@@ -293,8 +293,11 @@
 	if (camera)
 		camera.c_tag = changed_name
 
+/*
+	TODO: Will be return after rewrite
 	if(!custom_sprite) //Check for custom sprite
 		set_custom_sprite()
+*/
 
 	//Flavour text.
 	if(client)

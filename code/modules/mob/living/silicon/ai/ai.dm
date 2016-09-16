@@ -266,26 +266,6 @@ var/list/ai_verbs_default = list(
 	set name = "Set AI Core Display"
 	if(stat || aiRestorePowerRoutine)
 		return
-	if(!custom_sprite) //Check to see if custom sprite time, checking the appopriate file to change a var
-		var/file = file2text("config/custom_sprites.txt")
-		var/lines = text2list(file, "\n")
-
-		for(var/line in lines)
-		// split & clean up
-			var/list/Entry = text2list(line, ":")
-			for(var/i = 1 to Entry.len)
-				Entry[i] = trim(Entry[i])
-
-			if(Entry.len < 2)
-				continue;
-
-			if(Entry[1] == src.ckey && Entry[2] == src.real_name)
-				custom_sprite = 1 //They're in the list? Custom sprite time
-				icon = CUSTOM_ITEM_ROBOT
-
-		//if(icon_state == initial(icon_state))
-
-	if (custom_sprite == 1) icon_state = "[src.ckey]-ai"
 	var/icontype = input("Select an icon!", "AI", null, null) in AI_icons
 	if( icontype in AI_icons )
 		icon_state = AI_icons[icontype]
