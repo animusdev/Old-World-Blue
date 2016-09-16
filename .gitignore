@@ -1,0 +1,16 @@
+#ignore misc BYOND files
+Thumbs.db
+baystation12.dme.rej
+README.md
+*.log
+*.int
+*.rsc
+*.dmb
+*.lk
+*.backup
+data/
+config/
+
+/.gitattributes
+/.gitignore
+/.gitconfig
