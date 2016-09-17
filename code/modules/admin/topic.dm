@@ -17,6 +17,7 @@
 
 	else if(href_list["showmultiacc"])
 		showAccounts(href_list["showmultiacc"])
+
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"])
 		var/adminckey = href_list["dbsearchadmin"]
 		var/playerckey = href_list["dbsearchckey"]
@@ -520,7 +521,7 @@
 	//Species
 		counter = 0
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='dddddd'><th colspan='[length(playable_species)-1]'>Species</th></tr><tr align='center'>"
+		jobs += "<tr bgcolor='dddddd'><th colspan='[length(playable_species)-1]'><a href='?src=\ref[src];jobban3=Species;jobban4=\ref[M]'>Species</a></th></tr><tr align='center'>"
 		for(var/species in playable_species)
 			if(species == "Human")	continue
 			if(jobban_isbanned(M, species))
@@ -584,7 +585,7 @@
 			else
 				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[antag.bantype];jobban4=\ref[M]'>[replacetext("[antag.role_text]", " ", "&nbsp")]</a></td>"
 
-			if(++counter >= 5) //So things dont get squiiiiished!
+			if(++counter >= 5)
 				jobs += "</tr><tr align='center'>"
 				counter = 0
 
@@ -677,6 +678,9 @@
 					var/datum/job/temp = job_master.GetJob(jobPos)
 					if(!temp) continue
 					joblist += temp.title
+			if("Species")
+				for(var/species in playable_species-"Human")
+					joblist += species
 			else
 				joblist += href_list["jobban3"]
 
@@ -798,7 +802,7 @@
 				message_admins("\blue [key_name_admin(usr)] removed [t]", 1)
 				jobban_remove(t)
 				href_list["ban"] = 1 // lets it fall through and refresh
-				var/t_split = text2list(t, " - ")
+				var/t_split = splittext(t, " - ")
 				var/key = t_split[1]
 				var/job = t_split[2]
 				DB_ban_unban(ckey(key), BANTYPE_JOB_PERMA, job)
@@ -815,7 +819,7 @@
 		var/mob/M = locate(href_list["newban"])
 		if(!ismob(M)) return
 
-		if(check_rights(R_ADMIN,0, user = M))	return	//admins cannot be banned. Even if they could, the ban doesn't affect them anyway
+		if(M.client && M.client.holder)	return	//admins cannot be banned. Even if they could, the ban doesn't affect them anyway
 
 		switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))
 			if("Yes")
@@ -871,15 +875,6 @@
 				//qdel(M)
 			if("Cancel")
 				return
-
-	else if(href_list["unmutef"])
-		if(!check_rights(R_BAN))	return
-		remove_mute(href_list["unmutef"])
-		mutepanel()
-
-	else if(href_list["permamute"])
-		if(!check_rights(R_BAN))	return
-		addmute(href_list["permamute"], usr.ckey, href_list["chat"])
 
 	else if(href_list["mute"])
 		if(!check_rights(R_MOD,0) && !check_rights(R_ADMIN))  return
@@ -1212,7 +1207,7 @@
 		show_player_panel(M)
 
 	else if(href_list["adminplayerobservejump"])
-		if(!check_rights(R_MENTOR|R_MOD|R_ADMIN))	return
+		if(!check_rights(R_MENTOR|R_MOD|R_ADMIN|R_SERVER))	return
 
 		var/mob/M = locate(href_list["adminplayerobservejump"])
 
@@ -1225,7 +1220,7 @@
 		check_antagonists()
 
 	else if(href_list["adminplayerobservecoodjump"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_ADMIN|R_SERVER|R_MOD))	return
 
 		var/x = text2num(href_list["X"])
 		var/y = text2num(href_list["Y"])
@@ -1510,6 +1505,7 @@
 		*/
 
 
+
 	else if(href_list["jumpto"])
 		if(!check_rights(R_ADMIN))	return
 
@@ -1617,9 +1613,9 @@
 			alert("Select fewer object types, (max 5)")
 			return
 		else if(length(removed_paths))
-			alert("Removed:\n" + list2text(removed_paths, "\n"))
+			alert("Removed:\n" + jointext(removed_paths, "\n"))
 
-		var/list/offset = text2list(href_list["offset"],",")
+		var/list/offset = splittext(href_list["offset"],",")
 		var/number = dd_range(1, 100, text2num(href_list["object_count"]))
 		var/X = offset.len > 0 ? text2num(offset[1]) : 0
 		var/Y = offset.len > 1 ? text2num(offset[2]) : 0

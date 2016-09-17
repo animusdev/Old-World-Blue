@@ -36,7 +36,7 @@ var/global/list/navbeacons			// no I don't like putting this in, but it will do 
 			if(!navbeacons)
 				navbeacons = new()
 			navbeacons += src
-			
+
 
 		spawn(5)	// must wait for map loading to finish
 			if(radio_controller)
@@ -49,7 +49,7 @@ var/global/list/navbeacons			// no I don't like putting this in, but it will do 
 
 		codes = new()
 
-		var/list/entries = text2list(codes_txt, ";")	// entries are separated by semicolons
+		var/list/entries = splittext(codes_txt, ";")	// entries are separated by semicolons
 
 		for(var/e in entries)
 			var/index = findtext(e, "=")		// format is "key=value"
@@ -127,7 +127,7 @@ var/global/list/navbeacons			// no I don't like putting this in, but it will do 
 					src.locked = !src.locked
 					user << "Controls are now [src.locked ? "locked." : "unlocked."]"
 				else
-					user << "\red Access denied."
+					user << "<span class='warning'>Access denied.</span>"
 				updateDialog()
 			else
 				user << "You must open the cover first!"

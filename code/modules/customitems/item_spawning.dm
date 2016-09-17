@@ -67,7 +67,7 @@
 		K.new_icon = kit_icon
 		if(istype(item, /obj/item/device/kit/paint))
 			var/obj/item/device/kit/paint/kit = item
-			kit.allowed_types = text2list(additional_data, ", ")
+			kit.allowed_types = splittext(additional_data, ", ")
 		else if(istype(item, /obj/item/device/kit/suit))
 			var/obj/item/device/kit/suit/kit = item
 			kit.new_light_overlay = additional_data

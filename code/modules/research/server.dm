@@ -22,7 +22,7 @@
 	component_parts += new /obj/item/stack/cable_coil(src)
 	component_parts += new /obj/item/stack/cable_coil(src)
 	RefreshParts()
-	src.initialize(); //Agouri
+	initialize();
 
 /obj/machinery/r_n_d/server/Destroy()
 	griefProtection()
@@ -35,16 +35,17 @@
 	idle_power_usage /= max(1, tot_rating)
 
 /obj/machinery/r_n_d/server/initialize()
-	if(!files) files = new /datum/research(src)
+	if(!files)
+		files = new /datum/research(src)
 	var/list/temp_list
 	if(!id_with_upload.len)
 		temp_list = list()
-		temp_list = text2list(id_with_upload_string, ";")
+		temp_list = splittext(id_with_upload_string, ";")
 		for(var/N in temp_list)
 			id_with_upload += text2num(N)
 	if(!id_with_download.len)
 		temp_list = list()
-		temp_list = text2list(id_with_download_string, ";")
+		temp_list = splittext(id_with_download_string, ";")
 		for(var/N in temp_list)
 			id_with_download += text2num(N)
 
@@ -70,26 +71,13 @@
 		produce_heat()
 		delay = initial(delay)
 
-/obj/machinery/r_n_d/server/meteorhit(var/obj/O as obj)
-	griefProtection()
-	..()
-
-
 /obj/machinery/r_n_d/server/emp_act(severity)
 	griefProtection()
 	..()
 
-
 /obj/machinery/r_n_d/server/ex_act(severity)
 	griefProtection()
 	..()
-
-
-/obj/machinery/r_n_d/server/blob_act()
-	griefProtection()
-	..()
-
-
 
 //Backup files to centcomm to help admins recover data after greifer attacks
 /obj/machinery/r_n_d/server/proc/griefProtection()
@@ -101,10 +89,10 @@
 		C.files.RefreshResearch()
 
 /obj/machinery/r_n_d/server/proc/produce_heat()
-	if (!produces_heat)
+	if(!produces_heat)
 		return
 
-	if (!use_power)
+	if(!use_power)
 		return
 
 	if(!(stat & (NOPOWER|BROKEN))) //Blatently stolen from telecoms
@@ -159,11 +147,8 @@
 		shock(user,50)
 	return
 
-
-
-
 /obj/machinery/r_n_d/server/centcom
-	name = "Centcom Central R&D Database"
+	name = "Central R&D Database"
 	server_id = -1
 
 /obj/machinery/r_n_d/server/centcom/initialize()
@@ -190,8 +175,7 @@
 		no_id_servers -= S
 
 /obj/machinery/r_n_d/server/centcom/process()
-	return PROCESS_KILL	//don't need process()
-
+	return PROCESS_KILL //don't need process()
 
 /obj/machinery/computer/rdservercontrol
 	name = "R&D Server Controller"
@@ -210,8 +194,8 @@
 
 	add_fingerprint(usr)
 	usr.set_machine(src)
-	if(!src.allowed(usr) && !emagged)
-		usr << "\red You do not have the required access level"
+	if(!allowed(usr) && !emagged)
+		usr << "<span class='warning'>You do not have the required access level</span>"
 		return
 
 	if(href_list["main"])
@@ -340,17 +324,15 @@
 	if(istype(D, /obj/item/weapon/card/emag) && !emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
-		user << "\blue You you disable the security protocols"
-	src.updateUsrDialog()
+		user << "<span class='notice'>You you disable the security protocols.</span>"
+		src.updateUsrDialog()
 	return ..()
-
 
 /obj/machinery/r_n_d/server/robotics
 	name = "Robotics R&D Server"
 	id_with_upload_string = "1;2"
 	id_with_download_string = "1;2"
 	server_id = 2
-
 
 /obj/machinery/r_n_d/server/core
 	name = "Core R&D Server"

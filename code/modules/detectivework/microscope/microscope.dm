@@ -83,30 +83,22 @@
 		report.update_icon()
 		if(report.info)
 			user << report.info
-			remove_sample(user)
 	return
 
-/obj/machinery/microscope/proc/remove_sample(var/mob/living/remover)
+/obj/machinery/microscope/verb/remove_sample(var/mob/living/remover = usr)
+	set name = "Remove sample"
+	set category = "Object"
+	set src in view(1)
+
 	if(!istype(remover) || remover.stat > 0 || !Adjacent(remover))
 		return ..()
 	if(!sample)
 		remover << "<span class='warning'>\The [src] does not have a sample in it.</span>"
 		return
 	remover << "<span class='notice'>You remove \the [sample] from \the [src].</span>"
-	sample.forceMove(get_turf(src))
 	remover.put_in_hands(sample)
 	sample = null
 	update_icon()
-
-/obj/machinery/microscope/verb/eject()
-	set name = "Eject sample"
-	set category = "Object"
-	set src in oview(1)
-	if (usr.stat > 0)
-		return
-	add_fingerprint(usr)
-	remove_sample(usr)
-	return
 
 /obj/machinery/microscope/AltClick()
 	remove_sample(usr)

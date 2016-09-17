@@ -209,6 +209,7 @@
 	for(var/mob/M in hearers(15, source))
 		M.playsound_local(source, file(soundfile), 100, falloff = 5)
 
+
 /obj/structure/device/piano/proc/playsong()
 	do
 		var/cur_oct[7]
@@ -219,10 +220,10 @@
 
 		for(var/line in song.lines)
 			//world << line
-			for(var/beat in text2list(lowertext(line), ","))
+			for(var/beat in splittext(lowertext(line), ","))
 				//world << "beat: [beat]"
-				var/list/notes = text2list(beat, "/")
-				for(var/note in text2list(notes[1], "-"))
+				var/list/notes = splittext(beat, "/")
+				for(var/note in splittext(notes[1], "-"))
 					//world << "note: [note]"
 					if(!playing || !anchored)//If the piano is playing, or is loose
 						playing = 0
@@ -251,7 +252,7 @@
 			repeat-- //Infinite loops are baaaad.
 	while(repeat > 0)
 	playing = 0
-	attack_hand(usr)
+	updateUsrDialog()
 
 /obj/structure/device/piano/attack_hand(var/mob/user as mob)
 	if(!anchored)
@@ -336,7 +337,7 @@
 				spawn() playsong()
 
 		else if(href_list["newline"])
-			var/newline = rhtml_encode(input("Enter your line: ", "Piano") as text|null)
+			var/newline = html_encode(input("Enter your line: ", "Piano") as text|null)
 			if(!newline)
 				return
 			if(song.lines.len > 50)
@@ -353,7 +354,7 @@
 
 		else if(href_list["modifyline"])
 			var/num = round(text2num(href_list["modifyline"]),1)
-			var/content = rhtml_encode(input("Enter your line: ", "Piano", song.lines[num]) as text|null)
+			var/content = html_encode(input("Enter your line: ", "Piano", song.lines[num]) as text|null)
 			if(!content)
 				return
 			if(lentext(content) > 50)
@@ -374,7 +375,7 @@
 		else if(href_list["import"])
 			var/t = ""
 			do
-				t = rhtml_encode(input(usr, "Please paste the entire song, formatted:", text("[]", src.name), t)  as message)
+				t = html_encode(input(usr, "Please paste the entire song, formatted:", src.name, t)  as message)
 				if (!in_range(src, usr))
 					return
 
@@ -386,7 +387,7 @@
 
 			//split into lines
 			spawn()
-				var/list/lines = text2list(t, "\n")
+				var/list/lines = splittext(t, "\n")
 				var/tempo = 5
 				if(copytext(lines[1],1,6) == "BPM: ")
 					tempo = 600 / text2num(copytext(lines[1],6))
@@ -404,10 +405,10 @@
 				song = new()
 				song.lines = lines
 				song.tempo = tempo
-			attack_hand(usr)
+				updateUsrDialog()
 
 	add_fingerprint(usr)
-	attack_hand(usr)
+	updateUsrDialog()
 	return
 
 /obj/structure/device/piano/attackby(obj/item/O as obj, mob/user as mob)

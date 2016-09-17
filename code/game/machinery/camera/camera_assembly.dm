@@ -47,7 +47,7 @@
 
 			else if(iswrench(W))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				user << "You unattach the assembly from it's place."
+				user << "You unattach the assembly from its place."
 				anchored = 0
 				update_icon()
 				state = 0
@@ -67,7 +67,7 @@
 			else if(iswelder(W))
 
 				if(weld(W, user))
-					user << "You unweld the assembly from it's place."
+					user << "You unweld the assembly from its place."
 					state = 1
 					anchored = 1
 				return
@@ -83,7 +83,7 @@
 					usr << "No input found please hang up and try your call again."
 					return
 
-				var/list/tempnetwork = text2list(input, ",")
+				var/list/tempnetwork = splittext(input, ",")
 				if(tempnetwork.len < 1)
 					usr << "No network found please hang up and try your call again."
 					return

@@ -169,7 +169,7 @@
 				var/list/filternames = list("Object"="name", "Area"="area", "Fingerprints"="fprints", "Fibers"="fibers", "DNA"="blood", "Label"="label")
 				for(var/filter in filternames)
 					var/fname = filternames[filter]
-					dat += "<br>[filter]: <a href='?src=\ref[src];operation=filter;filter=[fname]'>[filters[fname] ? list2text(filters[fname], ",") : "All"]</a>"
+					dat += "<br>[filter]: <a href='?src=\ref[src];operation=filter;filter=[fname]'>[filters[fname] ? jointext(filters[fname], ",") : "All"]</a>"
 
 				current_list = get_filtered_set()
 				dat+= "<br><hr><br>"
@@ -224,7 +224,7 @@
 		if("filter")
 			var/filterstr = sanitize(input("Input the search criteria. Multiple values can be input, separated by a comma.", "Filter setting") as text|null)
 			if(filterstr)
-				filters[href_list["filter"]] = text2list(filterstr,",")
+				filters[href_list["filter"]] = splittext(filterstr,",")
 			else
 				filters[href_list["filter"]] = null
 		if("screen")

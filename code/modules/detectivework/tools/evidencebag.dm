@@ -9,11 +9,14 @@
 	w_class = 2
 	var/obj/item/stored_item = null
 
-/obj/item/weapon/evidencebag/afterattack(obj/item/I, mob/user, proximity_flag)
-	if(!proximity_flag) return
+/obj/item/weapon/evidencebag/afterattack(obj/item/I, mob/user, proximity)
+	if(!proximity) return
 
 	if(!istype(I) || I.anchored)
 		return
+
+	if(ismob(I.loc))
+		if(!I.loc:unEquip(I)) return
 
 	if(istype(I, /obj/item/weapon/evidencebag))
 		user << "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>"
@@ -29,9 +32,6 @@
 
 	user.visible_message("[user] puts [I] into [src]", "You put [I] inside [src].",\
 	"You hear a rustle as someone puts something into a plastic bag.")
-
-	if(ismob(I.loc))
-		I.loc:drop_from_inventory(I)
 
 	icon_state = "evidence"
 

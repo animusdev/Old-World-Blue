@@ -223,11 +223,11 @@ proc/load_donator(ckey)
 	return 1
 
 proc/build_prizes_list()
-	var/list/strings = text2list ( stuff, "\n" )
+	var/list/strings = splittext( stuff, "\n" )
 	var/cur_cat = "Miscellaneous"
 	for (var/string in strings)
 		if (string) //It's not a delimiter between
-			var/list/item_info = text2list ( string, ":" )
+			var/list/item_info = splittext( string, ":" )
 			if (item_info.len==3)
 				var/datum/donator_prize/prize = new
 				prize.item_name = item_info[1]
