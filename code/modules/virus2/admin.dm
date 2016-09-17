@@ -14,7 +14,7 @@
 		usr << "Antigens: [antigens2string(antigen)]"
 
 		return 1
-/*
+
 /datum/disease2/disease/get_view_variables_header()
 	. = list()
 	for(var/datum/disease2/effectholder/E in effects)
@@ -28,7 +28,7 @@
 	return ..() + {"
 		<option value='?src=\ref[src];info=1'>Show info</option>
 	"}
-*/
+
 /datum/admins/var/datum/virus2_editor/virus2_editor_datum = new
 /client/proc/virus2_editor()
 	set name = "Virus Editor"
