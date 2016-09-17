@@ -1,14 +1,4 @@
 // fun if you want to typecast humans/monkeys/etc without writing long path-filled lines.
-/proc/ishuman(A)
-	if(istype(A, /mob/living/carbon/human))
-		return 1
-	return 0
-
-/proc/isalien(A)
-	if(istype(A, /mob/living/carbon/alien))
-		return 1
-	return 0
-
 /proc/isxenomorph(A)
 	if(istype(A, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = A
@@ -22,71 +12,11 @@
 			return 1
 	return 0
 
-/proc/isbrain(A)
-	if(A && istype(A, /mob/living/carbon/brain))
-		return 1
-	return 0
-
-/proc/isslime(A)
-	if(istype(A, /mob/living/carbon/slime))
-		return 1
-	return 0
-
-/proc/isrobot(A)
-	if(istype(A, /mob/living/silicon/robot))
-		return 1
-	return 0
-
-/proc/isanimal(A)
-	if(istype(A, /mob/living/simple_animal))
-		return 1
-	return 0
-
-/proc/iscorgi(A)
-	if(istype(A, /mob/living/simple_animal/corgi))
-		return 1
-	return 0
-
-/proc/iscrab(A)
-	if(istype(A, /mob/living/simple_animal/crab))
-		return 1
-	return 0
-
-/proc/iscat(A)
-	if(istype(A, /mob/living/simple_animal/cat))
-		return 1
-	return 0
-
-/proc/ismouse(A)
-	if(istype(A, /mob/living/simple_animal/mouse))
-		return 1
-	return 0
-
-/proc/isbear(A)
-	if(istype(A, /mob/living/simple_animal/hostile/bear))
-		return 1
-	return 0
-
-/proc/iscarp(A)
-	if(istype(A, /mob/living/simple_animal/hostile/carp))
-		return 1
-	return 0
-
-/proc/isclown(A)
-	if(istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
-		return 1
-	return 0
-
 /mob/proc/isSilicon()
 	return 0
 
 /mob/living/silicon/isSilicon()
 	return 1
-
-/proc/isAI(A)
-	if(istype(A, /mob/living/silicon/ai))
-		return 1
-	return 0
 
 /mob/proc/isMobAI()
 	return 0
@@ -103,54 +33,16 @@
 /mob/living/silicon/isSynthetic()
 	return 1
 
-/mob/living/carbon/human/isMonkey()
-	return istype(species, /datum/species/monkey)
-
 /mob/proc/isMonkey()
 	return 0
 
 /mob/living/carbon/human/isMonkey()
 	return istype(species, /datum/species/monkey)
 
-/proc/ispAI(A)
-	if(istype(A, /mob/living/silicon/pai))
-		return 1
-	return 0
-
-/proc/iscarbon(A)
-	if(istype(A, /mob/living/carbon))
-		return 1
-	return 0
-
-/proc/issilicon(A)
-	if(istype(A, /mob/living/silicon))
-		return 1
-	return 0
-
-/proc/isliving(A)
-	if(istype(A, /mob/living))
-		return 1
-	return 0
-
-proc/isobserver(A)
-	if(istype(A, /mob/dead/observer))
-		return 1
-	return 0
-
-proc/isorgan(A)
-	if(istype(A, /obj/item/organ/external))
-		return 1
-	return 0
-
 proc/isdeaf(A)
 	if(istype(A, /mob))
 		var/mob/M = A
 		return (M.sdisabilities & DEAF) || M.ear_deaf
-	return 0
-
-proc/isnewplayer(A)
-	if(istype(A, /mob/new_player))
-		return 1
 	return 0
 
 proc/hasorgans(A) // Fucking really??
@@ -334,20 +226,19 @@ proc/slur(phrase)
 	while(counter>=1)
 		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
 		if(rand(1,3)==3)
-			if(rlowertext(newletter)=="i")	newletter="a"
-			if(rlowertext(newletter)=="a")	newletter="o"
-			if(rlowertext(newletter)=="a")	newletter="e"
-			if(rlowertext(newletter)=="n")	newletter="c"
-			if(rlowertext(newletter)=="a")	newletter="o"
+			if(lowertext(newletter)=="o")	newletter="u"
+			if(lowertext(newletter)=="s")	newletter="ch"
+			if(lowertext(newletter)=="a")	newletter="ah"
+			if(lowertext(newletter)=="c")	newletter="k"
 		switch(rand(1,15))
-			if(1,3,5,8)	newletter="[lowertext(newletter)]"
-			if(2,4,6,15)	newletter="[uppertext(newletter)]"
+			if(1,3,5,8)	newletter="[rlowertext(newletter)]"
+			if(2,4,6,15)	newletter="[ruppertext(newletter)]"
 			if(7)	newletter+="'"
 			//if(9,10)	newletter="<b>[newletter]</b>"
 			//if(11,12)	newletter="<big>[newletter]</big>"
 			//if(13)	newletter="<small>[newletter]</small>"
 		newphrase+="[newletter]";counter-=1
-	return rhtml_encode(newphrase)
+	return newphrase
 
 /proc/stutter(n)
 	var/te = rhtml_decode(n)
