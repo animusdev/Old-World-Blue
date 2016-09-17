@@ -24,7 +24,7 @@ Because if you select a player mob as owner it tries to do the proc for
 But you can call procs that are of type /mob/living/carbon/human/proc/ for that player.
 */
 
-/client/proc/callproc()
+/*/client/proc/callproc()
 	set category = "Debug"
 	set name = "Advanced ProcCall"
 
@@ -144,7 +144,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			log_admin("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 			returnval = call(procname)(arglist(lst)) // Pass the lst as an argument list to the proc
 
-		usr << "<font color='blue'>[procname] returned: [returnval ? returnval : "null"]</font>"
+		usr << "<font color='blue'>[procname] returned: [returnval ? returnval : "null"]</font>"*/
 
 /client/proc/Cell()
 	set category = "Debug"
@@ -993,7 +993,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/staff(M), slot_l_hand)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(M), slot_back)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box(M), slot_in_backpack)
-			
+
 		if("soviet admiral")
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/hgpiratecap(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots/combat(M), slot_shoes)
@@ -1012,7 +1012,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.assignment = "Admiral"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
-			
+
 		if("knight")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/bum2(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/knight/templar(M), slot_wear_suit)
