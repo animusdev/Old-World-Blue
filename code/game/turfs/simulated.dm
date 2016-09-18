@@ -93,7 +93,7 @@
 
 				bloodDNA = null
 
-			var/contents_weight
+/*			var/contents_weight
 			for(var/obj/item/weapon/O in src.contents)
 				if(O.w_class > 1)
 					contents_weight += O.w_class
@@ -102,7 +102,7 @@
 			if(prob(contents_weight))
 				if(!M.buckled && M.m_intent == "run")
 					if(M.slip("something on the floor",4))
-						step(M, M.dir)
+						step(M, M.dir)*/
 
 		if(src.wet)
 
