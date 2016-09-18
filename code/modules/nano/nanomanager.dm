@@ -90,7 +90,7 @@
 		'nano/templates/botany_editor.tmpl',
 		'nano/templates/botany_isolator.tmpl',
 		'nano/templates/canister.tmpl',
-		'nano/templates/chem_disp.tmpl',
+		'nano/templates/chem_dispenser.tmpl',
 		'nano/templates/crew_monitor.tmpl',
 		'nano/templates/crew_monitor_map_content.tmpl',
 		'nano/templates/crew_monitor_map_header.tmpl',
