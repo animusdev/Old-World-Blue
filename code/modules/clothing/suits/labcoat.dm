@@ -75,8 +75,7 @@
 					/obj/item/device/flashlight/pen,/obj/item/weapon/reagent_containers/glass/beaker/bottle,
 					/obj/item/weapon/reagent_containers/glass/beaker,/obj/item/weapon/reagent_containers/pill,
 					/obj/item/weapon/storage/pill_bottle,/obj/item/weapon/reagent_containers/spray/pepper,
-					/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/device/detective_scanner,
-					/obj/item/device/taperecorder)
+					/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/device/taperecorder)
 
 /obj/item/clothing/suit/storage/toggle/labcoat/virologist
 	name = "Virologist labcoat"

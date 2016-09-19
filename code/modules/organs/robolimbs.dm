@@ -16,6 +16,16 @@ var/global/datum/robolimb/basic_robolimb
 	var/icon = 'icons/mob/human_races/robotic.dmi'       // Icon base to draw from.
 	var/unavailable_at_chargen                           // If set, not available at chargen.
 
+	var/unavailable_to_build							 // If set, can't be constructed.
+	var/lifelike										 // If set, appears organic.
+	var/blood_color = SYNTH_BLOOD_COLOUR
+	var/list/species_cannot_use = list("Vox")
+/*
+	var/list/monitor_styles								 //If empty, the model of limbs offers a head compatible with monitors.
+	var/parts = BP_ALL									 //Defines what parts said brand can replace on a body.
+	var/health_hud_intensity = 1						 // Intensity modifier for the health GUI indicator.
+*/
+
 /datum/robolimb/bishop
 	company = "Bishop Cybernetics"
 	desc = "This limb has a white polymer casing with blue holo-displays."

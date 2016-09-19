@@ -6,12 +6,14 @@
 	var/tmp/list/fingerprintshidden
 	var/tmp/fingerprintslast = null
 	var/list/blood_DNA
+	var/was_bloodied
 	var/blood_color
 	var/tmp/last_bumped = 0
 	var/pass_flags = 0
 	var/throwpass = 0
 	var/germ_level = GERM_LEVEL_AMBIENT // The higher the germ level, the more germ on the atom.
 	var/simulated = 1 //filter for actions - used by lighting overlays
+	var/fluorescent // Shows up under a UV light.
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
@@ -22,6 +24,9 @@
 
 	//Detective Work, used for the duplicate data points kept in the scanners
 	var/list/original_atom
+
+/atom/proc/reveal_blood()
+	return
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	return null
@@ -69,6 +74,8 @@
 /atom/proc/CheckExit()
 	return 1
 
+// If you want to use this, the atom must have the PROXMOVE flag, and the moving
+// atom must also have the PROXMOVE flag currently to help with lag. ~ ComicIronic
 /atom/proc/HasProximity(atom/movable/AM as mob|obj)
 	return
 
@@ -194,7 +201,7 @@ its easier to just keep the beam vertical.
 			f_name = "some "
 		else
 			f_name = "a "
-		if(blood_color != "#030303")
+		if(blood_color != SYNTH_BLOOD_COLOUR)
 			f_name += "<span class='danger'>blood-stained</span> [name][infix]!"
 		else
 			f_name += "oil-stained [name][infix]."
@@ -388,14 +395,14 @@ its easier to just keep the beam vertical.
 	if(!blood_DNA || !istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
 		blood_DNA = list()
 
+	was_bloodied = 1
 	blood_color = "#A10808"
 	if(istype(M))
 		if (!istype(M.dna, /datum/dna))
 			M.dna = new /datum/dna(null)
 			M.dna.real_name = M.real_name
 		M.check_dna()
-		if (M.species)
-			blood_color = M.species.blood_color
+		blood_color = M.species.get_blood_colour(M)
 	. = 1
 	return 1
 
@@ -406,17 +413,15 @@ its easier to just keep the beam vertical.
 		// Make toxins vomit look different
 		if(toxvomit)
 			this.icon_state = "vomittox_[pick(1,4)]"
-		return this
-
 
 /atom/proc/clean_blood()
 	if(!simulated)
 		return
+	fluorescent = 0
 	src.germ_level = 0
 	if(istype(blood_DNA, /list))
 		blood_DNA = null
 		return 1
-
 
 /atom/proc/get_global_map_pos()
 	if(!islist(global_map) || isemptylist(global_map)) return
@@ -435,7 +440,7 @@ its easier to just keep the beam vertical.
 		return 0
 
 /atom/proc/checkpass(passflag)
-	return pass_flags&passflag
+	return (pass_flags&passflag)
 
 /atom/proc/isinspace()
 	if(istype(get_turf(src), /turf/space))

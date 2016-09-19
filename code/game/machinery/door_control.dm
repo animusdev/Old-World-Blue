@@ -38,8 +38,6 @@
 		return
 	}
 	*/
-	if(istype(W, /obj/item/device/detective_scanner))
-		return
 	if(istype(W, /obj/item/weapon/card/emag))
 		req_access = list()
 		req_one_access = list()

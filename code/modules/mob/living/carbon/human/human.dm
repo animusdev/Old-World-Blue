@@ -994,11 +994,31 @@
 
 /mob/living/carbon/human/clean_blood(var/clean_feet)
 	.=..()
-	if(clean_feet && !shoes && istype(feet_blood_DNA, /list) && feet_blood_DNA.len)
-		feet_blood_color = null
-		qdel(feet_blood_DNA)
-		update_inv_shoes(1)
-		return 1
+
+	if(gloves)
+		if(gloves.clean_blood())
+			update_inv_gloves()
+		gloves.germ_level = 0
+	else
+		if(bloody_hands)
+			bloody_hands = 0
+			update_inv_gloves()
+		germ_level = 0
+
+	gunshot_residue = null
+
+	if(clean_feet)
+		if(shoes)
+			if(shoes.clean_blood())
+				update_inv_shoes()
+		else
+			if(feet_blood_DNA && feet_blood_DNA.len)
+				feet_blood_color = null
+				feet_blood_DNA.Cut()
+				update_inv_shoes()
+
+	return
+
 
 /mob/living/carbon/human/get_visible_implants(var/class = 0)
 
@@ -1009,6 +1029,7 @@
 				visible_implants += O
 
 	return(visible_implants)
+
 
 /mob/living/carbon/human/embedded_needs_process()
 	for(var/obj/item/organ/external/organ in src.organs)

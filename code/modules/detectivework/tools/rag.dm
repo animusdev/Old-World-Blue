@@ -110,7 +110,7 @@
 			user.do_attack_animation(src)
 			M.IgniteMob()
 		else if(reagents.total_volume)
-			if(user.zone_sel.selecting == O_MOUTH)
+			if(user.zone_sel.selecting == "mouth")
 				user.do_attack_animation(src)
 				user.visible_message(
 					"<span class='danger'>\The [user] smothers [target] with [src]!</span>",

@@ -50,7 +50,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	color = COLOR_YELLOW
 
 /obj/structure/cable/green
-	color = COLOR_GREEN
+	color = COLOR_LIME
 
 /obj/structure/cable/blue
 	color = COLOR_BLUE

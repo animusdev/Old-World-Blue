@@ -189,7 +189,7 @@
 			my_atom.on_reagent_change()
 		return 1
 	else
-		warning("[my_atom] attempted to add a reagent called '[id]' which doesn't exist. ([usr])")
+		warning("[my_atom] attempted to add a reagent called '[id]' which doesn't exist as ([usr]) ([my_atom.x],[my_atom.y],[my_atom.z]).")
 	return 0
 
 /datum/reagents/proc/remove_reagent(var/id, var/amount, var/safety = 0)

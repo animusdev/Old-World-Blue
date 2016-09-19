@@ -92,7 +92,7 @@
 /*
  * Parapens
  */
- /obj/item/weapon/pen/reagent/paralysis
+/obj/item/weapon/pen/reagent/paralysis
 	origin_tech = "materials=2;syndicate=5"
 
 /obj/item/weapon/pen/reagent/paralysis/New()
@@ -138,7 +138,7 @@
 			if("Yellow")
 				colour = COLOR_YELLOW
 			if("Green")
-				colour = COLOR_GREEN
+				colour = COLOR_LIME
 			if("Pink")
 				colour = COLOR_PINK
 			if("Blue")

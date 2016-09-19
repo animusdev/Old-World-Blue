@@ -428,9 +428,8 @@
 	reagent_state = LIQUID
 	color = "#F2F3F4"
 
-/*Тоже до криминалистики
 /datum/reagent/luminol/touch_obj(var/obj/O)
 	O.reveal_blood()
 
 /datum/reagent/luminol/touch_mob(var/mob/living/L)
-	L.reveal_blood()*/
+	L.reveal_blood()

@@ -422,7 +422,6 @@
 	color = "#C8A5DC"
 	touch_met = 5
 
-/*Âåðíóòü, åñëè ïåðåíåñåì êðèìèíàëèñòèêó
 /datum/reagent/sterilizine/affect_touch(var/mob/living/carbon/M, var/alien, var/removed)
 	M.germ_level -= min(removed*20, M.germ_level)
 	for(var/obj/item/I in M.contents)
@@ -439,7 +438,6 @@
 		I.was_bloodied = null
 	for(var/obj/effect/decal/cleanable/blood/B in T)
 		qdel(B)
-*/
 
 /datum/reagent/leporazine
 	name = "Leporazine"

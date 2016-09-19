@@ -376,7 +376,7 @@
 
 		if (deathtime < config.respawn_time*600)
 			if(is_admin)
-				if(alert("Normal players must wait at least [config.respawn_time] minutes to respawn! Would you?","Warning", "Ok", "No") == "Ok")
+				if(alert("Normal players must wait at least [config.respawn_time] minutes to respawn! Continue?","Warning", "Respawn", "Cancel") == "Cancel")
 					return
 			else
 				usr << "You must wait [config.respawn_time] minutes to respawn!"

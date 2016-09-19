@@ -3,6 +3,7 @@
 	siemens_coefficient = 0.9
 	var/on_mob_icon = "" 				//If set used instead icon_state for mob drawing.
 	var/list/species_restricted = null  //Only these species can wear this kit.
+	var/gunshot_residue //Used by forensics.
 
 	/*
 		Sprites used when the clothing item is refit. This is done by setting icon_override.
@@ -13,6 +14,16 @@
 //Updates the icons of the mob wearing the clothing item, if any.
 /obj/item/clothing/proc/update_clothing_icon()
 	return
+
+// Aurora forensics port.
+/obj/item/clothing/clean_blood()
+	..()
+	gunshot_residue = null
+	if(istype(loc, /mob))
+		var/mob/M = loc
+		M.update_icon = 1
+		M.update_icons()
+
 
 //BS12: Species-restricted clothing check.
 /obj/item/clothing/mob_can_equip(M as mob, slot)
