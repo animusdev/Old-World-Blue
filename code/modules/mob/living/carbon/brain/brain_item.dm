@@ -76,18 +76,16 @@
 	if(borer)
 		borer.detatch() //Should remove borer if the brain is removed - RR
 
-	var/obj/item/organ/internal/brain/B = src
-	if(istype(B) && istype(owner))
-		B.transfer_identity(owner)
+	if(istype(owner))
+		transfer_identity(owner)
 
 	..()
 
 /obj/item/organ/internal/brain/install(var/mob/living/target)
 
-	if(target.key)
-		target.ghostize()
-
 	if(brainmob)
+		if(target.key)
+			target.ghostize()
 		if(brainmob.mind)
 			brainmob.mind.transfer_to(target)
 		else
