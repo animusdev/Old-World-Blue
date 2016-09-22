@@ -49,7 +49,7 @@
 	if(f_style == facial_hair_style)
 		return
 
-	if(!(facial_hair_style in facial_hair_styles_list))
+	if(!facial_hair_style in facial_hair_styles_list)
 		return
 
 	f_style = facial_hair_style
@@ -76,9 +76,11 @@
 	update_hair()
 
 /mob/living/carbon/human/proc/change_eye_color(var/new_color)
-	if(new_color == eyes_color)
+	if(eyes_color == new_color)
 		return
-	eyes_color = eyes_color
+
+	eyes_color = new_color
+
 	update_eyes()
 	update_body()
 	return 1
@@ -94,31 +96,40 @@
 	return 1*/
 
 /mob/living/carbon/human/proc/change_hair_color(var/new_color)
-	if(new_color == hair_color)
+	if(hair_color == new_color)
 		return
+
 	hair_color = new_color
 	update_hair()
 	return 1
 
 /mob/living/carbon/human/proc/change_facial_hair_color(var/new_color)
-	if(new_color == facial_color)
+	if(facial_color == new_color)
 		return
+
 	facial_color = new_color
+
 	update_hair()
 	return 1
 
 /mob/living/carbon/human/proc/change_skin_color(var/new_color)
 	if(new_color == skin_color || !(species.flags & HAS_SKIN_COLOR))
 		return
+
 	skin_color = new_color
+
 	force_update_limbs()
+	update_body()
 	return 1
 
 /mob/living/carbon/human/proc/change_skin_tone(var/tone)
 	if(s_tone == tone || !(species.flags & HAS_SKIN_TONE))
 		return
+
 	s_tone = tone
+
 	force_update_limbs()
+	update_body()
 	return 1
 
 /mob/living/carbon/human/proc/update_dna()
