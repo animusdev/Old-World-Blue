@@ -29,6 +29,11 @@
 			overlays -= wet_overlay
 			wet_overlay = null
 
+/turf/simulated/clean_blood()
+	for(var/obj/effect/decal/cleanable/blood/B in contents)
+		B.clean_blood()
+	..()
+
 /turf/simulated/New()
 	..()
 	if(istype(loc, /area/chapel))
@@ -49,8 +54,7 @@
 	if (istype(A,/mob/living))
 		var/mob/living/M = A
 		if(M.lying)
-			..()
-			return
+			return ..()
 
 		// Ugly hack :( Should never have multiple plants in the same tile.
 		var/obj/effect/plant/plant = locate() in contents
@@ -93,17 +97,6 @@
 
 				bloodDNA = null
 
-/*			var/contents_weight
-			for(var/obj/item/weapon/O in src.contents)
-				if(O.w_class > 1)
-					contents_weight += O.w_class
-			contents_weight = max(min(contents_weight, 75), 0)
-
-			if(prob(contents_weight))
-				if(!M.buckled && M.m_intent == "run")
-					if(M.slip("something on the floor",4))
-						step(M, M.dir)*/
-
 		if(src.wet)
 
 			if(M.buckled || (src.wet == 1 && M.m_intent == "walk"))
@@ -140,6 +133,8 @@
 
 	if(istype(M))
 		for(var/obj/effect/decal/cleanable/blood/B in contents)
+			if(!B.blood_DNA)
+				B.blood_DNA = list()
 			if(!B.blood_DNA[M.dna.unique_enzymes])
 				B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 				B.virus2 = virus_copylist(M.virus2)
