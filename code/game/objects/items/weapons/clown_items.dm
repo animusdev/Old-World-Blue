@@ -26,6 +26,11 @@
 	throw_speed = 4
 	throw_range = 20
 
+/obj/item/weapon/soap/New()
+	..()
+	create_reagents(5)
+	wet()
+
 /obj/item/weapon/soap/nanotrasen
 	desc = "A Nanotrasen brand bar of soap. Smells of phoron."
 	icon_state = "soapnt"
@@ -41,7 +46,10 @@
 	desc = "An untrustworthy bar of soap. Smells of fear."
 	icon_state = "soapsyndie"
 
-/obj/item/weapon/soap/Crossed(AM as mob|obj) //EXACTLY the same as bananapeel for now, so it makes sense to put it in the same dm -- Urist
+/obj/item/weapon/soap/proc/wet()
+	reagents.add_reagent("cleaner", 5)
+
+/obj/item/weapon/soap/Crossed(AM as mob|obj)
 	if (istype(AM, /mob/living))
 		var/mob/living/M =	AM
 		M.slip("the [src.name]",3)
@@ -52,13 +60,20 @@
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
 	if(user.client && (target in user.client.screen))
 		user << "<span class='notice'>You need to take that [target.name] off before cleaning it.</span>"
+	else if(istype(target,/obj/effect/decal/cleanable/blood))
+		user << "<span class='notice'>You scrub \the [target.name] out.</span>"
+		target.clean_blood()
+		return	//Blood is a cleanable decal, therefore needs to be accounted for before all cleanable decals.
 	else if(istype(target,/obj/effect/decal/cleanable))
 		user << "<span class='notice'>You scrub \the [target.name] out.</span>"
 		qdel(target)
 	else if(istype(target,/turf))
 		user << "<span class='notice'>You scrub \the [target.name] clean.</span>"
 		var/turf/T = target
-		T.clean(src)
+		T.clean(src, user)
+	else if(istype(target,/obj/structure/sink))
+		user << "<span class='notice'>You wet \the [src] in the sink.</span>"
+		wet()
 	else
 		user << "<span class='notice'>You clean \the [target.name].</span>"
 		target.clean_blood()
