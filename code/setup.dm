@@ -171,7 +171,6 @@
 #define NORMPIPERATE             30   // Pipe-insulation rate divisor.
 #define HEATPIPERATE             8    // Heat-exchange pipe insulation.
 #define FLOWFRAC                 0.99 // Fraction of gas transfered per process.
-#define SHOES_SLOWDOWN          -1.0  // How much shoes slow you down by default. Negative values speed you up.
 
 // Item inventory slot bitmasks.
 #define SLOT_OCLOTHING  1

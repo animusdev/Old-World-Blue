@@ -10,7 +10,7 @@
 	flags = NOSLIP
 
 /obj/item/clothing/shoes/magboots/proc/set_slowdown()
-	slowdown = shoes? max(SHOES_SLOWDOWN, shoes.slowdown): SHOES_SLOWDOWN	//So you can't put on magboots to make you walk faster.
+	slowdown = shoes? max(0, shoes.slowdown): 0	//So you can't put on magboots to make you walk faster.
 	slowdown += 3
 
 /obj/item/clothing/shoes/magboots/mob_can_equip(mob/user)
@@ -53,7 +53,7 @@
 	action_button_name = "Toggle the magboots"
 
 /obj/item/clothing/shoes/magboots/toggleable/set_slowdown()
-	slowdown = shoes? max(SHOES_SLOWDOWN, shoes.slowdown): SHOES_SLOWDOWN	//So you can't put on magboots to make you walk faster.
+	slowdown = shoes? max(0, shoes.slowdown): 0	//So you can't put on magboots to make you walk faster.
 	if (magpulse)
 		slowdown += 3
 
@@ -89,7 +89,7 @@
 	icon_base = "advmag"
 
 /obj/item/clothing/shoes/magboots/toggleable/advanced/set_slowdown()
-	slowdown = shoes? max(SHOES_SLOWDOWN, shoes.slowdown): SHOES_SLOWDOWN	//So you can't put on magboots to make you walk faster.
+	slowdown = shoes? max(0, shoes.slowdown): 0	//So you can't put on magboots to make you walk faster.
 	if (magpulse)
 		slowdown += 2
 

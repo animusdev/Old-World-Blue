@@ -336,7 +336,6 @@ BLIND     // can't see anything
 	slot_flags = SLOT_FEET
 
 	permeability_coefficient = 0.50
-	slowdown = SHOES_SLOWDOWN
 	force = 2
 	var/overshoes = 0
 	species_restricted = list("exclude","Unathi","Tajara")
