@@ -13,7 +13,7 @@
 				if(M.ckey) targets += "[M.ckey]"
 			holder.showAccounts(input("Select ckey", "Ckey") in targets)
 		if("Type ckey")
-			var/target = ckey(input(usr, "Напечатайте ckey, который нужно проверить.", "Ckey") as text|null)
+			var/target = ckey(input(usr, "Type in ckey for check.", "Ckey") as text|null)
 			if(!target) //Cancel теперь работает
 				return
 			holder.showAccounts(target)
@@ -47,6 +47,8 @@
 		output+="<td>[query.item[5]]</td></tr>"
 
 	output+="</table></center>"
+
+
 
 	usr << browse(output, "window=accaunts;size=600x[size*50+100]")
 

@@ -96,7 +96,6 @@ var/list/admin_verbs_admin = list(
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
 	//client/proc/jobbans,
-	/client/proc/late_ban,
 	/client/proc/DB_ban_panel
 	)
 var/list/admin_verbs_sounds = list(
@@ -421,47 +420,6 @@ var/list/admin_verbs_mentor = list(
 			mob << "\blue <b>Invisimin on. You are now as invisible as a ghost.</b>"
 			mob.alpha = max(mob.alpha - 100, 0)
 
-/client/proc/late_ban()
-	set name = "Late Ban"
-	set category = "Admin"
-
-	if(!check_rights(R_BAN))	return
-	var/ban_key = input(usr, "Type in key for late ban?","Key", "") as text|null
-	if (!ban_key) return
-	var/ban_comp_id = input(usr, "Type in computer id","Computer ID", "") as text|null
-
-	switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))
-		if("Yes")
-			var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
-			if(!mins)
-				return
-			if(mins >= 525600) mins = 525599
-			var/reason = input(usr,"Reason?","reason","Griefer") as text|null
-			if(!reason)
-				return
-			AddBan(ban_key, ban_comp_id, reason, usr.ckey, 1, mins)
-			ban_unban_log_save("[usr.client.ckey] has banned [ban_key] (not in game). - Reason: [reason] - This will be removed in [mins] minutes.")
-			log_admin("[usr.client.ckey] has banned [ban_key] (not in game).\nReason: [reason]\nThis will be removed in [mins] minutes.")
-			message_admins("\blue[usr.client.ckey] has banned [ban_key] (not in game).\nReason: [reason]\nThis will be removed in [mins] minutes.")
-
-		if("No")
-			var/reason = input(usr,"Reason?","reason","Griefer") as text|null
-			if(!reason)
-				return
-			switch(alert(usr,"IP ban?",,"Yes","No","Cancel"))
-				if("Cancel")	return
-				if("Yes")
-					var/ban_ip = input(usr, "Type in ip for late ban", "IP", "") as text|null
-					if (!ban_ip) return
-					AddBan(ban_key, ban_comp_id, reason, usr.ckey, 0, 0, ban_ip)
-				if("No")
-					AddBan(ban_key, ban_comp_id, reason, usr.ckey, 0, 0)
-			ban_unban_log_save("[usr.client.ckey] has permabanned [ban_key] (not in game). - Reason: [reason] - This is a permanent ban.")
-			log_admin("[usr.client.ckey] has banned [ban_key] (not in game).\nReason: [reason]\nThis is a permanent ban.")
-			message_admins("\blue[usr.client.ckey] has banned [ban_key] (not in game).\nReason: [reason]\nThis is a permanent ban.")
-		if("Cancel")
-			return
-
 /client/proc/time_to_respawn()
 	set category = "Server"
 	set name = "Edit time to respawn"
@@ -567,12 +525,16 @@ var/list/admin_verbs_mentor = list(
 	if(holder)
 		if(holder.fakekey)
 			holder.fakekey = null
+			if(istype(src.mob, /mob/new_player))
+				mob.name = capitalize(ckey)
 		else
 			var/new_key = sanitizeName(input("Enter your desired display name.", "Fake Key", key) as text|null, allow_numbers = 1)
 			if(!new_key)	return
 			if(length(new_key) >= 26)
 				new_key = copytext(new_key, 1, 26)
 			holder.fakekey = new_key
+			if(istype(mob, /mob/new_player))
+				mob.name = new_key
 		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]", 1)
 
@@ -600,8 +562,8 @@ var/list/admin_verbs_mentor = list(
 		ban_unban_log_save("[ckey] warned [warned_ckey], resulting in a [AUTOBANTIME] minute autoban.")
 		if(C)
 			message_admins("[key_name_admin(src)] has warned [key_name_admin(C)] resulting in a [AUTOBANTIME] minute ban.")
-			C << "<font color='red'><BIG><B>You have been autobanned due to a warning by [ckey].</B></BIG><br>This is a temporary ban, it will be removed in [AUTOBANTIME] minutes."
-			qdel(C)
+			C << "<font color='red'><BIG><B>You have been autobanned due to a warning by [ckey].</B></BIG><br>This is a temporary ban, it will be removed in [AUTOBANTIME] minutes.</font>"
+			del(C)
 		else
 			message_admins("[key_name_admin(src)] has warned [warned_ckey] resulting in a [AUTOBANTIME] minute ban.")
 		AddBan(warned_ckey, D.last_id, "Autobanning due to too many formal warnings", ckey, 1, AUTOBANTIME)
@@ -614,9 +576,8 @@ var/list/admin_verbs_mentor = list(
 	return
 
 
-
-#undef AUTOBANTIME
 #undef MAX_WARNS
+#undef AUTOBANTIME
 
 /client/proc/drop_bomb() // Some admin dickery that can probably be done better -- TLE
 	set category = "Special Verbs"

@@ -17,6 +17,7 @@
 #include "code\setup.dm"
 #include "code\stylesheet.dm"
 #include "code\world.dm"
+#include "code\__defines\admin.dm"
 #include "code\__defines\chemical_effects.dm"
 #include "code\__defines\misc.dm"
 #include "code\__defines\mobs.dm"

@@ -119,7 +119,7 @@
 	set name = "Direct Narrate"
 
 	if(!holder)
-		src << "Only administrators may use this command."
+		src << "Only administrators and moderators may use this command."
 		return
 
 	if(!M)
@@ -184,7 +184,7 @@ proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
 		M.client.prefs.muted |= mute_type
 		log_admin("SPAM AUTOMUTE: [muteunmute] [key_name(M)] from [mute_string]")
 		message_admins("SPAM AUTOMUTE: [muteunmute] [key_name_admin(M)] from [mute_string].", 1)
-		M << "You have been [muteunmute] from [mute_string] by the SPAM AUTOMUTE system. Contact an admin."
+		M << "<span class='alert'>You have been [muteunmute] from [mute_string] by the SPAM AUTOMUTE system. Contact an admin.</span>"
 		return
 
 	if(M.client.prefs.muted & mute_type)
@@ -196,7 +196,7 @@ proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
 
 	log_admin("[key_name(usr)] has [muteunmute] [key_name(M)] from [mute_string]")
 	message_admins("[key_name_admin(usr)] has [muteunmute] [key_name_admin(M)] from [mute_string].", 1)
-	M << "You have been [muteunmute] from [mute_string]."
+	M << "<span class = 'alert'>You have been [muteunmute] from [mute_string].</span>"
 
 /client/proc/cmd_admin_add_random_ai_law()
 	set category = "Fun"
@@ -248,9 +248,9 @@ Ccomp's first proc.
 /client/proc/allow_character_respawn()
 	set category = "Special Verbs"
 	set name = "Allow player to respawn"
-	set desc = "Let's the player bypass the 30 minute wait to respawn or allow them to re-enter their corpse."
+	set desc = "Let's the player bypass respawn delay or allow them to re-enter their corpse."
 	if(!holder)
-		src << "Only administrators may use this command."
+		src << "Only administrators and moderators may use this command."
 	var/list/ghosts= get_ghosts(1,1)
 
 	var/target = input("Please, select a ghost!", "COME BACK TO LIFE!", null, null) as null|anything in ghosts
@@ -270,8 +270,8 @@ Ccomp's first proc.
 	G.can_reenter_corpse = 1
 
 	G:show_message(text("\blue <B>You may now respawn.  You should roleplay as if you learned nothing about the round during your time with the dead.</B>"), 1)
-	log_admin("[key_name(usr)] allowed [key_name(G)] to bypass the 30 minute respawn limit")
-	message_admins("Admin [key_name_admin(usr)] allowed [key_name_admin(G)] to bypass the 30 minute respawn limit", 1)
+	log_admin("[key_name(usr)] allowed [key_name(G)] to bypass the [config.respawn_time] minute respawn limit")
+	message_admins("Admin [key_name_admin(usr)] allowed [key_name_admin(G)] to bypass the [config.respawn_time] minute respawn limit", 1)
 
 
 /client/proc/toggle_antagHUD_use()
@@ -341,8 +341,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /N */
 /client/proc/respawn_character()
 	set category = "Special Verbs"
-	set name = "Respawn Character"
-	set desc = "Respawn a person that has been gibbed/dusted/killed. They must be a ghost for this to work and preferably should not have a body to go back into."
+	set name = "Spawn Character"
+	set desc = "(Re)Spawn a client's loaded character."
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
@@ -441,9 +441,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			if(alert(new_character,"Would you like an active AI to announce this character?",,"No","Yes")=="Yes")
 				call(/mob/new_player/proc/AnnounceArrival)(new_character, new_character.mind.assigned_role)
 
-	message_admins("\blue [admin] has respawned [player_key] as [new_character.real_name].", 1)
+	log_admin("[admin] has spawned [player_key]'s character [new_character.real_name].")
+	message_admins("[admin] has spawned [player_key]'s character [new_character.real_name].", 1)
 
-	new_character << "You have been fully respawned. Enjoy the game."
+	new_character << "You have been fully spawned. Enjoy the game."
+
 
 	return new_character
 
@@ -509,7 +511,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if(! (C.stat & (BROKEN|NOPOWER) ) )
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
 			P.name = "'[command_name()] Update.'"
+			P.info = replacetext(input, "\n", "<br/>")
 			P.info = cp1251_to_utf8(input)
+			P.update_space(P.info)
 			P.update_icon()
 			C.messagetitle.Add("[command_name()] Update")
 			C.messagetext.Add(P.info)
@@ -666,7 +670,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			M << "\red To try to resolve this matter head to http://ss13.donglabs.com/forum/"
 			log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 			message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
-			world.Export("http://216.38.134.132/adminlog.php?type=ban&key=[usr.client.key]&key2=[M.key]&msg=[html_decode(reason)]&time=[mins]&server=[replacetext(config.server_name, "#", "")]")
+			world.Export("http://216.38.134.132/adminlog.php?type=ban&key=[usr.client.key]&key2=[M.key]&msg=[rhtml_decode(reason)]&time=[mins]&server=[replacetext(config.server_name, "#", "")]")
 			del(M.client)
 			qdel(M)
 		else
@@ -681,7 +685,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		M << "\red To try to resolve this matter head to http://ss13.donglabs.com/forum/"
 		log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
 		message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
-		world.Export("http://216.38.134.132/adminlog.php?type=ban&key=[usr.client.key]&key2=[M.key]&msg=[html_decode(reason)]&time=perma&server=[replacetext(config.server_name, "#", "")]")
+		world.Export("http://216.38.134.132/adminlog.php?type=ban&key=[usr.client.key]&key2=[M.key]&msg=[rhtml_decode(reason)]&time=perma&server=[replacetext(config.server_name, "#", "")]")
 		del(M.client)
 		qdel(M)
 */
@@ -841,11 +845,12 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("Admin [key_name_admin(usr)] has forced the players to have random appearances.", 1)
 
 	if(notifyplayers == "Yes")
-		world << "\blue <b>Admin [usr.key] has forced the players to have completely random identities!"
+		world << "\blue <b>Admin [usr.key] has forced the players to have completely random identities!</b>"
 
 	usr << "<i>Remember: you can always disable the randomness by using the verb again, assuming the round hasn't started yet</i>."
 
 	ticker.random_players = 1
+
 
 
 /client/proc/toggle_random_events()

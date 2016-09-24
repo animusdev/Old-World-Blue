@@ -39,7 +39,7 @@
 	msg = "\blue <b><font color=red>Request for Help:: </font>[get_options_bar(mob, 2, 1, 1)]:</b> [msg]"
 
 	for(var/client/X in admins)
-		if((R_ADMIN|R_MOD|R_MENTOR) & X.holder.rights)
+		if((R_ADMIN|R_MOD|R_MENTOR|R_SERVER) & X.holder.rights)
 			if(X.prefs.toggles & SOUND_ADMINHELP)
 				X << 'sound/effects/adminhelp.ogg'
 			if(X.holder.rights == R_MENTOR)

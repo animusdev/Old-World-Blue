@@ -8,13 +8,14 @@ var/global/floorIsLava = 0
 	msg = "<span class=\"log_message\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
 	log_adminwarn(msg)
 	for(var/client/C in admins)
-		C << msg
+		if((R_ADMIN|R_MOD) & C.holder.rights)
+			C << msg
 
 /proc/msg_admin_attack(var/text) //Toggleable Attack Messages
 	log_attack(text)
 	var/rendered = "<span class=\"log_message\"><span class=\"prefix\">ATTACK:</span> <span class=\"message\">[text]</span></span>"
 	for(var/client/C in admins)
-		if(R_ADMIN & C.holder.rights)
+		if((R_ADMIN|R_MOD) & C.holder.rights)
 			if(C.prefs.chat_toggles & CHAT_ATTACKLOGS)
 				var/msg = rendered
 				C << msg
@@ -77,10 +78,11 @@ proc/admin_notice(var/message, var/rights)
 			<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ADMINHELP]'><font color='[(muted & MUTE_ADMINHELP)?"red":"blue"]'>ADMINHELP</font></a> |
 			<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_DEADCHAT]'><font color='[(muted & MUTE_DEADCHAT)?"red":"blue"]'>DEADCHAT</font></a>\]
 			(<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ALL]'><font color='[(muted & MUTE_ALL)?"red":"blue"]'>toggle all</font></a>)
-			<br><b>Bans: </b>
+		<br><b>Chatbans: </b>
 			<A href='?_src_=holder;jobban3=OOC;jobban4=\ref[M]'><font color=[(jobban_isbanned(M, "OOC"))?"red":"blue"]>OOCBAN</font></A> |
 			<A href='?_src_=holder;jobban3=AHELP;jobban4=\ref[M]'><font color=[(jobban_isbanned(M, "AHELP"))?"red":"blue"]>AHELPBAN</font></A> |
 			<A href='?_src_=holder;jobban3=LOOC;jobban4=\ref[M]'><font color=[(jobban_isbanned(M, "LOOC"))?"red":"blue"]>LOOCBAN</font></A>"}
+
 
 	body += {"<br><br>
 		<A href='?src=\ref[src];jumpto=\ref[M]'><b>Jump to</b></A> |
@@ -91,7 +93,6 @@ proc/admin_notice(var/message, var/rights)
 		<A href='?src=\ref[src];narrateto=\ref[M]'>Narrate to</A> |
 		<A href='?src=\ref[src];subtlemessage=\ref[M]'>Subtle message</A>
 	"}
-
 
 	if (M.client)
 		if(!istype(M, /mob/new_player))
@@ -127,24 +128,6 @@ proc/admin_notice(var/message, var/rights)
 			else
 				body += "<A href='?src=\ref[src];makeanimal=\ref[M]'>Animalize</A> | "
 
-			// DNA2 - Admin Hax
-			if(M.dna && iscarbon(M))
-				body += "<br><br>"
-				body += "<b>DNA Blocks:</b><br><table border='0'><tr><th>&nbsp;</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>"
-				var/bname
-				for(var/block=1;block<=DNA_SE_LENGTH;block++)
-					if(((block-1)%5)==0)
-						body += "</tr><tr><th>[block-1]</th>"
-					bname = assigned_blocks[block]
-					body += "<td>"
-					if(bname)
-						var/bstate=M.dna.GetSEState(block)
-						var/bcolor="[(bstate)?"#006600":"#ff0000"]"
-						body += "<A href='?src=\ref[src];togmutate=\ref[M];block=[block]' style='color:[bcolor];'>[bname]</A><sub>[block]</sub>"
-					else
-						body += "[block]"
-					body+="</td>"
-				body += "</tr></table>"
 
 			body += {"<br><br>
 				<b>Rudimentary transformation:</b><font size=2><br>These transformations only create a new mob type and copy stuff over. They do not take into account MMIs and similar mob-specific things. The buttons in 'Transformations' are preferred, when possible.</font><br>
@@ -1335,7 +1318,7 @@ proc/admin_notice(var/message, var/rights)
 
 	if (!istype(src,/datum/admins))
 		src = usr.client.holder
-	if (!istype(src,/datum/admins))
+	if (!istype(src,/datum/admins) || !check_rights(R_ADMIN))
 		usr << "Error: you are not an admin!"
 		return
 

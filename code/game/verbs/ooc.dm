@@ -4,7 +4,7 @@
 	set category = "OOC"
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "\red Speech is currently admin-disabled."
+		usr << "<span class='warning'>Speech is currently admin-disabled.</span>"
 		return
 
 	if(!mob)	return
@@ -16,7 +16,7 @@
 	if(!msg)	return
 
 	if(!(prefs.chat_toggles & CHAT_OOC))
-		src << "\red You have OOC muted."
+		src << "<span class='warning'>You have OOC muted.</span>"
 		return
 
 	if(src.mob)
@@ -87,21 +87,23 @@
 	set category = "OOC"
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "\red Speech is currently admin-disabled."
+		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
 		return
 
-	if(src.mob)
-		if(jobban_isbanned(src.mob, "LOOC"))
-			src << "<span class='danger'>You have been banned from LOOC.</span>"
-			return
+	if(!mob)
+		return
 
-	if(!mob)	return
 	if(IsGuestKey(key))
 		src << "Guests may not use OOC."
 		return
 
+	if(jobban_isbanned(src.mob, "LOOC"))
+		src << "<span class='danger'>You have been banned from LOOC.</span>"
+		return
+
 	msg = sanitize(msg)
-	if(!msg)	return
+	if(!msg)
+		return
 
 	if(!(prefs.chat_toggles & CHAT_LOOC))
 		src << "\red You have LOOC muted."
