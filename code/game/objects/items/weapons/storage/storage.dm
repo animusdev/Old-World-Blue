@@ -300,10 +300,6 @@
 /obj/item/weapon/storage/proc/remove_from_storage(obj/item/W as obj, atom/new_location)
 	if(!istype(W)) return 0
 
-	if(istype(src, /obj/item/weapon/storage/fancy))
-		var/obj/item/weapon/storage/fancy/F = src
-		F.update_icon(1)
-
 	for(var/mob/M in range(1, src.loc))
 		if (M.s_active == src)
 			if (M.client)

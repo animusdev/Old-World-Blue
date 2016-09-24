@@ -20,13 +20,13 @@
 	var/icon_type = "donut"
 
 /obj/item/weapon/storage/fancy/update_icon(var/itemremoved = 0)
-	var/total_contents = src.contents.len - itemremoved
-	src.icon_state = "[src.icon_type]box[total_contents]"
+	..()
+	src.icon_state = "[src.icon_type]box[src.contents.len]"
 	return
 
 /obj/item/weapon/storage/fancy/examine(mob/user, return_dist = 1)
 	.=..()
-	if(.>1)
+	if(.>4)
 		return
 
 	if(contents.len <= 0)
