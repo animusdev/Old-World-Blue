@@ -26,7 +26,6 @@
 
 		var/t1 = text("<B>Access control</B><br>\n")
 
-
 		if (last_configurator)
 			t1 += "Operator: [last_configurator]<br>"
 

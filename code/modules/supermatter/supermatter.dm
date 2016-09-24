@@ -270,11 +270,11 @@
 	if(Adjacent(user))
 		return attack_hand(user)
 	else
-		user << "<span class = \"warning\">You attempt to interface with the control circuits but find they are not connected to your network.  Maybe in a future firmware update.</span>"
+		ui_interact(user)
 	return
 
 /obj/machinery/power/supermatter/attack_ai(mob/user as mob)
-	user << "<span class = \"warning\">You attempt to interface with the control circuits but find they are not connected to your network.  Maybe in a future firmware update.</span>"
+	ui_interact(user)
 
 /obj/machinery/power/supermatter/attack_hand(mob/user as mob)
 	user.visible_message("<span class=\"warning\">\The [user] reaches out and touches \the [src], inducing a resonance... \his body starts to glow and bursts into flames before flashing into ash.</span>",\
@@ -305,6 +305,8 @@
 
 
 /obj/machinery/power/supermatter/Bumped(atom/AM as mob|obj)
+	if(istype(AM, /obj/effect))
+		return
 	if(istype(AM, /mob/living))
 		AM.visible_message("<span class=\"warning\">\The [AM] slams into \the [src] inducing a resonance... \his body starts to glow and catch flame before flashing into ash.</span>",\
 		"<span class=\"danger\">You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
@@ -342,7 +344,7 @@
 		defer_powernet_rebuild = 1
 	// Let's just make this one loop.
 	for(var/atom/X in orange(pull_radius,src))
-		X.singularity_pull(src, STAGE_FIVE)
+		spawn()	X.singularity_pull(src, STAGE_FIVE)
 
 	if(defer_powernet_rebuild != 2)
 		defer_powernet_rebuild = 0

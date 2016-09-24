@@ -109,7 +109,6 @@
 	cameranet.updateVisibility(src, 0)
 
 /obj/machinery/camera/attack_hand(mob/living/carbon/human/user as mob)
-
 	if(!istype(user))
 		return
 
@@ -118,7 +117,6 @@
 		user.do_attack_animation(src)
 		visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
 		playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
-		icon_state = "[initial(icon_state)]1"
 		add_hiddenprint(user)
 		destroy()
 
@@ -176,13 +174,13 @@
 
 	else if (istype(W, /obj/item/weapon/camera_bug))
 		if (!src.can_use())
-			user << "\blue Camera non-functional"
+			user << "<span class='warning'>Camera non-functional.</span>"
 			return
 		if (src.bugged)
-			user << "\blue Camera bug removed."
+			user << "<span class='notice'>Camera bug removed.</span>"
 			src.bugged = 0
 		else
-			user << "\blue Camera bugged."
+			user << "<span class='notice'>Camera bugged.</span>"
 			src.bugged = 1
 
 	else if(W.damtype == BRUTE || W.damtype == BURN) //bashing cameras
@@ -208,7 +206,7 @@
 		kick_viewers()
 	else
 		update_coverage()
-		set_status( !src.status )
+		set_status(!src.status)
 		if (!(src.status))
 			if(user)
 				visible_message("<span class='notice'> [user] has deactivated [src]!</span>")

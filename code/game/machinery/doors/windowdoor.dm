@@ -159,7 +159,7 @@
 		if(H.can_shred())
 			user.next_move = world.time + 8
 			playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-			visible_message("\red <B>[user] smashes against the [src.name].</B>", 1)
+			visible_message("<span class='danger'>[user] smashes against the [src.name].</span>", 1)
 			take_damage(25)
 			return
 	return src.attackby(user, user)
@@ -179,7 +179,7 @@
 			spark_system.start()
 			playsound(src.loc, "sparks", 50, 1)
 			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			visible_message("\blue The glass door was sliced open by [user]!")
+			visible_message("<span class='warning'>The glass door was sliced open by [user]!</span>")
 		flick("[src.base_state]spark", src)
 		sleep(6)
 		open()
@@ -190,7 +190,7 @@
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 		user.visible_message("[user] removes the electronics from the windoor.", "You start to remove electronics from the windoor.")
 		if (do_after(user,40))
-			user << "\blue You removed the windoor electronics!"
+			user << "<span class='notice'>You removed the windoor electronics!</span>"
 
 			var/obj/structure/windoor_assembly/wa = new/obj/structure/windoor_assembly(src.loc)
 			if (istype(src, /obj/machinery/door/window/brigdoor))
@@ -229,7 +229,7 @@
 		user.next_move = world.time + 8
 		var/aforce = I.force
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
-		visible_message("\red <B>[src] was hit by [I].</B>")
+		visible_message("<span class='danger'>[src] was hit by [I].</span>")
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			take_damage(aforce)
 		return

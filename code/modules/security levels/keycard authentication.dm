@@ -150,7 +150,6 @@
 			if(is_ert_blocked())
 				usr << "\red All emergency response teams are dispatched and can not be called at this time."
 				return
-
 			trigger_armed_response_team(1)
 
 /obj/machinery/keycard_auth/proc/is_ert_blocked()

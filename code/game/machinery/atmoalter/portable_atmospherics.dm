@@ -118,21 +118,21 @@
 	else if (istype(W, /obj/item/weapon/wrench))
 		if(connected_port)
 			disconnect()
-			user << "\blue You disconnect [name] from the port."
+			user << "<span class='notice'>You disconnect \the [src] from the port.</span>"
 			update_icon()
 			return
 		else
 			var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
 			if(possible_port)
 				if(connect(possible_port))
-					user << "\blue You connect [name] to the port."
+					user << "<span class='notice'>You connect \the [src] to the port.</span>"
 					update_icon()
 					return
 				else
-					user << "\blue [name] failed to connect to the port."
+					user << "<span class='notice'>\The [src] failed to connect to the port.</span>"
 					return
 			else
-				user << "\blue Nothing happens."
+				user << "<span class='notice'>Nothing happens.</span>"
 				return
 
 	else if ((istype(W, /obj/item/device/analyzer)) && Adjacent(user))
@@ -182,16 +182,16 @@
 		C.add_fingerprint(user)
 		cell = C
 		C.loc = src
-		user.visible_message("\blue [user] opens the panel on [src] and inserts [C].", "\blue You open the panel on [src] and insert [C].")
+		user.visible_message("<span class='notice'>[user] opens the panel on [src] and inserts [C].</span>", "<span class='notice'>You open the panel on [src] and insert [C].</span>")
 		power_change()
 		return
 
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(!cell)
-			user << "\red There is no power cell installed."
+			user << "<span class='warning'>There is no power cell installed.</span>"
 			return
 
-		user.visible_message("\blue [user] opens the panel on [src] and removes [cell].", "\blue You open the panel on [src] and remove [cell].")
+		user.visible_message("<span class='notice'>[user] opens the panel on [src] and removes [cell].</span>", "<span class='notice'>You open the panel on [src] and remove [cell].</span>")
 		cell.add_fingerprint(user)
 		cell.loc = src.loc
 		cell = null
