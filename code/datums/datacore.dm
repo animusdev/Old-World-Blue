@@ -1,11 +1,9 @@
 var/global/list/PDA_Manifest = list()
 var/global/ManifestJSON
 
-
 /hook/startup/proc/createDatacore()
 	data_core = new /datum/datacore()
 	return 1
-
 
 /datum/datacore
 	var/name = "datacore"
@@ -355,33 +353,12 @@ using /datum/datacore/proc/manifest_inject( ), or manifest_insert( )
 	ManifestJSON = list2json(PDA_Manifest)
 	return
 
-proc/get_id_photo(var/mob/living/carbon/human/H)
-	var/icon/preview_icon = null
+/proc/get_id_photo(var/mob/living/carbon/human/H, var/assigned_role)
 
-	preview_icon = new /icon('icons/mob/human.dmi', "blank")
-
-	for(var/obj/item/organ/external/E in H.organs)
-		preview_icon.Blend(E.get_icon(), ICON_OVERLAY)
-
-	//Tail
-	if(H.species.tail)
-		var/icon/temp = new/icon(H.species.icobase, "tail")
-
-		if(H.species.flags & HAS_SKIN_TONE)
-			if (H.s_tone >= 0)
-				temp.Blend(rgb(H.s_tone, H.s_tone, H.s_tone), ICON_ADD)
-			else
-				temp.Blend(rgb(-H.s_tone,  -H.s_tone,  -H.s_tone), ICON_SUBTRACT)
-
-		// Skin color
-		if(H.species && H.species.flags & HAS_SKIN_COLOR)
-			temp.Blend(H.skin_color, ICON_ADD)
-
-		preview_icon.Blend(temp, ICON_OVERLAY)
-
+	var/icon/preview_icon = H.stand_icon
 	var/icon/temp
 
-	var/datum/sprite_accessory/hair_style = hair_styles_list[H.h_style]
+	var/datum/sprite_accessory/hair_style = hair_styles_list[H.h_style ? H.h_style : "bald"]
 	if(hair_style)
 		temp = new/icon(hair_style.icon, hair_style.icon_state)
 		temp.Blend(H.hair_color, ICON_ADD)
@@ -390,10 +367,7 @@ proc/get_id_photo(var/mob/living/carbon/human/H)
 	if(hair_style)
 		var/icon/facial = new/icon(hair_style.icon, hair_style.icon_state)
 		facial.Blend(H.facial_color, ICON_ADD)
-		if(temp)
-			temp.Blend(facial, ICON_OVERLAY)
-		else
-			temp = facial
+		temp.Blend(facial, ICON_OVERLAY)
 
 	preview_icon.Blend(temp, ICON_OVERLAY)
 

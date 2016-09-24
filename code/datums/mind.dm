@@ -64,6 +64,7 @@
 /datum/mind/New(var/key)
 	src.key = key
 
+	..()
 
 /datum/mind/proc/transfer_to(mob/living/new_character)
 	if(!istype(new_character))
@@ -199,9 +200,7 @@
 		switch (new_obj_type)
 			if ("assassinate","protect","debrain", "harm", "brig")
 				//To determine what to name the objective in explanation text.
-				var/objective_type_capital = uppertext(copytext(new_obj_type, 1,2))//Capitalize first letter.
-				var/objective_type_text = copytext(new_obj_type, 2)//Leave the rest of the text.
-				var/objective_type = "[objective_type_capital][objective_type_text]"//Add them together into a text string.
+				var/objective_type = capitalize(new_obj_type) //Capitalize first letter.
 
 				var/list/possible_targets = list("Free objective")
 				for(var/datum/mind/possible_target in ticker.minds)
@@ -318,10 +317,10 @@
 						if(I in organs.implants)
 							qdel(I)
 							break
-				H << "<span class='notice'><font size =3><B>Your loyalty implant has been deactivated.</font></span>"
+				H << "<span class='notice'><font size =3><B>Your loyalty implant has been deactivated.</B></font></span>"
 				log_admin("[key_name_admin(usr)] has de-loyalty implanted [current].")
 			if("add")
-				H << "<span class='danger'><font size =3>You somehow have become the recepient of a loyalty transplant, and it just activated!</font>"
+				H << "<span class='danger'><font size =3>You somehow have become the recepient of a loyalty transplant, and it just activated!</font></span>"
 				H.implant_loyalty(H, override = TRUE)
 				log_admin("[key_name_admin(usr)] has loyalty implanted [current].")
 			else
