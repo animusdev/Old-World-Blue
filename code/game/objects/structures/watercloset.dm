@@ -41,12 +41,12 @@
 
 
 /obj/structure/toilet/AltClick(var/mob/living/user)
-	if(!open)
-		return
+	if(!open || !usr.Adjacent(src))
+		return ..()
 	var/H = user.get_active_hand()
 	if(istype(H,/obj/item/weapon/reagent_containers/glass) || istype(H,/obj/item/weapon/reagent_containers/food/drinks))
 		var/obj/item/weapon/reagent_containers/O = user.get_active_hand()
-		if(O.reagents && O.reagents.total_volume)
+		if(O.reagents && O.reagents.total_volume && O.is_open_container())
 			O.reagents.clear_reagents()
 			user << "<span class='notice'>You empty the [O] into the [src].</span>"
 
@@ -128,7 +128,7 @@
 
 /obj/machinery/shower
 	name = "shower"
-	desc = "The HS-451. Installed in the 2550s by the Nanotrasen Hygiene Division."
+	desc = "The HS-451. Installed in the 2550s by the Hygiene Division."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "shower"
 	density = 0
@@ -138,13 +138,12 @@
 	var/obj/effect/mist/mymist = null
 	var/ismist = 0				//needs a var so we can make it linger~
 	var/watertemp = "normal"	//freezing, normal, or boiling
-	var/mobpresent = 0		//true if there is a mob on the shower's loc, this is to ease process()
 	var/is_washing = 0
 	var/list/temperature_settings = list("normal" = 310, "boiling" = T0C+100, "freezing" = T0C)
 
 /obj/machinery/shower/New()
 	..()
-	create_reagents(2)
+	create_reagents(50)
 
 //add heat controls? when emagged, you can freeze to death in it?
 
@@ -182,6 +181,7 @@
 	overlays.Cut()					//once it's been on for a while, in addition to handling the water overlay.
 	if(mymist)
 		qdel(mymist)
+		mymist = null
 
 	if(on)
 		overlays += image('icons/obj/watercloset.dmi', src, "water", MOB_LAYER + 1, dir)
@@ -201,19 +201,8 @@
 		spawn(250)
 			if(src && !on)
 				qdel(mymist)
+				mymist = null
 				ismist = 0
-
-/obj/machinery/shower/Crossed(atom/movable/O)
-	..()
-	wash(O)
-	if(ismob(O))
-		mobpresent += 1
-		process_heat(O)
-
-/obj/machinery/shower/Uncrossed(atom/movable/O)
-	if(ismob(O))
-		mobpresent -= 1
-	..()
 
 //Yes, showers are super powerful as far as washing goes.
 /obj/machinery/shower/proc/wash(atom/movable/O as obj|mob)
@@ -303,24 +292,30 @@
 
 	if(isturf(loc))
 		var/turf/tile = loc
-		loc.clean_blood()
 		for(var/obj/effect/E in tile)
 			if(istype(E,/obj/effect/rune) || istype(E,/obj/effect/decal/cleanable) || istype(E,/obj/effect/overlay))
 				qdel(E)
 
+	reagents.splash(O, 10)
+
 /obj/machinery/shower/process()
 	if(!on) return
+	for(var/thing in loc)
+		var/atom/movable/AM = thing
+		var/mob/living/L = thing
+		if(istype(AM) && AM.simulated)
+			wash(AM)
+			if(istype(L))
+				process_heat(L)
 	wash_floor()
-	if(!mobpresent)	return
-	for(var/mob/living/L in loc)
-		process_heat(L)
+	reagents.add_reagent("water", reagents.get_free_space())
 
 /obj/machinery/shower/proc/wash_floor()
 	if(!ismist && is_washing)
 		return
 	is_washing = 1
 	var/turf/T = get_turf(src)
-	reagents.add_reagent("water", 2)
+	reagents.splash(T, reagents.total_volume)
 	T.clean(src)
 	spawn(100)
 		is_washing = 0
@@ -357,10 +352,12 @@
 	var/busy = 0 	//Something's being washed at the moment
 
 /obj/structure/sink/AltClick(var/mob/living/user)
+	if(!usr.Adjacent(src))
+		return ..()
 	var/H = user.get_active_hand()
 	if(istype(H,/obj/item/weapon/reagent_containers/glass) || istype(H,/obj/item/weapon/reagent_containers/food/drinks))
 		var/obj/item/weapon/reagent_containers/O = user.get_active_hand()
-		if(O.reagents && O.reagents.total_volume)
+		if(O.reagents && O.reagents.total_volume && O.is_open_container())
 			O.reagents.clear_reagents()
 			user << "<span class='notice'>You empty the [O] into the [src].</span>"
 
@@ -369,10 +366,10 @@
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/external/temp = H.organs_by_name["r_hand"]
-		if (user.hand)
+		if (H.hand)
 			temp = H.organs_by_name["l_hand"]
 		if(temp && !temp.is_usable())
-			user << "<span class='notice'>You try to move your [temp.name], but cannot!"
+			user << "<span class='notice'>You try to move your [temp.name], but cannot!</span>"
 			return
 
 	if(isrobot(user) || isAI(user))
@@ -382,10 +379,10 @@
 		return
 
 	if(busy)
-		user << "\red Someone's already washing here."
+		user << "<span class='warning'>Someone's already washing here.</span>"
 		return
 
-	usr << "\blue You start washing your hands."
+	usr << "<span class='notice'>You start washing your hands.</span>"
 
 	busy = 1
 	sleep(40)
@@ -397,19 +394,19 @@
 	if(ishuman(user))
 		user:update_inv_gloves()
 	for(var/mob/V in viewers(src, null))
-		V.show_message("\blue [user] washes their hands using \the [src].")
+		V.show_message("<span class='notice'>[user] washes their hands using \the [src].</span>")
 
 
 /obj/structure/sink/attackby(obj/item/O as obj, mob/user as mob)
 	if(busy)
-		user << "\red Someone's already washing here."
+		user << "<span class='warning'>Someone's already washing here.</span>"
 		return
 
 	var/obj/item/weapon/reagent_containers/RG = O
 	if (istype(RG) && RG.is_open_container())
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
-		user.visible_message("\blue [user] fills \the [RG] using \the [src].","\blue You fill \the [RG] using \the [src].")
-		return
+		user.visible_message("<span class='notice'>[user] fills \the [RG] using \the [src].</span>","<span class='notice'>You fill \the [RG] using \the [src].</span>")
+		return 1
 
 	else if (istype(O, /obj/item/weapon/melee/baton))
 		var/obj/item/weapon/melee/baton/B = O
@@ -427,9 +424,11 @@
 				user.visible_message( \
 					"<span class='danger'>[user] was stunned by \his wet [O]!</span>", \
 					"<span class='userdanger'>[user] was stunned by \his wet [O]!</span>")
-				return
-	// Short of a rewrite, this is necessary to stop monkeycubes being washed.
-	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
+				return 1
+	else if(istype(O, /obj/item/weapon/mop))
+		O.reagents.add_reagent("water", 5)
+		user << "<span class='notice'>You wet \the [O] in \the [src].</span>"
+		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 		return
 
 	var/turf/location = user.loc
@@ -438,7 +437,7 @@
 	var/obj/item/I = O
 	if(!I || !istype(I,/obj/item)) return
 
-	usr << "\blue You start washing \the [I]."
+	usr << "<span class='notice'>You start washing \the [I].</span>"
 
 	busy = 1
 	sleep(40)
@@ -450,14 +449,13 @@
 
 	O.clean_blood()
 	user.visible_message( \
-		"\blue [user] washes \a [I] using \the [src].", \
-		"\blue You wash \a [I] using \the [src].")
+		"<span class='notice'>[user] washes \a [I] using \the [src].</span>", \
+		"<span class='notice'>You wash \a [I] using \the [src].</span>")
 
 
 /obj/structure/sink/kitchen
 	name = "kitchen sink"
 	icon_state = "sink_alt"
-
 
 /obj/structure/sink/puddle	//splishy splashy ^_^
 	name = "puddle"
