@@ -303,9 +303,9 @@
 			eyes_color = new_eyes
 
 	else if(href_list["age"])
-		var/new_age = input(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
+		var/new_age = input(user, "Choose your character's age:\n([current_species.min_age]-[current_species.max_age])", "Character Preference") as num|null
 		if(new_age)
-			age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
+			age = max(min( round(text2num(new_age)), current_species.max_age),current_species.min_age)
 
 	else if(href_list["skin_tone"])
 		if(current_species.flags & HAS_SKIN_TONE)

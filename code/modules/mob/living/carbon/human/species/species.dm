@@ -18,16 +18,23 @@
 	var/damage_mask = 'icons/mob/human_races/masks/dam_mask_human.dmi'
 	var/blood_mask = 'icons/mob/human_races/masks/blood_human.dmi'
 
-	var/prone_icon                           // If set, draws this from icobase when mob is prone.
-	var/blood_color = "#A10808"              // Red.
-	var/flesh_color = "#FFC896"              // Pink.
-	var/base_color                           // Used by changelings. Should also be used for icon previes..
-	var/tail                                 // Name of tail state in species effects icon file.
-	var/tail_animation                       // If set, the icon to obtain tail animation states from.
-	var/race_key = 0                         // Used for mob icon cache string.
-	var/icon/icon_template                   // Used for mob icon generation for non-32x32 species.
+	var/prone_icon                                       // If set, draws this from icobase when mob is prone.
+	var/blood_color = "#A10808"                          // Red.
+	var/flesh_color = "#FFC896"                          // Pink.
+	var/base_color                                       // Used by changelings. Should also be used for icon previews.
+
+	var/tail                                             // Name of tail state in species effects icon file.
+	var/tail_animation                                   // If set, the icon to obtain tail animation states from.
+
+	var/race_key = 0       	                             // Used for mob icon cache string.
+	var/icon/icon_template                               // Used for mob icon generation for non-32x32 species.
 	var/is_small
 	var/show_ssd = "fast asleep"
+	var/hunger_factor = 0.05                             // Multiplier for hunger.
+	var/taste_sensitivity = TASTE_NORMAL
+
+	var/min_age = 17
+	var/max_age = 70
 
 	// Language/culture vars.
 	var/default_language = "Galactic Common" // Default language is used when 'say' is used without modifiers.
@@ -37,15 +44,17 @@
 	var/list/speech_chance                   // The likelihood of a speech sound playing.
 
 	// Combat vars.
-	var/total_health = 100                   // Point at which the mob will enter crit.
-	var/list/unarmed_attacks = list(         // For empty hand harm-intent attack
+	var/total_health = 100					// Point at which the mob will enter crit.
+	var/list/unarmed_attacks = list(		// For empty hand harm-intent attack
 		new /datum/unarmed_attack,
 		new /datum/unarmed_attack/bite
-		)
-	var/brute_mod = 1                        // Physical damage multiplier.
-	var/burn_mod = 1                         // Burn damage multiplier.
+	)
+	var/brute_mod =     1                    // Physical damage multiplier.
+	var/burn_mod =      1                    // Burn damage multiplier.
+	var/oxy_mod =       1                    // Oxyloss modifier
+	var/toxins_mod =    1                    // Toxloss modifier
+	var/radiation_mod = 1                    // Radiation modifier
 	var/vision_flags = SEE_SELF              // Same flags as glasses.
-	var/taste_sensitivity = TASTE_NORMAL                   // How sensitive the species is to minute tastes. Higher values means less sensitive. Lower values means more sensitive.
 
 	// Death vars.
 	var/meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/human
@@ -56,6 +65,7 @@
 	var/dusted_anim = "dust-h"
 	var/death_sound
 	var/death_message = "seizes up and falls limp, their eyes dead and lifeless..."
+	var/knockout_message = "has been knocked unconscious!"
 
 	// Environment tolerance/life processes vars.
 	var/reagent_tag                                   //Used for metabolizing reagents.
@@ -69,13 +79,13 @@
 	var/heat_level_1 = 360                            // Heat damage level 1 above this point.
 	var/heat_level_2 = 400                            // Heat damage level 2 above this point.
 	var/heat_level_3 = 1000                           // Heat damage level 3 above this point.
-	var/synth_temp_gain = 0			                  // IS_SYNTHETIC species will gain this much temperature every second
+	var/passive_temp_gain = 0		                  // Species will gain this much temperature every second
 	var/hazard_high_pressure = HAZARD_HIGH_PRESSURE   // Dangerously high pressure.
 	var/warning_high_pressure = WARNING_HIGH_PRESSURE // High pressure warning.
 	var/warning_low_pressure = WARNING_LOW_PRESSURE   // Low pressure warning.
 	var/hazard_low_pressure = HAZARD_LOW_PRESSURE     // Dangerously low pressure.
 	var/light_dam                                     // If set, mob will be damaged in light over this value and heal in light below its negative.
-	var/body_temperature = 310.15	                  // Non-IS_SYNTHETIC species will try to stabilize at this temperature.
+	var/body_temperature = 310.15	                  // Species will try to stabilize at this temperature.
 	                                                  // (also affects temperature processing)
 
 	var/heat_discomfort_level = 315                   // Aesthetic messages about feeling warm.
@@ -92,15 +102,13 @@
 		)
 
 	// HUD data vars.
-	var/datum/hud_data/hud
-	var/hud_type
+	var/datum/hud_data/hud = new
 
 	// Body/form vars.
 	var/list/inherent_verbs 	  // Species-specific verbs.
 	var/has_fine_manipulation = 1 // Can use small items.
 	var/siemens_coefficient = 1   // The lower, the thicker the skin and better the insulation.
 	var/darksight = 2             // Native darksight distance.
-	var/toxins_mod = 1            // Toxloss modifier
 	var/flags = 0                 // Various specific features.
 	var/slowdown = 0              // Passive movement speed malus (or boost, if negative)
 	var/primitive_form            // Lesser form, if any (ie. monkey for humans)
@@ -118,6 +126,7 @@
 		"appendix" = /obj/item/organ/internal/appendix,
 		"eyes" =     /obj/item/organ/internal/eyes
 		)
+	var/vision_organ              // If set, this organ is required for vision. Defaults to "eyes" if the species has them.
 
 	var/list/has_limbs = list(
 		"chest"  = new /datum/organ_description,
@@ -133,8 +142,10 @@
 		"r_foot" = new /datum/organ_description/foot/right
 	)
 
+	var/body_builds = list("Default")
+
 	// Bump vars
-	var/bump_flag  = HUMAN	// What are we considered to be when bumped?
+	var/bump_flag = HUMAN	// What are we considered to be when bumped?
 	var/push_flags = ~HEAVY	// What can we push?
 	var/swap_flags = ~HEAVY	// What can we swap place with?
 
@@ -194,10 +205,15 @@
 		return 'icons/mob/hidden.dmi'
 
 /datum/species/New()
-	if(hud_type)
-		hud = new hud_type()
-	else
-		hud = new()
+
+	//If the species has eyes, they are the default vision organ
+	if(!vision_organ && has_organ["eyes"])
+		vision_organ = "eyes"
+
+	if(gluttonous)
+		if(!inherent_verbs)
+			inherent_verbs = list()
+		inherent_verbs |= /mob/living/carbon/human/proc/regurgitate
 
 /datum/species/proc/get_station_variant()
 	return name
@@ -235,7 +251,7 @@
 	return species_language.get_random_name(gender)
 
 /datum/species/proc/equip_survival_gear(var/mob/living/carbon/human/H, var/custom_survival_gear = /obj/item/weapon/storage/box/survival)
-	if(H.back)
+	if(H.back && istype(H.back,/obj/item/weapon/storage))
 		H.equip_to_slot_or_del(new custom_survival_gear(H.back), slot_in_backpack)
 	else
 		H.equip_to_slot_or_del(new custom_survival_gear(H), slot_r_hand)
@@ -246,9 +262,9 @@
 	for(var/obj/item/organ/organ in (H.organs|H.internal_organs))
 		qdel(organ)
 
-	if(H.organs.len) H.organs.Cut()
-	if(H.internal_organs.len) H.internal_organs.Cut()
-	if(H.organs_by_name.len) H.organs_by_name.Cut()
+	if(H.organs.len)                  H.organs.Cut()
+	if(H.internal_organs.len)         H.internal_organs.Cut()
+	if(H.organs_by_name.len)          H.organs_by_name.Cut()
 	if(H.internal_organs_by_name.len) H.internal_organs_by_name.Cut()
 
 	var/organ_type = null
@@ -262,12 +278,6 @@
 		organ_type = has_organ[organ]
 		new organ_type(H)
 
-	if(flags & IS_SYNTHETIC)
-		for(var/obj/item/organ/external/E in H.organs)
-			if(E.status & ORGAN_CUT_AWAY || E.status & ORGAN_DESTROYED) continue
-			E.robotize()
-		for(var/obj/item/organ/internal/I in H.internal_organs)
-			I.robotize()
 
 /datum/species/proc/hug(var/mob/living/carbon/human/H,var/mob/living/target)
 

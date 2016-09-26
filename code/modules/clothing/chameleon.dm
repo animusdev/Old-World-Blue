@@ -31,13 +31,8 @@ var/global/list/chameleons = list(
 	item_state = initial(new_type.item_state)
 	item_state_slots = initial(new_type.item_state_slots)
 	body_parts_covered = initial(new_type.body_parts_covered)
-	//flags = initial(new_type.flags)
 	flags_inv = initial(new_type.flags_inv)
 	description_info = initial(new_type.description_info)
-	//slot_flags = initial(new_type.slot_flags)
-	if (ismob(loc))
-		var/mob/M = loc
-		M.update_inv_obj(src, 1)
 
 
 //*****************
@@ -69,12 +64,13 @@ var/global/list/chameleons = list(
 	set category = "Object"
 	set src in usr
 
-	var/picked = input("Select jumpsuit to change it to", "Chameleon Jumpsuit")as null|anything in chameleons[style_list]
+	var/picked = input("Select jumpsuit to change it to", "Chameleon Jumpsuit") as null|anything in chameleons[style_list]
 	if(!picked)
 		return
 
 	var/newtype = chameleons[style_list][picked]
 	change_item_appearance(newtype)
+	update_clothing_icon()
 
 //*****************
 //**Chameleon Hat**
@@ -84,7 +80,8 @@ var/global/list/chameleons = list(
 	name = "grey cap"
 	icon_state = "greysoft"
 	item_state = "greysoft"
-	desc = "It looks like a plain hat, but upon closer inspection, there's an advanced holographic array installed inside. It seems to have a small dial inside."
+	desc = "It looks like a plain hat, but upon closer inspection, \
+			there's an advanced holographic array installed inside. It seems to have a small dial inside."
 	origin_tech = "syndicate=3"
 	body_parts_covered = 0
 	var/style_list = "head"
@@ -92,11 +89,12 @@ var/global/list/chameleons = list(
 		..()
 		initialize_chameleon_list(style_list, parent_type, list(/obj/item/clothing/head/justice))
 
-/obj/item/clothing/head/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
+/obj/item/clothing/head/chameleon/emp_act(severity)
 	name = "grey cap"
 	desc = "It's a baseball hat in a tasteful grey colour."
 	icon_state = "greysoft"
 	update_icon()
+	update_clothing_icon()
 	update_clothing_icon()
 
 /obj/item/clothing/head/chameleon/verb/change()
@@ -104,11 +102,12 @@ var/global/list/chameleons = list(
 	set category = "Object"
 	set src in usr
 
-	var/picked = input("Select headwear to change it to", "Chameleon Hat")as null|anything in chameleons[style_list]
+	var/picked = input("Select headwear to change it to", "Chameleon Hat") as null|anything in chameleons[style_list]
 	if(!picked)
 		return
 	var/newtype = chameleons[style_list][picked]
 	change_item_appearance(newtype)
+	update_clothing_icon()
 
 
 //******************
@@ -119,7 +118,8 @@ var/global/list/chameleons = list(
 	name = "armor"
 	icon_state = "armor"
 	item_state = "armor"
-	desc = "It appears to be a vest of standard armor, except this is embedded with a hidden holographic cloaker, allowing it to change it's appearance, but offering no protection.. It seems to have a small dial inside."
+	desc = "It appears to be a vest of standard armor, except this is embedded with a hidden holographic cloaker, \
+			allowing it to change it's appearance, but offering no protection.. It seems to have a small dial inside."
 	origin_tech = "syndicate=3"
 	var/style_list = "suit"
 	New()
@@ -127,7 +127,7 @@ var/global/list/chameleons = list(
 		initialize_chameleon_list(style_list, parent_type, list(/obj/item/clothing/suit/cyborg_suit,\
 									/obj/item/clothing/suit/justice, /obj/item/clothing/suit/storage/greatcoat))
 
-/obj/item/clothing/suit/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
+/obj/item/clothing/suit/chameleon/emp_act(severity)
 	name = "armor"
 	desc = "An armored vest that protects against some damage."
 	icon_state = "armor"
@@ -139,20 +139,23 @@ var/global/list/chameleons = list(
 	set category = "Object"
 	set src in usr
 
-	var/picked = input("Select exosuit to change it to", "Chameleon Exosuit")as null|anything in chameleons[style_list]
+	var/picked = input("Select exosuit to change it to", "Chameleon Exosuit") as null|anything in chameleons[style_list]
 	if(!picked)
 		return
 	var/newtype = chameleons[style_list][picked]
 	change_item_appearance(newtype)
+	update_clothing_icon()
 
 //*******************
 //**Chameleon Shoes**
 //*******************
+
 /obj/item/clothing/shoes/chameleon
 	name = "black shoes"
 	icon_state = "black"
 	item_state = "black"
-	desc = "They're comfy black shoes, with clever cloaking technology built in. It seems to have a small dial on the back of each shoe."
+	desc = "They're comfy black shoes, with clever cloaking technology built in.\
+			It seems to have a small dial on the back of each shoe."
 	origin_tech = "syndicate=3"
 	var/style_list = "shoes"
 	New()
@@ -160,7 +163,7 @@ var/global/list/chameleons = list(
 		initialize_chameleon_list(style_list, parent_type,\
 			list(/obj/item/clothing/shoes/syndigaloshes, /obj/item/clothing/shoes/cyborg))
 
-/obj/item/clothing/shoes/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
+/obj/item/clothing/shoes/chameleon/emp_act(severity)
 	name = "black shoes"
 	desc = "A pair of black shoes."
 	icon_state = "black"
@@ -173,15 +176,17 @@ var/global/list/chameleons = list(
 	set category = "Object"
 	set src in usr
 
-	var/picked = input("Select shoes to change it to", "Chameleon Shoes")as null|anything in chameleons[style_list]
+	var/picked = input("Select shoes to change it to", "Chameleon Shoes") as null|anything in chameleons[style_list]
 	if(!picked)
 		return
 	var/newtype = chameleons[style_list][picked]
 	change_item_appearance(newtype)
+	update_clothing_icon()
 
 //**********************
 //**Chameleon Backpack**
 //**********************
+
 /obj/item/weapon/storage/backpack/chameleon
 	name = "backpack"
 	icon_state = "backpack"
@@ -194,7 +199,7 @@ var/global/list/chameleons = list(
 		initialize_chameleon_list(style_list, parent_type,\
 			list(/obj/item/weapon/storage/backpack/satchel/withwallet))
 
-/obj/item/weapon/storage/backpack/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
+/obj/item/weapon/storage/backpack/chameleon/emp_act(severity)
 	name = "backpack"
 	desc = "You wear this on your back and put items into it."
 	icon_state = "backpack"
@@ -209,7 +214,7 @@ var/global/list/chameleons = list(
 	set category = "Object"
 	set src in usr
 
-	var/picked = input("Select backpack to change it to", "Chameleon Backpack")as null|anything in chameleons[style_list]
+	var/picked = input("Select backpack to change it to", "Chameleon Backpack") as null|anything in chameleons[style_list]
 	if(!picked)
 		return
 	var/newtype = chameleons[style_list][picked]
@@ -230,7 +235,7 @@ var/global/list/chameleons = list(
 		..()
 		initialize_chameleon_list(style_list, parent_type)
 
-/obj/item/clothing/gloves/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
+/obj/item/clothing/gloves/chameleon/emp_act(severity)
 	name = "black gloves"
 	desc = "It looks like a pair of gloves, but it seems to have a small dial inside."
 	icon_state = "black"
@@ -242,11 +247,12 @@ var/global/list/chameleons = list(
 	set category = "Object"
 	set src in usr
 
-	var/picked = input("Select gloves to change it to", "Chameleon Gloves")as null|anything in chameleons[style_list]
+	var/picked = input("Select gloves to change it to", "Chameleon Gloves") as null|anything in chameleons[style_list]
 	if(!picked)
 		return
 	var/newtype = chameleons[style_list][picked]
 	change_item_appearance(newtype)
+	update_clothing_icon()
 
 //******************
 //**Chameleon Mask**
@@ -263,7 +269,7 @@ var/global/list/chameleons = list(
 		..()
 		initialize_chameleon_list(style_list, parent_type)
 
-/obj/item/clothing/mask/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
+/obj/item/clothing/mask/chameleon/emp_act(severity)
 	name = "gas mask"
 	desc = "It's a gas mask."
 	icon_state = "gas_alt"
@@ -275,11 +281,12 @@ var/global/list/chameleons = list(
 	set category = "Object"
 	set src in usr
 
-	var/picked = input("Select mask to change it to", "Chameleon Mask")as null|anything in chameleons[style_list]
+	var/picked = input("Select mask to change it to", "Chameleon Mask") as null|anything in chameleons[style_list]
 	if(!picked)
 		return
 	var/newtype = chameleons[style_list][picked]
 	change_item_appearance(newtype)
+	update_clothing_icon()
 
 //*********************
 //**Chameleon Glasses**
@@ -296,7 +303,7 @@ var/global/list/chameleons = list(
 		..()
 		initialize_chameleon_list(style_list, parent_type)
 
-/obj/item/clothing/glasses/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
+/obj/item/clothing/glasses/chameleon/emp_act(severity)
 	name = "Optical Meson Scanner"
 	desc = "It's a set of mesons."
 	icon_state = "meson"
@@ -308,15 +315,17 @@ var/global/list/chameleons = list(
 	set category = "Object"
 	set src in usr
 
-	var/picked = input("Select glasses to change it to", "Chameleon Glasses")as null|anything in chameleons[style_list]
+	var/picked = input("Select glasses to change it to", "Chameleon Glasses") as null|anything in chameleons[style_list]
 	if(!picked)
 		return
 	var/newtype = chameleons[style_list][picked]
 	change_item_appearance(newtype)
+	update_clothing_icon()
 
 //*****************
 //**Chameleon Gun**
 //*****************
+
 /obj/item/weapon/gun/projectile/chameleon
 	name = "desert eagle"
 	desc = "A fake Desert Eagle with a dial on the side to change the gun's disguise."
@@ -347,6 +356,6 @@ var/global/list/chameleons = list(
 	set category = "Object"
 	set src in usr
 
-	var/picked = input("Select backpack to change it to", "Chameleon Backpack")as null|anything in chameleons[style_list]
+	var/picked = input("Select backpack to change it to", "Chameleon Backpack") as null|anything in chameleons[style_list]
 	var/newtype = chameleons[style_list][picked]
 	change_item_appearance(newtype)

@@ -99,7 +99,7 @@
 	
 	if(!armor && prob(damage))
 		target.apply_effect(20, PARALYZE)
-		target.visible_message("<span class='danger'>[target] has been knocked unconscious!</span>")
+		target.visible_message("<span class='danger'>[target] [target.get_knockout_message()]</span>")
 	
 	playsound(attacker.loc, "swing_hit", 25, 1, -1)
 	attacker.attack_log += text("\[[time_stamp()]\] <font color='red'>Headbutted [target.name] ([target.ckey])</font>")

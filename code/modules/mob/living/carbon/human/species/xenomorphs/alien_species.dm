@@ -9,7 +9,7 @@
 		new /datum/unarmed_attack/claws/strong,
 		new /datum/unarmed_attack/bite/strong
 		)
-	hud_type = /datum/hud_data/alien
+	hud = new /datum/hud_data/alien
 	rarity_value = 3
 
 	has_fine_manipulation = 0

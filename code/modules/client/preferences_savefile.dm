@@ -203,7 +203,7 @@
 	random_name		= sanitize_integer(random_name, 0, 1, initial(random_name))
 	gender			= sanitize_gender(gender)
 	body_build 		= sanitize_integer(body_build, 0, 1, initial(body_build))
-	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
+	age				= sanitize_integer(age, current_species.min_age, current_species.max_age, initial(age))
 	hair_color		= sanitize_hexcolor(hair_color, initial(hair_color))
 	facial_color	= sanitize_hexcolor(facial_color, initial(facial_color))
 	s_tone			= sanitize_integer(s_tone, -185, 34, initial(s_tone))
