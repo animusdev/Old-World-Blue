@@ -130,7 +130,7 @@ mob/living/carbon/human/arachna/verb/remove_venom()
 		src << "<span class='alium'>You need to be closer.</span>"
 		return
 
-//	var/obj/item/organ/internal/xenos/plasmavessel/I = M.internal_organs_by_name["plasma vessel"]
+//	var/obj/item/organ/internal/xenos/plasmavessel/I = M.internal_organs_by_name[O_PLASMA]
 //	if(!istype(I))
 //		src << "<span class='alium'>Their plasma vessel is missing.</span>"
 //		return
@@ -138,7 +138,7 @@ mob/living/carbon/human/arachna/verb/remove_venom()
 	var/amount = input("Amount:", "Transfer Plasma to [M]") as num
 	if (amount)
 		amount = abs(round(amount))
-		if(check_alien_ability(amount,0,"plasma vessel"))
+		if(check_alien_ability(amount,0,O_PLASMA))
 			M.gain_plasma(amount)
 			M << "<span class='alium'>[src] has transfered [amount] plasma to you.</span>"
 			src << "<span class='alium'>You have transferred [amount] plasma to [M].</span>"

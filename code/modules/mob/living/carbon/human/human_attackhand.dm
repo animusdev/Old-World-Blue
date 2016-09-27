@@ -4,13 +4,13 @@
 	if(!ignore_intent && a_intent != I_HURT)
 		return 0
 
-	var/obj/item/organ/external/attack_organ = get_organ(hand ? "l_hand" : "r_hand")
+	var/obj/item/organ/external/attack_organ = get_organ(hand ? BP_L_HAND : BP_R_HAND)
 	if(attack_organ && attack_organ.attack && attack_organ.attack.shredding)
 		return 1
 	else return species.can_shred(src, ignore_intent)
 
 /mob/living/carbon/human/proc/get_unarmed_attack(var/mob/living/carbon/human/target, var/hit_zone)
-	var/obj/item/organ/external/attack_organ = get_organ(hand ? "l_hand" : "r_hand")
+	var/obj/item/organ/external/attack_organ = get_organ(hand ? BP_L_HAND : BP_R_HAND)
 	if(attack_organ && attack_organ.attack && attack_organ.attack.is_usable(src, target, hit_zone))
 		return attack_organ.attack
 
@@ -23,9 +23,7 @@
 
 	var/mob/living/carbon/human/H = M
 	if(istype(H))
-		var/obj/item/organ/external/temp = H.organs_by_name["r_hand"]
-		if(H.hand)
-			temp = H.organs_by_name["l_hand"]
+		var/obj/item/organ/external/temp = get_organ(hand ? BP_L_HAND : BP_R_HAND)
 		if(!temp || !temp.is_usable())
 			H << "\red You can't use your hand."
 			return
@@ -186,7 +184,7 @@
 				*/
 				if(prob(80))
 					hit_zone = ran_zone(hit_zone)
-				if(prob(15) && hit_zone != "chest") // Missed!
+				if(prob(15) && hit_zone != BP_CHEST) // Missed!
 					if(!src.lying)
 						attack_message = "[H] attempted to strike [src], but missed!"
 					else

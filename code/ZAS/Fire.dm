@@ -171,7 +171,8 @@ turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 					continue
 
 				//Spread the fire.
-				if(prob( 50 + 50 * (firelevel/vsc.fire_firelevel_multiplier) ) && my_tile.CanPass(null, enemy_tile, 0,0) && enemy_tile.CanPass(null, my_tile, 0,0))
+				if (prob( 50 + 50 * (firelevel/vsc.fire_firelevel_multiplier) ) && \
+					my_tile.CanPass(null, enemy_tile, 0,0) && enemy_tile.CanPass(null, my_tile, 0,0))
 					enemy_tile.create_fire(firelevel)
 
 			else
@@ -269,7 +270,8 @@ turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 		var/min_burn = 0.30*volume*group_multiplier/CELL_VOLUME //in moles - so that fires with very small gas concentrations burn out fast
 		var/gas_reaction_progress = min(max(min_burn, gas_firelevel*gas_fuel)*FIRE_GAS_BURNRATE_MULT, gas_fuel)
 
-		//liquid fuels are not as volatile, and the reaction progress depends on the size of the area that is burning. Limit the burn rate to a certain amount per area.
+		//liquid fuels are not as volatile, and the reaction progress depends on the size of the area that is burning.
+		//Limit the burn rate to a certain amount per area.
 		var/liquid_firelevel = calculate_firelevel(liquid_fuel, total_oxidizers, reaction_limit, 0) / vsc.fire_firelevel_multiplier
 		var/liquid_reaction_progress = min((liquid_firelevel*0.2 + 0.05)*fuel_area*FIRE_LIQUID_BURNRATE_MULT, liquid_fuel)
 
@@ -298,7 +300,8 @@ turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 		//*** Remove fuel and oxidizer, add carbon dioxide and heat
 
 		//remove and add gasses as calculated
-		var/used_gas_fuel = min(max(0.25, used_fuel*(gas_reaction_progress/total_reaction_progress)), gas_fuel) //remove in proportion to the relative reaction progress
+		//remove in proportion to the relative reaction progress
+		var/used_gas_fuel = min(max(0.25, used_fuel*(gas_reaction_progress/total_reaction_progress)), gas_fuel)
 		var/used_liquid_fuel = min(max(0.25, used_fuel-used_gas_fuel), liquid_fuel)
 
 		//remove_by_flag() and adjust_gas() handle the group_multiplier for us.
@@ -368,7 +371,7 @@ datum/gas_mixture/proc/check_recombustability(list/fuel_objs)
 
 	if(total_combustables > 0)
 		//slows down the burning when the concentration of the reactants is low
-		var/damping_multiplier = min(1, active_combustables * group_multiplier / total_moles) // TODO: How the hell group_multiplier become equil to zero?
+		var/damping_multiplier = min(1, active_combustables * group_multiplier / total_moles)
 
 		//weight the damping mult so that it only really brings down the firelevel when the ratio is closer to 0
 		damping_multiplier = 2*damping_multiplier - (damping_multiplier*damping_multiplier)
@@ -425,10 +428,10 @@ datum/gas_mixture/proc/check_recombustability(list/fuel_objs)
 
 	//Always check these damage procs first if fire damage isn't working. They're probably what's wrong.
 
-	apply_damage(2.5*mx*head_exposure, BURN, "head", 0, 0, "Fire")
-	apply_damage(2.5*mx*chest_exposure, BURN, "chest", 0, 0, "Fire")
-	apply_damage(2.0*mx*groin_exposure, BURN, "groin", 0, 0, "Fire")
-	apply_damage(0.6*mx*legs_exposure, BURN, "l_leg", 0, 0, "Fire")
-	apply_damage(0.6*mx*legs_exposure, BURN, "r_leg", 0, 0, "Fire")
-	apply_damage(0.4*mx*arms_exposure, BURN, "l_arm", 0, 0, "Fire")
-	apply_damage(0.4*mx*arms_exposure, BURN, "r_arm", 0, 0, "Fire")
+	apply_damage(2.5*mx*head_exposure, BURN, BP_HEAD, 0, 0, "Fire")
+	apply_damage(2.5*mx*chest_exposure, BURN, BP_CHEST, 0, 0, "Fire")
+	apply_damage(2.0*mx*groin_exposure, BURN, BP_GROIN, 0, 0, "Fire")
+	apply_damage(0.6*mx*legs_exposure, BURN, BP_L_LEG, 0, 0, "Fire")
+	apply_damage(0.6*mx*legs_exposure, BURN, BP_R_LEG, 0, 0, "Fire")
+	apply_damage(0.4*mx*arms_exposure, BURN, BP_L_ARM, 0, 0, "Fire")
+	apply_damage(0.4*mx*arms_exposure, BURN, BP_R_ARM, 0, 0, "Fire")

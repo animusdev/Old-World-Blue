@@ -245,25 +245,25 @@
 
 	has_organ = list(
 		"nutrient channel" =   /obj/item/organ/internal/nutrients,
-		"neural strata" =      /obj/item/organ/internal/diona/strata,
-		"response node" =      /obj/item/organ/internal/node,
-		"gas bladder" =        /obj/item/organ/internal/diona/bladder,
-		"polyp segment" =      /obj/item/organ/internal/diona/polyp,
-		"anchoring ligament" = /obj/item/organ/internal/diona/ligament
+		O_STRATA =      /obj/item/organ/internal/diona/strata,
+		O_RESPONSE =      /obj/item/organ/internal/node,
+		O_GBLADDER =        /obj/item/organ/internal/diona/bladder,
+		O_POLYP =      /obj/item/organ/internal/diona/polyp,
+		O_ANCHOR = /obj/item/organ/internal/diona/ligament
 	)
 
 	has_limbs = list(
-		"chest" =  new /datum/organ_description/diona,
-		"groin" =  new /datum/organ_description/groin/diona,
-		"head" =   new /datum/organ_description/head/diona,
-		"l_arm" =  new /datum/organ_description/arm/left/diona,
-		"r_arm" =  new /datum/organ_description/arm/right/diona,
-		"l_leg" =  new /datum/organ_description/leg/left/diona,
-		"r_leg" =  new /datum/organ_description/leg/right/diona,
-		"l_hand" = new /datum/organ_description/hand/left/diona,
-		"r_hand" = new /datum/organ_description/hand/right/diona,
-		"l_foot" = new /datum/organ_description/foot/left/diona,
-		"r_foot" = new /datum/organ_description/foot/right/diona,
+		BP_CHEST =  new /datum/organ_description/diona,
+		BP_GROIN =  new /datum/organ_description/groin/diona,
+		BP_HEAD =   new /datum/organ_description/head/diona,
+		BP_L_ARM =  new /datum/organ_description/arm/left/diona,
+		BP_R_ARM =  new /datum/organ_description/arm/right/diona,
+		BP_L_LEG =  new /datum/organ_description/leg/left/diona,
+		BP_R_LEG =  new /datum/organ_description/leg/right/diona,
+		BP_L_HAND = new /datum/organ_description/hand/left/diona,
+		BP_R_HAND = new /datum/organ_description/hand/right/diona,
+		BP_L_FOOT = new /datum/organ_description/foot/left/diona,
+		BP_R_FOOT = new /datum/organ_description/foot/right/diona,
 	)
 
 	inherent_verbs = list(

@@ -25,7 +25,7 @@
 
 /obj/item/organ/external/diona/chest
 	name = "core trunk"
-	limb_name = "chest"
+	organ_tag = BP_CHEST
 	health = 200
 	min_broken_damage = 50
 	body_part = UPPER_TORSO
@@ -36,12 +36,12 @@
 
 /obj/item/organ/external/diona/groin
 	name = "fork"
-	limb_name = "groin"
+	organ_tag = BP_GROIN
 	gendered = 1
 	health = 100
 	min_broken_damage = 50
 	body_part = LOWER_TORSO
-	parent_organ = "chest"
+	parent_organ = BP_CHEST
 
 /obj/item/organ/external/diona/limb
 	health = 35
@@ -56,13 +56,13 @@
 	min_broken_damage = 15
 
 /obj/item/organ/external/diona/head
-	limb_name = "head"
+	organ_tag = BP_HEAD
 	name = "head"
 	gendered = 1
 	health = 50
 	min_broken_damage = 25
 	body_part = HEAD
-	parent_organ = "chest"
+	parent_organ = BP_CHEST
 
 //DIONA ORGANS.
 /obj/item/organ/external/diona/removed()
@@ -78,23 +78,23 @@
 
 /obj/item/organ/internal/diona/strata
 	name = "neural strata"
-	organ_tag = "strata"
-	parent_organ = "chest"
+	organ_tag = O_STRATA
+	parent_organ = BP_CHEST
 
 /obj/item/organ/internal/diona/bladder
 	name = "gas bladder"
-	organ_tag = "bladder"
-	parent_organ = "head"
+	organ_tag = O_GBLADDER
+	parent_organ = BP_HEAD
 
 /obj/item/organ/internal/diona/polyp
 	name = "polyp segment"
-	organ_tag = "polyp"
-	parent_organ = "groin"
+	organ_tag = O_POLYP
+	parent_organ = BP_GROIN
 
 /obj/item/organ/internal/diona/ligament
 	name = "anchoring ligament"
-	organ_tag = "ligament"
-	parent_organ = "groin"
+	organ_tag = O_ANCHOR
+	parent_organ = BP_GROIN
 
 /obj/item/organ/internal/diona
 	name = "diona nymph"
@@ -114,20 +114,20 @@
 // species (absorbing radiation and light respectively)
 /obj/item/organ/internal/nutrients
 	name = "nutrient vessel"
-	organ_tag = "nutrient vessel"
+	organ_tag = O_NUTRIENT
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "claw"
 
 /obj/item/organ/internal/node
 	name = "receptor node"
-	organ_tag = "receptor node"
+	organ_tag = O_RESPONSE
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "claw"
 
 //CORTICAL BORER ORGANS.
 /obj/item/organ/internal/borer
 	name = "cortical borer"
-	parent_organ = "head"
+	parent_organ = BP_HEAD
 	vital = 1
 
 /obj/item/organ/internal/borer/process()
@@ -156,7 +156,7 @@
 	name = "cortical borer"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "borer"
-	organ_tag = "brain"
+	organ_tag = O_BRAIN
 	desc = "A disgusting space slug."
 
 /obj/item/organ/internal/borer/removed(var/mob/living/user)
@@ -179,15 +179,15 @@
 
 /obj/item/organ/internal/xenos/eggsac
 	name = "egg sac"
-	parent_organ = "groin"
+	parent_organ = BP_GROIN
 	icon_state = "xgibmid1"
-	organ_tag = "egg sac"
+	organ_tag = O_EGG
 
 /obj/item/organ/internal/xenos/plasmavessel
 	name = "plasma vessel"
-	parent_organ = "chest"
+	parent_organ = BP_CHEST
 	icon_state = "xgibdown1"
-	organ_tag = "plasma vessel"
+	organ_tag = O_PLASMA
 	var/stored_plasma = 0
 	var/max_plasma = 500
 
@@ -207,26 +207,26 @@
 
 /obj/item/organ/internal/xenos/acidgland
 	name = "acid gland"
-	parent_organ = "head"
+	parent_organ = BP_HEAD
 	icon_state = "xgibtorso"
-	organ_tag = "acid gland"
+	organ_tag = O_ACID
 
 /obj/item/organ/internal/xenos/hivenode
 	name = "hive node"
-	parent_organ = "chest"
+	parent_organ = BP_CHEST
 	icon_state = "xgibmid2"
-	organ_tag = "hive node"
+	organ_tag = O_HIVE
 
 /obj/item/organ/internal/xenos/resinspinner
 	name = "resin spinner"
-	parent_organ = "head"
+	parent_organ = BP_HEAD
 	icon_state = "xgibmid2"
-	organ_tag = "resin spinner"
+	organ_tag = O_RESIN
 
 //VOX ORGANS.
 /obj/item/organ/internal/stack
 	name = "cortical stack"
-	parent_organ = "head"
+	parent_organ = BP_HEAD
 	robotic = 2
 	vital = 1
 	var/backup_time = 0

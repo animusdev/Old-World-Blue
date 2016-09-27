@@ -65,7 +65,10 @@
 /obj/vehicle/train/cargo/trolley/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(open && istype(W, /obj/item/weapon/wirecutters))
 		passenger_allowed = !passenger_allowed
-		user.visible_message("<span class='notice'>[user] [passenger_allowed ? "cuts" : "mends"] a cable in [src].</span>","<span class='notice'>You [passenger_allowed ? "cut" : "mend"] the load limiter cable.</span>")
+		user.visible_message(
+			"<span class='notice'>[user] [passenger_allowed ? "cuts" : "mends"] a cable in [src].</span>",
+			"<span class='notice'>You [passenger_allowed ? "cut" : "mend"] the load limiter cable.</span>"
+		)
 	else
 		..()
 
@@ -146,7 +149,7 @@
 		verbs += /obj/vehicle/train/cargo/engine/verb/stop_engine
 
 /obj/vehicle/train/cargo/RunOver(var/mob/living/carbon/human/H)
-	var/list/parts = list("head", "chest", "l_leg", "r_leg", "l_arm", "r_arm")
+	var/list/parts = list(BP_HEAD, BP_CHEST, BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_R_ARM)
 
 	H.apply_effects(5, 5)
 	for(var/i = 0, i < rand(1,3), i++)
@@ -255,7 +258,9 @@
 /obj/vehicle/train/cargo/trolley/load(var/atom/movable/C)
 	if(ismob(C) && !passenger_allowed)
 		return 0
-	if(!istype(C,/obj/machinery) && !istype(C,/obj/structure/closet) && !istype(C,/obj/structure/largecrate) && !istype(C,/obj/structure/reagent_dispensers) && !istype(C,/obj/structure/ore_box) && !istype(C, /mob/living/carbon/human))
+	if (!istype(C,/obj/machinery) && !istype(C,/obj/structure/closet) && \
+		!istype(C,/obj/structure/largecrate) && !istype(C,/obj/structure/reagent_dispensers) && \
+		!istype(C,/obj/structure/ore_box) && !istype(C, /mob/living/carbon/human))
 		return 0
 
 	//if there are any items you don't want to be able to interact with, add them to this check

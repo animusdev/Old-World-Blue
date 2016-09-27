@@ -48,8 +48,9 @@
 	attack_verb = list("stabbed")
 
 	suicide_act(mob/user)
-		viewers(user) << pick("\red <b>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</b>")
+		viewers(user) << pick(\
+			"\red <b>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</b>", \
+			"\red <b>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</b>")
 		return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/New()
@@ -82,7 +83,7 @@
 
 /obj/item/weapon/screwdriver/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))	return ..()
-	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
+	if(user.zone_sel.selecting != O_EYES && user.zone_sel.selecting != BP_HEAD)
 		return ..()
 	if((CLUMSY in user.mutations) && prob(50))
 		M = user
@@ -240,7 +241,8 @@
 	else if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.welding)
 		message_admins("[key_name_admin(user)] triggered a fueltank explosion with a welding tool.")
 		log_game("[key_name(user)] triggered a fueltank explosion with a welding tool.")
-		user << "\red You begin welding on the fueltank and with a moment of lucidity you realize, this might not have been the smartest thing you've ever done."
+		user << "\red You begin welding on the fueltank and with a moment of lucidity you realize,\
+				 this might not have been the smartest thing you've ever done."
 		var/obj/structure/reagent_dispensers/fueltank/tank = O
 		tank.explode()
 		return
@@ -286,7 +288,8 @@
 	return reagents.get_reagent_amount("fuel")
 
 
-//Removes fuel from the welding tool. If a mob is passed, it will perform an eyecheck on the mob. This should probably be renamed to use()
+//Removes fuel from the welding tool.
+//If a mob is passed, it will perform an eyecheck on the mob. This should probably be renamed to use()
 /obj/item/weapon/weldingtool/proc/remove_fuel(var/amount = 1, var/mob/M = null)
 	if(!welding)
 		return 0
@@ -355,7 +358,7 @@
 	var/safety = user:eyecheck()
 	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/internal/eyes/E = H.internal_organs_by_name["eyes"]
+		var/obj/item/organ/internal/eyes/E = H.internal_organs_by_name[O_EYES]
 		if(!E)
 			return
 		if(H.species.flags & IS_SYNTHETIC)
@@ -414,7 +417,8 @@
 	origin_tech = "engineering=4;phorontech=3"
 	var/last_gen = 0
 
-/obj/item/weapon/weldingtool/experimental/proc/fuel_gen()//Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
+//Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
+/obj/item/weapon/weldingtool/experimental/proc/fuel_gen()
 	var/gen_amount = ((world.time-last_gen)/25)
 	reagents += (gen_amount)
 	if(reagents > max_fuel)

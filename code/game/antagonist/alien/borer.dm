@@ -40,7 +40,7 @@ var/datum/antagonist/xenos/borer/borers
 				host = H
 				break
 		if(istype(host))
-			var/obj/item/organ/external/head = host.get_organ("head")
+			var/obj/item/organ/external/head = host.get_organ(BP_HEAD)
 			if(head)
 				borer.host = host
 				head.implants += borer

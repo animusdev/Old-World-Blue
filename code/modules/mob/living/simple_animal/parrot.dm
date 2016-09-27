@@ -53,7 +53,7 @@
 	var/parrot_state = PARROT_WANDER //Hunt for a perch when created
 	var/parrot_sleep_max = 25 //The time the parrot sits while perched before looking around. Mosly a way to avoid the parrot's AI in life() being run every single tick.
 	var/parrot_sleep_dur = 25 //Same as above, this is the var that physically counts down
-	var/parrot_dam_zone = list("chest", "head", "l_arm", "l_leg", "r_arm", "r_leg") //For humans, select a bodypart to attack
+	var/parrot_dam_zone = list(BP_CHEST, BP_HEAD, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG) //For humans, select a bodypart to attack
 
 	var/parrot_speed = 5 //"Delay in world ticks between movement." according to byond. Yeah, that's BS but it does directly affect movement. Higher number = slower.
 	var/parrot_been_shot = 0 //Parrots get a speed bonus after being shot. This will deincrement every Life() and at 0 the parrot will return to regular speed.
@@ -608,7 +608,11 @@
 			C.remove_from_mob(stolen_item)
 			held_item = stolen_item
 			stolen_item.loc = src
-			visible_message("[src] grabs the [held_item] out of [C]'s hand!", "\blue You snag the [held_item] out of [C]'s hand!", "You hear the sounds of wings flapping furiously.")
+			visible_message(\
+				"<span class = 'notice'>[src] grabs the [held_item] out of [C]'s hand!</span>",
+				"<span class = 'notice'>You snag the [held_item] out of [C]'s hand!</span>",
+				"You hear the sounds of wings flapping furiously."
+			)
 			return held_item
 
 	src << "\red There is nothing of interest to take."
@@ -677,7 +681,11 @@
 /mob/living/simple_animal/parrot/Poly
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
-	speak = list("Poly wanna cracker!", ":eCheck the supermatter, you chucklefucks!",":eWire the solars, you lazy bums!",":eWHO TOOK THE DAMN HARDSUITS?",":eOH GOD ITS OVERHEATED EJECT EJECT!")
+	speak = list(
+		"Poly wanna cracker!", ":eCheck the supermatter, you chucklefucks!",
+		":eWire the solars, you lazy bums!",":eWHO TOOK THE DAMN HARDSUITS?",
+		":eOH GOD ITS OVERHEATED EJECT EJECT!"
+	)
 
 /mob/living/simple_animal/parrot/Poly/New()
 	ears = new /obj/item/device/radio/headset/headset_eng(src)

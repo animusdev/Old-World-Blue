@@ -25,9 +25,9 @@
 
 	finish(mob/living/carbon/human/H)
 		if(!H.reagents.has_reagent("dexalin"))
-			for(var/organ_name in list("chest","l_arm","r_arm","r_leg","l_leg","head","groin"))
-				var/obj/item/organ/external/E = H.get_organ(organ_name)
-				E.take_damage(0, 5, 0)
+			for(var/organ_name in list(BP_CHEST,BP_L_ARM,BP_R_ARM,BP_R_LEG,BP_L_LEG,BP_HEAD,BP_GROIN))
+				var/obj/item/organ/external/E = H.organs
+				if(E) E.take_damage(0, 5, 0)
 
 /datum/genetics/side_effect/bone_snap
 	name = "Bone Snap"
@@ -41,10 +41,11 @@
 
 	finish(mob/living/carbon/human/H)
 		if(!H.reagents.has_reagent("bicaridine"))
-			var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
+			var/organ_name = pick(BP_CHEST,BP_L_ARM,BP_R_ARM,BP_R_LEG,BP_L_LEG,BP_HEAD,BP_GROIN)
 			var/obj/item/organ/external/E = H.get_organ(organ_name)
-			E.take_damage(20, 0, 0)
-			E.fracture()
+			if(E)
+				E.take_damage(20, 0, 0)
+				E.fracture()
 
 /*/datum/genetics/side_effect/monkey
 	name = "Monkey"

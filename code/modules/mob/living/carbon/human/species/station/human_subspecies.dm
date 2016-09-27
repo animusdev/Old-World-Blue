@@ -11,14 +11,14 @@ datum/species/human/vatgrown
 
 	flags = CAN_JOIN | HAS_UNDERWEAR | HAS_EYE_COLOR
 
-//	toxins_mod =   1.1
+	toxins_mod =   1.1
 	has_organ = list(
-		"heart" =    /obj/item/organ/internal/heart,
-		"lungs" =    /obj/item/organ/internal/lungs,
-		"liver" =    /obj/item/organ/internal/liver,
-		"kidneys" =  /obj/item/organ/internal/kidneys,
-		"brain" =    /obj/item/organ/internal/brain,
-		"eyes" =     /obj/item/organ/internal/eyes
+		O_HEART =    /obj/item/organ/internal/heart,
+		O_LUNGS =    /obj/item/organ/internal/lungs,
+		O_LIVER =    /obj/item/organ/internal/liver,
+		O_KIDNEYS =  /obj/item/organ/internal/kidneys,
+		O_BRAIN =    /obj/item/organ/internal/brain,
+		O_EYES =     /obj/item/organ/internal/eyes
 		)
 
 /datum/species/human/vatgrown/get_bodytype()
@@ -46,10 +46,10 @@ datum/species/human/android
 	burn_mod = 1
 
 	has_organ = list(                                     //TODO: Positronic brain.
-		"liver" =    /obj/item/organ/internal/liver,
-		"heart" =    /obj/item/organ/internal/heart,
-		"lungs" =    /obj/item/organ/internal/lungs,
-		"kidneys" =  /obj/item/organ/internal/kidneys,
+		O_LIVER =    /obj/item/organ/internal/liver,
+		O_HEART =    /obj/item/organ/internal/heart,
+		O_LUNGS =    /obj/item/organ/internal/lungs,
+		O_KIDNEYS =  /obj/item/organ/internal/kidneys,
 		)
 
 /datum/species/human/android/get_bodytype()

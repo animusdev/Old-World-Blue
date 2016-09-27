@@ -31,29 +31,29 @@
 
 /obj/item/prosthesis/l_arm
 	name = "Unbranded left arm"
-	icon_state = "l_arm"
-	part = list("l_arm" = /obj/item/organ/external/robotic/limb,
-				"l_hand"= /obj/item/organ/external/robotic/tiny)
+	icon_state = BP_L_ARM
+	part = list(BP_L_ARM = /obj/item/organ/external/robotic/limb,
+				BP_L_HAND= /obj/item/organ/external/robotic/tiny)
 
 /obj/item/prosthesis/r_arm
 	name = "Unbranded right arm"
 	icon_state = "r_arm"
-	part = list("r_arm" = /obj/item/organ/external/robotic/limb,
-				"r_hand"= /obj/item/organ/external/robotic/tiny)
+	part = list(BP_R_ARM = /obj/item/organ/external/robotic/limb,
+				BP_R_HAND= /obj/item/organ/external/robotic/tiny)
 
 /obj/item/prosthesis/l_leg
 	name = "Unbranded left leg"
 	icon_state = "l_leg"
 	construction_cost = list(DEFAULT_WALL_MATERIAL=15000)
-	part = list("l_leg" = /obj/item/organ/external/robotic/limb,
-				"l_foot"= /obj/item/organ/external/robotic/tiny)
+	part = list(BP_L_LEG = /obj/item/organ/external/robotic/limb,
+				BP_L_FOOT= /obj/item/organ/external/robotic/tiny)
 
 /obj/item/prosthesis/r_leg
 	name = "Unbranded right leg"
 	icon_state = "r_leg"
 	construction_cost = list(DEFAULT_WALL_MATERIAL=15000)
-	part = list("r_leg" = /obj/item/organ/external/robotic/limb,
-				"r_foot"= /obj/item/organ/external/robotic/tiny)
+	part = list(BP_R_LEG = /obj/item/organ/external/robotic/limb,
+				BP_R_FOOT= /obj/item/organ/external/robotic/tiny)
 
 
 
@@ -68,19 +68,19 @@
 /obj/item/prosthesis/enforcer/l_arm
 	name = "Enforcer Charge left arm"
 	icon_state = "l_arm"
-	part = list("l_arm" = /obj/item/organ/external/robotic/enforcer/limb)
+	part = list(BP_L_ARM = /obj/item/organ/external/robotic/enforcer/limb)
 
 /obj/item/prosthesis/enforcer/r_arm
 	name = "Enforcer Charge right arm"
 	icon_state = "r_arm"
-	part = list("r_arm" = /obj/item/organ/external/robotic/enforcer/limb)
+	part = list(BP_R_ARM = /obj/item/organ/external/robotic/enforcer/limb)
 
 /obj/item/prosthesis/enforcer/l_leg
 	name = "Enforcer Charge left leg"
 	icon_state = "l_leg"
-	part = list("l_leg" = /obj/item/organ/external/robotic/enforcer/limb/leg)
+	part = list(BP_L_LEG = /obj/item/organ/external/robotic/enforcer/limb/leg)
 
 /obj/item/prosthesis/enforcer/r_leg
 	name = "Enforcer Charge right leg"
 	icon_state = "r_leg"
-	part = list("r_leg" = /obj/item/organ/external/robotic/enforcer/limb/leg)
+	part = list(BP_R_LEG = /obj/item/organ/external/robotic/enforcer/limb/leg)

@@ -22,16 +22,16 @@ datum/preferences
 
 		preview_icon = new /icon('icons/mob/human.dmi', "blank")
 
-		var/list/organ_list = list("chest","groin","head")
+		var/list/organ_list = list(BP_CHEST,BP_GROIN,BP_HEAD)
 		if(preview_dir & (SOUTH|WEST))
-			organ_list += list("r_arm","r_hand","r_leg","r_foot", "l_leg","l_foot","l_arm","l_hand")
+			organ_list += list(BP_R_ARM,BP_R_HAND,BP_R_LEG,BP_R_FOOT, BP_L_LEG,BP_L_FOOT,BP_L_ARM,BP_L_HAND)
 		else
-			organ_list += list("l_leg","l_foot","l_arm","l_hand", "r_arm","r_hand","r_leg","r_foot")
+			organ_list += list(BP_L_LEG,BP_L_FOOT,BP_L_ARM,BP_L_HAND, BP_R_ARM,BP_R_HAND,BP_R_LEG,BP_R_FOOT)
 		for(var/organ in organ_list)
 			var/datum/body_modification/mod = get_modification(organ)
 			if(!mod.replace_limb)
 				var/icon/organ_icon
-				if(organ in list("head", "chest", "groin"))
+				if(organ in list(BP_HEAD, BP_CHEST, BP_GROIN))
 					organ_icon = new(icobase, "[organ]_[g]")
 				else
 					organ_icon = new(icobase, "[organ]_[b]")
@@ -65,12 +65,12 @@ datum/preferences
 
 		// Eyes color
 		var/icon/eyes = new /icon('icons/mob/human.dmi', "blank")
-		var/datum/body_modification/mod = get_modification("eyes")
+		var/datum/body_modification/mod = get_modification(O_EYES)
 		if(!mod.replace_limb)
 			eyes.Blend(new/icon(icobase, "eyes_[body_build]"), ICON_OVERLAY)
 			if((current_species && (current_species.flags & HAS_EYE_COLOR)))
 				eyes.Blend(eyes_color, ICON_ADD)
-		eyes.Blend(mod.get_mob_icon("eyes", body_build, modifications_colors["eyes"]), ICON_OVERLAY)
+		eyes.Blend(mod.get_mob_icon(O_EYES, body_build, modifications_colors[O_EYES]), ICON_OVERLAY)
 
 		// Hair Style'n'Color
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]

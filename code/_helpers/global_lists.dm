@@ -67,18 +67,18 @@ var/global/list/exclude_jobs = list(/datum/job/ai,/datum/job/cyborg)
 
 	//Tattoo
 var/global/list/tattoo_list = list(
-	"chest"  = list("Abstract" = 1),
+	BP_CHEST  = list("Abstract" = 1),
 	"chest2" = list("Abstract" = 1, "Cross" = 2, "Skull" = 3, "Spades" = 4),
-	"head"   = list("Abstract" = 1, "Over left eye scar" = 2, "Over right eye scar" = 3),
-	"groin"  = list("Abstract" = 1),
-	"l_arm"  = list("Abstract" = 1),
-	"l_hand" = list("Abstract" = 1),
-	"r_arm"  = list("Abstract" = 1, "Stripes" = 2),
-	"r_hand" = list("Abstract" = 1),
-	"l_leg"  = list("Abstract" = 1),
-	"l_foot" = list("Abstract" = 1),
-	"r_leg"  = list("Abstract" = 1),
-	"r_foot" = list("Abstract" = 1)
+	BP_HEAD   = list("Abstract" = 1, "Over left eye scar" = 2, "Over right eye scar" = 3),
+	BP_GROIN  = list("Abstract" = 1),
+	BP_L_ARM  = list("Abstract" = 1),
+	BP_L_HAND = list("Abstract" = 1),
+	BP_R_ARM  = list("Abstract" = 1, "Stripes" = 2),
+	BP_R_HAND = list("Abstract" = 1),
+	BP_L_LEG  = list("Abstract" = 1),
+	BP_L_FOOT = list("Abstract" = 1),
+	BP_R_LEG  = list("Abstract" = 1),
+	BP_R_FOOT = list("Abstract" = 1)
 )
 
 var/global/list/flavs_list = list("general"="General", "torso"="Body", "head"="Head", "face"="Face", "eyes"="Eyes",\
@@ -86,16 +86,16 @@ var/global/list/flavs_list = list("general"="General", "torso"="Body", "head"="H
 
 var/global/list/organ_structure = list(
 	chest = list(name= "Chest", children=list()),
-	groin = list(name= "Groin",     parent="chest", children=list()),
-	head  = list(name= "Head",      parent="chest", children=list()),
-	r_arm = list(name= "Right arm", parent="chest", children=list()),
-	l_arm = list(name= "Left arm",  parent="chest", children=list()),
-	r_leg = list(name= "Right leg", parent="groin", children=list()),
-	l_leg = list(name= "Left leg",  parent="groin", children=list()),
-	r_hand= list(name= "Right hand",parent="r_arm", children=list()),
-	l_hand= list(name= "Left hand", parent="l_arm", children=list()),
-	r_foot= list(name= "Right foot",parent="r_leg", children=list()),
-	l_foot= list(name= "Left foot", parent="l_leg", children=list()),
+	groin = list(name= "Groin",     parent=BP_CHEST, children=list()),
+	head  = list(name= "Head",      parent=BP_CHEST, children=list()),
+	r_arm = list(name= "Right arm", parent=BP_CHEST, children=list()),
+	l_arm = list(name= "Left arm",  parent=BP_CHEST, children=list()),
+	r_leg = list(name= "Right leg", parent=BP_GROIN, children=list()),
+	l_leg = list(name= "Left leg",  parent=BP_GROIN, children=list()),
+	r_hand= list(name= "Right hand",parent=BP_R_ARM, children=list()),
+	l_hand= list(name= "Left hand", parent=BP_L_ARM, children=list()),
+	r_foot= list(name= "Right foot",parent=BP_R_LEG, children=list()),
+	l_foot= list(name= "Left foot", parent=BP_L_LEG, children=list()),
 	)
 
 var/global/list/organ_tag_to_name = list(

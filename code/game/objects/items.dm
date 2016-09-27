@@ -133,13 +133,11 @@
 			size = "huge"
 	return ..(user, return_dist, "", "It is a [size] item.")
 
-/obj/item/attack_hand(mob/user as mob)
+/obj/item/attack_hand(mob/living/user as mob)
 	if (!user) return
 	if (hasorgans(user))
 		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/external/temp = H.organs_by_name["r_hand"]
-		if (user.hand)
-			temp = H.organs_by_name["l_hand"]
+		var/obj/item/organ/external/temp = H.get_organ(user.hand ? BP_L_HAND : BP_R_HAND)
 		if(temp && !temp.is_usable())
 			user << "<span class='notice'>You try to move your [temp.name], but cannot!"
 			return
@@ -440,7 +438,7 @@ var/list/global/slot_flags_enumeration = list(
 
 	if(istype(H))
 
-		var/obj/item/organ/internal/eyes/eyes = H.internal_organs_by_name["eyes"]
+		var/obj/item/organ/internal/eyes/eyes = H.internal_organs_by_name[O_EYES]
 
 		if(H != user)
 			for(var/mob/O in (viewers(M) - user - M))
@@ -468,7 +466,7 @@ var/list/global/slot_flags_enumeration = list(
 			if (eyes.damage >= eyes.min_broken_damage)
 				if(M.stat != 2)
 					M << "\red You go blind!"
-		var/obj/item/organ/external/affecting = H.get_organ("head")
+		var/obj/item/organ/external/affecting = H.get_organ(BP_HEAD)
 		if(affecting.take_damage(7))
 			M:UpdateDamageIcon()
 	else

@@ -24,7 +24,7 @@ var/global/list/limb_icon_cache = list()
 
 /obj/item/organ/external/head/sync_colour_to_human(var/mob/living/carbon/human/human)
 	..()
-	var/obj/item/organ/internal/eyes/eyes = owner.internal_organs_by_name["eyes"]
+	var/obj/item/organ/internal/eyes/eyes = owner.internal_organs_by_name[O_EYES]
 	if(eyes) eyes.update_colour()
 
 /obj/item/organ/external/head
@@ -44,8 +44,8 @@ var/global/list/limb_icon_cache = list()
 	overlays.Cut()
 	if(!owner || !owner.species)
 		return
-	if(owner.species.has_organ["eyes"])
-		var/obj/item/organ/internal/eyes/eyes = owner.internal_organs_by_name["eyes"]
+	if(owner.species.has_organ[O_EYES])
+		var/obj/item/organ/internal/eyes/eyes = owner.internal_organs_by_name[O_EYES]
 		var/icon/eyes_icon
 		if(eyes)
 			eyes_icon = eyes.get_icon()
@@ -85,7 +85,7 @@ var/global/list/limb_icon_cache = list()
 
 	var/body_build = owner ? (owner.body_build) : 0
 	var/gender = (owner.gender == FEMALE)?"f":"m"
-	icon_state = "[limb_name]_[gendered ? gender : ""][body_build]"
+	icon_state = "[organ_tag]_[gendered ? gender : ""][body_build]"
 
 	if(force_icon)
 		mob_icon = new /icon(force_icon, icon_state)
@@ -114,9 +114,9 @@ var/global/list/limb_icon_cache = list()
 				mob_icon.Blend(s_col, ICON_ADD)
 
 			if(tattoo)
-				mob_icon.Blend(new/icon('icons/mob/tattoo.dmi', "[limb_name]_[tattoo]_[body_build]"), ICON_OVERLAY)
+				mob_icon.Blend(new/icon('icons/mob/tattoo.dmi', "[organ_tag]_[tattoo]_[body_build]"), ICON_OVERLAY)
 			if(tattoo2)
-				mob_icon.Blend(new/icon('icons/mob/tattoo.dmi', "[limb_name]2_[tattoo2]_[body_build]"), ICON_OVERLAY)
+				mob_icon.Blend(new/icon('icons/mob/tattoo.dmi', "[organ_tag]2_[tattoo2]_[body_build]"), ICON_OVERLAY)
 
 	dir = EAST
 	icon = mob_icon

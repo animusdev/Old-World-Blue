@@ -189,7 +189,7 @@
 //		preview_icon.Blend(new /icon(icobase, "groin_[g]"), ICON_OVERLAY)
 //		preview_icon.Blend(new /icon(icobase, "head_[g]"), ICON_OVERLAY)
 
-	for(var/name in list("chest","groin","head","r_arm","r_hand","r_leg","r_foot","l_leg","l_foot","l_arm","l_hand"))
+	for(var/name in list(BP_CHEST,BP_GROIN,BP_HEAD,BP_R_ARM,BP_R_HAND,BP_R_LEG,BP_R_FOOT,BP_L_LEG,BP_L_FOOT,BP_L_ARM,BP_L_HAND))
 		if(organ_data[name] == "amputated") continue
 		if(organ_data[name] == "cyborg")
 			var/datum/robolimb/R
@@ -197,7 +197,7 @@
 			if(!R) R = basic_robolimb
 			preview_icon.Blend(icon(R.icon, "[name]_[b]"), ICON_OVERLAY) // This doesn't check gendered_icon. Not an issue while only limbs can be robotic.
 			continue
-		if(name in list("chest","groin","head"))
+		if(name in list(BP_CHEST,BP_GROIN,BP_HEAD))
 			preview_icon.Blend(new /icon(icobase, "[name]_[g]"), ICON_OVERLAY)
 		else
 			preview_icon.Blend(new /icon(icobase, "[name]_[b]"), ICON_OVERLAY)

@@ -32,10 +32,10 @@
 	// AUGMENTATION
 	var/list/modifications_data   = list()
 	var/list/modifications_colors = list()
-	var/current_organ= "chest"
-	var/global/list/r_organs = list("head", "r_arm", "r_hand", "chest", "r_leg", "r_foot")
-	var/global/list/l_organs = list("eyes", "l_arm", "l_hand", "groin", "l_leg", "l_foot")
-	var/global/list/internal_organs = list("chest2", "heart", "lungs", "liver")
+	var/current_organ= BP_CHEST
+	var/global/list/r_organs = list(BP_HEAD, BP_R_ARM, BP_R_HAND, BP_CHEST, BP_R_LEG, BP_R_FOOT)
+	var/global/list/l_organs = list(O_EYES, BP_L_ARM, BP_L_HAND, BP_GROIN, BP_L_LEG, BP_L_FOOT)
+	var/global/list/internal_organs = list("chest2", O_HEART, O_LUNGS, O_LIVER)
 
 	// LOADOUT
 	var/list/loadout = list()
@@ -484,7 +484,7 @@
 	if(!organ) return body_modifications["nothing"]
 	return modifications_data[organ]
 
-/datum/preferences/proc/check_childred_modifications(var/organ = "chest")
+/datum/preferences/proc/check_childred_modifications(var/organ = BP_CHEST)
 	var/list/organ_data = organ_structure[organ]
 	if(!organ_data) return
 	var/datum/body_modification/mod = modifications_data[organ]

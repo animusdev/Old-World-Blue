@@ -9,7 +9,7 @@
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/head = target.get_organ(target_zone)
-		return isnull(head) && target_zone == "head" && !isnull(target.species.has_limbs["head"])
+		return isnull(head) && target_zone == BP_HEAD && !isnull(target.species.has_limbs[BP_HEAD])
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] starts attaching [tool] to [target]'s neck.", \

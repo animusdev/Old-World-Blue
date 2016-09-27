@@ -21,8 +21,8 @@
 	death_message = "rapidly loses cohesion, splattering across the ground..."
 
 	has_organ = list(
-		"brain" = /obj/item/organ/internal/brain/slime
-		)
+		O_BRAIN = /obj/item/organ/internal/brain/slime
+	)
 
 	breath_type = null
 	poison_type = null
@@ -32,17 +32,17 @@
 	push_flags = MONKEY|SLIME|SIMPLE_ANIMAL
 
 	has_limbs = list(
-		"chest" =  new /datum/organ_description/slime,
-		"groin" =  new /datum/organ_description/groin/slime,
-		"head" =   new /datum/organ_description/head/slime,
-		"l_arm" =  new /datum/organ_description/arm/left/slime,
-		"r_arm" =  new /datum/organ_description/arm/right/slime,
-		"l_leg" =  new /datum/organ_description/leg/left/slime,
-		"r_leg" =  new /datum/organ_description/leg/right/slime,
-		"l_hand" = new /datum/organ_description/hand/left/slime,
-		"r_hand" = new /datum/organ_description/hand/right/slime,
-		"l_foot" = new /datum/organ_description/foot/left/slime,
-		"r_foot" = new /datum/organ_description/foot/right/slime
+		BP_CHEST =  new /datum/organ_description/slime,
+		BP_GROIN =  new /datum/organ_description/groin/slime,
+		BP_HEAD =   new /datum/organ_description/head/slime,
+		BP_L_ARM =  new /datum/organ_description/arm/left/slime,
+		BP_R_ARM =  new /datum/organ_description/arm/right/slime,
+		BP_L_LEG =  new /datum/organ_description/leg/left/slime,
+		BP_R_LEG =  new /datum/organ_description/leg/right/slime,
+		BP_L_HAND = new /datum/organ_description/hand/left/slime,
+		BP_R_HAND = new /datum/organ_description/hand/right/slime,
+		BP_L_FOOT = new /datum/organ_description/foot/left/slime,
+		BP_R_FOOT = new /datum/organ_description/foot/right/slime
 	)
 
 /datum/species/human/slime/handle_death(var/mob/living/carbon/human/H)

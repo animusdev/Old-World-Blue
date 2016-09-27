@@ -231,60 +231,61 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		var/status = organ_data[name]
 		var/organ_name = null
 		switch(name)
-			if("l_arm")
+			if(BP_L_ARM)
 				organ_name = "left arm"
-			if("r_arm")
+			if(BP_R_ARM)
 				organ_name = "right arm"
-			if("l_leg")
+			if(BP_L_LEG)
 				organ_name = "left leg"
-			if("r_leg")
+			if(BP_R_LEG)
 				organ_name = "right leg"
-			if("l_foot")
+			if(BP_L_FOOT)
 				organ_name = "left foot"
-			if("r_foot")
+			if(BP_R_FOOT)
 				organ_name = "right foot"
-			if("l_hand")
+			if(BP_L_HAND)
 				organ_name = "left hand"
-			if("r_hand")
+			if(BP_R_HAND)
 				organ_name = "right hand"
-			if("heart")
+			if(O_HEART)
 				organ_name = "heart"
-			if("eyes")
+			if(O_EYES)
 				organ_name = "eyes"
 
-		if(status == "cyborg")
-			++ind
-			if(ind > 1)
-				dat += ", "
-			var/datum/robolimb/R
-			if(rlimb_data[name] && all_robolimbs[rlimb_data[name]])
-				R = all_robolimbs[rlimb_data[name]]
-			else
-				R = basic_robolimb
-			dat += "\t[R.company] [organ_name] prothesis"
-		else if(status == "amputated")
-			++ind
-			if(ind > 1)
-				dat += ", "
-			dat += "\tAmputated [organ_name]"
-		else if(status == "mechanical")
-			++ind
-			if(ind > 1)
-				dat += ", "
-			dat += "\tMechanical [organ_name]"
-		else if(status == "assisted")
-			++ind
-			if(ind > 1)
-				dat += ", "
-			switch(organ_name)
-				if("heart")
-					dat += "\tPacemaker-assisted [organ_name]"
-				if("voicebox") //on adding voiceboxes for speaking skrell/similar replacements
-					dat += "\tSurgically altered [organ_name]"
-				if("eyes")
-					dat += "\tRetinal overlayed [organ_name]"
+		switch(status)
+			if("cyborg")
+				++ind
+				if(ind > 1)
+					dat += ", "
+				var/datum/robolimb/R
+				if(rlimb_data[name] && all_robolimbs[rlimb_data[name]])
+					R = all_robolimbs[rlimb_data[name]]
 				else
-					dat += "\tMechanically assisted [organ_name]"
+					R = basic_robolimb
+				dat += "\t[R.company] [organ_name] prothesis"
+			if("amputated")
+				++ind
+				if(ind > 1)
+					dat += ", "
+				dat += "\tAmputated [organ_name]"
+			if("mechanical")
+				++ind
+				if(ind > 1)
+					dat += ", "
+				dat += "\tMechanical [organ_name]"
+			if("assisted")
+				++ind
+				if(ind > 1)
+					dat += ", "
+				switch(organ_name)
+					if(O_HEART)
+						dat += "\tPacemaker-assisted [organ_name]"
+					if("voicebox") //on adding voiceboxes for speaking skrell/similar replacements
+						dat += "\tSurgically altered [organ_name]"
+					if(O_EYES)
+						dat += "\tRetinal overlayed [organ_name]"
+					else
+						dat += "\tMechanically assisted [organ_name]"
 	if(!ind)
 		dat += "\[...\]<br><br>"
 	else
@@ -638,8 +639,8 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	return
 
 /datum/preferences/proc/SetLimbs(mob/user)
-	var/list/limbs = list("Left Arm"="l_arm", "Left Hand"="l_hand", "Right Arm"="r_arm", "Right Hand"="r_hand",\
-						  "Left Leg"="l_leg", "Left Foot"="l_foot", "Right Leg"="r_leg", "Right Foot"="r_foot")
+	var/list/limbs = list("Left Arm"=BP_L_ARM, "Left Hand"=BP_L_HAND, "Right Arm"=BP_R_ARM, "Right Hand"=BP_R_HAND,\
+						  "Left Leg"=BP_L_LEG, "Left Foot"=BP_L_FOOT, "Right Leg"=BP_R_LEG, "Right Foot"=BP_R_FOOT)
 	var/list/states = list("Normal"=null,"Amputated"="amputated","Prothesis"="cyborg")
 	var/HTML = "<body>"
 	HTML += "<tt><center>"
@@ -662,9 +663,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	return
 
 /datum/preferences/proc/SetTattoo(mob/user)
-	var/list/limbs = list("Head"="head", "Chest"="chest", "Back" = "chest2", "Groin"="groin",\
-						  "Left Arm"="l_arm", "Left Hand"="l_hand", "Right Arm"="r_arm", "Right Hand"="r_hand",\
-						  "Left Leg"="l_leg", "Left Foot"="l_foot", "Right Leg"="r_leg", "Right Foot"="r_foot")
+	var/list/limbs = list("Head"=BP_HEAD, "Chest"=BP_CHEST, "Back" = "chest2", "Groin"=BP_GROIN,\
+						  "Left Arm"=BP_L_ARM, "Left Hand"=BP_L_HAND, "Right Arm"=BP_R_ARM, "Right Hand"=BP_R_HAND,\
+						  "Left Leg"=BP_L_LEG, "Left Foot"=BP_L_FOOT, "Right Leg"=BP_R_LEG, "Right Foot"=BP_R_FOOT)
 	var/HTML = "<body>"
 	HTML += "<tt><center>"
 	HTML += "<b>Set Tattoo State</b> <hr />"
@@ -1311,29 +1312,29 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					var/third_limb = null  // if you try to unchange the hand, the arm should also change
 					switch(limb_name)
 						if("Left Leg")
-							limb = "l_leg"
-							second_limb = "l_foot"
+							limb = BP_L_LEG
+							second_limb = BP_L_FOOT
 						if("Right Leg")
-							limb = "r_leg"
-							second_limb = "r_foot"
+							limb = BP_R_LEG
+							second_limb = BP_R_FOOT
 						if("Left Arm")
-							limb = "l_arm"
-							second_limb = "l_hand"
+							limb = BP_L_ARM
+							second_limb = BP_L_HAND
 						if("Right Arm")
-							limb = "r_arm"
-							second_limb = "r_hand"
+							limb = BP_R_ARM
+							second_limb = BP_R_HAND
 						if("Left Foot")
-							limb = "l_foot"
-							third_limb = "l_leg"
+							limb = BP_L_FOOT
+							third_limb = BP_L_LEG
 						if("Right Foot")
-							limb = "r_foot"
-							third_limb = "r_leg"
+							limb = BP_R_FOOT
+							third_limb = BP_R_LEG
 						if("Left Hand")
-							limb = "l_hand"
-							third_limb = "l_arm"
+							limb = BP_L_HAND
+							third_limb = BP_L_ARM
 						if("Right Hand")
-							limb = "r_hand"
-							third_limb = "r_arm"
+							limb = BP_R_HAND
+							third_limb = BP_R_ARM
 
 					switch(new_state)
 						if("Normal")
@@ -1372,9 +1373,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					var/organ = null
 					switch(organ_name)
 						if("Heart")
-							organ = "heart"
+							organ = O_HEART
 						if("Eyes")
-							organ = "eyes"
+							organ = O_EYES
 
 					var/new_state = input(user, "What state do you wish the organ to be in?") as null|anything in list("Normal","Assisted","Mechanical")
 					if(!new_state) return
