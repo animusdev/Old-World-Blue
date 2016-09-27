@@ -112,3 +112,11 @@
 	name = "long labcoat"
 	desc = "A suit that protects against minor chemical spills."
 	icon_state = "labcoat_long"
+
+/obj/item/clothing/suit/storage/toggle/labcoat/forensic
+	name = "forensics labcoat"
+	desc = "That's a long white labcoat with the forensic insignia on ot."
+	icon_state = "forensictech_open"
+	base_icon = "forensictech"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 30, rad = 0)
+	allowed = list(/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/flame/lighter,/obj/item/device/taperecorder,/obj/item/device/uv_light)

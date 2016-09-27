@@ -244,3 +244,20 @@
 					/obj/item/device/healthanalyzer,/obj/item/weapon/reagent_containers/dropper,
 					/obj/item/device/flashlight/pen,/obj/item/stack/medical,/obj/item/device/radio)
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 10, rad = 10)
+
+//Investigator
+/obj/item/clothing/suit/storage/toggle/investigator
+	name = "investigator jacket"
+	desc = "That's a black jacket with the investigator badge on it."
+	icon_state = "investigator_open"
+	item_state = "investigator"
+	base_icon = "investigator"
+	blood_overlay_type = "armor"
+	body_parts_covered = UPPER_TORSO|ARMS
+	allowed = list(/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/flame/lighter,/obj/item/device/taperecorder,/obj/item/device/uv_light)
+
+/obj/item/clothing/suit/storage/toggle/investigator/alt
+	desc = "That't a black jacket with investigator insignias."
+	icon_state = "investigatoralt_open"
+	item_state = "investigatoralt"
+	base_icon = "investigatoralt"

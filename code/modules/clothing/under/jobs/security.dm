@@ -168,3 +168,26 @@
 	icon_state = "wardendnavyclothes"
 	item_state = "ba_suit"
 
+//Investigator
+/obj/item/clothing/under/investigator
+	name = "worn suit"
+	desc = "That's a simple white dress shirt with the pants."
+	icon_state = "investigator"
+	item_state = "det"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	siemens_coefficient = 0.9
+
+/obj/item/clothing/under/investigator/alt
+	desc = "That's a simple blue dress shirt with the jeans."
+	icon_state = "investigatoralt"
+	item_state = "det"
+
+//Forensic Technician
+
+/obj/item/clothing/under/forensic
+	name = "black turtleneck"
+	desc = "That's the black turtleneck with pants."
+	icon_state = "forensictech"
+	item_state = "bl_suit"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	siemens_coefficient = 0.9
