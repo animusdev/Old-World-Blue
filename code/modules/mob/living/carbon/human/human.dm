@@ -10,6 +10,8 @@
 
 /mob/living/carbon/human/New(var/new_loc, var/new_species = null, var/datum/preferences/prefs = null)
 
+	body_build = get_body_build(gender)
+
 	if(!dna)
 		dna = new /datum/dna(null)
 		// Species name is handled by set_species()

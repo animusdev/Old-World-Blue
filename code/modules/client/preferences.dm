@@ -53,7 +53,6 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/real_name						//our character's name
 	var/random_name = 0					//whether we are a random name every round
 	var/gender = MALE					//gender of character (well duh)
-	var/body_build = 0					//type of char body (sprite pack)
 	var/age = 30						//age of character
 	var/spawnpoint = "Arrivals Shuttle" //where this character will spawn (0-2).
 	var/b_type = "A+"					//blood type (not-chooseable)
@@ -65,6 +64,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/s_tone = 0						//Skin tone
 	var/species = "Human"				//Species name for save file
 	var/datum/species/current_species = null	//Species datum to use
+	var/body = "Default"
 	var/species_preview                 //Used for the species selection window.
 	var/language = "None"				//Secondary language
 	var/list/gear						//Custom/fluff item loadout.
@@ -169,8 +169,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	dat += "<br>"
 
 	dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a><br>"
-	if(gender == FEMALE && current_species.allow_slim_fem)
-		dat += "<b>Body build:</b> <a href='?_src_=prefs;preference=build'><b>[body_build == BODY_DEFAULT ? "Default" : "Slim"]</b></a><br>"
+	dat += "<b>Body build:</b> <a href='?_src_=prefs;preference=build'><b>[body]</b></a><br>"
 	dat += "<b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a><br>"
 	dat += "<b>Spawn Point</b>: <a href='byond://?src=\ref[user];preference=spawnpoint;task=input'>[spawnpoint]</a>"
 
@@ -932,7 +931,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 				var/msg = input(usr,"Set the default flavour text for your robot. It will be used for any module without individual setting.","Flavour Text",rhtml_decode(flavour_texts_robot["Default"])) as message
 				flavour_texts_robot[href_list["task"]] = post_edit_utf8(sanitize(msg, extra = 0))
 			else
-				var/msg = input(usr,"Set the flavour text for your robot with [href_list["task"]] module. If you leave this empty, default flavour text will be used for this module.","Flavour Text",rhtml_decode(flavour_texts_robot[href_list["task"]])) as message
+				var/msg = input(usr,\
+					"Set the flavour text for your robot with [href_list["task"]] module. If you leave this empty, default flavour text will be used for this module.",\
+					"Flavour Text",rhtml_decode(flavour_texts_robot[href_list["task"]])) as message
 				flavour_texts_robot[href_list["task"]] = post_edit_utf8(sanitize(msg, extra = 0))
 		SetFlavourTextRobot(user)
 		return
@@ -1103,7 +1104,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					species = href_list["newspecies"]
 					if(prev_species != species)
 						current_species = all_species[species_preview]
-						if(!current_species.allow_slim_fem) body_build = BODY_DEFAULT
+						sanitize_body_build()
 
 						//grab one of the valid hair styles for the newly chosen species
 						var/list/valid_hairstyles = list()
@@ -1261,7 +1262,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						backbag = backbaglist.Find(new_backbag)
 
 				if("nt_relation")
-					var/new_relation = input(user, "Choose your relation to NT. Note that this represents what others can find out about your character by researching your background, not what your character actually thinks.", "Character Preference")  as null|anything in list("Loyal", "Supportive", "Neutral", "Skeptical", "Opposed")
+					var/new_relation = input(user, \
+						"Choose your relation to NT. Note that this represents what others can find out about your character by researching your background, not what your character actually thinks.",\
+						"Character Preference")  as null|anything in list("Loyal", "Supportive", "Neutral", "Skeptical", "Opposed")
 					if(new_relation)
 						nanotrasen_relation = new_relation
 
@@ -1469,13 +1472,11 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						gender = FEMALE
 					else
 						gender = MALE
-						body_build = 0
+					sanitize_body_build()
 
 				if("build")
-					if(body_build == BODY_DEFAULT && current_species.allow_slim_fem)
-						body_build = BODY_SLIM
-					else
-						body_build = BODY_DEFAULT
+					body = next_in_list(body, get_body_build_list(gender, current_species.body_builds))
+					req_update_icon = 1
 
 				if("disabilities")				//please note: current code only allows nearsightedness as a disability
 					disabilities = !disabilities//if you want to add actual disabilities, code that selects them should be here
@@ -1578,7 +1579,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	character.exploit_record = exploit_record
 
 	character.gender = gender
-	character.body_build = (current_species.allow_slim_fem && gender == FEMALE) ? body_build : 0
+	character.body_build = get_body_build(gender, body)
 	character.age = age
 	character.b_type = b_type
 

@@ -25,6 +25,9 @@
 		status |= ORGAN_ROBOT
 
 /obj/item/organ/internal/Destroy()
+	if(owner)
+		owner.internal_organs.Remove(src)
+		owner.internal_organs_by_name[organ_tag] = null
 	if(parent)
 		parent.internal_organs -= src
 		parent = null
@@ -94,7 +97,9 @@
 	parent_organ = BP_GROIN
 
 /obj/item/organ/internal/kidneys/process()
+
 	..()
+
 	if(!owner)
 		return
 
@@ -116,6 +121,7 @@
 	organ_tag = O_EYES
 	parent_organ = BP_HEAD
 	var/eye_colour = ""
+	var/icon/mob_icon = null
 
 /obj/item/organ/internal/eyes/install(mob/living/carbon/human/H)
 	if(..()) return 1
@@ -127,9 +133,9 @@
 	owner.update_eyes()
 
 /obj/item/organ/internal/eyes/proc/get_icon()
-	var/icon/eyes_icon = new/icon(owner.species.icobase, "eyes_[owner.body_build]")
-	eyes_icon.Blend(eye_colour, ICON_ADD)
-	return eyes_icon
+	mob_icon = new/icon(owner.species.icobase, "eyes[owner.body_build.index]")
+	mob_icon.Blend(eye_colour, ICON_ADD)
+	return mob_icon
 
 /obj/item/organ/internal/eyes/proc/update_colour()
 	if(!owner)

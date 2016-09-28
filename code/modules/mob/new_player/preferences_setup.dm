@@ -171,10 +171,11 @@
 	qdel(preview_icon_side)
 	qdel(preview_icon)
 
-	var/g = "m"
+	var/datum/body_build/body_build = get_body_build(gender, body)
+	var/g = "_m"
 	if(gender == FEMALE)
-		g = "f"
-	var/b="[body_build]"
+		g = "_f"
+	var/b="[body_build.index]"
 	g+=b
 
 	var/icon/icobase
@@ -186,8 +187,6 @@
 		icobase = 'icons/mob/human_races/r_human.dmi'
 
 	preview_icon = new /icon('icons/mob/human.dmi', "blank")
-//		preview_icon.Blend(new /icon(icobase, "groin_[g]"), ICON_OVERLAY)
-//		preview_icon.Blend(new /icon(icobase, "head_[g]"), ICON_OVERLAY)
 
 	for(var/name in list(BP_CHEST,BP_GROIN,BP_HEAD,BP_R_ARM,BP_R_HAND,BP_R_LEG,BP_R_FOOT,BP_L_LEG,BP_L_FOOT,BP_L_ARM,BP_L_HAND))
 		if(organ_data[name] == "amputated") continue
@@ -195,12 +194,13 @@
 			var/datum/robolimb/R
 			if(rlimb_data[name]) R = all_robolimbs[rlimb_data[name]]
 			if(!R) R = basic_robolimb
-			preview_icon.Blend(icon(R.icon, "[name]_[b]"), ICON_OVERLAY) // This doesn't check gendered_icon. Not an issue while only limbs can be robotic.
+			// This doesn't check gendered_icon. Not an issue while only limbs can be robotic.
+			preview_icon.Blend(icon(R.icon, "[name]_[b]"), ICON_OVERLAY)
 			continue
 		if(name in list(BP_CHEST,BP_GROIN,BP_HEAD))
-			preview_icon.Blend(new /icon(icobase, "[name]_[g]"), ICON_OVERLAY)
+			preview_icon.Blend(new /icon(icobase, "[name][g]"), ICON_OVERLAY)
 		else
-			preview_icon.Blend(new /icon(icobase, "[name]_[b]"), ICON_OVERLAY)
+			preview_icon.Blend(new /icon(icobase, "[name][b]"), ICON_OVERLAY)
 		var/tattoo = tattoo_data[name]
 		var/tattoo2 = tattoo_data["[name]2"]
 		if(tattoo)  preview_icon.Blend(new/icon('icons/mob/tattoo.dmi', "[name]_[tattoo]_[b]"), ICON_OVERLAY)
@@ -223,12 +223,12 @@
 			preview_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
 
 	// Eyes color
-	var/icon/eyes = new/icon(icobase, "eyes_[body_build]")
+	var/icon/eyes = new/icon(icobase, "eyes[body_build]")
 	if ((current_species && (current_species.flags & HAS_EYE_COLOR)))
 		eyes.Blend(eyes_color, ICON_ADD)
 
 	if(disabilities & NEARSIGHTED)
-		eyes.Blend(new /icon((g == "f1")?'icons/mob/eyes_f.dmi':'icons/mob/eyes.dmi', "glasses"), ICON_OVERLAY)
+		eyes.Blend(new /icon(body_build.glasses_icon, "glasses"), ICON_OVERLAY)
 
 	// Hair Style'n'Color
 	var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
@@ -246,45 +246,46 @@
 	preview_icon.Blend(eyes, ICON_OVERLAY)
 
 	if(underwear && current_species.flags & HAS_UNDERWEAR)
-		preview_icon.Blend(new/icon('icons/mob/human.dmi', "[underwear]_[g]"), ICON_OVERLAY)
+		preview_icon.Blend(new/icon('icons/mob/human.dmi', "[underwear][g]"), ICON_OVERLAY)
 
 	if(undershirt && current_species.flags & HAS_UNDERWEAR)
-		preview_icon.Blend(new/icon('icons/mob/human.dmi', "[undershirt]_[g]"), ICON_OVERLAY)
+		preview_icon.Blend(new/icon('icons/mob/human.dmi', "[undershirt][g]"), ICON_OVERLAY)
 
 	var/icon/clothes = null
-	if(job_civilian_low & ASSISTANT || !job_master)//This gives the preview icon clothes depending on which job(if any) is set to 'high'
-		clothes = new /icon(current_species.get_uniform_sprite("grey", body_build), "grey")
-		clothes.Blend(new /icon(current_species.get_shoes_sprite("black", body_build), "black"), ICON_UNDERLAY)
+	//This gives the preview icon clothes depending on which job(if any) is set to 'high'
+	if(job_civilian_low & ASSISTANT || !job_master)
+		clothes = new /icon(body_build.uniform_icon, "grey")
+		clothes.Blend(new /icon(body_build.shoes_icon, "black"), ICON_UNDERLAY)
 		if(backbag == 2)
-			clothes.Blend(new /icon(current_species.get_uniform_sprite("backpack", body_build), "backpack"), ICON_OVERLAY)
+			clothes.Blend(new /icon(body_build.back_icon, "backpack"), ICON_OVERLAY)
 		else if(backbag == 3 || backbag == 4)
-			clothes.Blend(new /icon(current_species.get_shoes_sprite("satchel", body_build), "satchel"), ICON_OVERLAY)
+			clothes.Blend(new /icon(body_build.back_icon, "satchel"), ICON_OVERLAY)
 
 	else
 		var/datum/job/J = job_master.GetJob(high_job_title)
 		if(J)//I hate how this looks, but there's no reason to go through this switch if it's empty
 
 			var/obj/item/clothing/under/UF = J.uniform
-			clothes = new /icon(current_species.get_uniform_sprite(initial(UF.icon_state), body_build), initial(UF.icon_state))
+			clothes = new /icon(body_build.uniform_icon, initial(UF.icon_state))
 
 			var/obj/item/clothing/shoes/SH = J.shoes
-			clothes.Blend(new /icon(current_species.get_shoes_sprite(initial(SH.icon_state), body_build), initial(SH.icon_state)), ICON_UNDERLAY)
+			clothes.Blend(new /icon(body_build.shoes_icon, initial(SH.icon_state)), ICON_UNDERLAY)
 
 			var/obj/item/clothing/gloves/GL = J.gloves
-			if(GL) clothes.Blend(new /icon(current_species.get_gloves_sprite(initial(GL.icon_state), body_build), initial(GL.icon_state)), ICON_UNDERLAY)
+			if(GL) clothes.Blend(new /icon(body_build.gloves_icon, initial(GL.icon_state)), ICON_UNDERLAY)
 
 			var/obj/item/weapon/storage/belt/BT = J.belt
-			if(BT) clothes.Blend(new /icon(current_species.get_belt_sprite(initial(BT.icon_state), body_build), initial(BT.icon_state)), ICON_OVERLAY)
+			if(BT) clothes.Blend(new /icon(body_build.belt_icon, initial(BT.icon_state)), ICON_OVERLAY)
 
 			var/obj/item/clothing/suit/ST = J.suit
-			if(ST) clothes.Blend(new /icon(current_species.get_suit_sprite(initial(ST.icon_state), body_build), initial(ST.icon_state)), ICON_OVERLAY)
+			if(ST) clothes.Blend(new /icon(body_build.suit_icon, initial(ST.icon_state)), ICON_OVERLAY)
 
 			var/obj/item/clothing/head/HT = J.hat
-			if(HT) clothes.Blend(new /icon(current_species.get_head_sprite(initial(HT.icon_state), body_build), initial(HT.icon_state)), ICON_OVERLAY)
+			if(HT) clothes.Blend(new /icon(body_build.hat_icon, initial(HT.icon_state)), ICON_OVERLAY)
 
 			if( backbag > 1 )
 				var/obj/item/weapon/storage/backpack/BP = J.backpacks[backbag-1]
-				clothes.Blend(new /icon(current_species.get_back_sprite(initial(BP.icon_state), body_build), initial(BP.icon_state)), ICON_OVERLAY)
+				clothes.Blend(new /icon(body_build.back_icon, initial(BP.icon_state)), ICON_OVERLAY)
 
 	if(clothes)
 		preview_icon.Blend(clothes, ICON_OVERLAY)

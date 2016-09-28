@@ -10,10 +10,17 @@
 	var/list/forced_children = null
 
 /obj/item/organ/external/robotic/get_icon()
-	var/body_build = owner ? (owner.body_build) : 0
-	mob_icon = new /icon(force_icon, "[organ_tag]_[body_build]")
-	dir = EAST
+	var/gender = "_m"
+	var/body_build = ""
+	if(owner)
+		if(owner.gender == FEMALE)
+			gender = "_f"
+		body_build = owner.body_build.index
+	icon_state = "[organ_tag][gendered ? "[gender]" : ""][body_build]"
+
+	mob_icon = new /icon(force_icon, icon_state)
 	icon = mob_icon
+	dir = SOUTH
 	return mob_icon
 
 /obj/item/organ/external/robotic/Destroy()
@@ -23,7 +30,6 @@
 /obj/item/organ/external/robotic/removed()
 	deactivate(1)
 	..()
-
 
 /obj/item/organ/external/robotic/update_germs()
 	germ_level = 0
@@ -58,7 +64,7 @@
 			"<span class='danger'>Your [src.name] explodes!</span>",\
 			"<span class='danger'>You hear an explosion!</span>")
 		explosion(get_turf(src),-1,-1,2,3)
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		var/datum/effect/effect/system/spark_spread/spark_system = new
 		spark_system.set_up(5, 0, last_owner)
 		spark_system.attach(last_owner)
 		spark_system.start()

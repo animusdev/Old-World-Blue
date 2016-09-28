@@ -110,20 +110,16 @@
 	S["real_name"]			>> real_name
 	S["name_is_always_random"] >> random_name
 	S["gender"]				>> gender
-	S["body_build"]			>> body_build
 	S["age"]				>> age
 	S["species"]			>> species
-	current_species = all_species[species]
-	if(!current_species)
-		species = "Human"
-		current_species = all_species["Human"]
+	S["body"]				>> body
 	S["language"]			>> language
 	S["spawnpoint"]			>> spawnpoint
 
-	S["hair_color"]		>> hair_color
+	S["hair_color"]			>> hair_color
 	S["facial_color"]		>> facial_color
-	S["skin_color"]		>> skin_color
-	S["eyes_color"]		>> eyes_color
+	S["skin_color"]			>> skin_color
+	S["eyes_color"]			>> eyes_color
 
 	S["skin_tone"]			>> s_tone
 	S["hair_style_name"]	>> h_style
@@ -188,6 +184,7 @@
 
 	if(isnull(species) || !(species in playable_species))
 		species = "Human"
+	current_species = all_species[species]
 
 	if(isnum(underwear))
 		var/list/undies = gender == MALE ? underwear_m : underwear_f
@@ -202,7 +199,7 @@
 	if(!real_name) real_name = random_name(gender)
 	random_name		= sanitize_integer(random_name, 0, 1, initial(random_name))
 	gender			= sanitize_gender(gender)
-	body_build 		= sanitize_integer(body_build, 0, 1, initial(body_build))
+	body 			= sanitize_inlist(body, current_species.body_builds, "Default")
 	age				= sanitize_integer(age, current_species.min_age, current_species.max_age, initial(age))
 	hair_color		= sanitize_hexcolor(hair_color, initial(hair_color))
 	facial_color	= sanitize_hexcolor(facial_color, initial(facial_color))
@@ -214,16 +211,16 @@
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
 	b_type			= sanitize_text(b_type, initial(b_type))
 
-	alternate_option = sanitize_integer(alternate_option, 0, 2, initial(alternate_option))
+	alternate_option  = sanitize_integer(alternate_option,  0, 2,     initial(alternate_option))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
-	job_civilian_med = sanitize_integer(job_civilian_med, 0, 65535, initial(job_civilian_med))
-	job_civilian_low = sanitize_integer(job_civilian_low, 0, 65535, initial(job_civilian_low))
-	job_medsci_high = sanitize_integer(job_medsci_high, 0, 65535, initial(job_medsci_high))
-	job_medsci_med = sanitize_integer(job_medsci_med, 0, 65535, initial(job_medsci_med))
-	job_medsci_low = sanitize_integer(job_medsci_low, 0, 65535, initial(job_medsci_low))
-	job_engsec_high = sanitize_integer(job_engsec_high, 0, 65535, initial(job_engsec_high))
-	job_engsec_med = sanitize_integer(job_engsec_med, 0, 65535, initial(job_engsec_med))
-	job_engsec_low = sanitize_integer(job_engsec_low, 0, 65535, initial(job_engsec_low))
+	job_civilian_med  = sanitize_integer(job_civilian_med,  0, 65535, initial(job_civilian_med))
+	job_civilian_low  = sanitize_integer(job_civilian_low,  0, 65535, initial(job_civilian_low))
+	job_medsci_high   = sanitize_integer(job_medsci_high,   0, 65535, initial(job_medsci_high))
+	job_medsci_med    = sanitize_integer(job_medsci_med,    0, 65535, initial(job_medsci_med))
+	job_medsci_low    = sanitize_integer(job_medsci_low,    0, 65535, initial(job_medsci_low))
+	job_engsec_high   = sanitize_integer(job_engsec_high,   0, 65535, initial(job_engsec_high))
+	job_engsec_med    = sanitize_integer(job_engsec_med,    0, 65535, initial(job_engsec_med))
+	job_engsec_low    = sanitize_integer(job_engsec_low,    0, 65535, initial(job_engsec_low))
 
 	if(isnull(disabilities)) disabilities = 0
 	if(!player_alt_titles) player_alt_titles = new()
@@ -233,7 +230,6 @@
 	if(!modifications_data) src.modifications_data = list()
 	if(!modifications_colors) src.modifications_colors = list()
 	if(!gear) src.gear = list()
-	//if(!skin_style) skin_style = "Default"
 
 	if(!home_system) home_system = "Unset"
 	if(!citizenship) citizenship = "None"
@@ -252,7 +248,7 @@
 	S["real_name"]			<< real_name
 	S["name_is_always_random"] << random_name
 	S["gender"]				<< gender
-	S["body_build"]			<< body_build
+	S["body"]				<< body
 	S["age"]				<< age
 	S["species"]			<< species
 	S["language"]			<< language

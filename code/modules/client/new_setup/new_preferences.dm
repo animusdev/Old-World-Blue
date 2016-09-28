@@ -26,6 +26,7 @@
 	var/eyes_color   = "#000000"
 	var/skin_color   = "#000000"
 	var/skin_tone    = 35			//LETHALGHOST: -s_tone + 35.
+
 	var/email = ""					//Character email adress.
 	var/email_is_public = 1			//Add or not to email-list at round join.
 
@@ -39,6 +40,14 @@
 
 	// LOADOUT
 	var/list/loadout = list()
+
+/datum/preferences/proc/sanitize_body_build()
+	var/datum/body_build/BB = get_body_build(gender, body)
+	if(BB && body in current_species.body_builds && gender in BB.genders)
+		return 1
+
+	BB = get_body_build(gender, body, current_species.body_builds)
+	body = BB.name
 
 
 /datum/preferences/proc/NewShowChoices(mob/user)
@@ -149,8 +158,7 @@
 	dat += "Species: <a href='byond://?src=\ref[src];switch_page=[PAGE_SPECIES]'>[species]</a><br>"
 //	dat += "Secondary Language:<br><a href='byond://?src=\ref[src];language=input'>[language]</a><br>"
 	dat += "Gender: <a href='byond://?src=\ref[src];gender=switch'>[gender == MALE ? "Male" : "Female"]</a><br>"
-	if(gender == FEMALE && current_species.allow_slim_fem)
-		dat += "Body build: <a href='byond://?src=\ref[src];build=switch'>[body_build == BODY_DEFAULT ? "Default" : "Slim"]</a><br>"
+	dat += "Body build: <a href='byond://?src=\ref[src];build=switch'>[body]</a><br>"
 
 	if(current_species.flags & HAS_SKIN_TONE)
 		dat += "Skin Tone: <a href='?src=\ref[src];skin_tone=input'>[skin_tone]/220<br></a>"
@@ -214,7 +222,6 @@
 
 	return dat
 
-
 /datum/preferences/proc/HandleRecordsTopic(mob/new_player/user, list/href_list)
 	if(href_list["name"]) switch(href_list["name"])
 		if("input")
@@ -245,15 +252,12 @@
 			gender = FEMALE
 		else
 			gender = MALE
-			body_build = BODY_DEFAULT
+		sanitize_body_build()
 
 	else if(href_list["build"])
+		body = next_in_list(body, get_body_build_list(gender, current_species.body_builds))
 		req_update_icon = 1
-		if(body_build == BODY_DEFAULT && gender == FEMALE && current_species.allow_slim_fem)
-			body_build = BODY_SLIM
-		else
-			body_build = BODY_DEFAULT
-
+		sanitize_body_build()
 
 	else if(href_list["hair"])
 		switch(href_list["hair"])
@@ -641,26 +645,28 @@
 
 /datum/preferences/proc/GetPrefsPage()
 	var/dat = "<table>"
-	dat += "<tr><td><b>UI:</b></td></tr>"
-	dat += "<tr><td></td><td>UI Style:</td><td><a href='?src=\ref[src];preference=ui'>[UI_style]</a></td></tr>"
-	dat += "<tr><td></td><td>Color:</td> <td><a href='?src=\ref[src];preference=UIcolor'><span class='box' style='background-color:[UI_style_color]'></span></a></td></tr>"
-	dat += "<tr><td></td><td>Alpha(transparency):</td> <td><a href='?src=\ref[src];preference=UIalpha'>[UI_style_alpha]</a></td></tr>"
-	dat += "<tr><td><b>SOUND:</b></td></tr>"
-	dat += "<tr><td></td><td>Play admin midis:</td> <td><a href='?src=\ref[src];preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a></td></tr>"
-	dat += "<tr><td></td><td>Play lobby music:</td> <td><a href='?src=\ref[src];preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</a></td></tr>"
-	dat += "<tr><td></td><td>Hear Ambience: </td> <td><a href='?src=\ref[src];preference=ambience'>[(toggles & SOUND_AMBIENCE) ? "Yes" : "No"]</a></td></tr>"
-	dat += "<tr><td><b>GHOST:</b></td></tr>"
-	dat += "<tr><td></td><td>Ghost ears:</td> <td><a href='?src=\ref[src];preference=ghost_ears'>[(chat_toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</a></td></tr>"
-	dat += "<tr><td></td><td>Ghost sight:</td> <td><a href=?src=\ref[src];preference=ghost_sight'>[(chat_toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearest Creatures"]</a></td></tr>"
-	dat += "<tr><td></td><td>Ghost radio:</td> <td><a href='?src=\ref[src];preference=ghost_radio'>[(chat_toggles & CHAT_GHOSTRADIO) ? "All Chatter" : "Nearest Speakers"]</a></td></tr>"
-	dat += "<tr><td></td><td>Hear dead chat:</td> <td><a href='?src=\ref[src];preference=dead_chat'>[(chat_toggles & CHAT_DEAD) ? "Yes" : "No"]</a></td></tr>"
-	dat += "<tr><td><b>CHAT:</b></td></tr>"
-	dat += "<tr><td></td><td>Hear OOC:</td> <td><a href='?src=\ref[src];preference=head_ooc'>[(chat_toggles & CHAT_OOC) ? "Yes" : "No"]</a></td></tr>"
-	dat += "<tr><td></td><td>Hear LOOC:</td> <td><a href='?src=\ref[src];preference=head_looc'>[(chat_toggles & CHAT_LOOC) ? "Yes" : "No"]</a></td></tr>"
-	dat += "<tr><td></td><td>Hide Chat Tags:</td> <td><a href='?src=\ref[src];preference=chat_tags'>[(toggles & CHAT_NOICONS) ? "Yes" : "No"]</a></td></tr>"
-	dat += "<tr><td></td><td>Emote Localization:</td> <td><a href='?src=\ref[src];preference=emote_localization'>[(toggles & RUS_AUTOEMOTES) ? "Enabled" : "Disabled"]</a></td></tr>"
-	dat += "<tr><td></td><td>Show MOTD:</td> <td><a href='?src=\ref[src];preference=show_motd'>[(toggles & HIDE_MOTD) ? "Disabled" : "Enabled"]</a></td></tr>"
-	dat += "</table>"
+	dat += {"
+		<tr><td><b>UI:</b></td></tr>
+		<tr><td></td><td>UI Style:</td><td><a href='?src=\ref[src];preference=ui'>[UI_style]</a></td></tr>
+		<tr><td></td><td>Color:</td> <td><a href='?src=\ref[src];preference=UIcolor'><span class='box' style='background-color:[UI_style_color]'></span></a></td></tr>
+		<tr><td></td><td>Alpha(transparency):</td> <td><a href='?src=\ref[src];preference=UIalpha'>[UI_style_alpha]</a></td></tr>
+		<tr><td><b>SOUND:</b></td></tr>
+		<tr><td></td><td>Play admin midis:</td> <td><a href='?src=\ref[src];preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a></td></tr>
+		<tr><td></td><td>Play lobby music:</td> <td><a href='?src=\ref[src];preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</a></td></tr>
+		<tr><td></td><td>Hear Ambience: </td> <td><a href='?src=\ref[src];preference=ambience'>[(toggles & SOUND_AMBIENCE) ? "Yes" : "No"]</a></td></tr>
+		<tr><td><b>GHOST:</b></td></tr>
+		<tr><td></td><td>Ghost ears:</td> <td><a href='?src=\ref[src];preference=ghost_ears'>[(chat_toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</a></td></tr>
+		<tr><td></td><td>Ghost sight:</td> <td><a href=?src=\ref[src];preference=ghost_sight'>[(chat_toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearest Creatures"]</a></td></tr>
+		<tr><td></td><td>Ghost radio:</td> <td><a href='?src=\ref[src];preference=ghost_radio'>[(chat_toggles & CHAT_GHOSTRADIO) ? "All Chatter" : "Nearest Speakers"]</a></td></tr>
+		<tr><td></td><td>Hear dead chat:</td> <td><a href='?src=\ref[src];preference=dead_chat'>[(chat_toggles & CHAT_DEAD) ? "Yes" : "No"]</a></td></tr>
+		<tr><td><b>CHAT:</b></td></tr>
+		<tr><td></td><td>Hear OOC:</td> <td><a href='?src=\ref[src];preference=head_ooc'>[(chat_toggles & CHAT_OOC) ? "Yes" : "No"]</a></td></tr>
+		<tr><td></td><td>Hear LOOC:</td> <td><a href='?src=\ref[src];preference=head_looc'>[(chat_toggles & CHAT_LOOC) ? "Yes" : "No"]</a></td></tr>
+		<tr><td></td><td>Hide Chat Tags:</td> <td><a href='?src=\ref[src];preference=chat_tags'>[(toggles & CHAT_NOICONS) ? "Yes" : "No"]</a></td></tr>
+		<tr><td></td><td>Emote Localization:</td> <td><a href='?src=\ref[src];preference=emote_localization'>[(toggles & RUS_AUTOEMOTES) ? "Enabled" : "Disabled"]</a></td></tr>
+		<tr><td></td><td>Show MOTD:</td> <td><a href='?src=\ref[src];preference=show_motd'>[(toggles & HIDE_MOTD) ? "Disabled" : "Enabled"]</a></td></tr>
+		</table>
+	"}
 
 	return dat
 

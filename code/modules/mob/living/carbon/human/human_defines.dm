@@ -15,12 +15,11 @@
 	//Skin colour
 	var/skin_color = "#000000"
 
-	var/body_build = BODY_DEFAULT // Only for fem rigth now
-
 	var/size_multiplier = 1 //multiplier for the mob's icon size
 	var/damage_multiplier = 1 //multiplies melee combat damage
 	var/icon_update = 1 //whether icon updating shall take place
 
+	var/datum/body_build/body_build = null
 
 	var/lip_color
 

@@ -17,6 +17,7 @@
 	min_age = 17
 	max_age = 110
 
+	body_builds = list("Default", "Slim")
 
 	flags = CAN_JOIN | HAS_SKIN_TONE | HAS_LIPS | HAS_UNDERWEAR | HAS_EYE_COLOR
 

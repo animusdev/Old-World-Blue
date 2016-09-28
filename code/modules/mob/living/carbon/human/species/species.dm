@@ -142,7 +142,7 @@
 		BP_R_FOOT = new /datum/organ_description/foot/right
 	)
 
-	var/body_builds = list("Default")
+	var/list/body_builds = list("Default")
 
 	// Bump vars
 	var/bump_flag = HUMAN	// What are we considered to be when bumped?

@@ -30,9 +30,9 @@ var/global/list/modifications_types = list(
 	var/desc = ""			// Description.
 	var/list/body_parts = list(BP_CHEST, "chest2", BP_HEAD, BP_GROIN, BP_L_ARM, BP_R_ARM, BP_L_HAND, BP_R_HAND, BP_L_LEG, BP_R_LEG,\
 		BP_L_FOOT, BP_R_FOOT, O_HEART, O_LUNGS, O_LIVER, O_BRAIN, O_EYES)		// For sorting'n'selection optimization.
-	var/allowed_species = list("Human")	// Species restriction.
-	var/allow_slim_body = 1			// The "main sprite question" yeah.
-	var/replace_limb = null				// To draw usual limb or not.
+	var/list/allowed_species = list("Human")	// Species restriction.
+	var/list/allow_body_builds=null				// The "main sprite question" yeah.
+	var/replace_limb = null						// To draw usual limb or not.
 	var/mob_icon = ""
 	var/icon/icon = 'icons/mob/human_races/body_modification.dmi'
 	var/nature = MODIFICATION_ORGANIC
@@ -47,8 +47,8 @@ var/global/list/modifications_types = list(
 		if(allowed_species && !(P.species in allowed_species))
 			usr << "[name] isn't allowed for [P.species]"
 			return 0
-		if(!allow_slim_body && (P.body_build == BODY_SLIM))
-			usr << "[name] isn't allowed for slim body"
+		if(allow_body_builds && !(P.body in allow_body_builds))
+			usr << "[name] isn't allowed for [P.body] body"
 			return 0
 		var/list/organ_data = organ_structure[organ]
 		if(organ_data)
@@ -162,7 +162,7 @@ var/global/list/modifications_types = list(
 	name = "Zeng-Hu"
 	id = "prosthesis_zenghu"
 	desc = "Prosthesis with rubbery fleshtone covering with visible seams."
-	allow_slim_body = 0
+	allow_body_builds = list("Default")
 
 	get_mob_icon(organ, body_build = 0)
 		return new/icon('icons/mob/human_races/cyberlimbs/zenghu.dmi', "[organ]_[body_build]")
@@ -178,7 +178,7 @@ var/global/list/modifications_types = list(
 /datum/body_modification/prosthesis/enforcer_charge
 	name = "Enforcer Charge"
 	id = "prosthesis_enforcer"
-	allow_slim_body = 0
+	allow_body_builds = list("Default")
 	mob_icon = "cyber"
 
 /datum/body_modification/prosthesis/eyecam
