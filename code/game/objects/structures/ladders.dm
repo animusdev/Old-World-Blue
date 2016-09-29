@@ -13,17 +13,6 @@
 
 	var/obj/structure/ladder/target
 
-	initialize()
-		// the upper will connect to the lower
-		if(icon_state == "ladder00")
-			return
-
-		for(var/obj/structure/ladder/L in GetBelow(src))
-			if(L.icon_state == "ladder00")
-				target = L
-				L.target = src
-				return
-
 	Destroy()
 		if(target && icon_state == "ladder01")
 			qdel(target)
@@ -52,29 +41,3 @@
 
 	CanPass(obj/mover, turf/source, height, airflow)
 		return airflow || !density
-
-// The storage of connections between adjacent levels means some bitwise magic is needed.
-var/z_levels = 0
-
-proc/HasAbove(var/z)
-	if(z >= world.maxz || z > 16 || z < 1)
-		return 0
-	return z_levels & (1 << (z - 1))
-
-proc/HasBelow(var/z)
-	if(z > world.maxz || z > 17 || z < 2)
-		return 0
-	return z_levels & (1 << (z - 2))
-
-// Thankfully, no bitwise magic is needed here.
-proc/GetAbove(var/atom/atom)
-	var/turf/turf = get_turf(atom)
-	if(!turf)
-		return null
-	return HasAbove(turf.z) ? get_step(turf, UP) : null
-
-proc/GetBelow(var/atom/atom)
-	var/turf/turf = get_turf(atom)
-	if(!turf)
-		return null
-	return HasBelow(turf.z) ? get_step(turf, DOWN) : null
