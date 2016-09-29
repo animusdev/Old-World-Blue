@@ -360,7 +360,7 @@ var/global/list/damage_icon_parts = list()
 		return
 
 	//base icons
-	var/icon/face_standing	= new /icon('icons/mob/human_face.dmi',"bald")
+	var/icon/face_standing	= new /icon('icons/mob/hair.dmi',"bald")
 
 	if(f_style)
 		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[f_style]
