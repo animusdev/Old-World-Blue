@@ -518,6 +518,7 @@
 #define RUS_AUTOEMOTES  64
 #define HIDE_MOTD       128
 #define PREFER_NEWSETUP 256
+#define PROGRESSBAR		512
 
 // Preference chat.
 #define CHAT_OOC          1

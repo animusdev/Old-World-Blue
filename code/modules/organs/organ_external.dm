@@ -44,6 +44,8 @@
 	var/open = 0
 	var/stage = 0
 	var/cavity = 0
+	var/atom/movable/applied_pressure
+	var/atom/movable/splinted
 	var/sabotaged = 0 // If a prosthetic limb is emagged, it will detonate when it fails.
 	var/encased       // Needs to be opened with a saw to access the organs.
 	var/list/implants = list()
@@ -56,6 +58,7 @@
 	var/tattoo = 0
 	var/tattoo2 = 0
 	var/list/drop_on_remove = null
+
 
 /obj/item/organ/external/New(mob/living/carbon/human/holder, var/datum/organ_description/desc = null)
 	if(desc)
@@ -114,6 +117,10 @@
 	if(parent)
 		parent.children -= src
 		parent = null
+
+	if(splinted && splinted.loc == src)
+		qdel(splinted)
+	splinted = null
 
 	if(children)
 		for(var/obj/item/organ/external/child in children)
@@ -971,6 +978,24 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	status &= ~ORGAN_BROKEN
 	return 1
+
+/obj/item/organ/external/proc/apply_splint(var/atom/movable/splint)
+	if(!splinted)
+		splinted = splint
+		if(!applied_pressure)
+			applied_pressure = splint
+		return 1
+	return 0
+
+/obj/item/organ/external/proc/remove_splint()
+	if(splinted)
+		if(splinted.loc == src)
+			splinted.dropInto(owner? owner.loc : src.loc)
+		if(applied_pressure == splinted)
+			applied_pressure = null
+		splinted = null
+		return 1
+	return 0
 
 /obj/item/organ/external/robotize(var/company)
 	..()
