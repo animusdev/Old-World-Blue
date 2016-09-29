@@ -195,7 +195,7 @@
 			if(rlimb_data[name]) R = all_robolimbs[rlimb_data[name]]
 			if(!R) R = basic_robolimb
 			// This doesn't check gendered_icon. Not an issue while only limbs can be robotic.
-			preview_icon.Blend(icon(R.icon, "[name]_[b]"), ICON_OVERLAY)
+			preview_icon.Blend(icon(R.icon, "[name][b]"), ICON_OVERLAY)
 			continue
 		if(name in list(BP_CHEST,BP_GROIN,BP_HEAD))
 			preview_icon.Blend(new /icon(icobase, "[name][g]"), ICON_OVERLAY)
@@ -223,7 +223,7 @@
 			preview_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
 
 	// Eyes color
-	var/icon/eyes = new/icon(icobase, "eyes[body_build]")
+	var/icon/eyes = new/icon(icobase, "eyes[b]")
 	if ((current_species && (current_species.flags & HAS_EYE_COLOR)))
 		eyes.Blend(eyes_color, ICON_ADD)
 
