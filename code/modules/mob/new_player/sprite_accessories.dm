@@ -133,7 +133,7 @@
 		name = "Bun"
 		icon_state = "bun"
 
-	bun
+	bun_casual
 		name = "Casual Bun"
 		icon_state = "bunalt"
 
@@ -188,6 +188,7 @@
 	devillock
 		name = "Devil Lock"
 		icon_state = "devilock"
+		gender = MALE
 
 	doublebun
 		name = "Double-Bun"
@@ -329,7 +330,7 @@
 		icon_state = "vlong"
 
 	longeralt2
-		name = "Long Hair Alt 2"
+		name = "Long Hair Alt"
 		icon_state = "longeralt2"
 
 	longest
@@ -472,7 +473,7 @@
 		icon_state = "rows1"
 
 	rows2
-		name = "Rows 2"
+		name = "Rows Alt"
 		icon_state = "rows2"
 
 	sargeant

@@ -84,11 +84,10 @@
 	minimal_access = list(access_security, access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
 	minimal_player_age = 3
 
-	uniform = /obj/item/clothing/under/det
+	uniform = /obj/item/clothing/under/investigator
 	pda = /obj/item/device/pda/detective
-	shoes = /obj/item/clothing/shoes/brown
-	hat = /obj/item/clothing/head/det_hat
-	suit = /obj/item/clothing/suit/storage/det_suit
+	shoes = /obj/item/clothing/shoes/laceup
+	suit = /obj/item/clothing/suit/storage/toggle/investigator
 
 	put_in_backpack = list(\
 		/obj/item/weapon/flame/lighter/zippo,\
@@ -107,8 +106,8 @@
 	title = "Forensic Technician"
 	flag = FORENTEC
 
-	uniform = /obj/item/clothing/under/rank/forentech
-	suit = /obj/item/clothing/suit/storage/forensics/red
+	uniform = /obj/item/clothing/under/forensic
+	suit = /obj/item/clothing/suit/storage/toggle/labcoat/forensic
 
 
 
