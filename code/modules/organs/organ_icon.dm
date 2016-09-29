@@ -117,9 +117,9 @@ var/global/list/limb_icon_cache = list()
 				mob_icon.Blend(s_col, ICON_ADD)
 
 			if(tattoo)
-				mob_icon.Blend(new/icon('icons/mob/tattoo.dmi', "[organ_tag]_[tattoo]_[body_build]"), ICON_OVERLAY)
+				mob_icon.Blend(new/icon('icons/mob/tattoo.dmi', "[organ_tag]_[tattoo][body_build]"), ICON_OVERLAY)
 			if(tattoo2)
-				mob_icon.Blend(new/icon('icons/mob/tattoo.dmi', "[organ_tag]2_[tattoo2]_[body_build]"), ICON_OVERLAY)
+				mob_icon.Blend(new/icon('icons/mob/tattoo.dmi', "[organ_tag]2_[tattoo2][body_build]"), ICON_OVERLAY)
 
 	dir = EAST
 	icon = mob_icon

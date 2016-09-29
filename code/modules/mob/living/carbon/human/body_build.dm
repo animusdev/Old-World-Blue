@@ -15,6 +15,7 @@
 	var/s_store_icon= 'icons/mob/belt_mirror.dmi'
 	var/back_icon	= 'icons/mob/back.dmi'
 	var/ties_icon	= 'icons/mob/ties.dmi'
+	var/hidden_icon = 'icons/mob/hidden.dmi'
 	var/rig_back	= 'icons/mob/rig_back.dmi'
 
 /datum/body_build/slim
@@ -31,6 +32,7 @@
 	belt_icon		= 'icons/mob/belt_f.dmi'
 	back_icon		= 'icons/mob/back_f.dmi'
 	ties_icon		= 'icons/mob/ties_f.dmi'
+	hidden_icon 	= 'icons/mob/hidden_f.dmi'
 	rig_back		= 'icons/mob/rig_back_slim.dmi'
 
 /proc/get_body_build(gender, prefered_build = "Default", var/list/limited_to)

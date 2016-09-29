@@ -1381,49 +1381,6 @@
 		return
 	return ..()
 
-/mob/living/carbon/human/proc/get_uniform_sprite(state = "")
-	return image(species.get_uniform_sprite(state, body_build), icon_state = state)
-
-/mob/living/carbon/human/proc/get_suit_sprite(state = "")
-	return image(species.get_suit_sprite(state, body_build), icon_state = state)
-
-/mob/living/carbon/human/proc/get_gloves_sprite(state = "")
-	return image(species.get_gloves_sprite(state, body_build), icon_state = state)
-
-/mob/living/carbon/human/proc/get_shoes_sprite(state = "")
-	return image(species.get_shoes_sprite(state, body_build), icon_state = state)
-
-/mob/living/carbon/human/proc/get_head_sprite(state = "")
-	return image(species.get_head_sprite(state, body_build), icon_state = state)
-
-/mob/living/carbon/human/proc/get_glasses_sprite(state = "")
-	return image(species.get_glasses_sprite(state, body_build), icon_state = state)
-
-/mob/living/carbon/human/proc/get_belt_sprite(state = "")
-	return image(species.get_belt_sprite(state, body_build), icon_state = state)
-
-/mob/living/carbon/human/proc/get_ears_sprite(state = "")
-	return image(species.get_ears_sprite(state, body_build), icon_state = state)
-
-/mob/living/carbon/human/proc/get_back_sprite(state = "")
-	return image(species.get_back_sprite(state, body_build), icon_state = state)
-
-/mob/living/carbon/human/proc/get_back_u_sprite(state = "")
-	var/image/back = species.get_back_u_sprite(state, body_build)
-	if(back)
-		return image(back, icon_state = state)
-	else
-		return null
-
-/mob/living/carbon/human/proc/get_mask_sprite(state = "")
-	return image(species.get_mask_sprite(state, body_build), icon_state = state)
-
-/mob/living/carbon/human/proc/get_store_sprite(state = "")
-	return image(species.get_store_sprite(state, body_build), icon_state = state)
-
-/mob/living/carbon/human/proc/get_hidden_slot_sprite(state = "")
-	return image(species.get_hidden_slot_sprite(state, body_build), icon_state = state)
-
 /mob/living/carbon/human/proc/get_full_print()
 	if(!dna ||!dna.uni_identity)
 		return

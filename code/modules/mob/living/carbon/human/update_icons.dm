@@ -695,7 +695,7 @@ var/global/list/damage_icon_parts = list()
 		if(wear_suit.icon_override)
 			standing = image(wear_suit.icon_override, t_state)
 		else
-			standing = get_suit_sprite(t_state)
+			standing = image(body_build.suit_icon, t_state)
 
 		if( istype(wear_suit, /obj/item/clothing/suit/straight_jacket) )
 			drop_from_inventory(handcuffed)
@@ -799,7 +799,7 @@ var/global/list/damage_icon_parts = list()
 	var/image/standing = new/image('icons/mob/mob.dmi', "blank")
 	for( var/obj/item/clothing/hidden/C in list(h_socks, h_underwear, h_undershirt) )
 		if(!C) continue
-		var/image/item = get_hidden_slot_sprite(C.item_state)
+		var/image/item = image(body_build.hidden_icon, C.item_state)
 		if(C.color) item.color = C.color
 		standing.overlays += item
 
