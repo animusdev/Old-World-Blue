@@ -3,30 +3,31 @@ var/list/organ_cache = list()
 /obj/item/organ
 	name = "organ"
 	icon = 'icons/obj/surgery.dmi'
-	var/dead_icon
-	var/mob/living/carbon/human/owner = null
-	var/status = 0
-	var/vital //Lose a vital limb, die immediately.
-	var/damage = 0 // amount of damage to the organ
-
-
-	var/min_bruised_damage = 10
-	var/min_broken_damage = 30
-	var/max_damage
-
-	var/parent_organ = "chest"
-	var/obj/item/organ/external/parent
-	var/robotic = 0 //For being a robot
-	var/rejecting   // Is this organ already being rejected?
-
-	var/list/transplant_data
-	var/list/datum/autopsy_data/autopsy_data = list()
-	var/list/trace_chemicals = list() // traces of chemicals in the organ,
-									  // links chemical IDs to number of ticks for which they'll stay in the blood
 	germ_level = 0
 
-/obj/item/organ/proc/update_health()
-	return
+	// Strings.
+	var/organ_tag = "organ"           // Unique identifier.
+	var/parent_organ = BP_CHEST       // Organ holding this object.
+	var/obj/item/organ/external/parent
+
+	// Status tracking.
+	var/status = 0                    // Various status flags
+	var/vital                         // Lose a vital limb, die immediately.
+	var/damage = 0                    // Current damage to the organ
+	var/robotic = 0
+
+	// Reference data.
+	var/mob/living/carbon/human/owner // Current mob owning the organ.
+	var/list/transplant_data          // Transplant match data.
+	var/list/autopsy_data = list()    // Trauma data for forensics.
+	var/list/trace_chemicals = list() // Traces of chemicals in the organ.
+
+	// Damage vars.
+	var/min_bruised_damage = 10       // Damage before considered bruised
+	var/min_broken_damage = 30        // Damage before becoming broken
+	var/max_damage                    // Damage cap
+	var/rejecting                     // Is this organ already being rejected?
+
 
 /obj/item/organ/New(var/mob/living/carbon/human/holder)
 	..(holder)
@@ -69,13 +70,16 @@ var/list/organ_cache = list()
 	loc = owner.loc
 	owner = null
 
+/obj/item/organ/proc/update_health()
+	return
+
 /obj/item/organ/proc/die()
 	if(status & ORGAN_ROBOT)
 		return
 	damage = max_damage
 	processing_objects -= src
-	if(dead_icon)
-		icon_state = dead_icon
+	if(owner && vital)
+		owner.death()
 
 /obj/item/organ/process()
 
@@ -286,6 +290,6 @@ var/list/organ_cache = list()
 /obj/item/organ/attack_self(mob/user as mob)
 
 	// Convert it to an edible form, yum yum.
-	if(!robotic && user.a_intent == "help" && user.zone_sel.selecting == "mouth")
+	if(!robotic && user.a_intent == "help" && user.zone_sel.selecting == O_MOUTH)
 		bitten(user)
 		return

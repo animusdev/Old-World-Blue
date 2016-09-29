@@ -40,9 +40,9 @@ attacked_by() will handle hitting/missing/logging as it does now, and will call 
 		for(var/obj/item/weapon/grab/G in M.grabbed_by)
 			if(G.assailant == user && G.state >= GRAB_NECK && world.time >= (G.last_action + 20))
 				//TODO: better alternative for applying damage multiple times? Nice knifing sound?
-				M.apply_damage(20, BRUTE, "head", 0, sharp=sharp, edge=edge)
-				M.apply_damage(20, BRUTE, "head", 0, sharp=sharp, edge=edge)
-				M.apply_damage(20, BRUTE, "head", 0, sharp=sharp, edge=edge)
+				M.apply_damage(20, BRUTE, BP_HEAD, 0, sharp=sharp, edge=edge)
+				M.apply_damage(20, BRUTE, BP_HEAD, 0, sharp=sharp, edge=edge)
+				M.apply_damage(20, BRUTE, BP_HEAD, 0, sharp=sharp, edge=edge)
 				M.adjustOxyLoss(60) // Brain lacks oxygen immediately, pass out
 				flick(G.hud.icon_state, G.hud)
 				G.last_action = world.time

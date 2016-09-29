@@ -28,7 +28,7 @@
 	if(in_action)
 		return
 	in_action = 1
-	if(user.zone_sel.selecting == "mouth" || user.zone_sel.selecting == "head")
+	if(user.zone_sel.selecting == O_MOUTH || user.zone_sel.selecting == BP_HEAD)
 		if(!C.wear_mask)
 			if(C==user)
 				if(user.equip_to_slot_or_del( new/obj/item/clothing/mask/muzzle/tape(user), slot_wear_mask))

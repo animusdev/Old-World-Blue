@@ -91,7 +91,6 @@
 
 	lips_color = new_color
 
-	update_eyes()
 	update_body()
 	return 1*/
 

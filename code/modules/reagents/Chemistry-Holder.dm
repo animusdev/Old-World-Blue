@@ -5,6 +5,7 @@
 	var/atom/my_atom = null
 
 /datum/reagents/New(var/max = 100, atom/A = null)
+	..()
 	maximum_volume = max
 	my_atom = A
 
@@ -189,7 +190,7 @@
 			my_atom.on_reagent_change()
 		return 1
 	else
-		warning("[my_atom] attempted to add a reagent called '[id]' which doesn't exist as ([usr]) ([my_atom.x],[my_atom.y],[my_atom.z]).")
+		warning("[my_atom] attempted to add a reagent called '[id]' which doesn't exist. ([usr]) ([my_atom.x],[my_atom.y],[my_atom.z]).")
 	return 0
 
 /datum/reagents/proc/remove_reagent(var/id, var/amount, var/safety = 0)
@@ -224,6 +225,24 @@
 			else
 				return 0
 	return 0
+
+/datum/reagents/proc/has_any_reagent(var/list/check_reagents)
+	for(var/datum/reagent/current in reagent_list)
+		if(current.id in check_reagents)
+			if(current.volume >= check_reagents[current.id])
+				return 1
+			else
+				return 0
+	return 0
+
+/datum/reagents/proc/has_all_reagents(var/list/check_reagents)
+	//this only works if check_reagents has no duplicate entries... hopefully okay since it expects an associative list
+	var/missing = check_reagents.len
+	for(var/datum/reagent/current in reagent_list)
+		if(current.id in check_reagents)
+			if(current.volume >= check_reagents[current.id])
+				missing--
+	return !missing
 
 /datum/reagents/proc/clear_reagents()
 	for(var/datum/reagent/current in reagent_list)

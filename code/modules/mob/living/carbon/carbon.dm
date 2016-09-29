@@ -56,7 +56,7 @@
 				var/d = rand(round(I.force / 4), I.force)
 				if(istype(src, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = src
-					var/obj/item/organ/external/organ = H.get_organ("chest")
+					var/obj/item/organ/external/organ = H.get_organ(BP_CHEST)
 					if (istype(organ))
 						if(organ.take_damage(d, 0))
 							H.UpdateDamageIcon()
@@ -86,23 +86,17 @@
 	if(!istype(M, /mob/living/carbon)) return
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/obj/item/organ/external/temp = H.organs_by_name["r_hand"]
-		if (H.hand)
-			temp = H.organs_by_name["l_hand"]
+		var/obj/item/organ/external/temp = H.get_organ(H.hand ? BP_L_HAND : BP_R_HAND)
 		if(temp && !temp.is_usable())
 			H << "\red You can't use your [temp.name]"
 			return
 
 	for(var/datum/disease/D in viruses)
-
 		if(D.spread_by_touch())
-
 			M.contract_disease(D, 0, 1, CONTACT_HANDS)
 
 	for(var/datum/disease/D in M.viruses)
-
 		if(D.spread_by_touch())
-
 			contract_disease(D, 0, 1, CONTACT_HANDS)
 
 	return

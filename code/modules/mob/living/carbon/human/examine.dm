@@ -224,7 +224,7 @@
 			msg += "<span class='warning'>[t_He] [t_is] twitching ever so slightly.</span>\n"
 
 	//splints
-	for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
+	for(var/organ in list(BP_L_LEG,BP_R_LEG,BP_L_ARM,BP_R_ARM))
 		var/obj/item/organ/external/o = get_organ(organ)
 		if(o && o.status & ORGAN_SPLINTED)
 			msg += "<span class='warning'>[t_He] [t_has] a splint on [t_his] [o.name]!</span>\n"
@@ -271,7 +271,7 @@
 	if(getBrainLoss() >= 60)
 		msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
-	if(species.show_ssd && (!species.has_organ["brain"] || has_brain()) && stat != DEAD)
+	if(species.show_ssd && (!species.has_organ[O_BRAIN] || has_brain()) && stat != DEAD)
 		if(!key)
 			msg += "<span class='deadsay'>[t_He] [t_is] fast asleep. It doesn't look like [t_he] [t_is] waking up anytime soon.</span>\n"
 		else if(!client)
@@ -335,9 +335,9 @@
 	var/display_shoes = 0
 	var/display_gloves = 0
 
-	if(wound_flavor_text["head"] && (is_destroyed["head"] || (!skipmask && !(wear_mask && istype(wear_mask, /obj/item/clothing/mask/gas)))))
-		msg += wound_flavor_text["head"]
-	else if(is_bleeding["head"])
+	if(wound_flavor_text[BP_HEAD] && (is_destroyed[BP_HEAD] || (!skipmask && !(wear_mask && istype(wear_mask, /obj/item/clothing/mask/gas)))))
+		msg += wound_flavor_text[BP_HEAD]
+	else if(is_bleeding[BP_HEAD])
 		msg += "<span class='warning'>[src] [t_has] blood running down [t_his] face!</span>\n"
 
 	if(wound_flavor_text["upper body"] && !w_uniform && !skipjumpsuit) //No need.  A missing chest gibs you.

@@ -12,7 +12,7 @@
 		if (affected)
 			return 0
 		var/list/organ_data = target.species.has_limbs["[target_zone]"]
-		return !isnull(organ_data) && !(target_zone in list("head","groin","chest"))
+		return !isnull(organ_data) && !(target_zone in list(BP_HEAD,BP_GROIN,BP_CHEST))
 
 /datum/surgery_step/limb/attach
 	allowed_tools = list(/obj/item/prosthesis = 100)

@@ -49,11 +49,11 @@
 
 		if (!( user.restrained() ) && !( user.stat ))
 			switch(over_object.name)
-				if("r_hand")
+				if(BP_R_HAND)
 					if(user.unEquip(master_item))
 						if(!user.put_in_r_hand(master_item))
 							user.drop_from_inventory(master_item)
-				if("l_hand")
+				if(BP_L_HAND)
 					if(user.unEquip(master_item))
 						if(!user.put_in_l_hand(master_item))
 							user.drop_from_inventory(master_item)

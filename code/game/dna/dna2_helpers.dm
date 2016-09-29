@@ -150,12 +150,12 @@
 
 		H.s_tone   = 35 - dna.GetUIValueRange(DNA_UI_SKIN_TONE, 220) // Value can be negative.
 
-		if (dna.GetUIState(DNA_UI_GENDER))
-			H.gender = FEMALE
-			H.body_build = dna.body_build
-		else
-			H.gender = MALE
-			H.body_build = 0
+		if(H.gender != NEUTER)
+			if (dna.GetUIState(DNA_UI_GENDER))
+				H.gender = FEMALE
+			else
+				H.gender = MALE
+		H.body_build = get_body_build(H.gender, dna.body_build)
 
 		//Hair
 		var/hair = dna.GetUIValueRange(DNA_UI_HAIR_STYLE,hair_styles_list.len)

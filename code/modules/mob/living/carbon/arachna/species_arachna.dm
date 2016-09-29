@@ -22,39 +22,39 @@
 	)
 
 	has_organ = list(
-		"lungs" =        /obj/item/organ/internal/lungs,
-		"heart" =        /obj/item/organ/internal/heart/arachna,
-		"kidneys" =      /obj/item/organ/internal/kidneys/arachna,
-		"eyes" =         /obj/item/organ/internal/eyes,
-		"liver" =        /obj/item/organ/internal/liver,
-		"appendix" =     /obj/item/organ/internal/appendix,
+		O_LUNGS =        /obj/item/organ/internal/lungs,
+		O_HEART =        /obj/item/organ/internal/heart/arachna,
+		O_KIDNEYS =      /obj/item/organ/internal/kidneys/arachna,
+		O_EYES =         /obj/item/organ/internal/eyes,
+		O_LIVER =        /obj/item/organ/internal/liver,
+		O_APPENDIX =     /obj/item/organ/internal/appendix,
 		"poison_gland" = /obj/item/organ/internal/arachna/poison_gland,
 		"silk_gland" =   /obj/item/organ/internal/arachna/silk_gland,
-		"brain" =        /obj/item/organ/internal/brain
+		O_BRAIN =        /obj/item/organ/internal/brain
 		)
 
 	has_limbs = list(
-		"chest" =  /datum/organ_description,
-		"groin" =  /datum/organ_description/groin/arachna,
-		"head"   = /datum/organ_description/head,
-		"l_arm"  = /datum/organ_description/arm/left,
-		"r_arm"  = /datum/organ_description/arm/right,
-		"l_leg"  = /datum/organ_description/leg/left,
-		"r_leg"  = /datum/organ_description/leg/right,
-		"l_hand" = /datum/organ_description/hand/left,
-		"r_hand" = /datum/organ_description/hand/right,
-		"l_foot" = /datum/organ_description/foot/left,
-		"r_foot" = /datum/organ_description/foot/right
+		BP_CHEST =  /datum/organ_description,
+		BP_GROIN =  /datum/organ_description/groin/arachna,
+		BP_HEAD   = /datum/organ_description/head,
+		BP_L_ARM  = /datum/organ_description/arm/left,
+		BP_R_ARM  = /datum/organ_description/arm/right,
+		BP_L_LEG  = /datum/organ_description/leg/left,
+		BP_R_LEG  = /datum/organ_description/leg/right,
+		BP_L_HAND = /datum/organ_description/hand/left,
+		BP_R_HAND = /datum/organ_description/hand/right,
+		BP_L_FOOT = /datum/organ_description/foot/left,
+		BP_R_FOOT = /datum/organ_description/foot/right
 	)
 
 	/*has_limbs = list(
-		"chest" =    list("path" = /obj/item/organ/external/chest),
+		BP_CHEST =    list("path" = /obj/item/organ/external/chest),
 		"abdomen" =  list("path" = /obj/item/organ/external/groin/arachna),
-		"head" =     list("path" = /obj/item/organ/external/head),
-		"l_arm" =    list("path" = /obj/item/organ/external/arm),
-		"r_arm" =    list("path" = /obj/item/organ/external/arm/right),
-		"l_hand" =   list("path" = /obj/item/organ/external/hand),
-		"r_hand" =   list("path" = /obj/item/organ/external/hand/right),
+		BP_HEAD =     list("path" = /obj/item/organ/external/head),
+		BP_L_ARM =    list("path" = /obj/item/organ/external/arm),
+		BP_R_ARM =    list("path" = /obj/item/organ/external/arm/right),
+		BP_L_HAND =   list("path" = /obj/item/organ/external/hand),
+		BP_R_HAND =   list("path" = /obj/item/organ/external/hand/right),
 		"l_f_leg" =  list("path" = /obj/item/organ/external/leg/arachna/left/f_leg),
 		"l_f_foot" = list("path" = /obj/item/organ/external/foot/arachna/left/f_foot),
 		"l_mf_leg" =  list("path" = /obj/item/organ/external/leg/arachna/left/mf_leg),

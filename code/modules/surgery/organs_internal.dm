@@ -35,7 +35,7 @@
 		if (!hasorgans(target))
 			return
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
-		return ..() && affected && embryo && affected.open == 3 && target_zone == "chest"
+		return ..() && affected && embryo && affected.open == 3 && target_zone == BP_CHEST
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/msg = "[user] starts to pull something out from [target]'s ribcage with \the [tool]."
@@ -357,7 +357,7 @@
 				user << "\red \The [target] already has [o_a][O.organ_tag]."
 				return 2
 
-			if(O && affected.limb_name == O.parent_organ)
+			if(O && affected.organ_tag == O.parent_organ)
 				organ_compatible = 1
 			else
 				user << "\red \The [O.organ_tag] [o_do] normally go in \the [affected.name]."

@@ -12,55 +12,67 @@
 	min_broken_damage = 30
 	max_damage = 0
 	dir = SOUTH
+	organ_tag = "limb"
 
-	var/brute_mod = 1
-	var/burn_mod = 1
-
-	var/body_part = null
-	var/icon_position = 0
-	var/gendered = 0
-	var/model
-	var/force_icon
-	var/damage_state = "00"
-	var/brute_dam = 0
-	var/burn_dam = 0
-	var/max_size = 0
-	var/last_dam = -1
-	var/icon/mob_icon
-	var/limb_name
-	var/disfigured = 0
-	var/cannot_amputate
-	var/cannot_break
-	var/s_tone
-	var/s_col = "#000000"
-	var/list/wounds = list()
-	var/number_wounds = 0 // cache the number of wounds, which is NOT wounds.len!
-	var/perma_injury = 0
-	var/list/children
-	var/list/internal_organs = list() 	// Internal organs of this body part
-	var/datum/unarmed_attack/attack = null
+	// Strings
+	var/broken_description	// fracture string if any.
+	var/damage_state = "00"	// Modifier used for generating the on-mob damage overlay for this limb.
 	var/damage_msg = "\red You feel an intense pain"
-	var/broken_description
+
+	// Damage vars.
+	var/brute_mod = 1		// Multiplier for incoming brute damage.
+	var/burn_mod = 1		// As above for burn.
+	var/brute_dam = 0		// Actual current brute damage.
+	var/burn_dam = 0		// Actual current burn damage.
+	var/last_dam = -1		// used in healing/processing calculations.
+	var/perma_injury = 0
+
+	// Appearance vars.
+	var/body_part = null	// Part flag
+	var/icon_position = 0	// Used in mob overlay layering calculations.
+	var/model				// Used when caching robolimb icons.
+	var/force_icon			// Used to force override of species-specific limb icons (for prosthetics).
+	var/icon/mob_icon		// Cached icon for use in mob overlays.
+	var/gendered = 0
+	var/s_tone				// Skin tone.
+	var/s_col				// skin colour
+
+	// Wound and structural data.
+	var/wound_update_accuracy = 1		// how often wounds should be updated, a higher number means less often
+	var/list/wounds = list()			// wound datum list.
+	var/number_wounds = 0				// number of wounds, which is NOT wounds.len!
+	var/list/children = list()			// Sub-limbs.
+	var/list/internal_organs = list()	// Internal organs of this body part
+	var/sabotaged = 0					// If a prosthetic limb is emagged, it will detonate when it fails.
+	var/list/implants = list()			// Currently implanted objects.
+	var/max_size = 0
+
+	var/datum/unarmed_attack/attack = null
+	var/list/drop_on_remove = null
+
+	// Joint/state stuff.
+	var/can_grasp			// It would be more appropriate if these two were named "affects_grasp" and "affects_stand" at this point
+	var/can_stand			// Modifies stance tally/ability to stand.
+	var/disfigured = 0		// Scarred/burned beyond recognition.
+	var/cannot_amputate		// Impossible to amputate.
+	var/cannot_break		// Impossible to fracture.
+	var/joint = "joint"		// Descriptive string used in dislocation.
+	var/amputation_point	// Descriptive string used in amputation.
+	var/dislocated = 0		// If you target a joint, you can dislocate the limb, impairing it's usefulness and causing pain
+	var/encased				// Needs to be opened with a saw to access the organs.
+
+	// Surgery vars.
 	var/open = 0
 	var/stage = 0
 	var/cavity = 0
-	var/sabotaged = 0 // If a prosthetic limb is emagged, it will detonate when it fails.
-	var/encased       // Needs to be opened with a saw to access the organs.
-	var/list/implants = list()
-	var/wound_update_accuracy = 1 	// how often wounds should be updated, a higher number means less often
-	var/joint = "joint"   // Descriptive string used in dislocation.
-	var/amputation_point  // Descriptive string used in amputation.
-	var/dislocated = 0    // If you target a joint, you can dislocate the limb, causing temporary damage to the organ.
-	var/can_grasp //It would be more appropriate if these two were named "affects_grasp" and "affects_stand" at this point
-	var/can_stand
+
 	var/tattoo = 0
 	var/tattoo2 = 0
-	var/list/drop_on_remove = null
 
 /obj/item/organ/external/New(mob/living/carbon/human/holder, var/datum/organ_description/desc = null)
 	if(desc)
 		// Mandatory part
-		src.limb_name = desc.limb_name
+		src.organ_tag = desc.organ_tag
 		src.body_part = desc.body_part
 		src.parent_organ = desc.parent_organ
 		src.icon_position = desc.icon_position
@@ -85,10 +97,10 @@
 /obj/item/organ/external/install(mob/living/carbon/human/H)
 	if(..()) return 1
 	H.organs += src
-	var/obj/item/organ/external/outdated = H.organs_by_name[limb_name]
+	var/obj/item/organ/external/outdated = H.organs_by_name[organ_tag]
 	if(outdated)
 		outdated.removed()
-	H.organs_by_name[limb_name] = src
+	H.organs_by_name[organ_tag] = src
 	var/obj/item/organ/external/E = H.organs_by_name[parent_organ]
 	if(E)
 		parent = E
@@ -107,7 +119,7 @@
 
 /obj/item/organ/external/Destroy()
 	if(owner)
-		owner.organs_by_name[limb_name] = null
+		owner.organs_by_name[organ_tag] = null
 		owner.organs -= src
 		owner.bad_external_organs -= src
 
@@ -127,7 +139,7 @@
 /obj/item/organ/external/removed(mob/living/user)
 	if(!istype(owner)) return
 
-	owner.organs_by_name[limb_name] = null
+	owner.organs_by_name[organ_tag] = null
 	owner.organs -= src
 	owner.bad_external_organs -= src
 
@@ -381,8 +393,6 @@
 
 		// heal brute damage
 		if(W.damage_type == BURN)
-
-
 			burn = W.heal_damage(burn)
 		else
 			brute = W.heal_damage(brute)
@@ -390,11 +400,6 @@
 	if(internal)
 		status &= ~ORGAN_BROKEN
 		perma_injury = 0
-
-	/*if((brute || burn) && children && children.len && (owner.species.flags & REGENERATES_LIMBS))
-		var/obj/item/organ/external/stump/S = locate() in children
-		if(S)
-			world << "Extra healing to go around ([brute+burn]) and [owner] needs a replacement limb."*/
 
 	//Sync the organ's damage with its wounds
 	src.update_damages()
@@ -1108,7 +1113,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/chest
 	name = "upper body"
-	limb_name = "chest"
+	organ_tag = BP_CHEST
 	max_damage = 100
 	min_broken_damage = 35
 	w_class = 5
@@ -1124,14 +1129,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/groin
 	name = "lower body"
-	limb_name = "groin"
+	organ_tag = BP_GROIN
 	max_damage = 100
 	min_broken_damage = 35
 	w_class = 5
 	body_part = LOWER_TORSO
 	vital = 1
 	gendered = 1
-	parent_organ = "chest"
+	parent_organ = BP_CHEST
 	amputation_point = "lumbar"
 	joint = "hip"
 	dislocated = -1
@@ -1146,7 +1151,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	w_class = 2
 
 /obj/item/organ/external/head
-	limb_name = "head"
+	organ_tag = BP_HEAD
 	name = "head"
 	max_damage = 75
 	min_broken_damage = 35
@@ -1154,7 +1159,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	body_part = HEAD
 	vital = 1
 	gendered = 1
-	parent_organ = "chest"
+	parent_organ = BP_CHEST
 	joint = "jaw"
 	amputation_point = "neck"
 	encased = "skull"

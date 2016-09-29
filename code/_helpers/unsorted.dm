@@ -1035,18 +1035,14 @@ proc/get_mob_with_client_list()
 
 /proc/parse_zone(zone)
 	switch(zone)
-		if("r_hand") return "right hand"
-		if("l_hand") return "left hand"
-		if("l_arm")  return "left arm"
-		if("r_arm")  return "right arm"
-		if("l_leg")  return "left leg"
-		if("r_leg")  return "right leg"
-		if("l_foot") return "left foot"
-		if("r_foot") return "right foot"
-		if("l_hand") return "left hand"
-		if("r_hand") return "right hand"
-		if("l_foot") return "left foot"
-		if("r_foot") return "right foot"
+		if(BP_L_HAND) return "left hand"
+		if(BP_R_HAND) return "right hand"
+		if(BP_L_ARM)  return "left arm"
+		if(BP_R_ARM)  return "right arm"
+		if(BP_L_LEG)  return "left leg"
+		if(BP_R_LEG)  return "right leg"
+		if(BP_L_FOOT) return "left foot"
+		if(BP_R_FOOT) return "right foot"
 	return zone
 
 /proc/get(atom/loc, type)

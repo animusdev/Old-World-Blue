@@ -97,7 +97,7 @@
 	src.adding += inv_box
 
 	inv_box = new /obj/screen/inventory()
-	inv_box.name = "l_hand"
+	inv_box.name = BP_L_HAND
 	inv_box.set_dir(EAST)
 	inv_box.icon = ui_style
 	inv_box.icon_state = "hand_inactive"

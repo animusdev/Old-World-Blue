@@ -236,7 +236,7 @@
 							hex2num(getblock(structure,9,3)),\
 							hex2num(getblock(structure,10,3)))
 
-		if(H.internal_organs_by_name["eyes"])
+		if(H.internal_organs_by_name[O_EYES])
 			H.update_eyes()
 
 		if (isblockon(getblock(structure, 11,3),11 , 1))

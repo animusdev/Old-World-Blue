@@ -24,11 +24,9 @@
 /obj/item/weapon/paper_bin/attack_hand(mob/user as mob)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/external/temp = H.organs_by_name["r_hand"]
-		if (H.hand)
-			temp = H.organs_by_name["l_hand"]
+		var/obj/item/organ/external/temp = H.get_organ(H.hand ? BP_L_HAND : BP_R_HAND)
 		if(temp && !temp.is_usable())
-			user << "<span class='notice'>You try to move your [temp.name], but cannot!"
+			H << "<span class='notice'>You try to move your [temp.name], but cannot!"
 			return
 	var/response = ""
 	if(!papers.len > 0)

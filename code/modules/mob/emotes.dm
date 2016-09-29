@@ -486,7 +486,7 @@ var/global/list/emotes_list = list()
 			if (t1 <= 0) return
 			switch(t1)
 				if (1 to 5)
-					if((H.r_hand || !H.get_organ("r_hand")) && (H.l_hand  || !H.get_organ("l_hand")))
+					if((H.r_hand || !H.get_organ(BP_R_HAND)) && (H.l_hand  || !H.get_organ(BP_L_HAND)))
 						H << "<span class='warning'>Your need at least one free hand for this</span>"
 						return
 					if(!russified)
@@ -499,7 +499,7 @@ var/global/list/emotes_list = list()
 							if(5)   emote = "поднимает [t1] пальцев."
 						return H.custom_emote(m_type, emote)
 				if (6 to 10)
-					if((H.r_hand || !H.get_organ("r_hand")) || (H.l_hand  || !H.get_organ("l_hand")))
+					if((H.r_hand || !H.get_organ(BP_R_HAND)) || (H.l_hand  || !H.get_organ(BP_L_HAND)))
 						H << "<span class='warning'>Your need at least two free hands for this</span>"
 						return
 					if(russified)

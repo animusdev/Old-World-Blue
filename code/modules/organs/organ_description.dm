@@ -1,6 +1,6 @@
 /datum/organ_description
 	var/name = "upper body"
-	var/limb_name = "chest"
+	var/organ_tag = BP_CHEST
 	var/default_type = /obj/item/organ/external/chest
 	var/body_part = UPPER_TORSO
 	var/amputation_point = "spine"
@@ -13,50 +13,50 @@
 
 /datum/organ_description/groin
 	name = "lower body"
-	limb_name = "groin"
+	organ_tag = BP_GROIN
 	default_type = /obj/item/organ/external/groin
 	body_part = LOWER_TORSO
 	joint = "hip"
 	amputation_point = "lumbar"
-	parent_organ = "chest"
+	parent_organ = BP_CHEST
 
 /datum/organ_description/head
 	name = "head"
-	limb_name = "head"
+	organ_tag = BP_HEAD
 	default_type = /obj/item/organ/external/head
 	body_part = HEAD
 	joint = "jaw"
 	amputation_point = "neck"
-	parent_organ = "chest"
+	parent_organ = BP_CHEST
 	drop_on_remove = list(slot_glasses,slot_head,slot_l_ear,slot_r_ear,slot_wear_mask)
 
 /datum/organ_description/arm
 	default_type = /obj/item/organ/external/limb
-	parent_organ = "chest"
+	parent_organ = BP_CHEST
 	can_grasp = 1
 
 /datum/organ_description/arm/left
 	name = "left arm"
-	limb_name = "l_arm"
+	organ_tag = BP_L_ARM
 	body_part = ARM_LEFT
 	joint = "left elbow"
 	amputation_point = "left shoulder"
 
 /datum/organ_description/arm/right
 	name = "right arm"
-	limb_name = "r_arm"
+	organ_tag = BP_R_ARM
 	body_part = ARM_RIGHT
 	joint = "right elbow"
 	amputation_point = "right shoulder"
 
 /datum/organ_description/leg
 	default_type = /obj/item/organ/external/limb
-	parent_organ = "groin"
+	parent_organ = BP_GROIN
 	can_stand = 1
 
 /datum/organ_description/leg/left
 	name = "left leg"
-	limb_name = "l_leg"
+	organ_tag = BP_L_LEG
 	body_part = LEG_LEFT
 	icon_position = LEFT
 	joint = "left knee"
@@ -64,7 +64,7 @@
 
 /datum/organ_description/leg/right
 	name = "right leg"
-	limb_name = "r_leg"
+	organ_tag = BP_R_LEG
 	body_part = LEG_RIGHT
 	icon_position = RIGHT
 	joint = "right knee"
@@ -76,18 +76,18 @@
 	drop_on_remove = list(slot_gloves)
 
 /datum/organ_description/hand/left
-	limb_name = "l_hand"
+	organ_tag = BP_L_HAND
 	name = "left hand"
 	body_part = HAND_LEFT
-	parent_organ = "l_arm"
+	parent_organ = BP_L_ARM
 	joint = "left wrist"
 	amputation_point = "left wrist"
 
 /datum/organ_description/hand/right
-	limb_name = "r_hand"
+	organ_tag = BP_R_HAND
 	name = "right hand"
 	body_part = HAND_RIGHT
-	parent_organ = "r_arm"
+	parent_organ = BP_R_ARM
 	joint = "right wrist"
 	amputation_point = "right wrist"
 
@@ -97,20 +97,20 @@
 	drop_on_remove = list(slot_shoes)
 
 /datum/organ_description/foot/left
-	limb_name = "l_foot"
+	organ_tag = BP_L_FOOT
 	name = "left foot"
 	body_part = FOOT_LEFT
 	icon_position = LEFT
-	parent_organ = "l_leg"
+	parent_organ = BP_L_LEG
 	joint = "left ankle"
 	amputation_point = "left ankle"
 
 /datum/organ_description/foot/right
-	limb_name = "r_foot"
+	organ_tag = BP_R_FOOT
 	name = "right foot"
 	body_part = FOOT_RIGHT
 	icon_position = RIGHT
-	parent_organ = "r_leg"
+	parent_organ = BP_R_LEG
 	joint = "right ankle"
 	amputation_point = "right ankle"
 

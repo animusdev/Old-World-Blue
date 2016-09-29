@@ -85,56 +85,54 @@ proc/getsensorlevel(A)
 
 //The base miss chance for the different defence zones
 var/list/global/base_miss_chance = list(
-	"head" = 30,
-	"chest" = 0,
-	"groin" = 10,
-	"l_leg" = 10,
-	"r_leg" = 10,
-	"l_arm" = 10,
-	"r_arm" = 10,
-	"l_hand" = 40,
-	"r_hand" = 40,
-	"l_foot" = 40,
-	"r_foot" = 40,
+	BP_HEAD   = 30,
+	BP_CHEST  = 0,
+	BP_GROIN  = 10,
+	BP_L_LEG  = 10,
+	BP_R_LEG  = 10,
+	BP_L_ARM  = 10,
+	BP_R_ARM  = 10,
+	BP_L_HAND = 40,
+	BP_R_HAND = 40,
+	BP_L_FOOT = 40,
+	BP_R_FOOT = 40,
 )
 
 //Used to weight organs when an organ is hit randomly (i.e. not a directed, aimed attack).
 //Also used to weight the protection value that armour provides for covering that body part when calculating protection from full-body effects.
 var/list/global/organ_rel_size = list(
-	"head" = 25,
-	"chest" = 70,
-	"groin" = 30,
-	"l_leg" = 25,
-	"r_leg" = 25,
-	"l_arm" = 25,
-	"r_arm" = 25,
-	"l_hand" = 10,
-	"r_hand" = 10,
-	"l_foot" = 10,
-	"r_foot" = 10,
+	BP_HEAD   = 25,
+	BP_CHEST  = 70,
+	BP_GROIN  = 30,
+	BP_L_LEG  = 25,
+	BP_R_LEG  = 25,
+	BP_L_ARM  = 25,
+	BP_R_ARM  = 25,
+	BP_L_HAND = 10,
+	BP_R_HAND = 10,
+	BP_L_FOOT = 10,
+	BP_R_FOOT = 10,
 )
 
 var/list/global/nearest_part = list(
-	"head" = list("head", "chest"),
-	"chest" = list("chest", "head", "groin", "r_arm", "l_arm"),
-	"groin" = list("groin", "l_leg", "r_leg", "chest"),
-	"l_leg" = list("l_leg", "l_foot", "groin"),
-	"r_leg" = list("r_leg", "r_foot", "groin"),
-	"l_arm" = list("l_arm", "chest", "l_hand"),
-	"r_arm" = list("r_arm", "chest", "r_hand"),
-	"l_hand" = list("l_hand", "l_arm"),
-	"r_hand" = list("r_hand", "r_arm"),
-	"l_foot" = list("l_foot", "l_leg"),
-	"r_foot" = list("r_foot", "r_leg"),
+	BP_HEAD   = list(BP_CHEST),
+	BP_CHEST  = list(BP_HEAD, BP_GROIN, BP_R_ARM, BP_L_ARM),
+	BP_GROIN  = list(BP_L_LEG, BP_R_LEG, BP_CHEST),
+	BP_L_LEG  = list(BP_R_LEG, BP_L_FOOT, BP_GROIN),
+	BP_R_LEG  = list(BP_L_LEG, BP_R_FOOT, BP_GROIN),
+	BP_L_ARM  = list(BP_CHEST, BP_L_HAND),
+	BP_R_ARM  = list(BP_CHEST, BP_R_HAND),
+	BP_L_HAND = list(BP_CHEST, BP_L_ARM),
+	BP_R_HAND = list(BP_CHEST, BP_R_ARM),
+	BP_L_FOOT = list(BP_R_FOOT, BP_L_LEG),
+	BP_R_FOOT = list(BP_L_FOOT, BP_R_LEG),
 )
 
 /proc/check_zone(zone)
-	if(!zone)	return "chest"
+	if(!zone)	return BP_CHEST
 	switch(zone)
-		if("eyes")
-			zone = "head"
-		if("mouth")
-			zone = "head"
+		if(O_EYES, O_MOUTH)
+			zone = BP_HEAD
 	return zone
 
 // Returns zone with a certain probability. If the probability fails, or no zone is specified, then a random body part is chosen.
@@ -149,17 +147,17 @@ var/list/global/nearest_part = list(
 	var/ran_zone = zone
 	while (ran_zone == zone)
 		ran_zone = pick (
-			organ_rel_size["head"]; "head",
-			organ_rel_size["chest"]; "chest",
-			organ_rel_size["groin"]; "groin",
-			organ_rel_size["l_arm"]; "l_arm",
-			organ_rel_size["r_arm"]; "r_arm",
-			organ_rel_size["l_leg"]; "l_leg",
-			organ_rel_size["r_leg"]; "r_leg",
-			organ_rel_size["l_hand"]; "l_hand",
-			organ_rel_size["r_hand"]; "r_hand",
-			organ_rel_size["l_foot"]; "l_foot",
-			organ_rel_size["r_foot"]; "r_foot",
+			organ_rel_size[BP_HEAD]; BP_HEAD,
+			organ_rel_size[BP_CHEST]; BP_CHEST,
+			organ_rel_size[BP_GROIN]; BP_GROIN,
+			organ_rel_size[BP_L_ARM]; BP_L_ARM,
+			organ_rel_size[BP_R_ARM]; BP_R_ARM,
+			organ_rel_size[BP_L_LEG]; BP_L_LEG,
+			organ_rel_size[BP_R_LEG]; BP_R_LEG,
+			organ_rel_size[BP_L_HAND]; BP_L_HAND,
+			organ_rel_size[BP_R_HAND]; BP_R_HAND,
+			organ_rel_size[BP_L_FOOT]; BP_L_FOOT,
+			organ_rel_size[BP_R_FOOT]; BP_R_FOOT,
 		)
 
 	return ran_zone

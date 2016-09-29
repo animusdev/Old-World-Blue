@@ -22,21 +22,21 @@
 // Brain is defined in brain_item.dm.
 /obj/item/organ/internal/heart/arachna // Heart in spider abdomen
 	icon_state = "heart-on"
-	parent_organ = "groin"
+	parent_organ = BP_GROIN
 
 /obj/item/organ/internal/kidneys/arachna
-	parent_organ = "chest"
+	parent_organ = BP_CHEST
 
 /obj/item/organ/internal/liver/arachna
-	parent_organ = "chest"
+	parent_organ = BP_CHEST
 
 /obj/item/organ/internal/appendix/arachna
-	parent_organ = "chest"
+	parent_organ = BP_CHEST
 
 /obj/item/organ/internal/arachna/poison_gland
 	name = "poison_gland"
 	organ_tag = "poison_gland"
-	parent_organ = "head"
+	parent_organ = BP_HEAD
 	var/list/poisons = list()
 	var/delay = 0
 	var/bite_ready = 0
@@ -72,7 +72,7 @@
 /obj/item/organ/internal/arachna/silk_gland
 	name = "silk_gland"
 	organ_tag = "silk_gland"
-	parent_organ = "groin"
+	parent_organ = BP_GROIN
 	var/silk = 50
 	var/silk_max=100
 	var/delay = 0
