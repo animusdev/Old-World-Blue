@@ -394,7 +394,7 @@ BLIND     // can't see anything
 	if(istype(src.loc, /mob/living/carbon/human))
 		H = src.loc
 
-	var/icon/under_icon = H.species.get_uniform_sprite(H)
+	var/icon/under_icon = H.body_build.uniform_icon
 
 	if(("[icon_state]_d") in icon_states(under_icon))
 		if(rolled_down != 1)

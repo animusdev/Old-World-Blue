@@ -97,7 +97,7 @@
 		)
 	var/list/cold_discomfort_strings = list(
 		"You feel chilly.",
-		"You shiver suddely.",
+		"You shiver suddenly.",
 		"Your chilly flesh stands out in goosebumps."
 		)
 
@@ -157,52 +157,6 @@
 
 	//Species Abilities
 	var/tmp/evolution_points = 0 //How many points race have for abilities
-
-
-	// Srites
-	proc/get_uniform_sprite(state = "", var/body_build = 0)
-		return 'icons/mob/uniform.dmi'
-
-	proc/get_suit_sprite(state = "", var/body_build = 0)
-		return 'icons/mob/suit.dmi'
-
-	proc/get_head_sprite(state = "", var/body_build = 0)
-		return 'icons/mob/head.dmi'
-
-	proc/get_gloves_sprite(state = "", var/body_build = 0)
-		return 'icons/mob/hands.dmi'
-
-	proc/get_shoes_sprite(state = "", var/body_build = 0)
-		return 'icons/mob/feet.dmi'
-
-	proc/get_glasses_sprite(state = "", var/body_build = 0)
-		return 'icons/mob/eyes.dmi'
-
-//	proc/get_l_hand_sprite(state = "", var/body_build = 0)
-//	proc/get_r_hand_sprite(state = "", var/body_build = 0)
-
-	proc/get_belt_sprite(state = "", var/body_build = 0)
-		return 'icons/mob/belt.dmi'
-
-	proc/get_ears_sprite(state = "", var/body_build = 0)
-		return 'icons/mob/ears.dmi'
-
-	proc/get_back_sprite(state = "", var/body_build = 0)
-		return 'icons/mob/back.dmi'
-
-	proc/get_back_u_sprite(state = "", var/body_build = 0)
-		if(state in icon_states('icons/mob/back.dmi'))
-			return 'icons/mob/back.dmi'
-		else return null
-
-	proc/get_mask_sprite(state = "", var/body_build = 0)
-		return 'icons/mob/mask.dmi'
-
-	proc/get_store_sprite(state = "", var/body_build = 0)
-		return 'icons/mob/belt_mirror.dmi'
-
-	proc/get_hidden_slot_sprite(state = "", var/body_build)
-		return 'icons/mob/hidden.dmi'
 
 /datum/species/New()
 

@@ -79,36 +79,6 @@
 	icobase = 'code/modules/mob/living/carbon/arachna/r_arachna.dmi'
 	deform = 'code/modules/mob/living/carbon/arachna/r_def_arachna.dmi'
 
-	get_uniform_sprite(state = "")
-		return 'code/modules/mob/living/carbon/arachna/arachna_uniform.dmi'
-
-	get_suit_sprite(state = "")
-		return 'code/modules/mob/living/carbon/arachna/arachna_suit.dmi'
-
-	get_gloves_sprite(state = "")
-		return 'code/modules/mob/living/carbon/arachna/arachna_hands.dmi'
-
-//	get_shoes_sprite(state = "", body_build = 0)
-//		if(body_build==BODY_SLIM)
-//			return 'code\modules/mob/living/carbon/arachna/feet_f.dmi'
-//		else
-//			return 'code\modules/mob/living/carbon/arachna/feet.dmi'
-
-	get_glasses_sprite(state = "")
-		return 'code/modules/mob/living/carbon/arachna/arachna_eyes.dmi'
-
-	get_belt_sprite(state = "")
-		return 'code/modules/mob/living/carbon/arachna/arachna_belt.dmi'
-
-	get_ears_sprite(state = "")
-		return 'code/modules/mob/living/carbon/arachna/arachna_ears.dmi'
-
-	get_back_sprite(state = "")
-		return 'code/modules/mob/living/carbon/arachna/arachna_back.dmi'
-
-	get_mask_sprite(state = "")
-		return 'code/modules/mob/living/carbon/arachna/arachna_mask.dmi'
-
 /datum/species/arachna/handle_post_spawn(var/mob/living/carbon/human/H)
 	H.gender = FEMALE
 	return ..()

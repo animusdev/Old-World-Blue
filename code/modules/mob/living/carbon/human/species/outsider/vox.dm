@@ -63,37 +63,6 @@
 					"Scientist", "Roboticist", "Xenobiologist", "Bartender", "Gardener", "Chef", "Librarian",\
 					"Quartermaster", "Lawyer", "Internal Affairs Agent", "Chaplain")
 
-	get_uniform_sprite(state = "")
-		if(state in icon_states('icons/mob/species/vox/uniform.dmi'))
-			return 'icons/mob/species/vox/uniform.dmi'
-		else return ..()
-
-	get_suit_sprite(state = "")
-		if(state in icon_states('icons/mob/species/vox/suit.dmi'))
-			return 'icons/mob/species/vox/suit.dmi'
-		else return ..()
-
-	get_head_sprite(state = "")
-		if(state in icon_states('icons/mob/species/vox/helmet.dmi'))
-			return 'icons/mob/species/vox/helmet.dmi'
-		else return ..()
-
-	get_gloves_sprite(state = "")
-		return 'icons/mob/species/vox/gloves.dmi'
-
-	get_shoes_sprite(state = "")
-		if(state in icon_states('icons/mob/species/vox/shoes.dmi'))
-			return 'icons/mob/species/vox/shoes.dmi'
-		else return ..()
-
-	get_glasses_sprite(state = "", var/body_build = 0)
-		if(state in icon_states('icons/mob/species/vox/eyes.dmi'))
-			return 'icons/mob/species/vox/eyes.dmi'
-		else return ..()
-
-	get_mask_sprite(state = "")
-		return  'icons/mob/species/vox/masks.dmi'
-
 /datum/species/vox/get_random_name(var/gender)
 	var/datum/language/species_language = all_languages[default_language]
 	return species_language.get_random_name(gender)
