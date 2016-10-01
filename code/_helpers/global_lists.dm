@@ -207,7 +207,7 @@ var/global/list/endgame_safespawns = list()
 			parent["children"] += organ
 
 	//Posters
-	paths = typesof(/datum/poster) - /datum/poster
+	paths = typesof(/datum/poster) - /datum/poster - /datum/poster/wanted
 	for(var/T in paths)
 		var/datum/poster/P = new T
 		poster_designs += P
