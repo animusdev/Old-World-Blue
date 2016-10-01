@@ -67,7 +67,10 @@ All grippers is here
 		/obj/item/weapon/stock_parts,
 		/obj/item/device/mmi,
 		/obj/item/robot_parts,
+		/obj/item/weapon/storage/firstaid,
+		/obj/item/device/assembly,
 		/obj/item/borg/upgrade,
+		/obj/item/mecha_parts/,
 		/obj/item/device/flash, //to build borgs
 		/obj/item/organ/internal/brain, //to insert into MMIs.
 		/obj/item/stack/cable_coil, //again, for borg building
