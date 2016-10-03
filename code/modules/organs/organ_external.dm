@@ -199,7 +199,7 @@
 
 /obj/item/organ/external/examine(mob/user, return_dist=1)
 	.=..()
-	if(.<=1 || istype(usr, /mob/dead/observer))
+	if(.<=1 || isobserver(usr))
 		for(var/obj/item/I in contents)
 			if(istype(I, /obj/item/organ))
 				continue

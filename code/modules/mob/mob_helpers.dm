@@ -453,7 +453,7 @@ proc/is_blind(A)
 				if(M.stat != DEAD && M.client.holder)
 					follow = "(<a href='?src=\ref[M.client.holder];adminplayerobservejump=\ref[subject]'>JMP</a>) "
 				var/mob/dead/observer/DM
-				if(istype(subject, /mob/dead/observer))
+				if(isobserver(subject))
 					DM = subject
 				if(M.client.holder) 							// What admins see
 					lname = "[keyname][(DM && DM.client && DM.client.prefs.chat_toggles&CHAT_GHOSTANONIM) ? "*" : (DM ? "" : "^")] ([name])"

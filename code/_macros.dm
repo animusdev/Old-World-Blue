@@ -27,9 +27,7 @@
 
 #define isnewplayer(A) istype(A, /mob/new_player)
 
-//#define isobserver(A) istype(A, /mob/observer/dead)
-
-#define isobserver(A) istype(A, /mob/dead/observer) // TODO: Rewrite mob type structure
+#define isobserver(A) istype(A, /mob/observer/dead)
 
 #define isorgan(A) istype(A, /obj/item/organ/external)
 

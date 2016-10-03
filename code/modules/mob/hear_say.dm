@@ -12,7 +12,7 @@
 		message = "<i>[message]</i>"
 
 	var/track = null
-	if(istype(src, /mob/dead/observer))
+	if(isobserver(src))
 		if(italics && client.prefs.chat_toggles & CHAT_GHOSTRADIO)
 			return
 		if(speaker_name != speaker.real_name && speaker.real_name)

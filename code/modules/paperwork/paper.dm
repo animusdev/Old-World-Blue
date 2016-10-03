@@ -73,14 +73,14 @@
 
 /obj/item/weapon/paper/examine(mob/user, return_dist=1)
 	.=..()
-	if(.<=1 || istype(user, /mob/dead/observer))
+	if(.<=1 || isobserver(user))
 		show_content(user)
 	else
 		user << "<span class='notice'>You have to go closer if you want to read it.</span>"
 	return
 
 /obj/item/weapon/paper/proc/show_content(var/mob/user, var/forceshow=0)
-	if(!(istype(user, /mob/living/carbon/human) || istype(user, /mob/dead/observer) || istype(user, /mob/living/silicon)) && !forceshow)
+	if(!(ishuman(user) || isobserver(user) || istype(user, /mob/living/silicon)) && !forceshow)
 		user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)][stamps]</BODY></HTML>", "window=[name]")
 		onclose(user, "[name]")
 	else
