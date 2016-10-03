@@ -17,7 +17,7 @@
 /datum/disease/appendicitis/stage_act()
 	..()
 
-	if(istype(affected_mob,/mob/living/carbon/human))
+	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/H = affected_mob
 		if(!H.internal_organs_by_name[O_APPENDIX])
 			src.cure()

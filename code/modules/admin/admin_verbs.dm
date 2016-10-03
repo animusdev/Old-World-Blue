@@ -636,7 +636,7 @@ var/list/admin_verbs_mentor = list(
 	D.makerandom(severity)
 	D.infectionchance = input("How virulent is this disease? (1-100)", "Give Disease", D.infectionchance) as num
 
-	if(istype(T,/mob/living/carbon/human))
+	if(ishuman(T))
 		var/mob/living/carbon/human/H = T
 		if (H.species)
 			D.affected_species = list(H.species.get_bodytype())
@@ -817,7 +817,7 @@ var/list/admin_verbs_mentor = list(
 
 	var/mob/living/carbon/human/M = input("Select mob.", "Edit Appearance") as null|anything in human_mob_list
 
-	if(!istype(M, /mob/living/carbon/human))
+	if(!ishuman(M))
 		usr << "\red You can only do this to humans!"
 		return
 	var/datum/species/S = M.species

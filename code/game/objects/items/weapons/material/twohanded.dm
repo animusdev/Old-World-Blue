@@ -78,46 +78,42 @@
 /obj/item/weapon/material/twohanded/pickup(mob/user)
 	unwield()
 
-/obj/item/weapon/material/twohanded/attack_self(mob/user as mob)
+/obj/item/weapon/material/twohanded/attack_self(mob/living/carbon/human/H as mob)
 
 	..()
 
-	if(istype(user, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		if(H.species.is_small)
-			user << "<span class='warning'>It's too heavy for you to wield fully.</span>"
-			return
-	else
+	if(!istype(H)) return
+
+	if(H.species.is_small)
+		H << "<span class='warning'>It's too heavy for you to wield fully.</span>"
 		return
 
 	if(wielded) //Trying to unwield it
 		unwield()
-		user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
+		H << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
 		if (src.unwieldsound)
 			playsound(src.loc, unwieldsound, 50, 1)
 
-		var/obj/item/weapon/material/twohanded/offhand/O = user.get_inactive_hand()
+		var/obj/item/weapon/material/twohanded/offhand/O = H.get_inactive_hand()
 		if(O && istype(O))
 			O.unwield()
 
 	else //Trying to wield it
-		if(user.get_inactive_hand())
-			user << "<span class='warning'>You need your other hand to be empty</span>"
+		if(H.get_inactive_hand())
+			H << "<span class='warning'>You need your other hand to be empty</span>"
 			return
 		wield()
-		user << "<span class='notice'>You grab the [base_name] with both hands.</span>"
+		H << "<span class='notice'>You grab the [base_name] with both hands.</span>"
 		if (src.wieldsound)
 			playsound(src.loc, wieldsound, 50, 1)
 
-		var/obj/item/weapon/material/twohanded/offhand/O = new(user) ////Let's reserve his other hand~
+		var/obj/item/weapon/material/twohanded/offhand/O = new(H) ////Let's reserve his other hand~
 		O.name = "[base_name] - offhand"
 		O.desc = "Your second grip on the [base_name]."
-		user.put_in_inactive_hand(O)
+		H.put_in_inactive_hand(O)
 
-	if(istype(user,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
+	H.update_inv_l_hand()
+	H.update_inv_r_hand()
 
 	return
 

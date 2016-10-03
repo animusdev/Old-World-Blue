@@ -396,7 +396,7 @@
 		else if (P.name != "paper" && P.name != "photo")
 			B.name = P.name
 		user.drop_from_inventory(P)
-		if (istype(user, /mob/living/carbon/human))
+		if (ishuman(user))
 			var/mob/living/carbon/human/h_user = user
 			if (h_user.r_hand == src)
 				h_user.drop_from_inventory(src)

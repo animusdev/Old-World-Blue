@@ -124,7 +124,7 @@
 		return 1
 
 	if(target == user)
-		if(istype(user, /mob/living/carbon/human))
+		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.species.flags & IS_SYNTHETIC)
 				H << "<span class='notice'>You have a monitor for a head, where do you think you're going to put that?</span>"
@@ -140,7 +140,7 @@
 		feed_sound(user)
 		return 1
 	else
-		if(istype(user, /mob/living/carbon/human))
+		if(ishuman(user))
 			var/mob/living/carbon/human/H = target
 			if(H.species.flags & IS_SYNTHETIC)
 				H << "<span class='notice'>They have a monitor for a head, where do you think you're going to put that?</span>"

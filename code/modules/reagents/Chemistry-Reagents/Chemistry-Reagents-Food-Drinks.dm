@@ -313,7 +313,7 @@
 	var/obj/item/face_protection = null
 
 	var/list/protection
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		protection = list(H.head, H.glasses, H.wear_mask)
 		if(H.species && (H.species.flags & NO_PAIN))

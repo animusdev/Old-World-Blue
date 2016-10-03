@@ -16,7 +16,7 @@ mob/living/carbon/proc/pain(var/partname, var/amount, var/force, var/burning = 0
 		return
 	if(world.time < next_pain_time && !force)
 		return
-	if(amount > 10 && istype(src,/mob/living/carbon/human))
+	if(amount > 10 && ishuman(src))
 		if(src:paralysis)
 			src:paralysis = max(0, src:paralysis-round(amount/10))
 	if(amount > 50 && prob(amount / 5))

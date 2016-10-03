@@ -5,7 +5,7 @@
 		return
 
 	var/speaker_name = speaker.name
-	if(istype(speaker, /mob/living/carbon/human))
+	if(ishuman(speaker))
 		speaker_name = speaker:GetVoice()
 
 	if(italics)
@@ -56,7 +56,7 @@
 /mob/proc/get_hear_name(var/mob/speaker, hard_to_hear, vname)
 	if(hard_to_hear) return "unknown"
 	else
-		if(istype(speaker, /mob/living/carbon/human))
+		if(ishuman(speaker))
 			var/voice = speaker:GetVoice()
 			if(voice)
 				return voice

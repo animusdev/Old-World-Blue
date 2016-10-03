@@ -222,7 +222,7 @@
 
 /////////////////////////// DNA MISC-PROCS
 /proc/updateappearance(mob/M as mob , structure)
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		M.dna.check_integrity()
 		var/mob/living/carbon/human/H = M
 		H.hair_color = rgb( hex2num(getblock(structure,1,3)),\
@@ -396,7 +396,7 @@
 	*/
 
 //////////////////////////////////////////////////////////// Monkey Block
-	if (isblockon(getblock(M.dna.struc_enzymes, MONKEYBLOCK,3),MONKEYBLOCK) && istype(M, /mob/living/carbon/human))
+	if (isblockon(getblock(M.dna.struc_enzymes, MONKEYBLOCK,3),MONKEYBLOCK) && ishuman(M))
 	// human > monkey
 		var/mob/living/carbon/human/H = M
 		H.monkeyizing = 1
@@ -472,7 +472,7 @@
 		qdel(M)
 		return
 
-	if (!isblockon(getblock(M.dna.struc_enzymes, MONKEYBLOCK,3),MONKEYBLOCK) && !istype(M, /mob/living/carbon/human))
+	if (!isblockon(getblock(M.dna.struc_enzymes, MONKEYBLOCK,3),MONKEYBLOCK) && !ishuman(M))
 	// monkey > human,
 		var/mob/living/carbon/monkey/Mo = M
 		Mo.monkeyizing = 1

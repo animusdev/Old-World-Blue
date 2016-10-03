@@ -71,7 +71,7 @@
 		if (get_dist(src, O) > src.range)
 			continue
 
-		if (istype(O, /mob/living/carbon/human))
+		if (ishuman(O))
 			var/mob/living/carbon/human/H = O
 			if(!H.eyecheck() <= 0)
 				continue
@@ -80,7 +80,7 @@
 			continue
 
 		O.Weaken(strength)
-		if (istype(O, /mob/living/carbon/human))
+		if (ishuman(O))
 			var/mob/living/carbon/human/H = O
 			var/obj/item/organ/internal/eyes/E = H.internal_organs_by_name[O_EYES]
 			if (E && (E.damage > E.min_bruised_damage && prob(E.damage + 50)))

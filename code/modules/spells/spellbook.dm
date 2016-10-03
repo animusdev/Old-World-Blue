@@ -91,7 +91,7 @@
 
 	if(H.stat || H.restrained())
 		return
-	if(!istype(H, /mob/living/carbon/human))
+	if(!ishuman(H))
 		return 1
 
 	if(H.mind.special_role == "apprentice")
@@ -396,10 +396,10 @@
 	icon_state ="bookhorses"
 	desc = "This book is more horse than your mind has room for."
 
-/obj/item/weapon/spellbook/oneuse/horsemask/recoil(mob/living/carbon/user as mob)
-	if(istype(user, /mob/living/carbon/human))
+/obj/item/weapon/spellbook/oneuse/horsemask/recoil(mob/living/carbon/human/user as mob)
+	if(istype(user))
 		user <<"<font size='15' color='red'><b>HOR-SIE HAS RISEN</b></font>"
-		var/obj/item/clothing/mask/horsehead/magichead = new /obj/item/clothing/mask/horsehead
+		var/obj/item/clothing/mask/horsehead/magichead = new
 		magichead.canremove = 0		//curses!
 		magichead.flags_inv = null	//so you can still see their face
 		magichead.voicechange = 1	//NEEEEIIGHH

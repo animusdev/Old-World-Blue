@@ -23,7 +23,7 @@
 		else
 			user << "<span class='notice'>All [R]'s systems are nominal.</span>"
 
-	if (istype(M,/mob/living/carbon/human))		//Repairing robolimbs
+	if (ishuman(M))		//Repairing robolimbs
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/external/S = H.get_organ(user.zone_sel.selecting)
 		if(!S)

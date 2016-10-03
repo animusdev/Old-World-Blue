@@ -44,7 +44,7 @@
 	//..()
 	if(usr.stat || usr.restrained())
 		return
-	if(((istype(usr, /mob/living/carbon/human) && ((!( ticker ) || (ticker && ticker.mode != "monkey")) && usr.contents.Find(src))) || (usr.contents.Find(master) || (in_range(src, usr) && istype(loc, /turf)))))
+	if( ishuman(usr) && usr.Adjacent(get_turf(src)) )
 		usr.set_machine(src)
 		if(href_list["freq"])
 			var/new_frequency = sanitize_frequency(frequency + text2num(href_list["freq"]))
@@ -103,26 +103,26 @@
 		master.receive_signal()
 	return
 
-/obj/item/device/radio/electropack/attack_self(mob/user as mob, flag1)
+/obj/item/device/radio/electropack/attack_self(mob/living/carbon/human/user as mob, flag1)
 
-	if(!istype(user, /mob/living/carbon/human))
+	if(!istype(user))
 		return
 	user.set_machine(src)
 	var/dat = {"<TT>
-<A href='?src=\ref[src];power=1'>Turn [on ? "Off" : "On"]</A><BR>
-<B>Frequency/Code</B> for electropack:<BR>
-Frequency:
-<A href='byond://?src=\ref[src];freq=-10'>-</A>
-<A href='byond://?src=\ref[src];freq=-2'>-</A> [format_frequency(frequency)]
-<A href='byond://?src=\ref[src];freq=2'>+</A>
-<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+		<A href='?src=\ref[src];power=1'>Turn [on ? "Off" : "On"]</A><BR>
+		<B>Frequency/Code</B> for electropack:<BR>
+		Frequency:
+		<A href='byond://?src=\ref[src];freq=-10'>-</A>
+		<A href='byond://?src=\ref[src];freq=-2'>-</A> [format_frequency(frequency)]
+		<A href='byond://?src=\ref[src];freq=2'>+</A>
+		<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
 
-Code:
-<A href='byond://?src=\ref[src];code=-5'>-</A>
-<A href='byond://?src=\ref[src];code=-1'>-</A> [code]
-<A href='byond://?src=\ref[src];code=1'>+</A>
-<A href='byond://?src=\ref[src];code=5'>+</A><BR>
-</TT>"}
+		Code:
+		<A href='byond://?src=\ref[src];code=-5'>-</A>
+		<A href='byond://?src=\ref[src];code=-1'>-</A> [code]
+		<A href='byond://?src=\ref[src];code=1'>+</A>
+		<A href='byond://?src=\ref[src];code=5'>+</A><BR>
+		</TT>"}
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return

@@ -108,7 +108,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 
 	var/target_zone = pick(head_ch;1,body_ch;2,hands_ch;3,feet_ch;4)//1 - head, 2 - body, 3 - hands, 4- feet
 
-	if(istype(src, /mob/living/carbon/human))
+	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 
 		switch(target_zone)
@@ -162,7 +162,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 
 /*
 	var/score = 0
-	if(istype(src, /mob/living/carbon/human))
+	if(ishuman(src))
 		if(src:gloves) score += 5
 		if(istype(src:wear_suit, /obj/item/clothing/suit/space)) score += 10
 		if(istype(src:wear_suit, /obj/item/clothing/suit/bio_suit)) score += 10

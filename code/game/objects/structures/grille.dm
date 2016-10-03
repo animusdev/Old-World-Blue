@@ -38,7 +38,7 @@
 
 	var/damage_dealt = 1
 	var/attack_message = "kicks"
-	if(istype(user,/mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.can_shred())
 			attack_message = "mangles"

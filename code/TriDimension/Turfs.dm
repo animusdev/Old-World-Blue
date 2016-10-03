@@ -46,7 +46,7 @@
 
 					if (soft || (!blocked && !(areacheck.name == "Space")))
 						AM.Move(floorbelow)
-						if (!soft && istype(AM, /mob/living/carbon/human))
+						if (!soft && ishuman(AM))
 							var/mob/living/carbon/human/H = AM
 							var/damage = 5
 							H.apply_damage(min(rand(-damage,damage),0), BRUTE, BP_HEAD)

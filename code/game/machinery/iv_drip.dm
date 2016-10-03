@@ -34,7 +34,7 @@
 			overlays += filling
 
 /obj/machinery/iv_drip/MouseDrop(over_object, src_location, over_location)
-	if(!istype(usr, /mob/living/carbon/human)) return
+	if(!ishuman(usr)) return
 	if(in_range(src, usr) && ishuman(over_object) && get_dist(over_object, src) <= 1)
 		if(attached)
 			visible_message("[src.attached] is detached from \the [src]")

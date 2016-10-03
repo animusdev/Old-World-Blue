@@ -5,13 +5,11 @@
 	block=MONKEYBLOCK
 
 /datum/dna/gene/monkey/can_activate(var/mob/M,var/flags)
-	return istype(M, /mob/living/carbon/human) || istype(M,/mob/living/carbon/monkey)
+	return ishuman(M)
 
-/datum/dna/gene/monkey/activate(var/mob/living/M, var/connected, var/flags)
-	if(!istype(M,/mob/living/carbon/human))
-		//testing("Cannot monkey-ify [M], type is [M.type].")
+/datum/dna/gene/monkey/activate(var/mob/living/human/H, var/connected, var/flags)
+	if(!istype(H))
 		return
-	var/mob/living/carbon/human/H = M
 	H.monkeyizing = 1
 	var/list/implants = list() //Try to preserve implants.
 	for(var/obj/item/weapon/implant/W in H)

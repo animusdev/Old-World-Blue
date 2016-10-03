@@ -130,7 +130,7 @@
 			user << "\red Something is already scanned inside the implant!"
 			return
 		c.scanned = A
-		if(istype(A.loc,/mob/living/carbon/human))
+		if(ishuman(A.loc))
 			var/mob/living/carbon/human/H = A.loc
 			H.remove_from_mob(A)
 		else if(istype(A.loc,/obj/item/weapon/storage))

@@ -112,7 +112,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(iscarbon(loc))
 			var/mob/living/carbon/C = loc
 			if (src == C.wear_mask) // if it's in the human/monkey mouth, transfer reagents to the mob
-				if(istype(C, /mob/living/carbon/human))
+				if(ishuman(C))
 					var/mob/living/carbon/human/H = C
 					if(H.species.flags & IS_SYNTHETIC)
 						return

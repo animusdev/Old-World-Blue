@@ -334,7 +334,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 
 	implanted(mob/M)
-		if(!istype(M, /mob/living/carbon/human))	return 0
+		if(!ishuman(M))	return 0
 		var/mob/living/carbon/human/H = M
 		var/datum/antagonist/antag_data = get_antag_data(H.mind.special_role)
 		if(antag_data && (antag_data.flags & ANTAG_IMPLANT_IMMUNE))

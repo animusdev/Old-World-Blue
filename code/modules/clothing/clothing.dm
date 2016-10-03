@@ -32,7 +32,7 @@
 	if (!..())
 		return 0
 
-	if(species_restricted && istype(M,/mob/living/carbon/human))
+	if(species_restricted && ishuman(M))
 		var/exclusive = null
 		var/wearable = null
 		var/mob/living/carbon/human/H = M
@@ -298,7 +298,7 @@ BLIND     // can't see anything
 		if(!light_overlay_cache["[light_overlay]"])
 			light_overlay_cache["[light_overlay]"] = image("icon" = 'icons/mob/light_overlays.dmi', "icon_state" = "[light_overlay]")
 		overlays |= light_overlay_cache["[light_overlay]_icon"]
-	if(istype(user,/mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.update_inv_head()
 
@@ -390,9 +390,8 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/proc/update_rolldown_status()
 
-	var/mob/living/carbon/human/H
-	if(istype(src.loc, /mob/living/carbon/human))
-		H = src.loc
+	if(!ishuman(src.loc)) return
+	var/mob/living/carbon/human/H = src.loc
 
 	var/icon/under_icon = H.body_build.uniform_icon
 
@@ -426,7 +425,7 @@ BLIND     // can't see anything
 			accessories += A
 			A.on_attached(src, user)
 
-			if(istype(loc, /mob/living/carbon/human))
+			if(ishuman(loc))
 				var/mob/living/carbon/human/H = loc
 				H.update_inv_w_uniform()
 

@@ -215,7 +215,7 @@
 		if(reader)
 			reader.loc = loc
 			if(istype(L) && !L.get_active_hand())
-				if(istype(L,/mob/living/carbon/human))
+				if(ishuman(L))
 					L.put_in_hands(reader)
 				else
 					reader.loc = get_turf(computer)
@@ -229,7 +229,7 @@
 		if(writer && dualslot)
 			writer.loc = loc
 			if(istype(L) && !L.get_active_hand())
-				if(istype(L,/mob/living/carbon/human))
+				if(ishuman(L))
 					L.put_in_hands(writer)
 				else
 					writer.loc = get_turf(computer)

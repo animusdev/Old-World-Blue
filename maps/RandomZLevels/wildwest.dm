@@ -27,7 +27,7 @@
 		user << "The Wish Granter lies silent."
 		return
 
-	else if(!istype(user, /mob/living/carbon/human))
+	else if(!istype(user))
 		user << "You feel a dark stirring inside of the Wish Granter, something you want nothing of. Your instincts are better than any man's."
 		return
 
@@ -116,18 +116,18 @@
 /obj/effect/meatgrinder/HasEntered(AM as mob|obj)
 	Bumped(AM)
 
-/obj/effect/meatgrinder/Bumped(mob/M as mob|obj)
+/obj/effect/meatgrinder/Bumped(mob/living/carbon/human/M as mob|obj)
 
 	if(triggered) return
 
-	if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))
+	if(istype(M))
 		for(var/mob/O in viewers(world.view, src.loc))
 			O << "<font color='red'>[M] triggered the \icon[src] [src]</font>"
 		triggered = 1
 		call(src,triggerproc)(M)
 
 /obj/effect/meatgrinder/proc/triggerrad1(mob)
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect/effect/system/spark_spread/s = new
 	for(var/mob/O in viewers(world.view, src.loc))
 		s.set_up(3, 1, src)
 		s.start()

@@ -1,12 +1,12 @@
 // fun if you want to typecast humans/monkeys/etc without writing long path-filled lines.
 /proc/isxenomorph(A)
-	if(istype(A, /mob/living/carbon/human))
+	if(ishuman(A))
 		var/mob/living/carbon/human/H = A
 		return istype(H.species, /datum/species/xenos)
 	return 0
 
 /proc/issmall(A)
-	if(A && istype(A, /mob/living/carbon/human))
+	if(A && ishuman(A))
 		var/mob/living/carbon/human/H = A
 		if(H.species && H.species.is_small)
 			return 1

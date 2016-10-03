@@ -70,7 +70,7 @@
 			else if (dirt > 50)
 				dirtoverlay.alpha = min(dirtoverlay.alpha+5, 255)
 
-		if(istype(M, /mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			// Tracking blood
 			var/list/bloodDNA = null

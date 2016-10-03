@@ -174,7 +174,7 @@
 
 		if (href_list["cardr"])
 			if (scan)
-				if(istype(usr,/mob/living/carbon/human) && !usr.get_active_hand())
+				if(ishuman(usr) && !usr.get_active_hand())
 					computer.cardslot.remove(1)
 				else
 					scan.loc = get_turf(src)
@@ -187,7 +187,7 @@
 
 		if (href_list["cardw"])
 			if (scan2)
-				if(istype(usr,/mob/living/carbon/human) && !usr.get_active_hand())
+				if(ishuman(usr) && !usr.get_active_hand())
 					computer.cardslot.remove(2)
 				else
 					scan2.loc = get_turf(src)

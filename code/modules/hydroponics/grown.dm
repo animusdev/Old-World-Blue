@@ -152,7 +152,7 @@
 			if(M.buckled)
 				return
 
-			if(istype(M,/mob/living/carbon/human))
+			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(H.shoes && H.shoes.flags & NOSLIP)
 					return
@@ -180,7 +180,7 @@
 				//TODO: generalize this.
 				user << "<span class='notice'>You add some cable to the [src.name] and slide it inside the battery casing.</span>"
 				var/obj/item/weapon/cell/potato/pocell = new /obj/item/weapon/cell/potato(get_turf(user))
-				if(src.loc == user && !(user.l_hand && user.r_hand) && istype(user,/mob/living/carbon/human))
+				if(src.loc == user && !(user.l_hand && user.r_hand) && ishuman(user))
 					user.put_in_hands(pocell)
 				pocell.maxcharge = src.potency * 10
 				pocell.charge = pocell.maxcharge
@@ -251,7 +251,7 @@
 		M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
 		msg_admin_attack("[key_name(user)] attacked [key_name(M)] with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])" )
 
-		if(istype(M, /mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			var/hit = H.attacked_by(src, user, def_zone)
 			if(hit && hitsound)
