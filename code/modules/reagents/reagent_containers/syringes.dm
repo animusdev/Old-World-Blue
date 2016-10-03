@@ -97,7 +97,7 @@
 							return
 
 						var/datum/reagent/B
-						if(istype(T, /mob/living/carbon/human))
+						if(ishuman(T))
 							var/mob/living/carbon/human/H = T
 							if(H.species && H.species.flags & NO_BLOOD)
 								H.reagents.trans_to_obj(src, amount)
@@ -151,7 +151,7 @@
 
 					var/injtime = time //Injecting through a hardsuit takes longer due to needing to find a port.
 
-					if(istype(target, /mob/living/carbon/human))
+					if(ishuman(target))
 
 						var/mob/living/carbon/human/H = target
 						if(H.wear_suit)
@@ -219,7 +219,7 @@
 
 	proc/syringestab(mob/living/carbon/target as mob, mob/living/carbon/user as mob)
 
-		if(istype(target, /mob/living/carbon/human))
+		if(ishuman(target))
 
 			var/mob/living/carbon/human/H = target
 

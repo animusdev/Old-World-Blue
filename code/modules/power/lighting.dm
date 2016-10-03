@@ -428,7 +428,7 @@
 		user << "There is no [fitting] in this light."
 		return
 
-	if(istype(user,/mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.can_shred())
 			for(var/mob/M in viewers(src))

@@ -276,7 +276,7 @@
 
 			else
 				// ------- YOU DO NOT HAVE AN ITEM IN YOUR HAND -------
-				if (istype(usr, /mob/living/carbon/human))
+				if (ishuman(usr))
 					// ------- YOU ARE HUMAN -------
 					src.attack_hand(usr, usr.hand)
 				else
@@ -299,7 +299,7 @@
 						src.attack_animal(usr)
 		else
 			// ------- YOU ARE RESTRAINED. DETERMINE WHAT YOU ARE AND ATTACK WITH THE PROPER HAND_X PROC -------
-			if (istype(usr, /mob/living/carbon/human))
+			if (ishuman(usr))
 				src.hand_h(usr, usr.hand)
 			else if (istype(usr, /mob/living/carbon/monkey))
 				src.hand_p(usr, usr.hand)
@@ -331,7 +331,7 @@
 						W.afterattack(src, usr,, params)
 				else
 					// ------- YOU ARE NOT RESTRAINED, AND ARE CLICKING A HUD OBJECT -------
-					if (istype(usr, /mob/living/carbon/human))
+					if (ishuman(usr))
 						src.attack_hand(usr, usr.hand)
 					else if (istype(usr, /mob/living/carbon/monkey))
 						src.attack_paw(usr, usr.hand)
@@ -339,7 +339,7 @@
 						src.attack_alien(usr, usr.hand)
 			else
 				// ------- YOU ARE RESTRAINED CLICKING ON A HUD OBJECT -------
-				if (istype(usr, /mob/living/carbon/human))
+				if (ishuman(usr))
 					src.hand_h(usr, usr.hand)
 				else if (istype(usr, /mob/living/carbon/monkey))
 					src.hand_p(usr, usr.hand)
@@ -354,7 +354,7 @@
 				var/turf/U = get_turf(src)
 
 
-				if(istype(usr, /mob/living/carbon/human))
+				if(ishuman(usr))
 					usr:nutrition -= rand(1,5)
 					usr:handle_regular_hud_updates()
 

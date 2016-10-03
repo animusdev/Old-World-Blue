@@ -1,6 +1,6 @@
 /mob/living/carbon/human/proc/handle_strip(var/slot_to_strip,var/mob/living/user)
 
-	if(!slot_to_strip || !(istype(user,/mob/living/carbon/human)||istype(user,/mob/living/silicon/robot)) )
+	if(!slot_to_strip || !(ishuman(user)||istype(user,/mob/living/silicon/robot)) )
 		return
 
 	// TODO :  Change to incapacitated() on merge.

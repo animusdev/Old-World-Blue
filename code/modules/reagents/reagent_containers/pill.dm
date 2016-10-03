@@ -21,7 +21,7 @@
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if(M == user)
 
-			if(istype(M, /mob/living/carbon/human))
+			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(H.species.flags & IS_SYNTHETIC)
 					H << "<span class='notice'>You have a monitor for a head, where do you think you're going to put that?</span>"
@@ -39,7 +39,7 @@
 			qdel(src)
 			return 1
 
-		else if(istype(M, /mob/living/carbon/human))
+		else if(ishuman(M))
 
 			var/mob/living/carbon/human/H = M
 			if(H.species.flags & IS_SYNTHETIC)

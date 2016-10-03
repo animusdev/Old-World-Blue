@@ -659,7 +659,7 @@ var/list/sacrificed = list()
 			for(var/mob/H in victims)
 
 				var/worth = 0
-				if(istype(H,/mob/living/carbon/human))
+				if(ishuman(H))
 					var/mob/living/carbon/human/lamb = H
 					if(lamb.species.rarity_value > 3)
 						worth = 1

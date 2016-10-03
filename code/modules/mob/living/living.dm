@@ -100,7 +100,7 @@ default behaviour is:
 			if(!can_move_mob(tmob, 0, 0))
 				now_pushing = 0
 				return
-			if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
+			if(ishuman(tmob) && FAT in tmob.mutations)
 				if(prob(40) && !(FAT in src.mutations))
 					src << "<span class='danger'>You fail to push [tmob]'s fat ass out of the way.</span>"
 					now_pushing = 0
@@ -166,7 +166,7 @@ default behaviour is:
 
 //sort of a legacy burn method for /electrocute, /shock, and the e_chair
 /mob/living/proc/burn_skin(burn_amount)
-	if(istype(src, /mob/living/carbon/human))
+	if(ishuman(src))
 		//world << "DEBUG: burn_skin(), mutations=[mutations]"
 		if(mShock in src.mutations) //shockproof
 			return 0
@@ -201,7 +201,7 @@ default behaviour is:
 		temperature -= change
 		if(actual < desired)
 			temperature = desired
-//	if(istype(src, /mob/living/carbon/human))
+//	if(ishuman(src))
 //		world << "[src] ~ [src.bodytemperature] ~ [temperature]"
 	return temperature
 

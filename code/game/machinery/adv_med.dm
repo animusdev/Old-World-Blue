@@ -252,7 +252,7 @@
 		if (!src.connected.occupant)
 			usr << "\icon[src]<span class='warning'>The body scanner is empty.</span>"
 			return
-		if (!istype(occupant,/mob/living/carbon/human))
+		if (!ishuman(occupant))
 			usr << "\icon[src]<span class='warning'>The body scanner cannot scan that lifeform.</span>"
 			return
 		var/obj/item/weapon/paper/R = new(src.loc)
@@ -261,7 +261,7 @@
 
 
 /obj/machinery/bodyscanner/proc/get_occupant_data()
-	if (!occupant || !istype(occupant, /mob/living/carbon/human))
+	if (!occupant || !ishuman(occupant))
 		return
 	var/mob/living/carbon/human/H = occupant
 	var/list/occupant_data = list(

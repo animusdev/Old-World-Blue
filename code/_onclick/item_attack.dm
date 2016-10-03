@@ -68,7 +68,7 @@ attacked_by() will handle hitting/missing/logging as it does now, and will call 
 
 	// TODO: needs to be refactored into a mob/living level attacked_by() proc. ~Z
 	user.do_attack_animation(M)
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 
 		// Handle striking to cripple.

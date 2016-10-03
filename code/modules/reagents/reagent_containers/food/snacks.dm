@@ -55,7 +55,7 @@
 	if(istype(M, /mob/living/carbon))
 		var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
 		if(M == user)								//If you're eating it yourself
-			if(istype(M,/mob/living/carbon/human))
+			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(H.species.flags & IS_SYNTHETIC)
 					H << "<span class='danger'>You have a monitor for a head, where do you think you're going to put that?</span>"
@@ -78,7 +78,7 @@
 				M << "<span class='danger'>You cannot force any more of [src] to go down your throat.</span>"
 				return 0
 		else
-			if(istype(M,/mob/living/carbon/human))
+			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(H.species.flags & IS_SYNTHETIC)
 					user << "<span class='danger'>They have a monitor for a head, where do you think you're going to put that?</span>"

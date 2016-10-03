@@ -154,7 +154,7 @@
 
 /obj/machinery/door/window/attack_hand(mob/user as mob)
 
-	if(istype(user,/mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.can_shred())
 			user.next_move = world.time + 8

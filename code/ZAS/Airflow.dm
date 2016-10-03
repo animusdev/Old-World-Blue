@@ -60,10 +60,11 @@ obj/item/check_airflow_movable(n)
 		if(4,5)
 			if(n < vsc.airflow_medium_pressure) return 0
 
-/atom/movable/var/tmp/turf/airflow_dest
-/atom/movable/var/tmp/airflow_speed = 0
-/atom/movable/var/tmp/airflow_time = 0
-/atom/movable/var/tmp/last_airflow = 0
+/atom/movable
+	var/tmp/turf/airflow_dest
+	var/tmp/airflow_speed = 0
+	var/tmp/airflow_time = 0
+	var/tmp/last_airflow = 0
 
 /atom/movable/proc/GotoAirflowDest(n)
 	if(!airflow_dest) return
@@ -78,7 +79,7 @@ obj/item/check_airflow_movable(n)
 	if(ismob(src))
 		if(src:status_flags & GODMODE)
 			return
-		if(istype(src, /mob/living/carbon/human))
+		if(ishuman(src))
 			if(src:buckled)
 				return
 			if(src:shoes && src:shoes.flags & NOSLIP)
@@ -140,7 +141,7 @@ obj/item/check_airflow_movable(n)
 	if(ismob(src))
 		if(src:status_flags & GODMODE)
 			return
-		if(istype(src, /mob/living/carbon/human))
+		if(ishuman(src))
 			if(src:buckled)
 				return
 			if(src:shoes)

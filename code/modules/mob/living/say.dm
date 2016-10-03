@@ -138,7 +138,7 @@ proc/get_radio_key_from_channel(var/channel)
 	else
 		speaking = get_default_language()
 
-	if(istype(src,/mob/living/carbon/human))
+	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if(!(speaking == all_languages[H.species.language] || (speaking.flags&(NO_STUTTER|HIVEMIND)) || speaking == all_languages["Noise"]))
 			message = H.species.handle_accent(message)

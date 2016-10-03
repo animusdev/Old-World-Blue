@@ -1005,7 +1005,7 @@
 	process(var/obj/item/mecha_parts/mecha_equipment/generator/nuclear/EG)
 		if(..())
 			for(var/mob/living/carbon/M in view(EG.chassis))
-				if(istype(M,/mob/living/carbon/human))
+				if(ishuman(M))
 					M.apply_effect((EG.rad_per_cycle*3),IRRADIATE,0)
 				else
 					M.radiation += EG.rad_per_cycle

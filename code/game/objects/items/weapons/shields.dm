@@ -29,7 +29,7 @@
 				cooldown = world.time
 		else
 			..()
-			
+
 /obj/item/weapon/shield/buckler
 	name = "wooden shield"
 	desc = "CHAAAAAAAAAAAAAARGE!"
@@ -56,7 +56,7 @@
 				playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
 				cooldown = world.time
 		else
-			..()			
+			..()
 
 /*
  * Energy Shield
@@ -102,7 +102,7 @@
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
 		user << "\blue [src] can now be concealed."
 
-	if(istype(user,/mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.update_inv_l_hand()
 		H.update_inv_r_hand()

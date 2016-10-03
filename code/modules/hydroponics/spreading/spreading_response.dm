@@ -71,7 +71,7 @@
 	//grabbing people
 	if(!victim.anchored && Adjacent(victim) && victim.loc != get_turf(src))
 		var/can_grab = 1
-		if(istype(victim, /mob/living/carbon/human))
+		if(ishuman(victim))
 			var/mob/living/carbon/human/H = victim
 			if(istype(H.shoes, /obj/item/clothing/shoes/magboots) && (H.shoes.flags & NOSLIP))
 				can_grab = 0
