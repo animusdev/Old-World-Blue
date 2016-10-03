@@ -59,7 +59,7 @@
 
 /obj/machinery/drone_fabricator/examine(mob/user)
 	.=..()
-	if(produce_drones && drone_progress >= 100 && istype(user,/mob/dead) && config.allow_drone_spawn && count_drones() < config.max_maint_drones)
+	if(produce_drones && drone_progress >= 100 && istype(user,/mob/observer/dead) && config.allow_drone_spawn && count_drones() < config.max_maint_drones)
 		user << "<BR><B>A drone is prepared. Select 'Join As Drone' from the Ghost tab to spawn as a maintenance drone.</B>"
 
 /obj/machinery/drone_fabricator/proc/create_drone(var/client/player)
@@ -70,7 +70,7 @@
 	if(!produce_drones || !config.allow_drone_spawn || count_drones() >= config.max_maint_drones)
 		return
 
-	if(!player || !istype(player.mob,/mob/dead))
+	if(!player || !istype(player.mob,/mob/observer/dead))
 		return
 
 	if(jobban_isbanned(player, "Drone"))
@@ -88,12 +88,11 @@
 
 	drone_progress = 0
 
-/mob/dead/verb/join_as_drone()
+/mob/observer/dead/verb/join_as_drone()
 
 	set category = "Ghost"
 	set name = "Join As Drone"
 	set desc = "If there is a powered, enabled fabricator in the game world with a prepared chassis, join as a maintenance drone."
-
 
 	if(ticker.current_state < GAME_STATE_PLAYING)
 		src << "<span class='danger'>The game hasn't started yet!</span>"
@@ -109,7 +108,7 @@
 	if (usr != src)
 		return 0 //something is terribly wrong
 
-	if(jobban_isbanned(src,"Cyborg"))
+	if(jobban_isbanned(src,"Cyborg") || jobban_isbanned(src,"Drone"))
 		usr << "<span class='danger'>You are banned from playing synthetics and cannot spawn as a drone.</span>"
 		return
 
@@ -117,8 +116,8 @@
 		return
 
 	var/deathtime = world.time - src.timeofdeath
-	if(istype(src,/mob/dead/observer))
-		var/mob/dead/observer/G = src
+	if(istype(src,/mob/observer/dead))
+		var/mob/observer/dead/G = src
 		if(G.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
 			usr << "<span class='notice'>Upon using the antagHUD you forfeighted the ability to join the round.</span>"
 			return

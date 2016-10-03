@@ -1,4 +1,4 @@
-/mob/dead/observer/say(var/message)
+/mob/observer/dead/say(var/message)
 	message = sanitize(message)
 
 	if (!message)
@@ -11,13 +11,10 @@
 			src << "\red You cannot talk in deadchat (muted)."
 			return
 
-		if (src.client.handle_spam_prevention(message,MUTE_DEADCHAT))
-			return
-
 	. = src.say_dead(message)
 
 
-/mob/dead/observer/emote(var/act, var/type, var/message)
+/mob/observer/dead/emote(var/act, var/type, var/message)
 	//message = sanitize(message) - already sanitized in verb/me_verb()
 
 	if(!message)
@@ -33,13 +30,10 @@
 			src << "\red You cannot emote in deadchat (muted)."
 			return
 
-		if(src.client.handle_spam_prevention(message, MUTE_DEADCHAT))
-			return
-
 	. = src.emote_dead(message)
 
 
-/mob/dead/observer/hear_say(var/message, var/verb = "says", var/datum/language/language = null, var/alt_name = "",var/italics = 0, var/mob/speaker = null, var/sound/speech_sound, var/sound_vol)
+/mob/observer/dead/hear_say(var/message, var/verb = "says", var/datum/language/language = null, var/alt_name = "",var/italics = 0, var/mob/speaker = null, var/sound/speech_sound, var/sound_vol)
 	if(!client) return
 
 	if(speaker && !speaker.client && client.prefs.chat_toggles & CHAT_GHOSTEARS && !speaker in view(src))

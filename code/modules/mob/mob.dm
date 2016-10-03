@@ -69,7 +69,7 @@
 			else
 				msg = alt
 				type = alt_type
-				if ((type & 1 && sdisabilities & BLIND))
+				if (type & 1 && sdisabilities & BLIND)
 					return
 	// Added voice muffling for Issue 41.
 	if(stat == UNCONSCIOUS || sleeping > 0)
@@ -358,8 +358,8 @@
 		if(src.client)
 			is_admin = check_rights(0, 0)
 		var/deathtime = world.time - src.timeofdeath
-		if(!is_admin && istype(src,/mob/dead/observer))
-			var/mob/dead/observer/G = src
+		if(!is_admin && istype(src,/mob/observer/dead))
+			var/mob/observer/dead/G = src
 			if(G.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
 				usr << "\blue <B>Upon using the antagHUD you forfeighted the ability to join the round.</B>"
 				return
