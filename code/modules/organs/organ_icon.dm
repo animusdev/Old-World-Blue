@@ -50,13 +50,13 @@ var/global/list/limb_icon_cache = list()
 		if(eyes)
 			eyes_icon = eyes.get_icon()
 		else
-			eyes_icon = new/icon(owner.species.icobase, "eyes[owner.body_build]")
+			eyes_icon = new/icon(owner.species.icobase, "eyes[owner.body_build.index]")
 			eyes_icon.Blend(rgb(128,0,0), ICON_ADD)
 
 		mob_icon.Blend(eyes_icon, ICON_OVERLAY)
 
 	if(owner.lip_color && (owner.species.flags & HAS_LIPS))
-		var/icon/lip_icon = new/icon(owner.species.icobase, "lips[owner.body_build]")
+		var/icon/lip_icon = new/icon(owner.species.icobase, "lips[owner.body_build.index]")
 		lip_icon.Blend(owner.lip_color, ICON_ADD)
 		mob_icon.Blend(lip_icon, ICON_OVERLAY)
 
