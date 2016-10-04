@@ -199,6 +199,7 @@
 
 /obj/mecha/proc/do_after(delay as num)
 	sleep(delay)
+	world << "Mecha do_after called"
 	if(src)
 		return 1
 	return 0

@@ -218,15 +218,6 @@
 			else
 				user << "<span class='notice'>The [affecting.name] is cut open, you'll need more than a bandage!</span>"
 
-/obj/item/stack/medical/splint
-	name = "medical splints"
-	singular_name = "medical splint"
-	icon_state = "splint"
-	amount = 5
-	max_amount = 5
-
-	var/list/splintable_limbs = list("l_arm","r_arm","l_leg","r_leg", "l_hand", "r_hand", "r_foot", "l_foot")	//List of organs you can splint, natch.
-
 
 /obj/item/stack/medical/splint
 	name = "medical splints"
