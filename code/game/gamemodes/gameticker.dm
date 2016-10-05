@@ -395,7 +395,7 @@ var/list/donator_icons
 				else
 					Player << "<font color='blue'><b>You missed the crew transfer after the events on [station_name()] as [Player.real_name].</b></font>"
 			else
-				if(istype(Player,/mob/observer/dead))
+				if(isobserver(Player))
 					var/mob/observer/dead/O = Player
 					if(!O.started_as_observer)
 						Player << "<font color='red'><b>You did not survive the events on [station_name()]...</b></font>"

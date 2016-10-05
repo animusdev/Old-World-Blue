@@ -350,8 +350,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!input)
 		return
 
-	var/mob/dead/observer/G_found
-	for(var/mob/dead/observer/G in player_list)
+	var/mob/observer/dead/G_found
+	for(var/mob/observer/dead/G in player_list)
 		if(G.ckey == input)
 			G_found = G
 			break

@@ -634,9 +634,6 @@ var/list/be_special_flags = list(
 #define FIRE_DAMAGE_MODIFIER 0.0215 // Higher values result in more external fire damage to the skin. (default 0.0215)
 #define  AIR_DAMAGE_MODIFIER 2.025  // More means less damage from hot air scalding lungs, less = more damage. (default 2.025)
 #define INFINITY             1.#INF
-#define BACKGROUND_ENABLED   0      // The default value for all uses of set background. Set background can
-                                    // cause gradual lag and is recommended you only turn this on if necessary.
-                                    // 1 will enable set background. 0 will disable set background.
 
 // Setting this much higher than 1024 could allow spammers to DOS the server easily.
 #define MAX_MESSAGE_LEN       1024

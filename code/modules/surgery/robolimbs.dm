@@ -26,9 +26,6 @@
 			if (p.part)
 				if (!(target_zone in p.part))
 					return 0
-			if(target.body_build == BODY_SLIM && !tool:allow_slim_body)
-				user << "<span class = 'warning'>[target.name]'s spine and bones is too weak for using [tool].</span>"
-				return 0
 			return isnull(target.get_organ(target_zone))
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

@@ -59,7 +59,7 @@
 
 /obj/machinery/drone_fabricator/examine(mob/user)
 	.=..()
-	if(produce_drones && drone_progress >= 100 && istype(user,/mob/observer/dead) && config.allow_drone_spawn && count_drones() < config.max_maint_drones)
+	if(produce_drones && drone_progress >= 100 && isobserver(user) && config.allow_drone_spawn && count_drones() < config.max_maint_drones)
 		user << "<BR><B>A drone is prepared. Select 'Join As Drone' from the Ghost tab to spawn as a maintenance drone.</B>"
 
 /obj/machinery/drone_fabricator/proc/create_drone(var/client/player)
@@ -70,7 +70,7 @@
 	if(!produce_drones || !config.allow_drone_spawn || count_drones() >= config.max_maint_drones)
 		return
 
-	if(!player || !istype(player.mob,/mob/observer/dead))
+	if(!player || !isobserver(player.mob))
 		return
 
 	if(jobban_isbanned(player, "Drone"))
@@ -116,7 +116,7 @@
 		return
 
 	var/deathtime = world.time - src.timeofdeath
-	if(istype(src,/mob/observer/dead))
+	if(isobserver(src))
 		var/mob/observer/dead/G = src
 		if(G.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
 			usr << "<span class='notice'>Upon using the antagHUD you forfeighted the ability to join the round.</span>"

@@ -208,16 +208,16 @@
 		return
 	var/input = input(src, "Please specify which key will be turned into a bloby.", "Key", "")
 
-	var/mob/dead/observer/G_found
+	var/mob/observer/dead/G_found
 	if(!input)
 		var/list/ghosts = list()
-		for(var/mob/dead/observer/G in player_list)
+		for(var/mob/observer/dead/G in player_list)
 			ghosts += G
 		if(ghosts.len)
 			G_found = pick(ghosts)
 
 	else
-		for(var/mob/dead/observer/G in player_list)
+		for(var/mob/observer/dead/G in player_list)
 			if(G.client&&ckey(G.key)==ckey(input))
 				G_found = G
 				break

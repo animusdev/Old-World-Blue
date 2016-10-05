@@ -175,7 +175,7 @@
 	var/g = "_m"
 	if(gender == FEMALE)
 		g = "_f"
-	var/b="[body_build.index]"
+	var/b=body_build.index
 	g+=b
 
 	var/icon/icobase

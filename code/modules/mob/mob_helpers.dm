@@ -27,9 +27,6 @@
 /mob/proc/isSynthetic()
 	return 0
 
-/mob/living/carbon/human/isSynthetic()
-	return species.flags & IS_SYNTHETIC
-
 /mob/living/silicon/isSynthetic()
 	return 1
 
@@ -319,7 +316,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 		var/atom/oldeye=M.client.eye
 		var/aiEyeFlag = 0
-		if(istype(oldeye, /mob/eye/aiEye))
+		if(istype(oldeye, /mob/observer/eye/aiEye))
 			aiEyeFlag = 1
 
 		var/x
@@ -452,7 +449,7 @@ proc/is_blind(A)
 					follow = "(<a href='byond://?src=\ref[M];track=\ref[subject]'>follow</a>) "
 				if(M.stat != DEAD && M.client.holder)
 					follow = "(<a href='?src=\ref[M.client.holder];adminplayerobservejump=\ref[subject]'>JMP</a>) "
-				var/mob/dead/observer/DM
+				var/mob/observer/dead/DM
 				if(isobserver(subject))
 					DM = subject
 				if(M.client.holder) 							// What admins see

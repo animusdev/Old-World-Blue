@@ -114,7 +114,7 @@
 		return 0
 
 	if(!brainmob.client)
-		for(var/mob/dead/observer/ghost in player_list)
+		for(var/mob/observer/dead/ghost in player_list)
 			if(ghost.mind == brainmob.mind)
 				ghost << "<b><font color = #330033><font size = 3>Someone is trying to regrown you from your brain. Return to your body if you want to be resurrected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
 				break

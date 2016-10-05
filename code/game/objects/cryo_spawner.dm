@@ -7,7 +7,7 @@
 	anchored = 1
 	var/player_spawn = 0
 
-/obj/cryo_spawner/attack_ghost(mob/dead/observer/user as mob)
+/obj/cryo_spawner/attack_ghost(mob/observer/dead/user as mob)
 	var/mob/living/carbon/human/new_character
 	if(!user) return
 	var/is_admin = check_rights(show_msg = player_spawn)

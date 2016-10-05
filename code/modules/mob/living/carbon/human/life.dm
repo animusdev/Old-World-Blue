@@ -36,12 +36,10 @@
 
 /mob/living/carbon/human/Life()
 	set invisibility = 0
-	set background = 1
+	set background = BACKGROUND_ENABLED
 
-	if (monkeyizing)	return
-	if(!loc)			return	// Fixing a null error that occurs when the mob isn't found in the world -- TLE
-
-	..()
+	if (transforming)
+		return
 
 	//Apparently, the person who wrote this code designed it so that
 	//blinded get reset each cycle and then get activated later in the
@@ -53,41 +51,20 @@
 	//TODO: seperate this out
 	// update the current life tick, can be used to e.g. only do something every 4 ticks
 	life_tick++
-	var/datum/gas_mixture/environment = loc.return_air()
 
-	in_stasis = istype(loc, /obj/structure/closet/body_bag/cryobag) && loc:opened == 0
-	if(in_stasis) loc:used++
+	..()
 
 	if(life_tick%30==15)
 		hud_updateflag = 1022
 
 	//No need to update all of these procs if the guy is dead.
 	if(stat != DEAD && !in_stasis)
-		if(air_master.current_cycle%4==2 || failed_last_breath || (health <= config.health_threshold_crit)) 	//First, resolve location and get a breath
-			breathe() 				//Only try to take a breath every 4 ticks, unless suffocating
-
 		//Updates the number of stored chemicals for powers
 		handle_changeling()
 
-		//Mutations and radiation
-		handle_mutations_and_radiation()
-
-		//Chemicals in the body
-		handle_chemicals_in_body()
-
-		//Disabilities
-		handle_disabilities()
-
 		//Organs and blood
 		handle_organs()
-		handle_blood()
 		stabilize_body_temperature() //Body temperature adjusts itself (self-regulation)
-
-		//Random events (vomiting etc)
-		handle_random_events()
-
-		//stuff in the stomach
-		handle_stomach()
 
 		handle_shock()
 
@@ -100,35 +77,28 @@
 		if(!client)
 			species.handle_npc(src)
 
-	if(life_tick > 5 && timeofdeath && (timeofdeath < 5 || world.time - timeofdeath > 6000))	//We are long dead, or we're junk mobs spawned like the clowns on the clown shuttle
+
+	if(!handle_some_updates())
 		return											//We go ahead and process them 5 times for HUD images and other stuff though.
-
-	//Handle temperature/pressure differences between body and environment
-	handle_environment(environment)		//Optimized a good bit.
-
-	//Check if we're on fire
-	handle_fire()
 
 	if(src.lying && src.birth)
 		src.overlays += image('icons/mob/alien.dmi', loc = src, icon_state = "bursted_lie")
 	else if(!src.lying && src.birth)
 		src.overlays += image('icons/mob/alien.dmi', loc = src, icon_state = "bursted_stand")
 
-
-	//Status updates, death etc.
-	handle_regular_status_updates()		//Optimized a bit
-	update_canmove()
-
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
-	handle_regular_hud_updates()
-
 	pulse = handle_pulse()
 
-	// Grabbing
-	for(var/obj/item/weapon/grab/G in src)
-		G.process()
+/mob/living/carbon/human/proc/handle_some_updates()
+	if(life_tick > 5 && timeofdeath && (timeofdeath < 5 || world.time - timeofdeath > 6000))	//We are long dead, or we're junk mobs spawned like the clowns on the clown shuttle
+		return 0
+	return 1
+
+/mob/living/carbon/human/breathe()
+	if(!in_stasis)
+		..()
 
 // Calculate how vulnerable the human is to under- and overpressure.
 // Returns 0 (equals 0 %) if sealed in an undamaged suit, 1 if unprotected (equals 100%).
@@ -177,7 +147,8 @@
 	else
 		return ONE_ATMOSPHERE + pressure_difference
 
-/mob/living/carbon/human/proc/handle_disabilities()
+/mob/living/carbon/human/handle_disabilities()
+	..()
 
 	if(stat != CONSCIOUS) //Let's not worry about tourettes if you're not conscious.
 		return
@@ -235,7 +206,7 @@
 
 
 
-/mob/living/carbon/human/proc/handle_mutations_and_radiation()
+/mob/living/carbon/human/handle_mutations_and_radiation()
 	if(in_stasis)
 		return
 
@@ -576,8 +547,7 @@
 	breath.update_values()
 	return 1
 
-/mob/living/carbon/human/proc/handle_environment(datum/gas_mixture/environment)
-
+/mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
 		return
 
@@ -798,7 +768,7 @@
 			. += THERMAL_PROTECTION_HAND_RIGHT
 	return min(1,.)
 
-/mob/living/carbon/human/proc/handle_chemicals_in_body()
+/mob/living/carbon/human/handle_chemicals_in_body()
 
 	if(in_stasis)
 		return
@@ -892,7 +862,9 @@
 	return //TODO: DEFERRED
 
 //DO NOT CALL handle_statuses() from this proc, it's called from living/Life() as long as this returns a true value.
-/mob/living/carbon/human/proc/handle_regular_status_updates()
+/mob/living/carbon/human/handle_regular_status_updates()
+	if(!handle_some_updates())
+		return 0
 
 	if(status_flags & GODMODE)	return 0
 
@@ -1031,9 +1003,6 @@
 			jitteriness = max(0, jitteriness - 3)
 			adjustHalLoss(-1)
 
-		//Other
-		handle_statuses()
-
 		if (drowsyness)
 			drowsyness--
 			eye_blurry = max(2, eye_blurry)
@@ -1049,7 +1018,7 @@
 
 	return 1
 
-/mob/living/carbon/human/proc/handle_regular_hud_updates()
+/mob/living/carbon/human/handle_regular_hud_updates()
 	if(!overlays_cache)
 		overlays_cache = list()
 		overlays_cache.len = 23
@@ -1364,7 +1333,7 @@
 			O.process_hud(src)
 			if(!druggy && !seer)	see_invisible = SEE_INVISIBLE_LIVING
 
-/mob/living/carbon/human/proc/handle_random_events()
+/mob/living/carbon/human/handle_random_events()
 	if(in_stasis)
 		return
 
@@ -1380,7 +1349,7 @@
 		if(L && L.lum_r + L.lum_g + L.lum_b == 0)
 			playsound_local(src,pick(scarySounds),50, 1, -1)
 
-/mob/living/carbon/human/proc/handle_stomach()
+/mob/living/carbon/human/handle_stomach()
 	spawn(0)
 		for(var/mob/living/M in stomach_contents)
 			if(M.loc != src)
