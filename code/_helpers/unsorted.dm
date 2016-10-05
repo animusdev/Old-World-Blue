@@ -432,7 +432,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if (M.real_name && M.real_name != M.name)
 			name += " \[[M.real_name]\]"
 		if (M.stat == 2)
-			if(istype(M, /mob/dead/observer/))
+			if(isobserver(M))
 				name += " \[ghost\]"
 			else
 				name += " \[dead\]"
@@ -444,7 +444,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/sortmobs()
 	var/list/moblist = list()
 	var/list/sortmob = sortAtom(mob_list)
-	for(var/mob/eye/M in sortmob)
+	for(var/mob/observer/eye/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/living/silicon/ai/M in sortmob)
 		moblist.Add(M)
@@ -458,7 +458,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		moblist.Add(M)
 	for(var/mob/living/carbon/alien/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/dead/observer/M in sortmob)
+	for(var/mob/observer/dead/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/new_player/M in sortmob)
 		moblist.Add(M)
@@ -834,7 +834,7 @@ proc/GaussRandRound(var/sigma,var/roundto)
 						if(!istype(O,/obj)) continue
 						O.loc = X
 					for(var/mob/M in T)
-						if(!istype(M,/mob) || istype(M, /mob/eye)) continue // If we need to check for more mobs, I'll add a variable
+						if(!istype(M,/mob) || isEye(M)) continue // If we need to check for more mobs, I'll add a variable
 						M.loc = X
 
 //					var/area/AR = X.loc
@@ -965,7 +965,7 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 
 					for(var/mob/M in T)
 
-						if(!istype(M,/mob) || istype(M, /mob/eye)) continue // If we need to check for more mobs, I'll add a variable
+						if(!istype(M,/mob) || isEye(M)) continue // If we need to check for more mobs, I'll add a variable
 						mobs += M
 
 					for(var/mob/M in mobs)
@@ -1035,18 +1035,14 @@ proc/get_mob_with_client_list()
 
 /proc/parse_zone(zone)
 	switch(zone)
-		if("r_hand") return "right hand"
-		if("l_hand") return "left hand"
-		if("l_arm")  return "left arm"
-		if("r_arm")  return "right arm"
-		if("l_leg")  return "left leg"
-		if("r_leg")  return "right leg"
-		if("l_foot") return "left foot"
-		if("r_foot") return "right foot"
-		if("l_hand") return "left hand"
-		if("r_hand") return "right hand"
-		if("l_foot") return "left foot"
-		if("r_foot") return "right foot"
+		if(BP_L_HAND) return "left hand"
+		if(BP_R_HAND) return "right hand"
+		if(BP_L_ARM)  return "left arm"
+		if(BP_R_ARM)  return "right arm"
+		if(BP_L_LEG)  return "left leg"
+		if(BP_R_LEG)  return "right leg"
+		if(BP_L_FOOT) return "left foot"
+		if(BP_R_FOOT) return "right foot"
 	return zone
 
 /proc/get(atom/loc, type)

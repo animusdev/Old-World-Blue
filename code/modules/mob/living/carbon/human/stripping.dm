@@ -1,6 +1,6 @@
 /mob/living/carbon/human/proc/handle_strip(var/slot_to_strip,var/mob/living/user)
 
-	if(!slot_to_strip || !(istype(user,/mob/living/carbon/human)||istype(user,/mob/living/silicon/robot)) )
+	if(!slot_to_strip || !(ishuman(user)||istype(user,/mob/living/silicon/robot)) )
 		return
 
 	// TODO :  Change to incapacitated() on merge.
@@ -123,7 +123,7 @@
 
 	if(can_reach_splints)
 		var/removed_splint
-		for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
+		for(var/organ in list(BP_L_LEG,BP_R_LEG,BP_L_ARM,BP_R_ARM))
 			var/obj/item/organ/external/o = get_organ(organ)
 			if (o && o.status & ORGAN_SPLINTED)
 				var/obj/item/W = new /obj/item/stack/medical/splint(get_turf(src), 1)

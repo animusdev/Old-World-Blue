@@ -37,11 +37,11 @@
 					melee_can_hit = 1
 				return
 			*/
-			if(istype(target, /mob/living/carbon/human))
+			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
 	//			if (M.health <= 0) return
 
-				var/obj/item/organ/external/temp = H.get_organ(pick("chest", "chest", "chest", "head"))
+				var/obj/item/organ/external/temp = H.get_organ(pick(BP_CHEST, BP_CHEST, BP_CHEST, BP_HEAD))
 				if(temp)
 					var/update = 0
 					switch(damtype)

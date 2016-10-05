@@ -151,7 +151,7 @@ datum/objective/anti_revolution/demote
 	check_completion()
 		if(!target)//If it's a free objective.
 			return 1
-		if(target && target.current && istype(target,/mob/living/carbon/human))
+		if(target && target.current && ishuman(target))
 			var/obj/item/weapon/card/id/I = target.current:wear_id
 			if(istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/P = I
@@ -403,7 +403,7 @@ datum/objective/harm
 		if(already_completed)
 			return 1
 
-		if(target && target.current && istype(target.current, /mob/living/carbon/human))
+		if(target && target.current && ishuman(target.current))
 			if(target.current.stat == DEAD)
 				return 0
 
@@ -422,7 +422,7 @@ datum/objective/harm
 				if(!found)
 					return 1
 
-			var/obj/item/organ/external/head/head = H.get_organ("head")
+			var/obj/item/organ/external/head/head = H.get_organ(BP_HEAD)
 			if(head.disfigured)
 				return 1
 		return 0
@@ -572,7 +572,7 @@ datum/objective/download
 
 		var/current_amount
 		var/obj/item/weapon/rig/S
-		if(istype(owner.current,/mob/living/carbon/human))
+		if(ishuman(owner.current))
 			var/mob/living/carbon/human/H = owner.current
 			S = H.back
 

@@ -1,4 +1,5 @@
-/datum/hud/proc/human_hud(var/ui_style='icons/mob/screen1_White.dmi', var/ui_color = "#ffffff", var/ui_alpha = 255, var/mob/living/carbon/human/target)
+/datum/hud/proc/human_hud(	var/ui_style='icons/mob/screen1_White.dmi', var/ui_color = "#ffffff",
+							var/ui_alpha = 255, var/mob/living/carbon/human/target)
 
 	var/datum/hud_data/hud_data
 	if(!istype(target))
@@ -318,7 +319,8 @@
 	mymob.damageoverlay.name = "dmg"
 	mymob.damageoverlay.screen_loc = "1,1"
 	mymob.damageoverlay.mouse_opacity = 0
-	mymob.damageoverlay.layer = 18.1 //The black screen overlay sets layer to 18 to display it, this one has to be just on top.
+	//The black screen overlay sets layer to 18 to display it, this one has to be just on top.
+	mymob.damageoverlay.layer = 18.1
 	hud_elements |= mymob.damageoverlay
 
 	mymob.flash = new /obj/screen()
@@ -439,5 +441,6 @@
 		h_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 	undershirt = null
 	underwear = null
-	body_build = dna.body_build
+	body_build = get_body_build(gender, dna.body_build)
+	update_body_build(0)
 	regenerate_icons()

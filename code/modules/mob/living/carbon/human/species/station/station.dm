@@ -8,76 +8,19 @@
 		new /datum/unarmed_attack/kick,
 		new /datum/unarmed_attack/punch,
 		new /datum/unarmed_attack/bite
-		)
+	)
 	blurb = "Humanity originated in the Sol system, and over the last five centuries has spread \
 	colonies across a wide swathe of space. They hold a wide range of forms and creeds.<br/><br/> \
 	While the central Sol government maintains control of its far-flung people, powerful corporate \
 	interests, rampant cyber and bio-augmentation and secretive factions make life on most human \
 	worlds tumultous at best."
+	min_age = 17
+	max_age = 110
+
+	body_builds = list("Default", "Slim")
 
 	flags = CAN_JOIN | HAS_SKIN_TONE | HAS_LIPS | HAS_UNDERWEAR | HAS_EYE_COLOR
 
-	allow_slim_fem = 1
-
-	get_uniform_sprite(state = "", body_build = 0)
-		if(body_build==BODY_SLIM)
-			return 'icons/mob/uniform_f.dmi'
-		else
-			return 'icons/mob/uniform.dmi'
-
-	get_suit_sprite(state = "", body_build = 0)
-		if(body_build==BODY_SLIM)
-			return 'icons/mob/suit_f.dmi'
-		else
-			return 'icons/mob/suit.dmi'
-
-	get_gloves_sprite(state = "", body_build = 0)
-		if(body_build==BODY_SLIM)
-			return 'icons/mob/hands_f.dmi'
-		else
-			return 'icons/mob/hands.dmi'
-
-	get_shoes_sprite(state = "", body_build = 0)
-		if(body_build==BODY_SLIM)
-			return 'icons/mob/feet_f.dmi'
-		else
-			return 'icons/mob/feet.dmi'
-
-	get_glasses_sprite(state = "", body_build = 0)
-		if(body_build==BODY_SLIM)
-			return 'icons/mob/eyes_f.dmi'
-		else
-			return 'icons/mob/eyes.dmi'
-
-	get_belt_sprite(state = "", body_build = 0)
-		if(body_build==BODY_SLIM)
-			return 'icons/mob/belt_f.dmi'
-		else
-			return 'icons/mob/belt.dmi'
-
-	get_ears_sprite(state = "", body_build = 0)
-		if(body_build==BODY_SLIM)
-			return 'icons/mob/ears_f.dmi'
-		else
-			return 'icons/mob/ears.dmi'
-
-	get_back_sprite(state = "", body_build = 0)
-		if(body_build==BODY_SLIM)
-			return 'icons/mob/back_f.dmi'
-		else
-			return 'icons/mob/back.dmi'
-
-	get_mask_sprite(state = "", body_build = 0)
-		if(body_build==BODY_SLIM)
-			return 'icons/mob/mask_f.dmi'
-		else
-			return 'icons/mob/mask.dmi'
-
-	get_hidden_slot_sprite(state = "", var/body_build = 0)
-		if(body_build==BODY_SLIM)
-			return 'icons/mob/hidden_f.dmi'
-		else
-			return 'icons/mob/hidden.dmi'
 
 /datum/species/human/cursed
 	name = "Cursed huamn"
@@ -110,7 +53,6 @@
 /datum/species/human/cursed/get_bodytype()
 	return "Human"
 
-
 /datum/species/unathi
 	name = "Unathi"
 	name_plural = "Unathi"
@@ -124,10 +66,15 @@
 		new /datum/unarmed_attack/kick,
 		new /datum/unarmed_attack/claws,
 		new /datum/unarmed_attack/bite/sharp
-		)
+	)
 	primitive_form = "Stok"
 	darksight = 3
 	gluttonous = 1
+	slowdown = 0.5
+	brute_mod = 0.8
+
+	min_age = 18
+	max_age = 60
 
 	blurb = "A heavily reptillian species, Unathi (or 'Sinta as they call themselves) hail from the \
 	Uuosa-Eso system, which roughly translates to 'burning mother'.<br/><br/>Coming from a harsh, radioactive \
@@ -173,19 +120,6 @@
 						"Medical Doctor", "Geneticist", "Chemist", "Scientist", "Roboticist",\
 						"Xenobiologist", "Quartermaster", "Internal Affairs Agent")
 
-	get_suit_sprite(state = "")
-		if(state in icon_states('icons/mob/species/unathi/suit.dmi'))
-			return 'icons/mob/species/unathi/suit.dmi'
-		else return ..()
-
-	get_mask_sprite(state = "")
-		if(state in icon_states('icons/mob/species/unathi/mask.dmi'))
-			return 'icons/mob/species/unathi/mask.dmi'
-		else return ..()
-
-	get_hidden_slot_sprite(state = "")
-		return 'icons/mob/species/unathi/hidden.dmi'
-
 /datum/species/unathi/equip_survival_gear(var/mob/living/carbon/human/H)
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H),slot_shoes)
@@ -203,11 +137,15 @@
 		new /datum/unarmed_attack/kick,
 		new /datum/unarmed_attack/claws,
 		new /datum/unarmed_attack/bite/sharp
-		)
+	)
 	darksight = 8
-	slowdown = -0.75
-	brute_mod = 1.2
+	slowdown = -0.5
+	brute_mod = 1.15
+	burn_mod =  1.15
 	gluttonous = 1
+
+	min_age = 17
+	max_age = 80
 
 	blurb = "The Tajaran race is a species of feline-like bipeds hailing from the planet of Ahdomai in the \
 	S'randarr system. They have been brought up into the space age by the Humans and Skrell, and have been \
@@ -217,7 +155,7 @@
 
 	cold_level_1 = 200 //Default 260
 	cold_level_2 = 140 //Default 200
-	cold_level_3 = 80 //Default 120
+	cold_level_3 = 80  //Default 120
 
 	heat_level_1 = 330 //Default 360
 	heat_level_2 = 380 //Default 400
@@ -229,6 +167,8 @@
 
 	flesh_color = "#AFA59E"
 	base_color = "#333333"
+
+	reagent_tag = IS_TAJARA
 
 	heat_discomfort_level = 292
 	heat_discomfort_strings = list(
@@ -243,38 +183,26 @@
 						"Quartermaster", "Internal Affairs Agent")
 	accent = list("ð" = "ðð", "Ð" = "Ðð")
 
-	get_suit_sprite(state = "")
-		if(state in icon_states('icons/mob/species/tajaran/suit.dmi'))
-			return 'icons/mob/species/tajaran/suit.dmi'
-		else return ..()
-
-	get_mask_sprite(state = "")
-		if(state in icon_states('icons/mob/species/tajaran/mask.dmi'))
-			return 'icons/mob/species/tajaran/mask.dmi'
-		else return ..()
-
-	get_hidden_slot_sprite(state = "")
-		return 'icons/mob/species/tajaran/hidden.dmi'
-
 /datum/species/tajaran/equip_survival_gear(var/mob/living/carbon/human/H)
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H),slot_shoes)
 
-/datum/species/human/skrell
+/datum/species/skrell
 	name = "Skrell"
 	name_plural = "Skrell"
 	icobase = 'icons/mob/human_races/r_skrell.dmi'
 	deform = 'icons/mob/human_races/r_def_skrell.dmi'
 	language = "Skrellian"
 	primitive_form = "Neaera"
-	unarmed_attacks = list(
-		new /datum/unarmed_attack/punch
-		)
+	unarmed_attacks = list(new /datum/unarmed_attack/punch)
 	blurb = "An amphibious species, Skrell come from the star system known as Qerr'Vallis, which translates to 'Star of \
 	the royals' or 'Light of the Crown'.<br/><br/>Skrell are a highly advanced and logical race who live under the rule \
 	of the Qerr'Katish, a caste within their society which keeps the empire of the Skrell running smoothly. Skrell are \
 	herbivores on the whole and tend to be co-operative with the other species of the galaxy, although they rarely reveal \
 	the secrets of their empire to their allies."
+
+	min_age = 19
+	max_age = 80
 
 	flags = CAN_JOIN | IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_SKIN_COLOR
 
@@ -287,11 +215,6 @@
 						"Detective", "Security Officer", "Station Engineer", "Atmospheric Technician",\
 						"Quartermaster", "Cargo Technician", "Shaft Miner")
 
-	get_head_sprite(state = "", var/body_build = 0)
-		if(state in icon_states('icons/mob/species/skrell/helmet.dmi'))
-			return 'icons/mob/species/skrell/helmet.dmi'
-		else return ..()
-
 /datum/species/diona
 	name = "Diona"
 	name_plural = "Dionaea"
@@ -302,14 +225,16 @@
 		new /datum/unarmed_attack/stomp,
 		new /datum/unarmed_attack/kick,
 		new /datum/unarmed_attack/diona
-		)
+	)
 	//primitive_form = "Nymph"
 	slowdown = 7
 	rarity_value = 3
-	hud_type = /datum/hud_data/diona
+	hud = new /datum/hud_data/diona
 	siemens_coefficient = 0.3
 	show_ssd = "completely quiescent"
 
+	min_age = 1
+	max_age = 300
 
 	blurb = "Commonly referred to (erroneously) as 'plant people', the Dionaea are a strange space-dwelling collective \
 	species hailing from Epsilon Ursae Minoris. Each 'diona' is a cluster of numerous cat-sized organisms called nymphs; \
@@ -321,25 +246,25 @@
 
 	has_organ = list(
 		"nutrient channel" =   /obj/item/organ/internal/nutrients,
-		"neural strata" =      /obj/item/organ/internal/diona/strata,
-		"response node" =      /obj/item/organ/internal/node,
-		"gas bladder" =        /obj/item/organ/internal/diona/bladder,
-		"polyp segment" =      /obj/item/organ/internal/diona/polyp,
-		"anchoring ligament" = /obj/item/organ/internal/diona/ligament
+		O_STRATA =      /obj/item/organ/internal/diona/strata,
+		O_RESPONSE =      /obj/item/organ/internal/node,
+		O_GBLADDER =        /obj/item/organ/internal/diona/bladder,
+		O_POLYP =      /obj/item/organ/internal/diona/polyp,
+		O_ANCHOR = /obj/item/organ/internal/diona/ligament
 	)
 
 	has_limbs = list(
-		"chest" =  new /datum/organ_description/diona,
-		"groin" =  new /datum/organ_description/groin/diona,
-		"head" =   new /datum/organ_description/head/diona,
-		"l_arm" =  new /datum/organ_description/arm/left/diona,
-		"r_arm" =  new /datum/organ_description/arm/right/diona,
-		"l_leg" =  new /datum/organ_description/leg/left/diona,
-		"r_leg" =  new /datum/organ_description/leg/right/diona,
-		"l_hand" = new /datum/organ_description/hand/left/diona,
-		"r_hand" = new /datum/organ_description/hand/right/diona,
-		"l_foot" = new /datum/organ_description/foot/left/diona,
-		"r_foot" = new /datum/organ_description/foot/right/diona,
+		BP_CHEST =  new /datum/organ_description/diona,
+		BP_GROIN =  new /datum/organ_description/groin/diona,
+		BP_HEAD =   new /datum/organ_description/head/diona,
+		BP_L_ARM =  new /datum/organ_description/arm/left/diona,
+		BP_R_ARM =  new /datum/organ_description/arm/right/diona,
+		BP_L_LEG =  new /datum/organ_description/leg/left/diona,
+		BP_R_LEG =  new /datum/organ_description/leg/right/diona,
+		BP_L_HAND = new /datum/organ_description/hand/left/diona,
+		BP_R_HAND = new /datum/organ_description/hand/right/diona,
+		BP_L_FOOT = new /datum/organ_description/foot/left/diona,
+		BP_R_FOOT = new /datum/organ_description/foot/right/diona,
 	)
 
 	inherent_verbs = list(
@@ -370,21 +295,6 @@
 						"Station Engineer", "Atmospheric Technician", "Medical Doctor", "Geneticist", "Paramedic",\
 						"Scientist", "Roboticist", "Bartender", "Quartermaster", "Internal Affairs Agent")
 
-	get_uniform_sprite(state = "")
-		if(state in icon_states('icons/mob/species/diona/uniform.dmi'))
-			return 'icons/mob/species/diona/uniform.dmi'
-		else return ..()
-
-	get_suit_sprite(state = "")
-		if(state in icon_states('icons/mob/species/diona/suit.dmi'))
-			return 'icons/mob/species/diona/suit.dmi'
-		else return ..()
-
-	get_head_sprite(state = "")
-		if(state in icon_states('icons/mob/species/diona/head.dmi'))
-			return 'icons/mob/species/diona/head.dmi'
-		else return ..()
-
 /datum/species/diona/can_understand(var/mob/other)
 	var/mob/living/carbon/alien/diona/D = other
 	if(istype(D))
@@ -392,7 +302,7 @@
 	return 0
 
 /datum/species/diona/equip_survival_gear(var/mob/living/carbon/human/H)
-	if(H.back)
+	if(H.back && istype(H.back, /obj/item/weapon/storage))
 		H.equip_to_slot_or_del(new /obj/item/device/flashlight/flare(H.back), slot_in_backpack)
 	else
 		H.equip_to_slot_or_del(new /obj/item/device/flashlight/flare(H), slot_r_hand)
@@ -408,13 +318,17 @@
 	if(H.mind)
 		H.mind.transfer_to(S)
 
+	if(H.isSynthetic())
+		H.visible_message("<span class='danger'>\The [H] collapses into parts, revealing a solitary diona nymph at the core.</span>")
+		return
+
 	for(var/mob/living/carbon/alien/diona/D in H.contents)
 		if(D.client)
-			D.loc = H.loc
+			D.forceMove(get_turf(H))
 		else
 			qdel(D)
 
-	H.visible_message("\red[H] splits apart with a wet slithering noise!")
+	H.visible_message("<span class='danger'>\The [H] splits apart with a wet slithering noise!</span>")
 
 /datum/species/machine
 	name = "Machine"
@@ -443,7 +357,7 @@
 	heat_level_2 = 1000
 	heat_level_3 = 2000
 
-	synth_temp_gain = 10 //this should cause IPCs to stabilize at ~80 C in a 20 C environment.
+	passive_temp_gain = 10 //this should cause IPCs to stabilize at ~80 C in a 20 C environment.
 
 	flags = CAN_JOIN | IS_WHITELISTED | NO_BREATHE | NO_SCAN | NO_BLOOD | NO_PAIN | IS_SYNTHETIC
 
@@ -467,61 +381,3 @@
 		H.h_style = ""
 		spawn(100)
 			if(H) H.update_hair()
-
-//Human Subspecies//
-
-datum/species/human/vatgrown
-	name = "Vat-grown Human"
-	name_plural = "Vat-grown Humans"
-	blurb = "With cloning on the forefront of human scientific advancement, cheap mass production \
-	of bodies is a very real and rather ethically grey industry. Vat-grown humans tend to be paler than \
-	baseline, with no appendix and fewer inherited genetic disabilities, but a weakened metabolism."
-	icobase = 'icons/mob/human_races/r_vatgrown.dmi'
-	allow_slim_fem = 1
-
-	flags = CAN_JOIN | HAS_UNDERWEAR | HAS_EYE_COLOR
-
-//	toxins_mod =   1.1
-	has_organ = list(
-		"heart" =    /obj/item/organ/internal/heart,
-		"lungs" =    /obj/item/organ/internal/lungs,
-		"liver" =    /obj/item/organ/internal/liver,
-		"kidneys" =  /obj/item/organ/internal/kidneys,
-		"brain" =    /obj/item/organ/internal/brain,
-		"eyes" =     /obj/item/organ/internal/eyes
-		)
-
-/datum/species/human/vatgrown/get_bodytype()
-	return "Human"
-
-
-datum/species/human/android
-	name = "Synth"
-	name_plural = "Synths"
-	blurb = "Synths are an artificial life forms designed to look and act like a human.\
-	Most of them have a lab-grown bodies of real flesh, bones, and organs in a way to copy Human physiology and mentality.\
-	Synths have blue biogel instead of blood and strong skeleton, what allows them to work in very hard conditions."
-	icobase = 'icons/mob/human_races/r_android.dmi'
-	deform = 'icons/mob/human_races/r_def_android.dmi'
-	allow_slim_fem = 1
-
-	taste_sensitivity = TASTE_DULL
-
-	flags = CAN_JOIN | NO_PAIN | NO_SCAN | HAS_UNDERWEAR | IS_WHITELISTED
-
-	blood_color = "#2299FC"
-	flesh_color = "#808D11"
-
-	brute_mod = 0.5
-	burn_mod = 1
-
-	has_organ = list(                                     //TODO: Positronic brain.
-		"liver" =    /obj/item/organ/internal/liver,
-		"heart" =    /obj/item/organ/internal/heart,
-		"lungs" =    /obj/item/organ/internal/lungs,
-		"kidneys" =  /obj/item/organ/internal/kidneys,
-		)
-
-/datum/species/human/android/get_bodytype()
-	return "Human"
-

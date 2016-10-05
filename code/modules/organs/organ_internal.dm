@@ -1,11 +1,19 @@
 #define PROCESS_ACCURACY 10
 
+/****************************************************
+				INTERNAL ORGANS DEFINES
+****************************************************/
 /obj/item/organ/internal
-	var/organ_tag = "organ"
+	var/dead_icon // Icon to use when the organ has died.
+
+/obj/item/organ/internal/die()
+	..()
+	if((status & ORGAN_DEAD) && dead_icon)
+		icon_state = dead_icon
 
 /obj/item/organ/internal/install(mob/living/carbon/human/H)
 	if(..()) return 1
-	H.internal_organs += src
+	H.internal_organs |= src
 	var/obj/item/organ/internal/outdated = H.internal_organs_by_name[organ_tag]
 	if(outdated)
 		outdated.removed()
@@ -17,6 +25,9 @@
 		status |= ORGAN_ROBOT
 
 /obj/item/organ/internal/Destroy()
+	if(owner)
+		owner.internal_organs.Remove(src)
+		owner.internal_organs_by_name[organ_tag] = null
 	if(parent)
 		parent.internal_organs -= src
 		parent = null
@@ -49,16 +60,16 @@
 /obj/item/organ/internal/heart
 	name = "heart"
 	icon_state = "heart-on"
-	organ_tag = "heart"
-	parent_organ = "chest"
+	organ_tag = O_HEART
+	parent_organ = BP_CHEST
 	dead_icon = "heart-off"
 
 /obj/item/organ/internal/lungs
 	name = "lungs"
 	icon_state = "lungs"
 	gender = PLURAL
-	organ_tag = "lungs"
-	parent_organ = "chest"
+	organ_tag = O_LUNGS
+	parent_organ = BP_CHEST
 
 /obj/item/organ/internal/lungs/process()
 	..()
@@ -82,11 +93,13 @@
 	name = "kidneys"
 	icon_state = "kidneys"
 	gender = PLURAL
-	organ_tag = "kidneys"
-	parent_organ = "groin"
+	organ_tag = O_KIDNEYS
+	parent_organ = BP_GROIN
 
 /obj/item/organ/internal/kidneys/process()
+
 	..()
+
 	if(!owner)
 		return
 
@@ -105,9 +118,10 @@
 	name = "eyeballs"
 	icon_state = "eyes"
 	gender = PLURAL
-	organ_tag = "eyes"
-	parent_organ = "head"
+	organ_tag = O_EYES
+	parent_organ = BP_HEAD
 	var/eye_colour = ""
+	var/icon/mob_icon = null
 
 /obj/item/organ/internal/eyes/install(mob/living/carbon/human/H)
 	if(..()) return 1
@@ -119,9 +133,9 @@
 	owner.update_eyes()
 
 /obj/item/organ/internal/eyes/proc/get_icon()
-	var/icon/eyes_icon = new/icon(owner.species.icobase, "eyes_[owner.body_build]")
-	eyes_icon.Blend(eye_colour, ICON_ADD)
-	return eyes_icon
+	mob_icon = new/icon(owner.species.icobase, "eyes[owner.body_build.index]")
+	mob_icon.Blend(eye_colour, ICON_ADD)
+	return mob_icon
 
 /obj/item/organ/internal/eyes/proc/update_colour()
 	if(!owner)
@@ -151,7 +165,7 @@
 	put_in_socket(user, user)
 
 /obj/item/eye_camera/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	if(user.zone_sel.selecting == "eyes")
+	if(user.zone_sel.selecting == O_EYES)
 		put_in_socket(user, M)
 	else
 		..()
@@ -160,7 +174,7 @@
 	if(target.eyecheck())
 		user << "<span class='warning'>You can't access[user == target ? "" : " [target]'s"] eye-socket.</span>"
 		return
-	var/obj/item/organ/internal/eyes/mechanic/cam/eyes = target.internal_organs_by_name["eyes"]
+	var/obj/item/organ/internal/eyes/mechanic/cam/eyes = target.internal_organs_by_name[O_EYES]
 	if(eyes && istype(eyes))
 		eyes.attackby(src, user)
 
@@ -221,8 +235,8 @@
 /obj/item/organ/internal/liver
 	name = "liver"
 	icon_state = "liver"
-	organ_tag = "liver"
-	parent_organ = "groin"
+	organ_tag = O_LIVER
+	parent_organ = BP_GROIN
 
 /obj/item/organ/internal/liver/process()
 
@@ -270,13 +284,14 @@
 			if(filter_effect < 3)
 				owner.adjustToxLoss(owner.chem_effects[CE_ALCOHOL_TOXIC] * 0.1 * PROCESS_ACCURACY)
 			else
-				take_damage(owner.chem_effects[CE_ALCOHOL_TOXIC] * 0.1 * PROCESS_ACCURACY, prob(1)) // Chance to warn them
+				// Chance to warn them
+				take_damage(owner.chem_effects[CE_ALCOHOL_TOXIC] * 0.1 * PROCESS_ACCURACY, prob(1))
 
 /obj/item/organ/internal/appendix
 	name = "appendix"
 	icon_state = "appendix"
-	parent_organ = "groin"
-	organ_tag = "appendix"
+	parent_organ = BP_GROIN
+	organ_tag = O_APPENDIX
 
 /obj/item/organ/internal/appendix/removed()
 	if(owner)

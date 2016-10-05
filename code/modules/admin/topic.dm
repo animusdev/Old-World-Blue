@@ -271,7 +271,7 @@
 		message_admins("\blue [key_name_admin(usr)] has used rudimentary transformation on [key_name_admin(M)]. Transforming to [href_list["simplemake"]]; deletemob=[delmob]", 1)
 
 		switch(href_list["simplemake"])
-			if("observer")			M.change_mob_type( /mob/dead/observer , null, null, delmob )
+			if("observer")			M.change_mob_type( /mob/observer/dead , null, null, delmob )
 			if("larva")				M.change_mob_type( /mob/living/carbon/alien/larva , null, null, delmob )
 			if("nymph")				M.change_mob_type( /mob/living/carbon/alien/diona , null, null, delmob )
 			if("human")				M.change_mob_type( /mob/living/carbon/human , null, null, delmob, href_list["species"])
@@ -1012,7 +1012,7 @@
 		if(!M)	return
 
 		M.loc = prison_cell
-		if(istype(M, /mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/prisoner = M
 			prisoner.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(prisoner), slot_w_uniform)
 			prisoner.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(prisoner), slot_shoes)
@@ -1110,7 +1110,7 @@
 		for(var/obj/item/I in M)
 			M.drop_from_inventory(I)
 
-		if(istype(M, /mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/observer = M
 			observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket(observer), slot_w_uniform)
 			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(observer), slot_shoes)
@@ -2020,7 +2020,7 @@
 					L.fix()
 				message_admins("[key_name_admin(usr)] fixed all lights", 1)
 			if("friendai")
-				for(var/mob/eye/aiEye/aE in mob_list)
+				for(var/mob/observer/eye/aiEye/aE in mob_list)
 					aE.icon_state = "ai_friend"
 				for(var/obj/machinery/M in machines)
 					if(istype(M, /obj/machinery/ai_status_display))
@@ -2114,7 +2114,7 @@
 				for(var/obj/item/clothing/head/W in world)
 					W.icon_state = "kitty"
 					W.item_state = "w_head"
-					if(ismob(W.loc)) W.loc:update_inv_obj(W)
+					W.update_clothing_icon()
 				message_admins("[key_name_admin(usr)] spawned Meownomaly")
 				command_announcement.Announce("Mystic Meownomaly detected on the station.", new_sound = 'sound/AI/commandreport.ogg')
 			if("paintball")

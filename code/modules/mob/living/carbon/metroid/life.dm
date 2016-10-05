@@ -2,13 +2,12 @@
 	set invisibility = 0
 	set background = 1
 
-	if (src.monkeyizing)
+	if (src.transforming)
 		return
 
 	..()
 
 	if(stat != DEAD)
-		handle_chemicals_in_body()
 		handle_nutrition()
 
 		if (!client)
@@ -18,18 +17,7 @@
 					handle_AI()
 			handle_speech_and_mood()
 
-	var/datum/gas_mixture/environment
-	if(src.loc)
-		environment = loc.return_air()
-
-	regular_hud_updates()
-
-	if(environment)
-		handle_environment(environment) // Handle temperature/pressure differences between body and environment
-
-	handle_regular_status_updates() // Status updates, death etc.
-
-/mob/living/carbon/slime/proc/handle_environment(datum/gas_mixture/environment)
+/mob/living/carbon/slime/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
 		adjustToxLoss(rand(10,20))
 		return
@@ -45,12 +33,7 @@
 	else
 		loc_temp = environment.temperature
 
-	if(loc_temp < 310.15) // a cold place
-		bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
-	else // a hot place
-		bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
-
-	//Account for massive pressure differences
+	bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
 
 	if(bodytemperature < (T0C + 5)) // start calculating temperature damage etc
 
@@ -81,7 +64,7 @@
 	temp_change = (temperature - current)
 	return temp_change
 
-/mob/living/carbon/slime/proc/handle_chemicals_in_body()
+/mob/living/carbon/slime/handle_chemicals_in_body()
 	chem_effects.Cut()
 	analgesic = 0
 
@@ -96,7 +79,7 @@
 
 	return //TODO: DEFERRED
 
-/mob/living/carbon/slime/proc/handle_regular_status_updates()
+/mob/living/carbon/slime/handle_regular_status_updates()
 
 	src.blinded = null
 
@@ -122,14 +105,11 @@
 	else
 		if (src.paralysis || src.stunned || src.weakened || (status_flags && FAKEDEATH)) //Stunned etc.
 			if (src.stunned > 0)
-				AdjustStunned(-1)
 				src.stat = 0
 			if (src.weakened > 0)
-				AdjustWeakened(-1)
 				src.lying = 0
 				src.stat = 0
 			if (src.paralysis > 0)
-				AdjustParalysis(-1)
 				src.blinded = 0
 				src.lying = 0
 				src.stat = 0
@@ -161,7 +141,6 @@
 	if (src.druggy > 0)
 		src.druggy = 0
 
-	//for aphrodisiac
 	if (src.horny > 0)
 		src.horny = 0
 
@@ -238,7 +217,7 @@
 				if(issilicon(L) && (rabid || attacked)) // They can't eat silicons, but they can glomp them in defence
 					targets += L // Possible target found!
 
-				if(istype(L, /mob/living/carbon/human) && dna) //Ignore slime(wo)men
+				if(ishuman(L) && dna) //Ignore slime(wo)men
 					var/mob/living/carbon/human/H = L
 					if(H.species.name == "Slime")
 						continue

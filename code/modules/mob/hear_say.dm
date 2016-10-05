@@ -5,14 +5,14 @@
 		return
 
 	var/speaker_name = speaker.name
-	if(istype(speaker, /mob/living/carbon/human))
+	if(ishuman(speaker))
 		speaker_name = speaker:GetVoice()
 
 	if(italics)
 		message = "<i>[message]</i>"
 
 	var/track = null
-	if(istype(src, /mob/dead/observer))
+	if(isobserver(src))
 		if(italics && client.prefs.chat_toggles & CHAT_GHOSTRADIO)
 			return
 		if(speaker_name != speaker.real_name && speaker.real_name)
@@ -56,7 +56,7 @@
 /mob/proc/get_hear_name(var/mob/speaker, hard_to_hear, vname)
 	if(hard_to_hear) return "unknown"
 	else
-		if(istype(speaker, /mob/living/carbon/human))
+		if(ishuman(speaker))
 			var/voice = speaker:GetVoice()
 			if(voice)
 				return voice
@@ -112,7 +112,7 @@
 	else
 		return "<a href=\"byond://?src=\ref[src];trackname=[rhtml_encode(speaker_name)];track=\ref[speaker]\">[speaker_name] ([jobname])</a>"
 
-/mob/dead/observer/get_hear_name(var/mob/speaker, hard_to_hear, vname)
+/mob/observer/dead/get_hear_name(var/mob/speaker, hard_to_hear, vname)
 	var/speaker_name = ..()
 	if(ishuman(speaker) && speaker_name != speaker.real_name && !isAI(speaker)) //Announce computer and various stuff that broadcasts doesn't use it's real name but AI's can't pretend to be other mobs.
 		speaker_name = "[speaker.real_name] ([speaker_name])"

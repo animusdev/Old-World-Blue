@@ -23,7 +23,7 @@
 			var/log = ""
 			var/turf/pos = get_turf(C)
 			if((C) && (C.has_sensor) && (pos) && (pos.z == computer.z) && C.sensor_mode)
-				if(istype(C.loc, /mob/living/carbon/human))
+				if(ishuman(C.loc))
 
 					var/mob/living/carbon/human/H = C.loc
 
@@ -58,7 +58,7 @@
 
 	proc/scan()
 		for(var/obj/item/clothing/under/C in world)
-			if((C.has_sensor) && (istype(C.loc, /mob/living/carbon/human)))
+			if(C.has_sensor && ishuman(C.loc))
 				tracked |= C
 		return 1
 

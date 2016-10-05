@@ -2,8 +2,8 @@
 	name = "brain"
 	health = 400 //They need to live awhile longer than other organs.
 	desc = "A piece of juicy meat found in a person's head."
-	organ_tag = "brain"
-	parent_organ = "head"
+	organ_tag = O_BRAIN
+	parent_organ = BP_HEAD
 	vital = 1
 	icon_state = "brain2"
 	force = 1.0
@@ -18,8 +18,8 @@
 /obj/item/organ/internal/pariah_brain
 	name = "brain remnants"
 	desc = "Did someone tread on this? It looks useless for cloning or cyborgification."
-	organ_tag = "brain"
-	parent_organ = "head"
+	organ_tag = O_BRAIN
+	parent_organ = BP_HEAD
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "chitin"
 	vital = 1
@@ -114,7 +114,7 @@
 		return 0
 
 	if(!brainmob.client)
-		for(var/mob/dead/observer/ghost in player_list)
+		for(var/mob/observer/dead/ghost in player_list)
 			if(ghost.mind == brainmob.mind)
 				ghost << "<b><font color = #330033><font size = 3>Someone is trying to regrown you from your brain. Return to your body if you want to be resurrected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
 				break

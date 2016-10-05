@@ -12,7 +12,7 @@
 		if (affected)
 			return 0
 		var/list/organ_data = target.species.has_limbs["[target_zone]"]
-		return !isnull(organ_data) && !(target_zone in list("head","groin","chest"))
+		return !isnull(organ_data) && !(target_zone in list(BP_HEAD,BP_GROIN,BP_CHEST))
 
 /datum/surgery_step/limb/attach
 	allowed_tools = list(/obj/item/prosthesis = 100)
@@ -26,9 +26,6 @@
 			if (p.part)
 				if (!(target_zone in p.part))
 					return 0
-			if(target.body_build == BODY_SLIM && !tool:allow_slim_body)
-				user << "<span class = 'warning'>[target.name]'s spine and bones is too weak for using [tool].</span>"
-				return 0
 			return isnull(target.get_organ(target_zone))
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

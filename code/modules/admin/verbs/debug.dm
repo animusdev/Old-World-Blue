@@ -173,7 +173,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!ticker)
 		alert("Wait until the game starts")
 		return
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		log_admin("[key_name(src)] has robotized [M.key].")
 		spawn(10)
 			M:Robotize()
@@ -214,7 +214,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/mob/choice = input("Choose a player to play the pAI", "Spawn pAI") in available
 	if(!choice)
 		return 0
-	if(!istype(choice, /mob/dead/observer))
+	if(!isobserver(choice))
 		var/confirm = input("[choice.key] isn't ghosting right now. Are you sure you want to yank them out of them out of their body and place them in this pAI?", "Spawn pAI Confirmation", "No") in list("Yes", "No")
 		if(confirm != "Yes")
 			return 0
@@ -261,40 +261,41 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		alert("Invalid mob")
 
 /*
-/client/proc/cmd_admin_monkeyize(var/mob/M in world)
+/client/proc/cmd_admin_monkeyize(var/mob/living/carbon/human/H in world)
 	set category = "Fun"
 	set name = "Make Monkey"
 
 	if(!ticker)
 		alert("Wait until the game starts")
 		return
-	if(istype(M, /mob/living/carbon/human))
-		var/mob/living/carbon/human/target = M
-		log_admin("[key_name(src)] is attempting to monkeyize [M.key].")
-		spawn(10)
-			target.monkeyize()
-	else
+	if(istype(H))
 		alert("Invalid mob")
+		return
 
-/client/proc/cmd_admin_changelinginize(var/mob/M in world)
+	log_admin("[key_name(src)] is attempting to monkeyize [H.key].")
+	spawn(10)
+		H.monkeyize()
+
+/client/proc/cmd_admin_changelinginize(var/mob/living/carbon/human/H in world)
 	set category = "Fun"
 	set name = "Make Changeling"
 
 	if(!ticker)
 		alert("Wait until the game starts")
 		return
-	if(istype(M, /mob/living/carbon/human))
-		log_admin("[key_name(src)] has made [M.key] a changeling.")
-		spawn(10)
-			M.absorbed_dna[M.real_name] = M.dna.Clone()
-			M.make_changeling()
-			if(M.mind)
-				M.mind.special_role = "Changeling"
-	else
+	if(istype(H))
 		alert("Invalid mob")
+		return
+
+	log_admin("[key_name(src)] has made [H.key] a changeling.")
+	spawn(10)
+		H.absorbed_dna[H.real_name] = H.dna.Clone()
+		H.make_changeling()
+		if(H.mind)
+			H.mind.special_role = "Changeling"
 */
 /*
-/client/proc/cmd_admin_abominize(var/mob/M in world)
+/client/proc/cmd_admin_abominize(var/mob/living/carbon/human/H in world)
 	set category = null
 	set name = "Make Abomination"
 
@@ -303,52 +304,52 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!ticker)
 		alert("Wait until the game starts.")
 		return
-	if(istype(M, /mob/living/carbon/human))
-		log_admin("[key_name(src)] has made [M.key] an abomination.")
+	if(istype(H))
+		log_admin("[key_name(src)] has made [H.key] an abomination.")
 
 	//	spawn(10)
-	//		M.make_abomination()
+	//		H.make_abomination()
 
 */
 /*
-/client/proc/make_cultist(var/mob/M in world) // -- TLE, modified by Urist
+/client/proc/make_cultist(var/mob/living/carbon/human/H in world) // -- TLE, modified by Urist
 	set category = "Fun"
 	set name = "Make Cultist"
 	set desc = "Makes target a cultist"
 	if(!cultwords["travel"])
 		runerandom()
-	if(M)
-		if(M.mind in ticker.mode.cult)
+	if(H)
+		if(H.mind in ticker.mode.cult)
 			return
 		else
 			if(alert("Spawn that person a tome?",,"Yes","No")=="Yes")
-				M << "\red You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie. A tome, a message from your new master, appears on the ground."
+				H << "\red You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie. A tome, a message from your new master, appears on the ground."
 				new /obj/item/weapon/book/tome(M.loc)
 			else
 				M << "\red You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie."
 			var/glimpse=pick("1","2","3","4","5","6","7","8")
 			switch(glimpse)
 				if("1")
-					M << "\red You remembered one thing from the glimpse... [cultwords["travel"]] is travel..."
+					H << "\red You remembered one thing from the glimpse... [cultwords["travel"]] is travel..."
 				if("2")
-					M << "\red You remembered one thing from the glimpse... [cultwords["blood"]] is blood..."
+					H << "\red You remembered one thing from the glimpse... [cultwords["blood"]] is blood..."
 				if("3")
-					M << "\red You remembered one thing from the glimpse... [cultwords["join"]] is join..."
+					H << "\red You remembered one thing from the glimpse... [cultwords["join"]] is join..."
 				if("4")
-					M << "\red You remembered one thing from the glimpse... [cultwords["hell"]] is Hell..."
+					H << "\red You remembered one thing from the glimpse... [cultwords["hell"]] is Hell..."
 				if("5")
-					M << "\red You remembered one thing from the glimpse... [cultwords["destroy"]] is destroy..."
+					H << "\red You remembered one thing from the glimpse... [cultwords["destroy"]] is destroy..."
 				if("6")
-					M << "\red You remembered one thing from the glimpse... [cultwords["technology"]] is technology..."
+					H << "\red You remembered one thing from the glimpse... [cultwords["technology"]] is technology..."
 				if("7")
-					M << "\red You remembered one thing from the glimpse... [cultwords["self"]] is self..."
+					H << "\red You remembered one thing from the glimpse... [cultwords["self"]] is self..."
 				if("8")
-					M << "\red You remembered one thing from the glimpse... [cultwords["see"]] is see..."
+					H << "\red You remembered one thing from the glimpse... [cultwords["see"]] is see..."
 
-			if(M.mind)
-				M.mind.special_role = "Cultist"
+			if(H.mind)
+				H.mind.special_role = "Cultist"
 				ticker.mode.cult += M.mind
-			src << "Made [M] a cultist."
+			src << "Made [H] a cultist."
 */
 
 //TODO: merge the vievars version into this or something maybe mayhaps
@@ -357,7 +358,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Del-All"
 
 	// to prevent REALLY stupid deletions
-	var/blocked = list(/obj, /mob, /mob/living, /mob/living/carbon, /mob/living/carbon/human, /mob/dead, /mob/dead/observer, /mob/living/silicon, /mob/living/silicon/robot, /mob/living/silicon/ai)
+	var/blocked = list(/obj, /mob, /mob/living, /mob/living/carbon, /mob/living/carbon/human, /mob/observer, /mob/observer/dead, /mob/living/silicon, /mob/living/silicon/robot, /mob/living/silicon/ai)
 	var/hsbitem = input(usr, "Choose an object to delete.", "Delete:") as null|anything in typesof(/obj) + typesof(/mob) - blocked
 	if(hsbitem)
 		for(var/atom/O in world)
@@ -381,35 +382,36 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	log_admin("[key_name(src)] has turned aliens [config.aliens_allowed ? "on" : "off"].")
 	message_admins("[key_name_admin(src)] has turned aliens [config.aliens_allowed ? "on" : "off"].", 0)
 
-/client/proc/cmd_admin_grantfullaccess(var/mob/M in mob_list)
+/client/proc/cmd_admin_grantfullaccess(var/mob/living/carbon/human/H in mob_list)
 	set category = "Admin"
 	set name = "Grant Full Access"
 
 	if (!ticker)
 		alert("Wait until the game starts")
 		return
-	if (istype(M, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = M
-		if (H.wear_id)
-			var/obj/item/weapon/card/id/id = H.wear_id
-			if(istype(H.wear_id, /obj/item/device/pda))
-				var/obj/item/device/pda/pda = H.wear_id
-				id = pda.id
-			id.icon_state = "gold"
-			id:access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
-		else
-			var/obj/item/weapon/card/id/id = new/obj/item/weapon/card/id(M);
-			id.icon_state = "gold"
-			id:access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
-			id.registered_name = H.real_name
-			id.assignment = "Captain"
-			id.name = "[id.registered_name]'s ID Card ([id.assignment])"
-			H.equip_to_slot_or_del(id, slot_wear_id)
-			H.update_inv_wear_id()
-	else
+	if (!istype(H))
 		alert("Invalid mob")
-	log_admin("[key_name(src)] has granted [M.key] full access.")
-	message_admins("\blue [key_name_admin(usr)] has granted [M.key] full access.", 1)
+		return
+
+	if (H.wear_id)
+		var/obj/item/weapon/card/id/id = H.wear_id
+		if(istype(H.wear_id, /obj/item/device/pda))
+			var/obj/item/device/pda/pda = H.wear_id
+			id = pda.id
+		id.icon_state = "gold"
+		id:access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
+	else
+		var/obj/item/weapon/card/id/id = new(H)
+		id.icon_state = "gold"
+		id:access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
+		id.registered_name = H.real_name
+		id.assignment = "Captain"
+		id.name = "[id.registered_name]'s ID Card ([id.assignment])"
+		H.equip_to_slot_or_del(id, slot_wear_id)
+		H.update_inv_wear_id()
+
+	log_admin("[key_name(src)] has granted [H.key] full access.")
+	message_admins("\blue [key_name_admin(usr)] has granted [H.key] full access.", 1)
 
 /client/proc/cmd_assume_direct_control(var/mob/M in mob_list)
 	set category = "Admin"
@@ -421,7 +423,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if(alert("This mob is being controlled by [M.ckey]. Are you sure you wish to assume control of it? [M.ckey] will be made a ghost.",,"Yes","No") != "Yes")
 			return
 		else
-			var/mob/dead/observer/ghost = new/mob/dead/observer(M,1)
+			var/mob/observer/dead/ghost = new (M,1)
 			ghost.ckey = M.ckey
 	message_admins("\blue [key_name_admin(usr)] assumed direct control of [M].", 1)
 	log_admin("[key_name(usr)] assumed direct control of [M].")

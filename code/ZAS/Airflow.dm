@@ -43,7 +43,7 @@ mob/check_airflow_movable(n)
 		return 0
 	return 1
 
-mob/dead/observer/check_airflow_movable()
+mob/observer/check_airflow_movable()
 	return 0
 
 mob/living/silicon/check_airflow_movable()
@@ -60,10 +60,11 @@ obj/item/check_airflow_movable(n)
 		if(4,5)
 			if(n < vsc.airflow_medium_pressure) return 0
 
-/atom/movable/var/tmp/turf/airflow_dest
-/atom/movable/var/tmp/airflow_speed = 0
-/atom/movable/var/tmp/airflow_time = 0
-/atom/movable/var/tmp/last_airflow = 0
+/atom/movable
+	var/tmp/turf/airflow_dest
+	var/tmp/airflow_speed = 0
+	var/tmp/airflow_time = 0
+	var/tmp/last_airflow = 0
 
 /atom/movable/proc/GotoAirflowDest(n)
 	if(!airflow_dest) return
@@ -78,7 +79,7 @@ obj/item/check_airflow_movable(n)
 	if(ismob(src))
 		if(src:status_flags & GODMODE)
 			return
-		if(istype(src, /mob/living/carbon/human))
+		if(ishuman(src))
 			if(src:buckled)
 				return
 			if(src:shoes && src:shoes.flags & NOSLIP)
@@ -140,7 +141,7 @@ obj/item/check_airflow_movable(n)
 	if(ismob(src))
 		if(src:status_flags & GODMODE)
 			return
-		if(istype(src, /mob/living/carbon/human))
+		if(ishuman(src))
 			if(src:buckled)
 				return
 			if(src:shoes)
@@ -225,14 +226,14 @@ mob/living/carbon/human/airflow_hit(atom/A)
 		bloody_body(src)
 	var/b_loss = airflow_speed * vsc.airflow_damage
 
-	var/blocked = run_armor_check("head","melee")
-	apply_damage(b_loss/3, BRUTE, "head", blocked, 0, "Airflow")
+	var/blocked = run_armor_check(BP_HEAD,"melee")
+	apply_damage(b_loss/3, BRUTE, BP_HEAD, blocked, 0, "Airflow")
 
-	blocked = run_armor_check("chest","melee")
-	apply_damage(b_loss/3, BRUTE, "chest", blocked, 0, "Airflow")
+	blocked = run_armor_check(BP_CHEST,"melee")
+	apply_damage(b_loss/3, BRUTE, BP_CHEST, blocked, 0, "Airflow")
 
-	blocked = run_armor_check("groin","melee")
-	apply_damage(b_loss/3, BRUTE, "groin", blocked, 0, "Airflow")
+	blocked = run_armor_check(BP_GROIN,"melee")
+	apply_damage(b_loss/3, BRUTE, BP_GROIN, blocked, 0, "Airflow")
 
 	if(airflow_speed > 10)
 		Paralyse(round(airflow_speed * vsc.airflow_stun))
@@ -245,6 +246,6 @@ zone/proc/movables()
 	. = list()
 	for(var/turf/T in contents)
 		for(var/atom/movable/A in T)
-			if(!A.simulated || A.anchored || istype(A, /obj/effect) || istype(A, /mob/eye))
+			if(!A.simulated || A.anchored || istype(A, /obj/effect) || isEye(A))
 				continue
 			. += A

@@ -91,7 +91,7 @@
 	// Prune restricted status. Broke it up for readability.
 	// Note that this is done before jobs are handed out.
 	for(var/datum/mind/player in ticker.mode.get_players_for_role(role_type, id))
-		if(ghosts_only && !istype(player.current, /mob/dead))
+		if(ghosts_only && !isobserver(player.current))
 			log_debug("[key_name(player)] is not eligible to become a [role_text]: Only ghosts may join as this role!")
 		else if(player.special_role)
 			log_debug("[key_name(player)] is not eligible to become a [role_text]: They already have a special role ([player.special_role])!")
@@ -196,10 +196,10 @@
 	for(var/datum/mind/player in pending_antagonists)
 		pending_antagonists -= player
 		add_antagonist(player,0,0,1)
-	
+
 	reset_antag_selection()
 
-//Resets the antag selection, clearing all pending_antagonists and their special_role 
+//Resets the antag selection, clearing all pending_antagonists and their special_role
 //(and assigned_role if ANTAG_OVERRIDE_JOB is set) as well as clearing the candidate list.
 //Existing antagonists are left untouched.
 /datum/antagonist/proc/reset_antag_selection()

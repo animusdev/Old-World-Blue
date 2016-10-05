@@ -222,7 +222,7 @@
 
 /////////////////////////// DNA MISC-PROCS
 /proc/updateappearance(mob/M as mob , structure)
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		M.dna.check_integrity()
 		var/mob/living/carbon/human/H = M
 		H.hair_color = rgb( hex2num(getblock(structure,1,3)),\
@@ -236,7 +236,7 @@
 							hex2num(getblock(structure,9,3)),\
 							hex2num(getblock(structure,10,3)))
 
-		if(H.internal_organs_by_name["eyes"])
+		if(H.internal_organs_by_name[O_EYES])
 			H.update_eyes()
 
 		if (isblockon(getblock(structure, 11,3),11 , 1))
@@ -396,10 +396,9 @@
 	*/
 
 //////////////////////////////////////////////////////////// Monkey Block
-	if (isblockon(getblock(M.dna.struc_enzymes, MONKEYBLOCK,3),MONKEYBLOCK) && istype(M, /mob/living/carbon/human))
-	// human > monkey
+	if (isblockon(getblock(M.dna.struc_enzymes, MONKEYBLOCK,3),MONKEYBLOCK) && ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.monkeyizing = 1
+		H.transforming = 1
 		var/list/implants = list() //Try to preserve implants.
 		for(var/obj/item/weapon/implant/W in H)
 			implants += W
@@ -410,7 +409,7 @@
 				if (W==H.w_uniform) // will be teared
 					continue
 				H.drop_from_inventory(W)
-			M.monkeyizing = 1
+			M.transforming = 1
 			M.canmove = 0
 			M.icon = null
 			M.invisibility = 101
@@ -472,10 +471,10 @@
 		qdel(M)
 		return
 
-	if (!isblockon(getblock(M.dna.struc_enzymes, MONKEYBLOCK,3),MONKEYBLOCK) && !istype(M, /mob/living/carbon/human))
+	if (!isblockon(getblock(M.dna.struc_enzymes, MONKEYBLOCK,3),MONKEYBLOCK) && !ishuman(M))
 	// monkey > human,
 		var/mob/living/carbon/monkey/Mo = M
-		Mo.monkeyizing = 1
+		Mo.transforming = 1
 		var/list/implants = list() //Still preserving implants
 		for(var/obj/item/weapon/implant/W in Mo)
 			implants += W
@@ -483,7 +482,7 @@
 		if(!connected)
 			for(var/obj/item/W in (Mo.contents-implants))
 				Mo.drop_from_inventory(W)
-			M.monkeyizing = 1
+			M.transforming = 1
 			M.canmove = 0
 			M.icon = null
 			M.invisibility = 101

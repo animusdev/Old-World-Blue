@@ -306,6 +306,10 @@
 		icon_state = "kagami"
 		gender = FEMALE
 
+	kare
+		name = "Kare"
+		icon_state = "kare"
+
 	kusangi
 		name = "Kusanagi Hair"
 		icon_state = "kusanagi"

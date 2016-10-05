@@ -148,7 +148,7 @@
 /obj/item/weapon/card/id/New()
 	..()
 	spawn(30)
-	if(istype(loc, /mob/living/carbon/human))
+	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		blood_type = H.dna.b_type
 		dna_hash = H.dna.unique_enzymes

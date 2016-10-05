@@ -109,10 +109,6 @@ var/list/slot_equipment_priority = list( \
 	if(lying)			return 0
 	if(!istype(W))		return 0
 	if(!l_hand)
-		if(istype(src, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = src
-			var/obj/item/organ/external/tiny/hand = H.organs_by_name["l_hand"]
-			if(!hand || !hand.is_usable()) return 0
 		W.forceMove(src)		//TODO: move to equipped?
 		l_hand = W
 		W.layer = 20	//TODO: move to equipped?
@@ -129,10 +125,6 @@ var/list/slot_equipment_priority = list( \
 	if(lying)			return 0
 	if(!istype(W))		return 0
 	if(!r_hand)
-		if(istype(src, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = src
-			var/obj/item/organ/external/tiny/hand = H.organs_by_name["r_hand"]
-			if(!hand || !hand.is_usable()) return 0
 		W.forceMove(src)
 		r_hand = W
 		W.layer = 20
@@ -284,7 +276,7 @@ var/list/slot_equipment_priority = list( \
 //	if(hasvar(src,"w_radio")) if(src:w_radio) items += src:w_radio  commenting this out since headsets go on your ears now PLEASE DON'T BE MAD KEELIN
 	if(hasvar(src,"w_uniform")) if(src:w_uniform) items += src:w_uniform
 
-	//if(hasvar(src,"l_hand")) if(src:l_hand) items += src:l_hand
-	//if(hasvar(src,"r_hand")) if(src:r_hand) items += src:r_hand
+	//if(hasvar(src,BP_L_HAND)) if(src:l_hand) items += src:l_hand
+	//if(hasvar(src,BP_R_HAND)) if(src:r_hand) items += src:r_hand
 
 	return items

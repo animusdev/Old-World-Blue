@@ -381,9 +381,9 @@ var/list/admin_verbs_mentor = list(
 	set category = "Admin"
 	set name = "Aghost"
 	if(!holder)	return
-	if(istype(mob,/mob/dead/observer))
+	if(isobserver(mob))
 		//re-enter
-		var/mob/dead/observer/ghost = mob
+		var/mob/observer/dead/ghost = mob
 		if(!is_mentor(usr.client))
 			ghost.can_reenter_corpse = 1
 		if(ghost.can_reenter_corpse)
@@ -398,7 +398,7 @@ var/list/admin_verbs_mentor = list(
 	else
 		//ghostize
 		var/mob/body = mob
-		var/mob/dead/observer/ghost = body.ghostize(1)
+		var/mob/observer/dead/ghost = body.ghostize(1)
 		ghost.admin_ghosted = 1
 		if(body)
 			body.teleop = ghost
@@ -636,7 +636,7 @@ var/list/admin_verbs_mentor = list(
 	D.makerandom(severity)
 	D.infectionchance = input("How virulent is this disease? (1-100)", "Give Disease", D.infectionchance) as num
 
-	if(istype(T,/mob/living/carbon/human))
+	if(ishuman(T))
 		var/mob/living/carbon/human/H = T
 		if (H.species)
 			D.affected_species = list(H.species.get_bodytype())
@@ -817,7 +817,7 @@ var/list/admin_verbs_mentor = list(
 
 	var/mob/living/carbon/human/M = input("Select mob.", "Edit Appearance") as null|anything in human_mob_list
 
-	if(!istype(M, /mob/living/carbon/human))
+	if(!ishuman(M))
 		usr << "\red You can only do this to humans!"
 		return
 	var/datum/species/S = M.species
@@ -864,17 +864,10 @@ var/list/admin_verbs_mentor = list(
 	if (new_gender)
 		if(new_gender == "Male")
 			M.gender = MALE
-			M.body_build = 0
 		else
 			M.gender = FEMALE
-			if(!S.allow_slim_fem)
-				M.body_build = 0
-			else // If slim body allowed
-				var/new_body_build = alert(usr, "Please select body build.", "Character body build", "Default", "Slim")
-				if (new_body_build == "Slim")
-					M.body_build = 1
-				else
-					M.body_build = 0
+
+	// TODO: Body_build
 
 	M.dna.ResetUIFrom(M)
 	M.dna.real_name = M.real_name

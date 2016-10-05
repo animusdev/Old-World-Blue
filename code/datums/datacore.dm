@@ -375,13 +375,13 @@ using /datum/datacore/proc/manifest_inject( ), or manifest_insert( )
 	var/datum/job/J = job_master.GetJob(H.mind.assigned_role)
 	if(J)
 		var/obj/item/clothing/under/UF = J.uniform
-		temp = new /icon(H.species.get_uniform_sprite(initial(UF.icon_state), H.body_build), initial(UF.icon_state))
+		temp = new /icon(H.body_build.uniform_icon, initial(UF.icon_state))
 
 		var/obj/item/clothing/shoes/SH = J.shoes
-		temp.Blend(new /icon(H.species.get_shoes_sprite(initial(SH.icon_state), H.body_build), initial(SH.icon_state)), ICON_OVERLAY)
+		temp.Blend(new /icon(H.body_build.shoes_icon, initial(SH.icon_state)), ICON_OVERLAY)
 	else
-		temp = new /icon(H.species.get_uniform_sprite("grey", H.body_build), "grey")
-		temp.Blend(new /icon(H.species.get_shoes_sprite("black", H.body_build), "black"), ICON_OVERLAY)
+		temp = new /icon(H.body_build.uniform_icon, "grey")
+		temp.Blend(new /icon(H.body_build.shoes_icon, "black"), ICON_OVERLAY)
 
 	preview_icon.Blend(temp, ICON_OVERLAY)
 

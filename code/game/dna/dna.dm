@@ -60,10 +60,9 @@
 
 			if (character.gender == MALE)
 				gender = add_zero2(num2hex((rand(1,(2050+BLOCKADD))),1), 3)
-				body_build = 0
 			else
 				gender = add_zero2(num2hex((rand((2051+BLOCKADD),4094)),1), 3)
-				body_build = character.body_build
+			body_build = character.body_build.name
 
 			temp += gender
 			temp += add_zero2(num2hex((beard),1), 3)
@@ -134,10 +133,9 @@
 
 	if (character.gender == MALE)
 		gender = add_zero2(num2hex((rand(1,(2050+BLOCKADD))),1), 3)
-		body_build = 0
 	else
 		gender = add_zero2(num2hex((rand((2051+BLOCKADD),4094)),1), 3)
-		body_build = character.body_build
+	body_build = character.body_build.name
 
 	temp += gender
 	temp += add_zero2(num2hex((beard),1), 3)

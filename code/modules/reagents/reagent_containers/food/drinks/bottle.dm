@@ -54,7 +54,7 @@
 	target.apply_damage(force, BRUTE, affecting, armor_block, sharp=0)
 
 	// You are going to knock someone out for longer if they are not wearing a helmet.
-	if(affecting == "head" && istype(target, /mob/living/carbon/))
+	if(affecting == BP_HEAD && istype(target, /mob/living/carbon/))
 
 		//Display an attack message.
 		for(var/mob/O in viewers(user, null))

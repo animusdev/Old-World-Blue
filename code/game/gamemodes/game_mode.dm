@@ -381,11 +381,12 @@ var/global/list/additional_antag_types = list()
 
 	var/text = ""
 	if(surviving_total > 0)
-		text += "<br>There [surviving_total>1 ? "were <b>[surviving_total] survivors</b>" : "was <b>one survivor</b>"]</b>"
-		text += " (<b>[escaped_total>0 ? escaped_total : "none"] [emergency_shuttle.evac ? "escaped" : "transferred"]</b>) and <b>[ghosts] ghosts</b>.</b><br>"
+		text += "<br>There [surviving_total>1 ? "were <b>[surviving_total] survivors</b>" : "was <b>one survivor</b>"]"
+		text += " (<b>[escaped_total>0 ? escaped_total : "none"] [emergency_shuttle.evac ? "escaped" : "transferred"]</b>) and <b>[ghosts] ghosts</b>.<br>"
 	else
-		text += "There were <b>no survivors</b> (<b>[ghosts] ghosts</b>).</b>"
+		text += "There were <b>no survivors</b> (<b>[ghosts] ghosts</b>)."
 	world << text
+
 	return 0
 
 /datum/game_mode/proc/check_win() //universal trigger to be called at mob death, nuke explosion, etc. To be called from everywhere.
@@ -441,7 +442,7 @@ var/global/list/additional_antag_types = list()
 			comm.messagetext.Add(intercepttext)
 	world << sound('sound/AI/commandreport.ogg')
 
-/datum/game_mode/proc/get_players_for_role(var/role, var/antag_id)
+/datum/game_mode/proc/get_players_for_role(var/role, var/antag_id, var/ghosts_only)
 	var/list/players = list()
 	var/list/candidates = list()
 
@@ -455,6 +456,8 @@ var/global/list/additional_antag_types = list()
 			if(!player.client)
 				continue
 			if(istype(player, /mob/new_player))
+				continue
+			if(isobserver(player) && !ghosts_only)
 				continue
 			if(!role || (player.client.prefs.be_special & role))
 				log_debug("[player.key] had [antag_id] enabled, so we are drafting them.")
@@ -524,7 +527,7 @@ var/global/list/additional_antag_types = list()
 //Reports player logouts//
 //////////////////////////
 proc/display_roundstart_logout_report()
-	var/msg = "\blue <b>Roundstart logout report\n\n"
+	var/msg = "<span class='notice'><b>Roundstart logout report</b>\n\n"
 	for(var/mob/living/L in mob_list)
 
 		if(L.ckey)
@@ -552,7 +555,7 @@ proc/display_roundstart_logout_report()
 					continue //Dead
 
 			continue //Happy connected client
-		for(var/mob/dead/observer/D in mob_list)
+		for(var/mob/observer/dead/D in mob_list)
 			if(D.mind && (D.mind.original == L || D.mind.current == L))
 				if(L.stat == DEAD)
 					if(L.suiciding)	//Suicider
@@ -568,6 +571,8 @@ proc/display_roundstart_logout_report()
 					else
 						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<font color='red'><b>Ghosted</b></font>)\n"
 						continue //Ghosted while alive
+
+	msg += "</span>" // close the span from right at the top
 
 	for(var/mob/M in mob_list)
 		if(M.client && M.client.holder)

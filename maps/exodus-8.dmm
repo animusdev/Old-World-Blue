@@ -162,7 +162,7 @@
 "df" = (/turf/space,/turf/simulated/shuttle/wall{tag = "icon-diagonalWall3 (SOUTHEAST)"; icon_state = "diagonalWall3"; dir = 6},/area/shipheist)
 "dg" = (/obj/machinery/vending/boozeomat,/turf/simulated/floor/wood,/area/desolatebar)
 "dh" = (/turf/simulated/floor/plating{tag = "icon-panelscorched"; icon_state = "panelscorched"},/area/desolatebar)
-"di" = (/obj/structure/sign/poster,/turf/simulated/wall,/area/desolatebar)
+"di" = (/obj/item/weapon/contraband/poster/placed,/turf/simulated/wall,/area/desolatebar)
 "dj" = (/obj/structure/window/basic{tag = "icon-window (NORTHEAST)"; icon_state = "window"; dir = 5},/turf/simulated/floor/plating,/area/desolatebar)
 "dk" = (/obj/machinery/power/apc/high{dir = 4; name = "east bump"; pixel_x = 24},/turf/simulated/floor/wood,/area/desolatebar)
 "dl" = (/turf/simulated/shuttle/wall{tag = "icon-wall3"; icon_state = "wall3"},/area/shipheist)

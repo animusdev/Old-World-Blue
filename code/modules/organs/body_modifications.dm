@@ -4,10 +4,10 @@
 
 var/global/list/body_modifications = list()
 var/global/list/modifications_types = list(
-	"chest" = "",  "chest2" = "", "head" = "",   "groin" = "",
-	"l_arm"  = "", "r_arm"  = "", "l_hand" = "", "r_hand" = "",
-	"l_leg"  = "", "r_leg"  = "", "l_foot" = "", "r_foot" = "",
-	"heart"  = "", "lungs"  = "", "liver"  = "", "eyes"   = ""
+	BP_CHEST = "",  "chest2" = "", BP_HEAD = "",   BP_GROIN = "",
+	BP_L_ARM  = "", BP_R_ARM  = "", BP_L_HAND = "", BP_R_HAND = "",
+	BP_L_LEG  = "", BP_R_LEG  = "", BP_L_FOOT = "", BP_R_FOOT = "",
+	O_HEART  = "", O_LUNGS  = "", O_LIVER  = "", O_EYES   = ""
 )
 
 /proc/generate_body_modification_lists()
@@ -28,11 +28,11 @@ var/global/list/modifications_types = list(
 	var/short_name = ""
 	var/id = ""				// For savefile. Must be unique.
 	var/desc = ""			// Description.
-	var/list/body_parts = list("chest", "chest2", "head", "groin", "l_arm", "r_arm", "l_hand", "r_hand", "l_leg", "r_leg",\
-		"l_foot", "r_foot", "heart", "lungs", "liver", "brain", "eyes")		// For sorting'n'selection optimization.
-	var/allowed_species = list("Human")	// Species restriction.
-	var/allow_slim_body = 1			// The "main sprite question" yeah.
-	var/replace_limb = null				// To draw usual limb or not.
+	var/list/body_parts = list(BP_CHEST, "chest2", BP_HEAD, BP_GROIN, BP_L_ARM, BP_R_ARM, BP_L_HAND, BP_R_HAND, BP_L_LEG, BP_R_LEG,\
+		BP_L_FOOT, BP_R_FOOT, O_HEART, O_LUNGS, O_LIVER, O_BRAIN, O_EYES)		// For sorting'n'selection optimization.
+	var/list/allowed_species = list("Human")	// Species restriction.
+	var/list/allow_body_builds=null				// The "main sprite question" yeah.
+	var/replace_limb = null						// To draw usual limb or not.
 	var/mob_icon = ""
 	var/icon/icon = 'icons/mob/human_races/body_modification.dmi'
 	var/nature = MODIFICATION_ORGANIC
@@ -47,8 +47,8 @@ var/global/list/modifications_types = list(
 		if(allowed_species && !(P.species in allowed_species))
 			usr << "[name] isn't allowed for [P.species]"
 			return 0
-		if(!allow_slim_body && (P.body_build == BODY_SLIM))
-			usr << "[name] isn't allowed for slim body"
+		if(allow_body_builds && !(P.body in allow_body_builds))
+			usr << "[name] isn't allowed for [P.body] body"
 			return 0
 		var/list/organ_data = organ_structure[organ]
 		if(organ_data)
@@ -75,7 +75,7 @@ var/global/list/modifications_types = list(
 	short_name = "Amputated"
 	id = "amputated"
 	desc = "Organ was removed."
-	body_parts = list("l_arm", "r_arm", "l_hand", "r_hand", "l_leg", "r_leg", "l_foot", "r_foot")
+	body_parts = list(BP_L_ARM, BP_R_ARM, BP_L_HAND, BP_R_HAND, BP_L_LEG, BP_R_LEG, BP_L_FOOT, BP_R_FOOT)
 	replace_limb = 1
 	nature = MODIFICATION_REMOVED
 
@@ -84,8 +84,8 @@ var/global/list/modifications_types = list(
 	short_name = "T: Abstract"
 	desc = "Simple tattoo (use flavor)."
 	id = "abstract"
-	body_parts = list("head", "chest", "chest2", "groin", "l_arm", "r_arm",\
-		"l_hand", "r_hand", "l_leg", "r_leg", "l_foot", "r_foot")
+	body_parts = list(BP_HEAD, BP_CHEST, "chest2", BP_GROIN, BP_L_ARM, BP_R_ARM,\
+		BP_L_HAND, BP_R_HAND, BP_L_LEG, BP_R_LEG, BP_L_FOOT, BP_R_FOOT)
 	icon = 'icons/mob/tattoo.dmi'
 	mob_icon = "1"
 
@@ -112,7 +112,7 @@ var/global/list/modifications_types = list(
 	short_name = "T: Tiger"
 	desc = "A great camouflage to hide in long grass."
 	id = "stripes"
-	body_parts = list("head", "chest")
+	body_parts = list(BP_HEAD, BP_CHEST)
 	icon = 'icons/mob/tattoo.dmi'
 	mob_icon = "2"
 	allowed_species = list("Tajara")
@@ -122,7 +122,7 @@ var/global/list/modifications_types = list(
 	short_name = "T: Tribal"
 	desc = "A specific identification and beautification marks designed on the face or body."
 	id = "tribal"
-	body_parts = list("head", "chest")
+	body_parts = list(BP_HEAD, BP_CHEST)
 	icon = 'icons/mob/tattoo.dmi'
 	mob_icon = "2"
 	allowed_species = list("Unathi")
@@ -131,8 +131,8 @@ var/global/list/modifications_types = list(
 	name = "Unbranded"
 	id = "prosthesis_basic"
 	desc = "Simple, brutal and reliable prosthesis"
-	body_parts = list("l_arm", "r_arm", "l_hand", "r_hand", \
-		"l_leg", "r_leg", "l_foot", "r_foot")
+	body_parts = list(BP_L_ARM, BP_R_ARM, BP_L_HAND, BP_R_HAND, \
+		BP_L_LEG, BP_R_LEG, BP_L_FOOT, BP_R_FOOT)
 	replace_limb = 1
 	mob_icon = "base"
 	nature = MODIFICATION_SILICON
@@ -162,7 +162,7 @@ var/global/list/modifications_types = list(
 	name = "Zeng-Hu"
 	id = "prosthesis_zenghu"
 	desc = "Prosthesis with rubbery fleshtone covering with visible seams."
-	allow_slim_body = 0
+	allow_body_builds = list("Default")
 
 	get_mob_icon(organ, body_build = 0)
 		return new/icon('icons/mob/human_races/cyberlimbs/zenghu.dmi', "[organ]_[body_build]")
@@ -178,7 +178,7 @@ var/global/list/modifications_types = list(
 /datum/body_modification/prosthesis/enforcer_charge
 	name = "Enforcer Charge"
 	id = "prosthesis_enforcer"
-	allow_slim_body = 0
+	allow_body_builds = list("Default")
 	mob_icon = "cyber"
 
 /datum/body_modification/prosthesis/eyecam
@@ -186,7 +186,7 @@ var/global/list/modifications_types = list(
 	id = "prosthesis_eye_cam"
 	desc = "One of your eyes replaced with portable cam. Do not lose it."
 	mob_icon = ""
-	body_parts = list("eyes")
+	body_parts = list(O_EYES)
 
 	get_mob_icon(organ, body_build = 0, color = "#ffffff")
 		var/icon/I = new/icon(icon, "one_eye_[body_build]")
@@ -202,13 +202,13 @@ var/global/list/modifications_types = list(
 	name = "Exoskeleton"
 	id = "mutation_exoskeleton"
 	desc = "Your limb covered with bony shell (act as shield)."
-	body_parts = list("head", "chest", "groin", "l_arm", "r_arm",\
-		"l_hand", "r_hand", "l_leg", "r_leg", "l_foot", "r_foot")
+	body_parts = list(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_R_ARM,\
+		BP_L_HAND, BP_R_HAND, BP_L_LEG, BP_R_LEG, BP_L_FOOT, BP_R_FOOT)
 	replace_limb = 1
 	mob_icon = "exo"
 
 	get_mob_icon(organ, body_build = 0, color="#ffffff", gender = MALE)
-		if(organ in list("head", "chest", "groin"))
+		if(organ in list(BP_HEAD, BP_CHEST, BP_GROIN))
 			return new/icon(icon, "[organ]_[mob_icon]_[gender==FEMALE?"f":"m"][body_build]")
 		else
 			return new/icon(icon, "[organ]_[mob_icon]_[body_build]")
@@ -226,7 +226,7 @@ var/global/list/modifications_types = list(
 	name = "Heterochromia"
 	id = "mutation_heterochromia"
 	desc = "Special color for left eye."
-	body_parts = list("eyes")
+	body_parts = list(O_EYES)
 
 	get_mob_icon(organ, body_build = 0, color = "#ffffff")
 		var/icon/I = new/icon(icon, "one_eye_[body_build]")

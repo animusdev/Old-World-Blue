@@ -42,15 +42,12 @@
 			playsound(M, 'sound/items/trayhit2.ogg', 50, 1) //sound playin'
 			return //it always returns, but I feel like adding an extra return just for safety's sakes. EDIT; Oh well I won't :3
 
-	var/mob/living/carbon/human/H = M      ///////////////////////////////////// /Let's have this ready for later.
-
-
-	if(!(user.zone_sel.selecting == ("eyes" || "head"))) //////////////hitting anything else other than the eyes
+	if(!(user.zone_sel.selecting in list(O_EYES, BP_HEAD))) //////////////hitting anything else other than the eyes
 		if(prob(33))
-			src.add_blood(H)
-			var/turf/location = H.loc
+			src.add_blood(M)
+			var/turf/location = M.loc
 			if (istype(location, /turf/simulated))
-				location.add_blood(H)     ///Plik plik, the sound of blood
+				location.add_blood(M)     ///Plik plik, the sound of blood
 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
@@ -64,16 +61,17 @@
 		if(prob(50))
 			playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
 			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
+				O.show_message("\red <B>[user] slams [M] with the tray!</B>", 1)
 			return
 		else
 			playsound(M, 'sound/items/trayhit2.ogg', 50, 1)  //we applied the damage, we played the sound, we showed the appropriate messages. Time to return and stop the proc
 			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
+				O.show_message("\red <B>[user] slams [M] with the tray!</B>", 1)
 			return
 
 
-	if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
+	var/mob/living/carbon/human/H = M
+	if(istype(H) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
 		M << "\red You get slammed in the face with the tray, against your mask!"
 		if(prob(33))
 			src.add_blood(H)

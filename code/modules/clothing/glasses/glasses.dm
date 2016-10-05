@@ -249,7 +249,7 @@
 	vision_flags = SEE_MOBS
 
 	emp_act(severity)
-		if(istype(src.loc, /mob/living/carbon/human))
+		if(ishuman(src.loc))
 			var/mob/living/carbon/human/M = src.loc
 			M << "\red The Optical Thermal Scanner overloads and blinds you!"
 			if(M.glasses == src)

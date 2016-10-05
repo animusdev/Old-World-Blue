@@ -25,7 +25,7 @@
 		new /datum/unarmed_attack/claws
 		)
 	inherent_verbs = list(/mob/living/proc/ventcrawl)
-	hud_type = /datum/hud_data/monkey
+	hud = new /datum/hud_data/monkey
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/monkey
 	holder_type = /obj/item/weapon/holder/monkey
 

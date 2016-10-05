@@ -26,7 +26,7 @@
 	if(istype(H) && H.shoes)
 		return
 	seed.do_thorns(victim,src)
-	seed.do_sting(victim,src,pick("r_foot","l_foot","r_leg","l_leg"))
+	seed.do_sting(victim,src,pick(BP_R_FOOT,BP_L_FOOT,BP_R_LEG,BP_L_LEG))
 
 /obj/effect/plant/proc/unbuckle()
 	if(buckled_mob)
@@ -71,7 +71,7 @@
 	//grabbing people
 	if(!victim.anchored && Adjacent(victim) && victim.loc != get_turf(src))
 		var/can_grab = 1
-		if(istype(victim, /mob/living/carbon/human))
+		if(ishuman(victim))
 			var/mob/living/carbon/human/H = victim
 			if(istype(H.shoes, /obj/item/clothing/shoes/magboots) && (H.shoes.flags & NOSLIP))
 				can_grab = 0

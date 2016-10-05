@@ -1,70 +1,43 @@
+//////////////////////////////
+//Contents: Ladders, Stairs.//
+//////////////////////////////
+
 /obj/structure/ladder
 	name = "ladder"
-	desc = "A sturdy metal ladder."
+	desc = "A ladder.  You can climb it up and down."
+	icon_state = "ladder01"
 	icon = 'icons/obj/structures.dmi'
-	icon_state = "ladder11"
-	var/id = null
-	var/height = 0							//the 'height' of the ladder. higher numbers are considered physically higher
-	var/obj/structure/ladder/down = null	//the ladder below this one
-	var/obj/structure/ladder/up = null		//the ladder above this one
+	density = 0
+	opacity = 0
+	anchored = 1
 
-/obj/structure/ladder/New()
-	spawn(8)
-		for(var/obj/structure/ladder/L in world)
-			if(L.id == id)
-				if(L.height == (height - 1))
-					down = L
-					continue
-				if(L.height == (height + 1))
-					up = L
-					continue
+	var/obj/structure/ladder/target
 
-			if(up && down)	//if both our connections are filled
-				break
-		update_icon()
+	Destroy()
+		if(target && icon_state == "ladder01")
+			qdel(target)
+		return ..()
 
-/obj/structure/ladder/update_icon()
-	if(up && down)
-		icon_state = "ladder11"
+	attackby(obj/item/C as obj, mob/user as mob)
+		. = ..()
+		attack_hand(user)
+		return
 
-	else if(up)
-		icon_state = "ladder10"
+	attack_hand(var/mob/M)
+		if(!target || !istype(target.loc, /turf))
+			M << "<span class='notice'>\The [src] is incomplete and can't be climbed.</span>"
+			return
 
-	else if(down)
-		icon_state = "ladder01"
-
-	else	//wtf make your ladders properly assholes
-		icon_state = "ladder00"
-
-/obj/structure/ladder/attack_hand(mob/user as mob)
-	if(up && down)
-		switch( alert("Go up or down the ladder?", "Ladder", "Up", "Down", "Cancel") )
-			if("Up")
-				user.visible_message("<span class='notice'>[user] climbs up \the [src]!</span>", \
-									 "<span class='notice'>You climb up \the [src]!</span>")
-				user.loc = get_turf(up)
-				up.add_fingerprint(user)
-			if("Down")
-				user.visible_message("<span class='notice'>[user] climbs down \the [src]!</span>", \
-									 "<span class='notice'>You climb down \the [src]!</span>")
-				user.loc = get_turf(down)
-				down.add_fingerprint(user)
-			if("Cancel")
+		var/turf/T = target.loc
+		for(var/atom/A in T)
+			if(A.density)
+				M << "<span class='notice'>\A [A] is blocking \the [src].</span>"
 				return
 
-	else if(up)
-		user.visible_message("<span class='notice'>[user] climbs up \the [src]!</span>", \
-							 "<span class='notice'>You climb up \the [src]!</span>")
-		user.loc = get_turf(up)
-		up.add_fingerprint(user)
+		M.visible_message("<span class='notice'>\A [M] climbs [icon_state == "ladderup" ? "up" : "down"] \a [src]!</span>",
+			"You climb [icon_state == "ladderup"  ? "up" : "down"] \the [src]!",
+			"You hear the grunting and clanging of a metal ladder being used.")
+		M.Move(T)
 
-	else if(down)
-		user.visible_message("<span class='notice'>[user] climbs down \the [src]!</span>", \
-							 "<span class='notice'>You climb down \the [src]!</span>")
-		user.loc = get_turf(down)
-		down.add_fingerprint(user)
-
-	add_fingerprint(user)
-
-/obj/structure/ladder/attackby(obj/item/weapon/W, mob/user as mob)
-	return attack_hand(user)
+	CanPass(obj/mover, turf/source, height, airflow)
+		return airflow || !density

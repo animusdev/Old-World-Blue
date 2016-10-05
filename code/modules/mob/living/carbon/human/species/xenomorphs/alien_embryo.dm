@@ -72,7 +72,7 @@
 					affected_mob << "\red Your chest feels tight."
 				if(prob(3))
 					affected_mob << "\red Your chest aches."
-					if(istype(affected_mob, /mob/living/carbon/human))
+					if(ishuman(affected_mob))
 						affected_mob.take_organ_damage(5)
 				if(prob(10))
 					affected_mob << "\red You feel hungry."
@@ -88,23 +88,23 @@
 				if(prob(30))
 					affected_mob << "\red Your chest hurts."
 					if(prob(50))
-						if(istype(affected_mob, /mob/living/carbon/human))
+						if(ishuman(affected_mob))
 							affected_mob.take_organ_damage(10)
 				if(prob(20))
 					affected_mob << "\red Your stomach hurts."
 					if(prob(50))
-						if(istype(affected_mob, /mob/living/carbon/human))
+						if(ishuman(affected_mob))
 							affected_mob.adjustToxLoss(1)
 							affected_mob.updatehealth()
 			if(5)
-				if(istype(affected_mob, /mob/living/carbon/human))
+				if(ishuman(affected_mob))
 					affected_mob.adjustToxLoss(2)
 
 				affected_mob << "\red You feel something tearing its way out of your stomach..."
 				AttemptGrow()
 				stage = 6
 				if(prob(70))
-					if(istype(affected_mob, /mob/living/carbon/human))
+					if(ishuman(affected_mob))
 						affected_mob.adjustBruteLoss(5)
 						affected_mob.updatehealth()
 			if(6)
@@ -123,9 +123,9 @@
 		if(!affected_mob)//hopefully fix a runtime error
 			return
 
-		if(istype(affected_mob, /mob/living/carbon/human) && affected_mob.stat == DEAD)
+		if(ishuman(affected_mob) && affected_mob.stat == DEAD)
 			return
-		for(var/mob/dead/observer/G in player_list)
+		for(var/mob/observer/dead/G in player_list)
 			if(G)
 				if(G.client)
 					if(G.client.prefs.be_special & BE_ALIEN)

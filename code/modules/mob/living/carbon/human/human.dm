@@ -10,6 +10,8 @@
 
 /mob/living/carbon/human/New(var/new_loc, var/new_species = null, var/datum/preferences/prefs = null)
 
+	body_build = get_body_build(gender)
+
 	if(!dna)
 		dna = new /datum/dna(null)
 		// Species name is handled by set_species()
@@ -146,11 +148,11 @@
 
 	for(var/obj/item/organ/external/temp in organs)
 		switch(temp.name)
-			if("head")
+			if(BP_HEAD)
 				update |= temp.take_damage(b_loss * 0.2, f_loss * 0.2, used_weapon = weapon_message)
-			if("chest")
+			if(BP_CHEST)
 				update |= temp.take_damage(b_loss * 0.4, f_loss * 0.4, used_weapon = weapon_message)
-			if("l_arm","r_arm","l_leg","r_leg","r_foot","l_foot","r_arm","l_arm")
+			if(BP_L_ARM,BP_R_ARM,BP_L_LEG,BP_R_LEG,BP_R_FOOT,BP_L_FOOT,BP_R_HAND,BP_L_HAND)
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 	if(update)	UpdateDamageIcon()
 
@@ -158,7 +160,7 @@
 /mob/living/carbon/human/blob_act()
 	if(stat == 2)	return
 	show_message("\red The blob attacks you!")
-	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+	var/dam_zone = pick(BP_CHEST, BP_L_HAND, BP_R_HAND, BP_L_LEG, BP_R_LEG)
 	var/obj/item/organ/external/affecting = get_organ(ran_zone(dam_zone))
 	apply_damage(rand(30,40), BRUTE, affecting, run_armor_check(affecting, "melee"))
 	return
@@ -168,7 +170,7 @@
 		if ((M.client && !( M.blinded )))
 			M.show_message("\red [src] has been hit by [O]", 1)
 	if (health > 0)
-		var/obj/item/organ/external/affecting = get_organ(pick("chest", "chest", "chest", "head"))
+		var/obj/item/organ/external/affecting = get_organ(pick(BP_CHEST, BP_CHEST, BP_CHEST, BP_HEAD))
 		if(!affecting)	return
 		if (istype(O, /obj/effect/immovablerod))
 			if(affecting.take_damage(101, 0))
@@ -185,7 +187,7 @@
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)
 	L.imp_in = M
 	L.implanted = 1
-	var/obj/item/organ/external/affected = M.organs_by_name["head"]
+	var/obj/item/organ/external/affected = M.organs_by_name[BP_HEAD]
 	affected.implants += L
 	L.part = affected
 	L.implanted(src)
@@ -326,7 +328,7 @@
 
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name()
-	var/obj/item/organ/external/head = get_organ("head")
+	var/obj/item/organ/external/head = get_organ(BP_HEAD)
 	if(!head || head.disfigured || (head.status & ORGAN_DESTROYED) || !real_name || (HUSK in mutations) )	//disfigured. use id-name if possible
 		return "Unknown"
 	return real_name
@@ -355,7 +357,7 @@
 	if(status_flags & GODMODE)	return 0	//godmode
 
 	if (!def_zone)
-		def_zone = pick("l_hand", "r_hand")
+		def_zone = pick(BP_L_HAND, BP_R_HAND)
 
 	var/obj/item/organ/external/affected_organ = get_organ(check_zone(def_zone))
 	var/siemens_coeff = base_siemens_coeff * get_siemens_coefficient_organ(affected_organ)
@@ -406,7 +408,7 @@
 
 										spawn()
 											BITSET(hud_updateflag, WANTED_HUD)
-											if(istype(usr,/mob/living/carbon/human))
+											if(ishuman(usr))
 												var/mob/living/carbon/human/U = usr
 												U.handle_regular_hud_updates()
 											if(istype(usr,/mob/living/silicon/robot))
@@ -498,7 +500,7 @@
 								var/counter = 1
 								while(R.fields[text("com_[]", counter)])
 									counter++
-								if(istype(usr,/mob/living/carbon/human))
+								if(ishuman(usr))
 									var/mob/living/carbon/human/U = usr
 									R.fields[text("com_[counter]")] = text("Made by [U.get_authentification_name()] ([U.get_assignment()]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [game_year]<BR>[t1]")
 								if(istype(usr,/mob/living/silicon/robot))
@@ -534,7 +536,7 @@
 										PDA_Manifest.Cut()
 
 									spawn()
-										if(istype(usr,/mob/living/carbon/human))
+										if(ishuman(usr))
 											var/mob/living/carbon/human/U = usr
 											U.handle_regular_hud_updates()
 										if(istype(usr,/mob/living/silicon/robot))
@@ -627,7 +629,7 @@
 								var/counter = 1
 								while(R.fields[text("com_[]", counter)])
 									counter++
-								if(istype(usr,/mob/living/carbon/human))
+								if(ishuman(usr))
 									var/mob/living/carbon/human/U = usr
 									R.fields[text("com_[counter]")] = text("Made by [U.get_authentification_name()] ([U.get_assignment()]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [game_year]<BR>[t1]")
 								if(istype(usr,/mob/living/silicon/robot))
@@ -664,11 +666,11 @@
 /mob/living/carbon/human/eyecheck()
 	var/number = 0
 
-	if(!species.has_organ["eyes"]) //No eyes, can't hurt them.
+	if(!species.has_organ[O_EYES]) //No eyes, can't hurt them.
 		return 2
 
-	if(internal_organs_by_name["eyes"]) // Eyes are fucked, not a 'weak point'.
-		var/obj/item/organ/internal/I = internal_organs_by_name["eyes"]
+	if(internal_organs_by_name[O_EYES]) // Eyes are fucked, not a 'weak point'.
+		var/obj/item/organ/internal/I = internal_organs_by_name[O_EYES]
 		if(I.status & ORGAN_CUT_AWAY)
 			return 2
 	else
@@ -703,8 +705,11 @@
 	return 0
 
 /mob/living/carbon/human/abiotic(var/full_body = 0)
-	if(full_body && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask || src.head || src.shoes || src.w_uniform || src.wear_suit || src.glasses || src.l_ear || src.r_ear || src.gloves)))
-		return 1
+	if(full_body)
+		for(var/obj/item/I in list(l_hand, r_hand, back, head, shoes, w_uniform, wear_suit, glasses, l_ear, r_ear, gloves))
+			if(I.abstract)
+				return 1
+		return 0
 
 	if( (src.l_hand && !src.l_hand.abstract) || (src.r_hand && !src.r_hand.abstract) )
 		return 1
@@ -828,7 +833,11 @@
 	regenerate_icons()
 	check_dna()
 
-	visible_message("\blue \The [src] morphs and changes [get_visible_gender() == MALE ? "his" : get_visible_gender() == FEMALE ? "her" : "their"] appearance!", "\blue You change your appearance!", "\red Oh, god!  What the hell was that?  It sounded like flesh getting squished and bone ground into a different shape!")
+	visible_message(
+		"\blue \The [src] morphs and changes [get_visible_gender() == MALE ? "his" : get_visible_gender() == FEMALE ? "her" : "their"] appearance!",
+		"\blue You change your appearance!",
+		"\red Oh, god!  What the hell was that?  It sounded like flesh getting squished and bone ground into a different shape!"
+	)
 
 /mob/living/carbon/human/proc/remotesay()
 	set name = "Project mind"
@@ -856,7 +865,7 @@
 		target.show_message("\blue You hear a voice that seems to echo around the room: [say]")
 	usr.show_message("\blue You project your mind into [target.real_name]: [say]")
 	log_say("[key_name(usr)] sent a telepathic message to [key_name(target)]: [say]")
-	for(var/mob/dead/observer/G in world)
+	for(var/mob/observer/dead/G in world)
 		G.show_message("<i>Telepathic message from <b>[src]</b> to <b>[target]</b>: [say]</i>")
 
 /mob/living/carbon/human/proc/remoteobserve()
@@ -938,11 +947,11 @@
 	..()
 
 /mob/living/carbon/human/proc/is_lung_ruptured()
-	var/obj/item/organ/internal/lungs/L = internal_organs_by_name["lungs"]
+	var/obj/item/organ/internal/lungs/L = internal_organs_by_name[O_LUNGS]
 	return L && L.is_bruised()
 
 /mob/living/carbon/human/proc/rupture_lung()
-	var/obj/item/organ/internal/lungs/L = internal_organs_by_name["lungs"]
+	var/obj/item/organ/internal/lungs/L = internal_organs_by_name[O_LUNGS]
 
 	if(L && !L.is_bruised())
 		src.custom_pain("You feel a stabbing pain in your chest!", 1)
@@ -1188,12 +1197,13 @@
 
 	if(!target_zone)
 		if(!user)
-			target_zone = pick("chest","chest","chest","left leg","right leg","left arm", "right arm", "head")
+			// LETHAL GHOST
+			target_zone = pick(BP_CHEST,BP_CHEST,BP_CHEST,"left leg","right leg","left arm", "right arm", BP_HEAD)
 		else
 			target_zone = user.zone_sel.selecting
 
 	switch(target_zone)
-		if("head")
+		if(BP_HEAD)
 			if(head && head.flags & THICKMATERIAL)
 				. = 0
 		else
@@ -1201,7 +1211,7 @@
 				. = 0
 	if(!. && error_msg && user)
  		// Might need re-wording.
-		user << "<span class='alert'>There is no exposed flesh or thin material [target_zone == "head" ? "on their head" : "on their body"] to inject into.</span>"
+		user << "<span class='alert'>There is no exposed flesh or thin material [target_zone == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>"
 
 /mob/living/carbon/human/print_flavor_text(var/shrink = 1)
 	var/list/equipment = list(src.head,src.wear_mask,src.glasses,src.w_uniform,src.wear_suit,src.gloves,src.shoes)
@@ -1257,15 +1267,15 @@
 	..()
 
 /mob/living/carbon/human/has_brain()
-	if(internal_organs_by_name["brain"])
-		var/obj/item/organ/internal/brain = internal_organs_by_name["brain"]
+	if(internal_organs_by_name[O_BRAIN])
+		var/obj/item/organ/internal/brain = internal_organs_by_name[O_BRAIN]
 		if(brain && istype(brain))
 			return 1
 	return 0
 
 /mob/living/carbon/human/has_eyes()
-	if(internal_organs_by_name["eyes"])
-		var/obj/item/organ/internal/eyes = internal_organs_by_name["eyes"]
+	if(internal_organs_by_name[O_EYES])
+		var/obj/item/organ/internal/eyes = internal_organs_by_name[O_EYES]
 		if(eyes && istype(eyes) && !(eyes.status & ORGAN_CUT_AWAY))
 			return 1
 	return 0
@@ -1371,49 +1381,6 @@
 		return
 	return ..()
 
-/mob/living/carbon/human/proc/get_uniform_sprite(state = "")
-	return image(species.get_uniform_sprite(state, body_build), icon_state = state)
-
-/mob/living/carbon/human/proc/get_suit_sprite(state = "")
-	return image(species.get_suit_sprite(state, body_build), icon_state = state)
-
-/mob/living/carbon/human/proc/get_gloves_sprite(state = "")
-	return image(species.get_gloves_sprite(state, body_build), icon_state = state)
-
-/mob/living/carbon/human/proc/get_shoes_sprite(state = "")
-	return image(species.get_shoes_sprite(state, body_build), icon_state = state)
-
-/mob/living/carbon/human/proc/get_head_sprite(state = "")
-	return image(species.get_head_sprite(state, body_build), icon_state = state)
-
-/mob/living/carbon/human/proc/get_glasses_sprite(state = "")
-	return image(species.get_glasses_sprite(state, body_build), icon_state = state)
-
-/mob/living/carbon/human/proc/get_belt_sprite(state = "")
-	return image(species.get_belt_sprite(state, body_build), icon_state = state)
-
-/mob/living/carbon/human/proc/get_ears_sprite(state = "")
-	return image(species.get_ears_sprite(state, body_build), icon_state = state)
-
-/mob/living/carbon/human/proc/get_back_sprite(state = "")
-	return image(species.get_back_sprite(state, body_build), icon_state = state)
-
-/mob/living/carbon/human/proc/get_back_u_sprite(state = "")
-	var/image/back = species.get_back_u_sprite(state, body_build)
-	if(back)
-		return image(back, icon_state = state)
-	else
-		return null
-
-/mob/living/carbon/human/proc/get_mask_sprite(state = "")
-	return image(species.get_mask_sprite(state, body_build), icon_state = state)
-
-/mob/living/carbon/human/proc/get_store_sprite(state = "")
-	return image(species.get_store_sprite(state, body_build), icon_state = state)
-
-/mob/living/carbon/human/proc/get_hidden_slot_sprite(state = "")
-	return image(species.get_hidden_slot_sprite(state, body_build), icon_state = state)
-
 /mob/living/carbon/human/proc/get_full_print()
 	if(!dna ||!dna.uni_identity)
 		return
@@ -1421,7 +1388,4 @@
 
 /mob/living/carbon/human/proc/check_has_mouth()
 	// Todo, check stomach organ when implemented.
-	var/obj/item/organ/external/head/H = get_organ("head")
-	if(!H)
-		return 0
-	return 1
+	return get_organ(BP_HEAD)

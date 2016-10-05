@@ -226,8 +226,7 @@ Class Procs:
 		return 1
 	if(user.lying || user.stat)
 		return 1
-	if ( ! (istype(usr, /mob/living/carbon/human) || \
-			istype(usr, /mob/living/silicon)))
+	if ( !ishuman(usr) && !istype(usr, /mob/living/silicon))
 		usr << "\red You don't have the dexterity to do this!"
 		return 1
 /*

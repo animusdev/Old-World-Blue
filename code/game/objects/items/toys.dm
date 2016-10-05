@@ -185,7 +185,7 @@
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 		if (flag)
 			return
-		if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+		if (!(ishuman(usr) || ticker) && ticker.mode.name != "monkey")
 			usr << "\red You don't have the dexterity to do this!"
 			return
 		src.add_fingerprint(user)
@@ -364,7 +364,7 @@
 			src.item_state = "sword0"
 			src.w_class = 2
 
-		if(istype(user,/mob/living/carbon/human))
+		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.update_inv_l_hand()
 			H.update_inv_r_hand()

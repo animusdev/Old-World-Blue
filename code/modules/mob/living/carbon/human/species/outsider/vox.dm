@@ -49,12 +49,12 @@
 		)
 
 	has_organ = list(
-		"heart" =    /obj/item/organ/internal/heart,
-		"lungs" =    /obj/item/organ/internal/lungs,
-		"liver" =    /obj/item/organ/internal/liver,
-		"kidneys" =  /obj/item/organ/internal/kidneys,
-		"brain" =    /obj/item/organ/internal/brain,
-		"eyes" =     /obj/item/organ/internal/eyes,
+		O_HEART =    /obj/item/organ/internal/heart,
+		O_LUNGS =    /obj/item/organ/internal/lungs,
+		O_LIVER =    /obj/item/organ/internal/liver,
+		O_KIDNEYS =  /obj/item/organ/internal/kidneys,
+		O_BRAIN =    /obj/item/organ/internal/brain,
+		O_EYES =     /obj/item/organ/internal/eyes,
 		"stack" =    /obj/item/organ/internal/stack/vox
 		)
 	restricted_jobs = list("Captain","Head of Personnel","Head of Security","Chief Engineer","Research Director",\
@@ -62,37 +62,6 @@
 					"Atmospheric Technician","Medical Doctor","Geneticist","Psychiatrist","Chemist","Paramedic",\
 					"Scientist", "Roboticist", "Xenobiologist", "Bartender", "Gardener", "Chef", "Librarian",\
 					"Quartermaster", "Lawyer", "Internal Affairs Agent", "Chaplain")
-
-	get_uniform_sprite(state = "")
-		if(state in icon_states('icons/mob/species/vox/uniform.dmi'))
-			return 'icons/mob/species/vox/uniform.dmi'
-		else return ..()
-
-	get_suit_sprite(state = "")
-		if(state in icon_states('icons/mob/species/vox/suit.dmi'))
-			return 'icons/mob/species/vox/suit.dmi'
-		else return ..()
-
-	get_head_sprite(state = "")
-		if(state in icon_states('icons/mob/species/vox/helmet.dmi'))
-			return 'icons/mob/species/vox/helmet.dmi'
-		else return ..()
-
-	get_gloves_sprite(state = "")
-		return 'icons/mob/species/vox/gloves.dmi'
-
-	get_shoes_sprite(state = "")
-		if(state in icon_states('icons/mob/species/vox/shoes.dmi'))
-			return 'icons/mob/species/vox/shoes.dmi'
-		else return ..()
-
-	get_glasses_sprite(state = "", var/body_build = 0)
-		if(state in icon_states('icons/mob/species/vox/eyes.dmi'))
-			return 'icons/mob/species/vox/eyes.dmi'
-		else return ..()
-
-	get_mask_sprite(state = "")
-		return  'icons/mob/species/vox/masks.dmi'
 
 /datum/species/vox/get_random_name(var/gender)
 	var/datum/language/species_language = all_languages[default_language]
@@ -139,12 +108,12 @@
 
 	// Pariahs have no stack.
 	has_organ = list(
-		"heart" =    /obj/item/organ/internal/heart,
-		"lungs" =    /obj/item/organ/internal/lungs,
-		"liver" =    /obj/item/organ/internal/liver,
-		"kidneys" =  /obj/item/organ/internal/kidneys,
-		"brain" =    /obj/item/organ/internal/pariah_brain,
-		"eyes" =     /obj/item/organ/internal/eyes
+		O_HEART =    /obj/item/organ/internal/heart,
+		O_LUNGS =    /obj/item/organ/internal/lungs,
+		O_LIVER =    /obj/item/organ/internal/liver,
+		O_KIDNEYS =  /obj/item/organ/internal/kidneys,
+		O_BRAIN =    /obj/item/organ/internal/pariah_brain,
+		O_EYES =     /obj/item/organ/internal/eyes
 		)
 	flags = IS_RESTRICTED | NO_SCAN | HAS_EYE_COLOR
 

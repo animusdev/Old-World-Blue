@@ -46,15 +46,15 @@
 
 					if (soft || (!blocked && !(areacheck.name == "Space")))
 						AM.Move(floorbelow)
-						if (!soft && istype(AM, /mob/living/carbon/human))
+						if (!soft && ishuman(AM))
 							var/mob/living/carbon/human/H = AM
 							var/damage = 5
-							H.apply_damage(min(rand(-damage,damage),0), BRUTE, "head")
-							H.apply_damage(min(rand(-damage,damage),0), BRUTE, "chest")
-							H.apply_damage(min(rand(-damage,damage),0), BRUTE, "l_leg")
-							H.apply_damage(min(rand(-damage,damage),0), BRUTE, "r_leg")
-							H.apply_damage(min(rand(-damage,damage),0), BRUTE, "l_arm")
-							H.apply_damage(min(rand(-damage,damage),0), BRUTE, "r_arm")
+							H.apply_damage(min(rand(-damage,damage),0), BRUTE, BP_HEAD)
+							H.apply_damage(min(rand(-damage,damage),0), BRUTE, BP_CHEST)
+							H.apply_damage(min(rand(-damage,damage),0), BRUTE, BP_L_LEG)
+							H.apply_damage(min(rand(-damage,damage),0), BRUTE, BP_R_LEG)
+							H.apply_damage(min(rand(-damage,damage),0), BRUTE, BP_L_ARM)
+							H.apply_damage(min(rand(-damage,damage),0), BRUTE, BP_R_ARM)
 							H:weakened = max(H:weakened,2)
 							H:updatehealth()
 		return ..()

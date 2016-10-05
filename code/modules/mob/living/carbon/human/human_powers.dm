@@ -147,7 +147,7 @@
 
 	visible_message("<span class='warning'><b>\The [src]</b> rips viciously at \the [G.affecting]'s body with its claws!</span>")
 
-	if(istype(G.affecting,/mob/living/carbon/human))
+	if(ishuman(G.affecting))
 		var/mob/living/carbon/human/H = G.affecting
 		H.apply_damage(50,BRUTE)
 		if(H.stat == 2)
@@ -181,14 +181,14 @@
 
 	var/mob/M = targets[target]
 
-	if(istype(M, /mob/dead/observer) || M.stat == DEAD)
+	if(isobserver(M) || M.stat == DEAD)
 		src << "Not even a [src.species.name] can speak to the dead."
 		return
 
 	log_say("[key_name(src)] communed to [key_name(M)]: [text]")
 
 	M << "\blue Like lead slabs crashing into the ocean, alien thoughts drop into your mind: [text]"
-	if(istype(M,/mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.species.name == src.species.name)
 			return

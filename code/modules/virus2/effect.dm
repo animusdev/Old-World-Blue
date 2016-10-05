@@ -77,7 +77,7 @@
 		// Probabilities have been tweaked to kill in ~2-3 minutes, giving 5-10 messages.
 		// Probably needs more balancing, but it's better than LOL U GIBBED NOW, especially now that viruses can potentially have no signs up until Gibbingtons.
 		mob.adjustBruteLoss(10*multiplier)
-		if(istype(mob, /mob/living/carbon/human))
+		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
 			var/obj/item/organ/external/O = pick(H.organs)
 			if(prob(25))
@@ -112,7 +112,7 @@
 	stage = 4
 	badness = 3
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		if(istype(mob,/mob/living/carbon/human))
+		if(ishuman(mob))
 			var/mob/living/carbon/human/h = mob
 			h.monkeyize()
 
@@ -150,9 +150,9 @@
 	stage = 4
 	badness = 2
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		if(istype(mob, /mob/living/carbon/human))
+		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
-			var/organ = pick(list("r_arm","l_arm","r_leg","r_leg"))
+			var/organ = pick(list(BP_R_ARM,BP_L_ARM,BP_R_LEG,BP_L_LEG))
 			var/obj/item/organ/external/E = H.organs_by_name[organ]
 			if (!(E.status & ORGAN_DEAD))
 				E.status |= ORGAN_DEAD
@@ -163,7 +163,7 @@
 		mob.adjustToxLoss(15*multiplier)
 
 	deactivate(var/mob/living/carbon/mob,var/multiplier)
-		if(istype(mob, /mob/living/carbon/human))
+		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
 			for (var/obj/item/organ/external/E in H.organs)
 				E.status &= ~ORGAN_DEAD
@@ -176,7 +176,7 @@
 	stage = 4
 	badness = 2
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		if(istype(mob, /mob/living/carbon/human))
+		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
 			for (var/obj/item/organ/external/E in H.organs)
 				if (E.status & ORGAN_BROKEN && prob(30))
@@ -185,7 +185,7 @@
 		mob.apply_damages(heal_amt,heal_amt,heal_amt,heal_amt)
 
 	deactivate(var/mob/living/carbon/mob,var/multiplier)
-		if(istype(mob, /mob/living/carbon/human))
+		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
 			H << "<span class='notice'>You suddenly feel hurt and old...</span>"
 			H.age += 8
@@ -197,13 +197,13 @@
 	stage = 4
 	badness = 2
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		if(istype(mob, /mob/living/carbon/human))
+		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
 			for (var/obj/item/organ/external/E in H.organs)
 				E.min_broken_damage = max(5, E.min_broken_damage - 30)
 
 	deactivate(var/mob/living/carbon/mob,var/multiplier)
-		if(istype(mob, /mob/living/carbon/human))
+		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
 			for (var/obj/item/organ/external/E in H.organs)
 				E.min_broken_damage = initial(E.min_broken_damage)
@@ -235,9 +235,9 @@
 	name = "Lazy Mind Syndrome"
 	stage = 3
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		if(istype(mob, /mob/living/carbon/human))
+		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
-			var/obj/item/organ/internal/brain/B = H.internal_organs_by_name["brain"]
+			var/obj/item/organ/internal/brain/B = H.internal_organs_by_name[O_BRAIN]
 			if (B && B.damage < B.min_broken_damage)
 				B.take_damage(5)
 		else
@@ -353,7 +353,7 @@
 	name = "Hair Loss"
 	stage = 2
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		if(istype(mob, /mob/living/carbon/human))
+		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
 			if(H.species.name == "Human" && !(H.h_style == "Bald") && !(H.h_style == "Balding Hair"))
 				H << "<span class='danger'>Your hair starts to fall out in clumps...</span>"

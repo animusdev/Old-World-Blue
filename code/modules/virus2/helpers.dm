@@ -19,7 +19,7 @@ proc/infection_check(var/mob/living/carbon/M, var/vector = "Airborne")
 						score += 1 //this should be added after
 
 		if("Contact")
-			if(istype(M, /mob/living/carbon/human))
+			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 
 				//gloves provide a larger bonus

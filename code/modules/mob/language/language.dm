@@ -104,7 +104,7 @@
 	var/msg = "<i><span class='game say'>[name], <span class='name'>[speaker_mask]</span> [format_message(message, get_spoken_verb(message))]</span></i>"
 
 	for(var/mob/player in player_list)
-		if(istype(player,/mob/dead) || ((src in player.languages) && check_special_condition(player)))
+		if(isobserver(player) || ((src in player.languages) && check_special_condition(player)))
 			player << msg
 
 /datum/language/proc/check_special_condition(var/mob/other)

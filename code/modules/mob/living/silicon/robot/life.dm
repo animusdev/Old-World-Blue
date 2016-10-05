@@ -2,7 +2,7 @@
 	set invisibility = 0
 	set background = 1
 
-	if (src.monkeyizing)
+	if (src.transforming)
 		return
 
 	src.blinded = null
@@ -60,7 +60,7 @@
 			lights_on = 0
 			set_light(0)
 
-/mob/living/silicon/robot/proc/handle_regular_status_updates()
+/mob/living/silicon/robot/handle_regular_status_updates()
 
 	if(src.camera && !scrambledcodes)
 		if(src.stat == 2 || wires.IsIndexCut(BORG_WIRE_CAMERA))
@@ -113,9 +113,9 @@
 
 	src.density = !( src.lying )
 
-	if ((src.sdisabilities & BLIND))
+	if (src.sdisabilities & BLIND)
 		src.blinded = 1
-	if ((src.sdisabilities & DEAF))
+	if (src.sdisabilities & DEAF)
 		src.ear_deaf = 1
 
 	if (src.eye_blurry > 0)
@@ -143,9 +143,9 @@
 
 	return 1
 
-/mob/living/silicon/robot/proc/handle_regular_hud_updates()
+/mob/living/silicon/robot/handle_regular_hud_updates()
 
-	if (src.stat == 2 || XRAY in mutations || src.sight_mode & BORGXRAY)
+	if (src.stat == DEAD || XRAY in mutations || src.sight_mode & BORGXRAY)
 		src.sight |= SEE_TURFS
 		src.sight |= SEE_MOBS
 		src.sight |= SEE_OBJS
@@ -172,7 +172,7 @@
 		src.see_invisible = SEE_INVISIBLE_LIVING // This is normal vision (25), setting it lower for normal vision means you don't "see" things like darkness since darkness
 							 // has a "invisible" value of 15
 
-	regular_hud_updates()
+	..()
 
 	var/obj/item/borg/sight/hud/hud = (locate(/obj/item/borg/sight/hud) in src)
 	if(hud && hud.hud)
@@ -270,7 +270,7 @@
 
 	client.screen.Remove(global_hud.blurry,global_hud.druggy,global_hud.vimpaired)
 
-	if ((src.blind && src.stat != 2))
+	if (src.stat != DEAD)
 		if(src.blinded)
 			src.blind.alpha = 255
 		else
@@ -284,10 +284,9 @@
 			if (src.druggy)
 				src.client.screen += global_hud.druggy
 
-	if (src.stat != 2)
 		if (src.machine)
 			if (src.machine.check_eye(src) < 0)
-				src.reset_view(null)
+				reset_view(null)
 		else
 			if(client && !client.adminobs)
 				reset_view(null)
@@ -313,7 +312,7 @@
 		killswitch_time --
 		if(killswitch_time <= 0)
 			if(src.client)
-				src << "\red <B>Killswitch Activated"
+				src << "<span class='danger'>Killswitch Activated</span>"
 			killswitch = 0
 			spawn(5)
 				gib()
@@ -324,7 +323,7 @@
 		weaponlock_time --
 		if(weaponlock_time <= 0)
 			if(src.client)
-				src << "\red <B>Weapon Lock Timed Out!"
+				src << "<span class='danger'>Weapon Lock Timed Out!</span>"
 			weapon_lock = 0
 			weaponlock_time = 120
 

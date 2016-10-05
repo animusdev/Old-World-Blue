@@ -29,9 +29,9 @@
 			switch(type)
 				if("feet")
 					if(!H.shoes)
-						affecting = H.get_organ(pick("l_leg", "r_leg"))
+						affecting = H.get_organ(pick(BP_L_LEG, BP_R_LEG))
 						H.Weaken(3)
-				if("l_hand", "r_hand")
+				if(BP_L_HAND, BP_R_HAND)
 					if(!H.gloves)
 						affecting = H.get_organ(type)
 						H.Stun(3)
@@ -55,10 +55,7 @@
 			user << "<span class='notice'>You arm [src].</span>"
 		else
 			if(((user.getBrainLoss() >= 60 || (CLUMSY in user.mutations)) && prob(50)))
-				var/which_hand = "l_hand"
-				if(!user.hand)
-					which_hand = "r_hand"
-				triggered(user, which_hand)
+				triggered(user, user.hand ? BP_L_HAND : BP_R_HAND)
 				user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
 									 "<span class='warning'>You accidentally trigger [src]!</span>")
 				return
@@ -71,10 +68,7 @@
 	attack_hand(mob/living/user as mob)
 		if(armed)
 			if(((user.getBrainLoss() >= 60 || CLUMSY in user.mutations)) && prob(50))
-				var/which_hand = "l_hand"
-				if(!user.hand)
-					which_hand = "r_hand"
-				triggered(user, which_hand)
+				triggered(user, user.hand ? BP_L_HAND : BP_R_HAND)
 				user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
 									 "<span class='warning'>You accidentally trigger [src]!</span>")
 				return
@@ -98,7 +92,7 @@
 		if(armed)
 			finder.visible_message("<span class='warning'>[finder] accidentally sets off [src], breaking their fingers.</span>", \
 								   "<span class='warning'>You accidentally trigger [src]!</span>")
-			triggered(finder, finder.hand ? "l_hand" : "r_hand")
+			triggered(finder, finder.hand ? BP_L_HAND : BP_R_HAND)
 			return 1	//end the search!
 		return 0
 

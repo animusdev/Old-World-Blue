@@ -95,7 +95,7 @@ var/global/list/rnwords = list("ire","ego","nahlizet","certum","veri","jatkaa","
 			qdel(src)
 			return
 		else if(istype(I, /obj/item/weapon/nullrod))
-			user << "\blue You disrupt the vile magic with the deadening field of the null rod!"
+			user << "<span class='notice'>You disrupt the vile magic with the deadening field of the null rod!</span>"
 			qdel(src)
 			return
 		return
@@ -171,7 +171,7 @@ var/global/list/rnwords = list("ire","ego","nahlizet","certum","veri","jatkaa","
 			else
 				usr.whisper(pick("Hakkrutju gopoenjim.", "Nherasai pivroiashan.", "Firjji prhiv mazenhor.", "Tanah eh wakantahe.", "Obliyae na oraie.", "Miyf hon vnor'c.", "Wakabai hij fen juswix."))
 			for (var/mob/V in viewers(src))
-				V.show_message("\red The markings pulse with a small burst of light, then fall dark.", 3, "\red You hear a faint fizzle.", 2)
+				V.show_message("<span class='warning'>The markings pulse with a small burst of light, then fall dark.</span>", 3, "<span class='warning'>You hear a faint fizzle.</span>", 2)
 			return
 
 		check_icon()
@@ -344,8 +344,8 @@ var/global/list/rnwords = list("ire","ego","nahlizet","certum","veri","jatkaa","
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used [name] on [M.name] ([M.ckey])</font>")
 		msg_admin_attack("[user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-		if(istype(M,/mob/dead))
-			var/mob/dead/D = M
+		if(isobserver(M))
+			var/mob/observer/dead/D = M
 			D.manifest(user)
 			return
 		if(!istype(M))
@@ -356,8 +356,8 @@ var/global/list/rnwords = list("ire","ego","nahlizet","certum","veri","jatkaa","
 			return
 		M.take_organ_damage(0,rand(5,20)) //really lucky - 5 hits for a crit
 		for(var/mob/O in viewers(M, null))
-			O.show_message(text("\red <B>[] beats [] with the arcane tome!</B>", user, M), 1)
-		M << "\red You feel searing heat inside!"
+			O.show_message("<span class='warning'>\The [user] beats \the [M] with \the [src]!</span>", 1)
+		M << "<span class='danger'>You feel searing heat inside!</span>"
 
 
 	attack_self(mob/living/user as mob)
@@ -372,7 +372,7 @@ var/global/list/rnwords = list("ire","ego","nahlizet","certum","veri","jatkaa","
 			for(var/obj/effect/rune/N in world)
 				C++
 			if (!istype(user.loc,/turf))
-				user << "\red You do not have enough space to write a proper rune."
+				user << "<span class='warning'>You do not have enough space to write a proper rune.</span>"
 				return
 
 			if (C>=26 + runedec + cult.current_antagonists.len) //including the useless rune at the secret room, shouldn't count against the limit of 25 runes - Urist
@@ -534,7 +534,7 @@ var/global/list/rnwords = list("ire","ego","nahlizet","certum","veri","jatkaa","
 				return
 
 			var/obj/effect/rune/R = new /obj/effect/rune(user.loc)
-			if(istype(user, /mob/living/carbon/human))
+			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				R.blood_DNA = list()
 				R.blood_DNA[H.dna.unique_enzymes] = H.dna.b_type

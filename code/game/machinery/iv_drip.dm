@@ -34,7 +34,7 @@
 			overlays += filling
 
 /obj/machinery/iv_drip/MouseDrop(over_object, src_location, over_location)
-	if(!istype(usr, /mob/living/carbon/human)) return
+	if(!ishuman(usr)) return
 	if(in_range(src, usr) && ishuman(over_object) && get_dist(over_object, src) <= 1)
 		if(attached)
 			visible_message("[src.attached] is detached from \the [src]")
@@ -69,7 +69,7 @@
 
 		if(!(get_dist(src, src.attached) <= 1 && isturf(src.attached.loc)))
 			visible_message("The needle is ripped out of [src.attached], doesn't that hurt?")
-			src.attached:apply_damage(3, BRUTE, pick("r_arm", "l_arm"))
+			src.attached:apply_damage(3, BRUTE, pick(BP_R_ARM, BP_L_ARM))
 			src.attached = null
 			src.update_icon()
 			return

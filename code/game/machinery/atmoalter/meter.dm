@@ -69,8 +69,8 @@
 	. = ..()
 	var/t = "A gas flow meter. "
 
-	if(. > 3 && !(istype(user, /mob/living/silicon/ai) || istype(user, /mob/dead)))
-		t += "<span class='notice'>You are too far away to read it.</span>"
+	if(. > 3 && !(istype(user, /mob/living/silicon/ai) || isobserver(user)))
+		t += "<span class='warning'>You are too far away to read it.</span>"
 
 	else if(stat & (NOPOWER|BROKEN))
 		t += "<span class='warning'>The display is off.</span>"

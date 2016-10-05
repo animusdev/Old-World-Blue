@@ -243,8 +243,8 @@
 		processing_objects.Add(src)
 
 	process()
-		var/mob/dead/observer/ghost
-		for(var/mob/dead/observer/O in src.loc)
+		var/mob/observer/dead/ghost
+		for(var/mob/observer/dead/O in src.loc)
 			if(!O.client)	continue
 			if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
 			ghost = O
@@ -255,8 +255,8 @@
 			icon_state = "golem"
 
 	attack_hand(mob/living/user as mob)
-		var/mob/dead/observer/ghost
-		for(var/mob/dead/observer/O in src.loc)
+		var/mob/observer/dead/ghost
+		for(var/mob/observer/dead/O in src.loc)
 			if(!O.client)	continue
 			if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
 			ghost = O
@@ -272,7 +272,7 @@
 
 
 	proc/announce_to_ghosts()
-		for(var/mob/dead/observer/G in player_list)
+		for(var/mob/observer/dead/G in player_list)
 			if(G.client)
 				var/area/A = get_area(src)
 				if(A)

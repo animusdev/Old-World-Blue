@@ -10,10 +10,17 @@
 	var/list/forced_children = null
 
 /obj/item/organ/external/robotic/get_icon()
-	var/body_build = owner ? (owner.body_build) : 0
-	mob_icon = new /icon(force_icon, "[limb_name]_[body_build]")
-	dir = EAST
+	var/gender = "_m"
+	var/body_build = ""
+	if(owner)
+		if(owner.gender == FEMALE)
+			gender = "_f"
+		body_build = owner.body_build.index
+	icon_state = "[organ_tag][gendered ? "[gender]" : ""][body_build]"
+
+	mob_icon = new /icon(force_icon, icon_state)
 	icon = mob_icon
+	dir = SOUTH
 	return mob_icon
 
 /obj/item/organ/external/robotic/Destroy()
@@ -23,7 +30,6 @@
 /obj/item/organ/external/robotic/removed()
 	deactivate(1)
 	..()
-
 
 /obj/item/organ/external/robotic/update_germs()
 	germ_level = 0
@@ -40,8 +46,8 @@
 
 /obj/item/organ/external/robotic/install()
 	..()
-	if(islist(forced_children) && forced_children[limb_name])
-		var/list/spawn_part = forced_children[limb_name]
+	if(islist(forced_children) && forced_children[organ_tag])
+		var/list/spawn_part = forced_children[organ_tag]
 		var/child_type
 		for(var/name in spawn_part)
 			child_type = spawn_part[name]
@@ -58,7 +64,7 @@
 			"<span class='danger'>Your [src.name] explodes!</span>",\
 			"<span class='danger'>You hear an explosion!</span>")
 		explosion(get_turf(src),-1,-1,2,3)
-		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		var/datum/effect/effect/system/spark_spread/spark_system = new
 		spark_system.set_up(5, 0, last_owner)
 		spark_system.attach(last_owner)
 		spark_system.start()
@@ -86,10 +92,10 @@
 	min_broken_damage = 35
 	w_class = 4
 	forced_children = list(
-		"l_arm" = list("l_hand" = /obj/item/organ/external/robotic/enforcer/tiny/hand),
-		"r_arm" = list("r_hand" = /obj/item/organ/external/robotic/enforcer/tiny/hand),
-		"l_leg" = list("l_foot" = /obj/item/organ/external/robotic/enforcer/tiny),
-		"r_leg" = list("r_foot" = /obj/item/organ/external/robotic/enforcer/tiny)
+		BP_L_ARM = list(BP_L_HAND = /obj/item/organ/external/robotic/enforcer/tiny/hand),
+		BP_R_ARM = list(BP_R_HAND = /obj/item/organ/external/robotic/enforcer/tiny/hand),
+		BP_L_LEG = list(BP_L_FOOT = /obj/item/organ/external/robotic/enforcer/tiny),
+		BP_R_LEG = list(BP_R_FOOT = /obj/item/organ/external/robotic/enforcer/tiny)
 		)
 
 /obj/item/organ/external/robotic/enforcer/tiny
@@ -157,10 +163,10 @@
 
 	can_activate()
 		var/obj/item/organ/external/robotic/enforcer/limb/leg/other = null
-		if(body_part == "l_leg")
-			other = owner.organs_by_name["r_leg"]
+		if(body_part == BP_L_LEG)
+			other = owner.organs_by_name[BP_R_LEG]
 		else
-			other = owner.organs_by_name["l_leg"]
+			other = owner.organs_by_name[BP_L_LEG]
 		if(other && istype(other, type))
 			other.slave = src
 			return 0

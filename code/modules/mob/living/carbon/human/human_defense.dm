@@ -25,7 +25,7 @@ emp_act
 	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/armor/laserproof))
 		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 			var/reflectchance = 40 - round(P.damage/3)
-			if(!(def_zone in list("chest", "groin")))
+			if(!(def_zone in list(BP_CHEST, BP_GROIN)))
 				reflectchance /= 2
 			if(prob(reflectchance))
 				visible_message("\red <B>\The [P] gets reflected by \the [src]'s [wear_suit.name]!</B>")
@@ -60,11 +60,11 @@ emp_act
 	agony_amount *= siemens_coeff
 
 	switch (def_zone)
-		if("head")
+		if(BP_HEAD)
 			agony_amount *= 1.50
-		if("l_hand", "r_hand")
+		if(BP_L_HAND, BP_R_HAND)
 			var/c_hand
-			if (def_zone == "l_hand")
+			if (def_zone == BP_L_HAND)
 				c_hand = l_hand
 			else
 				c_hand = r_hand
@@ -264,7 +264,7 @@ emp_act
 
 		if(!stat)
 			switch(hit_area)
-				if("head")//Harder to score a stun but if you do it lasts a bit longer
+				if(BP_HEAD)//Harder to score a stun but if you do it lasts a bit longer
 					if(prob(effective_force))
 						apply_effect(20, PARALYZE, armor)
 						visible_message("\red <B>[src] has been knocked unconscious!</B>")
@@ -279,7 +279,7 @@ emp_act
 							glasses.add_blood(src)
 							update_inv_glasses(0)
 
-				if("chest")//Easier to score a stun but lasts less time
+				if(BP_CHEST)//Easier to score a stun but lasts less time
 					if(prob((effective_force + 10)))
 						apply_effect(6, WEAKEN, armor)
 						visible_message("\red <B>[src] has been knocked down!</B>")
@@ -326,7 +326,7 @@ emp_act
 			var/mob/living/L = O.thrower
 			zone = check_zone(L.zone_sel.selecting)
 		else
-			zone = ran_zone("chest",75)	//Hits a random part of the body, geared towards the chest
+			zone = ran_zone(BP_CHEST,75)	//Hits a random part of the body, geared towards the chest
 
 		//check if we hit
 		var/miss_chance = 15

@@ -48,7 +48,7 @@
 	else
 		M.key = key
 
-	if(subspecies && istype(M,/mob/living/carbon/human))
+	if(subspecies && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.set_species(subspecies)
 

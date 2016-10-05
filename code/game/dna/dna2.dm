@@ -80,7 +80,7 @@ var/global/list/datum/dna/gene/dna_genes[0]
 
 	// From old dna.
 	var/b_type = "A+"  // Should probably change to an integer => string map but I'm lazy.
-	var/body_build = 0
+	var/body_build = "Default"
 	var/real_name          // Stores the real name of the person who originally got this dna datum. Used primarily for changelings,
 
 	// New stuff
@@ -131,7 +131,7 @@ var/global/list/datum/dna/gene/dna_genes[0]
 		character.f_style = "Shaved"
 	var/beard	= facial_hair_styles_list.Find(character.f_style)
 
-	body_build = character.body_build
+	body_build = character.body_build.name
 
 	var/r_part = hex2num(copytext(character.hair_color, 2, 4))
 	var/g_part = hex2num(copytext(character.hair_color, 4, 6))

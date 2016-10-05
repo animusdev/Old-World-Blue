@@ -65,7 +65,10 @@
 /obj/vehicle/train/cargo/trolley/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(open && istype(W, /obj/item/weapon/wirecutters))
 		passenger_allowed = !passenger_allowed
-		user.visible_message("<span class='notice'>[user] [passenger_allowed ? "cuts" : "mends"] a cable in [src].</span>","<span class='notice'>You [passenger_allowed ? "cut" : "mend"] the load limiter cable.</span>")
+		user.visible_message(
+			"<span class='notice'>[user] [passenger_allowed ? "cuts" : "mends"] a cable in [src].</span>",
+			"<span class='notice'>You [passenger_allowed ? "cut" : "mend"] the load limiter cable.</span>"
+		)
 	else
 		..()
 
@@ -146,7 +149,7 @@
 		verbs += /obj/vehicle/train/cargo/engine/verb/stop_engine
 
 /obj/vehicle/train/cargo/RunOver(var/mob/living/carbon/human/H)
-	var/list/parts = list("head", "chest", "l_leg", "r_leg", "l_arm", "r_arm")
+	var/list/parts = list(BP_HEAD, BP_CHEST, BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_R_ARM)
 
 	H.apply_effects(5, 5)
 	for(var/i = 0, i < rand(1,3), i++)
@@ -159,7 +162,7 @@
 /obj/vehicle/train/cargo/engine/RunOver(var/mob/living/carbon/human/H)
 	..()
 
-	if(is_train_head() && istype(load, /mob/living/carbon/human))
+	if(is_train_head() && ishuman(load))
 		var/mob/living/carbon/human/D = load
 		D << "\red \b You ran over [H]!"
 		visible_message("<B>\red \The [src] ran over [H]!</B>")
@@ -187,7 +190,7 @@
 
 /obj/vehicle/train/cargo/engine/examine(mob/user, return_dist=1)
 	.=..()
-	if(.<=1 && istype(usr, /mob/living/carbon/human))
+	if(.<=3)
 		user << "The power light is [on ? "on" : "off"].\nThere are[key ? "" : " no"] keys in the ignition."
 		user << "The charge meter reads [cell? round(cell.percent(), 0.01) : 0]%"
 
@@ -196,7 +199,7 @@
 	set category = "Vehicle"
 	set src in view(0)
 
-	if(!istype(usr, /mob/living/carbon/human))
+	if(!ishuman(usr))
 		return
 
 	if(on)
@@ -217,7 +220,7 @@
 	set category = "Vehicle"
 	set src in view(0)
 
-	if(!istype(usr, /mob/living/carbon/human))
+	if(!ishuman(usr))
 		return
 
 	if(!on)
@@ -233,7 +236,7 @@
 	set category = "Vehicle"
 	set src in view(0)
 
-	if(!istype(usr, /mob/living/carbon/human))
+	if(!ishuman(usr))
 		return
 
 	if(!key || (load && load != usr))
@@ -255,7 +258,9 @@
 /obj/vehicle/train/cargo/trolley/load(var/atom/movable/C)
 	if(ismob(C) && !passenger_allowed)
 		return 0
-	if(!istype(C,/obj/machinery) && !istype(C,/obj/structure/closet) && !istype(C,/obj/structure/largecrate) && !istype(C,/obj/structure/reagent_dispensers) && !istype(C,/obj/structure/ore_box) && !istype(C, /mob/living/carbon/human))
+	if (!istype(C,/obj/machinery) && !istype(C,/obj/structure/closet) && \
+		!istype(C,/obj/structure/largecrate) && !istype(C,/obj/structure/reagent_dispensers) && \
+		!istype(C,/obj/structure/ore_box) && !istype(C))
 		return 0
 
 	//if there are any items you don't want to be able to interact with, add them to this check
@@ -269,7 +274,7 @@
 		return 1
 
 /obj/vehicle/train/cargo/engine/load(var/atom/movable/C)
-	if(!istype(C, /mob/living/carbon/human))
+	if(!ishuman(C))
 		return 0
 
 	return ..()

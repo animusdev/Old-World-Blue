@@ -53,7 +53,6 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/real_name						//our character's name
 	var/random_name = 0					//whether we are a random name every round
 	var/gender = MALE					//gender of character (well duh)
-	var/body_build = 0					//type of char body (sprite pack)
 	var/age = 30						//age of character
 	var/spawnpoint = "Arrivals Shuttle" //where this character will spawn (0-2).
 	var/b_type = "A+"					//blood type (not-chooseable)
@@ -65,6 +64,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/s_tone = 0						//Skin tone
 	var/species = "Human"				//Species name for save file
 	var/datum/species/current_species = null	//Species datum to use
+	var/body = "Default"
 	var/species_preview                 //Used for the species selection window.
 	var/language = "None"				//Secondary language
 	var/list/gear						//Custom/fluff item loadout.
@@ -169,8 +169,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	dat += "<br>"
 
 	dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a><br>"
-	if(gender == FEMALE && current_species.allow_slim_fem)
-		dat += "<b>Body build:</b> <a href='?_src_=prefs;preference=build'><b>[body_build == BODY_DEFAULT ? "Default" : "Slim"]</b></a><br>"
+	dat += "<b>Body build:</b> <a href='?_src_=prefs;preference=build'><b>[body]</b></a><br>"
 	dat += "<b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a><br>"
 	dat += "<b>Spawn Point</b>: <a href='byond://?src=\ref[user];preference=spawnpoint;task=input'>[spawnpoint]</a>"
 
@@ -231,60 +230,61 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		var/status = organ_data[name]
 		var/organ_name = null
 		switch(name)
-			if("l_arm")
+			if(BP_L_ARM)
 				organ_name = "left arm"
-			if("r_arm")
+			if(BP_R_ARM)
 				organ_name = "right arm"
-			if("l_leg")
+			if(BP_L_LEG)
 				organ_name = "left leg"
-			if("r_leg")
+			if(BP_R_LEG)
 				organ_name = "right leg"
-			if("l_foot")
+			if(BP_L_FOOT)
 				organ_name = "left foot"
-			if("r_foot")
+			if(BP_R_FOOT)
 				organ_name = "right foot"
-			if("l_hand")
+			if(BP_L_HAND)
 				organ_name = "left hand"
-			if("r_hand")
+			if(BP_R_HAND)
 				organ_name = "right hand"
-			if("heart")
+			if(O_HEART)
 				organ_name = "heart"
-			if("eyes")
+			if(O_EYES)
 				organ_name = "eyes"
 
-		if(status == "cyborg")
-			++ind
-			if(ind > 1)
-				dat += ", "
-			var/datum/robolimb/R
-			if(rlimb_data[name] && all_robolimbs[rlimb_data[name]])
-				R = all_robolimbs[rlimb_data[name]]
-			else
-				R = basic_robolimb
-			dat += "\t[R.company] [organ_name] prothesis"
-		else if(status == "amputated")
-			++ind
-			if(ind > 1)
-				dat += ", "
-			dat += "\tAmputated [organ_name]"
-		else if(status == "mechanical")
-			++ind
-			if(ind > 1)
-				dat += ", "
-			dat += "\tMechanical [organ_name]"
-		else if(status == "assisted")
-			++ind
-			if(ind > 1)
-				dat += ", "
-			switch(organ_name)
-				if("heart")
-					dat += "\tPacemaker-assisted [organ_name]"
-				if("voicebox") //on adding voiceboxes for speaking skrell/similar replacements
-					dat += "\tSurgically altered [organ_name]"
-				if("eyes")
-					dat += "\tRetinal overlayed [organ_name]"
+		switch(status)
+			if("cyborg")
+				++ind
+				if(ind > 1)
+					dat += ", "
+				var/datum/robolimb/R
+				if(rlimb_data[name] && all_robolimbs[rlimb_data[name]])
+					R = all_robolimbs[rlimb_data[name]]
 				else
-					dat += "\tMechanically assisted [organ_name]"
+					R = basic_robolimb
+				dat += "\t[R.company] [organ_name] prothesis"
+			if("amputated")
+				++ind
+				if(ind > 1)
+					dat += ", "
+				dat += "\tAmputated [organ_name]"
+			if("mechanical")
+				++ind
+				if(ind > 1)
+					dat += ", "
+				dat += "\tMechanical [organ_name]"
+			if("assisted")
+				++ind
+				if(ind > 1)
+					dat += ", "
+				switch(organ_name)
+					if(O_HEART)
+						dat += "\tPacemaker-assisted [organ_name]"
+					if("voicebox") //on adding voiceboxes for speaking skrell/similar replacements
+						dat += "\tSurgically altered [organ_name]"
+					if(O_EYES)
+						dat += "\tRetinal overlayed [organ_name]"
+					else
+						dat += "\tMechanically assisted [organ_name]"
 	if(!ind)
 		dat += "\[...\]<br><br>"
 	else
@@ -638,8 +638,8 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	return
 
 /datum/preferences/proc/SetLimbs(mob/user)
-	var/list/limbs = list("Left Arm"="l_arm", "Left Hand"="l_hand", "Right Arm"="r_arm", "Right Hand"="r_hand",\
-						  "Left Leg"="l_leg", "Left Foot"="l_foot", "Right Leg"="r_leg", "Right Foot"="r_foot")
+	var/list/limbs = list("Left Arm"=BP_L_ARM, "Left Hand"=BP_L_HAND, "Right Arm"=BP_R_ARM, "Right Hand"=BP_R_HAND,\
+						  "Left Leg"=BP_L_LEG, "Left Foot"=BP_L_FOOT, "Right Leg"=BP_R_LEG, "Right Foot"=BP_R_FOOT)
 	var/list/states = list("Normal"=null,"Amputated"="amputated","Prothesis"="cyborg")
 	var/HTML = "<body>"
 	HTML += "<tt><center>"
@@ -662,9 +662,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	return
 
 /datum/preferences/proc/SetTattoo(mob/user)
-	var/list/limbs = list("Head"="head", "Chest"="chest", "Back" = "chest2", "Groin"="groin",\
-						  "Left Arm"="l_arm", "Left Hand"="l_hand", "Right Arm"="r_arm", "Right Hand"="r_hand",\
-						  "Left Leg"="l_leg", "Left Foot"="l_foot", "Right Leg"="r_leg", "Right Foot"="r_foot")
+	var/list/limbs = list("Head"=BP_HEAD, "Chest"=BP_CHEST, "Back" = "chest2", "Groin"=BP_GROIN,\
+						  "Left Arm"=BP_L_ARM, "Left Hand"=BP_L_HAND, "Right Arm"=BP_R_ARM, "Right Hand"=BP_R_HAND,\
+						  "Left Leg"=BP_L_LEG, "Left Foot"=BP_L_FOOT, "Right Leg"=BP_R_LEG, "Right Foot"=BP_R_FOOT)
 	var/HTML = "<body>"
 	HTML += "<tt><center>"
 	HTML += "<b>Set Tattoo State</b> <hr />"
@@ -931,7 +931,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 				var/msg = input(usr,"Set the default flavour text for your robot. It will be used for any module without individual setting.","Flavour Text",rhtml_decode(flavour_texts_robot["Default"])) as message
 				flavour_texts_robot[href_list["task"]] = post_edit_utf8(sanitize(msg, extra = 0))
 			else
-				var/msg = input(usr,"Set the flavour text for your robot with [href_list["task"]] module. If you leave this empty, default flavour text will be used for this module.","Flavour Text",rhtml_decode(flavour_texts_robot[href_list["task"]])) as message
+				var/msg = input(usr,\
+					"Set the flavour text for your robot with [href_list["task"]] module. If you leave this empty, default flavour text will be used for this module.",\
+					"Flavour Text",rhtml_decode(flavour_texts_robot[href_list["task"]])) as message
 				flavour_texts_robot[href_list["task"]] = post_edit_utf8(sanitize(msg, extra = 0))
 		SetFlavourTextRobot(user)
 		return
@@ -1050,7 +1052,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 				if("name")
 					real_name = random_name(gender,species)
 				if("age")
-					age = rand(AGE_MIN, AGE_MAX)
+					age = rand(current_species.min_age, current_species.max_age)
 				if("hair")
 					hair_color = rgb(rand(0,255), rand(0,255), rand(0,255))
 				if("h_style")
@@ -1092,9 +1094,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 							user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
 
 				if("age")
-					var/new_age = input(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
+					var/new_age = input(user, "Choose your character's age:\n([current_species.min_age]-[current_species.max_age])", "Character Preference") as num|null
 					if(new_age)
-						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
+						age = max(min( round(text2num(new_age)), current_species.max_age),current_species.min_age)
 
 				if("species")
 					user << browse(null, "window=species")
@@ -1102,7 +1104,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					species = href_list["newspecies"]
 					if(prev_species != species)
 						current_species = all_species[species_preview]
-						if(!current_species.allow_slim_fem) body_build = BODY_DEFAULT
+						sanitize_body_build()
 
 						//grab one of the valid hair styles for the newly chosen species
 						var/list/valid_hairstyles = list()
@@ -1260,7 +1262,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						backbag = backbaglist.Find(new_backbag)
 
 				if("nt_relation")
-					var/new_relation = input(user, "Choose your relation to NT. Note that this represents what others can find out about your character by researching your background, not what your character actually thinks.", "Character Preference")  as null|anything in list("Loyal", "Supportive", "Neutral", "Skeptical", "Opposed")
+					var/new_relation = input(user, \
+						"Choose your relation to NT. Note that this represents what others can find out about your character by researching your background, not what your character actually thinks.",\
+						"Character Preference")  as null|anything in list("Loyal", "Supportive", "Neutral", "Skeptical", "Opposed")
 					if(new_relation)
 						nanotrasen_relation = new_relation
 
@@ -1311,29 +1315,29 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					var/third_limb = null  // if you try to unchange the hand, the arm should also change
 					switch(limb_name)
 						if("Left Leg")
-							limb = "l_leg"
-							second_limb = "l_foot"
+							limb = BP_L_LEG
+							second_limb = BP_L_FOOT
 						if("Right Leg")
-							limb = "r_leg"
-							second_limb = "r_foot"
+							limb = BP_R_LEG
+							second_limb = BP_R_FOOT
 						if("Left Arm")
-							limb = "l_arm"
-							second_limb = "l_hand"
+							limb = BP_L_ARM
+							second_limb = BP_L_HAND
 						if("Right Arm")
-							limb = "r_arm"
-							second_limb = "r_hand"
+							limb = BP_R_ARM
+							second_limb = BP_R_HAND
 						if("Left Foot")
-							limb = "l_foot"
-							third_limb = "l_leg"
+							limb = BP_L_FOOT
+							third_limb = BP_L_LEG
 						if("Right Foot")
-							limb = "r_foot"
-							third_limb = "r_leg"
+							limb = BP_R_FOOT
+							third_limb = BP_R_LEG
 						if("Left Hand")
-							limb = "l_hand"
-							third_limb = "l_arm"
+							limb = BP_L_HAND
+							third_limb = BP_L_ARM
 						if("Right Hand")
-							limb = "r_hand"
-							third_limb = "r_arm"
+							limb = BP_R_HAND
+							third_limb = BP_R_ARM
 
 					switch(new_state)
 						if("Normal")
@@ -1372,9 +1376,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					var/organ = null
 					switch(organ_name)
 						if("Heart")
-							organ = "heart"
+							organ = O_HEART
 						if("Eyes")
-							organ = "eyes"
+							organ = O_EYES
 
 					var/new_state = input(user, "What state do you wish the organ to be in?") as null|anything in list("Normal","Assisted","Mechanical")
 					if(!new_state) return
@@ -1468,13 +1472,11 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						gender = FEMALE
 					else
 						gender = MALE
-						body_build = 0
+					sanitize_body_build()
 
 				if("build")
-					if(body_build == BODY_DEFAULT && current_species.allow_slim_fem)
-						body_build = BODY_SLIM
-					else
-						body_build = BODY_DEFAULT
+					body = next_in_list(body, get_body_build_list(gender, current_species.body_builds))
+					req_update_icon = 1
 
 				if("disabilities")				//please note: current code only allows nearsightedness as a disability
 					disabilities = !disabilities//if you want to add actual disabilities, code that selects them should be here
@@ -1577,7 +1579,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	character.exploit_record = exploit_record
 
 	character.gender = gender
-	character.body_build = (current_species.allow_slim_fem && gender == FEMALE) ? body_build : 0
+	character.body_build = get_body_build(gender, body)
 	character.age = age
 	character.b_type = b_type
 

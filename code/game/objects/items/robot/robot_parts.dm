@@ -92,8 +92,10 @@
 		src.overlays += "head+o"
 
 /obj/item/robot_parts/robot_suit/proc/check_completion()
-	if(src.l_arm && src.r_arm && src.l_leg && src.r_leg && src.chest && src.head)
-		return 1
+	if(src.l_arm && src.r_arm)
+		if(src.l_leg && src.r_leg)
+			if(src.chest && src.head)
+				return 1
 	return 0
 
 /obj/item/robot_parts/robot_suit/attackby(obj/item/W as obj, mob/user as mob)
@@ -146,9 +148,9 @@
 			src.chest = W
 			src.updateicon()
 		else if(!W:wires)
-			user << "\blue You need to attach wires to it first!"
+			user << "<span class='warning'>You need to attach wires to it first!</span>"
 		else
-			user << "\blue You need to attach a cell to it first!"
+			user << "<span class='warning'>You need to attach a cell to it first!</span>"
 
 	if(istype(W, /obj/item/robot_parts/head))
 		if(src.head)	return
@@ -158,21 +160,21 @@
 			src.head = W
 			src.updateicon()
 		else
-			user << "\blue You need to attach a flash to it first!"
+			user << "<span class='warning'>You need to attach a flash to it first!</span>"
 
 	if(istype(W, /obj/item/device/mmi))
 		var/obj/item/device/mmi/M = W
 		if(check_completion())
 			if(!istype(loc,/turf))
-				user << "\red You can't put \the [W] in, the frame has to be standing on the ground to be perfectly precise."
+				user << "<span class='warning'>You can't put \the [W] in, the frame has to be standing on the ground to be perfectly precise.</span>"
 				return
 			if(!M.brainmob)
-				user << "\red Sticking an empty [W] into the frame would sort of defeat the purpose."
+				user << "<span class='warning'>Sticking an empty [W] into the frame would sort of defeat the purpose.</span>"
 				return
 			if(!M.brainmob.key)
 				var/ghost_can_reenter = 0
 				if(M.brainmob.mind)
-					for(var/mob/dead/observer/G in player_list)
+					for(var/mob/observer/dead/G in player_list)
 						if(G.can_reenter_corpse && G.mind == M.brainmob.mind)
 							ghost_can_reenter = 1
 							break
@@ -181,11 +183,11 @@
 					return
 
 			if(M.brainmob.stat == DEAD)
-				user << "\red Sticking a dead [W] into the frame would sort of defeat the purpose."
+				user << "<span class='warning'>Sticking a dead [W] into the frame would sort of defeat the purpose.</span>"
 				return
 
 			if(jobban_isbanned(M.brainmob, "Cyborg"))
-				user << "\red This [W] does not seem to fit."
+				user << "<span class='warning'>This [W] does not seem to fit.</span>"
 				return
 
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc), unfinished = 1)
@@ -220,7 +222,7 @@
 
 			qdel(src)
 		else
-			user << "\blue The MMI must go in after everything else!"
+			user << "<span class='warning'>The MMI must go in after everything else!</span>"
 
 	if (istype(W, /obj/item/weapon/pen))
 		var/t = sanitizeSafe(input(user, "Enter new robot name", src.name, src.created_name), MAX_NAME_LEN)
@@ -237,22 +239,22 @@
 	..()
 	if(istype(W, /obj/item/weapon/cell))
 		if(src.cell)
-			user << "\blue You have already inserted a cell!"
+			user << "<span class='warning'>You have already inserted a cell!</span>"
 			return
 		else
 			user.drop_item()
 			W.loc = src
 			src.cell = W
-			user << "\blue You insert the cell!"
+			user << "<span class='notice'>You insert the cell!</span>"
 	if(istype(W, /obj/item/stack/cable_coil))
 		if(src.wires)
-			user << "\blue You have already inserted wire!"
+			user << "<span class='warning'>You have already inserted wire!</span>"
 			return
 		else
 			var/obj/item/stack/cable_coil/coil = W
 			coil.use(1)
 			src.wires = 1.0
-			user << "\blue You insert the wire!"
+			user << "<span class='notice'>You insert the wire!</span>"
 	return
 
 /obj/item/robot_parts/head/attackby(obj/item/W as obj, mob/user as mob)
@@ -268,7 +270,7 @@
 		else
 			add_flashes(W,user)
 	else if(istype(W, /obj/item/weapon/stock_parts/manipulator))
-		user << "\blue You install some manipulators and modify the head, creating a functional spider-bot!"
+		user << "<span class='notice'>You install some manipulators and modify the head, creating a functional spider-bot!</span>"
 		new /mob/living/simple_animal/spiderbot(get_turf(loc))
 		user.drop_item()
 		qdel(W)

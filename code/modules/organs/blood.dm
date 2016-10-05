@@ -35,7 +35,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			B.color = B.data["blood_colour"]
 
 // Takes care blood loss and regeneration
-/mob/living/carbon/human/proc/handle_blood()
+/mob/living/carbon/human/handle_blood()
+	if(in_stasis)
+		return
 
 	if(species && species.flags & NO_BLOOD)
 		return
@@ -60,8 +62,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 		// Damaged heart virtually reduces the blood volume, as the blood isn't
 		// being pumped properly anymore.
-		if(species && species.has_organ["heart"])
-			var/obj/item/organ/internal/heart/heart = internal_organs_by_name["heart"]
+		if(species && species.has_organ[O_HEART])
+			var/obj/item/organ/internal/heart/heart = internal_organs_by_name[O_HEART]
 
 			if(!heart)
 				blood_volume = 0
@@ -133,22 +135,18 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		drip(blood_max)
 
 //Makes a blood drop, leaking amt units of blood from the mob
-/mob/living/carbon/human/proc/drip(var/amt as num)
+/mob/living/carbon/human/proc/drip(var/amt)
+	if(remove_blood(amt))
+		blood_splatter(src,src)
 
-	if(!isturf(loc))	//No drips, if we are in closet, or disposal pipe or anywhere else, but not on the floor
-		return
-
-	if(istype(loc, /turf/space))	//No drips in space
-		return
-
+/mob/living/carbon/human/proc/remove_blood(var/amt)
 	if(species && species.flags & NO_BLOOD) //TODO: Make drips come from the reagents instead.
-		return
+		return 0
 
 	if(!amt)
-		return
+		return 0
 
 	vessel.remove_reagent("blood",amt)
-	blood_splatter(src,src)
 
 /****************************************************
 				BLOOD TRANSFERS
@@ -177,7 +175,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	B.data["blood_type"] = copytext(src.dna.b_type,1,0)
 
 	// Putting this here due to return shenanigans.
-	if(istype(src,/mob/living/carbon/human))
+	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		B.data["blood_colour"] = H.species.blood_color
 		B.color = B.data["blood_colour"]
@@ -276,7 +274,7 @@ proc/blood_splatter(var/target,var/datum/reagent/blood/source,var/large)
 	var/decal_type = /obj/effect/decal/cleanable/blood/splatter
 	var/turf/T = get_turf(target)
 
-	if(istype(source,/mob/living/carbon/human))
+	if(ishuman(source))
 		var/mob/living/carbon/human/M = source
 		source = M.get_blood(M.vessel)
 

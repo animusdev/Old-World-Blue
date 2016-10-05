@@ -56,7 +56,7 @@
 				handle_movement_target()
 
 	if(prob(2)) //spooky
-		var/mob/dead/observer/spook = locate() in range(src,5)
+		var/mob/observer/dead/spook = locate() in range(src,5)
 		if(spook)
 			var/turf/T = spook.loc
 			var/list/visible = list()
@@ -155,7 +155,7 @@
 		var/current_dist = get_dist(src, friend)
 
 		if (movement_target != friend)
-			if (current_dist > follow_dist && !istype(movement_target, /mob/living/simple_animal/mouse) && (friend in oview(src)))
+			if (current_dist > follow_dist && !ismouse(movement_target) && (friend in oview(src)))
 				//stop existing movement
 				walk_to(src,0)
 				turns_since_scan = 0

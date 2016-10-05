@@ -102,17 +102,17 @@ var/global/photo_count = 0
 
 /obj/item/weapon/storage/photo_album/MouseDrop(obj/over_object as obj)
 
-	if((istype(usr, /mob/living/carbon/human)))
+	if(ishuman(usr))
 		var/mob/M = usr
 		if(!( istype(over_object, /obj/screen) ))
 			return ..()
 		playsound(loc, "rustle", 50, 1, -5)
 		if((!( M.restrained() ) && !( M.stat ) && M.back == src))
 			switch(over_object.name)
-				if("r_hand")
+				if(BP_R_HAND)
 					M.u_equip(src)
 					M.put_in_r_hand(src)
-				if("l_hand")
+				if(BP_L_HAND)
 					M.u_equip(src)
 					M.put_in_l_hand(src)
 			add_fingerprint(usr)

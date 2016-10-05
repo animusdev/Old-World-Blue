@@ -16,7 +16,7 @@
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		if(!affected) return
-		var/obj/item/organ/internal/brain/sponge = target.internal_organs_by_name["brain"]
+		var/obj/item/organ/internal/brain/sponge = target.internal_organs_by_name[O_BRAIN]
 		return (sponge && sponge.damage > 0 && sponge.damage <= 20) && affected.open == 3
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -27,14 +27,14 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\blue [user] takes out all the bone chips in [target]'s brain with \the [tool].",	\
 		"\blue You take out all the bone chips in [target]'s brain with \the [tool].")
-		var/obj/item/organ/internal/brain/sponge = target.internal_organs_by_name["brain"]
+		var/obj/item/organ/internal/brain/sponge = target.internal_organs_by_name[O_BRAIN]
 		if (sponge)
 			sponge.damage = 0
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\red [user]'s hand slips, jabbing \the [tool] in [target]'s brain!", \
 		"\red Your hand slips, jabbing \the [tool] in [target]'s brain!")
-		target.apply_damage(30, BRUTE, "head", 1, sharp=1)
+		target.apply_damage(30, BRUTE, BP_HEAD, 1, sharp=1)
 
 /datum/surgery_step/brain/hematoma
 	allowed_tools = list(
@@ -49,7 +49,7 @@
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		if(!affected) return
-		var/obj/item/organ/internal/brain/sponge = target.internal_organs_by_name["brain"]
+		var/obj/item/organ/internal/brain/sponge = target.internal_organs_by_name[O_BRAIN]
 		return (sponge && sponge.damage > 20) && affected.open == 3
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -60,11 +60,11 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\blue [user] mends hematoma in [target]'s brain with \the [tool].",	\
 		"\blue You mend hematoma in [target]'s brain with \the [tool].")
-		var/obj/item/organ/internal/brain/sponge = target.internal_organs_by_name["brain"]
+		var/obj/item/organ/internal/brain/sponge = target.internal_organs_by_name[O_BRAIN]
 		if (sponge)
 			sponge.damage = 20
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("\red [user]'s hand slips, bruising [target]'s brain with \the [tool]!", \
 		"\red Your hand slips, bruising [target]'s brain with \the [tool]!")
-		target.apply_damage(20, BRUTE, "head", 1, sharp=1)
+		target.apply_damage(20, BRUTE, BP_HEAD, 1, sharp=1)

@@ -17,9 +17,9 @@
 /datum/disease/appendicitis/stage_act()
 	..()
 
-	if(istype(affected_mob,/mob/living/carbon/human))
+	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/H = affected_mob
-		if(!H.internal_organs_by_name["appendix"])
+		if(!H.internal_organs_by_name[O_APPENDIX])
 			src.cure()
 
 	if(stage == 1)
@@ -46,7 +46,7 @@
 			H << "\red Your abdomen is a world of pain!"
 			H.Weaken(10)
 
-			var/obj/item/organ/external/groin = H.get_organ("groin")
+			var/obj/item/organ/external/groin = H.get_organ(BP_GROIN)
 			var/datum/wound/W = new /datum/wound/internal_bleeding(20)
 			H.adjustToxLoss(25)
 			groin.wounds += W
