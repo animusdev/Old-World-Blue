@@ -864,17 +864,10 @@ var/list/admin_verbs_mentor = list(
 	if (new_gender)
 		if(new_gender == "Male")
 			M.gender = MALE
-			M.body_build = 0
 		else
 			M.gender = FEMALE
-			if(!S.allow_slim_fem)
-				M.body_build = 0
-			else // If slim body allowed
-				var/new_body_build = alert(usr, "Please select body build.", "Character body build", "Default", "Slim")
-				if (new_body_build == "Slim")
-					M.body_build = 1
-				else
-					M.body_build = 0
+
+	// TODO: Body_build
 
 	M.dna.ResetUIFrom(M)
 	M.dna.real_name = M.real_name

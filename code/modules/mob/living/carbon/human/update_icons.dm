@@ -245,7 +245,7 @@ var/global/list/damage_icon_parts = list()
 	var/skeleton = (SKELETON in src.mutations)
 
 	var/g = (gender == FEMALE ? "f" : "m")
-	g += "[body_build]"
+	g += body_build.index
 
 	//CACHING: Generate an index key from visible bodyparts.
 	//0 = destroyed, 1 = normal, 2 = robotic, 3 = mutated, 4 = necrotic.
