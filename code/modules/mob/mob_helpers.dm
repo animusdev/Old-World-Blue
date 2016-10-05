@@ -27,9 +27,6 @@
 /mob/proc/isSynthetic()
 	return 0
 
-/mob/living/carbon/human/isSynthetic()
-	return species.flags & IS_SYNTHETIC
-
 /mob/living/silicon/isSynthetic()
 	return 1
 

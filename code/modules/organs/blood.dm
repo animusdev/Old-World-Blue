@@ -35,7 +35,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			B.color = B.data["blood_colour"]
 
 // Takes care blood loss and regeneration
-/mob/living/carbon/human/proc/handle_blood()
+/mob/living/carbon/human/handle_blood()
+	if(in_stasis)
+		return
 
 	if(species && species.flags & NO_BLOOD)
 		return
@@ -133,22 +135,18 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		drip(blood_max)
 
 //Makes a blood drop, leaking amt units of blood from the mob
-/mob/living/carbon/human/proc/drip(var/amt as num)
+/mob/living/carbon/human/proc/drip(var/amt)
+	if(remove_blood(amt))
+		blood_splatter(src,src)
 
-	if(!isturf(loc))	//No drips, if we are in closet, or disposal pipe or anywhere else, but not on the floor
-		return
-
-	if(istype(loc, /turf/space))	//No drips in space
-		return
-
+/mob/living/carbon/human/proc/remove_blood(var/amt)
 	if(species && species.flags & NO_BLOOD) //TODO: Make drips come from the reagents instead.
-		return
+		return 0
 
 	if(!amt)
-		return
+		return 0
 
 	vessel.remove_reagent("blood",amt)
-	blood_splatter(src,src)
 
 /****************************************************
 				BLOOD TRANSFERS

@@ -27,6 +27,9 @@
 	pixel_y		= -3
 	w_class		= 3
 
+
+
+
 	var/obj/machinery/computer3/laptop/stored_computer = null
 
 	verb/open_computer()
