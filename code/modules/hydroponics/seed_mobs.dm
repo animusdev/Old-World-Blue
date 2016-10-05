@@ -24,7 +24,7 @@
 
 /datum/seed/proc/request_player(var/mob/living/host)
 	if(!host) return
-	for(var/mob/dead/observer/O in player_list)
+	for(var/mob/observer/dead/O in player_list)
 		if(jobban_isbanned(O, "Dionaea"))
 			continue
 		if(O.client && O.MayRespawn())
@@ -35,11 +35,11 @@
 /datum/seed/proc/question(var/client/C,var/mob/living/host)
 	spawn(0)
 
-		if(!C || !host || !(C.mob && istype(C.mob,/mob/dead))) return // We don't want to spam them repeatedly if they're already in a mob.
+		if(!C || !host || !(C.mob && isobserver(C.mob))) return // We don't want to spam them repeatedly if they're already in a mob.
 
 		var/response = alert(C, "Someone is harvesting [display_name]. Would you like to play as one?", "Sentient plant harvest", "Yes", "No", "Never for this round")
 
-		if(!C || !host || !(C.mob && istype(C.mob,/mob/dead))) return // ...or accidentally accept an invalid argument for transfer.
+		if(!C || !host || !(C.mob && isobserver(C.mob))) return // ...or accidentally accept an invalid argument for transfer.
 
 		if(response == "Yes")
 			transfer_personality(C,host)

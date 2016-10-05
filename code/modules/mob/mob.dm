@@ -358,7 +358,7 @@
 		if(src.client)
 			is_admin = check_rights(0, 0)
 		var/deathtime = world.time - src.timeofdeath
-		if(!is_admin && istype(src,/mob/observer/dead))
+		if(!is_admin && isobserver(src))
 			var/mob/observer/dead/G = src
 			if(G.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
 				usr << "\blue <B>Upon using the antagHUD you forfeighted the ability to join the round.</B>"

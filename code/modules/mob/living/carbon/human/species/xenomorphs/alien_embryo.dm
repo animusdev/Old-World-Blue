@@ -125,7 +125,7 @@
 
 		if(ishuman(affected_mob) && affected_mob.stat == DEAD)
 			return
-		for(var/mob/dead/observer/G in player_list)
+		for(var/mob/observer/dead/G in player_list)
 			if(G)
 				if(G.client)
 					if(G.client.prefs.be_special & BE_ALIEN)

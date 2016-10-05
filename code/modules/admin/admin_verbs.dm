@@ -381,7 +381,7 @@ var/list/admin_verbs_mentor = list(
 	set category = "Admin"
 	set name = "Aghost"
 	if(!holder)	return
-	if(istype(mob,/mob/observer/dead))
+	if(isobserver(mob))
 		//re-enter
 		var/mob/observer/dead/ghost = mob
 		if(!is_mentor(usr.client))
