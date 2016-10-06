@@ -221,6 +221,9 @@
 	if(fire_stacks < 0)
 		fire_stacks = min(0, ++fire_stacks) //If we've doused ourselves in water to avoid fire, dry off slowly
 
+	if(fire_stacks > 0)
+		fire_stacks = max(0, (fire_stacks-0.1))	//Should slowly burn out
+
 	if(!on_fire)
 		return 1
 	else if(fire_stacks <= 0)
