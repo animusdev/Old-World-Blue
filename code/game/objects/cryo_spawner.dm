@@ -7,7 +7,14 @@
 	anchored = 1
 	var/player_spawn = 0
 
+
+
 /obj/cryo_spawner/attack_ghost(mob/observer/dead/user as mob)
+
+	if(!ticker || ticker.current_state!=GAME_STATE_PLAYING)
+		alert("Noway, bugogosse")
+		return 0
+
 	var/mob/living/carbon/human/new_character
 	if(!user) return
 	var/is_admin = check_rights(show_msg = player_spawn)
