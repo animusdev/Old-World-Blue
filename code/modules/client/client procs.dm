@@ -181,6 +181,10 @@
 
 
 
+/client/proc/last_activity_seconds()
+	return inactivity / 10
+
+
 	//////////////
 	//DISCONNECT//
 	//////////////
