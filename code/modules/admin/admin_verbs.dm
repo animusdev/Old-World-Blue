@@ -15,6 +15,7 @@ var/list/admin_verbs_default = list(
 	)
 var/list/admin_verbs_admin = list(
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
+/datum/admins/proc/paralyze_mob,
 	/client/proc/invisimin,				/*allows our mob to go invisible/visible*/
 //	/datum/admins/proc/show_traitor_panel,	/*interface which shows a mob's mind*/ -Removed due to rare practical use. Moved to debug verbs ~Errorage
 	/datum/admins/proc/show_game_mode,  /*Configuration window for the current game mode.*/
@@ -1049,3 +1050,23 @@ var/list/admin_verbs_mentor = list(
 	T.spell_list += new S
 	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].")
 	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the spell [S].", 1)
+
+
+
+/datum/admins/proc/paralyze_mob(mob/living/carbon/human/H as mob)
+	set category = "Admin"
+	set name = "Toggle Paralyze"
+	set desc = "Paralyzes a player. Or unparalyses them."
+
+	var/msg
+
+	if(check_rights(R_ADMIN|R_MOD))
+		if (H.paralysis == 0)
+			H.paralysis = 1000
+			msg = "has paralyzed [key_name(H)]."
+		else
+			H.paralysis = 0
+			msg = "has unparalyzed [key_name(H)]."
+		message_admins(msg)
+		log_admin(msg)
+
