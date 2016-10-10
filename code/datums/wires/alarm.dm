@@ -91,3 +91,19 @@ var/const/AALARM_WIRE_AALARM = 16
 			if (A.alarm_area.atmosalert(0, A))
 				A.post_alert(0)
 			A.update_icon()
+
+
+/datum/wires/alarm/SolveWireFunction(var/function)
+	var/sf = ""
+	switch(function)
+		if(AALARM_WIRE_IDSCAN)
+			sf = "ID wire"
+		if(AALARM_WIRE_POWER)
+			sf = "Power wire"
+		if(AALARM_WIRE_SYPHON)
+			sf = "Syphon wire"
+		if(AALARM_WIRE_AI_CONTROL)
+			sf = "AI Control wire"
+		if(AALARM_WIRE_AALARM)
+			sf = "Alarm wire"
+	return sf

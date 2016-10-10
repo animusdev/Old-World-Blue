@@ -88,6 +88,9 @@
 				if("Engine Technician")
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/engine_tech(H), slot_w_uniform)
 				if("Electrician")
+					H.mind.store_memory(all_solved_wires[/obj/machinery/door/airlock])
+					H.mind.store_memory(all_solved_wires[/obj/machinery/power/apc])
+					H.mind.store_memory(all_solved_wires[/obj/machinery/alarm])
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/electrician(H), slot_w_uniform)
 		return ..()
 

@@ -9,6 +9,9 @@ var/list/same_wires = list()
 // 14 colours, if you're adding more than 14 wires then add more colours here
 var/list/wireColours = list("red", "blue", "green", "darkred", "orange", "brown", "gold", "gray", "cyan", "navy", "purple", "pink", "black", "yellow")
 
+
+var/global/all_solved_wires = list() //Solved wire associative list, eg; all_solved_wires[/obj/machinery/door/airlock]
+
 /datum/wires
 
 	var/random = 0 // Will the wires be different for every single instance.
@@ -45,6 +48,8 @@ var/list/wireColours = list("red", "blue", "green", "darkred", "orange", "brown"
 		else
 			var/list/wires = same_wires[holder_type]
 			src.wires = wires // Reference the wires list.
+
+		all_solved_wires[holder_type] = SolveWires()
 
 /datum/wires/proc/GenerateWires()
 	var/list/colours_to_pick = wireColours.Copy() // Get a copy, not a reference.
@@ -304,3 +309,54 @@ var/const/POWER = 8
 /datum/wires/proc/Shuffle()
 	wires_status = 0
 	GenerateWires()
+
+
+
+
+/datum/wires/proc/SolveWireFunction(var/WireFunction)
+	return WireFunction //Default returns the original number, so it still "works"
+
+//
+//Works out a name by the type of the holder
+//To "Pretty" up the SolveWires() output
+//
+
+/datum/wires/proc/name_by_type()
+	var/name_by_type
+
+	if(istype(src, /datum/wires/airlock))
+		name_by_type = "Airlock"
+	else if(istype(src, /datum/wires/apc))
+		name_by_type = "APC"
+	else if(istype(src, /datum/wires/alarm))
+		name_by_type = "Air alarm"
+	else if(istype(src, /datum/wires/robot))
+		name_by_type = "Cyborg"
+	else if(istype(src, /datum/wires/camera))
+		name_by_type = "Camera"
+	else
+		name_by_type = "Unknown"
+	return name_by_type
+
+//
+//Decipher colours and function of wires into a text string
+//
+
+/datum/wires/proc/SolveWires()
+	var/list/unsolved_wires = wires.Copy()
+	var/colour_function
+	var/solved_colour_function
+
+	var/name_by_type = name_by_type()
+
+	var/solved_txt = "[name_by_type] wires:<br>"
+
+	for(var/colour in wireColours) //Eg: Red
+		if(unsolved_wires[colour]) //unsolved_wires[red]
+			colour_function = unsolved_wires[colour] //unsolved_wires[red] = 1 so colour_index = 1
+			solved_colour_function = SolveWireFunction(colour_function) //unsolved_wires[red] = 1, 1 = AIRLOCK_WIRE_IDSCAN
+			solved_txt += "the [colour] wire is the [solved_colour_function]<br>" //the red wire is the ID wire
+
+	solved_txt += "<br>"
+
+	return solved_txt
