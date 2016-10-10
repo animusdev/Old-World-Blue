@@ -1,6 +1,8 @@
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
+	w_class = 3.0
+
 	var/tmp/image/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
 	var/tmp/abstract = 0
 	var/r_speed = 1.0
@@ -8,7 +10,6 @@
 	var/burn_point = null
 	var/burning = null
 	var/hitsound = null
-	var/w_class = 3.0
 	var/tmp/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	var/no_attack_log = 0			//If it's an item we don't want to log attack_logs with, set this to 1
 	pass_flags = PASSTABLE
@@ -68,11 +69,11 @@
 
 //Checks if the item is being held by a mob, and if so, updates the held icons
 /obj/item/proc/update_held_icon()
-	if(ismob(src.loc))
-		var/mob/M = src.loc
+	if(isliving(src.loc))
+		var/mob/living/M = src.loc
 		if(M.l_hand == src)
 			M.update_inv_l_hand()
-		if(M.r_hand == src)
+		else if(M.r_hand == src)
 			M.update_inv_r_hand()
 
 /obj/item/ex_act(severity)
@@ -138,8 +139,11 @@
 	if (hasorgans(user))
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/external/temp = H.get_organ(user.hand ? BP_L_HAND : BP_R_HAND)
-		if(temp && !temp.is_usable())
-			user << "<span class='notice'>You try to move your [temp.name], but cannot!"
+		if(!temp)
+			user << "<span class='notice'>You try to use your hand, but realize it is no longer attached!</span>"
+			return
+		if(!temp.is_usable())
+			user << "<span class='notice'>You try to move your [temp.name], but cannot!</span>"
 			return
 	src.pickup(user)
 	if (istype(src.loc, /obj/item/weapon/storage))
@@ -192,7 +196,7 @@
 					else if(success)
 						user << "<span class='notice'>You put some things in [S].</span>"
 					else
-						user << "<span class='notice'>You fail to pick anything up with [S].</span>"
+						user << "<span class='notice'>You fail to pick anything up with \the [S].</span>"
 
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
@@ -362,27 +366,25 @@ var/list/global/slot_flags_enumeration = list(
 	set category = "Object"
 	set name = "Pick up"
 
-	if(!(usr)) //BS12 EDIT
+	if(!usr) //BS12 EDIT
 		return
 	if(!usr.canmove || usr.stat || usr.restrained() || !Adjacent(usr))
 		return
 	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))//Is humanoid, and is not a brain
-		usr << "\red You can't pick things up!"
+		usr << "<span class='warning'>You can't pick things up!</span>"
 		return
+	var/mob/living/carbon/C = usr
 	if( usr.stat || usr.restrained() )//Is not asleep/dead and is not restrained
-		usr << "\red You can't pick things up!"
+		usr << "<span class='warning'>You can't pick things up!</span>"
 		return
 	if(src.anchored) //Object isn't anchored
-		usr << "\red You can't pick that up!"
+		usr << "<span class='warning'>You can't pick that up!</span>"
 		return
-	if(!usr.hand && usr.r_hand) //Right hand is not full
-		usr << "\red Your right hand is full."
-		return
-	if(usr.hand && usr.l_hand) //Left hand is not full
-		usr << "\red Your left hand is full."
+	if(C.get_active_hand()) //Hand is not full
+		usr << "<span class='warning'>Your hand is full.</span>"
 		return
 	if(!istype(src.loc, /turf)) //Object is on a turf
-		usr << "\red You can't pick that up!"
+		usr << "<span class='warning'>You can't pick that up!</span>"
 		return
 	//All checks are done, time to pick it up!
 	usr.UnarmedAttack(src)

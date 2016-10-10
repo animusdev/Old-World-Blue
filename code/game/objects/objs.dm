@@ -1,6 +1,7 @@
 /obj
 	//Used to store information about the contents of the object.
 	var/list/matter
+	var/w_class // Size of the object.
 
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/tmp/reliability = 100	//Used by SOME devices to determine how reliable they are.

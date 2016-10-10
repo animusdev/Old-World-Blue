@@ -30,13 +30,17 @@
 	selection_color = "#ffddf0"
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
+	economic_modifier = 10
 	access = list(access_medical, access_medical_equip, access_morgue, access_genetics, access_heads,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-			access_keycard_auth, access_sec_doors, access_psychiatrist, access_eva, access_external_airlocks)
+			access_keycard_auth, access_sec_doors, access_psychiatrist, access_eva, access_external_airlocks, access_maint_tunnels)
 	minimal_access = list(access_medical, access_medical_equip, access_morgue, access_genetics, access_heads,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-			access_keycard_auth, access_sec_doors, access_psychiatrist, access_eva, access_external_airlocks)
-	minimal_player_age = 10
+			access_keycard_auth, access_sec_doors, access_psychiatrist, access_eva, access_external_airlocks, access_maint_tunnels)
+
+	minimum_character_age = 27
+	minimal_player_age = 30
+	ideal_character_age = 50
 
 	uniform = /obj/item/clothing/under/rank/chief_medical_officer
 	shoes = /obj/item/clothing/shoes/brown
@@ -51,9 +55,11 @@
 	flag = DOCTOR
 	total_positions = 5
 	spawn_positions = 3
+	economic_modifier = 7
 	access = list(access_medical, access_medical_equip, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
 	minimal_access = list(access_medical, access_medical_equip, access_morgue, access_surgery, access_virology, access_genetics)
 	alt_titles = list("Surgeon","Emergency Physician","Nurse","Virologist")
+	minimal_player_age = 14
 
 	suit = /obj/item/clothing/suit/storage/toggle/labcoat
 	suit_store = /obj/item/device/flashlight/pen
@@ -101,9 +107,12 @@
 	flag = CHEMIST
 	total_positions = 2
 	spawn_positions = 2
+	economic_modifier = 5
 	access = list(access_medical, access_medical_equip, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
 	minimal_access = list(access_medical, access_medical_equip, access_chemistry)
 	alt_titles = list("Pharmacist")
+	minimum_character_age = 20
+	minimal_player_age = 14
 
 	uniform = /obj/item/clothing/under/rank/chemist
 	pda = /obj/item/device/pda/chemist
@@ -131,6 +140,7 @@
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "the chief medical officer and research director"
+	economic_modifier = 7
 	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_research)
 	minimal_access = list(access_medical, access_morgue, access_genetics, access_research, access_medical_equip)
 
@@ -152,9 +162,11 @@
 	flag = PSYCHIATRIST
 	total_positions = 1
 	spawn_positions = 1
-	access = list(access_medical, access_medical_equip, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_psychiatrist)
+	economic_modifier = 5
+	access = list(access_medical, access_medical_equip, access_morgue, access_psychiatrist)
 	minimal_access = list(access_medical, access_medical_equip, access_psychiatrist)
 	alt_titles = list("Psychologist")
+	minimum_character_age = 20
 
 	uniform = /obj/item/clothing/under/rank/psych
 	shoes = /obj/item/clothing/shoes/laceup
@@ -176,8 +188,9 @@
 	flag = PARAMEDIC
 	total_positions = 2
 	spawn_positions = 2
+	economic_modifier = 4
 	access = list(access_medical, access_medical_equip, access_morgue, access_surgery, access_chemistry, access_virology, access_eva, access_maint_tunnels, access_external_airlocks, access_psychiatrist)
-	minimal_access = list(access_medical, access_medical_equip, access_eva, access_maint_tunnels, access_external_airlocks, access_morgue)
+	minimal_access = list(access_medical, access_medical_equip, access_morgue, access_eva, access_maint_tunnels, access_external_airlocks)
 	alt_titles = list("Emergency Medical Technician")
 
 	uniform = /obj/item/clothing/under/rank/medical/black
