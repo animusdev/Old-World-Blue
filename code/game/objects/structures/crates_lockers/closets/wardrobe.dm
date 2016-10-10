@@ -1,3 +1,20 @@
+/obj/structure/closet/cabinet/underwear
+	name = "underwear wardrobe"
+	desc = "Holds item of clothing you shouldn't be showing off in the hallways."
+
+/obj/structure/closet/cabinet/underwear/New()
+	..()
+	var/tmp_type
+	for(var/i in 1 to 6)
+		tmp_type = pick(subtypesof(/obj/item/clothing/hidden/underwear))
+		new tmp_type(src)
+	for(var/i in 1 to 6)
+		tmp_type = pick(subtypesof(/obj/item/clothing/hidden/undershirt))
+		new tmp_type(src)
+	for(var/i in 1 to 6)
+		tmp_type = pick(subtypesof(/obj/item/clothing/hidden/socks))
+		new tmp_type(src)
+
 /obj/structure/closet/wardrobe
 	name = "wardrobe"
 	desc = "It's a storage unit for standard-issue attire."

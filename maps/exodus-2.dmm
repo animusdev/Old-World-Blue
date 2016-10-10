@@ -1261,7 +1261,7 @@
 "ym" = (/obj/structure/table/standard,/obj/machinery/recharger{pixel_y = 4},/obj/item/weapon/handcuffs,/obj/item/weapon/storage/pill_bottle/dice,/obj/item/weapon/deck,/turf/unsimulated/floor{icon_state = "dark"},/area/centcom/specops)
 "yn" = (/obj/structure/bed/chair/office/light,/turf/unsimulated/floor{icon_state = "dark"},/area/centcom/specops)
 "yo" = (/obj/machinery/computer/arcade,/turf/unsimulated/floor{icon_state = "dark"},/area/centcom/specops)
-"yp" = (/obj/structure/undies_wardrobe,/turf/unsimulated/floor{icon_state = "dark"},/area/centcom/specops)
+"yp" = (/obj/structure/closet/cabinet/underwear,/turf/unsimulated/floor{icon_state = "dark"},/area/centcom/specops)
 "yq" = (/obj/structure/table/reinforced,/turf/unsimulated/floor{icon_state = "floor"},/area/centcom/control)
 "yr" = (/obj/machinery/button/remote/blast_door{id = "crescent_checkpoint_access"; name = "Crescent Checkpoint Access"; pixel_x = -6; pixel_y = -24; req_access = list(101)},/obj/machinery/button/remote/blast_door{id = "crescent_thunderdome"; name = "Thunderdome Access"; pixel_x = 6; pixel_y = -24; req_access = list(101)},/obj/machinery/button/remote/blast_door{id = "crescent_vip_shuttle"; name = "VIP Shuttle Access"; pixel_x = 6; pixel_y = -34; req_access = list(101)},/obj/machinery/turretid{pixel_x = 28; pixel_y = -28; req_access = list(101)},/turf/unsimulated/floor{icon_state = "floor"},/area/centcom/control)
 "ys" = (/obj/structure/table/reinforced,/obj/item/weapon/card/id/captains_spare,/turf/unsimulated/floor{icon_state = "floor"},/area/centcom/control)

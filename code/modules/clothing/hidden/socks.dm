@@ -55,12 +55,12 @@
 
 /obj/item/clothing/hidden/socks/striped
 	name = "Knee-length striped socks"
-	icon_state = "ss_striped"
-	wear_state = "striped_knee"
+	icon_state = "socks_striped"
+	wear_state = "ss_striped"
 
 /obj/item/clothing/hidden/socks/striped/thigh
 	name = "Thigh striped socks"
-	wear_state = "striped_thigh"
+	wear_state = "st_striped"
 
 /obj/item/clothing/hidden/socks/pantyhose
 	name = "pantyhose"
