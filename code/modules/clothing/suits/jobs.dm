@@ -185,7 +185,7 @@
 	name = "Blue Suit Jacket"
 	desc = "A snappy dress jacket."
 	icon_state = "suitjacket_blue_open"
-	base_icon = "suitjacket_blue"
+	base_state = "suitjacket_blue"
 	item_state = "blue_blazer"
 	blood_overlay_type = "coat"
 	body_parts_covered = UPPER_TORSO|ARMS
@@ -202,7 +202,7 @@
 	name = "Internal Affairs Jacket"
 	desc = "A smooth black jacket."
 	icon_state = "ia_jacket_open"
-	base_icon = "ia_jacket"
+	base_state = "ia_jacket"
 	blood_overlay_type = "coat"
 	body_parts_covered = UPPER_TORSO|ARMS
 
@@ -211,7 +211,7 @@
 	name = "head of personnel's jacket"
 	desc = "Funny, it looks bigger inside."
 	icon_state = "gmjacket_open"
-	base_icon = "gmjacket"
+	base_state = "gmjacket"
 	blood_overlay_type = "coat"
 	body_parts_covered = UPPER_TORSO|ARMS
 
@@ -221,7 +221,7 @@
 	desc = "A high-visibility jacket worn by medical first responders."
 	icon_state = "fr_jacket_open"
 	item_state = "fr_jacket"
-	base_icon = "fr_jacket"
+	base_state = "fr_jacket"
 	blood_overlay_type = "armor"
 	allowed = list( /obj/item/stack/medical, /obj/item/device/radio, /obj/item/weapon/reagent_containers/dropper,
 					/obj/item/weapon/reagent_containers/hypospray, /obj/item/weapon/reagent_containers/syringe,
@@ -251,7 +251,7 @@
 	desc = "That's a black jacket with the investigator badge on it."
 	icon_state = "investigator_open"
 	item_state = "investigator"
-	base_icon = "investigator"
+	base_state = "investigator"
 	blood_overlay_type = "armor"
 	body_parts_covered = UPPER_TORSO|ARMS
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/flame/lighter,/obj/item/device/taperecorder,/obj/item/device/uv_light)
@@ -260,4 +260,4 @@
 	desc = "That't a black jacket with investigator insignias."
 	icon_state = "investigatoralt_open"
 	item_state = "investigatoralt"
-	base_icon = "investigatoralt"
+	base_state = "investigatoralt"

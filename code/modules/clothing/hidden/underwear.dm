@@ -5,74 +5,56 @@
 
 ////Female////
 
-/obj/item/clothing/hidden/underwear/type1
+/obj/item/clothing/hidden/underwear/female/white
 	name = "white female underwear"
-	icon_state = "underwear_f1"
-	item_state = "underwear_f1"
+	icon_state = "uwf_white"
+	wear_state = "uwf_white"
 
-/obj/item/clothing/hidden/underwear/type1/pink
-	name = "pink female underwear"
-	color = "#ff66ff"
-
-/obj/item/clothing/hidden/underwear/type1/red
-	name = "red female underwear"
-	color = "#f05438"
-
-/obj/item/clothing/hidden/underwear/type1/black
+/obj/item/clothing/hidden/underwear/female/black
 	name = "black female underwear"
-	color = "#282828"
+	icon_state = "uwf_black"
+	wear_state = "uwf_black"
 
-/obj/item/clothing/hidden/underwear/type1/blue
-	name = "blue female underwear"
-	color = "#3333ff"
+/obj/item/clothing/hidden/underwear/female/red
+	name = "red female underwear"
+	icon_state = "uwf_red"
+	wear_state = "uwf_red"
 
-/obj/item/clothing/hidden/underwear/yellow
-	name = "light gray female underwear"
-	color = "#fff000"
+/obj/item/clothing/hidden/underwear/female/beige
+	name = "beige female underwear"
+	icon_state = "uwf_beige"
+	wear_state = "uwf_beige"
 
-/obj/item/clothing/hidden/underwear/mixed_female
-	name = "mixed female underwear"
-	icon_state = "mixed_female"
-	item_state = "mixed_female"
+/obj/item/clothing/hidden/underwear/female/purple
+	name = "purple female underwear"
+	icon_state = "uwf_purple"
+	wear_state = "uwf_purple"
 
-/obj/item/clothing/hidden/underwear/red_alt_female
-	name = "red alt female underwear"
-	icon_state = "red_alt_female"
-	item_state = "red_alt_female"
+////Both////
 
-/obj/item/clothing/hidden/underwear/light_pink_female
-	name = "light pink female underwear"
-	icon_state = "light_pink_female"
-	item_state = "light_pink_female"
+/obj/item/clothing/hidden/underwear/pants
+	name = "pants"
+	icon_state = "uwm_white"
+	wear_state = "pants"
 
-/obj/item/clothing/hidden/underwear/teal_female
-	name = "teal female underwear"
-	icon_state = "teal_female"
-	item_state = "teal_female"
+////Male////
 
-/obj/item/clothing/hidden/underwear/green_female
-	name = "green female underwear"
-	icon_state = "green_female"
-	item_state = "green_female"
+/obj/item/clothing/hidden/underwear/male/white
+	name = "white male underwear"
+	icon_state = "uwm_white"
+	wear_state = "uwm_white"
 
-/obj/item/clothing/hidden/underwear/light_purple_female
-	name = "light purple female underwear"
-	icon_state = "light_purple_female"
-	item_state = "light_purple_female"
+/obj/item/clothing/hidden/underwear/male/black
+	name = "black male underwear"
+	icon_state = "uwm_black"
+	wear_state = "uwm_black"
 
-/obj/item/clothing/hidden/underwear/yellow_female
-	name = "yellow female underwear"
-	icon_state = "yellow_female"
-	item_state = "yellow_female"
+/obj/item/clothing/hidden/underwear/male/red
+	name = "red male underwear"
+	icon_state = "uwm_red"
+	wear_state = "uwm_red"
 
-/obj/item/clothing/hidden/underwear/gray_female
-	name = "gray female underwear"
-	icon_state = "gray_female"
-	item_state = "gray_female"
-
-/obj/item/clothing/hidden/underwear/thong_female
-	name = "thong female underwear"
-	icon_state = "thong_female"
-	item_state = "thong_female"
-
-
+/obj/item/clothing/hidden/underwear/male/blue
+	name = "blue male underwear"
+	icon_state = "uwm_blue"
+	wear_state = "uwm_blue"

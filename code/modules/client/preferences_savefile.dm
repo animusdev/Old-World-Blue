@@ -186,12 +186,10 @@
 		species = "Human"
 	current_species = all_species[species]
 
-	if(isnum(underwear))
-		var/list/undies = gender == MALE ? underwear_m : underwear_f
-		underwear = undies[undies[underwear]]
+	if(!underwear  || !(underwear in all_underwears))   underwear = pick(all_underwears)
+	if(!undershirt || !(undershirt in all_undershirts)) undershirt = pick(all_undershirts)
+	if(!socks || !(socks in all_socks)) socks = pick(all_socks)
 
-	if(isnum(undershirt))
-		undershirt = undershirt_t[undershirt_t[undershirt]]
 
 	if(isnull(language)) language = "None"
 	if(isnull(spawnpoint)) spawnpoint = "Arrivals Shuttle"

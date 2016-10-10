@@ -330,13 +330,6 @@ var/global/list/damage_icon_parts = list()
 	//END CACHED ICON GENERATION.
 	stand_icon.Blend(base_icon,ICON_OVERLAY)
 
-	//Underwear
-	if(underwear && species.flags & HAS_UNDERWEAR)
-		stand_icon.Blend(new /icon('icons/mob/human.dmi', "[underwear]_[g]"), ICON_OVERLAY)
-
-	if(undershirt && species.flags & HAS_UNDERWEAR)
-		stand_icon.Blend(new /icon('icons/mob/human.dmi', "[undershirt]_[g]"), ICON_OVERLAY)
-
 	//tail
 	update_tail_showing(0)
 
@@ -690,8 +683,9 @@ var/global/list/damage_icon_parts = list()
 
 		var/image/standing
 		var/t_state = wear_suit.icon_state
-		if(istype(wear_suit, /obj/item/clothing) && wear_suit:on_mob_icon)
-			t_state = wear_suit:on_mob_icon
+		if(istype(wear_suit, /obj/item/clothing))
+			t_state = wear_suit:wear_state
+
 		if(wear_suit.icon_override)
 			standing = image(wear_suit.icon_override, t_state)
 		else
@@ -797,9 +791,9 @@ var/global/list/damage_icon_parts = list()
 		return
 
 	var/image/standing = new/image('icons/mob/mob.dmi', "blank")
-	for( var/obj/item/clothing/hidden/C in list(h_socks, h_underwear, h_undershirt) )
+	for( var/obj/item/clothing/hidden/C in list(h_underwear, h_socks, h_undershirt) )
 		if(!C) continue
-		var/image/item = image(body_build.hidden_icon, C.item_state)
+		var/image/item = image(body_build.hidden_icon, C.wear_state)
 		if(C.color) item.color = C.color
 		standing.overlays += item
 

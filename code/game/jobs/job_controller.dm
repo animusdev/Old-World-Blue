@@ -135,7 +135,8 @@ var/global/datum/controller/occupations/job_master
 		return
 
 
-	///This proc is called before the level loop of DivideOccupations() and will try to select a head, ignoring ALL non-head preferences for every level until it locates a head or runs out of levels to check
+	///This proc is called before the level loop of DivideOccupations() and will try to select a head, \
+	ignoring ALL non-head preferences for every level until it locates a head or runs out of levels to check
 	proc/FillHeadPosition()
 		for(var/level = 1 to 3)
 			for(var/command_position in command_positions)
@@ -182,7 +183,8 @@ var/global/datum/controller/occupations/job_master
 		return 0
 
 
-	///This proc is called at the start of the level loop of DivideOccupations() and will cause head jobs to be checked before any other jobs of the same level
+	///This proc is called at the start of the level loop of DivideOccupations() and \
+	will cause head jobs to be checked before any other jobs of the same level
 	proc/CheckHeadPositions(var/level)
 		for(var/command_position in command_positions)
 			var/datum/job/job = GetJob(command_position)
@@ -411,6 +413,13 @@ var/global/datum/controller/occupations/job_master
 								spawn_in_storage.Add(thing)
 						else
 							spawn_in_storage += thing
+			var/hidden_type = all_socks[H.client.prefs.socks]
+			if(hidden_type)
+				H.equip_to_slot_or_del(new hidden_type, slot_socks)
+			hidden_type = all_underwears[H.client.prefs.underwear]
+			if(hidden_type) H.equip_to_slot_or_del(new hidden_type, slot_underwear)
+			hidden_type = all_undershirts[H.client.prefs.undershirt]
+			if(hidden_type) H.equip_to_slot_or_del(new hidden_type, slot_undershirt)
 			//Equip job items.
 			job.equip(H)
 			job.apply_fingerprints(H)
@@ -520,13 +529,15 @@ var/global/datum/controller/occupations/job_master
 		H << "<B>You are [job.total_positions == 1 ? "the" : "a"] [alt_title ? alt_title : rank].</B>"
 
 		if(job.supervisors)
-			H << "<b>As the [alt_title ? alt_title : rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
+			H << "<b>As the [alt_title ? alt_title : rank] you answer directly to [job.supervisors]. \
+				  Special circumstances may change this.</b>"
 
 		if(job.idtype)
 			spawnId(H, rank, alt_title)
 
 		if(job.req_admin_notify)
-			H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
+			H << "<b>You are playing a job that is important for Game Progression. \
+				  If you have to disconnect, please notify the admins via adminhelp.</b>"
 
 		//Gives glasses to the vision impaired
 		if(H.disabilities & NEARSIGHTED)

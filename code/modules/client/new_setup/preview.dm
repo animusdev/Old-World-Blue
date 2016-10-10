@@ -64,6 +64,16 @@ datum/preferences
 					temp.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
 			preview_icon.Blend(temp, ICON_OVERLAY)
 
+		if(underwear && current_species.flags & HAS_UNDERWEAR)
+			var/obj/item/clothing/hidden/H = all_underwears[underwear]
+			preview_icon.Blend(icon(body_build.hidden_icon, initial(H.wear_state)), ICON_OVERLAY)
+		if(socks)
+			var/obj/item/clothing/hidden/H = all_socks[socks]
+			preview_icon.Blend(icon(body_build.hidden_icon, initial(H.wear_state)), ICON_OVERLAY)
+		if(undershirt && current_species.flags & HAS_UNDERWEAR)
+			var/obj/item/clothing/hidden/H = all_undershirts[undershirt]
+			preview_icon.Blend(icon(body_build.hidden_icon, initial(H.wear_state)), ICON_OVERLAY)
+
 		// Eyes color
 		var/icon/eyes = new /icon('icons/mob/human.dmi', "blank")
 		var/datum/body_modification/mod = get_modification(O_EYES)
@@ -135,6 +145,4 @@ datum/preferences
 		preview_west  = new(preview_icon, dir = WEST)
 
 		qdel(eyes)
-		qdel(underwear)
-		qdel(undershirt)
 		qdel(clothes)

@@ -27,7 +27,7 @@
 		var/output = "<div align='center'><B>New Player Options</B>"
 		output +="<hr>"
 		output += "<p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
-		output += "<p><a href='byond://?src=\ref[src];show_preferences_new=1'>New Setup Character (WIP)</A></p>"
+		//output += "<p><a href='byond://?src=\ref[src];show_preferences_new=1'>New Setup Character (WIP)</A></p>"
 
 		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
 			if(ready)

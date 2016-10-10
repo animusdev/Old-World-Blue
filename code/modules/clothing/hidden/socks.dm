@@ -17,75 +17,57 @@
 		return
 	..()
 
-/obj/item/clothing/hidden/socks/white_norm
+/obj/item/clothing/hidden/socks/white
 	name = "White socks"
-	item_state = "white_norm"
+	wear_state = "ss_white"
 	icon_state = "socks_white"
 
-/obj/item/clothing/hidden/socks/white_short
-	name = "Short white socks"
-	item_state = "white_short"
-	icon_state = "socks_white"
-
-/obj/item/clothing/hidden/socks/white_knee
-	name = "Knee-length white socks"
-	item_state = "white_knee"
-	icon_state = "socks_white"
-
-/obj/item/clothing/hidden/socks/white_thigh
+/obj/item/clothing/hidden/socks/white/thigh
 	name = "Thigh white socks"
-	item_state = "white_thigh"
+	wear_state = "st_white"
+
+/obj/item/clothing/hidden/socks/white/thin
+	name = "White thin socks"
+	wear_state = "sst_white"
 	icon_state = "socks_white"
 
-/obj/item/clothing/hidden/socks/black_norm
+/obj/item/clothing/hidden/socks/white/thigh/thin
+	name = "Thigh thin white socks"
+	wear_state = "stt_white"
+
+/obj/item/clothing/hidden/socks/black
 	name = "Black socks"
-	item_state = "black_norm"
+	wear_state = "ss_black"
 	icon_state = "socks_black"
 
-/obj/item/clothing/hidden/socks/black_short
-	name = "Short black socks"
-	item_state = "black_short"
-	icon_state = "socks_black"
-
-/obj/item/clothing/hidden/socks/black_knee
-	name = "Knee-length black socks"
-	item_state = "black_knee"
-	icon_state = "socks_black"
-
-/obj/item/clothing/hidden/socks/black_thigh
+/obj/item/clothing/hidden/socks/black/thigh
 	name = "Thigh black socks"
-	item_state = "black_thigh"
+	wear_state = "st_black"
+
+/obj/item/clothing/hidden/socks/black/thin
+	name = "Black thin socks"
+	wear_state = "sst_black"
 	icon_state = "socks_black"
 
-/obj/item/clothing/hidden/socks/thin_knee
-	name = "Knee-length thin socks"
-	item_state = "thin_knee"
-	icon_state = "socks_thin"
+/obj/item/clothing/hidden/socks/black/thigh/thin
+	name = "Thigh black thin socks"
+	wear_state = "stt_black"
 
-/obj/item/clothing/hidden/socks/thin_thigh
-	name = "Thigh thin socks"
-	item_state = "thin_thigh"
-	icon_state = "socks_thin"
+/obj/item/clothing/hidden/socks/striped
+	name = "Knee-length striped socks"
+	icon_state = "ss_striped"
+	wear_state = "striped_knee"
 
-/*/obj/item/clothing/hidden/socks/rainbow_knee
-	name = "Knee-length rainbow socks"
-	item_state = "rainbow_knee"
-
-/obj/item/clothing/hidden/socks/rainbow_thigh
-	name = "Thigh rainbow socks"
-	item_state = "rainbow_thigh"*/
+/obj/item/clothing/hidden/socks/striped/thigh
+	name = "Thigh striped socks"
+	wear_state = "striped_thigh"
 
 /obj/item/clothing/hidden/socks/pantyhose
 	name = "pantyhose"
-	item_state = "pantyhose"
+	wear_state = "pantyhose"
 	icon_state = "pantyhose"
 
-/obj/item/clothing/hidden/socks/striped_knee
-	name = "Knee-length striped socks"
-	icon_state = "socks_striped"
-	item_state = "striped_knee"
-
-/obj/item/clothing/hidden/socks/striped_thigh
-	name = "Thigh striped socks"
-	icon_state = "socks_striped"
-	item_state = "striped_thigh"
+/obj/item/clothing/hidden/socks/stock
+	name = "Black stockings"
+	wear_state = "ss_black"
+	icon_state = "socks_black"

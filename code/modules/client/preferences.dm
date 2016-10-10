@@ -56,8 +56,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/age = 30						//age of character
 	var/spawnpoint = "Arrivals Shuttle" //where this character will spawn (0-2).
 	var/b_type = "A+"					//blood type (not-chooseable)
-	var/underwear						//underwear type
-	var/undershirt						//undershirt type
+	var/underwear = "None"				//underwear type
+	var/undershirt = "None"				//undershirt type
+	var/socks = "None"					//socks type
 	var/backbag = 2						//backpack type
 	var/h_style = "Bald"				//Hair type
 	var/f_style = "Shaved"				//Face hair type
@@ -290,15 +291,11 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	else
 		dat += "<br><br>"
 
-	var/list/undies = gender == MALE ? underwear_m : underwear_f
+	dat += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'><b>[underwear]</b></a><br>"
 
-	var/undies_key = get_key_by_value(undies,underwear)
-	if(!undies_key) undies_key = undies[undies.len]
-	dat += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'><b>[undies_key]</b></a><br>"
+	dat += "Undershirt: <a href='?_src_=prefs;preference=undershirt;task=input'><b>[undershirt]</b></a><br>"
 
-	var/undershirt_key = get_key_by_value(undershirt_t,undershirt)
-	if(!undershirt_key) undershirt_key = undershirt_t[undershirt_t.len]
-	dat += "Undershirt: <a href='?_src_=prefs;preference=undershirt;task=input'><b>[undershirt_key]</b></a><br>"
+	dat += "Socks: <a href='?_src_=prefs;preference=socks;task=input'><b>[socks]</b></a><br>"
 
 	dat += "Backpack Type:<br><a href ='?_src_=prefs;preference=bag;task=input'><b>[backbaglist[backbag]]</b></a><br>"
 
@@ -1062,12 +1059,13 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 				if("f_style")
 					f_style = random_facial_hair_style(gender, species)
 				if("underwear")
-					var/r = pick(underwear_m)
-					underwear = underwear_m[r]
+					underwear = pick(all_underwears)
 					ShowChoices(user)
 				if("undershirt")
-					var/r = pick(undershirt_t)
-					undershirt = undershirt_t[r]
+					undershirt = pick(all_undershirts)
+					ShowChoices(user)
+				if("socks")
+					socks = pick(all_socks)
 					ShowChoices(user)
 				if("eyes")
 					eyes_color = rgb(rand(0,255), rand(0,255), rand(0,255))
@@ -1214,24 +1212,27 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						f_style = new_f_style
 
 				if("underwear")
-					var/list/underwear_options
-					if(gender == MALE)
-						underwear_options = underwear_m
-					else
-						underwear_options = underwear_f
-
-					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in underwear_options
+					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in all_underwears
 					if(new_underwear)
-						underwear = underwear_options[new_underwear]
+						underwear = new_underwear
+					else
+						underwear = "None"
 					ShowChoices(user)
 
 				if("undershirt")
-					var/list/undershirt_options
-					undershirt_options = undershirt_t
-
-					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in undershirt_options
+					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in all_undershirts
 					if (new_undershirt)
-						undershirt = undershirt_options[new_undershirt]
+						undershirt = new_undershirt
+					else
+						new_undershirt = "None"
+					ShowChoices(user)
+
+				if("socks")
+					var/new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in all_socks
+					if (new_socks)
+						socks = new_socks
+					else
+						new_socks = "None"
 					ShowChoices(user)
 
 				if("eyes")
@@ -1624,10 +1625,6 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					I.mechassist()
 				else if(status == "mechanical")
 					I.robotize()
-
-	character.underwear = underwear
-
-	character.undershirt = undershirt
 
 	if(backbag > 4 || backbag < 1)
 		backbag = 1 //Same as above

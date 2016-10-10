@@ -1,7 +1,7 @@
 /obj/item/clothing
 	name = "clothing"
 	siemens_coefficient = 0.9
-	var/on_mob_icon = "" 				//If set used instead icon_state for mob drawing.
+	var/wear_state = "" 				//If set used instead icon_state for mob drawing.
 	var/list/species_restricted = null  //Only these species can wear this kit.
 	var/gunshot_residue //Used by forensics.
 
@@ -10,6 +10,11 @@
 		Ideally, sprite_sheets_refit should be used for "hard" clothing items that can't change shape very well to fit the wearer (e.g. helmets, hardsuits),
 	*/
 	var/list/sprite_sheets_refit = null
+
+/obj/item/clothing/New()
+	..()
+	if(!wear_state)
+		wear_state = icon_state
 
 //Updates the icons of the mob wearing the clothing item, if any.
 /obj/item/clothing/proc/update_clothing_icon()
