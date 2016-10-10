@@ -2,10 +2,8 @@
 	name = "botanist's locker"
 	req_access = list(access_hydroponics)
 	icon_state = "hydrosecure"
-	icon_closed = "hydrosecure"
 	icon_opened = "hydrosecureopen"
 	icon_broken = "hydrosecurebroken"
-	icon_off = "hydrosecureoff"
 
 	New()
 		..()

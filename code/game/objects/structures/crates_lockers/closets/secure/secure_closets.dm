@@ -8,11 +8,9 @@
 	var/locked = 1
 	var/broken = 0
 	var/large = 1
-	icon_closed = "secure"
 	icon_opened = "secureopen"
 	var/locked_overlay = "locked"
 	var/icon_broken = "securebroken"
-	var/icon_off = "secureoff"
 	wall_mounted = 0 //never solid (You can always pass over it)
 	health = 200
 
@@ -126,10 +124,8 @@
 	if(opened)
 		icon_state = icon_opened
 	else
-		if(broken)
-			icon_state = icon_off
-		else
-			icon_state = icon_closed
+		icon_state = icon_closed
+		if(!broken)
 			overlays += "[locked_overlay][locked?"1":"0"]"
 		if(welded)
 			overlays += "welded"
@@ -146,4 +142,5 @@
 		flick(icon_broken, src)
 		sleep(10)
 	broken = 1
+	locked = 0
 	return ..()
