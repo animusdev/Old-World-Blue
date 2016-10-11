@@ -253,35 +253,22 @@ REAGENT SCANNER
 
 	origin_tech = "magnets=1;engineering=1"
 
+/obj/item/device/analyzer/atmosanalyze(var/mob/user)
+	var/air = user.return_air()
+	if (!air)
+		return
+
+	return atmosanalyzer_scan(src, air, user)
+
 /obj/item/device/analyzer/attack_self(mob/user as mob)
 
 	if (user.stat)
 		return
-	if (!(ishuman(usr) || ticker) && ticker.mode.name != "monkey")
-		usr << "\red You don't have the dexterity to do this!"
+	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 
-	var/turf/location = user.loc
-	if (!( istype(location, /turf) ))
-		return
-
-	var/datum/gas_mixture/environment = location.return_air()
-
-	var/pressure = environment.return_pressure()
-	var/total_moles = environment.total_moles
-
-	user.show_message("\blue <B>Results:</B>", 1)
-	if(abs(pressure - ONE_ATMOSPHERE) < 10)
-		user.show_message("\blue Pressure: [round(pressure,0.1)] kPa", 1)
-	else
-		user.show_message("\red Pressure: [round(pressure,0.1)] kPa", 1)
-	if(total_moles)
-		for(var/g in environment.gas)
-			user.show_message("\blue [gas_data.name[g]]: [round((environment.gas[g] / total_moles)*100)]%", 1)
-
-		user.show_message("\blue Temperature: [round(environment.temperature-T0C)]&deg;C", 1)
-
-	src.add_fingerprint(user)
+	analyze_gases(src, user)
 	return
 
 /obj/item/device/mass_spectrometer

@@ -76,28 +76,15 @@
 
 /obj/item/weapon/tank/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	var/obj/icon = src
 
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
 
 	if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
-		for (var/mob/O in viewers(user, null))
-			O << "\red [user] has used [W] on \icon[icon] [src]"
-
-		var/pressure = air_contents.return_pressure()
-		manipulated_by = user.real_name			//This person is aware of the contents of the tank.
-		var/total_moles = air_contents.total_moles
-
-		user << "\blue Results of analysis of \icon[icon]"
-		if (total_moles>0)
-			user << "\blue Pressure: [round(pressure,0.1)] kPa"
-			for(var/g in air_contents.gas)
-				user << "\blue [gas_data.name[g]]: [(round(air_contents.gas[g] / total_moles) * 100)]%"
-			user << "\blue Temperature: [round(air_contents.temperature-T0C)]&deg;C"
-		else
-			user << "\blue Tank is empty!"
+		var/obj/item/device/analyzer/A = W
+		A.analyze_gases(src, user)
 		src.add_fingerprint(user)
+
 	else if (istype(W,/obj/item/latexballon))
 		var/obj/item/latexballon/LB = W
 		LB.blow(src)

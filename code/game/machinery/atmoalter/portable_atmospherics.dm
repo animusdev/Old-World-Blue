@@ -104,7 +104,6 @@
 		network.update = 1
 
 /obj/machinery/portable_atmospherics/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-	var/obj/icon = src
 	if ((istype(W, /obj/item/weapon/tank) && !( src.destroyed )))
 		if (src.holding)
 			return
@@ -136,25 +135,9 @@
 				return
 
 	else if ((istype(W, /obj/item/device/analyzer)) && Adjacent(user))
-		visible_message("\red [user] has used [W] on \icon[icon]")
-		if(air_contents)
-			var/pressure = air_contents.return_pressure()
-			var/total_moles = air_contents.total_moles
-
-			user << "\blue Results of analysis of \icon[icon]"
-			if (total_moles>0)
-				user << "\blue Pressure: [round(pressure,0.1)] kPa"
-				for(var/g in air_contents.gas)
-					user << "\blue [gas_data.name[g]]: [round((air_contents.gas[g] / total_moles) * 100)]%"
-				user << "\blue Temperature: [round(air_contents.temperature-T0C)]&deg;C"
-			else
-				user << "\blue Tank is empty!"
-		else
-			user << "\blue Tank is empty!"
+		var/obj/item/device/analyzer/A = W
+		A.analyze_gases(src, user)
 		return
-
-	return
-
 
 
 /obj/machinery/portable_atmospherics/powered
