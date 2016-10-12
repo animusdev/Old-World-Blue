@@ -13,7 +13,7 @@
 			if(3) new /obj/item/weapon/storage/backpack/captain(src)
 		new /obj/item/clothing/suit/captunic(src)
 		new /obj/item/clothing/suit/captunic/capjacket(src)
-		new /obj/item/clothing/head/helmet/cap(src)
+		new /obj/item/clothing/head/cap(src)
 		new /obj/item/clothing/under/rank/captain(src)
 		new /obj/item/clothing/suit/storage/vest(src)
 		new /obj/item/weapon/cartridge/captain(src)

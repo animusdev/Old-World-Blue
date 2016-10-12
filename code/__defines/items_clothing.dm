@@ -20,6 +20,23 @@
 #define SLOT_TIE        0x4000
 #define SLOT_HOLSTER	0x8000 //16th bit - higher than this will overflow
 
+// Flags bitmasks.
+#define NOBLUDGEON         0x1  // When an item has this it produces no "X has been hit by Y with Z" message with the default handler.
+#define CONDUCT            0x2  // Conducts electricity. (metal etc.)
+#define ON_BORDER          0x4  // Item has priority to check when entering or leaving.
+#define NOBLOODY           0x8  // Used for items if they don't want to get a blood overlay.
+#define OPENCONTAINER      0x10 // Is an open container for chemistry purposes.
+#define PHORONGUARD        0x20 // Does not get contaminated by phoron.
+#define NOREACT            0x40 // Reagents don't react inside this container.
+
+//Flags for items (equipment)
+#define THICKMATERIAL          0x1  // Prevents syringes, parapens and hyposprays if equiped to slot_suit or slot_head.
+#define STOPPRESSUREDAMAGE     0x2  // Counts towards pressure protection. Note that like temperature protection, body_parts_covered is considered here as well.
+#define AIRTIGHT               0x4  // Functions with internals.
+#define NOSLIP                 0x8  // Prevents from slipping on wet floors, in space, etc.
+#define BLOCK_GAS_SMOKE_EFFECT 0x10 // Blocks the effect that chemical clouds would have on a mob -- glasses, mask and helmets ONLY!
+#define FLEXIBLEMATERIAL       0x20 // At the moment, masks with this flag will not prevent eating even if they are covering your face.
+
 // Flags for pass_flags.
 #define PASSTABLE  0x1
 #define PASSGLASS  0x2
@@ -39,6 +56,9 @@
 #define HIDEEARS 0x2 // Headsets and such.
 #define HIDEEYES 0x4 // Glasses.
 #define HIDEFACE 0x8 // Dictates whether we appear as "Unknown".
+
+#define BLOCKHEADHAIR   0x20    // Hides the user's hair overlay. Leaves facial hair.
+#define BLOCKHAIR       0x40    // Hides the user's hair, facial and otherwise.
 
 // Slots.
 #define slot_back        1

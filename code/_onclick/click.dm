@@ -91,9 +91,6 @@
 	var/obj/item/W = get_active_hand()
 
 	if(W == A)
-		//next_move = world.time + 6
-		if(W.flags&USEDELAY)
-			next_move = world.time + 5
 		W.attack_self(src)
 		if(hand)
 			update_inv_l_hand(0)
@@ -105,18 +102,7 @@
 	// operate two STORAGE levels deep here (item in backpack in src; NOT item in box in backpack in src)
 	var/sdepth = A.storage_depth(src)
 	if(A == loc || (A in loc) || (sdepth != -1 && sdepth <= 1))
-
-		// faster access to objects already on you
-	//	if(A in contents)
-	//		next_move = world.time + 6 // on your person
-	//	else
-	//		next_move = world.time + 8 // in a box/bag or in your square
-
-		// No adjacency needed
 		if(W)
-			if(W.flags&USEDELAY)
-				next_move = world.time + 5
-
 			var/resolved = A.attackby(W,src)
 			if(!resolved && A && W)
 				W.afterattack(A,src,1,params) // 1 indicates adjacency
@@ -136,9 +122,6 @@
 
 		if(A.Adjacent(src)) // see adjacent.dm
 			if(W)
-				if(W.flags&USEDELAY)
-					next_move = world.time + 5
-
 				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
 				var/resolved = A.attackby(W,src)
 				if(!resolved && A && W)

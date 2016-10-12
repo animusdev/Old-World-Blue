@@ -27,7 +27,7 @@ mob/living/carbon/slime/airflow_stun()
 
 mob/living/carbon/human/airflow_stun()
 	if(shoes)
-		if(shoes.flags & NOSLIP) return 0
+		if(shoes.item_flags & NOSLIP) return 0
 	..()
 
 atom/movable/proc/check_airflow_movable(n)
@@ -65,6 +65,19 @@ obj/item/check_airflow_movable(n)
 	var/tmp/airflow_speed = 0
 	var/tmp/airflow_time = 0
 	var/tmp/last_airflow = 0
+
+/atom/movable/proc/AirflowCanMove(n)
+	return 1
+
+/mob/AirflowCanMove(n)
+	if(status_flags & GODMODE)
+		return 0
+	if(buckled)
+		return 0
+	var/obj/item/shoes = get_equipped_item(slot_shoes)
+	if(istype(shoes) && (shoes.item_flags & NOSLIP))
+		return 0
+	return 1
 
 /atom/movable/proc/GotoAirflowDest(n)
 	if(!airflow_dest) return

@@ -4,7 +4,7 @@
 	icon_state = "brown"
 	item_state = "brown"
 	permeability_coefficient = 0.05
-	flags = NOSLIP
+	item_flags = NOSLIP
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 	siemens_coefficient = 0.8
@@ -20,7 +20,7 @@
 	icon_state = "swat"
 	force = 3
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
-	flags = NOSLIP
+	item_flags = NOSLIP
 	siemens_coefficient = 0.6
 
 /obj/item/clothing/shoes/jackboots/combat //Basically SWAT shoes combined with galoshes.
@@ -29,7 +29,7 @@
 	icon_state = "swat"
 	force = 5
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
-	flags = NOSLIP
+	item_flags = NOSLIP
 	siemens_coefficient = 0.6
 
 	cold_protection = FEET
@@ -131,7 +131,7 @@
 	desc = "Help you swim good."
 	name = "swimming fins"
 	icon_state = "flippers"
-	flags = NOSLIP
+	item_flags = NOSLIP
 	slowdown = 1
 	species_restricted = null
 

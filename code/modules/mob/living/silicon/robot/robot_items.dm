@@ -151,34 +151,14 @@
 		return
 	// pick up items, mostly copied from base tray pickup proc
 	// see code\game\objects\items\weapons\kitchen.dm line 241
-	if ( istype(target,/obj/item))
-		if ( !isturf(target.loc) ) // Don't load up stuff if it's inside a container or mob!
+	if (istype(target,/obj/item))
+		if (!isturf(target.loc)) // Don't load up stuff if it's inside a container or mob!
 			return
-		var turf/pickup = target.loc
 
-		var addedSomething = 0
-
-		for(var/obj/item/weapon/reagent_containers/food/I in pickup)
-
-
-			if( I != src && !I.anchored && !istype(I, /obj/item/clothing/under) && !istype(I, /obj/item/clothing/suit) && !istype(I, /obj/item/projectile) )
-				var/add = 0
-				if(I.w_class == 1.0)
-					add = 1
-				else if(I.w_class == 2.0)
-					add = 3
-				else
-					add = 5
-				if(calc_carry() + add >= max_carry)
-					break
-
-				I.loc = src
-				carrying.Add(I)
-				overlays += image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer)
-				addedSomething = 1
-		if ( addedSomething )
+		var/prev_carry = carry
+		grab_objects(target.loc)
+		if(prev_carry != carry)
 			user.visible_message("\blue [user] load some items onto their service tray.")
-
 		return
 
 	// Unloads the tray, copied from base item's proc dropped() and altered

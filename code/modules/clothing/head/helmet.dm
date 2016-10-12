@@ -2,7 +2,7 @@
 	name = "helmet"
 	desc = "Standard defence gear. Protects the head from impacts."
 	icon_state = "helmet"
-	flags = THICKMATERIAL
+	item_flags = THICKMATERIAL
 	item_state = "helmet"
 	armor = list(melee = 50, bullet = 15, laser = 50,energy = 10, bomb = 25, bio = 0, rad = 0)
 	flags_inv = HIDEEARS|HIDEEYES
@@ -60,7 +60,7 @@
 	name = "combat helmet"
 	desc = "That's the tactical helmet with multiple attachments. Protects the head from impacts."
 	icon_state = "combathelmet"
-	flags = THICKMATERIAL
+	item_flags = THICKMATERIAL
 	item_state = "combathelmet"
 	armor = list(melee = 60, bullet = 50, laser = 55,energy = 45, bomb = 45, bio = 0, rad = 0)
 	flags_inv = HIDEEARS
@@ -161,7 +161,7 @@
 	name = "gladiator helmet"
 	desc = "Ave, Imperator, morituri te salutant."
 	icon_state = "gladiator"
-	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags = BLOCKHAIR
 	item_state = "gladiator"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 	siemens_coefficient = 1

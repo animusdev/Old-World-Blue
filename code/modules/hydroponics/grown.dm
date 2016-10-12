@@ -154,7 +154,7 @@
 
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if(H.shoes && H.shoes.flags & NOSLIP)
+				if(H.shoes && H.shoes.item_flags & NOSLIP)
 					return
 
 			M.stop_pulling()
@@ -171,7 +171,7 @@
 	if(seed) seed.thrown_at(src,hit_atom)
 	..()
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/attackby(var/obj/item/weapon/W, var/mob/user)
+/obj/item/weapon/reagent_containers/food/snacks/grown/attackby(var/obj/item/weapon/W, var/mob/living/user)
 
 	if(seed)
 		if(seed.get_trait(TRAIT_PRODUCES_POWER) && istype(W, /obj/item/stack/cable_coil))
@@ -180,7 +180,7 @@
 				//TODO: generalize this.
 				user << "<span class='notice'>You add some cable to the [src.name] and slide it inside the battery casing.</span>"
 				var/obj/item/weapon/cell/potato/pocell = new /obj/item/weapon/cell/potato(get_turf(user))
-				if(src.loc == user && !(user.l_hand && user.r_hand) && ishuman(user))
+				if(src.loc == user && ishuman(user))
 					user.put_in_hands(pocell)
 				pocell.maxcharge = src.potency * 10
 				pocell.charge = pocell.maxcharge

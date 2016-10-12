@@ -15,7 +15,6 @@ var/const/MAX_ACTIVE_TIME = 400
 	icon_state = "facehugger"
 	item_state = "facehugger"
 	w_class = 3 //note: can be picked up by aliens unlike most other items of w_class below 4
-	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | AIRTIGHT
 	body_parts_covered = FACE|EYES
 	throw_range = 5
 
@@ -235,6 +234,7 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(H.head && H.head.flags & HEADCOVERSMOUTH)
-			return 0
+		for(var/obj/item/I in list(H.wear_mask, H.head, H.glasses))
+			if(I && istype(I) && I.body_parts_covered & FACE)
+				return 0
 	return 1

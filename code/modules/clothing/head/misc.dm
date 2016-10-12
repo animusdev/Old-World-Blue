@@ -61,7 +61,7 @@
 	name = "hastur's hood"
 	desc = "It's unspeakably stylish"
 	icon_state = "hasturhood"
-	flags = HEADCOVERSEYES|BLOCKHAIR
+	flags_inv = BLOCKHAIR
 	body_parts_covered = HEAD|FACE|EYES
 
 /obj/item/clothing/head/nursehat
@@ -76,8 +76,7 @@
 	icon_state = "syndicate"
 	item_state = "syndicate"
 	desc = "A plastic replica of a bloodthirsty mercenary's space helmet, you'll look just like a real murderous criminal operative in this! This is a toy, it is not made for use in space!"
-	flags = BLOCKHAIR
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|BLOCKHAIR
 	siemens_coefficient = 2.0
 	body_parts_covered = HEAD|FACE|EYES
 
@@ -85,9 +84,8 @@
 	name = "cueball helmet"
 	desc = "A large, featureless white orb mean to be worn on your head. How do you even see out of this thing?"
 	icon_state = "cueball"
-	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
-	item_state="cueball"
-	flags_inv = 0
+	item_state = "cueball"
+	flags_inv = BLOCKHAIR
 	body_parts_covered = HEAD|FACE|EYES
 
 /obj/item/clothing/head/greenbandana
@@ -95,24 +93,23 @@
 	desc = "It's a green bandana with some fine nanotech lining."
 	icon_state = "greenbandana"
 	item_state = "greenbandana"
-	flags_inv = 0
-	body_parts_covered = 0
+	body_parts_covered = HEAD
 
 /obj/item/clothing/head/cardborg
 	name = "cardborg helmet"
 	desc = "A helmet made out of a box."
 	icon_state = "cardborg_h"
 	item_state = "cardborg_h"
-	flags = HEADCOVERSEYES | HEADCOVERSMOUTH
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	body_parts_covered = HEAD|FACE|EYES
-
+/*
 /obj/item/clothing/head/justice
 	name = "justice hat"
 	desc = "fight for what's righteous!"
 	icon_state = "justicered"
 	item_state = "justicered"
-	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags_inv = BLOCKHAIR
+	body_parts_covered = HEAD|EYES
 
 /obj/item/clothing/head/justice/blue
 	icon_state = "justiceblue"
@@ -129,7 +126,7 @@
 /obj/item/clothing/head/justice/pink
 	icon_state = "justicepink"
 	item_state = "justicepink"
-
+*/
 /obj/item/clothing/head/rabbitears
 	name = "rabbit ears"
 	desc = "Wearing these makes you looks useless, and only good for your sex appeal."
@@ -176,12 +173,13 @@
 	icon_state = "bandana"
 	item_state = "bandana"
 
+/*
 /obj/item/clothing/head/bowler
 	name = "bowler-hat"
 	desc = "Gentleman, elite aboard!"
 	icon_state = "bowler"
 	item_state = "bowler"
-	body_parts_covered = 0
+*/
 
 //stylish bs12 hats
 
@@ -190,7 +188,6 @@
 	icon_state = "bowler_hat"
 	item_state = "bowler_hat"
 	desc = "For the gentleman of distinction."
-	body_parts_covered = 0
 
 /obj/item/clothing/head/beaverhat
 	name = "beaver hat"
@@ -205,19 +202,19 @@
 	desc = "The ultimate in summer fashion."
 
 /obj/item/clothing/head/fedora
-	name = "\improper fedora"
+	name = "fedora"
 	icon_state = "fedora"
 	item_state = "fedora"
 	desc = "A sharp, stylish hat."
 
 /obj/item/clothing/head/feathertrilby
-	name = "\improper feather trilby"
+	name = "feather trilby"
 	icon_state = "feather_trilby"
 	item_state = "feather_trilby"
 	desc = "A sharp, stylish hat with a feather."
 
 /obj/item/clothing/head/fez
-	name = "\improper fez"
+	name = "fez"
 	icon_state = "fez"
 	item_state = "fez"
 	desc = "You should wear a fez. Fezzes are cool."
@@ -229,7 +226,7 @@
 	desc = "Eeeee~heheheheheheh!"
 	icon_state = "witch"
 	item_state = "witch"
-	flags = BLOCKHAIR
+	flags_inv = BLOCKHAIR
 	siemens_coefficient = 2.0
 
 /obj/item/clothing/head/chicken
@@ -237,7 +234,7 @@
 	desc = "Bkaw!"
 	icon_state = "chickenhead"
 	item_state = "chickensuit"
-	flags = BLOCKHAIR
+	flags_inv = BLOCKHAIR
 	siemens_coefficient = 0.7
 	body_parts_covered = HEAD|FACE|EYES
 
@@ -246,7 +243,7 @@
 	desc = "Fuzzy."
 	icon_state = "bearpelt"
 	item_state = "bearpelt"
-	flags = BLOCKHAIR
+	flags_inv = BLOCKHAIR
 	siemens_coefficient = 0.7
 
 /obj/item/clothing/head/xenos
@@ -254,8 +251,7 @@
 	icon_state = "xenos"
 	item_state = "xenos_helm"
 	desc = "A helmet made out of chitinous alien hide."
-	flags = BLOCKHAIR
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|BLOCKHAIR
 	siemens_coefficient = 2.0
 	body_parts_covered = HEAD|FACE|EYES
 
@@ -264,7 +260,7 @@
 	desc = "A stylish monstrosity unearthed from Earth's Renaissance period. With this most distinguish'd wig, you'll be ready for your next soiree!"
 	icon_state = "philosopher_wig"
 	item_state = "philosopher_wig"
-	flags = BLOCKHEADHAIR
+	flags_inv = BLOCKHEADHAIR
 	siemens_coefficient = 2.0 //why is it so conductive?!
 	body_parts_covered = 0
 
@@ -292,7 +288,6 @@
 	desc = "That's the khaki-colored cap."
 	icon_state = "armycap"
 	item_state = "armycap"
-	body_parts_covered = 0
 
 /obj/item/clothing/head/beret/white
 	desc = "Usuall black beret. Nothing special."
