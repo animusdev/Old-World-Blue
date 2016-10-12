@@ -152,10 +152,10 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 	if(path)
 		dat += "<center>"
-		dat += "Slot <b>[slot_name]</b> - "
-		dat += "<a href=\"byond://?src=\ref[user];preference=open_load_dialog\">Load slot</a> - "
-		dat += "<a href=\"byond://?src=\ref[user];preference=save\">Save slot</a> - "
-		dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload slot</a>"
+		dat += "<a href=\"byond://?src=\ref[user];preference=open_load_dialog\">Load Setup</a> "
+		dat += "<a href=\"byond://?src=\ref[user];preference=open_save_dialog\">Save Setup</a> | "
+		dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload Slot</a> "
+		dat += "<a href=\"byond://?src=\ref[user];preference=reset\">Reset Slot</a>"
 		dat += "</center>"
 
 	else
@@ -353,14 +353,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 				else
 					dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=be_special;num=[n]'><b>[src.be_special&(1<<n) ? "Yes" : "No"]</b></a><br>"
 			n++
-	dat += "</td></tr></table><hr><center>"
-
-	if(!IsGuestKey(user.key))
-		dat += "<a href='?_src_=prefs;preference=load'>Undo</a> - "
-		dat += "<a href='?_src_=prefs;preference=save'>Save Setup</a> - "
-
-	dat += "<a href='?_src_=prefs;preference=reset_all'>Reset Setup</a>"
-	dat += "</center></body></html>"
+	dat += "</td></tr></table></body></html>"
 
 	user << browse(dat, "window=preferences;size=560x736")
 
@@ -1534,25 +1527,36 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 				if("ghost_radio")
 					chat_toggles ^= CHAT_GHOSTRADIO
 
-				if("save")
-					save_preferences()
-					save_character()
-
-				if("reload")
-					load_preferences()
-					load_character()
-
 				if("open_load_dialog")
 					if(!IsGuestKey(user.key))
 						spawn(2)
 							open_load_dialog(user)
 
-				if("close_load_dialog")
-					close_load_dialog(user)
-
-				if("changeslot")
+				if("load")
+					load_preferences()
 					load_character(text2num(href_list["num"]))
-					close_load_dialog(user)
+					close_dialog(user)
+
+				if("open_save_dialog")
+					if(!IsGuestKey(user.key))
+						spawn(2)
+							open_save_dialog(user)
+
+				if("save")
+					save_preferences()
+					save_character(text2num(href_list["num"]))
+					close_dialog(user)
+
+				if("close_dialog")
+					close_dialog(user)
+
+				if("reload")
+					load_preferences()
+					load_character()
+
+				if("reset")
+					delete_character()
+					load_character()
 
 	ShowChoices(user)
 	return 1
@@ -1646,7 +1650,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 	var/savefile/S = new /savefile(path)
 	if(S)
-		dat += "<b>Select a character slot to load</b><hr>"
+		dat += "<b>Select a character slot to load:</b><hr>"
 		var/name
 		for(var/i=1, i<= config.character_slots, i++)
 			S.cd = "/character[i]"
@@ -1654,12 +1658,33 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 			if(!name)	name = "Character[i]"
 			if(i==default_slot)
 				name = "<b>[name]</b>"
-			dat += "<a href='?_src_=prefs;preference=changeslot;num=[i];'>[name]</a><br>"
+			dat += "<a href='?_src_=prefs;preference=load;num=[i];'>[name]</a><br>"
 
 	dat += "<hr>"
-	dat += "<a href='byond://?src=\ref[user];preference=close_load_dialog'>Close</a><br>"
+	dat += "<a href='byond://?src=\ref[user];preference=close_dialog'>Close</a><br>"
 	dat += "</center></tt>"
 	user << browse(dat, "window=saves;size=300x390")
 
-/datum/preferences/proc/close_load_dialog(mob/user)
+/datum/preferences/proc/open_save_dialog(mob/user)
+	var/dat = "<body>"
+	dat += "<tt><center>"
+
+	var/savefile/S = new /savefile(path)
+	if(S)
+		dat += "<b>Select a character slot to save:</b><hr>"
+		var/name
+		for(var/i=1, i<= config.character_slots, i++)
+			S.cd = "/character[i]"
+			S["real_name"] >> name
+			if(!name)	name = "Character[i]"
+			if(i==default_slot)
+				name = "<b>[name]</b>"
+			dat += "<a href='?_src_=prefs;preference=save;num=[i];'>[name]</a><br>"
+
+	dat += "<hr>"
+	dat += "<a href='byond://?src=\ref[user];preference=close_dialog'>Close</a><br>"
+	dat += "</center></tt>"
+	user << browse(dat, "window=saves;size=300x390")
+
+/datum/preferences/proc/close_dialog(mob/user)
 	user << browse(null, "window=saves")
