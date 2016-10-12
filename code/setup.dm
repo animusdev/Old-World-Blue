@@ -28,35 +28,6 @@
 #define HEATPIPERATE             8    // Heat-exchange pipe insulation.
 #define FLOWFRAC                 0.99 // Fraction of gas transfered per process.
 
-// Flags bitmasks.
-#define STOPPRESSUREDAMAGE 1 // This flag is used on the flags variable for SUIT and HEAD items which stop pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & SLOT_BACK) if you see it anywhere
-                             // To successfully stop you taking all pressure damage you must have both a suit and head item with this flag.
-#define NOBLUDGEON         2    // When an item has this it produces no "X has been hit by Y with Z" message with the default handler.
-#define AIRTIGHT           4    // Functions with internals.
-#define USEDELAY           8    // 1 second extra delay on use. (Can be used once every 2s)
-#define NOSHIELD           16   // Weapon not affected by shield.
-#define CONDUCT            32   // Conducts electricity. (metal etc.)
-#define ON_BORDER          64   // Item has priority to check when entering or leaving.
-#define NOBLOODY           512  // Used for items if they don't want to get a blood overlay.
-#define NODELAY            8192 // 1 second attack-by delay skipped (Can be used once every 0.2s). Most objects have a 1s attack-by delay, which doesn't require a flag.
-
-//Use these flags to indicate if an item obscures the specified slots from view, whereas body_parts_covered seems to be used to indicate what body parts the item protects.
-#define GLASSESCOVERSEYES 256
-#define    MASKCOVERSEYES 256 // Get rid of some of the other retardation in these flags.
-#define    HEADCOVERSEYES 256 // Feel free to reallocate these numbers for other purposes.
-#define   MASKCOVERSMOUTH 512 // On other items, these are just for mask/head.
-#define   HEADCOVERSMOUTH 512
-
-#define THICKMATERIAL          256  // From /tg/station: prevents syringes, parapens and hyposprays if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with NOSLIP for shoes)
-#define NOSLIP                 256  // Prevents from slipping on wet floors, in space, etc.
-#define OPENCONTAINER          1024 // Is an open container for chemistry purposes.
-#define BLOCK_GAS_SMOKE_EFFECT 2048 // Blocks the effect that chemical clouds would have on a mob -- glasses, mask and helmets ONLY! (NOTE: flag shared with ONESIZEFITSALL)
-#define ONESIZEFITSALL         2048
-#define PHORONGUARD            4096 // Does not get contaminated by phoron.
-#define	NOREACT                4096 // Reagents don't react inside this container.
-#define BLOCKHEADHAIR          4    // Temporarily removes the user's hair overlay. Leaves facial hair.
-#define BLOCKHAIR              8192 // Temporarily removes the user's hair, facial and otherwise.
-
 // Turf-only flags.
 #define NOJAUNT 1 // This is used in literally one place, turf.dm, to block ethereal jaunt.
 

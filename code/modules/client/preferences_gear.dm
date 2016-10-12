@@ -230,7 +230,7 @@ var/global/list/gear_datums = list()
 
  /datum/gear/bowler
 	display_name = "hat, bowler"
-	path = /obj/item/clothing/head/bowler
+	path = /obj/item/clothing/head/bowlerhat
 	slot = slot_head
 
 /datum/gear/fez

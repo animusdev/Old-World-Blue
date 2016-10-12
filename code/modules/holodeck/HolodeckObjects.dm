@@ -175,17 +175,15 @@
 	throw_range = 5
 	throwforce = 0
 	w_class = 2.0
-	flags = NOSHIELD | NOBLOODY
+	flags = NOBLOODY
 	var/active = 0
 	var/item_color
 
 /obj/item/weapon/holo/esword/green
-	New()
-		item_color = "green"
+	item_color = "green"
 
 /obj/item/weapon/holo/esword/red
-	New()
-		item_color = "red"
+	item_color = "red"
 
 /obj/item/weapon/holo/esword/IsShield()
 	if(active)
@@ -291,10 +289,6 @@
 /obj/machinery/readybutton/attack_ai(mob/user as mob)
 	user << "The station AI is not to interact with these devices!"
 	return
-
-/obj/machinery/readybutton/New()
-	..()
-
 
 /obj/machinery/readybutton/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	user << "The device is a solid button, there's nothing you can do with it!"

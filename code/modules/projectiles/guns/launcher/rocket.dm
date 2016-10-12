@@ -7,7 +7,7 @@
 	throw_speed = 2
 	throw_range = 10
 	force = 5.0
-	flags =  CONDUCT | USEDELAY
+	flags =  CONDUCT
 	slot_flags = 0
 	origin_tech = "combat=8;materials=5"
 	fire_sound = 'sound/effects/bang.ogg'
@@ -20,7 +20,7 @@
 /obj/item/weapon/gun/launcher/rocket/examine(mob/user, return_dist=1)
 	.=..()
 	if(.<=2)
-		user << "\blue [rockets.len] / [max_rockets] rockets."
+		user << "<span class='notice'>[rockets.len] / [max_rockets] rockets.</span>"
 
 /obj/item/weapon/gun/launcher/rocket/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/ammo_casing/rocket))

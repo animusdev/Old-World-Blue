@@ -1,11 +1,13 @@
 /obj/item/clothing/suit/armor
-	allowed = list( /obj/item/weapon/gun/energy, /obj/item/weapon/reagent_containers/spray/pepper, \
-					/obj/item/weapon/gun/projectile, /obj/item/ammo_magazine,/obj/item/ammo_casing, \
-					/obj/item/weapon/melee/baton, /obj/item/weapon/handcuffs,/obj/item/device/flashlight, \
-					/obj/item/weapon/melee/telebaton, /obj/item/clothing/head/helmet/security, \
-					/obj/item/clothing/mask/gas)
+	allowed = list(
+		/obj/item/weapon/gun/energy, /obj/item/weapon/reagent_containers/spray/pepper,
+		/obj/item/weapon/gun/projectile, /obj/item/ammo_magazine,/obj/item/ammo_casing,
+		/obj/item/weapon/melee/baton, /obj/item/weapon/handcuffs,/obj/item/device/flashlight,
+		/obj/item/weapon/melee/telebaton, /obj/item/clothing/head/helmet/security,
+		/obj/item/clothing/mask/gas
+	)
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
-	flags = THICKMATERIAL
+	item_flags = THICKMATERIAL
 
 	cold_protection = UPPER_TORSO|LOWER_TORSO
 	min_cold_protection_temperature = ARMOR_MIN_COLD_PROTECTION_TEMPERATURE
@@ -20,7 +22,6 @@
 	icon_state = "armor"
 	item_state = "armor"
 	blood_overlay_type = "armor"
-	flags = ONESIZEFITSALL
 	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/vest/security
@@ -54,7 +55,6 @@
 	name = "armored trenchcoat"
 	desc = "A trenchcoat augmented with a special alloy for some protection and style."
 	icon_state = "jensencoat"
-	flags_inv = 0
 
 /obj/item/clothing/suit/armor/riot
 	name = "Riot Suit"
@@ -117,11 +117,12 @@
 	icon_state = "deathsquad"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
-	flags = STOPPRESSUREDAMAGE | THICKMATERIAL
+	item_flags = STOPPRESSUREDAMAGE | THICKMATERIAL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
 	allowed = list( /obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton, \
 					/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1
+	w_class = 5
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 100, rad = 100)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
@@ -143,7 +144,6 @@
 	desc = "An armored vest with a detective's badge on it."
 	icon_state = "detective-armor"
 	blood_overlay_type = "armor"
-	flags = ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
 

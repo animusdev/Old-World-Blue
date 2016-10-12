@@ -3,8 +3,7 @@
 	desc = "To stop that awful noise."
 	icon_state = "muzzle"
 	item_state = "muzzle"
-	flags = MASKCOVERSMOUTH
-	body_parts_covered = 0
+	body_parts_covered = FACE
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 
@@ -22,8 +21,10 @@
 
 /obj/item/clothing/mask/muzzle/tape
 	name = "tape piece"
+	desc = "It's a robust DIY muzzle!"
 	icon_state = "tape"
 	item_state = "tape"
+	w_class = 1
 
 /obj/item/clothing/mask/muzzle/tape/dropped()
 	name = "utilized tape piece"
@@ -37,8 +38,8 @@
 	icon_state = "sterile"
 	item_state = "sterile"
 	w_class = 2
-	flags = MASKCOVERSMOUTH
-	body_parts_covered = 0
+	body_parts_covered = FACE
+	item_flags = FLEXIBLEMATERIAL
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 60, rad = 0)
@@ -64,32 +65,29 @@
 	flags_inv = HIDEFACE
 	body_parts_covered = 0
 
-// For Terti with love <3.
 /obj/item/clothing/mask/arafatka
 	name = "shemagh"
 	desc = "Traditional Middle Eastern headdress fashioned from a square scarf."
 	icon_state = "arafatka"
 	item_state = "arafatka"
-	flags = MASKCOVERSMOUTH
 	slot_flags = SLOT_HEAD|SLOT_MASK
+	item_flags = FLEXIBLEMATERIAL
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 
 /obj/item/clothing/mask/arafatka/equipped(mob/living/carbon/human/H, var/slot)
 	if(slot == slot_wear_mask)
-		flags |= MASKCOVERSMOUTH
-		body_parts_covered = FACE|EYES
+		body_parts_covered = FACE
 	else
-		flags &= ~MASKCOVERSMOUTH
 		body_parts_covered = HEAD
+
 
 /obj/item/clothing/mask/pig
 	name = "pig mask"
 	desc = "A rubber pig mask."
 	icon_state = "pig"
 	item_state = "pig"
-	flags = BLOCKHAIR
-	flags_inv = HIDEFACE
+	flags_inv = HIDEFACE|BLOCKHAIR
 	w_class = 2
 	siemens_coefficient = 0.9
 	body_parts_covered = HEAD|FACE|EYES
@@ -99,8 +97,7 @@
 	desc = "A mask made of soft vinyl and latex, representing the head of a horse."
 	icon_state = "horsehead"
 	item_state = "horsehead"
-	flags = BLOCKHAIR
-	flags_inv = HIDEFACE
+	flags_inv = HIDEFACE|BLOCKHAIR
 	body_parts_covered = HEAD|FACE|EYES
 	w_class = 2
 	var/voicechange = 0
@@ -112,6 +109,7 @@
 	icon_state = "blueneckscarf"
 	item_state = "blueneckscarf"
 	w_class = 2
+	item_flags = FLEXIBLEMATERIAL
 	gas_transfer_coefficient = 0.90
 
 /obj/item/clothing/mask/redscarf
@@ -120,6 +118,7 @@
 	icon_state = "redwhite_scarf"
 	item_state = "redwhite_scarf"
 	w_class = 2
+	item_flags = FLEXIBLEMATERIAL
 	gas_transfer_coefficient = 0.90
 
 /obj/item/clothing/mask/greenscarf
@@ -128,6 +127,7 @@
 	icon_state = "green_scarf"
 	item_state = "green_scarf"
 	w_class = 2
+	item_flags = FLEXIBLEMATERIAL
 	gas_transfer_coefficient = 0.90
 
 /obj/item/clothing/mask/ninjascarf
@@ -136,6 +136,7 @@
 	icon_state = "ninja_scarf"
 	item_state = "ninja_scarf"
 	w_class = 2
+	item_flags = FLEXIBLEMATERIAL
 	gas_transfer_coefficient = 0.90
 	siemens_coefficient = 0
 
@@ -144,8 +145,8 @@
 	desc = "A simple cloth rag that bears the flag of the first nations."
 	icon_state = "flagmask"
 	item_state = "flagmask"
-	flags = MASKCOVERSMOUTH
 	w_class = 2
+	item_flags = FLEXIBLEMATERIAL
 	gas_transfer_coefficient = 0.90
 
 /obj/item/clothing/mask/tuskmask
@@ -153,6 +154,7 @@
 	desc = "Standart Boars mask."
 	icon_state = "tuskmask"
 	w_class = 1
+	item_flags = FLEXIBLEMATERIAL
 	gas_transfer_coefficient = 0.90
 	siemens_coefficient = 0
 

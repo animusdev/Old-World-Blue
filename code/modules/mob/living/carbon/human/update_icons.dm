@@ -343,12 +343,12 @@ var/global/list/damage_icon_parts = list()
 	overlays_standing[HAIR_LAYER]	= null
 
 	var/obj/item/organ/external/head/head_organ = get_organ(BP_HEAD)
-	if(!head_organ || head_organ.is_stump() || (head_organ.status & ORGAN_DESTROYED) || (SKELETON in src.mutations))
+	if(!head_organ || head_organ.is_stump() || SKELETON in src.mutations)
 		if(update_icons)   update_icons()
 		return
 
 	//masks and helmets can obscure our hair.
-	if( (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)))
+	if( (head && (head.flags_inv & BLOCKHAIR)) || (wear_mask && (wear_mask.flags_inv & BLOCKHAIR)))
 		if(update_icons)   update_icons()
 		return
 
@@ -364,7 +364,7 @@ var/global/list/damage_icon_parts = list()
 
 			face_standing.Blend(facial, ICON_OVERLAY)
 
-	if(h_style && !(head && (head.flags & BLOCKHEADHAIR)))
+	if(h_style && !(head && (head.flags_inv & BLOCKHEADHAIR)))
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
 		if(hair_style && (src.species.get_bodytype() in hair_style.species_allowed))
 			var/icon/hair = new/icon(hair_style.icon, hair_style.icon_state)
@@ -554,7 +554,7 @@ var/global/list/damage_icon_parts = list()
 	if(update_icons)   update_icons()
 
 /mob/living/carbon/human/update_inv_ears(var/update_icons=1)
-	if( (head && (head.flags & (BLOCKHAIR | BLOCKHEADHAIR))) || (wear_mask && (wear_mask.flags & (BLOCKHAIR | BLOCKHEADHAIR))))
+	if( (head && (head.flags_inv & (BLOCKHAIR | BLOCKHEADHAIR))) || (wear_mask && (wear_mask.flags_inv & (BLOCKHAIR | BLOCKHEADHAIR))))
 		if(update_icons)   update_icons()
 		return
 

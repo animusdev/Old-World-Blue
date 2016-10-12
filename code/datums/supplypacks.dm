@@ -1225,7 +1225,7 @@ var/list/all_supply_groups = list(
 
 /datum/supply_packs/formal_wear
 	contains = list(
-		/obj/item/clothing/head/bowler,
+		/obj/item/clothing/head/bowlerhat,
 		/obj/item/clothing/head/that,
 		/obj/item/clothing/suit/storage/toggle/lawyer/bluejacket,
 		/obj/item/clothing/suit/storage/lawyer/purpjacket,

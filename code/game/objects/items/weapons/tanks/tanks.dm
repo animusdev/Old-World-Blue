@@ -136,11 +136,11 @@
 				mask_check = 1
 
 		if(mask_check)
-			if(location.wear_mask && (location.wear_mask.flags & AIRTIGHT))
+			if(location.wear_mask && (location.wear_mask.item_flags & AIRTIGHT))
 				data["maskConnected"] = 1
 			else if(ishuman(location))
 				var/mob/living/carbon/human/H = location
-				if(H.head && (H.head.flags & AIRTIGHT))
+				if(H.head && (H.head.item_flags & AIRTIGHT))
 					data["maskConnected"] = 1
 
 	// update the ui if it exists, returns null if no ui is passed/found
@@ -184,20 +184,20 @@
 			else
 
 				var/can_open_valve
-				if(location.wear_mask && (location.wear_mask.flags & AIRTIGHT))
+				if(location.wear_mask && (location.wear_mask.item_flags & AIRTIGHT))
 					can_open_valve = 1
 				else if(ishuman(location))
 					var/mob/living/carbon/human/H = location
-					if(H.head && (H.head.flags & AIRTIGHT))
+					if(H.head && (H.head.item_flags & AIRTIGHT))
 						can_open_valve = 1
 
 				if(can_open_valve)
 					location.internal = src
-					usr << "\blue You open \the [src] valve."
+					usr << "<span class='notice'>You open \the [src] valve.</span>"
 					if (location.internals)
 						location.internals.icon_state = "internal1"
 				else
-					usr << "\blue You need something to connect to \the [src]."
+					usr << "<span class='warning'>You need something to connect to \the [src].</span>"
 
 	src.add_fingerprint(usr)
 	return 1

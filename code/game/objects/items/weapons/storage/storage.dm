@@ -338,7 +338,7 @@
 
 	if(istype(W, /obj/item/weapon/tray))
 		var/obj/item/weapon/tray/T = W
-		if(T.calc_carry() > 0)
+		if(T.carrying.len)
 			if(prob(85))
 				user << "\red The tray won't fit in [src]."
 				return

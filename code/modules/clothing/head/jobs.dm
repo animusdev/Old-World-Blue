@@ -21,40 +21,33 @@
 	icon_state = "officercap"
 
 //Captain: This probably shouldn't be space-worthy
-/obj/item/clothing/head/helmet/cap
+/obj/item/clothing/head/cap
 	name = "captain's cap"
 	desc = "You fear to wear it for the negligence it brings."
 	icon_state = "capcap"
-	flags_inv = 0
-	body_parts_covered = 0
-	cold_protection = HEAD
-	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.9
-	body_parts_covered = 0
 
 //Chaplain
 /obj/item/clothing/head/chaplain_hood
 	name = "chaplain's hood"
 	desc = "It's hood that covers the head. It keeps you warm during the space winters."
 	icon_state = "chaplain_hood"
-	flags = HEADCOVERSEYES|BLOCKHAIR
-	siemens_coefficient = 0.9
-	body_parts_covered = HEAD|EYES
+	flags_inv = BLOCKHAIR
+	body_parts_covered = HEAD
 
 //Chaplain
 /obj/item/clothing/head/nun_hood
 	name = "nun hood"
 	desc = "Maximum piety in this star system."
 	icon_state = "nun_hood"
-	flags = HEADCOVERSEYES|BLOCKHAIR
-	siemens_coefficient = 0.9
+	flags_inv = BLOCKHAIR
+	body_parts_covered = HEAD
 
 //Mime
 /obj/item/clothing/head/beret
 	name = "beret"
 	desc = "A beret, an artists favorite headwear."
 	icon_state = "beret"
-	siemens_coefficient = 0.9
 	body_parts_covered = 0
 
 //Security
@@ -162,7 +155,7 @@
 	name = "surgical cap"
 	desc = "A cap surgeons wear during operations. Keeps their hair from tickling your internal organs."
 	icon_state = "surgcap_blue"
-	flags = BLOCKHEADHAIR
+	flags_inv = BLOCKHEADHAIR
 
 /obj/item/clothing/head/surgery/purple
 	desc = "A cap surgeons wear during operations. \

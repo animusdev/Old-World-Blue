@@ -114,19 +114,12 @@ This saves us from having to call add_fingerprint() any time something is put in
 		update_inv_glasses()
 	else if (W == head)
 		head = null
-
-		var/update_hair = 0
-		if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
-			update_hair = 1
-		else if(istype(W, /obj/item))
+		if(istype(W, /obj/item))
 			var/obj/item/I = W
-			if(I.flags_inv & HIDEMASK)
-				update_hair = 1
-		if(update_hair)
-			update_hair(0)	//rebuild hair
-			update_inv_ears(0)
-			update_inv_wear_mask(0)
-
+			if(I.flags_inv & (HIDEMASK|BLOCKHAIR|BLOCKHEADHAIR))
+				update_hair(0)	//rebuild hair
+				update_inv_ears(0)
+				update_inv_wear_mask(0)
 		update_inv_head()
 	else if (W == l_ear)
 		l_ear = null
@@ -142,9 +135,11 @@ This saves us from having to call add_fingerprint() any time something is put in
 		update_inv_belt()
 	else if (W == wear_mask)
 		wear_mask = null
-		if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
-			update_hair(0)	//rebuild hair
-			update_inv_ears(0)
+		if(istype(W, /obj/item))
+			var/obj/item/I = W
+			if(I.flags_inv & (BLOCKHAIR|BLOCKHEADHAIR))
+				update_hair(0)	//rebuild hair
+				update_inv_ears(0)
 		if(internal)
 			if(internals)
 				internals.icon_state = "internal0"
@@ -212,7 +207,7 @@ This saves us from having to call add_fingerprint() any time something is put in
 			update_inv_back(redraw_mob)
 		if(slot_wear_mask)
 			src.wear_mask = W
-			if((wear_mask.flags & BLOCKHAIR) || (wear_mask.flags & BLOCKHEADHAIR))
+			if(wear_mask.flags_inv & (BLOCKHAIR|BLOCKHEADHAIR))
 				update_hair(redraw_mob)	//rebuild hair
 				update_inv_ears(0)
 			W.equipped(src, slot)
@@ -258,7 +253,7 @@ This saves us from having to call add_fingerprint() any time something is put in
 			update_inv_gloves(redraw_mob)
 		if(slot_head)
 			src.head = W
-			if((head.flags & BLOCKHAIR) || (head.flags & BLOCKHEADHAIR) || (head.flags_inv & HIDEMASK))
+			if(head.flags_inv & (BLOCKHAIR|BLOCKHEADHAIR|HIDEMASK))
 				update_hair(redraw_mob)	//rebuild hair
 				update_inv_ears(0)
 				update_inv_wear_mask(0)
@@ -270,8 +265,6 @@ This saves us from having to call add_fingerprint() any time something is put in
 			update_inv_shoes(redraw_mob)
 		if(slot_wear_suit)
 			src.wear_suit = W
-			if(wear_suit.flags_inv & HIDESHOES)
-				update_inv_shoes(0)
 			W.equipped(src, slot)
 			update_inv_wear_suit(redraw_mob)
 		if(slot_w_uniform)
@@ -332,10 +325,10 @@ This saves us from having to call add_fingerprint() any time something is put in
 	switch(slot)
 		if(slot_wear_mask)
 			covering = src.head
-			check_flags = HEADCOVERSMOUTH
+			check_flags = FACE
 		if(slot_glasses)
 			covering = src.head
-			check_flags = HEADCOVERSEYES
+			check_flags = EYES
 		if(slot_gloves, slot_w_uniform)
 			covering = src.wear_suit
 		if(slot_socks)
@@ -343,10 +336,9 @@ This saves us from having to call add_fingerprint() any time something is put in
 		if(slot_underwear, slot_undershirt)
 			covering = src.w_uniform
 
-	if(covering)
-		if((covering.body_parts_covered & I.body_parts_covered) || (covering.flags & check_flags))
-			user << "<span class='warning'>\The [covering] is in the way.</span>"
-			return 0
+	if(covering && (covering.body_parts_covered & (I.body_parts_covered|check_flags)))
+		user << "<span class='warning'>\The [covering] is in the way.</span>"
+		return 0
 	return 1
 
 /mob/living/carbon/human/get_equipped_item(var/slot)

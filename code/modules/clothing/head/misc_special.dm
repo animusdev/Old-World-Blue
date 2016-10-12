@@ -15,7 +15,6 @@
 	name = "welding helmet"
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye."
 	icon_state = "welding"
-	flags = HEADCOVERSEYES | HEADCOVERSMOUTH
 	item_state = "welding"
 	matter = list(DEFAULT_WALL_MATERIAL = 3000, "glass" = 1000)
 	var/up = 0
@@ -37,13 +36,13 @@
 	if(usr.canmove && !usr.stat && !usr.restrained())
 		if(src.up)
 			src.up = !src.up
-			src.flags |= (HEADCOVERSEYES | HEADCOVERSMOUTH)
+			body_parts_covered |= (EYES|FACE)
 			flags_inv |= (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			icon_state = initial(icon_state)
 			usr << "You flip the [src] down to protect your eyes."
 		else
 			src.up = !src.up
-			src.flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
+			body_parts_covered &= ~(EYES|FACE)
 			flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			icon_state = "[initial(icon_state)]up"
 			usr << "You push the [src] up out of your face."
@@ -74,12 +73,12 @@ obj/item/clothing/head/welding/blue
 	name = "cake-hat"
 	desc = "It's tasty looking!"
 	icon_state = "cake0"
-	flags = HEADCOVERSEYES
 	var/onfire = 0.0
 	var/status = 0
-	var/fire_resist = T0C+1300	//this is the max temp it can stand before you start to cook. although it might not burn away, you take damage
+	//this is the max temp it can stand before you start to cook. although it might not burn away, you take damage
+	var/fire_resist = T0C+1300
 	var/processing = 0 //I dont think this is used anywhere.
-	body_parts_covered = EYES
+	body_parts_covered = HEAD
 
 /obj/item/clothing/head/cakehat/process()
 	if(!onfire)
@@ -137,10 +136,8 @@ obj/item/clothing/head/welding/blue
 	name = "carved pumpkin"
 	desc = "A jack o' lantern! Believed to ward off evil spirits."
 	icon_state = "hardhat0_pumpkin"//Could stand to be renamed
-	item_state = "hardhat0_pumpkin"
-	flags = HEADCOVERSEYES | HEADCOVERSMOUTH | BLOCKHAIR
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
-	body_parts_covered = HEAD|EYES
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|BLOCKHAIR
+	body_parts_covered = HEAD|FACE|EYES
 	brightness_on = 2
 	light_overlay = "helmet_light"
 	w_class = 3
@@ -174,7 +171,7 @@ obj/item/clothing/head/welding/blue
 	desc = "You can hear the distant sounds of rhythmic electronica."
 	icon_state = "richard"
 	body_parts_covered = HEAD|FACE
-	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags_inv = BLOCKHAIR
 
 /obj/item/clothing/head/vox_cap
 	name = "vox captain's hat"
