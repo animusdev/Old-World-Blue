@@ -236,11 +236,17 @@
 
 	return 1
 
-/datum/preferences/proc/save_character()
+/datum/preferences/proc/save_character(slot)
 	if(!path)				return 0
 	var/savefile/S = new /savefile(path)
 	if(!S)					return 0
-	S.cd = "/character[default_slot]"
+	S.cd = "/"
+	if(!slot)	slot = default_slot
+	slot = sanitize_integer(slot, 1, config.character_slots, initial(default_slot))
+	if(slot != default_slot)
+		default_slot = slot
+		S["default_slot"] << slot
+	S.cd = "/character[slot]"
 
 	//Character
 	S["real_name"]			<< real_name
@@ -306,6 +312,15 @@
 
 	S["uplinklocation"] << uplinklocation
 	S["exploit_record"]	<< exploit_record
+
+	return 1
+
+/datum/preferences/proc/delete_character()
+	if(!path)				return 0
+	var/savefile/S = new /savefile(path)
+	if(!S)					return 0
+	S.cd = "/"
+	S.dir -= "character[default_slot]"
 
 	return 1
 
