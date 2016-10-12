@@ -62,10 +62,6 @@ var/global/vs_control/vsc = new
 	var/airflow_delay_NAME = "Airflow Retrigger Delay"
 	var/airflow_delay_DESC = "Time in deciseconds before things can be moved by airflow again."
 
-	var/airflow_mob_delay = 10
-	var/airflow_mob_delay_NAME = "Airflow Retrigger Delay (Mob)"
-	var/airflow_mob_delay_DESC = "Time in deciseconds before mob can be moved by airflow again."
-
 	var/airflow_mob_slowdown = 3
 	var/airflow_mob_slowdown_NAME = "Airflow Slowdown"
 	var/airflow_mob_slowdown_DESC = "Time in tenths of a second to add as a delay to each movement by a mob if they are fighting the pull of the airflow."

@@ -82,22 +82,17 @@ obj/item/check_airflow_movable(n)
 /atom/movable/proc/GotoAirflowDest(n)
 	if(!airflow_dest) return
 	if(airflow_speed < 0) return
-	if(last_airflow > world.time - (ismob(src) ? vsc.airflow_mob_delay : vsc.airflow_delay)) return
+	if(last_airflow > world.time - vsc.airflow_delay) return
 	if(airflow_speed)
 		airflow_speed = n/max(get_dist(src,airflow_dest),1)
 		return
-	last_airflow = world.time
 	if(airflow_dest == loc)
 		step_away(src,loc)
+	if(!src.AirflowCanMove(n))
+		return
 	if(ismob(src))
-		if(src:status_flags & GODMODE)
-			return
-		if(ishuman(src))
-			if(src:buckled)
-				return
-			if(src:shoes && src:shoes.flags & NOSLIP)
-				return
-		src << "\red You are sucked away by airflow!"
+		src << "<span class='danger'>You are sucked away by airflow!</span>"
+	last_airflow = world.time
 	var/airflow_falloff = 9 - sqrt((x - airflow_dest.x) ** 2 + (y - airflow_dest.y) ** 2)
 	if(airflow_falloff < 1)
 		airflow_dest = null
@@ -133,8 +128,9 @@ obj/item/check_airflow_movable(n)
 		if(!istype(loc, /turf))
 			break
 		step_towards(src, src.airflow_dest)
-		if(ismob(src) && src:client)
-			src:client:move_delay = world.time + vsc.airflow_mob_slowdown
+		var/mob/M = src
+		if(istype(M) && M.client)
+			M.client.move_delay = world.time + vsc.airflow_mob_slowdown
 	airflow_dest = null
 	airflow_speed = 0
 	airflow_time = 0
@@ -145,24 +141,17 @@ obj/item/check_airflow_movable(n)
 /atom/movable/proc/RepelAirflowDest(n)
 	if(!airflow_dest) return
 	if(airflow_speed < 0) return
-	if(last_airflow > world.time - (ismob(src) ? vsc.airflow_mob_delay : vsc.airflow_delay)) return
+	if(last_airflow > world.time - vsc.airflow_delay) return
 	if(airflow_speed)
 		airflow_speed = n/max(get_dist(src,airflow_dest),1)
 		return
 	if(airflow_dest == loc)
 		step_away(src,loc)
+	if(!src.AirflowCanMove(n))
+		return
 	if(ismob(src))
-		if(src:status_flags & GODMODE)
-			return
-		if(ishuman(src))
-			if(src:buckled)
-				return
-			if(src:shoes)
-				if(istype(src:shoes, /obj/item/clothing/shoes/magboots))
-					if(src:shoes.flags & NOSLIP)
-						return
-		src << "\red You are pushed away by airflow!"
-		last_airflow = world.time
+		src << "<span clas='danger'>You are pushed away by airflow!</span>"
+	last_airflow = world.time
 	var/airflow_falloff = 9 - sqrt((x - airflow_dest.x) ** 2 + (y - airflow_dest.y) ** 2)
 	if(airflow_falloff < 1)
 		airflow_dest = null
@@ -214,7 +203,7 @@ atom/movable/proc/airflow_hit(atom/A)
 
 mob/airflow_hit(atom/A)
 	for(var/mob/M in hearers(src))
-		M.show_message("\red <B>\The [src] slams into \a [A]!</B>",1,"\red You hear a loud slam!",2)
+		M.show_message("<span class='danger'>\The [src] slams into \a [A]!</span>",1,"<span class='danger'>You hear a loud slam!</span>",2)
 	playsound(src.loc, "smash.ogg", 25, 1, -1)
 	var/weak_amt = istype(A,/obj/item) ? A:w_class : rand(1,5) //Heheheh
 	Weaken(weak_amt)
@@ -222,7 +211,7 @@ mob/airflow_hit(atom/A)
 
 obj/airflow_hit(atom/A)
 	for(var/mob/M in hearers(src))
-		M.show_message("\red <B>\The [src] slams into \a [A]!</B>",1,"\red You hear a loud slam!",2)
+		M.show_message("<span class='danger'>\The [src] slams into \a [A]!</span>",1,"<span class='danger'>You hear a loud slam!</span>",2)
 	playsound(src.loc, "smash.ogg", 25, 1, -1)
 	. = ..()
 
@@ -232,7 +221,7 @@ obj/item/airflow_hit(atom/A)
 
 mob/living/carbon/human/airflow_hit(atom/A)
 //	for(var/mob/M in hearers(src))
-//		M.show_message("\red <B>[src] slams into [A]!</B>",1,"\red You hear a loud slam!",2)
+//		M.show_message("<span class='danger'>[src] slams into [A]!</span>",1,"<span class='danger'>You hear a loud slam!</span>",2)
 	playsound(src.loc, "punch", 25, 1, -1)
 	if (prob(33))
 		loc:add_blood(src)
@@ -259,6 +248,6 @@ zone/proc/movables()
 	. = list()
 	for(var/turf/T in contents)
 		for(var/atom/movable/A in T)
-			if(!A.simulated || A.anchored || istype(A, /obj/effect) || isEye(A))
+			if(!A.simulated || A.anchored || istype(A, /obj/effect) || isobserver(A))
 				continue
 			. += A
