@@ -21,6 +21,7 @@
 #include "code\__defines\admin.dm"
 #include "code\__defines\atmos.dm"
 #include "code\__defines\chemical_effects.dm"
+#include "code\__defines\items_clothing.dm"
 #include "code\__defines\math_physics.dm"
 #include "code\__defines\misc.dm"
 #include "code\__defines\mobs.dm"
