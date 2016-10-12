@@ -25,7 +25,7 @@
 		new /obj/item/weapon/melee/baton/shocker(src)
 		new /obj/item/weapon/melee/telebaton(src)
 		new /obj/item/clothing/under/dress/dress_cap(src)
-		new /obj/item/clothing/head/helmet/formalcaptain(src)
+		new /obj/item/clothing/head/captain/formal(src)
 		new /obj/item/clothing/under/captainformal(src)
 		return
 
@@ -77,7 +77,7 @@
 		new /obj/item/clothing/under/rank/head_of_personnel/dark(src)
 		new /obj/item/clothing/under/rank/head_of_personnel/doctor(src)
 		new /obj/item/clothing/suit/storage/toggle/hop(src)
-		new /obj/item/clothing/head/helmet/hop(src)
+		new /obj/item/clothing/head/hop(src)
 		return
 
 
@@ -95,13 +95,13 @@
 			if(1) new /obj/item/weapon/storage/backpack/security(src)
 			if(2) new /obj/item/weapon/storage/backpack/satchel_sec(src)
 			if(3) new /obj/item/weapon/storage/backpack/duffle/security(src)
-		new /obj/item/clothing/head/helmet/HoS(src)
+		new /obj/item/clothing/head/HoS(src)
 		new /obj/item/clothing/suit/storage/vest/hos(src)
 		new /obj/item/clothing/under/rank/head_of_security/jensen(src)
 		new /obj/item/clothing/under/rank/head_of_security/corp(src)
 		new /obj/item/clothing/suit/armor/hos/jensen(src)
 		new /obj/item/clothing/suit/armor/hos(src)
-		new /obj/item/clothing/head/helmet/HoS/dermal(src)
+		new /obj/item/clothing/head/helmet/dermal(src)
 		new /obj/item/weapon/cartridge/hos(src)
 		new /obj/item/device/radio/headset/heads/hos/alt(src)
 		new /obj/item/clothing/glasses/sunglasses/sechud(src)

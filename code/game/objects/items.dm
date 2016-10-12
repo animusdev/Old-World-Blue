@@ -28,9 +28,13 @@
 	var/icon_action_button //If this is set, The item will make an action button on the player's HUD when picked up. The button will have the icon_action_button sprite from the screen1_action.dmi file.
 	var/action_button_name //This is the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. Note that icon_action_button needs to be set in order for the action button to appear.
 
-	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
-	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
+	//This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
+	//It should be used purely for appearance. For gameplay effects caused by items covering body parts, use body_parts_covered.
+	var/flags_inv = 0
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
+
+	var/item_flags = 0 //Miscellaneous flags pertaining to equippable objects.
+
 	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
 	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
 	var/permeability_coefficient = 1 // for chemicals/diseases
@@ -43,6 +47,8 @@
 	var/zoomdevicename = null //name used for message when binoculars/scope is used
 	var/zoom = 0 //1 if item is actively being used to zoom. For scoped guns and binoculars.
 
+	var/icon_override = null  //Used to override hardcoded clothing dmis in human clothing proc.
+
 	var/item_state = null // Used to specify the item state for the on-mob overlays.
 	var/item_state_slots = null //overrides the default item_state for particular slots.
 
@@ -51,7 +57,6 @@
 	// Only slot_l_hand/slot_r_hand are implemented at the moment. Others to be implemented as needed.
 	var/tmp/list/item_icons = null
 
-	var/icon_override = null  //Used to override hardcoded clothing dmis in human clothing proc.
 
 	/* Species-specific sprite sheets for inventory sprites
 	Works similarly to worn sprite_sheets, except the alternate sprites are used when the clothing/refit_for_species() proc is called.
@@ -160,7 +165,6 @@
 	else
 		if(isliving(src.loc))
 			return
-		//user.next_move = max(user.next_move+2,world.time + 2)
 	user.put_in_active_hand(src)
 	return
 
@@ -414,17 +418,15 @@ var/list/global/slot_flags_enumeration = list(
 /obj/item/proc/eyestab(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 
 	var/mob/living/carbon/human/H = M
-	if(istype(H) && ( \
-			(H.head && H.head.flags & HEADCOVERSEYES) || \
-			(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
-			(H.glasses && H.glasses.flags & GLASSESCOVERSEYES) \
-		))
-		// you can't stab someone in the eyes wearing a mask!
-		user << "\red You're going to need to remove the eye covering first."
-		return
+	if(istype(H))
+		for(var/obj/item/protection in list(H.head, H.wear_mask, H.glasses))
+			if(protection && (protection.body_parts_covered & EYES))
+				// you can't stab someone in the eyes wearing a mask!
+				user << "<span class='warning'>You're going to need to remove the eye covering first.</span>"
+				return
 
 	if(!M.has_eyes())
-		user << "\red You cannot locate any eyes on [M]!"
+		user << "<span class='warning'>You cannot locate any eyes on [M]!</span>"
 		return
 
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
@@ -435,7 +437,7 @@ var/list/global/slot_flags_enumeration = list(
 	//if((CLUMSY in user.mutations) && prob(50))
 	//	M = user
 		/*
-		M << "\red You stab yourself in the eye."
+		M << "<span class='warning'>You stab yourself in the eye.</span>"
 		M.sdisabilities |= BLIND
 		M.weakened += 4
 		M.adjustBruteLoss(10)
@@ -447,30 +449,30 @@ var/list/global/slot_flags_enumeration = list(
 
 		if(H != user)
 			for(var/mob/O in (viewers(M) - user - M))
-				O.show_message("\red [M] has been stabbed in the eye with [src] by [user].", 1)
-			M << "\red [user] stabs you in the eye with [src]!"
-			user << "\red You stab [M] in the eye with [src]!"
+				O.show_message("<span class='danger'>[M] has been stabbed in the eye with [src] by [user].</span>", 1)
+			M << "<span class='danger'>[user] stabs you in the eye with [src]!</span>"
+			user << "<span class='danger'>You stab [M] in the eye with [src]!</span>"
 		else
 			user.visible_message( \
-				"\red [user] has stabbed themself with [src]!", \
-				"\red You stab yourself in the eyes with [src]!" \
+				"<span class='danger'>[user] has stabbed themself with [src]!</span>", \
+				"<span class='danger'>You stab yourself in the eyes with [src]!</span>" \
 			)
 
 		eyes.damage += rand(3,4)
 		if(eyes.damage >= eyes.min_bruised_damage)
 			if(M.stat != 2)
 				if(eyes.robotic <= 1) //robot eyes bleeding might be a bit silly
-					M << "\red Your eyes start to bleed profusely!"
+					M << "<span class='danger'>Your eyes start to bleed profusely!</span>"
 			if(prob(50))
 				if(M.stat != 2)
-					M << "\red You drop what you're holding and clutch at your eyes!"
+					M << "<span class='warning'>You drop what you're holding and clutch at your eyes!</span>"
 					M.drop_item()
 				M.eye_blurry += 10
 				M.Paralyse(1)
 				M.Weaken(4)
 			if (eyes.damage >= eyes.min_broken_damage)
 				if(M.stat != 2)
-					M << "\red You go blind!"
+					M << "<span class='warning'>You go blind!</span>"
 		var/obj/item/organ/external/affecting = H.get_organ(BP_HEAD)
 		if(affecting.take_damage(7))
 			M:UpdateDamageIcon()
