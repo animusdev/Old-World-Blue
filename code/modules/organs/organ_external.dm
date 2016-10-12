@@ -231,6 +231,12 @@
 				return
 	..()
 
+/obj/item/organ/external/proc/get_tally()
+	if(status & ORGAN_SPLINTED)
+		return 0.5
+	else if(status & ORGAN_BROKEN)
+		return 1.5
+
 /obj/item/organ/external/proc/is_dislocated()
 	if(dislocated > 0)
 		return 1
