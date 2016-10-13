@@ -97,14 +97,14 @@ obj/var/contaminated = 0
 			if(!wear_mask)
 				burn_eyes()
 			else
-				if(!(wear_mask.flags & MASKCOVERSEYES))
+				if(!wear_mask.body_parts_covered & EYES)
 					burn_eyes()
 		else
-			if(!(head.flags & HEADCOVERSEYES))
+			if(!head.body_parts_covered & EYES)
 				if(!wear_mask)
 					burn_eyes()
 				else
-					if(!(wear_mask.flags & MASKCOVERSEYES))
+					if(!wear_mask.body_parts_covered & EYES)
 						burn_eyes()
 
 	//Genetic Corruption
@@ -116,10 +116,6 @@ obj/var/contaminated = 0
 
 
 /mob/living/carbon/human/proc/burn_eyes()
-	//The proc that handles eye burning.
-	if(!species.has_organ[O_EYES])
-		return
-
 	var/obj/item/organ/internal/eyes/E = internal_organs_by_name[O_EYES]
 	if(E)
 		if(prob(20)) src << "<span class='danger'>Your eyes burn!</span>"
@@ -135,19 +131,24 @@ obj/var/contaminated = 0
 		if(vsc.plc.PHORONGUARD_ONLY)
 			if(head.flags & PHORONGUARD)
 				return 1
-		else if(head.flags & HEADCOVERSEYES)
+		else if(head.body_parts_covered & EYES)
 			return 1
 	return 0
 
 /mob/living/carbon/human/proc/pl_suit_protected()
 	//Checks if the suit is adequately sealed.
-	if(wear_suit)
-		if(vsc.plc.PHORONGUARD_ONLY)
-			if(wear_suit.flags & PHORONGUARD) return 1
-		else
-			if(wear_suit.flags_inv & HIDEJUMPSUIT) return 1
-		//should check HIDETAIL as well, but for the moment tails are not a part that can be damaged separately
-	return 0
+	var/coverage = 0
+	for(var/obj/item/protection in list(wear_suit, gloves, shoes))
+		if(!protection)
+			continue
+		if(vsc.plc.PHORONGUARD_ONLY && !(protection.flags & PHORONGUARD))
+			continue
+		coverage |= protection.body_parts_covered
+
+	if(vsc.plc.PHORONGUARD_ONLY)
+		return 1
+
+	return BIT_TEST_ALL(coverage, UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS)
 
 /mob/living/carbon/human/proc/suit_contamination()
 	//Runs over the things that can be contaminated and does so.

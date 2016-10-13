@@ -15,16 +15,22 @@
 
 	if(!islist(newdata) || !newdata.len)
 		return
-	for(var/i in 1 to newdata.len)
-		if(!(newdata[i] in data))
-			data[newdata[i]] = 0
-		data[newdata[i]] += newdata[newdata[i]]
+
+	//add the new taste data
+	for(var/taste in newdata)
+		if(taste in data)
+			data[taste] += (newdata[taste] ? newdata[taste] : 1)
+		else
+			data[taste] = (newdata[taste] ? newdata[taste] : 1)
+
+	//cull all tastes below 10% of total
 	var/totalFlavor = 0
-	for(var/i in 1 to data.len)
-		totalFlavor += data[data[i]]
-	for(var/i in 1 to data.len) //cull the tasteless
-		if(data[data[i]]/totalFlavor * 100 < 10)
-			data -= data[i]
+	for(var/taste in data)
+		totalFlavor += data[taste]
+	var/min_taste = totalFlavor/10
+	for(var/taste in data)
+		if(data[taste] < min_taste)
+			data -= taste
 
 /datum/reagent/nutriment/affect_blood(var/mob/living/carbon/M, var/alien, var/removed)
 	if(!injectable)

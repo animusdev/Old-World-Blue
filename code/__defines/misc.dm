@@ -1,3 +1,4 @@
+#define subtypesof(type) (typesof(type) - type)
 //some colors
 #define COLOR_WHITE				"#FFFFFF"
 #define COLOR_SILVER			"#C0C0C0"

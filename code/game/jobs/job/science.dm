@@ -29,6 +29,7 @@
 	selection_color = "#ffddff"
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
+	economic_modifier = 15
 	access = list(access_rd, access_heads, access_tox, access_genetics, access_morgue,
 			            access_tox_storage, access_teleporter, access_sec_doors,
 			            access_research, access_robotics, access_xenobiology, access_ai_upload, access_tech_storage,
@@ -37,7 +38,10 @@
 			            access_tox_storage, access_teleporter, access_sec_doors,
 			            access_research, access_robotics, access_xenobiology, access_ai_upload, access_tech_storage,
 			            access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch)
-	minimal_player_age = 14
+
+	minimum_character_age = 30
+	minimal_player_age = 30
+	ideal_character_age = 50
 
 	uniform = /obj/item/clothing/under/rank/research_director
 	pda = /obj/item/device/pda/heads/rd
@@ -53,6 +57,7 @@
 	flag = SCIENTIST
 	total_positions = 5
 	spawn_positions = 3
+	economic_modifier = 7
 	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology, access_xenoarch)
 	minimal_access = list(access_tox, access_tox_storage, access_research, access_xenoarch)
 	alt_titles = list("Xenoarcheologist", "Anomalist", "Phoron Researcher")
@@ -84,11 +89,13 @@
 	flag = XENOBIOLOGIST
 	total_positions = 3
 	spawn_positions = 2
+	economic_modifier = 7
 	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology, access_hydroponics)
 	minimal_access = list(access_research, access_xenobiology, access_hydroponics, access_tox_storage)
 	alt_titles = list("Xenobotanist")
 
 	minimal_player_age = 14
+	minimum_character_age = 23
 
 	uniform = /obj/item/clothing/under/rank/xenobio
 	pda = /obj/item/device/pda/science
@@ -101,11 +108,16 @@
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "research director"
-	access = list(access_robotics, access_tox, access_tox_storage, access_tech_storage, access_morgue, access_research) //As a job that handles so many corpses, it makes sense for them to have morgue access.
-	minimal_access = list(access_robotics, access_tech_storage, access_morgue, access_research) //As a job that handles so many corpses, it makes sense for them to have morgue access.
+	economic_modifier = 5
+	//As a job that handles so many corpses, it makes sense for them to have morgue access.
+	access = list(
+		access_robotics, access_tox, access_tox_storage, access_tech_storage, access_morgue, access_research
+	)
+	minimal_access = list(access_robotics, access_tech_storage, access_morgue, access_research)
 	alt_titles = list("Biomechanical Engineer","Mechatronic Engineer")
 
 	minimal_player_age = 7
+	minimum_character_age = 23
 
 	uniform = /obj/item/clothing/under/rank/roboticist
 	ear = /obj/item/device/radio/headset/headset_rob

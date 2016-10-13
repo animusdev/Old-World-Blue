@@ -149,7 +149,7 @@
 	current_data.assoc_key = "solareclipse84"
 	current_data.req_titles = list("Head of Security")
 	current_data.character_name = "Dallas Brun"
-	current_data.item_path = /obj/item/clothing/head/helmet/HoS/solyarkin
+	current_data.item_path = /obj/item/clothing/head/HoS/solyarkin
 	L |= current_data
 
 	custom_items["solareclipse84"] = L

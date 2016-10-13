@@ -8,7 +8,6 @@
 	icon_state = "wall-locker"
 	density = 0
 	anchored = 1
-	icon_closed = "wall-locker"
 	icon_opened = "wall-lockeropen"
 
 //spawns endless (3 sets) amounts of breathmask, emergency oxy tank and crowbar
@@ -16,7 +15,7 @@
 /obj/structure/closet/walllocker/emerglocker
 	name = "emergency locker"
 	desc = "A wall mounted locker with emergency supplies."
-	var/list/spawnitems = list(/obj/item/weapon/tank/emergency_oxygen,/obj/item/clothing/mask/breath/toggleable)
+	var/list/spawnitems = list(/obj/item/weapon/tank/emergency_oxygen,/obj/item/clothing/mask/breath/toggleable,/obj/item/weapon/crowbar/red)
 	var/amount = 2 // spawns each items X times.
 	icon_state = "emerg"
 

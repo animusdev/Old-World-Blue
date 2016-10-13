@@ -2,20 +2,18 @@
 	name = "captain's locker"
 	req_access = list(access_captain)
 	icon_state = "capsecure"
-	icon_closed = "capsecure"
 	icon_opened = "capsecureopen"
 	icon_broken = "capsecurebroken"
-	icon_off = "capsecureoff"
 
 	New()
 		..()
-		switch(pick(1,2,3))
+		switch(rand(3))
 			if(1) new /obj/item/weapon/storage/backpack/duffle/cap(src)
 			if(2) new /obj/item/weapon/storage/backpack/satchel_cap(src)
 			if(3) new /obj/item/weapon/storage/backpack/captain(src)
 		new /obj/item/clothing/suit/captunic(src)
 		new /obj/item/clothing/suit/captunic/capjacket(src)
-		new /obj/item/clothing/head/helmet/cap(src)
+		new /obj/item/clothing/head/cap(src)
 		new /obj/item/clothing/under/rank/captain(src)
 		new /obj/item/clothing/suit/storage/vest(src)
 		new /obj/item/weapon/cartridge/captain(src)
@@ -27,7 +25,7 @@
 		new /obj/item/weapon/melee/baton/shocker(src)
 		new /obj/item/weapon/melee/telebaton(src)
 		new /obj/item/clothing/under/dress/dress_cap(src)
-		new /obj/item/clothing/head/helmet/formalcaptain(src)
+		new /obj/item/clothing/head/captain/formal(src)
 		new /obj/item/clothing/under/captainformal(src)
 		return
 
@@ -37,10 +35,8 @@
 	name = "head of personnel's locker"
 	req_access = list(access_hop)
 	icon_state = "hopsecure"
-	icon_closed = "hopsecure"
 	icon_opened = "hopsecureopen"
 	icon_broken = "hopsecurebroken"
-	icon_off = "hopsecureoff"
 
 	New()
 		..()
@@ -61,10 +57,8 @@
 	name = "head of personnel's attire"
 	req_access = list(access_hop)
 	icon_state = "hopsecure"
-	icon_closed = "hopsecure"
 	icon_opened = "hopsecureopen"
 	icon_broken = "hopsecurebroken"
-	icon_off = "hopsecureoff"
 
 	New()
 		..()
@@ -83,7 +77,7 @@
 		new /obj/item/clothing/under/rank/head_of_personnel/dark(src)
 		new /obj/item/clothing/under/rank/head_of_personnel/doctor(src)
 		new /obj/item/clothing/suit/storage/toggle/hop(src)
-		new /obj/item/clothing/head/helmet/hop(src)
+		new /obj/item/clothing/head/hop(src)
 		return
 
 
@@ -92,24 +86,22 @@
 	name = "head of security's locker"
 	req_access = list(access_hos)
 	icon_state = "hossecure"
-	icon_closed = "hossecure"
 	icon_opened = "hossecureopen"
 	icon_broken = "hossecurebroken"
-	icon_off = "hossecureoff"
 
 	New()
 		..()
-		switch(pick(1,2,3))
+		switch(rand(3))
 			if(1) new /obj/item/weapon/storage/backpack/security(src)
 			if(2) new /obj/item/weapon/storage/backpack/satchel_sec(src)
 			if(3) new /obj/item/weapon/storage/backpack/duffle/security(src)
-		new /obj/item/clothing/head/helmet/HoS(src)
+		new /obj/item/clothing/head/HoS(src)
 		new /obj/item/clothing/suit/storage/vest/hos(src)
 		new /obj/item/clothing/under/rank/head_of_security/jensen(src)
 		new /obj/item/clothing/under/rank/head_of_security/corp(src)
 		new /obj/item/clothing/suit/armor/hos/jensen(src)
 		new /obj/item/clothing/suit/armor/hos(src)
-		new /obj/item/clothing/head/helmet/HoS/dermal(src)
+		new /obj/item/clothing/head/helmet/dermal(src)
 		new /obj/item/weapon/cartridge/hos(src)
 		new /obj/item/device/radio/headset/heads/hos/alt(src)
 		new /obj/item/clothing/glasses/sunglasses/sechud(src)
@@ -133,15 +125,13 @@
 	name = "warden's locker"
 	req_access = list(access_armory)
 	icon_state = "wardensecure"
-	icon_closed = "wardensecure"
 	icon_opened = "wardensecureopen"
 	icon_broken = "wardensecurebroken"
-	icon_off = "wardensecureoff"
 
 
 	New()
 		..()
-		switch(pick(1,2,3))
+		switch(rand(3))
 			if(1) new /obj/item/weapon/storage/backpack/security(src)
 			if(2) new /obj/item/weapon/storage/backpack/satchel_sec(src)
 			if(3) new /obj/item/weapon/storage/backpack/duffle/security(src)
@@ -173,14 +163,12 @@
 	name = "security officer's locker"
 	req_access = list(access_brig)
 	icon_state = "sec"
-	icon_closed = "sec"
 	icon_opened = "secopen"
 	icon_broken = "secbroken"
-	icon_off = "secoff"
 
 	New()
 		..()
-		switch(pick(1,2,3))
+		switch(rand(3))
 			if(1) new /obj/item/weapon/storage/backpack/security(src)
 			if(2) new /obj/item/weapon/storage/backpack/satchel_sec(src)
 			if(3) new /obj/item/weapon/storage/backpack/duffle/security (src)
@@ -340,23 +328,18 @@
 		return
 
 /obj/structure/closet/secure_closet/wall/batman
-    name = "head of personnel's emergency suit"
-    desc = "It's a secure wall-mounted storage unit for justice."
-    icon_state = "batman_wall_closed"
-    icon_closed = "batman_wall_closed"
-    icon_opened = "batman_wall_open"
-    icon_broken = "batman_wall_broken"
-    icon_off = "batman_wall_off"
-    anchored = 1
-    density = 0
-    wall_mounted = 1
-    req_access = list(access_hop)
+	name = "head of personnel's emergency suit"
+	desc = "It's a secure wall-mounted storage unit for justice."
+	icon_state = "batman_wall_closed"
+	icon_opened = "batman_wall_open"
+	icon_broken = "batman_wall_broken"
+	req_access = list(access_hop)
 
-    New()
-        ..()
-        new /obj/item/clothing/mask/gas/batman(src)
-        new /obj/item/clothing/under/batman(src)
-        new /obj/item/clothing/gloves/black/batman(src)
-        new /obj/item/clothing/shoes/swat/batman(src)
-        new /obj/item/weapon/storage/belt/security/batman(src)
-        return
+	New()
+		..()
+		new /obj/item/clothing/mask/gas/batman(src)
+		new /obj/item/clothing/under/batman(src)
+		new /obj/item/clothing/gloves/black/batman(src)
+		new /obj/item/clothing/shoes/swat/batman(src)
+		new /obj/item/weapon/storage/belt/security/batman(src)
+		return

@@ -1,15 +1,20 @@
 /obj/item/clothing
 	name = "clothing"
 	siemens_coefficient = 0.9
-	var/on_mob_icon = "" 				//If set used instead icon_state for mob drawing.
+	var/wear_state = "" 				//If set used instead icon_state for mob drawing.
 	var/list/species_restricted = null  //Only these species can wear this kit.
 	var/gunshot_residue //Used by forensics.
 
 	/*
 		Sprites used when the clothing item is refit. This is done by setting icon_override.
-		Ideally, sprite_sheets_refit should be used for "hard" clothing items that can't change shape very well to fit the wearer (e.g. helmets, hardsuits),
+		Ideally, sprite_sheets_refit should be used for "hard" clothing items that can't change shape very well to fit the wearer (e.g. helmets, hardsuits).
 	*/
 	var/list/sprite_sheets_refit = null
+
+/obj/item/clothing/New()
+	..()
+	if(!wear_state)
+		wear_state = icon_state
 
 //Updates the icons of the mob wearing the clothing item, if any.
 /obj/item/clothing/proc/update_clothing_icon()
@@ -89,13 +94,13 @@
 			species_restricted = list(target_species)
 
 	if(target_species == "Vox")
-		src.flags &= ~BLOCKHAIR
-		src.flags &= ~BLOCKHEADHAIR
+		flags_inv &= ~BLOCKHAIR
+		flags_inv &= ~BLOCKHEADHAIR
 	else
-		if(initial(src.flags)&BLOCKHAIR)
-			flags |= BLOCKHAIR
-		if(initial(src.flags)&BLOCKHEADHAIR)
-			flags |= BLOCKHEADHAIR
+		if(initial(flags_inv) & BLOCKHAIR)
+			flags_inv |= BLOCKHAIR
+		if(initial(flags_inv) & BLOCKHEADHAIR)
+			flags_inv |= BLOCKHEADHAIR
 
 	//Set icon
 	if (sprite_sheets_refit && (target_species in sprite_sheets_refit))
@@ -171,31 +176,6 @@
 		qdel(src)
 		return
 
-///////////////////////////////////////////////////////////////////////
-//Glasses
-/*
-SEE_SELF  // can see self, no matter what
-SEE_MOBS  // can see all mobs, no matter what
-SEE_OBJS  // can see all objs, no matter what
-SEE_TURFS // can see all turfs (and areas), no matter what
-SEE_PIXELS// if an object is located on an unlit area, but some of its pixels are
-          // in a lit area (via pixel_x,y or smooth movement), can see those pixels
-BLIND     // can't see anything
-*/
-/obj/item/clothing/glasses
-	name = "glasses"
-	icon = 'icons/obj/clothing/glasses.dmi'
-	w_class = 2.0
-	flags = GLASSESCOVERSEYES
-	slot_flags = SLOT_EYES
-	var/vision_flags = 0
-	var/darkness_view = 0//Base human is 2
-	var/see_invisible = -1
-
-/obj/item/clothing/glasses/update_clothing_icon()
-	if (ismob(src.loc))
-		var/mob/M = src.loc
-		M.update_inv_glasses()
 
 ///////////////////////////////////////////////////////////////////////
 //Gloves

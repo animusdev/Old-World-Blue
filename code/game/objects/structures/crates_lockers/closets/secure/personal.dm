@@ -7,7 +7,7 @@
 /obj/structure/closet/secure_closet/personal/New()
 	..()
 	spawn(2)
-		switch(pick(1,2,3))
+		switch(rand(3))
 			if(1) new /obj/item/weapon/storage/backpack(src)
 			if(2) new /obj/item/weapon/storage/backpack/satchel_norm(src)
 			if(3) new /obj/item/weapon/storage/backpack/duffle(src)
@@ -29,11 +29,9 @@
 	return
 
 /obj/structure/closet/secure_closet/personal/cabinet
-	icon_state = "cabinetdetective_locked"
-	icon_closed = "cabinetdetective"
+	icon_state = "cabinetdetective"
 	icon_opened = "cabinetdetective_open"
 	icon_broken = "cabinetdetective_broken"
-	icon_off = "cabinetdetective_broken"
 
 /obj/structure/closet/secure_closet/personal/cabinet/New()
 	..()
@@ -66,7 +64,7 @@
 				src.registered_name = I.registered_name
 				src.desc = "Owned by [I.registered_name]."
 		else
-			user << "\red Access Denied"
+			user << "<span class='warning'>Access Denied</span>"
 	else if( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
 		broken = 1
 		locked = 0
@@ -81,7 +79,7 @@
 			for(var/mob/O in viewers(user, 3))
 				O.show_message("\blue The locker has been sliced open by [user] with an energy blade!", 1, "\red You hear metal being sliced and sparks flying.", 2)
 	else
-		user << "\red Access Denied"
+		user << "<span class='warning'>Access Denied</span>"
 	return
 
 /obj/structure/closet/secure_closet/personal/verb/reset()
@@ -93,9 +91,9 @@
 	if(ishuman(usr))
 		src.add_fingerprint(usr)
 		if (src.locked || !src.registered_name)
-			usr << "\red You need to unlock it first."
+			usr << "<span class='warning'>You need to unlock it first.</span>"
 		else if (src.broken)
-			usr << "\red It appears to be broken."
+			usr << "<span class='warning'>It appears to be broken.</span>"
 		else
 			if (src.opened)
 				if(!src.close())

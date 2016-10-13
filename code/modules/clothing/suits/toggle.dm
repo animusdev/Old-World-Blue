@@ -1,7 +1,7 @@
 //Jackets with buttons, used for labcoats, IA jackets, First Responder jackets, and brown jackets.
 /obj/item/clothing/suit/storage/toggle
-	var/base_icon
-	var/on_mob_base_icon
+	var/base_state
+	var/base_wear_state
 	verb/toggle()
 		set name = "Toggle Coat Buttons"
 		set category = "Object"
@@ -9,24 +9,21 @@
 		if(!usr.canmove || usr.stat || usr.restrained())
 			return 0
 
-		if(icon_state != base_icon) //Will check whether icon state is currently set to the "open" or "closed" state and switch it around with a message to the user
-			icon_state = base_icon
-			on_mob_icon = on_mob_base_icon
+		if(icon_state != base_state) //Will check whether icon state is currently set to the "open" or "closed" state and switch it around with a message to the user
+			icon_state = base_state
+			wear_state = base_wear_state
 			usr << "You button up the coat."
 		else
-			icon_state = "[base_icon]_open"
-			if(on_mob_icon)
-				on_mob_icon = "[on_mob_base_icon]_open"
+			icon_state = base_state + "_open"
 			usr << "You unbutton the coat."
+			wear_state = base_wear_state + "_open"
 		update_clothing_icon()	//so our overlays update
 
-	New()
-		..()
-		if(!base_icon)
-			base_icon = icon_state
-			on_mob_base_icon = on_mob_icon
-
-
+/obj/item/clothing/suit/storage/toggle/New()
+	..()
+	if(!base_state)
+		base_state = icon_state
+		base_wear_state = wear_state
 
 /obj/item/clothing/suit/storage/toggle/varsityred
 	name = "red varsity jacket"
@@ -73,53 +70,53 @@
 	desc = "A black leather coat."
 	icon_state = "leather_jacket"
 	item_state = "leather_jacket"
-	on_mob_icon = "leather_jacket"
+	wear_state = "leather_jacket"
 	body_parts_covered = UPPER_TORSO|ARMS
 
 /obj/item/clothing/suit/storage/toggle/leather_jacket/fox
 	name = "fox leather jacket"
-	on_mob_icon = "leather_jacket_fox"
+	wear_state = "leather_jacket_fox"
 
 /obj/item/clothing/suit/storage/toggle/leather_jacket/wolf
 	name = "wolf leather jacket"
-	on_mob_icon = "leather_jacket_wolf"
+	wear_state = "leather_jacket_wolf"
 
 /obj/item/clothing/suit/storage/toggle/leather_jacket/mouse
 	name = "rat leather jacket"
-	on_mob_icon = "leather_jacket_mouse"
+	wear_state = "leather_jacket_mouse"
 
 /obj/item/clothing/suit/storage/toggle/leather_jacket/boar
 	name = "boar leather jacket"
-	on_mob_icon = "leather_jacket_boar"
+	wear_state = "leather_jacket_boar"
 
 /obj/item/clothing/suit/storage/toggle/leather_jacket/skull
 	name = "skull leather jacket"
-	on_mob_icon = "leather_jacket_skull"
+	wear_state = "leather_jacket_skull"
 
 /obj/item/clothing/suit/storage/toggle/leather_jacket/snake
 	name = "snake leather jacket"
-	on_mob_icon = "leather_jacket_snake"
+	wear_state = "leather_jacket_snake"
 
 /obj/item/clothing/suit/storage/toggle/leather_jacket/cerberus
 	name = "cerberus leather jacket"
-	on_mob_icon = "leather_jacket_cerberus"
+	wear_state = "leather_jacket_cerberus"
 
 /obj/item/clothing/suit/storage/toggle/leather_jacket/nanotrasen
 	name = "NT leather jacket"
 	desc = "A black leather coat. The letters NT are proudly displayed on the back."
-	on_mob_icon = "leather_jacket_nt"
+	wear_state = "leather_jacket_nt"
 
 /obj/item/clothing/suit/storage/toggle/brown_jacket
 	name = "leather jacket"
 	desc = "A brown leather coat."
 	icon_state = "brown_jacket"
 	item_state = "brown_jacket"
-	on_mob_icon = "brown_jacket"
+	wear_state = "brown_jacket"
 	body_parts_covered = UPPER_TORSO|ARMS
 
 /obj/item/clothing/suit/storage/toggle/brown_jacket/nanotrasen
 	desc = "A brown leather coat. The letters NT are proudly displayed on the back."
-	on_mob_icon = "brown_jacket_nt"
+	wear_state = "brown_jacket_nt"
 
 /obj/item/clothing/suit/storage/toggle/hoodie
 	name = "grey hoodie"

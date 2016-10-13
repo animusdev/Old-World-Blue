@@ -5,7 +5,7 @@
 	icon_key is [species.race_key][g][husk][fat][hulk][skeleton][s_tone]
 */
 var/global/list/human_icon_cache = list()
-var/global/list/tail_icon_cache = list() //key is [species.race_key][r_skin][g_skin][b_skin]
+var/global/list/tail_icon_cache = list() //key is [species.race_key][skin_color]
 var/global/list/light_overlay_cache = list()
 
 	///////////////////////
@@ -330,13 +330,6 @@ var/global/list/damage_icon_parts = list()
 	//END CACHED ICON GENERATION.
 	stand_icon.Blend(base_icon,ICON_OVERLAY)
 
-	//Underwear
-	if(underwear && species.flags & HAS_UNDERWEAR)
-		stand_icon.Blend(new /icon('icons/mob/human.dmi', "[underwear]_[g]"), ICON_OVERLAY)
-
-	if(undershirt && species.flags & HAS_UNDERWEAR)
-		stand_icon.Blend(new /icon('icons/mob/human.dmi', "[undershirt]_[g]"), ICON_OVERLAY)
-
 	//tail
 	update_tail_showing(0)
 
@@ -350,12 +343,12 @@ var/global/list/damage_icon_parts = list()
 	overlays_standing[HAIR_LAYER]	= null
 
 	var/obj/item/organ/external/head/head_organ = get_organ(BP_HEAD)
-	if(!head_organ || head_organ.is_stump() || (head_organ.status & ORGAN_DESTROYED) || (SKELETON in src.mutations))
+	if(!head_organ || head_organ.is_stump() || SKELETON in src.mutations)
 		if(update_icons)   update_icons()
 		return
 
 	//masks and helmets can obscure our hair.
-	if( (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)))
+	if( (head && (head.flags_inv & BLOCKHAIR)) || (wear_mask && (wear_mask.flags_inv & BLOCKHAIR)))
 		if(update_icons)   update_icons()
 		return
 
@@ -371,7 +364,7 @@ var/global/list/damage_icon_parts = list()
 
 			face_standing.Blend(facial, ICON_OVERLAY)
 
-	if(h_style && !(head && (head.flags & BLOCKHEADHAIR)))
+	if(h_style && !(head && (head.flags_inv & BLOCKHEADHAIR)))
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
 		if(hair_style && (src.species.get_bodytype() in hair_style.species_allowed))
 			var/icon/hair = new/icon(hair_style.icon, hair_style.icon_state)
@@ -561,7 +554,7 @@ var/global/list/damage_icon_parts = list()
 	if(update_icons)   update_icons()
 
 /mob/living/carbon/human/update_inv_ears(var/update_icons=1)
-	if( (head && (head.flags & (BLOCKHAIR | BLOCKHEADHAIR))) || (wear_mask && (wear_mask.flags & (BLOCKHAIR | BLOCKHEADHAIR))))
+	if( (head && (head.flags_inv & (BLOCKHAIR | BLOCKHEADHAIR))) || (wear_mask && (wear_mask.flags_inv & (BLOCKHAIR | BLOCKHEADHAIR))))
 		if(update_icons)   update_icons()
 		return
 
@@ -690,8 +683,9 @@ var/global/list/damage_icon_parts = list()
 
 		var/image/standing
 		var/t_state = wear_suit.icon_state
-		if(istype(wear_suit, /obj/item/clothing) && wear_suit:on_mob_icon)
-			t_state = wear_suit:on_mob_icon
+		if(istype(wear_suit, /obj/item/clothing))
+			t_state = wear_suit:wear_state
+
 		if(wear_suit.icon_override)
 			standing = image(wear_suit.icon_override, t_state)
 		else
@@ -797,9 +791,9 @@ var/global/list/damage_icon_parts = list()
 		return
 
 	var/image/standing = new/image('icons/mob/mob.dmi', "blank")
-	for( var/obj/item/clothing/hidden/C in list(h_socks, h_underwear, h_undershirt) )
+	for( var/obj/item/clothing/hidden/C in list(h_underwear, h_socks, h_undershirt) )
 		if(!C) continue
-		var/image/item = image(body_build.hidden_icon, C.item_state)
+		var/image/item = image(body_build.hidden_icon, C.wear_state)
 		if(C.color) item.color = C.color
 		standing.overlays += item
 

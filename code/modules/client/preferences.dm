@@ -56,8 +56,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/age = 30						//age of character
 	var/spawnpoint = "Arrivals Shuttle" //where this character will spawn (0-2).
 	var/b_type = "A+"					//blood type (not-chooseable)
-	var/underwear						//underwear type
-	var/undershirt						//undershirt type
+	var/underwear = "None"				//underwear type
+	var/undershirt = "None"				//undershirt type
+	var/socks = "None"					//socks type
 	var/backbag = 2						//backpack type
 	var/h_style = "Bald"				//Hair type
 	var/f_style = "Shaved"				//Face hair type
@@ -151,10 +152,10 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 	if(path)
 		dat += "<center>"
-		dat += "Slot <b>[slot_name]</b> - "
-		dat += "<a href=\"byond://?src=\ref[user];preference=open_load_dialog\">Load slot</a> - "
-		dat += "<a href=\"byond://?src=\ref[user];preference=save\">Save slot</a> - "
-		dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload slot</a>"
+		dat += "<a href=\"byond://?src=\ref[user];preference=open_load_dialog\">Load Setup</a> "
+		dat += "<a href=\"byond://?src=\ref[user];preference=open_save_dialog\">Save Setup</a> | "
+		dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload Slot</a> "
+		dat += "<a href=\"byond://?src=\ref[user];preference=reset\">Reset Slot</a>"
 		dat += "</center>"
 
 	else
@@ -290,15 +291,11 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	else
 		dat += "<br><br>"
 
-	var/list/undies = gender == MALE ? underwear_m : underwear_f
+	dat += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'><b>[underwear]</b></a><br>"
 
-	var/undies_key = get_key_by_value(undies,underwear)
-	if(!undies_key) undies_key = undies[undies.len]
-	dat += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'><b>[undies_key]</b></a><br>"
+	dat += "Undershirt: <a href='?_src_=prefs;preference=undershirt;task=input'><b>[undershirt]</b></a><br>"
 
-	var/undershirt_key = get_key_by_value(undershirt_t,undershirt)
-	if(!undershirt_key) undershirt_key = undershirt_t[undershirt_t.len]
-	dat += "Undershirt: <a href='?_src_=prefs;preference=undershirt;task=input'><b>[undershirt_key]</b></a><br>"
+	dat += "Socks: <a href='?_src_=prefs;preference=socks;task=input'><b>[socks]</b></a><br>"
 
 	dat += "Backpack Type:<br><a href ='?_src_=prefs;preference=bag;task=input'><b>[backbaglist[backbag]]</b></a><br>"
 
@@ -356,14 +353,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 				else
 					dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=be_special;num=[n]'><b>[src.be_special&(1<<n) ? "Yes" : "No"]</b></a><br>"
 			n++
-	dat += "</td></tr></table><hr><center>"
-
-	if(!IsGuestKey(user.key))
-		dat += "<a href='?_src_=prefs;preference=load'>Undo</a> - "
-		dat += "<a href='?_src_=prefs;preference=save'>Save Setup</a> - "
-
-	dat += "<a href='?_src_=prefs;preference=reset_all'>Reset Setup</a>"
-	dat += "</center></body></html>"
+	dat += "</td></tr></table></body></html>"
 
 	user << browse(dat, "window=preferences;size=560x736")
 
@@ -1062,12 +1052,13 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 				if("f_style")
 					f_style = random_facial_hair_style(gender, species)
 				if("underwear")
-					var/r = pick(underwear_m)
-					underwear = underwear_m[r]
+					underwear = pick(all_underwears)
 					ShowChoices(user)
 				if("undershirt")
-					var/r = pick(undershirt_t)
-					undershirt = undershirt_t[r]
+					undershirt = pick(all_undershirts)
+					ShowChoices(user)
+				if("socks")
+					socks = pick(all_socks)
 					ShowChoices(user)
 				if("eyes")
 					eyes_color = rgb(rand(0,255), rand(0,255), rand(0,255))
@@ -1214,24 +1205,27 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						f_style = new_f_style
 
 				if("underwear")
-					var/list/underwear_options
-					if(gender == MALE)
-						underwear_options = underwear_m
-					else
-						underwear_options = underwear_f
-
-					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in underwear_options
+					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in all_underwears
 					if(new_underwear)
-						underwear = underwear_options[new_underwear]
+						underwear = new_underwear
+					else
+						underwear = "None"
 					ShowChoices(user)
 
 				if("undershirt")
-					var/list/undershirt_options
-					undershirt_options = undershirt_t
-
-					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in undershirt_options
+					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in all_undershirts
 					if (new_undershirt)
-						undershirt = undershirt_options[new_undershirt]
+						undershirt = new_undershirt
+					else
+						new_undershirt = "None"
+					ShowChoices(user)
+
+				if("socks")
+					var/new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in all_socks
+					if (new_socks)
+						socks = new_socks
+					else
+						new_socks = "None"
 					ShowChoices(user)
 
 				if("eyes")
@@ -1262,9 +1256,11 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						backbag = backbaglist.Find(new_backbag)
 
 				if("nt_relation")
-					var/new_relation = input(user, \
-						"Choose your relation to NT. Note that this represents what others can find out about your character by researching your background, not what your character actually thinks.",\
-						"Character Preference")  as null|anything in list("Loyal", "Supportive", "Neutral", "Skeptical", "Opposed")
+					var/new_relation = input(
+						user,
+						"Choose your relation to NT. Note that this represents what others can find out about \
+						your character by researching your background, not what your character actually thinks.",
+						"Character Preference")  as null|anything in COMPANY_ALIGNMENTS
 					if(new_relation)
 						nanotrasen_relation = new_relation
 
@@ -1531,25 +1527,36 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 				if("ghost_radio")
 					chat_toggles ^= CHAT_GHOSTRADIO
 
-				if("save")
-					save_preferences()
-					save_character()
-
-				if("reload")
-					load_preferences()
-					load_character()
-
 				if("open_load_dialog")
 					if(!IsGuestKey(user.key))
 						spawn(2)
 							open_load_dialog(user)
 
-				if("close_load_dialog")
-					close_load_dialog(user)
-
-				if("changeslot")
+				if("load")
+					load_preferences()
 					load_character(text2num(href_list["num"]))
-					close_load_dialog(user)
+					close_dialog(user)
+
+				if("open_save_dialog")
+					if(!IsGuestKey(user.key))
+						spawn(2)
+							open_save_dialog(user)
+
+				if("save")
+					save_preferences()
+					save_character(text2num(href_list["num"]))
+					close_dialog(user)
+
+				if("close_dialog")
+					close_dialog(user)
+
+				if("reload")
+					load_preferences()
+					load_character()
+
+				if("reset")
+					delete_character()
+					load_character()
 
 	ShowChoices(user)
 	return 1
@@ -1625,10 +1632,6 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 				else if(status == "mechanical")
 					I.robotize()
 
-	character.underwear = underwear
-
-	character.undershirt = undershirt
-
 	if(backbag > 4 || backbag < 1)
 		backbag = 1 //Same as above
 	character.backbag = backbag
@@ -1647,7 +1650,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 	var/savefile/S = new /savefile(path)
 	if(S)
-		dat += "<b>Select a character slot to load</b><hr>"
+		dat += "<b>Select a character slot to load:</b><hr>"
 		var/name
 		for(var/i=1, i<= config.character_slots, i++)
 			S.cd = "/character[i]"
@@ -1655,12 +1658,33 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 			if(!name)	name = "Character[i]"
 			if(i==default_slot)
 				name = "<b>[name]</b>"
-			dat += "<a href='?_src_=prefs;preference=changeslot;num=[i];'>[name]</a><br>"
+			dat += "<a href='?_src_=prefs;preference=load;num=[i];'>[name]</a><br>"
 
 	dat += "<hr>"
-	dat += "<a href='byond://?src=\ref[user];preference=close_load_dialog'>Close</a><br>"
+	dat += "<a href='byond://?src=\ref[user];preference=close_dialog'>Close</a><br>"
 	dat += "</center></tt>"
 	user << browse(dat, "window=saves;size=300x390")
 
-/datum/preferences/proc/close_load_dialog(mob/user)
+/datum/preferences/proc/open_save_dialog(mob/user)
+	var/dat = "<body>"
+	dat += "<tt><center>"
+
+	var/savefile/S = new /savefile(path)
+	if(S)
+		dat += "<b>Select a character slot to save:</b><hr>"
+		var/name
+		for(var/i=1, i<= config.character_slots, i++)
+			S.cd = "/character[i]"
+			S["real_name"] >> name
+			if(!name)	name = "Character[i]"
+			if(i==default_slot)
+				name = "<b>[name]</b>"
+			dat += "<a href='?_src_=prefs;preference=save;num=[i];'>[name]</a><br>"
+
+	dat += "<hr>"
+	dat += "<a href='byond://?src=\ref[user];preference=close_dialog'>Close</a><br>"
+	dat += "</center></tt>"
+	user << browse(dat, "window=saves;size=300x390")
+
+/datum/preferences/proc/close_dialog(mob/user)
 	user << browse(null, "window=saves")

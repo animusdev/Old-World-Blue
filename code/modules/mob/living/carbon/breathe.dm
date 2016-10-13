@@ -1,5 +1,10 @@
 //Common breathing procs
 
+//Start of a breath chain, calls breathe()
+/mob/living/carbon/handle_breathing()
+	if(air_master.current_cycle%4==2 || failed_last_breath || (health < config.health_threshold_crit)) 	//First, resolve location and get a breath
+		breathe()
+
 /mob/living/carbon/proc/breathe()
 	//if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 	if(species && (species.flags & NO_BREATHE || species.flags & IS_SYNTHETIC)) return
@@ -27,7 +32,7 @@
 	if(internal)
 		if (!contents.Find(internal))
 			internal = null
-		if (!(wear_mask && (wear_mask.flags & AIRTIGHT)))
+		if (!(wear_mask && (wear_mask.item_flags & AIRTIGHT)))
 			internal = null
 		if(internal)
 			if (internals)
@@ -42,29 +47,27 @@
 	var/datum/gas_mixture/breath = null
 
 	var/datum/gas_mixture/environment
-	if(!loc) return null
+	if(loc)
+		environment = loc.return_air_for_internal_lifeform()
 
-	environment = loc.return_air_for_internal_lifeform()
+	if(environment)
+		breath = environment.remove_volume(volume_needed)
+		handle_chemical_smoke(environment) //handle chemical smoke while we're at it
 
-	if(!environment) return null
-
-	breath = environment.remove_volume(volume_needed)
-	handle_chemical_smoke(environment) //handle chemical smoke while we're at it
-
-	if(!(breath && breath.total_moles)) return null
-
-	//handle mask filtering
-	if(istype(wear_mask, /obj/item/clothing/mask) && breath)
-		var/obj/item/clothing/mask/M = wear_mask
-		var/datum/gas_mixture/filtered = M.filter_air(breath)
-		loc.assume_air(filtered)
-	return breath
+	if(breath)
+		//handle mask filtering
+		if(istype(wear_mask, /obj/item/clothing/mask) && breath)
+			var/obj/item/clothing/mask/M = wear_mask
+			var/datum/gas_mixture/filtered = M.filter_air(breath)
+			loc.assume_air(filtered)
+		return breath
+	return null
 
 //Handle possble chem smoke effect
 /mob/living/carbon/proc/handle_chemical_smoke(var/datum/gas_mixture/environment)
 	if(species && environment.return_pressure() < species.breath_pressure/5)
 		return //pressure is too low to even breathe in.
-	if(wear_mask && (wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT))
+	if(wear_mask && (wear_mask.item_flags & BLOCK_GAS_SMOKE_EFFECT))
 		return
 
 	for(var/obj/effect/effect/smoke/chem/smoke in view(1, src))

@@ -75,8 +75,12 @@
 			else
 				msg += " - Playing"
 
+
 			if(C.is_afk())
-				msg += " (AFK)"
+				var/seconds = C.last_activity_seconds()
+				msg += " (AFK - "
+				msg += "[round(seconds / 60)] minutes, "
+				msg += "[seconds % 60] seconds)"
 			msg += "\n"
 	else
 		for(var/client/C in admins)

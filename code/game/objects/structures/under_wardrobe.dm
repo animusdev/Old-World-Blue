@@ -6,6 +6,7 @@
 	density = 1
 
 /obj/structure/undies_wardrobe/attack_hand(mob/user as mob)
+/*
 	src.add_fingerprint(user)
 	var/mob/living/carbon/human/H = user
 	if(!ishuman(user) || (H.species && !(H.species.flags & HAS_UNDERWEAR)))
@@ -30,5 +31,5 @@
 		else
 			H.underwear = selection[pick]
 		H.update_body(1)
-
+*/
 	return 1

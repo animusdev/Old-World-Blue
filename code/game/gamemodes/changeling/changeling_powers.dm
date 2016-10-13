@@ -829,6 +829,14 @@ var/list/datum/dna/hivemind_bank = list()
 	var/datum/changeling/changeling = changeling_power(40)
 	if(!changeling)	return 0
 
+	var/obj/item/weapon/grab/G = src.get_active_hand()
+	if(!istype(G))
+		src << "<span class='warning'>We must be grabbing a creature in our active hand to transform them.</span>"
+		return 0
+	if(G.state < GRAB_NECK)
+		src << "<span class='warning'>We must have a tighter grip to transform this creature.</span>"
+		return 0
+
 
 
 	var/list/names = list()
@@ -842,17 +850,24 @@ var/list/datum/dna/hivemind_bank = list()
 	if(!chosen_dna)
 		return
 
-	var/mob/living/carbon/T = changeling_sting(40,/mob/proc/changeling_transformation_sting)
-	if(!T)	return 0
+	changeling.chem_charges -= 40
+	src.verbs -= /mob/proc/changeling_transformation_sting
+	spawn(10)	src.verbs += /mob/proc/changeling_transformation_sting
+
+	var/mob/living/carbon/T = G.affecting
 	if((HUSK in T.mutations) || (!ishuman(T) && !issmall(T)))
 		src << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
 		return 0
-	T.visible_message("<span class='warning'>[T] transforms!</span>")
-	T.dna = chosen_dna.Clone()
-	T.real_name = chosen_dna.real_name
-	T.UpdateAppearance()
-	domutcheck(T, null)
-	return 1
+	src << "<span class='notice'>We stealthily sting [T] in the neck.</span>"
+	if(!T.mind || !T.mind.changeling)
+		T.visible_message("<span class='warning'>[T] transforms!</span>")
+		T.dna = chosen_dna.Clone()
+		T.real_name = chosen_dna.real_name
+		T.UpdateAppearance()
+		domutcheck(T, null)
+		return 1
+	T << "<span class='warning'>You feel a tiny prick.</span>"
+	return
 
 /mob/proc/changeling_unfat_sting()
 	set category = "Changeling"

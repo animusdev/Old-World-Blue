@@ -140,18 +140,10 @@
 /obj/item/weapon/gift/fatherland_protect/attack_self(mob/living/carbon/human/user as mob)
 	if(istype(user))
 		if(user.gender == MALE)
-			new /obj/random/pistol(src)
-			gift = locate(/obj) in src
+			gift = new /obj/random/pistol(src)
 		else
-			var/surprize = pick(/obj/item/clothing/hidden/socks/white_norm,
-				/obj/item/clothing/hidden/socks/white_short,
-				/obj/item/clothing/hidden/socks/white_knee,
-				/obj/item/clothing/hidden/socks/black_norm,
-				/obj/item/clothing/hidden/socks/black_short,
-				/obj/item/clothing/hidden/socks/black_knee,
-				/obj/item/clothing/hidden/socks/thin_knee,
-				/obj/item/clothing/hidden/socks/striped_knee)
-			gift = new surprize
+			var/gitf_type = pick(typesof(/obj/item/clothing/hidden/socks) - /obj/item/clothing/hidden/socks)
+			gift = new gitf_type
 	..()
 
 /*

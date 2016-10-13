@@ -479,7 +479,6 @@ var/list/sacrificed = list()
 			D.s_tone = 35
 			D.eyes_color = "#C8C8C8"
 			D.update_eyes()
-			D.underwear = 0
 			D.key = ghost.key
 			cult.add_antagonist(D.mind)
 

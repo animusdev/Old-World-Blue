@@ -87,7 +87,7 @@ var/global/list/chameleons = list(
 	var/style_list = "head"
 	New()
 		..()
-		initialize_chameleon_list(style_list, parent_type, list(/obj/item/clothing/head/justice))
+		initialize_chameleon_list(style_list, parent_type)
 
 /obj/item/clothing/head/chameleon/emp_act(severity)
 	name = "grey cap"

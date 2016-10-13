@@ -13,8 +13,9 @@
 	randomize_hair_color("facial")
 	randomize_eyes_color()
 	randomize_skin_color()
-	underwear = rand(1,underwear_m.len)
-	undershirt = rand(1,undershirt_t.len)
+	underwear = pick(all_underwears)
+	undershirt = pick(all_undershirts)
+	socks = pick(all_socks)
 	backbag = rand(1,4)
 	age = rand(current_species.min_age, current_species.max_age)
 	if(H) copy_to(H,1)
@@ -222,6 +223,17 @@
 		else
 			preview_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
 
+	if(underwear && current_species.flags & HAS_UNDERWEAR)
+		var/obj/item/clothing/hidden/H = all_underwears[underwear]
+		preview_icon.Blend(icon(body_build.hidden_icon, initial(H.wear_state)), ICON_OVERLAY)
+	if(socks)
+		var/obj/item/clothing/hidden/H = all_socks[socks]
+		preview_icon.Blend(icon(body_build.hidden_icon, initial(H.wear_state)), ICON_OVERLAY)
+	if(undershirt && current_species.flags & HAS_UNDERWEAR)
+		var/obj/item/clothing/hidden/H = all_undershirts[undershirt]
+		preview_icon.Blend(icon(body_build.hidden_icon, initial(H.wear_state)), ICON_OVERLAY)
+
+
 	// Eyes color
 	var/icon/eyes = new/icon(icobase, "eyes[b]")
 	if ((current_species && (current_species.flags & HAS_EYE_COLOR)))
@@ -244,12 +256,6 @@
 		eyes.Blend(facial, ICON_OVERLAY)
 
 	preview_icon.Blend(eyes, ICON_OVERLAY)
-
-	if(underwear && current_species.flags & HAS_UNDERWEAR)
-		preview_icon.Blend(new/icon('icons/mob/human.dmi', "[underwear][g]"), ICON_OVERLAY)
-
-	if(undershirt && current_species.flags & HAS_UNDERWEAR)
-		preview_icon.Blend(new/icon('icons/mob/human.dmi', "[undershirt][g]"), ICON_OVERLAY)
 
 	var/icon/clothes = null
 	//This gives the preview icon clothes depending on which job(if any) is set to 'high'

@@ -195,16 +195,14 @@ steam.start() -- spawns the effect
 		affect(M)
 
 /obj/effect/effect/smoke/proc/affect(var/mob/living/carbon/M)
-	if (istype(M))
+	if (!istype(M))
 		return 0
-	if (M.internal != null)
-		if(M.wear_mask && (M.wear_mask.flags & AIRTIGHT))
+	if(M.wear_mask && (M.wear_mask.item_flags & AIRTIGHT))
+		return 0
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.head && (H.head.item_flags & AIRTIGHT))
 			return 0
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(H.head && (H.head.flags & AIRTIGHT))
-				return 0
-		return 0
 	return 1
 
 /////////////////////////////////////////////
@@ -480,10 +478,10 @@ steam.start() -- spawns the effect
 			s.start()
 
 			for(var/mob/M in viewers(5, location))
-				M << "\red The solution violently explodes."
+				M << "<span class='warning'>The solution violently explodes.</span>"
 			for(var/mob/M in viewers(1, location))
 				if (prob (50 * amount))
-					M << "\red The explosion knocks you down."
+					M << "<span class='warning'>The explosion knocks you down.</span>"
 					M.Weaken(rand(1,5))
 			return
 		else
@@ -506,7 +504,7 @@ steam.start() -- spawns the effect
 				flash = (amount/4) * flashing_factor
 
 			for(var/mob/M in viewers(8, location))
-				M << "\red The solution violently explodes."
+				M << "<span class='warning'>The solution violently explodes.</span>"
 
 			explosion(
 				location,

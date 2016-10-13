@@ -92,21 +92,7 @@ datum/controller/vote
 						if(choices[master_mode] >= greatest_votes)
 							greatest_votes = choices[master_mode]
 				else if(mode == "crew_transfer")
-					var/factor = 0.5
-					switch(world.time / (10 * 60)) // minutes
-						if(0 to 60)
-							factor = 0.5
-						if(61 to 120)
-							factor = 0.8
-						if(121 to 240)
-							factor = 1
-						if(241 to 300)
-							factor = 1.2
-						else
-							factor = 1.4
-					choices["Initiate Crew Transfer"] = round(choices["Initiate Crew Transfer"] * factor)
-					world << "<font color='purple'>Crew Transfer Factor: [factor]</font>"
-					greatest_votes = max(choices["Initiate Crew Transfer"], choices["Continue The Round"])
+					greatest_votes = max(choices["Initiate Crew Transfer"], total_votes / 1.5)
 
 
 		//get all options with that many votes and return them in a list
@@ -140,7 +126,10 @@ datum/controller/vote
 					text += "<b>The vote has ended.</b>" // What will be shown if it is a gamemode vote that isn't extended
 
 		else
-			text += "<b>Vote Result: Inconclusive - No Votes!</b>"
+			if(mode == "crew_transfer")
+				text += "<b>Vote Result: Continue Playing</b>"
+			else
+				text += "<b>Vote Result: Inconclusive - No Votes!</b>"
 			if(mode == "add_antagonist")
 				antag_add_failed = 1
 		log_vote(text)
@@ -186,7 +175,7 @@ datum/controller/vote
 
 	proc/submit_vote(var/ckey, var/vote)
 		if(mode)
-			if(!dead_allow_forced && config.vote_no_dead && usr.stat == DEAD && !usr.client.holder)
+			if(!dead_allow_forced && config.vote_no_dead && usr.stat == DEAD || usr.type == /mob/living/simple_animal/mouse || usr.type == /mob/living/silicon/robot/drone || usr.z == 2 && !usr.client.holder)
 				return 0
 			if(vote && vote >= 1 && vote <= choices.len)
 				if(current_votes[ckey])
@@ -222,7 +211,7 @@ datum/controller/vote
 					gamemode_names["secret"] = "Secret"
 				if("crew_transfer")
 					if(check_rights(R_ADMIN|R_MOD, 0))
-						question = "End the shift?"
+						question = "End the shift? Requires at least 2/3 of total votes count to succeed."
 						choices.Add("Initiate Crew Transfer", "Continue The Round")
 					else
 						if (get_security_level() == "red" || get_security_level() == "delta")
@@ -231,7 +220,7 @@ datum/controller/vote
 						if(ticker.current_state <= 2)
 							return 0
 							initiator_key << "The crew transfer button has been disabled!"
-						question = "End the shift?"
+						question = "End the shift? Requires at least 2/3 of total votes count to succeed."
 						choices.Add("Initiate Crew Transfer", "Continue The Round")
 				if("add_antagonist")
 					if(!config.allow_extra_antags || ticker.current_state >= 2)

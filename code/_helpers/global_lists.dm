@@ -49,6 +49,7 @@ var/list/obj/item/device/uplink/world_uplinks = list()
 //Preferences stuff
 	//Bodybuilds
 var/global/list/body_builds = list()
+
 	//Hairstyles
 var/global/list/hair_styles_list = list()			//stores /datum/sprite_accessory/hair indexed by name
 var/global/list/hair_styles_male_list = list()
@@ -56,12 +57,11 @@ var/global/list/hair_styles_female_list = list()
 var/global/list/facial_hair_styles_list = list()	//stores /datum/sprite_accessory/facial_hair indexed by name
 var/global/list/facial_hair_styles_male_list = list()
 var/global/list/facial_hair_styles_female_list = list()
-var/global/list/skin_styles_female_list = list()		//unused
-	//Underwear
-var/global/list/underwear_m = list("White" = "1", "Grey" = "2", "Green" = "3", "Blue" = "4", "Black" = "5", "Mankini" = "6", "None") //Curse whoever made male/female underwear diffrent colours
-var/global/list/underwear_f = list("Red" = "1", "White" = "2", "Yellow" = "3", "Blue" = "4", "Black" = "5", "Thong" = "6", "Black Sports" = "7", "White Sports" = "8", "None")
-	//undershirt
-var/global/list/undershirt_t = list("White Tank top" = "u1", "Black Tank top" = "u2", "Black shirt" = "u3", "White shirt" = "u4", "None")
+
+	// Hidden slots
+var/global/list/all_underwears = list("None")
+var/global/list/all_undershirts = list("None")
+var/global/list/all_socks = list("None")
 
 	//Backpacks
 var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Alt")
@@ -84,7 +84,7 @@ var/global/list/tattoo_list = list(
 )
 
 var/global/list/flavs_list = list("general"="General", "torso"="Body", "head"="Head", "face"="Face", "eyes"="Eyes",\
-				"mech_eyes"="Mechanical eyes", "arms"="Arms", "hands"="Hands", "legs"="Legs", "feet"="Feet")
+				"arms"="Arms", "hands"="Hands", "legs"="Legs", "feet"="Feet")
 
 var/global/list/organ_structure = list(
 	chest = list(name= "Chest", children=list()),
@@ -166,6 +166,24 @@ var/global/list/endgame_safespawns = list()
 			else
 				facial_hair_styles_male_list += H.name
 				facial_hair_styles_female_list += H.name
+
+	// Undershirt list
+	paths = typesof(/obj/item/clothing/hidden/undershirt) - /obj/item/clothing/hidden/undershirt
+	for(var/path in paths)
+		var/obj/item/clothing/hidden/H = path
+		all_undershirts[initial(H.name)] = path
+
+	// Underwear list
+	paths = typesof(/obj/item/clothing/hidden/underwear) - /obj/item/clothing/hidden/underwear
+	for(var/path in paths)
+		var/obj/item/clothing/hidden/H = path
+		all_underwears[initial(H.name)] = path
+
+	// Socks list
+	paths = typesof(/obj/item/clothing/hidden/socks) - /obj/item/clothing/hidden/socks
+	for(var/path in paths)
+		var/obj/item/clothing/hidden/H = path
+		all_socks[initial(H.name)] = path
 
 	//Surgery Steps - Initialize all /datum/surgery_step into a list
 	paths = typesof(/datum/surgery_step)-/datum/surgery_step

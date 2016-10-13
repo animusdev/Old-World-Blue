@@ -3,7 +3,7 @@
 	name = "galoshes"
 	icon_state = "galoshes"
 	permeability_coefficient = 0.05
-	flags = NOSLIP
+	item_flags = NOSLIP
 	slowdown = 1
 	species_restricted = null
 

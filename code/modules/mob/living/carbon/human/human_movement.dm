@@ -2,62 +2,60 @@
 
 	if (istype(loc, /turf/space)) return -1 // It's hard to be slowed down in space by... anything
 
+	if(CE_SPEEDBOOST in chem_effects || mRun in mutations)
+		return -1
+
 	var/tally = 0
+
+	if(species.slowdown)
+		tally = species.slowdown
 
 	if(embedded_flag)
 		handle_embedded_objects() //Moving with objects stuck in you can cause bad times.
 
-	var/health_deficiency = (100 - health)
+	var/health_deficiency = (maxHealth - health)
 	if(health_deficiency >= 40) tally += (health_deficiency / 25)
 
 	if (!(species && (species.flags & NO_PAIN)))
 		if(halloss >= 10) tally += (halloss / 10) //halloss shouldn't slow you down if you can't even feel it
 
-	if( !(CE_SPEEDBOOST in chem_effects || mRun in mutations) )
-		if(species.slowdown)
-			tally += species.slowdown
+	var/hungry = (500 - nutrition)/5 // So overeat would be 100 and default level would be 80
+	if (hungry >= 70) tally += hungry/50
 
-		var/hungry = (500 - nutrition)/5 // So overeat would be 100 and default level would be 80
-		if (hungry >= 70) tally += hungry/50
-
-		if(wear_suit)
-			tally += wear_suit.slowdown
-
-		if(back)
-			tally += back.slowdown
-
-		if(FAT in src.mutations)
-			tally += 1.5
-
-		if (bodytemperature < 283.222)
-			tally += (283.222 - bodytemperature) / 10 * 1.75
-
-	if(shock_stage >= 10) tally += 3
-
-	tally += max(2 * stance_damage, 0) //damaged/missing feet or legs is slow
-
+	// Loop through some slots, and add up their slowdowns.  Shoes are handled below, unfortunately.
+	// Includes slots which can provide armor, the back slot, and suit storage.
+	for(var/obj/item/I in list(wear_suit, w_uniform, back, gloves, head, s_store) )
+		tally += I.slowdown
 
 	if(istype(buckled, /obj/structure/bed/chair/wheelchair))
-		for(var/organ_name in list(BP_L_HAND,BP_R_HAND,BP_L_ARM,BP_R_ARM))
+		for(var/organ_name in list(BP_L_HAND, BP_R_HAND, BP_L_ARM, BP_R_ARM))
 			var/obj/item/organ/external/E = get_organ(organ_name)
-			if(!E || (E.status & ORGAN_DESTROYED))
+			if(!E)
 				tally += 4
-			if(E.status & ORGAN_SPLINTED)
-				tally += 0.5
-			else if(E.status & ORGAN_BROKEN)
-				tally += 1.5
+			else
+				tally += E.get_tally()
 	else
 		if(shoes)
 			tally += shoes.slowdown - 1
 
-		for(var/organ_name in list(BP_L_FOOT,BP_R_FOOT,BP_L_LEG,BP_R_LEG))
+		for(var/organ_name in list(BP_L_LEG, BP_R_LEG, BP_L_FOOT, BP_R_FOOT))
 			var/obj/item/organ/external/E = get_organ(organ_name)
-			if(!E || (E.status & ORGAN_DESTROYED))
+			if(!E)
 				tally += 4
-			else if(E.status & ORGAN_SPLINTED)
-				tally += 0.5
-			else if(E.status & ORGAN_BROKEN)
-				tally += 1.5
+			else
+				tally += E.get_tally()
+
+
+	if(shock_stage >= 10) tally += 3
+
+	if(FAT in src.mutations)
+		tally += 1.5
+
+	if (bodytemperature < 283.222)
+		tally += (283.222 - bodytemperature) / 10 * 1.75
+
+	tally += max(2 * stance_damage, 0) //damaged/missing feet or legs is slow
+
 
 	return (tally+config.human_delay)
 
@@ -97,7 +95,7 @@
 		prob_slip = 0 // Changing this to zero to make it line up with the comment, and also, make more sense.
 
 	//Do we have magboots or such on if so no slip
-	if(istype(shoes, /obj/item/clothing/shoes/magboots) && (shoes.flags & NOSLIP))
+	if(istype(shoes, /obj/item/clothing/shoes/magboots) && (shoes.item_flags & NOSLIP))
 		prob_slip = 0
 
 	//Check hands and mod slip

@@ -181,6 +181,10 @@
 
 
 
+/client/proc/last_activity_seconds()
+	return inactivity / 10
+
+
 	//////////////
 	//DISCONNECT//
 	//////////////
@@ -347,3 +351,15 @@ client/proc/MayRespawn()
 
 	// Something went wrong, client is usually kicked or transfered to a new mob at this point
 	return 0
+
+client/verb/character_setup()
+	set name = "Character Setup"
+	set category = "Preferences"
+	if(prefs)
+		prefs.ShowChoices(usr)
+
+client/verb/new_character_setup()
+	set name = "New Character Setup"
+	set hidden = 1
+	if(prefs)
+		prefs.NewShowChoices(usr)

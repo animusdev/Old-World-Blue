@@ -2,10 +2,8 @@
 	name = "chief engineer's locker"
 	req_access = list(access_ce)
 	icon_state = "securece"
-	icon_closed = "securece"
 	icon_opened = "secureceopen"
 	icon_broken = "securecebroken"
-	icon_off = "secureceoff"
 
 
 	New()
@@ -44,10 +42,8 @@
 	name = "electrical supplies"
 	req_access = list(access_engine_equip)
 	icon_state = "secureengelec"
-	icon_closed = "secureengelec"
 	icon_opened = "toolclosetopen"
 	icon_broken = "secureengelecbroken"
-	icon_off = "secureengelecoff"
 
 	New()
 		..()
@@ -70,10 +66,8 @@
 	name = "welding supplies"
 	req_access = list(access_construction)
 	icon_state = "secureengweld"
-	icon_closed = "secureengweld"
 	icon_opened = "toolclosetopen"
 	icon_broken = "secureengweldbroken"
-	icon_off = "secureengweldoff"
 
 	New()
 		..()
@@ -94,10 +88,8 @@
 	name = "engineer's locker"
 	req_access = list(access_engine_equip)
 	icon_state = "secureeng"
-	icon_closed = "secureeng"
 	icon_opened = "secureengopen"
 	icon_broken = "secureengbroken"
-	icon_off = "secureengoff"
 
 	New()
 		..()
@@ -126,10 +118,8 @@
 	name = "technician's locker"
 	req_access = list(access_atmospherics)
 	icon_state = "secureatm"
-	icon_closed = "secureatm"
 	icon_opened = "secureatmopen"
 	icon_broken = "secureatmbroken"
-	icon_off = "secureatmoff"
 
 	New()
 		..()

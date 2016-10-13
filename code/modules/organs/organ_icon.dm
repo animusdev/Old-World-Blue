@@ -68,7 +68,7 @@ var/global/list/limb_icon_cache = list()
 				facial.Blend(owner.facial_color, ICON_ADD)
 			overlays |= facial
 
-	if(owner.h_style && !(owner.head && (owner.head.flags & BLOCKHEADHAIR)))
+	if(owner.h_style && !(owner.head && (owner.head.flags_inv & BLOCKHEADHAIR)))
 		var/datum/sprite_accessory/hair_style = hair_styles_list[owner.h_style]
 		if(hair_style && (owner.species.get_bodytype() in hair_style.species_allowed))
 			hair = new/icon(hair_style.icon, hair_style.icon_state)

@@ -8,8 +8,9 @@
 	spawn_positions = -1
 	supervisors = "absolutely everyone"
 	selection_color = "#dddddd"
-	access = list()			//See /datum/job/assistant/get_access()
-	minimal_access = list()	//See /datum/job/assistant/get_access()
+	economic_modifier = 1
+	access = list(access_maint_tunnels)			//See /datum/job/assistant/get_access()
+	minimal_access = list(access_maint_tunnels)	//See /datum/job/assistant/get_access()
 	alt_titles = list("Security Cadet","Technical Assistant","Medical Intern","Research Assistant","Visitor","Private Eye")
 
 	uniform = /obj/item/clothing/under/color/grey
@@ -38,6 +39,10 @@
 					H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
 					H.equip_to_slot_or_del(new /obj/item/weapon/flame/lighter/zippo(H), slot_in_backpack)
 		return ..()
-
+/*
 /datum/job/assistant/get_access()
-	return list(access_maint_tunnels)
+	if(config.assistant_maint)
+		return list(access_maint_tunnels)
+	else
+		return list()
+*/

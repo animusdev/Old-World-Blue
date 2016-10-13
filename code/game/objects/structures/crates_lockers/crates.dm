@@ -6,7 +6,6 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "crate"
 	icon_opened = "crateopen"
-	icon_closed = "crate"
 	climbable = 1
 //	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
 	var/rigged = 0
@@ -63,7 +62,7 @@
 		O.forceMove(src)
 		itemcount++
 
-	icon_state = icon_closed
+	update_icon()
 	src.opened = 0
 	return 1
 
@@ -126,7 +125,6 @@
 	name = "Secure crate"
 	icon_state = "securecrate"
 	icon_opened = "securecrateopen"
-	icon_closed = "securecrate"
 	var/redlight = "securecrater"
 	var/greenlight = "securecrateg"
 	var/sparks = "securecratesparks"
@@ -235,21 +233,18 @@
 	desc = "A rectangular plastic crate."
 	icon_state = "plasticcrate"
 	icon_opened = "plasticcrateopen"
-	icon_closed = "plasticcrate"
 
 /obj/structure/closet/crate/internals
 	name = "internals crate"
 	desc = "A internals crate."
 	icon_state = "o2crate"
 	icon_opened = "o2crateopen"
-	icon_closed = "o2crate"
 
 /obj/structure/closet/crate/trashcart
 	name = "trash cart"
 	desc = "A heavy, metal trashcart with wheels."
 	icon_state = "trashcart"
 	icon_opened = "trashcartopen"
-	icon_closed = "trashcart"
 
 /*these aren't needed anymore
 /obj/structure/closet/crate/hat
@@ -257,14 +252,12 @@
 	name = "Hat Crate"
 	icon_state = "crate"
 	icon_opened = "crateopen"
-	icon_closed = "crate"
 
 /obj/structure/closet/crate/contraband
 	name = "Poster crate"
 	desc = "A random assortment of posters manufactured by providers NOT listed under Nanotrasen's whitelist."
 	icon_state = "crate"
 	icon_opened = "crateopen"
-	icon_closed = "crate"
 */
 
 /obj/structure/closet/crate/medical
@@ -272,14 +265,12 @@
 	desc = "A medical crate."
 	icon_state = "medicalcrate"
 	icon_opened = "medicalcrateopen"
-	icon_closed = "medicalcrate"
 
 /obj/structure/closet/crate/rcd
 	name = "\improper RCD crate"
 	desc = "A crate with rapid construction device."
 	icon_state = "crate"
 	icon_opened = "crateopen"
-	icon_closed = "crate"
 
 /obj/structure/closet/crate/rcd/New()
 	..()
@@ -293,27 +284,8 @@
 
 /obj/structure/closet/crate/solar/New()
 	..()
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
+	for(var/i = 1 to 21)
+		new /obj/item/solar_assembly(src)
 	new /obj/item/weapon/circuitboard/solar_control(src)
 	new /obj/item/weapon/tracker_electronics(src)
 	new /obj/item/weapon/paper/solar(src)
@@ -323,22 +295,22 @@
 	desc = "A freezer."
 	icon_state = "freezer"
 	icon_opened = "freezeropen"
-	icon_closed = "freezer"
 	var/target_temp = T0C - 40
 	var/cooling_power = 40
 
-	return_air()
-		var/datum/gas_mixture/gas = (..())
-		if(!gas)	return null
-		var/datum/gas_mixture/newgas = new/datum/gas_mixture()
-		newgas.copy_from(gas)
-		if(newgas.temperature <= target_temp)	return
+/obj/structure/closet/crate/freezer/return_air()
+	var/datum/gas_mixture/gas = (..())
+	if(!gas)	return null
+	var/datum/gas_mixture/newgas = new/datum/gas_mixture()
+	newgas.copy_from(gas)
+	if(newgas.temperature <= target_temp)	return
 
-		if((newgas.temperature - cooling_power) > target_temp)
-			newgas.temperature -= cooling_power
-		else
-			newgas.temperature = target_temp
-		return newgas
+	if((newgas.temperature - cooling_power) > target_temp)
+		newgas.temperature -= cooling_power
+	else
+		newgas.temperature = target_temp
+	return newgas
+
 
 /obj/structure/closet/crate/freezer/rations //Fpr use in the escape shuttle
 	name = "emergency rations"
@@ -357,14 +329,12 @@
 	desc = "A large bin."
 	icon_state = "largebin"
 	icon_opened = "largebinopen"
-	icon_closed = "largebin"
 
 /obj/structure/closet/crate/radiation
 	name = "radioactive gear crate"
 	desc = "A crate with a radiation sign on it."
 	icon_state = "radiation"
 	icon_opened = "radiationopen"
-	icon_closed = "radiation"
 
 /obj/structure/closet/crate/radiation/New()
 	..()
@@ -382,35 +352,30 @@
 	desc = "A secure weapons crate."
 	icon_state = "weaponcrate"
 	icon_opened = "weaponcrateopen"
-	icon_closed = "weaponcrate"
 
 /obj/structure/closet/crate/secure/phoron
 	name = "phoron crate"
 	desc = "A secure phoron crate."
 	icon_state = "phoroncrate"
 	icon_opened = "phoroncrateopen"
-	icon_closed = "phoroncrate"
 
 /obj/structure/closet/crate/secure/gear
 	name = "gear crate"
 	desc = "A secure gear crate."
 	icon_state = "secgearcrate"
 	icon_opened = "secgearcrateopen"
-	icon_closed = "secgearcrate"
 
 /obj/structure/closet/crate/secure/hydrosec
 	name = "secure hydroponics crate"
 	desc = "A crate with a lock on it, painted in the scheme of the station's botanists."
 	icon_state = "hydrosecurecrate"
 	icon_opened = "hydrosecurecrateopen"
-	icon_closed = "hydrosecurecrate"
 
 /obj/structure/closet/crate/secure/bin
 	name = "secure bin"
 	desc = "A secure bin."
 	icon_state = "largebins"
 	icon_opened = "largebinsopen"
-	icon_closed = "largebins"
 	redlight = "largebinr"
 	greenlight = "largebing"
 	sparks = "largebinsparks"
@@ -422,7 +387,6 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "largemetal"
 	icon_opened = "largemetalopen"
-	icon_closed = "largemetal"
 
 /obj/structure/closet/crate/large/close()
 	. = ..()
@@ -448,7 +412,6 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "largemetal"
 	icon_opened = "largemetalopen"
-	icon_closed = "largemetal"
 	redlight = "largemetalr"
 	greenlight = "largemetalg"
 
@@ -475,14 +438,12 @@
 	desc = "A hefty, reinforced metal crate with an electronic locking system."
 	icon_state = "largermetal"
 	icon_opened = "largermetalopen"
-	icon_closed = "largermetal"
 
 /obj/structure/closet/crate/hydroponics
 	name = "hydroponics crate"
 	desc = "All you need to destroy those pesky weeds and pests."
 	icon_state = "hydrocrate"
 	icon_opened = "hydrocrateopen"
-	icon_closed = "hydrocrate"
 
 /obj/structure/closet/crate/hydroponics/prespawned
 	//This exists so the prespawned hydro crates spawn with their contents.

@@ -7,7 +7,7 @@
 	overshoes = 1
 	var/obj/item/clothing/shoes/shoes = null	//Undershoes
 	var/mob/living/carbon/human/wearer = null	//For shoe procs
-	flags = NOSLIP
+	item_flags = NOSLIP
 
 /obj/item/clothing/shoes/magboots/proc/set_slowdown()
 	slowdown = shoes? max(0, shoes.slowdown): 0	//So you can't put on magboots to make you walk faster.
@@ -23,7 +23,7 @@
 			shoes = null
 			return 0
 		H.drop_from_inventory(shoes)	//Remove the old shoes so you can put on the magboots.
-		shoes.loc = src
+		shoes.forceMove(src)
 
 	if(!..())
 		if(shoes) 	//Put the old shoes back on if the check fails.
@@ -42,7 +42,7 @@
 	var/mob/living/carbon/human/H = wearer
 	if(shoes)
 		if(!H.equip_to_slot_if_possible(shoes, slot_shoes))
-			shoes.loc = get_turf(src)
+			shoes.forceMove(get_turf(src))
 		src.shoes = null
 	wearer = null
 
@@ -59,16 +59,15 @@
 
 
 /obj/item/clothing/shoes/magboots/toggleable/attack_self(mob/user)
+	magpulse = !magpulse
 	if(magpulse)
-		flags &= ~NOSLIP
-		magpulse = 0
+		item_flags &= ~NOSLIP
 		set_slowdown()
 		force = 3
 		if(icon_base) icon_state = "[icon_base]0"
 		user << "You disable the mag-pulse traction system."
 	else
-		flags |= NOSLIP
-		magpulse = 1
+		item_flags |= NOSLIP
 		set_slowdown()
 		force = 5
 		if(icon_base) icon_state = "[icon_base]1"
@@ -78,7 +77,7 @@
 /obj/item/clothing/shoes/magboots/toggleable/examine(mob/user, return_dist=1)
 	. = ..()
 	if(.<=3)
-		user << "Its mag-pulse traction system appears to be [flags&NOSLIP ? "enabled" : "disabled"]."
+		user << "Its mag-pulse traction system appears to be [item_flags&NOSLIP ? "enabled" : "disabled"]."
 
 
 

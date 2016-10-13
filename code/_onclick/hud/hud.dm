@@ -216,7 +216,7 @@ datum/hud/New(mob/owner)
 						if(H.wear_suit) H.wear_suit.screen_loc = null
 					if(slot_wear_mask)
 						if(H.wear_mask) H.wear_mask.screen_loc = null
-		for(var/obj/item/clothing/hidden/item in list(H.h_socks, H.h_underwear, H.undershirt))
+		for(var/obj/item/clothing/hidden/item in list(H.h_socks, H.h_underwear, H.h_undershirt))
 			if(item) item.screen_loc = null
 
 
@@ -256,7 +256,7 @@ datum/hud/New(mob/owner)
 						if(H.l_store) H.l_store.screen_loc = null
 					if(slot_r_store)
 						if(H.r_store) H.r_store.screen_loc = null
-		for(var/obj/item/clothing/hidden/item in list(H.h_socks, H.h_underwear, H.undershirt))
+		for(var/obj/item/clothing/hidden/item in list(H.h_socks, H.h_underwear, H.h_undershirt))
 			if(item) item.screen_loc = null
 
 /datum/hud/proc/instantiate()
