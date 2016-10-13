@@ -211,9 +211,14 @@
 	base_color = "#006666"
 
 	reagent_tag = IS_SKRELL
-	restricted_jobs = list("Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Warden",\
-						"Detective", "Security Officer", "Station Engineer", "Atmospheric Technician",\
-						"Quartermaster", "Cargo Technician", "Shaft Miner")
+
+	body_builds = list("Default", "Slim")
+
+	restricted_jobs = list(
+		"Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Warden",
+		"Detective", "Security Officer", "Station Engineer", "Atmospheric Technician",
+		"Quartermaster", "Cargo Technician", "Shaft Miner"
+	)
 
 /datum/species/diona
 	name = "Diona"
