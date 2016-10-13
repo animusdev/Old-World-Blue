@@ -69,7 +69,9 @@ var/global/datum/controller/occupations/job_master
 			if((job.current_positions < position_limit) || position_limit == -1)
 				Debug("Player: [player] is now Rank: [rank], JCP:[job.current_positions], JPL:[position_limit]")
 				player.mind.assigned_role = rank
-				player.mind.role_alt_title = GetPlayerAltTitle(player, rank)
+				player.mind.role_alt_title = rank
+				if(GetPlayerAltTitle(player, rank) in job.alt_titles)
+					player.mind.role_alt_title = GetPlayerAltTitle(player, rank)
 				unassigned -= player
 				job.current_positions++
 				return 1
