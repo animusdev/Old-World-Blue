@@ -11,6 +11,10 @@
 	ear = /obj/item/device/radio/headset/headset_eng
 	custom_survival_gear = /obj/item/weapon/storage/box/engineer
 
+	memory = null
+
+
+
 	backpack = /obj/item/weapon/storage/backpack/industrial
 	satchel = /obj/item/weapon/storage/backpack/satchel_eng
 	duffle = /obj/item/weapon/storage/backpack/duffle/engie
@@ -58,7 +62,6 @@
 	ear = /obj/item/device/radio/headset/heads/ce
 
 
-
 /datum/job/engi/engineer
 	title = "Station Engineer"
 	flag = ENGINEER
@@ -88,9 +91,6 @@
 				if("Engine Technician")
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/engine_tech(H), slot_w_uniform)
 				if("Electrician")
-					H.mind.store_memory(all_solved_wires[/obj/machinery/door/airlock])
-					H.mind.store_memory(all_solved_wires[/obj/machinery/power/apc])
-					H.mind.store_memory(all_solved_wires[/obj/machinery/alarm])
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/electrician(H), slot_w_uniform)
 		return ..()
 
