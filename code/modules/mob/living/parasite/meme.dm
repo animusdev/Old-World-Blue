@@ -425,7 +425,7 @@ mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob 
 		src << "<b>Your host can't speak..</b>"
 		return
 
-	for(var/mob/M in view(host)+src)
+	for(var/mob/M in view(host))
 		M.show_message("<B>[host]</B> screams something incoherent!",2) // 2 stands for hearable message
 
 	// Find out whether the target can hear
