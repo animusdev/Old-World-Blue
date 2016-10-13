@@ -231,7 +231,7 @@ mob/living/parasite/meme/verb/Thought()
 	var/speaker = input("Select the voice in which you would like to make yourself heard.", "Voice") as null|text
 	if(!speaker) return
 
-	var/message = input("What would you like to say?", "Message") as null
+	var/message = input("What would you like to say?", "Message") as null|text
 	if(!message) return
 	//message = sanitize_uni(message)
 
