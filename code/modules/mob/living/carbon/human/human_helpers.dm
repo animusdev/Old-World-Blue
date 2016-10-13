@@ -1,3 +1,10 @@
+/mob/living/carbon/human/proc/get_blood_colour()
+	var/datum/robolimb/company = isSynthetic()
+	if(company)
+		return company.blood_color
+	else
+		return species.blood_color
+
 /mob/living/carbon/human/proc/get_ssd()
 	if(looksSynthetic())
 		return "flashing a 'system offline' light"

@@ -398,8 +398,7 @@ its easier to just keep the beam vertical.
 			M.dna = new /datum/dna(null)
 			M.dna.real_name = M.real_name
 		M.check_dna()
-		blood_color = M.species.get_blood_colour(M)
-	. = 1
+		blood_color = M.get_blood_colour()
 	return 1
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M as mob, var/toxvomit = 0)
