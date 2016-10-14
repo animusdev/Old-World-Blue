@@ -136,7 +136,7 @@
 			if(istype(P, /obj/item/weapon/crowbar))
 				if(battery)
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-					if(do_after(10))
+					if(do_after(user, 10))
 						battery.loc = loc
 						user << "\blue You remove [battery]."
 						battery = null
@@ -146,7 +146,7 @@
 			if(istype(P, /obj/item/weapon/cell))
 				if(!battery)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					if(do_after(5))
+					if(do_after(user, 5))
 						battery = P
 						P.loc = src
 						user << "\blue You insert [battery]."
