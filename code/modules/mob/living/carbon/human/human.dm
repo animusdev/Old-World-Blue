@@ -10,11 +10,11 @@
 
 /mob/living/carbon/human/New(var/new_loc, var/new_species = null, var/datum/preferences/prefs = null)
 
-	body_build = get_body_build(gender)
-
 	if(!dna)
 		dna = new /datum/dna(null)
 		// Species name is handled by set_species()
+
+	body_build = get_body_build(gender)
 
 	if(!species)
 		if(new_species)
@@ -1113,6 +1113,8 @@
 		holder_type = species.holder_type
 
 	icon_state = lowertext(species.name)
+
+	body_build = get_body_build(gender, species.body_builds)
 
 	species.create_organs(src, prefs)
 
