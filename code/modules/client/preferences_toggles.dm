@@ -210,3 +210,11 @@
 
 	src << "You will now use preference from [(prefs.toggles & PREFER_NEWSETUP) ? "new" : "old"] setup menu."
 
+/client/verb/toggle_progressbar()
+	set name = "Toggle Progressbar"
+	set category = "Preferences"
+	set desc ="Toggle progressbar visibility"
+	prefs.toggles ^= PROGRESSBAR
+	prefs.save_preferences()
+
+	src << "You will [(prefs.toggles & PROGRESSBAR) ? "now" : "no longer"] see the progressbar."
