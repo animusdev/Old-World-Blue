@@ -7,6 +7,7 @@
 	overshoes = 1
 	var/obj/item/clothing/shoes/shoes = null	//Undershoes
 	var/mob/living/carbon/human/wearer = null	//For shoe procs
+	flags = PHORONGUARD
 	item_flags = NOSLIP
 
 /obj/item/clothing/shoes/magboots/proc/set_slowdown()
