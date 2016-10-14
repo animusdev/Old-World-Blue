@@ -87,7 +87,7 @@
 		set_ready_state(1)
 		return
 
-	detach()
+	detached()
 		if(occupant)
 			occupant_message("Unable to detach [src] - equipment occupied.")
 			return
@@ -245,12 +245,12 @@
 		cable.amount = 0
 		..()
 
-	attach()
+	attached()
 		..()
 		event = chassis.events.addEvent("onMove",src,"layCable")
 		return
 
-	detach()
+	detached()
 		chassis.events.clearEvent("onMove",event)
 		return ..()
 
@@ -400,7 +400,7 @@
 		create_reagents(max_volume)
 		synth = new (list(src),0)
 
-	detach()
+	detached()
 		synth.stop()
 		return ..()
 
