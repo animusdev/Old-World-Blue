@@ -221,10 +221,6 @@ mob/living/parasite/meme/verb/Thought()
 		use_points(50)
 		return
 
-	var/list/candidates = indoctrinated.Copy()
-	if(!(src.host in candidates))
-		candidates.Add(src.host)
-
 	var/mob/target = select_indoctrinated("Thought", "Select a target which will hear your thought.")
 	if(!target) return
 
@@ -238,8 +234,7 @@ mob/living/parasite/meme/verb/Thought()
 	// Use the points at the end rather than the beginning, because the user might cancel
 	if(!use_points(50)) return
 
-	message = say_quote(message)
-	var/rendered = "<span class='game say'><span class='name'>[speaker]</span> <span class='message'>[message]</span></span>"
+	var/rendered = "<span class='game say'><span class='name'>[speaker]</span> <span class='message'>[say_quote(message)] [message]</span></span>"
 	target.show_message(rendered)
 
 	usr << "<i>You make [target] hear:</i> [rendered]"
