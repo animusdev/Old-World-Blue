@@ -1219,8 +1219,8 @@ var/list/WALLITEMS = list(
 	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/embedded_controller,
 	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/button,
 	/obj/machinery/computer/security/telescreen, /obj/machinery/keycard_auth, /obj/structure/closet/fireaxecabinet,
-	/obj/item/weapon/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher,
-	/obj/structure/mirror, /obj/machinery/computer/security/telescreen/entertainment
+	/obj/item/weapon/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/structure/mirror,
+	/obj/machinery/computer/security/telescreen/entertainment
 )
 
 /proc/gotwallitem(loc, dir)
