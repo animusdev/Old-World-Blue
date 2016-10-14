@@ -153,7 +153,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	if(path)
 		dat += "<center>"
 		dat += "<a href=\"byond://?src=\ref[user];preference=open_load_dialog\">Load Setup</a> | "
-		dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload Slot</a> | "
+		dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload Setup</a> | "
 		dat += "<a href=\"byond://?src=\ref[user];preference=open_save_dialog\">Save Setup</a>"
 		dat += "</center>"
 
