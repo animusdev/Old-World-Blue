@@ -60,6 +60,7 @@ proc/admin_notice(var/message, var/rights)
 		<a href='?src=\ref[src];subtlemessage=\ref[M]'>SM</a> -
 		<a href='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</a>\] </b><br>
 		<b>Mob type</b> = [M.type]<br><br>
+		<b>Inactivity time:</b> [M.client ? "[M.client.inactivity/600] minutes" : "Logged out"]<br/><br/>
 		<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> |
 		<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> |
 		<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> |

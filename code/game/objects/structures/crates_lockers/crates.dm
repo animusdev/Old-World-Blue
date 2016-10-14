@@ -5,6 +5,7 @@
 	desc = "A rectangular steel crate."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "crate"
+	var/points_per_crate = 5
 	icon_opened = "crateopen"
 	climbable = 1
 //	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
@@ -229,6 +230,7 @@
 	..()
 
 /obj/structure/closet/crate/plastic
+	points_per_crate = 1
 	name = "plastic crate"
 	desc = "A rectangular plastic crate."
 	icon_state = "plasticcrate"
