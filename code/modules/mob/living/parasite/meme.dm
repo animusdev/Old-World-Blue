@@ -446,7 +446,7 @@ mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob 
 //	message_admins("[src.key] has jumped (meme) to [target]")
 
 // Jump to an attuned mob for free
-mob/living/parasite/meme/verb/AttunedJump(mob/living/carbon/human/target as mob in view(host) - usr - usr:host)
+mob/living/parasite/meme/verb/AttunedJump(mob/living/carbon/human/target as mob in view(host)&indoctrinated)
 	set category = "Meme"
 	set name	 = "Attuned Jump(0)"
 	set desc     = "Move to a mob in sight that you have already attuned."
