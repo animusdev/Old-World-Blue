@@ -12,7 +12,7 @@ datum/preferences
 		qdel(preview_east)
 		qdel(preview_west)
 
-		var/datum/body_build/body_build = get_body_build(gender, body)
+		var/datum/body_build/body_build = current_species.get_body_build_list(gender, body)
 		var/g = "_m"
 		if(gender == FEMALE)
 			g = "_f"

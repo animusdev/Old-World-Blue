@@ -44,3 +44,17 @@
 				return 1
 
 	return 0
+
+/mob/living/carbon/human/proc/set_body_build(var/prefered = "Default")
+	species.get_body_build(prefered)
+	fix_body_build()
+
+/mob/living/carbon/human/proc/fix_body_build()
+	if(body_build && (gender in body_build.genders) && (body_build in species.body_builds))
+		return 1
+	for(var/datum/body_build/BB in species.body_builds)
+		if(gender in BB.genders)
+			body_build = BB
+			return 1
+	world.log << "Cann't find possible body_build. Gender = [gender], Species = [species]"
+	return 0

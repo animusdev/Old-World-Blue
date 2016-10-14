@@ -58,7 +58,9 @@
 		"stack" =    /obj/item/organ/internal/stack/vox
 	)
 
-	body_builds = list("Vox")
+	body_builds = list(
+		new/datum/body_build/vox
+	)
 
 	restricted_jobs = list(
 		"Captain","Head of Personnel","Head of Security","Chief Engineer","Research Director",

@@ -42,11 +42,10 @@
 	var/list/loadout = list()
 
 /datum/preferences/proc/sanitize_body_build()
-	var/datum/body_build/BB = get_body_build(gender, body)
-	if(BB && body in current_species.body_builds && gender in BB.genders)
+	if(current_species.get_body_build(gender, body))
 		return 1
 
-	BB = get_body_build(gender, body, current_species.body_builds)
+	var/datum/body_build/BB = current_species.get_body_build(gender)
 	body = BB.name
 
 
@@ -255,9 +254,8 @@
 		sanitize_body_build()
 
 	else if(href_list["build"])
-		body = next_in_list(body, get_body_build_list(gender, current_species.body_builds))
+		body = next_in_list(body, current_species.get_body_build_list(gender))
 		req_update_icon = 1
-		sanitize_body_build()
 
 	else if(href_list["hair"])
 		switch(href_list["hair"])

@@ -17,7 +17,10 @@
 	min_age = 17
 	max_age = 110
 
-	body_builds = list("Default", "Slim")
+	body_builds = list(
+		new/datum/body_build,
+		new/datum/body_build/slim
+	)
 
 	flags = CAN_JOIN | HAS_SKIN_TONE | HAS_LIPS | HAS_UNDERWEAR | HAS_EYE_COLOR
 
@@ -212,7 +215,10 @@
 
 	reagent_tag = IS_SKRELL
 
-	body_builds = list("Default", "Slim")
+	body_builds = list(
+		new/datum/body_build,
+		new/datum/body_build/slim
+	)
 
 	restricted_jobs = list(
 		"Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Warden",

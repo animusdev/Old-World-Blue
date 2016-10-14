@@ -439,6 +439,6 @@
 	f_style = "Shaved"
 	if(dna.species == "Human") //no more xenos losing ears/tentacles
 		h_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
-	body_build = get_body_build(gender, dna.body_build)
-	update_body_build(0)
+	body_build = species.get_body_build(gender, dna.body_build)
+	fix_body_build()
 	regenerate_icons()

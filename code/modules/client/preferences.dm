@@ -64,7 +64,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/f_style = "Shaved"				//Face hair type
 	var/s_tone = 0						//Skin tone
 	var/species = "Human"				//Species name for save file
-	var/datum/species/current_species = null	//Species datum to use
+	var/datum/species/current_species	//Species datum to use
 	var/body = "Default"
 	var/species_preview                 //Used for the species selection window.
 	var/language = "None"				//Secondary language
@@ -152,10 +152,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 	if(path)
 		dat += "<center>"
-		dat += "<a href=\"byond://?src=\ref[user];preference=open_load_dialog\">Load Setup</a> "
-		dat += "<a href=\"byond://?src=\ref[user];preference=open_save_dialog\">Save Setup</a> | "
-		dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload Slot</a> "
-		dat += "<a href=\"byond://?src=\ref[user];preference=reset\">Reset Slot</a>"
+		dat += "<a href=\"byond://?src=\ref[user];preference=open_load_dialog\">Load Setup</a> | "
+		dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload Slot</a> | "
+		dat += "<a href=\"byond://?src=\ref[user];preference=open_save_dialog\">Save Setup</a>"
 		dat += "</center>"
 
 	else
@@ -1471,7 +1470,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					sanitize_body_build()
 
 				if("build")
-					body = next_in_list(body, get_body_build_list(gender, current_species.body_builds))
+					body = next_in_list(body, current_species.get_body_build_list(gender))
 					req_update_icon = 1
 
 				if("disabilities")				//please note: current code only allows nearsightedness as a disability
@@ -1554,9 +1553,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					load_preferences()
 					load_character()
 
-				if("reset")
-					delete_character()
-					load_character()
+				if("delete")
+					delete_character(href_list["num"])
+					open_load_dialog(user)
 
 	ShowChoices(user)
 	return 1
@@ -1586,7 +1585,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	character.exploit_record = exploit_record
 
 	character.gender = gender
-	character.body_build = get_body_build(gender, body)
+	character.body_build = current_species.get_body_build(gender, body)
 	character.age = age
 	character.b_type = b_type
 
@@ -1658,7 +1657,8 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 			if(!name)	name = "Character[i]"
 			if(i==default_slot)
 				name = "<b>[name]</b>"
-			dat += "<a href='?_src_=prefs;preference=load;num=[i];'>[name]</a><br>"
+			dat +={"<a href='?_src_=prefs;preference=load;num=[i];'>[name]</a>
+					<a href='?src=\ref[user];preference=delete;num=[i];'> \[X]</a><br>"}
 
 	dat += "<hr>"
 	dat += "<a href='byond://?src=\ref[user];preference=close_dialog'>Close</a><br>"
