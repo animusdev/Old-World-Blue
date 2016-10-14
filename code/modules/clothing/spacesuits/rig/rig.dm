@@ -133,13 +133,14 @@
 		chest.slowdown = offline_slowdown
 		verbs |= /obj/item/weapon/rig/proc/toggle_chest
 
-	for(var/obj/item/piece in list(gloves,helmet,boots,chest))
+	for(var/obj/item/clothing/piece in list(gloves,helmet,boots,chest))
 		if(!istype(piece))
 			continue
 		piece.canremove = 0
 		piece.name = "[suit_type] [initial(piece.name)]"
 		piece.desc = "It seems to be part of a [src.name]."
 		piece.icon_state = "[initial(icon_state)]"
+		piece.wear_state = piece.icon_state
 		piece.min_cold_protection_temperature = min_cold_protection_temperature
 		piece.max_heat_protection_temperature = max_heat_protection_temperature
 		if(piece.siemens_coefficient > siemens_coefficient) //So that insulated gloves keep their insulation.
@@ -213,11 +214,11 @@
 			failed_to_seal = 1
 		else
 			for(var/list/piece_data in list(
-						list(M.shoes,    boots, "boots", boot_type),
-						list(M.gloves,   gloves,"gloves",glove_type),
-						list(M.head,     helmet,"helmet",helm_type),
-						list(M.wear_suit,chest, "chest", chest_type))
-					)
+				list(M.shoes,    boots, "boots", boot_type),
+				list(M.gloves,   gloves,"gloves",glove_type),
+				list(M.head,     helmet,"helmet",helm_type),
+				list(M.wear_suit,chest, "chest", chest_type))
+			)
 
 				var/obj/item/piece = piece_data[1]
 				var/obj/item/compare_piece = piece_data[2]
