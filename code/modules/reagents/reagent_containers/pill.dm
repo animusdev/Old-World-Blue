@@ -54,7 +54,7 @@
 
 			user.visible_message("<span class='warning'>[user] attempts to force [M] to swallow \the [src].</span>")
 
-			if(!do_mob(user, M))
+			if(!do_mob(user, M, 15))
 				return
 
 			user.drop_from_inventory(src) //icon update
