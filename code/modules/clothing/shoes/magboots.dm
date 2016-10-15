@@ -11,8 +11,8 @@
 	item_flags = NOSLIP
 
 /obj/item/clothing/shoes/magboots/proc/set_slowdown()
-	slowdown = shoes? max(0, shoes.slowdown): 0	//So you can't put on magboots to make you walk faster.
-	slowdown += 3
+	slowdown = (shoes? max(0, shoes.slowdown): 0) + 1 //So you can't put on magboots to make you walk faster.
+	slowdown += 2
 
 /obj/item/clothing/shoes/magboots/mob_can_equip(mob/user)
 	var/mob/living/carbon/human/H = user
@@ -54,14 +54,14 @@
 	action_button_name = "Toggle the magboots"
 
 /obj/item/clothing/shoes/magboots/toggleable/set_slowdown()
-	slowdown = shoes? max(0, shoes.slowdown): 0	//So you can't put on magboots to make you walk faster.
+	slowdown = (shoes? max(0, shoes.slowdown): 0) + 1 //So you can't put on magboots to make you walk faster.
 	if (magpulse)
-		slowdown += 3
+		slowdown += 2
 
 
 /obj/item/clothing/shoes/magboots/toggleable/attack_self(mob/user)
 	magpulse = !magpulse
-	if(magpulse)
+	if(!magpulse)
 		item_flags &= ~NOSLIP
 		set_slowdown()
 		force = 3
@@ -89,9 +89,9 @@
 	icon_base = "advmag"
 
 /obj/item/clothing/shoes/magboots/toggleable/advanced/set_slowdown()
-	slowdown = shoes? max(0, shoes.slowdown): 0	//So you can't put on magboots to make you walk faster.
+	slowdown = (shoes? max(0, shoes.slowdown): 0) + 1 //So you can't put on magboots to make you walk faster.
 	if (magpulse)
-		slowdown += 2
+		slowdown += 1
 
 /obj/item/clothing/shoes/magboots/toggleable/syndie
 	desc = "Reverse-engineered magnetic boots that have a heavy magnetic pull. Property of Gorlex Marauders."
