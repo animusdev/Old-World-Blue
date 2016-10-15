@@ -1655,11 +1655,16 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		for(var/i=1, i<= config.character_slots, i++)
 			S.cd = "/character[i]"
 			S["real_name"] >> name
-			if(!name)	name = "Character[i]"
+			var/removable = 1
+			if(!name)
+				name = "Character[i]"
+				removable = 0
 			if(i==default_slot)
 				name = "<b>[name]</b>"
-			dat +={"<a href='?_src_=prefs;preference=load;num=[i];'>[name]</a>
-					<a href='?src=\ref[user];preference=delete;num=[i];'> \[X]</a><br>"}
+			dat += "<a href='?_src_=prefs;preference=load;num=[i];'>[name]</a>"
+			if(removable)
+				dat += " <a href='?src=\ref[user];preference=delete;num=[i];'>\[X]</a>"
+			dat += "<br>"
 
 	dat += "<hr>"
 	dat += "<a href='byond://?src=\ref[user];preference=close_dialog'>Close</a><br>"
