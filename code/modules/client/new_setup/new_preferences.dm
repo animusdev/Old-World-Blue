@@ -95,8 +95,8 @@
 	user << browse(dat, "window=preferences;size=560x510;can_resize=0")
 
 /datum/preferences/Topic(href, href_list)
-	var/mob/new_player/user = usr
-	if(!user || !istype(user))
+	var/mob/user = usr
+	if(!user || !user.client)
 		return
 
 	if(href_list["switch_page"])
@@ -138,8 +138,10 @@
 		if(PAGE_PREFS)		HandlePrefsTopic(user, href_list)
 		if(PAGE_SPECIES)	HandleSpeciesTopic(user, href_list)
 
+/*
 	if(user.ready)
 		return
+*/
 
 	spawn()
 		NewShowChoices(user)
