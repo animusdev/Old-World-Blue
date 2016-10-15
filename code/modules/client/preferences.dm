@@ -133,6 +133,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	gender = pick(MALE, FEMALE)
 	real_name = random_name(gender,species)
 	current_species = all_species["Human"]
+	sanitize_body_build()
 	h_style = random_hair_style(gender, species)
 	gear = list()
 

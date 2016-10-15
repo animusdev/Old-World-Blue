@@ -42,7 +42,7 @@
 	var/list/loadout = list()
 
 /datum/preferences/proc/sanitize_body_build()
-	if(current_species.get_body_build(gender, body))
+	if(body && current_species.get_body_build(gender, body))
 		return 1
 
 	var/datum/body_build/BB = current_species.get_body_build(gender)
