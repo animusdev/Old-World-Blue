@@ -35,7 +35,6 @@
 	var/hat = null
 	var/suit = null
 	var/gloves = null
-	var/memory = null
 	var/mask = null
 	var/belt = null
 	var/ear = /obj/item/device/radio/headset
@@ -110,11 +109,6 @@ For copy-pasting:
 	if(hat)			H.equip_to_slot_or_del(new hat (H), slot_head)
 	if(gloves)		H.equip_to_slot_or_del(new gloves (H), slot_gloves)
 	if(glasses)		H.equip_to_slot_or_del(new glasses (H), slot_glasses)
-	if(memory)		H.mind.store_memory(all_solved_wires[/obj/machinery/door/airlock]) //cut off my hands plz
-	H.mind.store_memory(all_solved_wires[/obj/machinery/door/airlock])
-	H.mind.store_memory(all_solved_wires[/obj/machinery/power/apc])
-	H.mind.store_memory(all_solved_wires[/obj/machinery/alarm])
-
 
 	//Belt and PDA
 	if(belt)
