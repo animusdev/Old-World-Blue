@@ -55,7 +55,7 @@
 			if(run_action())//If we can do something here then we dont need to pulse more
 				return
 
-		if(!istype(src,/obj/effect/blob/shield) && !istype(src,/obj/effect/blob/core) && !istype(src,/obj/effect/blob/node) && (pulse <= 2) && (prob(30)))
+		if(!is_type_in_list(src,list(/obj/effect/blob/shield,/obj/effect/blob/core,/obj/effect/blob/node)) && (pulse <= 2) && (prob(30)))
 			change_to("Shield")
 			return
 

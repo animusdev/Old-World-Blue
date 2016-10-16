@@ -2,7 +2,8 @@
 // (mostly) DNA2 SETUP
 /////////////////////////
 
-// Randomize block, assign a reference name, and optionally define difficulty (by making activation zone smaller or bigger)
+// Randomize block, assign a reference name, and optionally define difficulty
+//  (by making activation zone smaller or bigger)
 // The name is used on /vg/ for species with predefined genetic traits,
 //  and for the DNA panel in the player panel.
 /proc/getAssignedBlock(var/name,var/list/blocksLeft, var/activity_bounds=DNA_DEFAULT_BOUNDS)
@@ -74,7 +75,8 @@
 		var/datum/dna/gene/G = new gene_type
 		if(G.block)
 			if(G.block in blocks_assigned)
-				warning("DNA2: Gene [G.name] trying to use already-assigned block [G.block] (used by [english_list(blocks_assigned[G.block])])")
+				warning("DNA2: Gene [G.name] trying to use already-assigned block [G.block] \
+				(used by [english_list(blocks_assigned[G.block])])")
 			dna_genes.Add(G)
 			var/list/assignedToBlock[0]
 			if(blocks_assigned[G.block])

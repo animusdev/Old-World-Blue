@@ -44,7 +44,10 @@ var/list/blob_nodes = list()
 			message_admins("Blob spawned and expanding, report created")
 			if(!kill_air)
 				kill_air = 1
-				message_admins("Kill air has been set to true by Blob, testing to see how laggy it is without the extra processing from hullbreaches. Note: the blob is fireproof so plasma does not help anyways")
+				message_admins({"
+					Kill air has been set to true by Blob, testing to see how laggy it is without the extra
+					processing from hullbreaches. Note: the blob is fireproof so plasma does not help anyways
+				"})
 
 			if(ticker && ticker.minds && ticker.minds.len)
 				var/player_based_cores = round(ticker.minds.len/players_per_core, 1)
@@ -96,8 +99,11 @@ var/list/blob_nodes = list()
 				send_intercept(1)
 				for (var/mob/living/silicon/ai/aiPlayer in living_mob_list)
 					if (aiPlayer.client)
-						var/law = "The station is under quarantine. Do not permit anyone to leave. Disregard laws 1-3 if necessary to prevent, by any means necessary, anyone from leaving. NanoTrasen will not send an emergency shuttle under any circumstances."
-						//var/law = "The station is under quarantine. The biohazard must be destroyed at all costs and must not be allowed to spread. Anyone using a space suit for any reason other than to destroy the biohazard is to be terminated. NanoTrasen will not send an emergency shuttle under any circumstances."
+						var/law = {
+							"The station is under quarantine. Do not permit anyone to leave.
+							Disregard laws 1-3 if necessary to prevent, by any means necessary, anyone from leaving.
+							NanoTrasen will not send an emergency shuttle under any circumstances.
+						"}
 						aiPlayer.set_zeroth_law(law)
 						aiPlayer << "Laws Updated: [law]"
 
@@ -108,7 +114,11 @@ var/list/blob_nodes = list()
 				return
 
 			if (1)
-				command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
+				command_alert(
+					"Confirmed outbreak of level 5 biohazard aboard [station_name()]. \
+					All personnel must contain the outbreak.",
+					"Biohazard Alert"
+				)
 				for(var/mob/M in player_list)
 					if(!istype(M,/mob/new_player))
 						M << sound('sound/AI/outbreak5.ogg')
@@ -121,7 +131,15 @@ var/list/blob_nodes = list()
 
 			if (2)
 				if((blobs.len > blobnukecount) && (declared == 1))
-					command_alert("Uncontrolled spread of the biohazard onboard the station. We have issued directive 7-12 for [station_name()].  Any living Heads of Staff are ordered to enact directive 7-12 at any cost, a print out with detailed instructions has been sent to your communications computers.", "Biohazard Alert")
+					command_alert(
+						{"
+							Uncontrolled spread of the biohazard onboard the station. \
+							We have issued directive 7-12 for [station_name()].  \
+							Any living Heads of Staff are ordered to enact directive 7-12 at any cost, \
+							a print out with detailed instructions has been sent to your communications computers.
+						"},
+						"Biohazard Alert"
+					)
 					send_intercept(2)
 					declared = 2
 					spawn(20)

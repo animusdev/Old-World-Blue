@@ -49,7 +49,8 @@
 
 	if(danger_level != atmosalm)
 		if (danger_level < 1 && atmosalm >= 1)
-			//closing the doors on red and opening on green provides a bit of hysteresis that will hopefully prevent fire doors from opening and closing repeatedly due to noise
+			//closing the doors on red and opening on green provides a bit of hysteresis
+			// that will hopefully prevent fire doors from opening and closing repeatedly due to noise
 			air_doors_open()
 		else if (danger_level >= 2 && atmosalm < 2)
 			air_doors_close()
@@ -144,7 +145,8 @@
 	return
 
 /area/proc/updateicon()
-	if ((fire || eject || party) && (!requires_power||power_environ) && !istype(src, /area/space))//If it doesn't require power, can still activate this proc.
+	//If it doesn't require power, can still activate this proc.
+	if ((fire || eject || party) && (!requires_power||power_environ) && !istype(src, /area/space))
 		if(fire && !eject && !party)
 			icon_state = "blue"
 		/*else if(atmosalm && !fire && !eject && !party)
@@ -229,7 +231,8 @@ var/list/mob/living/forced_ambiance_list = new
 		L.lastarea = get_area(L.loc)
 	var/area/newarea = get_area(L.loc)
 	var/area/oldarea = L.lastarea
-	if((oldarea.has_gravity == 0) && (newarea.has_gravity == 1) && (L.m_intent == "run")) // Being ready when you change areas gives you a chance to avoid falling all together.
+	// Being ready when you change areas gives you a chance to avoid falling all together.
+	if((oldarea.has_gravity == 0) && (newarea.has_gravity == 1) && (L.m_intent == "run"))
 		thunk(L)
 		L.update_floating( L.Check_Dense_Object() )
 
@@ -237,7 +240,9 @@ var/list/mob/living/forced_ambiance_list = new
 	play_ambience(L)
 
 /area/proc/play_ambience(var/mob/living/L)
-	// Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
+	// Ambience goes down here
+	// make sure to list each area seperately for ease of adding things in later, thanks!
+	// Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
 	if(!(L && L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))	return
 
 	// If we previously were in an area with force-played ambiance, stop it.

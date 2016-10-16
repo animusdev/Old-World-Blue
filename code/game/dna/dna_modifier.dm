@@ -85,9 +85,8 @@
 
 /obj/machinery/dna_scannernew/proc/eject_occupant()
 	src.go_out()
-	for(var/obj/O in src)
-		if((!istype(O,/obj/item/weapon/reagent_containers)) && (!istype(O,/obj/item/weapon/circuitboard/clonescanner)) && (!istype(O,/obj/item/weapon/stock_parts)) && (!istype(O,/obj/item/stack/cable_coil)))
-			O.loc = get_turf(src)//Ejects items that manage to get in there (exluding the components)
+	for(var/obj/O in (src.contents - src.component_parts))
+		O.loc = get_turf(src)//Ejects items that manage to get in there (exluding the components)
 	if(!occupant)
 		for(var/mob/M in src)//Failsafe so you can get mobs out
 			M.loc = get_turf(src)
@@ -153,15 +152,17 @@
 	src.icon_state = "scanner_1"
 
 	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
-	if(locate(/obj/machinery/computer/cloning, get_step(src, NORTH)) \
-		|| locate(/obj/machinery/computer/cloning, get_step(src, SOUTH)) \
-		|| locate(/obj/machinery/computer/cloning, get_step(src, EAST)) \
-		|| locate(/obj/machinery/computer/cloning, get_step(src, WEST)))
-
+	if(locate(/obj/machinery/computer/cloning) in range(1))
 		if(!M.client && M.mind)
 			for(var/mob/observer/dead/ghost in player_list)
 				if(ghost.mind == M.mind)
-					ghost << "<b><font color = #330033 size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font>"
+					ghost << {"
+						<font color = #330033 size = 3>
+						<b>Your corpse has been placed into a cloning scanner.
+						Return to your body if you want to be resurrected/cloned!</b>
+						(Verbs -> Ghost -> Re-enter corpse)
+						</font>
+					"}
 					break
 	return
 
@@ -239,7 +240,6 @@
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 400
-	var/waiting_for_user_input=0 // Fix for #274 (Mash create block injector without answering dialog to make unlimited injectors) - N3X
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I as obj, mob/user as mob)
 	if (istype(I, /obj/item/weapon/disk/data)) //INSERT SOME diskS
@@ -545,7 +545,8 @@
 			src.selected_ui_target_hex = "F"
 		return 1 // return 1 forces an update to all Nano uis attached to src
 
-	if (href_list["selectUIBlock"] && href_list["selectUISubblock"]) // This chunk of code updates selected block / sub-block based on click
+	// This chunk of code updates selected block / sub-block based on click
+	if (href_list["selectUIBlock"] && href_list["selectUISubblock"])
 		var/select_block = text2num(href_list["selectUIBlock"])
 		var/select_subblock = text2num(href_list["selectUISubblock"])
 		if ((select_block <= DNA_UI_LENGTH) && (select_block >= 1))
@@ -600,14 +601,14 @@
 
 	////////////////////////////////////////////////////////
 
-	if (href_list["selectSEBlock"] && href_list["selectSESubblock"]) // This chunk of code updates selected block / sub-block based on click (se stands for strutural enzymes)
+	// This chunk of code updates selected block / sub-block based on click (se stands for strutural enzymes)
+	if (href_list["selectSEBlock"] && href_list["selectSESubblock"])
 		var/select_block = text2num(href_list["selectSEBlock"])
 		var/select_subblock = text2num(href_list["selectSESubblock"])
 		if ((select_block <= DNA_SE_LENGTH) && (select_block >= 1))
 			src.selected_se_block = select_block
 		if ((select_subblock <= DNA_BLOCK_SIZE) && (select_subblock >= 1))
 			src.selected_se_subblock = select_subblock
-		//testing("User selected block [selected_se_block] (sent [select_block]), subblock [selected_se_subblock] (sent [select_block]).")
 		return 1 // return 1 forces an update to all Nano uis attached to src
 
 	if (href_list["pulseSERadiation"])
@@ -627,7 +628,7 @@
 		if(src.connected.occupant)
 			if (prob((80 + (src.radiation_duration / 2))))
 				// FIXME: Find out what these corresponded to and change them to the WHATEVERBLOCK they need to be.
-				//if ((src.selected_se_block != 2 || src.selected_se_block != 12 || src.selected_se_block != 8 || src.selected_se_block || 10) && prob (20))
+				//if (!src.selected_se_block in list(2, 12, 8, 10) && prob (20))
 				var/real_SE_block=selected_se_block
 				block = miniscramble(block, src.radiation_intensity, src.radiation_duration)
 				if(prob(20))
@@ -636,7 +637,6 @@
 					else if (src.selected_se_block > DNA_SE_LENGTH/2 && src.selected_se_block < DNA_SE_LENGTH)
 						real_SE_block--
 
-				//testing("Irradiated SE block [real_SE_block]:[src.selected_se_subblock] ([original_block] now [block]) [(real_SE_block!=selected_se_block) ? "(SHIFTED)":""]!")
 				connected.occupant.dna.SetSESubBlock(real_SE_block,selected_se_subblock,block)
 				src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)
 				domutcheck(src.connected.occupant,src.connected)
@@ -767,13 +767,13 @@
 			return 1
 
 		if (bufferOption == "createInjector")
-			if (src.injector_ready || waiting_for_user_input)
+			if (src.injector_ready )
 
 				var/success = 1
-				var/obj/item/weapon/dnainjector/I = new /obj/item/weapon/dnainjector
+				var/obj/item/weapon/dnainjector/I = new
 				var/datum/dna2/record/buf = src.buffers[bufferId]
+				src.injector_ready = 0
 				if(href_list["createBlockInjector"])
-					waiting_for_user_input=1
 					var/list/selectedbuf
 					if(buf.types & DNA2_BUF_SE)
 						selectedbuf=buf.dna.SE
@@ -783,18 +783,14 @@
 					success = setInjectorBlock(I,blk,buf)
 				else
 					I.buf = buf
-				waiting_for_user_input=0
 				if(success)
 					I.loc = src.loc
 					I.name += " ([buf.name])"
 					//src.temphtml = "Injector created."
-					src.injector_ready = 0
 					spawn(300)
 						src.injector_ready = 1
-				//else
-					//src.temphtml = "Error in injector creation."
-			//else
-				//src.temphtml = "Replicator not ready yet."
+				else
+					src.injector_ready = 1
 			return 1
 
 		if (bufferOption == "loadDisk")

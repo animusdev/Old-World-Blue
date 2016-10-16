@@ -34,7 +34,7 @@
 	var/initial_spawn_req = 1               // Gamemode using this template won't start without this # candidates.
 	var/initial_spawn_target = 3            // Gamemode will attempt to spawn this many antags.
 	var/announced                           // Has an announcement been sent?
-	var/spawn_announcement                  // When the datum spawn proc is called, does it announce to the world? (ie. xenos)
+	var/spawn_announcement                  // When the datum spawn proc is called, does it announce to the world?
 	var/spawn_announcement_title            // Report title.
 	var/spawn_announcement_sound            // Report sound clip.
 	var/spawn_announcement_delay            // Time between initial spawn and round announcement.
@@ -92,15 +92,20 @@
 	// Note that this is done before jobs are handed out.
 	for(var/datum/mind/player in ticker.mode.get_players_for_role(role_type, id))
 		if(ghosts_only && !isobserver(player.current))
-			log_debug("[key_name(player)] is not eligible to become a [role_text]: Only ghosts may join as this role!")
+			log_debug("[key_name(player)] is not eligible to become a [role_text]: \
+				Only ghosts may join as this role!")
 		else if(player.special_role)
-			log_debug("[key_name(player)] is not eligible to become a [role_text]: They already have a special role ([player.special_role])!")
+			log_debug("[key_name(player)] is not eligible to become a [role_text]: \
+				They already have a special role ([player.special_role])!")
 		else if (player in pending_antagonists)
-			log_debug("[key_name(player)] is not eligible to become a [role_text]: They have already been selected for this role!")
+			log_debug("[key_name(player)] is not eligible to become a [role_text]: \
+				They have already been selected for this role!")
 		else if(!can_become_antag(player))
-			log_debug("[key_name(player)] is not eligible to become a [role_text]: They are blacklisted for this role!")
+			log_debug("[key_name(player)] is not eligible to become a [role_text]: \
+				They are blacklisted for this role!")
 		else if(player_is_antag(player))
-			log_debug("[key_name(player)] is not eligible to become a [role_text]: They are already an antagonist!")
+			log_debug("[key_name(player)] is not eligible to become a [role_text]: \
+				They are already an antagonist!")
 		else
 			candidates += player
 
@@ -183,7 +188,8 @@
 	if(flags & ANTAG_OVERRIDE_JOB)
 		player.assigned_role = role_text
 
-	//Ensure that a player cannot be drafted for multiple antag roles, taking up slots for antag roles that they will not fill.
+	//Ensure that a player cannot be drafted for multiple antag roles,
+	// taking up slots for antag roles that they will not fill.
 	player.special_role = role_text
 
 	return 1

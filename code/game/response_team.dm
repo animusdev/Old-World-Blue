@@ -50,7 +50,11 @@ client/verb/JoinResponseTeam()
 		if(!send_emergency_team)
 			usr << "No emergency response team is currently being sent."
 			return
-		if(jobban_isbanned(usr, "Syndicate") || jobban_isbanned(usr, "Emergency Response Team") || jobban_isbanned(usr, "Security Officer"))
+		if(
+			jobban_isbanned(usr, "Syndicate") || \
+			jobban_isbanned(usr, "Emergency Response Team") || \
+			jobban_isbanned(usr, "Security Officer")
+		)
 			usr << "<span class='danger'>You are jobbanned from the emergency reponse team!</span>"
 			return
 		if(ert.current_antagonists.len >= ert.hard_cap)
@@ -114,11 +118,17 @@ proc/trigger_armed_response_team(var/force = 0)
 
 	// there's only a certain chance a team will be sent
 	if(!prob(send_team_chance))
-		command_announcement.Announce("It would appear that an emergency response team was requested for [station_name()]. Unfortunately, we were unable to send one at this time.", "Central Command")
+		command_announcement.Announce(
+			"It would appear that an emergency response team was requested for [station_name()]. \
+			Unfortunately, we were unable to send one at this time.", "Central Command"
+		)
 		can_call_ert = 0 // Only one call per round, ladies.
 		return
 
-	command_announcement.Announce("It would appear that an emergency response team was requested for [station_name()]. We will prepare and send one as soon as possible.", "Central Command")
+	command_announcement.Announce(
+		"It would appear that an emergency response team was requested for [station_name()]. \
+		We will prepare and send one as soon as possible.", "Central Command"
+	)
 
 	can_call_ert = 0 // Only one call per round, gentleman.
 	send_emergency_team = 1
