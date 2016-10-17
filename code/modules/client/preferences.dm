@@ -153,9 +153,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 	if(path)
 		dat += "<center>"
-		dat += "<a href=\"byond://?src=\ref[user];preference=open_load_dialog\">Load Setup</a> | "
-		dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload Setup</a> | "
-		dat += "<a href=\"byond://?src=\ref[user];preference=open_save_dialog\">Save Setup</a>"
+		dat += "<a href=\"?src=\ref[user];preference=open_load_dialog\">Load Setup</a> | "
+		dat += "<a href=\"?src=\ref[user];preference=reload\">Reload Setup</a> | "
+		dat += "<a href=\"?src=\ref[user];preference=open_save_dialog\">Save Setup</a>"
 		dat += "</center>"
 
 	else
@@ -172,7 +172,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a><br>"
 	dat += "<b>Body build:</b> <a href='?_src_=prefs;preference=build'><b>[body]</b></a><br>"
 	dat += "<b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a><br>"
-	dat += "<b>Spawn Point</b>: <a href='byond://?src=\ref[user];preference=spawnpoint;task=input'>[spawnpoint]</a>"
+	dat += "<b>Spawn Point</b>: <a href='?src=\ref[user];preference=spawnpoint;task=input'>[spawnpoint]</a>"
 
 	dat += "<br>"
 	dat += "<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'><b>[UI_style]</b></a><br>"
@@ -196,16 +196,16 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 			var/datum/gear/G = gear_datums[gear[i]]
 			if(G)
 				total_cost += G.cost
-				dat += "[gear[i]] ([G.cost] points) <a href='byond://?src=\ref[user];preference=loadout;task=remove;gear=[i]'>\[remove\]</a><br>"
+				dat += "[gear[i]] ([G.cost] points) <a href='?src=\ref[user];preference=loadout;task=remove;gear=[i]'>\[remove\]</a><br>"
 
 		dat += "<b>Used:</b> [total_cost] points."
 	else
 		dat += "none."
 
 	if(total_cost < MAX_GEAR_COST)
-		dat += " <a href='byond://?src=\ref[user];preference=loadout;task=input'>\[add\]</a>"
+		dat += " <a href='?src=\ref[user];preference=loadout;task=input'>\[add\]</a>"
 		if(gear && gear.len)
-			dat += " <a href='byond://?src=\ref[user];preference=loadout;task=clear'>\[clear\]</a>"
+			dat += " <a href='?src=\ref[user];preference=loadout;task=clear'>\[clear\]</a>"
 
 	dat += "<br><br><b>Occupation Choices</b><br>"
 	dat += "\t<a href='?_src_=prefs;preference=job;task=menu'><b>Set Preferences</b></a><br>"
@@ -214,15 +214,15 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	dat += "(<a href='?_src_=prefs;preference=all;task=random'>&reg;</A>)"
 	dat += "<br>"
 	dat += "Species: <a href='?src=\ref[user];preference=species;task=change'>[species]</a><br>"
-	dat += "Secondary Language:<br><a href='byond://?src=\ref[user];preference=language;task=input'>[language]</a><br>"
-	dat += "Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a><br>"
+	dat += "Secondary Language:<br><a href='?src=\ref[user];preference=language;task=input'>[language]</a><br>"
+	dat += "Blood Type: <a href='?src=\ref[user];preference=b_type;task=input'>[b_type]</a><br>"
 	if(current_species.flags & HAS_SKIN_TONE)
 		dat += "Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220<br></a>"
 	dat += "Needs Glasses: <a href='?_src_=prefs;preference=disabilities'><b>[disabilities == 0 ? "No" : "Yes"]</b></a><br>"
-	dat += "Tattoo: <a href='byond://?src=\ref[user];preference=tattoo;task=open'>Set</a><br>"
+	dat += "Tattoo: <a href='?src=\ref[user];preference=tattoo;task=open'>Set</a><br>"
 	if( !(current_species.flags & (IS_PLANT|IS_SYNTHETIC)) )
-		dat += "Limbs: <a href='byond://?src=\ref[user];preference=limbs;task=open'>Adjust</a><br>"
-		dat += "Internal Organs: <a href='byond://?src=\ref[user];preference=organs;task=input'>Adjust</a><br>"
+		dat += "Limbs: <a href='?src=\ref[user];preference=limbs;task=open'>Adjust</a><br>"
+		dat += "Internal Organs: <a href='?src=\ref[user];preference=organs;task=input'>Adjust</a><br>"
 
 	//display limbs below
 	var/ind = 0
@@ -308,14 +308,14 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	if(jobban_isbanned(user, "Records"))
 		dat += "<b>You are banned from using character records.</b><br>"
 	else
-		dat += "<b><a href=\"byond://?src=\ref[user];preference=records;record=1\">Character Records</a></b><br>"
+		dat += "<b><a href=\"?src=\ref[user];preference=records;record=1\">Character Records</a></b><br>"
 
-	dat += "<b><a href=\"byond://?src=\ref[user];preference=antagoptions;active=0\">Set Antag Options</b></a><br>"
+	dat += "<b><a href=\"?src=\ref[user];preference=antagoptions;active=0\">Set Antag Options</b></a><br>"
 
-	dat += "<a href='byond://?src=\ref[user];preference=flavor_text;task=open'><b>Set Flavor Text</b></a><br>"
-	dat += "<a href='byond://?src=\ref[user];preference=flavour_text_robot;task=open'><b>Set Robot Flavour Text</b></a><br>"
+	dat += "<a href='?src=\ref[user];preference=flavor_text;task=open'><b>Set Flavor Text</b></a><br>"
+	dat += "<a href='?src=\ref[user];preference=flavour_text_robot;task=open'><b>Set Robot Flavour Text</b></a><br>"
 
-	dat += "<a href='byond://?src=\ref[user];preference=pAI'><b>pAI Configuration</b></a><br>"
+	dat += "<a href='?src=\ref[user];preference=pAI'><b>pAI Configuration</b></a><br>"
 	dat += "<br>"
 
 	dat += "<br><b>Hair</b><br>"
@@ -334,10 +334,10 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		dat += "<a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> <font face='fixedsys' size='3' color='[skin_color]'><table style='display:inline;' bgcolor='[skin_color]'><tr><td>__</td></tr></table></font>"
 
 	dat += "<br><br><b>Background Information</b><br>"
-	dat += "<b>Home system</b>: <a href='byond://?src=\ref[user];preference=home_system;task=input'>[home_system]</a><br/>"
-	dat += "<b>Citizenship</b>: <a href='byond://?src=\ref[user];preference=citizenship;task=input'>[citizenship]</a><br/>"
-	dat += "<b>Faction</b>: <a href='byond://?src=\ref[user];preference=faction;task=input'>[faction]</a><br/>"
-	dat += "<b>Religion</b>: <a href='byond://?src=\ref[user];preference=religion;task=input'>[religion]</a><br/>"
+	dat += "<b>Home system</b>: <a href='?src=\ref[user];preference=home_system;task=input'>[home_system]</a><br/>"
+	dat += "<b>Citizenship</b>: <a href='?src=\ref[user];preference=citizenship;task=input'>[citizenship]</a><br/>"
+	dat += "<b>Faction</b>: <a href='?src=\ref[user];preference=faction;task=input'>[faction]</a><br/>"
+	dat += "<b>Religion</b>: <a href='?src=\ref[user];preference=religion;task=input'>[religion]</a><br/>"
 
 	dat += "<br><br>"
 
@@ -418,7 +418,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 			else
 				HTML += " <font color=red>\[No]</font>"
 			if(job.alt_titles) //Blatantly cloned from a few lines down.
-				HTML += "</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td><td><a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"
+				HTML += "</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td><td><a href=\"?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"
 			HTML += "</a></td></tr>"
 			continue
 
@@ -431,7 +431,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		else
 			HTML += " <font color=red>\[NEVER]</font>"
 		if(job.alt_titles)
-			HTML += "</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td><td><a href=\"byond://?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"
+			HTML += "</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td><td><a href=\"?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"
 		HTML += "</a></td></tr>"
 
 	HTML += "</td'></tr></table>"
@@ -458,15 +458,15 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	HTML += "<tt><center>"
 	HTML += "<b>Choose disabilities</b><br>"
 
-	HTML += "Need Glasses? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=0\">[disabilities & (1<<0) ? "Yes" : "No"]</a><br>"
-	HTML += "Seizures? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=1\">[disabilities & (1<<1) ? "Yes" : "No"]</a><br>"
-	HTML += "Coughing? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=2\">[disabilities & (1<<2) ? "Yes" : "No"]</a><br>"
-	HTML += "Tourettes/Twitching? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=3\">[disabilities & (1<<3) ? "Yes" : "No"]</a><br>"
-	HTML += "Nervousness? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=4\">[disabilities & (1<<4) ? "Yes" : "No"]</a><br>"
-	HTML += "Deafness? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=5\">[disabilities & (1<<5) ? "Yes" : "No"]</a><br>"
+	HTML += "Need Glasses? <a href=\"?src=\ref[user];preferences=1;disabilities=0\">[disabilities & (1<<0) ? "Yes" : "No"]</a><br>"
+	HTML += "Seizures? <a href=\"?src=\ref[user];preferences=1;disabilities=1\">[disabilities & (1<<1) ? "Yes" : "No"]</a><br>"
+	HTML += "Coughing? <a href=\"?src=\ref[user];preferences=1;disabilities=2\">[disabilities & (1<<2) ? "Yes" : "No"]</a><br>"
+	HTML += "Tourettes/Twitching? <a href=\"?src=\ref[user];preferences=1;disabilities=3\">[disabilities & (1<<3) ? "Yes" : "No"]</a><br>"
+	HTML += "Nervousness? <a href=\"?src=\ref[user];preferences=1;disabilities=4\">[disabilities & (1<<4) ? "Yes" : "No"]</a><br>"
+	HTML += "Deafness? <a href=\"?src=\ref[user];preferences=1;disabilities=5\">[disabilities & (1<<5) ? "Yes" : "No"]</a><br>"
 
 	HTML += "<br>"
-	HTML += "<a href=\"byond://?src=\ref[user];preferences=1;disabilities=-2\">\[Done\]</a>"
+	HTML += "<a href=\"?src=\ref[user];preferences=1;disabilities=-2\">\[Done\]</a>"
 	HTML += "</center></tt>"
 
 	user << browse(null, "window=preferences")
@@ -478,20 +478,20 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	HTML += "<tt><center>"
 	HTML += "<b>Set Character Records</b><br>"
 
-	HTML += "<a href=\"byond://?src=\ref[user];preference=records;task=med_record\">Medical Records</a><br>"
+	HTML += "<a href=\"?src=\ref[user];preference=records;task=med_record\">Medical Records</a><br>"
 
 	HTML += TextPreview(med_record,40)
 
-	HTML += "<br><br><a href=\"byond://?src=\ref[user];preference=records;task=gen_record\">Employment Records</a><br>"
+	HTML += "<br><br><a href=\"?src=\ref[user];preference=records;task=gen_record\">Employment Records</a><br>"
 
 	HTML += TextPreview(gen_record,40)
 
-	HTML += "<br><br><a href=\"byond://?src=\ref[user];preference=records;task=sec_record\">Security Records</a><br>"
+	HTML += "<br><br><a href=\"?src=\ref[user];preference=records;task=sec_record\">Security Records</a><br>"
 
 	HTML += TextPreview(sec_record,40)
 
 	HTML += "<br>"
-	HTML += "<a href=\"byond://?src=\ref[user];preference=records;records=-1\">\[Done\]</a>"
+	HTML += "<a href=\"?src=\ref[user];preference=records;records=-1\">\[Done\]</a>"
 	HTML += "</center></tt>"
 
 	user << browse(null, "window=preferences")
@@ -581,7 +581,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	if(jobban_isbanned(user, "Records"))
 		HTML += "<b>You are banned from using character records.</b><br>"
 	else
-		HTML +="<b><a href=\"byond://?src=\ref[user];preference=records;task=exploitable_record\">[TextPreview(exploit_record,40)]</a></b>"
+		HTML +="<b><a href=\"?src=\ref[user];preference=records;task=exploitable_record\">[TextPreview(exploit_record,40)]</a></b>"
 	HTML +="<br>"
 	HTML +="<hr />"
 	HTML +="<a href='?src=\ref[user];preference=antagoptions;antagtask=done;active=1'>\[Done\]</a>"
@@ -598,7 +598,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	HTML += "<b>Set Flavour Text</b> <hr />"
 	HTML += "<br></center>"
 	for(var/flavor in flavs_list)
-		HTML += "<a href='byond://?src=\ref[user];preference=flavor_text;task=[flavor]'>[flavs_list[flavor]]:</a> "
+		HTML += "<a href='?src=\ref[user];preference=flavor_text;task=[flavor]'>[flavs_list[flavor]]:</a> "
 		HTML += TextPreview(cp1251_to_utf8(flavor_texts[flavor]))
 		HTML += "<br>"
 	HTML += "<hr />"
@@ -613,11 +613,11 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	HTML += "<tt><center>"
 	HTML += "<b>Set Robot Flavour Text</b> <hr />"
 	HTML += "<br></center>"
-	HTML += "<a href ='byond://?src=\ref[user];preference=flavour_text_robot;task=Default'>Default:</a> "
+	HTML += "<a href ='?src=\ref[user];preference=flavour_text_robot;task=Default'>Default:</a> "
 	HTML += TextPreview(cp1251_to_utf8(flavour_texts_robot["Default"]))
 	HTML += "<hr />"
 	for(var/module in robot_modules)
-		HTML += "<a href='byond://?src=\ref[user];preference=flavour_text_robot;task=[module]'>[module]:</a> "
+		HTML += "<a href='?src=\ref[user];preference=flavour_text_robot;task=[module]'>[module]:</a> "
 		HTML += TextPreview(cp1251_to_utf8(flavour_texts_robot[module]))
 		HTML += "<br>"
 	HTML += "<hr />"
@@ -641,9 +641,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 			if( organ_data[limbs[limb]]==states[state] )
 				HTML += "\t<b>[state]</b>"
 				if( organ_data[limbs[limb]]=="cyborg" )
-					HTML += "\t<a href='byond://?src=\ref[user];preference=limbs;task=input;limb=[limb];state=Prothesis'>Set type</a> "
+					HTML += "\t<a href='?src=\ref[user];preference=limbs;task=input;limb=[limb];state=Prothesis'>Set type</a> "
 			else
-				HTML += "\t<a href='byond://?src=\ref[user];preference=limbs;task=input;limb=[limb];state=[state]'>[state]</a> "
+				HTML += "\t<a href='?src=\ref[user];preference=limbs;task=input;limb=[limb];state=[state]'>[state]</a> "
 		HTML += "<br>"
 	HTML += "<hr />"
 	HTML +="<a href='?src=\ref[user];preference=limbs;task=done'>\[Done\]</a>"
@@ -662,8 +662,8 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	for(var/limb in limbs)
 		HTML += "[limb]:"
 		if( tattoo_data[limbs[limb]] )
-			HTML += "\t<a href='byond://?src=\ref[user];preference=tattoo;task=input;limb=[limb];mark=[limbs[limb]];state=drop'>Drop</a> "
-		HTML += "\t<a href='byond://?src=\ref[user];preference=tattoo;task=input;limb=[limb];mark=[limbs[limb]]'>Set</a> <br>"
+			HTML += "\t<a href='?src=\ref[user];preference=tattoo;task=input;limb=[limb];mark=[limbs[limb]];state=drop'>Drop</a> "
+		HTML += "\t<a href='?src=\ref[user];preference=tattoo;task=input;limb=[limb];mark=[limbs[limb]]'>Set</a> <br>"
 	HTML += "<br>"
 	HTML += "<hr />"
 	HTML +="<a href='?src=\ref[user];preference=tattoo;task=done'>\[Done\]</a>"
@@ -1667,7 +1667,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 			dat += "<br>"
 
 	dat += "<hr>"
-	dat += "<a href='byond://?src=\ref[user];preference=close_dialog'>Close</a><br>"
+	dat += "<a href='?src=\ref[user];preference=close_dialog'>Close</a><br>"
 	dat += "</center></tt>"
 	user << browse(dat, "window=saves;size=300x390")
 
@@ -1688,7 +1688,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 			dat += "<a href='?_src_=prefs;preference=save;num=[i];'>[name]</a><br>"
 
 	dat += "<hr>"
-	dat += "<a href='byond://?src=\ref[user];preference=close_dialog'>Close</a><br>"
+	dat += "<a href='?src=\ref[user];preference=close_dialog'>Close</a><br>"
 	dat += "</center></tt>"
 	user << browse(dat, "window=saves;size=300x390")
 
