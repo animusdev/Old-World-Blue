@@ -153,9 +153,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 	if(path)
 		dat += "<center>"
-		dat += "<a href=\"?src=\ref[user];preference=open_load_dialog\">Load Setup</a> | "
-		dat += "<a href=\"?src=\ref[user];preference=reload\">Reload Setup</a> | "
-		dat += "<a href=\"?src=\ref[user];preference=open_save_dialog\">Save Setup</a>"
+		dat += "<a href=\"?src=\ref[src];preference=open_load_dialog\">Load Setup</a> | "
+		dat += "<a href=\"?src=\ref[src];preference=reload\">Reload Setup</a> | "
+		dat += "<a href=\"?src=\ref[src];preference=open_save_dialog\">Save Setup</a>"
 		dat += "</center>"
 
 	else
@@ -164,26 +164,26 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	dat += "</center><hr><table><tr><td width='340px' height='320px'>"
 
 	dat += "<b>Name:</b> "
-	dat += "<a href='?_src_=prefs;preference=name;task=input'><b>[real_name]</b></a><br>"
-	dat += "(<a href='?_src_=prefs;preference=name;task=random'>Random Name</A>) "
-	dat += "(<a href='?_src_=prefs;preference=name'>Always Random Name: [random_name ? "Yes" : "No"]</a>)"
+	dat += "<a href='?src=\ref[src];preference=name;task=input'><b>[real_name]</b></a><br>"
+	dat += "(<a href='?src=\ref[src];preference=name;task=random'>Random Name</A>) "
+	dat += "(<a href='?src=\ref[src];preference=name'>Always Random Name: [random_name ? "Yes" : "No"]</a>)"
 	dat += "<br>"
 
-	dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a><br>"
-	dat += "<b>Body build:</b> <a href='?_src_=prefs;preference=build'><b>[body]</b></a><br>"
-	dat += "<b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a><br>"
-	dat += "<b>Spawn Point</b>: <a href='?src=\ref[user];preference=spawnpoint;task=input'>[spawnpoint]</a>"
+	dat += "<b>Gender:</b> <a href='?src=\ref[src];preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a><br>"
+	dat += "<b>Body build:</b> <a href='?src=\ref[src];preference=build'><b>[body]</b></a><br>"
+	dat += "<b>Age:</b> <a href='?src=\ref[src];preference=age;task=input'>[age]</a><br>"
+	dat += "<b>Spawn Point</b>: <a href='?src=\ref[src];preference=spawnpoint;task=input'>[spawnpoint]</a>"
 
 	dat += "<br>"
-	dat += "<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'><b>[UI_style]</b></a><br>"
+	dat += "<b>UI Style:</b> <a href='?src=\ref[src];preference=ui'><b>[UI_style]</b></a><br>"
 	dat += "<b>Custom UI</b>(recommended for White UI):<br>"
-	dat += "-Color: <a href='?_src_=prefs;preference=UIcolor'><b>[UI_style_color]</b></a> <table style='display:inline;' bgcolor='[UI_style_color]'><tr><td>__</td></tr></table><br>"
-	dat += "-Alpha(transparency): <a href='?_src_=prefs;preference=UIalpha'><b>[UI_style_alpha]</b></a><br>"
-	dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'><b>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</b></a><br>"
-	dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'><b>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</b></a><br>"
-	dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'><b>[(chat_toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</b></a><br>"
-	dat += "<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'><b>[(chat_toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearest Creatures"]</b></a><br>"
-	dat += "<b>Ghost radio:</b> <a href='?_src_=prefs;preference=ghost_radio'><b>[(chat_toggles & CHAT_GHOSTRADIO) ? "All Chatter" : "Nearest Speakers"]</b></a><br>"
+	dat += "-Color: <a href='?src=\ref[src];preference=UIcolor'><b>[UI_style_color]</b></a> <table style='display:inline;' bgcolor='[UI_style_color]'><tr><td>__</td></tr></table><br>"
+	dat += "-Alpha(transparency): <a href='?src=\ref[src];preference=UIalpha'><b>[UI_style_alpha]</b></a><br>"
+	dat += "<b>Play admin midis:</b> <a href='?src=\ref[src];preference=hear_midis'><b>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</b></a><br>"
+	dat += "<b>Play lobby music:</b> <a href='?src=\ref[src];preference=lobby_music'><b>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</b></a><br>"
+	dat += "<b>Ghost ears:</b> <a href='?src=\ref[src];preference=ghost_ears'><b>[(chat_toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</b></a><br>"
+	dat += "<b>Ghost sight:</b> <a href='?src=\ref[src];preference=ghost_sight'><b>[(chat_toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearest Creatures"]</b></a><br>"
+	dat += "<b>Ghost radio:</b> <a href='?src=\ref[src];preference=ghost_radio'><b>[(chat_toggles & CHAT_GHOSTRADIO) ? "All Chatter" : "Nearest Speakers"]</b></a><br>"
 
 	dat += "<br><b>Custom Loadout:</b> "
 	var/total_cost = 0
@@ -196,33 +196,33 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 			var/datum/gear/G = gear_datums[gear[i]]
 			if(G)
 				total_cost += G.cost
-				dat += "[gear[i]] ([G.cost] points) <a href='?src=\ref[user];preference=loadout;task=remove;gear=[i]'>\[remove\]</a><br>"
+				dat += "[gear[i]] ([G.cost] points) <a href='?src=\ref[src];preference=loadout;task=remove;gear=[i]'>\[remove\]</a><br>"
 
 		dat += "<b>Used:</b> [total_cost] points."
 	else
 		dat += "none."
 
 	if(total_cost < MAX_GEAR_COST)
-		dat += " <a href='?src=\ref[user];preference=loadout;task=input'>\[add\]</a>"
+		dat += " <a href='?src=\ref[src];preference=loadout;task=input'>\[add\]</a>"
 		if(gear && gear.len)
-			dat += " <a href='?src=\ref[user];preference=loadout;task=clear'>\[clear\]</a>"
+			dat += " <a href='?src=\ref[src];preference=loadout;task=clear'>\[clear\]</a>"
 
 	dat += "<br><br><b>Occupation Choices</b><br>"
-	dat += "\t<a href='?_src_=prefs;preference=job;task=menu'><b>Set Preferences</b></a><br>"
+	dat += "\t<a href='?src=\ref[src];preference=job;task=menu'><b>Set Preferences</b></a><br>"
 
 	dat += "<br><table><tr><td><b>Body</b> "
-	dat += "(<a href='?_src_=prefs;preference=all;task=random'>&reg;</A>)"
+	dat += "(<a href='?src=\ref[src];preference=all;task=random'>&reg;</A>)"
 	dat += "<br>"
-	dat += "Species: <a href='?src=\ref[user];preference=species;task=change'>[species]</a><br>"
-	dat += "Secondary Language:<br><a href='?src=\ref[user];preference=language;task=input'>[language]</a><br>"
-	dat += "Blood Type: <a href='?src=\ref[user];preference=b_type;task=input'>[b_type]</a><br>"
+	dat += "Species: <a href='?src=\ref[src];preference=species;task=change'>[species]</a><br>"
+	dat += "Secondary Language:<br><a href='?src=\ref[src];preference=language;task=input'>[language]</a><br>"
+	dat += "Blood Type: <a href='?src=\ref[src];preference=b_type;task=input'>[b_type]</a><br>"
 	if(current_species.flags & HAS_SKIN_TONE)
-		dat += "Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220<br></a>"
-	dat += "Needs Glasses: <a href='?_src_=prefs;preference=disabilities'><b>[disabilities == 0 ? "No" : "Yes"]</b></a><br>"
-	dat += "Tattoo: <a href='?src=\ref[user];preference=tattoo;task=open'>Set</a><br>"
+		dat += "Skin Tone: <a href='?src=\ref[src];preference=s_tone;task=input'>[-s_tone + 35]/220<br></a>"
+	dat += "Needs Glasses: <a href='?src=\ref[src];preference=disabilities'><b>[disabilities == 0 ? "No" : "Yes"]</b></a><br>"
+	dat += "Tattoo: <a href='?src=\ref[src];preference=tattoo;task=open'>Set</a><br>"
 	if( !(current_species.flags & (IS_PLANT|IS_SYNTHETIC)) )
-		dat += "Limbs: <a href='?src=\ref[user];preference=limbs;task=open'>Adjust</a><br>"
-		dat += "Internal Organs: <a href='?src=\ref[user];preference=organs;task=input'>Adjust</a><br>"
+		dat += "Limbs: <a href='?src=\ref[src];preference=limbs;task=open'>Adjust</a><br>"
+		dat += "Internal Organs: <a href='?src=\ref[src];preference=organs;task=input'>Adjust</a><br>"
 
 	//display limbs below
 	var/ind = 0
@@ -291,15 +291,15 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	else
 		dat += "<br><br>"
 
-	dat += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'><b>[underwear]</b></a><br>"
+	dat += "Underwear: <a href ='?src=\ref[src];preference=underwear;task=input'><b>[underwear]</b></a><br>"
 
-	dat += "Undershirt: <a href='?_src_=prefs;preference=undershirt;task=input'><b>[undershirt]</b></a><br>"
+	dat += "Undershirt: <a href='?src=\ref[src];preference=undershirt;task=input'><b>[undershirt]</b></a><br>"
 
-	dat += "Socks: <a href='?_src_=prefs;preference=socks;task=input'><b>[socks]</b></a><br>"
+	dat += "Socks: <a href='?src=\ref[src];preference=socks;task=input'><b>[socks]</b></a><br>"
 
-	dat += "Backpack Type:<br><a href ='?_src_=prefs;preference=bag;task=input'><b>[backbaglist[backbag]]</b></a><br>"
+	dat += "Backpack Type:<br><a href ='?src=\ref[src];preference=bag;task=input'><b>[backbaglist[backbag]]</b></a><br>"
 
-	dat += "Nanotrasen Relation:<br><a href ='?_src_=prefs;preference=nt_relation;task=input'><b>[nanotrasen_relation]</b></a><br>"
+	dat += "Nanotrasen Relation:<br><a href ='?src=\ref[src];preference=nt_relation;task=input'><b>[nanotrasen_relation]</b></a><br>"
 
 	dat += "</td><td><b>Preview</b><br><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></td></tr></table>"
 
@@ -308,36 +308,36 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	if(jobban_isbanned(user, "Records"))
 		dat += "<b>You are banned from using character records.</b><br>"
 	else
-		dat += "<b><a href=\"?src=\ref[user];preference=records;record=1\">Character Records</a></b><br>"
+		dat += "<b><a href=\"?src=\ref[src];preference=records;record=1\">Character Records</a></b><br>"
 
-	dat += "<b><a href=\"?src=\ref[user];preference=antagoptions;active=0\">Set Antag Options</b></a><br>"
+	dat += "<b><a href=\"?src=\ref[src];preference=antagoptions;active=0\">Set Antag Options</b></a><br>"
 
-	dat += "<a href='?src=\ref[user];preference=flavor_text;task=open'><b>Set Flavor Text</b></a><br>"
-	dat += "<a href='?src=\ref[user];preference=flavour_text_robot;task=open'><b>Set Robot Flavour Text</b></a><br>"
+	dat += "<a href='?src=\ref[src];preference=flavor_text;task=open'><b>Set Flavor Text</b></a><br>"
+	dat += "<a href='?src=\ref[src];preference=flavour_text_robot;task=open'><b>Set Robot Flavour Text</b></a><br>"
 
-	dat += "<a href='?src=\ref[user];preference=pAI'><b>pAI Configuration</b></a><br>"
+	dat += "<a href='?src=\ref[src];preference=pAI'><b>pAI Configuration</b></a><br>"
 	dat += "<br>"
 
 	dat += "<br><b>Hair</b><br>"
-	dat += "<a href='?_src_=prefs;preference=hair;task=input'>Change Color</a> <font face='fixedsys' size='3' color='[hair_color]'><table style='display:inline;' bgcolor='[hair_color]'><tr><td>__</td></tr></table></font> "
-	dat += " Style: <a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>"
+	dat += "<a href='?src=\ref[src];preference=hair;task=input'>Change Color</a> <font face='fixedsys' size='3' color='[hair_color]'><table style='display:inline;' bgcolor='[hair_color]'><tr><td>__</td></tr></table></font> "
+	dat += " Style: <a href='?src=\ref[src];preference=h_style;task=input'>[h_style]</a><br>"
 
 	dat += "<br><b>Facial</b><br>"
-	dat += "<a href='?_src_=prefs;preference=facial;task=input'>Change Color</a> <font face='fixedsys' size='3' color='[facial_color]'><table  style='display:inline;' bgcolor='[facial_color]'><tr><td>__</td></tr></table></font> "
-	dat += " Style: <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
+	dat += "<a href='?src=\ref[src];preference=facial;task=input'>Change Color</a> <font face='fixedsys' size='3' color='[facial_color]'><table  style='display:inline;' bgcolor='[facial_color]'><tr><td>__</td></tr></table></font> "
+	dat += " Style: <a href='?src=\ref[src];preference=f_style;task=input'>[f_style]</a><br>"
 
 	dat += "<br><b>Eyes</b><br>"
-	dat += "<a href='?_src_=prefs;preference=eyes;task=input'>Change Color</a> <font face='fixedsys' size='3' color='[eyes_color]'><table  style='display:inline;' bgcolor='[eyes_color]'><tr><td>__</td></tr></table></font><br>"
+	dat += "<a href='?src=\ref[src];preference=eyes;task=input'>Change Color</a> <font face='fixedsys' size='3' color='[eyes_color]'><table  style='display:inline;' bgcolor='[eyes_color]'><tr><td>__</td></tr></table></font><br>"
 
 	if(current_species.flags & HAS_SKIN_COLOR)
 		dat += "<br><b>Body Color</b><br>"
-		dat += "<a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> <font face='fixedsys' size='3' color='[skin_color]'><table style='display:inline;' bgcolor='[skin_color]'><tr><td>__</td></tr></table></font>"
+		dat += "<a href='?src=\ref[src];preference=skin;task=input'>Change Color</a> <font face='fixedsys' size='3' color='[skin_color]'><table style='display:inline;' bgcolor='[skin_color]'><tr><td>__</td></tr></table></font>"
 
 	dat += "<br><br><b>Background Information</b><br>"
-	dat += "<b>Home system</b>: <a href='?src=\ref[user];preference=home_system;task=input'>[home_system]</a><br/>"
-	dat += "<b>Citizenship</b>: <a href='?src=\ref[user];preference=citizenship;task=input'>[citizenship]</a><br/>"
-	dat += "<b>Faction</b>: <a href='?src=\ref[user];preference=faction;task=input'>[faction]</a><br/>"
-	dat += "<b>Religion</b>: <a href='?src=\ref[user];preference=religion;task=input'>[religion]</a><br/>"
+	dat += "<b>Home system</b>: <a href='?src=\ref[src];preference=home_system;task=input'>[home_system]</a><br/>"
+	dat += "<b>Citizenship</b>: <a href='?src=\ref[src];preference=citizenship;task=input'>[citizenship]</a><br/>"
+	dat += "<b>Faction</b>: <a href='?src=\ref[src];preference=faction;task=input'>[faction]</a><br/>"
+	dat += "<b>Religion</b>: <a href='?src=\ref[src];preference=religion;task=input'>[religion]</a><br/>"
 
 	dat += "<br><br>"
 
@@ -351,7 +351,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 				if(jobban_isbanned(user, i) || (i == "positronic brain" && jobban_isbanned(user, "AI") && jobban_isbanned(user, "Cyborg")) || (i == "pAI candidate" && jobban_isbanned(user, "pAI")))
 					dat += "<b>Be [i]:<b> <font color=red><b> \[BANNED]</b></font><br>"
 				else
-					dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=be_special;num=[n]'><b>[src.be_special&(1<<n) ? "Yes" : "No"]</b></a><br>"
+					dat += "<b>Be [i]:</b> <a href='?src=\ref[src];preference=be_special;num=[n]'><b>[src.be_special&(1<<n) ? "Yes" : "No"]</b></a><br>"
 			n++
 	dat += "</td></tr></table></body></html>"
 
@@ -371,7 +371,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/HTML = "<body>"
 	HTML += "<tt><center>"
 	HTML += "<b>Choose occupation chances</b><br>Unavailable occupations are crossed out.<br><br>"
-	HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>\[Done\]</a></center><br>" // Easier to press up here.
+	HTML += "<center><a href='?src=\ref[src];preference=job;task=close'>\[Done\]</a></center><br>" // Easier to press up here.
 	HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
 	HTML += "<table width='100%' cellpadding='1' cellspacing='0'>"
 	var/index = -1
@@ -410,7 +410,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 		HTML += "</td><td width='40%'>"
 
-		HTML += "<a href='?_src_=prefs;preference=job;task=input;text=[rank]'>"
+		HTML += "<a href='?src=\ref[src];preference=job;task=input;text=[rank]'>"
 
 		if(rank == "Assistant")//Assistant is special
 			if(job_civilian_low & ASSISTANT)
@@ -418,7 +418,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 			else
 				HTML += " <font color=red>\[No]</font>"
 			if(job.alt_titles) //Blatantly cloned from a few lines down.
-				HTML += "</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td><td><a href=\"?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"
+				HTML += "</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td><td><a href=\"?src=\ref[src];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"
 			HTML += "</a></td></tr>"
 			continue
 
@@ -431,7 +431,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		else
 			HTML += " <font color=red>\[NEVER]</font>"
 		if(job.alt_titles)
-			HTML += "</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td><td><a href=\"?src=\ref[user];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"
+			HTML += "</a></td></tr><tr bgcolor='[lastJob.selection_color]'><td width='60%' align='center'><a>&nbsp</a></td><td><a href=\"?src=\ref[src];preference=job;task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a></td></tr>"
 		HTML += "</a></td></tr>"
 
 	HTML += "</td'></tr></table>"
@@ -440,13 +440,13 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 	switch(alternate_option)
 		if(GET_RANDOM_JOB)
-			HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=green>Get random job if preferences unavailable</font></a></u></center><br>"
+			HTML += "<center><br><u><a href='?src=\ref[src];preference=job;task=random'><font color=green>Get random job if preferences unavailable</font></a></u></center><br>"
 		if(BE_ASSISTANT)
-			HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=red>Be assistant if preference unavailable</font></a></u></center><br>"
+			HTML += "<center><br><u><a href='?src=\ref[src];preference=job;task=random'><font color=red>Be assistant if preference unavailable</font></a></u></center><br>"
 		if(RETURN_TO_LOBBY)
-			HTML += "<center><br><u><a href='?_src_=prefs;preference=job;task=random'><font color=purple>Return to lobby if preference unavailable</font></a></u></center><br>"
+			HTML += "<center><br><u><a href='?src=\ref[src];preference=job;task=random'><font color=purple>Return to lobby if preference unavailable</font></a></u></center><br>"
 
-	HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>\[Reset\]</a></center>"
+	HTML += "<center><a href='?src=\ref[src];preference=job;task=reset'>\[Reset\]</a></center>"
 	HTML += "</tt>"
 
 	user << browse(null, "window=preferences")
@@ -458,15 +458,15 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	HTML += "<tt><center>"
 	HTML += "<b>Choose disabilities</b><br>"
 
-	HTML += "Need Glasses? <a href=\"?src=\ref[user];preferences=1;disabilities=0\">[disabilities & (1<<0) ? "Yes" : "No"]</a><br>"
-	HTML += "Seizures? <a href=\"?src=\ref[user];preferences=1;disabilities=1\">[disabilities & (1<<1) ? "Yes" : "No"]</a><br>"
-	HTML += "Coughing? <a href=\"?src=\ref[user];preferences=1;disabilities=2\">[disabilities & (1<<2) ? "Yes" : "No"]</a><br>"
-	HTML += "Tourettes/Twitching? <a href=\"?src=\ref[user];preferences=1;disabilities=3\">[disabilities & (1<<3) ? "Yes" : "No"]</a><br>"
-	HTML += "Nervousness? <a href=\"?src=\ref[user];preferences=1;disabilities=4\">[disabilities & (1<<4) ? "Yes" : "No"]</a><br>"
-	HTML += "Deafness? <a href=\"?src=\ref[user];preferences=1;disabilities=5\">[disabilities & (1<<5) ? "Yes" : "No"]</a><br>"
+	HTML += "Need Glasses? <a href=\"?src=\ref[src];preferences=1;disabilities=0\">[disabilities & (1<<0) ? "Yes" : "No"]</a><br>"
+	HTML += "Seizures? <a href=\"?src=\ref[src];preferences=1;disabilities=1\">[disabilities & (1<<1) ? "Yes" : "No"]</a><br>"
+	HTML += "Coughing? <a href=\"?src=\ref[src];preferences=1;disabilities=2\">[disabilities & (1<<2) ? "Yes" : "No"]</a><br>"
+	HTML += "Tourettes/Twitching? <a href=\"?src=\ref[src];preferences=1;disabilities=3\">[disabilities & (1<<3) ? "Yes" : "No"]</a><br>"
+	HTML += "Nervousness? <a href=\"?src=\ref[src];preferences=1;disabilities=4\">[disabilities & (1<<4) ? "Yes" : "No"]</a><br>"
+	HTML += "Deafness? <a href=\"?src=\ref[src];preferences=1;disabilities=5\">[disabilities & (1<<5) ? "Yes" : "No"]</a><br>"
 
 	HTML += "<br>"
-	HTML += "<a href=\"?src=\ref[user];preferences=1;disabilities=-2\">\[Done\]</a>"
+	HTML += "<a href=\"?src=\ref[src];preferences=1;disabilities=-2\">\[Done\]</a>"
 	HTML += "</center></tt>"
 
 	user << browse(null, "window=preferences")
@@ -478,20 +478,20 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	HTML += "<tt><center>"
 	HTML += "<b>Set Character Records</b><br>"
 
-	HTML += "<a href=\"?src=\ref[user];preference=records;task=med_record\">Medical Records</a><br>"
+	HTML += "<a href=\"?src=\ref[src];preference=records;task=med_record\">Medical Records</a><br>"
 
 	HTML += TextPreview(med_record,40)
 
-	HTML += "<br><br><a href=\"?src=\ref[user];preference=records;task=gen_record\">Employment Records</a><br>"
+	HTML += "<br><br><a href=\"?src=\ref[src];preference=records;task=gen_record\">Employment Records</a><br>"
 
 	HTML += TextPreview(gen_record,40)
 
-	HTML += "<br><br><a href=\"?src=\ref[user];preference=records;task=sec_record\">Security Records</a><br>"
+	HTML += "<br><br><a href=\"?src=\ref[src];preference=records;task=sec_record\">Security Records</a><br>"
 
 	HTML += TextPreview(sec_record,40)
 
 	HTML += "<br>"
-	HTML += "<a href=\"?src=\ref[user];preference=records;records=-1\">\[Done\]</a>"
+	HTML += "<a href=\"?src=\ref[src];preference=records;records=-1\">\[Done\]</a>"
 	HTML += "</center></tt>"
 
 	user << browse(null, "window=preferences")
@@ -503,7 +503,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		species_preview = "Human"
 	var/datum/species/current_species = all_species[species_preview]
 	var/dat = "<body>"
-	dat += "<center><h2>[current_species.name] \[<a href='?src=\ref[user];preference=species;task=change'>change</a>\]</h2></center><hr/>"
+	dat += "<center><h2>[current_species.name] \[<a href='?src=\ref[src];preference=species;task=change'>change</a>\]</h2></center><hr/>"
 	dat += "<table padding='8px'>"
 	dat += "<tr>"
 	dat += "<td width = 400>[current_species.blurb]</td>"
@@ -556,11 +556,11 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 	if(restricted)
 		if(restricted == 1)
-			dat += "<font color='red'><b>You cannot play as this species.</br><small>If you wish to be whitelisted, you can make an application post on <a href='?src=\ref[user];preference=open_whitelist_forum'>the forums</a>.</small></b></font></br>"
+			dat += "<font color='red'><b>You cannot play as this species.</br><small>If you wish to be whitelisted, you can make an application post on <a href='?src=\ref[src];preference=open_whitelist_forum'>the forums</a>.</small></b></font></br>"
 		else if(restricted == 2)
 			dat += "<font color='red'><b>You cannot play as this species.</br><small>This species is not available for play as a station race..</small></b></font></br>"
 	if(!restricted || check_rights(R_ADMIN, 0))
-		dat += "\[<a href='?src=\ref[user];preference=species;task=input;newspecies=[species_preview]'>select</a>\]"
+		dat += "\[<a href='?src=\ref[src];preference=species;task=input;newspecies=[species_preview]'>select</a>\]"
 	dat += "</center></body>"
 
 	user << browse(null, "window=preferences")
@@ -574,17 +574,17 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	HTML += "<tt><center>"
 	HTML += "<b>Antagonist Options</b> <hr />"
 	HTML += "<br>"
-	HTML +="Uplink Type : <b><a href='?src=\ref[user];preference=antagoptions;antagtask=uplinktype;active=1'>[uplinklocation]</a></b>"
+	HTML +="Uplink Type : <b><a href='?src=\ref[src];preference=antagoptions;antagtask=uplinktype;active=1'>[uplinklocation]</a></b>"
 	HTML +="<br>"
 	HTML +="Exploitable information about you : "
 	HTML += "<br>"
 	if(jobban_isbanned(user, "Records"))
 		HTML += "<b>You are banned from using character records.</b><br>"
 	else
-		HTML +="<b><a href=\"?src=\ref[user];preference=records;task=exploitable_record\">[TextPreview(exploit_record,40)]</a></b>"
+		HTML +="<b><a href=\"?src=\ref[src];preference=records;task=exploitable_record\">[TextPreview(exploit_record,40)]</a></b>"
 	HTML +="<br>"
 	HTML +="<hr />"
-	HTML +="<a href='?src=\ref[user];preference=antagoptions;antagtask=done;active=1'>\[Done\]</a>"
+	HTML +="<a href='?src=\ref[src];preference=antagoptions;antagtask=done;active=1'>\[Done\]</a>"
 
 	HTML += "</center></tt>"
 
@@ -598,11 +598,11 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	HTML += "<b>Set Flavour Text</b> <hr />"
 	HTML += "<br></center>"
 	for(var/flavor in flavs_list)
-		HTML += "<a href='?src=\ref[user];preference=flavor_text;task=[flavor]'>[flavs_list[flavor]]:</a> "
+		HTML += "<a href='?src=\ref[src];preference=flavor_text;task=[flavor]'>[flavs_list[flavor]]:</a> "
 		HTML += TextPreview(cp1251_to_utf8(flavor_texts[flavor]))
 		HTML += "<br>"
 	HTML += "<hr />"
-	HTML +="<a href='?src=\ref[user];preference=flavor_text;task=done'>\[Done\]</a>"
+	HTML +="<a href='?src=\ref[src];preference=flavor_text;task=done'>\[Done\]</a>"
 	HTML += "<tt>"
 	user << browse(null, "window=preferences")
 	user << browse(HTML, "window=flavor_text;size=430x300")
@@ -613,15 +613,15 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	HTML += "<tt><center>"
 	HTML += "<b>Set Robot Flavour Text</b> <hr />"
 	HTML += "<br></center>"
-	HTML += "<a href ='?src=\ref[user];preference=flavour_text_robot;task=Default'>Default:</a> "
+	HTML += "<a href ='?src=\ref[src];preference=flavour_text_robot;task=Default'>Default:</a> "
 	HTML += TextPreview(cp1251_to_utf8(flavour_texts_robot["Default"]))
 	HTML += "<hr />"
 	for(var/module in robot_modules)
-		HTML += "<a href='?src=\ref[user];preference=flavour_text_robot;task=[module]'>[module]:</a> "
+		HTML += "<a href='?src=\ref[src];preference=flavour_text_robot;task=[module]'>[module]:</a> "
 		HTML += TextPreview(cp1251_to_utf8(flavour_texts_robot[module]))
 		HTML += "<br>"
 	HTML += "<hr />"
-	HTML +="<a href='?src=\ref[user];preference=flavour_text_robot;task=done'>\[Done\]</a>"
+	HTML +="<a href='?src=\ref[src];preference=flavour_text_robot;task=done'>\[Done\]</a>"
 	HTML += "<tt>"
 	user << browse(null, "window=preferences")
 	user << browse(HTML, "window=flavour_text_robot;size=430x300")
@@ -641,12 +641,12 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 			if( organ_data[limbs[limb]]==states[state] )
 				HTML += "\t<b>[state]</b>"
 				if( organ_data[limbs[limb]]=="cyborg" )
-					HTML += "\t<a href='?src=\ref[user];preference=limbs;task=input;limb=[limb];state=Prothesis'>Set type</a> "
+					HTML += "\t<a href='?src=\ref[src];preference=limbs;task=input;limb=[limb];state=Prothesis'>Set type</a> "
 			else
-				HTML += "\t<a href='?src=\ref[user];preference=limbs;task=input;limb=[limb];state=[state]'>[state]</a> "
+				HTML += "\t<a href='?src=\ref[src];preference=limbs;task=input;limb=[limb];state=[state]'>[state]</a> "
 		HTML += "<br>"
 	HTML += "<hr />"
-	HTML +="<a href='?src=\ref[user];preference=limbs;task=done'>\[Done\]</a>"
+	HTML +="<a href='?src=\ref[src];preference=limbs;task=done'>\[Done\]</a>"
 	HTML += "<tt>"
 	user << browse(HTML, "window=set_limbs;size=430x300")
 	return
@@ -662,11 +662,11 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	for(var/limb in limbs)
 		HTML += "[limb]:"
 		if( tattoo_data[limbs[limb]] )
-			HTML += "\t<a href='?src=\ref[user];preference=tattoo;task=input;limb=[limb];mark=[limbs[limb]];state=drop'>Drop</a> "
-		HTML += "\t<a href='?src=\ref[user];preference=tattoo;task=input;limb=[limb];mark=[limbs[limb]]'>Set</a> <br>"
+			HTML += "\t<a href='?src=\ref[src];preference=tattoo;task=input;limb=[limb];mark=[limbs[limb]];state=drop'>Drop</a> "
+		HTML += "\t<a href='?src=\ref[src];preference=tattoo;task=input;limb=[limb];mark=[limbs[limb]]'>Set</a> <br>"
 	HTML += "<br>"
 	HTML += "<hr />"
-	HTML +="<a href='?src=\ref[user];preference=tattoo;task=done'>\[Done\]</a>"
+	HTML +="<a href='?src=\ref[src];preference=tattoo;task=done'>\[Done\]</a>"
 	HTML += "<tt>"
 	user << browse(HTML, "window=set_tattoo;size=430x300")
 	return
@@ -805,228 +805,210 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					job_engsec_low |= job.flag
 	return 1
 
-/datum/preferences/proc/process_link(mob/user, list/href_list)
-	if(!user)	return
+/datum/preferences/Topic(href, list/href_list)
+	switch(href_list["preference"])
+		if("open_whitelist_forum")
+			if(config.forumurl)
+				usr << link(config.forumurl)
+			else
+				usr << "<span class='danger'>The forum URL is not set in the server configuration.</span>"
+				return
 
-	if(!istype(user, /mob/new_player))	return
+		if("job")
+			switch(href_list["task"])
+				if("close")
+					usr << browse(null, "window=mob_occupation")
+					ShowChoices(usr)
+				if("reset")
+					ResetJobs()
+					SetChoices(usr)
+				if("random")
+					if(alternate_option == GET_RANDOM_JOB || alternate_option == BE_ASSISTANT)
+						alternate_option += 1
+					else if(alternate_option == RETURN_TO_LOBBY)
+						alternate_option = 0
+					else
+						return 0
+					SetChoices(usr)
+				if ("alt_title")
+					var/datum/job/job = locate(href_list["job"])
+					if (job)
+						var/choices = list(job.title) + job.alt_titles
+						var/choice = input("Pick a title for [job.title].", "Character Generation", GetPlayerAltTitle(job)) as anything in choices | null
+						if(choice)
+							SetPlayerAltTitle(job, choice)
+							SetChoices(usr)
+				if("input")
+					if(SetJob(usr, href_list["text"]))
+						spawn SetChoices(usr)
+				else
+					SetChoices(usr)
+			return 1
 
-	if(href_list["preference"] == "open_whitelist_forum")
-		if(config.forumurl)
-			user << link(config.forumurl)
-		else
-			user << "<span class='danger'>The forum URL is not set in the server configuration.</span>"
+		if("loadout")
+			if(href_list["task"] == "input")
+				var/list/valid_gear_choices = list()
+				for(var/gear_name in gear_datums)
+					var/datum/gear/G = gear_datums[gear_name]
+					if(G.whitelisted && !is_alien_whitelisted(usr, G.whitelisted))
+						continue
+					valid_gear_choices += gear_name
+
+				var/choice = input(usr, "Select gear to add: ") as null|anything in valid_gear_choices
+				if(choice && gear_datums[choice])
+					var/total_cost = 0
+					if(isnull(gear) || !islist(gear)) gear = list()
+					if(gear && gear.len)
+						for(var/gear_name in gear)
+							if(gear_datums[gear_name])
+								var/datum/gear/G = gear_datums[gear_name]
+								total_cost += G.cost
+					var/datum/gear/C = gear_datums[choice]
+					total_cost += C.cost
+					if(C && total_cost <= MAX_GEAR_COST)
+						gear += choice
+						usr << "<span class='notice'>Added \the '[choice]' for [C.cost] points ([MAX_GEAR_COST - total_cost] points remaining).</span>"
+					else
+						usr << "<span class='warning'>Adding \the '[choice]' will exceed the maximum loadout cost of [MAX_GEAR_COST] points.</span>"
+			else if(href_list["task"] == "remove")
+				var/i_remove = text2num(href_list["gear"])
+				if(i_remove < 1 || i_remove > gear.len) return
+				gear.Cut(i_remove, i_remove + 1)
+			else if(href_list["task"] == "clear")
+				gear.Cut()
+
+		if("flavor_text")
+			switch(href_list["task"])
+				if("open")
+					SetFlavorText(usr)
+					return
+				if("done")
+					usr << browse(null, "window=flavor_text")
+					ShowChoices(usr)
+					return
+				if("general")
+					var/msg = input(usr,"Give a general description of your character. This will be shown regardless of clothing, and may include OOC notes and preferences.","Flavor Text",rhtml_decode(edit_cp1251(flavor_texts["general"]))) as message
+					flavor_texts[href_list["task"]] = post_edit_cp1251(sanitize(msg, extra = 0))
+				else
+					var/msg = input(usr,"Set the flavor text for your [href_list["task"]].","Flavor Text",rhtml_decode(edit_cp1251(flavor_texts[href_list["task"]]))) as message
+					flavor_texts[href_list["task"]] = post_edit_cp1251(sanitize(msg, extra = 0))
+			SetFlavorText(usr)
 			return
 
-	if(href_list["preference"] == "job")
-		switch(href_list["task"])
-			if("close")
-				user << browse(null, "window=mob_occupation")
-				ShowChoices(user)
-			if("reset")
-				ResetJobs()
-				SetChoices(user)
-			if("random")
-				if(alternate_option == GET_RANDOM_JOB || alternate_option == BE_ASSISTANT)
-					alternate_option += 1
-				else if(alternate_option == RETURN_TO_LOBBY)
-					alternate_option = 0
+		if("flavour_text_robot")
+			switch(href_list["task"])
+				if("open")
+					SetFlavourTextRobot(usr)
+					return
+				if("done")
+					usr << browse(null, "window=flavour_text_robot")
+					ShowChoices(usr)
+					return
+				if("Default")
+					var/msg = input(usr,"Set the default flavour text for your robot. It will be used for any module without individual setting.","Flavour Text",rhtml_decode(flavour_texts_robot["Default"])) as message
+					flavour_texts_robot[href_list["task"]] = post_edit_utf8(sanitize(msg, extra = 0))
 				else
-					return 0
-				SetChoices(user)
-			if ("alt_title")
-				var/datum/job/job = locate(href_list["job"])
-				if (job)
-					var/choices = list(job.title) + job.alt_titles
-					var/choice = input("Pick a title for [job.title].", "Character Generation", GetPlayerAltTitle(job)) as anything in choices | null
-					if(choice)
-						SetPlayerAltTitle(job, choice)
-						SetChoices(user)
-			if("input")
-				if(SetJob(user, href_list["text"]))
-					spawn SetChoices(user)
+					var/msg = input(usr,\
+						"Set the flavour text for your robot with [href_list["task"]] module. If you leave this empty, default flavour text will be used for this module.",\
+						"Flavour Text",rhtml_decode(flavour_texts_robot[href_list["task"]])) as message
+					flavour_texts_robot[href_list["task"]] = post_edit_utf8(sanitize(msg, extra = 0))
+			SetFlavourTextRobot(usr)
+			return
+
+		if("pAI")
+			paiController.recruitWindow(usr, 0)
+			return 1
+
+		if("records")
+			if(text2num(href_list["record"]) >= 1)
+				SetRecords(usr)
+				return
 			else
-				SetChoices(user)
-		return 1
+				usr << browse(null, "window=records")
+			if(href_list["task"] == "med_record")
+				var/medmsg = cp1251_to_utf8(post_edit_utf8(sanitize(input(usr,"Set your medical notes here.","Medical Records",rhtml_decode(edit_utf8(med_record))) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)))
+				if(medmsg != null)
+					med_record = medmsg
+					SetRecords(usr)
 
-	else if (href_list["preference"] == "loadout")
+			switch(href_list["task"])
+				if("sec_record")
+					var/secmsg = cp1251_to_utf8(post_edit_utf8(sanitize(input(usr,"Set your security notes here.","Security Records",rhtml_decode(edit_utf8(sec_record))) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)))
+					if(secmsg != null)
+						sec_record = secmsg
+						SetRecords(usr)
+				if("gen_record")
+					var/genmsg = cp1251_to_utf8(post_edit_utf8(sanitize(input(usr,"Set your employment notes here.","Employment Records",rhtml_decode(edit_utf8(gen_record))) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)))
+					if(genmsg != null)
+						gen_record = genmsg
+						SetRecords(usr)
 
-		if(href_list["task"] == "input")
+				if("exploitable_record")
+					var/exploitmsg = cp1251_to_utf8(post_edit_utf8(sanitize(input(usr,"Set exploitable information about you here.","Exploitable Information",rhtml_decode(edit_utf8(exploit_record))) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)))
+					if(exploitmsg != null)
+						exploit_record = exploitmsg
+						SetAntagoptions(usr)
 
-			var/list/valid_gear_choices = list()
+		if("antagoptions")
+			if(text2num(href_list["active"]) == 0)
+				SetAntagoptions(usr)
+				return
+			switch(href_list["antagtask"])
+				if("uplinktype")
+					if (uplinklocation == "PDA")
+						uplinklocation = "Headset"
+					else if(uplinklocation == "Headset")
+						uplinklocation = "None"
+					else
+						uplinklocation = "PDA"
+					SetAntagoptions(usr)
+				if("done")
+					usr << browse(null, "window=antagoptions")
+					ShowChoices(usr)
+			return 1
 
-			for(var/gear_name in gear_datums)
-				var/datum/gear/G = gear_datums[gear_name]
-				if(G.whitelisted && !is_alien_whitelisted(user, G.whitelisted))
-					continue
-				valid_gear_choices += gear_name
+		if("loadout")
+			switch(href_list["task"])
+				if("input")
+					var/list/valid_gear_choices = list()
+					for(var/gear_name in gear_datums)
+						var/datum/gear/G = gear_datums[gear_name]
+						if(G.whitelisted && !is_alien_whitelisted(usr, G.whitelisted))
+							continue
+						valid_gear_choices += gear_name
+					var/choice = input(usr, "Select gear to add: ") as null|anything in valid_gear_choices
+					if(choice && gear_datums[choice])
+						var/total_cost = 0
+						if(isnull(gear) || !islist(gear)) gear = list()
+						if(gear && gear.len)
+							for(var/gear_name in gear)
+								if(gear_datums[gear_name])
+									var/datum/gear/G = gear_datums[gear_name]
+									total_cost += G.cost
 
-			var/choice = input(user, "Select gear to add: ") as null|anything in valid_gear_choices
+						var/datum/gear/C = gear_datums[choice]
+						total_cost += C.cost
+						if(C && total_cost <= MAX_GEAR_COST)
+							gear += choice
+							usr << "\blue Added [choice] for [C.cost] points ([MAX_GEAR_COST - total_cost] points remaining)."
+						else
+							usr << "\red That item will exceed the maximum loadout cost of [MAX_GEAR_COST] points."
 
-			if(choice && gear_datums[choice])
+				if("remove")
 
-				var/total_cost = 0
+					if(isnull(gear) || !islist(gear))
+						gear = list()
+					if(!gear.len)
+						return
 
-				if(isnull(gear) || !islist(gear)) gear = list()
+					var/choice = input(usr, "Select gear to remove: ") as null|anything in gear
+					if(!choice)
+						return
 
-				if(gear && gear.len)
 					for(var/gear_name in gear)
-						if(gear_datums[gear_name])
-							var/datum/gear/G = gear_datums[gear_name]
-							total_cost += G.cost
-
-				var/datum/gear/C = gear_datums[choice]
-				total_cost += C.cost
-				if(C && total_cost <= MAX_GEAR_COST)
-					gear += choice
-					user << "<span class='notice'>Added \the '[choice]' for [C.cost] points ([MAX_GEAR_COST - total_cost] points remaining).</span>"
-				else
-					user << "<span class='warning'>Adding \the '[choice]' will exceed the maximum loadout cost of [MAX_GEAR_COST] points.</span>"
-
-		else if(href_list["task"] == "remove")
-			var/i_remove = text2num(href_list["gear"])
-			if(i_remove < 1 || i_remove > gear.len) return
-			gear.Cut(i_remove, i_remove + 1)
-
-		else if(href_list["task"] == "clear")
-			gear.Cut()
-
-	else if(href_list["preference"] == "flavor_text")
-		switch(href_list["task"])
-			if("open")
-				SetFlavorText(user)
-				return
-			if("done")
-				user << browse(null, "window=flavor_text")
-				ShowChoices(user)
-				return
-			if("general")
-				var/msg = input(usr,"Give a general description of your character. This will be shown regardless of clothing, and may include OOC notes and preferences.","Flavor Text",rhtml_decode(edit_cp1251(flavor_texts["general"]))) as message
-				flavor_texts[href_list["task"]] = post_edit_cp1251(sanitize(msg, extra = 0))
-			else
-				var/msg = input(usr,"Set the flavor text for your [href_list["task"]].","Flavor Text",rhtml_decode(edit_cp1251(flavor_texts[href_list["task"]]))) as message
-				flavor_texts[href_list["task"]] = post_edit_cp1251(sanitize(msg, extra = 0))
-		SetFlavorText(user)
-		return
-
-	else if(href_list["preference"] == "flavour_text_robot")
-		switch(href_list["task"])
-			if("open")
-				SetFlavourTextRobot(user)
-				return
-			if("done")
-				user << browse(null, "window=flavour_text_robot")
-				ShowChoices(user)
-				return
-			if("Default")
-				var/msg = input(usr,"Set the default flavour text for your robot. It will be used for any module without individual setting.","Flavour Text",rhtml_decode(flavour_texts_robot["Default"])) as message
-				flavour_texts_robot[href_list["task"]] = post_edit_utf8(sanitize(msg, extra = 0))
-			else
-				var/msg = input(usr,\
-					"Set the flavour text for your robot with [href_list["task"]] module. If you leave this empty, default flavour text will be used for this module.",\
-					"Flavour Text",rhtml_decode(flavour_texts_robot[href_list["task"]])) as message
-				flavour_texts_robot[href_list["task"]] = post_edit_utf8(sanitize(msg, extra = 0))
-		SetFlavourTextRobot(user)
-		return
-
-	else if(href_list["preference"] == "pAI")
-		paiController.recruitWindow(user, 0)
-		return 1
-
-	else if(href_list["preference"] == "records")
-		if(text2num(href_list["record"]) >= 1)
-			SetRecords(user)
-			return
-		else
-			user << browse(null, "window=records")
-		if(href_list["task"] == "med_record")
-			var/medmsg = cp1251_to_utf8(post_edit_utf8(sanitize(input(usr,"Set your medical notes here.","Medical Records",rhtml_decode(edit_utf8(med_record))) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)))
-			if(medmsg != null)
-				med_record = medmsg
-				SetRecords(user)
-
-		if(href_list["task"] == "sec_record")
-			var/secmsg = cp1251_to_utf8(post_edit_utf8(sanitize(input(usr,"Set your security notes here.","Security Records",rhtml_decode(edit_utf8(sec_record))) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)))
-			if(secmsg != null)
-				sec_record = secmsg
-				SetRecords(user)
-		if(href_list["task"] == "gen_record")
-			var/genmsg = cp1251_to_utf8(post_edit_utf8(sanitize(input(usr,"Set your employment notes here.","Employment Records",rhtml_decode(edit_utf8(gen_record))) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)))
-			if(genmsg != null)
-				gen_record = genmsg
-				SetRecords(user)
-
-		if(href_list["task"] == "exploitable_record")
-			var/exploitmsg = cp1251_to_utf8(post_edit_utf8(sanitize(input(usr,"Set exploitable information about you here.","Exploitable Information",rhtml_decode(edit_utf8(exploit_record))) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)))
-			if(exploitmsg != null)
-				exploit_record = exploitmsg
-				SetAntagoptions(user)
-
-	else if (href_list["preference"] == "antagoptions")
-		if(text2num(href_list["active"]) == 0)
-			SetAntagoptions(user)
-			return
-		if (href_list["antagtask"] == "uplinktype")
-			if (uplinklocation == "PDA")
-				uplinklocation = "Headset"
-			else if(uplinklocation == "Headset")
-				uplinklocation = "None"
-			else
-				uplinklocation = "PDA"
-			SetAntagoptions(user)
-		if (href_list["antagtask"] == "done")
-			user << browse(null, "window=antagoptions")
-			ShowChoices(user)
-		return 1
-
-	else if (href_list["preference"] == "loadout")
-
-		if(href_list["task"] == "input")
-
-			var/list/valid_gear_choices = list()
-
-			for(var/gear_name in gear_datums)
-				var/datum/gear/G = gear_datums[gear_name]
-				if(G.whitelisted && !is_alien_whitelisted(user, G.whitelisted))
-					continue
-				valid_gear_choices += gear_name
-
-			var/choice = input(user, "Select gear to add: ") as null|anything in valid_gear_choices
-
-			if(choice && gear_datums[choice])
-
-				var/total_cost = 0
-
-				if(isnull(gear) || !islist(gear)) gear = list()
-
-				if(gear && gear.len)
-					for(var/gear_name in gear)
-						if(gear_datums[gear_name])
-							var/datum/gear/G = gear_datums[gear_name]
-							total_cost += G.cost
-
-				var/datum/gear/C = gear_datums[choice]
-				total_cost += C.cost
-				if(C && total_cost <= MAX_GEAR_COST)
-					gear += choice
-					user << "\blue Added [choice] for [C.cost] points ([MAX_GEAR_COST - total_cost] points remaining)."
-				else
-					user << "\red That item will exceed the maximum loadout cost of [MAX_GEAR_COST] points."
-
-		else if(href_list["task"] == "remove")
-
-			if(isnull(gear) || !islist(gear))
-				gear = list()
-			if(!gear.len)
-				return
-
-			var/choice = input(user, "Select gear to remove: ") as null|anything in gear
-			if(!choice)
-				return
-
-			for(var/gear_name in gear)
-				if(gear_name == choice)
-					gear -= gear_name
-					break
+						if(gear_name == choice)
+							gear -= gear_name
+							break
 
 	switch(href_list["task"])
 		if("change")
@@ -1035,7 +1017,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 				var/choice = input("Which species would you like to look at?") as null|anything in playable_species
 				if(!choice) return
 				species_preview = choice
-				SetSpecies(user)
+				SetSpecies(usr)
 
 		if("random")
 			switch(href_list["preference"])
@@ -1053,13 +1035,13 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					f_style = random_facial_hair_style(gender, species)
 				if("underwear")
 					underwear = pick(all_underwears)
-					ShowChoices(user)
+					ShowChoices(usr)
 				if("undershirt")
 					undershirt = pick(all_undershirts)
-					ShowChoices(user)
+					ShowChoices(usr)
 				if("socks")
 					socks = pick(all_socks)
-					ShowChoices(user)
+					ShowChoices(usr)
 				if("eyes")
 					eyes_color = rgb(rand(0,255), rand(0,255), rand(0,255))
 				if("s_tone")
@@ -1068,29 +1050,27 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					skin_color = rgb(rand(0,255), rand(0,255), rand(0,255))
 				if("bag")
 					backbag = rand(1,4)
-				/*if("skin_style")
-					h_style = random_skin_style(gender)*/
 				if("all")
 					randomize_appearance_for()	//no params needed
 
 		if("input")
 			switch(href_list["preference"])
 				if("name")
-					var/raw_name = input(user, "Choose your character's name:", "Character Preference")  as text|null
+					var/raw_name = input(usr, "Choose your character's name:", "Character Preference")  as text|null
 					if (!isnull(raw_name)) // Check to ensure that the user entered text (rather than cancel.)
 						var/new_name = sanitizeName(raw_name)
 						if(new_name)
 							real_name = new_name
 						else
-							user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+							usr << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
 
 				if("age")
-					var/new_age = input(user, "Choose your character's age:\n([current_species.min_age]-[current_species.max_age])", "Character Preference") as num|null
+					var/new_age = input(usr, "Choose your character's age:\n([current_species.min_age]-[current_species.max_age])", "Character Preference") as num|null
 					if(new_age)
 						age = max(min( round(text2num(new_age)), current_species.max_age),current_species.min_age)
 
 				if("species")
-					user << browse(null, "window=species")
+					usr << browse(null, "window=species")
 					var/prev_species = species
 					species = href_list["newspecies"]
 					if(prev_species != species)
@@ -1151,20 +1131,20 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						new_languages += L
 
 					if(!(new_languages.len))
-						alert(user, "There are not currently any available secondary languages.")
+						alert(usr, "There are not currently any available secondary languages.")
 					else
 						language = input("Please select a secondary language", "Character Generation", null) in new_languages
 
 
 				if("b_type")
-					var/new_b_type = input(user, "Choose your character's blood-type:", "Character Preference") as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
+					var/new_b_type = input(usr, "Choose your character's blood-type:", "Character Preference") as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
 					if(new_b_type)
 						b_type = new_b_type
 
 				if("hair")
 					var/datum/sprite_accessory/H = hair_styles_list[h_style]
 					if(H.do_colouration)
-						var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference", hair_color) as color|null
+						var/new_hair = input(usr, "Choose your character's hair colour:", "Character Preference", hair_color) as color|null
 						if(new_hair && new_hair!=hair_color)
 							req_update_icon = 1
 							hair_color = new_hair
@@ -1178,12 +1158,12 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 						valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
 
-					var/new_h_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in valid_hairstyles
+					var/new_h_style = input(usr, "Choose your character's hair style:", "Character Preference")  as null|anything in valid_hairstyles
 					if(new_h_style)
 						h_style = new_h_style
 
 				if("facial")
-					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference", facial_color) as color|null
+					var/new_facial = input(usr, "Choose your character's facial-hair colour:", "Character Preference", facial_color) as color|null
 					if(new_facial)
 						facial_color = new_facial
 
@@ -1200,64 +1180,63 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 						valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
 
-					var/new_f_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in valid_facialhairstyles
+					var/new_f_style = input(usr, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in valid_facialhairstyles
 					if(new_f_style)
 						f_style = new_f_style
 
 				if("underwear")
-					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in all_underwears
+					var/new_underwear = input(usr, "Choose your character's underwear:", "Character Preference")  as null|anything in all_underwears
 					if(new_underwear)
 						underwear = new_underwear
 					else
 						underwear = "None"
-					ShowChoices(user)
+					ShowChoices(usr)
 
 				if("undershirt")
-					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in all_undershirts
+					var/new_undershirt = input(usr, "Choose your character's undershirt:", "Character Preference") as null|anything in all_undershirts
 					if (new_undershirt)
 						undershirt = new_undershirt
 					else
 						new_undershirt = "None"
-					ShowChoices(user)
+					ShowChoices(usr)
 
 				if("socks")
-					var/new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in all_socks
+					var/new_socks = input(usr, "Choose your character's socks:", "Character Preference") as null|anything in all_socks
 					if (new_socks)
 						socks = new_socks
 					else
 						new_socks = "None"
-					ShowChoices(user)
+					ShowChoices(usr)
 
 				if("eyes")
-					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference", eyes_color) as color|null
+					var/new_eyes = input(usr, "Choose your character's eye colour:", "Character Preference", eyes_color) as color|null
 					if(new_eyes)
 						eyes_color = new_eyes
 
 				if("s_tone")
 					if(current_species.flags & HAS_SKIN_TONE)
-						var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference")  as num|null
+						var/new_s_tone = input(usr, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference")  as num|null
 						if(new_s_tone)
 							s_tone = 35 - max(min( round(new_s_tone), 220),1)
 
 				if("skin")
 					if(current_species.flags & HAS_SKIN_COLOR)
-						var/new_skin = input(user, "Choose your character's skin colour: ", "Character Preference", skin_color) as color|null
+						var/new_skin = input(usr, "Choose your character's skin colour: ", "Character Preference", skin_color) as color|null
 						if(new_skin)
 							skin_color = new_skin
 
 				if("ooccolor")
-					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference") as color|null
+					var/new_ooccolor = input(usr, "Choose your OOC colour:", "Game Preference") as color|null
 					if(new_ooccolor)
 						ooccolor = new_ooccolor
 
 				if("bag")
-					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in backbaglist
+					var/new_backbag = input(usr, "Choose your character's style of bag:", "Character Preference")  as null|anything in backbaglist
 					if(new_backbag)
 						backbag = backbaglist.Find(new_backbag)
 
 				if("nt_relation")
 					var/new_relation = input(
-						user,
 						"Choose your relation to NT. Note that this represents what others can find out about \
 						your character by researching your background, not what your character actually thinks.",
 						"Character Preference")  as null|anything in COMPANY_ALIGNMENTS
@@ -1268,10 +1247,10 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					if(text2num(href_list["disabilities"]) >= -1)
 						if(text2num(href_list["disabilities"]) >= 0)
 							disabilities ^= (1<<text2num(href_list["disabilities"])) //MAGIC
-						SetDisabilities(user)
+						SetDisabilities(usr)
 						return
 					else
-						user << browse(null, "window=disabil")
+						usr << browse(null, "window=disabil")
 
 				if("tattoo")
 					var/limb_name = href_list["limb"]
@@ -1292,8 +1271,8 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						else
 							tattoo_data[mark] = states[new_state]
 
-					ShowChoices(user)
-					SetTattoo(user)
+					ShowChoices(usr)
+					SetTattoo(usr)
 					return
 
 				if("limbs")
@@ -1350,7 +1329,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 								rlimb_data[second_limb] = null
 
 						if("Prothesis")
-							var/choice = input(user, "Which manufacturer do you wish to use for this limb?") as null|anything in chargen_robolimbs
+							var/choice = input(usr, "Which manufacturer do you wish to use for this limb?") as null|anything in chargen_robolimbs
 							if(!choice) return
 							rlimb_data[limb] = choice
 							organ_data[limb] = "cyborg"
@@ -1359,14 +1338,14 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 								organ_data[second_limb] = "cyborg"
 							if(third_limb && organ_data[third_limb] == "amputated")
 								organ_data[third_limb] = null
-					ShowChoices(user)
-					SetLimbs(user)
+					ShowChoices(usr)
+					SetLimbs(usr)
 					return
 
 				if("organs")
 					if( current_species.flags & (IS_PLANT|IS_SYNTHETIC) )
 						return
-					var/organ_name = input(user, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes")
+					var/organ_name = input(usr, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes")
 					if(!organ_name) return
 
 					var/organ = null
@@ -1376,7 +1355,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						if("Eyes")
 							organ = O_EYES
 
-					var/new_state = input(user, "What state do you wish the organ to be in?") as null|anything in list("Normal","Assisted","Mechanical")
+					var/new_state = input(usr, "What state do you wish the organ to be in?") as null|anything in list("Normal","Assisted","Mechanical")
 					if(!new_state) return
 
 					switch(new_state)
@@ -1388,55 +1367,55 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 							organ_data[organ] = "mechanical"
 
 				if("skin_style")
-					var/skin_style_name = input(user, "Select a new skin style") as null|anything in list("default1", "default2", "default3")
+					var/skin_style_name = input(usr, "Select a new skin style") as null|anything in list("default1", "default2", "default3")
 					if(!skin_style_name) return
 
 				if("spawnpoint")
 					var/list/spawnkeys = list()
 					for(var/S in spawntypes)
 						spawnkeys += S
-					var/choice = input(user, "Where would you like to spawn when latejoining?") as null|anything in spawnkeys
+					var/choice = input(usr, "Where would you like to spawn when latejoining?") as null|anything in spawnkeys
 					if(!choice || !spawntypes[choice])
 						spawnpoint = "Arrivals Shuttle"
 						return
 					spawnpoint = choice
 
 				if("home_system")
-					var/choice = input(user, "Please choose a home system.") as null|anything in home_system_choices + list("Unset","Other")
+					var/choice = input(usr, "Please choose a home system.") as null|anything in home_system_choices + list("Unset","Other")
 					if(!choice)
 						return
 					if(choice == "Other")
-						var/raw_choice = input(user, "Please enter a home system.")  as text|null
+						var/raw_choice = input(usr, "Please enter a home system.")  as text|null
 						if(raw_choice)
 							home_system = sanitize(raw_choice)
 						return
 					home_system = choice
 				if("citizenship")
-					var/choice = input(user, "Please choose your current citizenship.") as null|anything in citizenship_choices + list("None","Other")
+					var/choice = input(usr, "Please choose your current citizenship.") as null|anything in citizenship_choices + list("None","Other")
 					if(!choice)
 						return
 					if(choice == "Other")
-						var/raw_choice = input(user, "Please enter your current citizenship.", "Character Preference") as text|null
+						var/raw_choice = input(usr, "Please enter your current citizenship.", "Character Preference") as text|null
 						if(raw_choice)
 							citizenship = sanitize(raw_choice)
 						return
 					citizenship = choice
 				if("faction")
-					var/choice = input(user, "Please choose a faction to work for.") as null|anything in faction_choices + list("None","Other")
+					var/choice = input(usr, "Please choose a faction to work for.") as null|anything in faction_choices + list("None","Other")
 					if(!choice)
 						return
 					if(choice == "Other")
-						var/raw_choice = input(user, "Please enter a faction.")  as text|null
+						var/raw_choice = input(usr, "Please enter a faction.")  as text|null
 						if(raw_choice)
 							faction = sanitize(raw_choice)
 						return
 					faction = choice
 				if("religion")
-					var/choice = input(user, "Please choose a religion.") as null|anything in religion_choices + list("None","Other")
+					var/choice = input(usr, "Please choose a religion.") as null|anything in religion_choices + list("None","Other")
 					if(!choice)
 						return
 					if(choice == "Other")
-						var/raw_choice = input(user, "Please enter a religon.")  as text|null
+						var/raw_choice = input(usr, "Please enter a religon.")  as text|null
 						if(raw_choice)
 							religion = sanitize(raw_choice)
 						return
@@ -1447,20 +1426,20 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					switch(href_list["task"])
 						if("open")
 							spawn(2)
-								SetLimbs(user)
+								SetLimbs(usr)
 						if("done")
-							user << browse(null, "window=set_limbs")
-							ShowChoices(user)
+							usr << browse(null, "window=set_limbs")
+							ShowChoices(usr)
 							return
 
 				if("tattoo")
 					switch(href_list["task"])
 						if("open")
 							spawn(2)
-								SetTattoo(user)
+								SetTattoo(usr)
 						if("done")
-							user << browse(null, "window=set_tattoo")
-							ShowChoices(user)
+							usr << browse(null, "window=set_tattoo")
+							ShowChoices(usr)
 							return
 
 				if("gender")
@@ -1492,12 +1471,12 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 							UI_style = "Midnight"
 
 				if("UIcolor")
-					var/UI_style_color_new = input(user, "Choose your UI color, dark colors are not recommended!") as color|null
+					var/UI_style_color_new = input("Choose your UI color, dark colors are not recommended!") as color|null
 					if(!UI_style_color_new) return
 					UI_style_color = UI_style_color_new
 
 				if("UIalpha")
-					var/UI_style_alpha_new = input(user, "Select a new alpha(transparence) parametr for UI, between 50 and 255") as num
+					var/UI_style_alpha_new = input("Select a new alpha(transparence) parametr for UI, between 50 and 255") as num
 					if(!UI_style_alpha_new || UI_style_alpha_new > 255 || UI_style_alpha_new < 50) return
 					UI_style_alpha = UI_style_alpha_new
 
@@ -1514,9 +1493,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 				if("lobby_music")
 					toggles ^= SOUND_LOBBY
 					if(toggles & SOUND_LOBBY)
-						user << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1)
+						usr << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1)
 					else
-						user << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
+						usr << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
 
 				if("ghost_ears")
 					chat_toggles ^= CHAT_GHOSTEARS
@@ -1528,27 +1507,27 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					chat_toggles ^= CHAT_GHOSTRADIO
 
 				if("open_load_dialog")
-					if(!IsGuestKey(user.key))
+					if(!IsGuestKey(usr.key))
 						spawn(2)
-							open_load_dialog(user)
+							open_load_dialog(usr)
 
 				if("load")
 					load_preferences()
 					load_character(text2num(href_list["num"]))
-					close_dialog(user)
+					close_dialog(usr)
 
 				if("open_save_dialog")
-					if(!IsGuestKey(user.key))
+					if(!IsGuestKey(usr.key))
 						spawn(2)
-							open_save_dialog(user)
+							open_save_dialog(usr)
 
 				if("save")
 					save_preferences()
 					save_character(text2num(href_list["num"]))
-					close_dialog(user)
+					close_dialog(usr)
 
 				if("close_dialog")
-					close_dialog(user)
+					close_dialog(usr)
 
 				if("reload")
 					load_preferences()
@@ -1556,9 +1535,9 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 				if("delete")
 					delete_character(href_list["num"])
-					open_load_dialog(user)
+					open_load_dialog(usr)
 
-	ShowChoices(user)
+	ShowChoices(usr)
 	return 1
 
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, safety = 0)
@@ -1661,13 +1640,13 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 				removable = 0
 			if(i==default_slot)
 				name = "<b>[name]</b>"
-			dat += "<a href='?_src_=prefs;preference=load;num=[i];'>[name]</a>"
+			dat += "<a href='?src=\ref[src];preference=load;num=[i];'>[name]</a>"
 			if(removable)
-				dat += " <a href='?src=\ref[user];preference=delete;num=[i];'>\[X]</a>"
+				dat += " <a href='?src=\ref[src];preference=delete;num=[i];'>\[X]</a>"
 			dat += "<br>"
 
 	dat += "<hr>"
-	dat += "<a href='?src=\ref[user];preference=close_dialog'>Close</a><br>"
+	dat += "<a href='?src=\ref[src];preference=close_dialog'>Close</a><br>"
 	dat += "</center></tt>"
 	user << browse(dat, "window=saves;size=300x390")
 
@@ -1685,10 +1664,10 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 			if(!name)	name = "Character[i]"
 			if(i==default_slot)
 				name = "<b>[name]</b>"
-			dat += "<a href='?_src_=prefs;preference=save;num=[i];'>[name]</a><br>"
+			dat += "<a href='?src=\ref[src];preference=save;num=[i];'>[name]</a><br>"
 
 	dat += "<hr>"
-	dat += "<a href='?src=\ref[user];preference=close_dialog'>Close</a><br>"
+	dat += "<a href='?src=\ref[src];preference=close_dialog'>Close</a><br>"
 	dat += "</center></tt>"
 	user << browse(dat, "window=saves;size=300x390")
 

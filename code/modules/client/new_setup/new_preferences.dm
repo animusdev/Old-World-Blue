@@ -109,6 +109,9 @@
 	if(!user || !user.client)
 		return
 
+	if(href_list["preference"] || href_list["task"]) // OLD Setup Character
+		return ..()
+
 	if(href_list["switch_page"])
 		current_page = text2num(href_list["switch_page"])
 		spawn(2)
@@ -165,15 +168,15 @@
 				removable = 0
 			if(i==default_slot)
 				name = "<b>[name]</b>"
-			dat += "<a href='?src=\ref[src];preference=load;num=[i]'>[name]</a>"
+			dat += "<a href='?src=\ref[src];character=load;num=[i]'>[name]</a>"
 			if(removable)
-				dat += " <a href='?src=\ref[src];preference=delete;num=[i]'>\[X]</a>"
+				dat += " <a href='?src=\ref[src];character=delete;num=[i]'>\[X]</a>"
 			dat += "<br>"
 	dat += "</center></tt>"
 	return dat
 
 /datum/preferences/proc/HandleLoadTopic(mob/user, list/href_list)
-	switch(href_list["preference"])
+	switch(href_list["character"])
 		if("load")
 			load_preferences()
 			load_character(text2num(href_list["num"]))
@@ -247,12 +250,27 @@
 	dat += "<span style='white-space: nowrap'>[TextPreview(exploit_record,26)]</span>"
 
 	dat += "<br><br>"
+
+	dat += "<table style='position:relative; left:-3px'>"
+	dat += "<tr><td>Backpack:</td>\
+		<td>	<a href ='?src=\ref[src];bag=input'><b>[backbaglist[backbag]]</b></a></td></tr>"
+	dat += "<tr><td>Underwear:</td>\
+		<td><a href ='?src=\ref[src];underwear=input'><b>[underwear]</b></a></td></tr>"
+	dat += "<tr><td>Undershirt:</td>\
+		<td><a href='?src=\ref[src];undershirt=input'><b>[undershirt]</b></a></td></tr>"
+	dat += "<tr><td>Socks:</td>\
+		<td><a href='?src=\ref[src];socks=input'><b>[socks]</b></a></td></tr>"
+	dat += "</table>"
+
+/*
 	dat += "<table style='position:relative; left:-3px'><tr><td>Need Glasses?<br>Coughing?<br>Nervousness?<br>Paraplegia?</td><td>"
 	dat += "<a href='?src=\ref[src];disabilities=glasses'>[disabilities & NEARSIGHTED ? "Yes" : "No"]</a><br>"
 	dat += "<a href='?src=\ref[src];disabilities=coughing'>[disabilities & COUGHING ? "Yes" : "No"]</a><br>"
 	dat += "<a href='?src=\ref[src];disabilities=nervousness'>[disabilities & NERVOUS ? "Yes" : "No"]</a><br>"
 	dat += "<a href='?src=\ref[src];disabilities=paraplegia'>[disabilities & PARAPLEGIA ? "Yes" : "No"]</a>"
 	dat += "</td></tr></table>"
+*/
+
 
 	dat += "</td></tr></table>"
 
@@ -683,31 +701,31 @@
 	var/dat = "<table>"
 	dat += {"
 		<tr><td><b>UI:</b></td></tr>
-		<tr><td></td><td>UI Style:</td><td><a href='?src=\ref[src];preference=ui'>[UI_style]</a></td></tr>
-		<tr><td></td><td>Color:</td> <td><a href='?src=\ref[src];preference=UIcolor'><span class='box' style='background-color:[UI_style_color]'></span></a></td></tr>
-		<tr><td></td><td>Alpha(transparency):</td> <td><a href='?src=\ref[src];preference=UIalpha'>[UI_style_alpha]</a></td></tr>
+		<tr><td></td><td>UI Style:</td><td><a href='?src=\ref[src];toggle=ui'>[UI_style]</a></td></tr>
+		<tr><td></td><td>Color:</td> <td><a href='?src=\ref[src];toggle=UIcolor'><span class='box' style='background-color:[UI_style_color]'></span></a></td></tr>
+		<tr><td></td><td>Alpha(transparency):</td> <td><a href='?src=\ref[src];toggle=UIalpha'>[UI_style_alpha]</a></td></tr>
 		<tr><td><b>SOUND:</b></td></tr>
-		<tr><td></td><td>Play admin midis:</td> <td><a href='?src=\ref[src];preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a></td></tr>
-		<tr><td></td><td>Play lobby music:</td> <td><a href='?src=\ref[src];preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</a></td></tr>
-		<tr><td></td><td>Hear Ambience: </td> <td><a href='?src=\ref[src];preference=ambience'>[(toggles & SOUND_AMBIENCE) ? "Yes" : "No"]</a></td></tr>
+		<tr><td></td><td>Play admin midis:</td> <td><a href='?src=\ref[src];toggle=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a></td></tr>
+		<tr><td></td><td>Play lobby music:</td> <td><a href='?src=\ref[src];toggle=lobby_music'>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</a></td></tr>
+		<tr><td></td><td>Hear Ambience: </td> <td><a href='?src=\ref[src];toggle=ambience'>[(toggles & SOUND_AMBIENCE) ? "Yes" : "No"]</a></td></tr>
 		<tr><td><b>GHOST:</b></td></tr>
-		<tr><td></td><td>Ghost ears:</td> <td><a href='?src=\ref[src];preference=ghost_ears'>[(chat_toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</a></td></tr>
-		<tr><td></td><td>Ghost sight:</td> <td><a href=?src=\ref[src];preference=ghost_sight'>[(chat_toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearest Creatures"]</a></td></tr>
-		<tr><td></td><td>Ghost radio:</td> <td><a href='?src=\ref[src];preference=ghost_radio'>[(chat_toggles & CHAT_GHOSTRADIO) ? "All Chatter" : "Nearest Speakers"]</a></td></tr>
-		<tr><td></td><td>Hear dead chat:</td> <td><a href='?src=\ref[src];preference=dead_chat'>[(chat_toggles & CHAT_DEAD) ? "Yes" : "No"]</a></td></tr>
+		<tr><td></td><td>Ghost ears:</td> <td><a href='?src=\ref[src];toggle=ghost_ears'>[(chat_toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</a></td></tr>
+		<tr><td></td><td>Ghost sight:</td> <td><a href=?src=\ref[src];toggle=ghost_sight'>[(chat_toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearest Creatures"]</a></td></tr>
+		<tr><td></td><td>Ghost radio:</td> <td><a href='?src=\ref[src];toggle=ghost_radio'>[(chat_toggles & CHAT_GHOSTRADIO) ? "All Chatter" : "Nearest Speakers"]</a></td></tr>
+		<tr><td></td><td>Hear dead chat:</td> <td><a href='?src=\ref[src];toggle=dead_chat'>[(chat_toggles & CHAT_DEAD) ? "Yes" : "No"]</a></td></tr>
 		<tr><td><b>CHAT:</b></td></tr>
-		<tr><td></td><td>Hear OOC:</td> <td><a href='?src=\ref[src];preference=head_ooc'>[(chat_toggles & CHAT_OOC) ? "Yes" : "No"]</a></td></tr>
-		<tr><td></td><td>Hear LOOC:</td> <td><a href='?src=\ref[src];preference=head_looc'>[(chat_toggles & CHAT_LOOC) ? "Yes" : "No"]</a></td></tr>
-		<tr><td></td><td>Hide Chat Tags:</td> <td><a href='?src=\ref[src];preference=chat_tags'>[(toggles & CHAT_NOICONS) ? "Yes" : "No"]</a></td></tr>
-		<tr><td></td><td>Emote Localization:</td> <td><a href='?src=\ref[src];preference=emote_localization'>[(toggles & RUS_AUTOEMOTES) ? "Enabled" : "Disabled"]</a></td></tr>
-		<tr><td></td><td>Show MOTD:</td> <td><a href='?src=\ref[src];preference=show_motd'>[(toggles & HIDE_MOTD) ? "Disabled" : "Enabled"]</a></td></tr>
+		<tr><td></td><td>Hear OOC:</td> <td><a href='?src=\ref[src];toggle=head_ooc'>[(chat_toggles & CHAT_OOC) ? "Yes" : "No"]</a></td></tr>
+		<tr><td></td><td>Hear LOOC:</td> <td><a href='?src=\ref[src];toggle=head_looc'>[(chat_toggles & CHAT_LOOC) ? "Yes" : "No"]</a></td></tr>
+		<tr><td></td><td>Hide Chat Tags:</td> <td><a href='?src=\ref[src];toggle=chat_tags'>[(toggles & CHAT_NOICONS) ? "Yes" : "No"]</a></td></tr>
+		<tr><td></td><td>Emote Localization:</td> <td><a href='?src=\ref[src];toggle=emote_localization'>[(toggles & RUS_AUTOEMOTES) ? "Enabled" : "Disabled"]</a></td></tr>
+		<tr><td></td><td>Show MOTD:</td> <td><a href='?src=\ref[src];toggle=show_motd'>[(toggles & HIDE_MOTD) ? "Disabled" : "Enabled"]</a></td></tr>
 		</table>
 	"}
 
 	return dat
 
 /datum/preferences/proc/HandlePrefsTopic(mob/user, list/href_list)
-	switch(href_list["preference"])
+	switch(href_list["toggle"])
 		if("ui")
 			switch(UI_style)
 				if("Midnight")
