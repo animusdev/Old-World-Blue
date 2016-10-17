@@ -15,7 +15,7 @@
 		"Loadout"     = PAGE_LOADOUT,\
 		"Silicon"     = PAGE_SILICON,\
 		"Preferences" = PAGE_PREFS,\
-		)
+	)
 
 	var/current_page = PAGE_RECORDS
 	var/req_update_icon = 1
@@ -42,11 +42,10 @@
 	var/list/loadout = list()
 
 /datum/preferences/proc/sanitize_body_build()
-	var/datum/body_build/BB = get_body_build(gender, body)
-	if(BB && body in current_species.body_builds && gender in BB.genders)
+	if(body && current_species.get_body_build(gender, body))
 		return 1
 
-	BB = get_body_build(gender, body, current_species.body_builds)
+	var/datum/body_build/BB = current_species.get_body_build(gender)
 	body = BB.name
 
 
@@ -59,16 +58,25 @@
 		user << browse_rsc(preview_east,  "new_previewicon[EAST].png" )
 		user << browse_rsc(preview_west,  "new_previewicon[WEST].png" )
 
-	var/dat = "<html><head><script language='javascript'>function set(param, value)"
-	dat += "{window.location='byond://?src=\ref[src];'+param+'='+value;}</script>"
-	dat += "<style>span.box{display: inline-block; width: 20px; height: 10px; border:1px solid #000;} td{padding: 0px}</style>"
-	dat += "</head><body><center>"
+	var/dat = {"
+		<html><head>
+		<script language='javascript'>
+			[js_byjax]
+			function set(param, value) {window.location='?src=\ref[src];'+param+'='+value;}
+		</script>
+		<style>
+			span.box{display: inline-block; width: 20px; height: 10px; border:1px solid #000;}
+			td{padding: 0px}
+		</style>
+		</head>
+		<body><center>
+	"}
 
 	if(path)
 		dat += "Slot - "
-		dat += "<span onclick=\"set('preference', 'open_load_dialog')\">Load slot</span> - "
-		dat += "<span onclick=\"set('preference', 'save')\">Save slot</span> - "
-		dat += "<span onclick=\"set('preference', 'reload')\">Reload slot</span><hr>"
+		dat += "<span onclick=\"set('switch_page', [PAGE_LOAD])\">Load slot</span> - "
+		dat += "<span onclick=\"set('reload', 'reload')\">Reload slot</span> - "
+		dat += "<span onclick=\"set('save', 'save')\">Save slot</span><hr>"
 	else
 		dat += "Please create an account to save your preferences.<hr>"
 
@@ -83,6 +91,7 @@
 	dat += "</center><hr>"
 
 	switch(current_page)
+		if(PAGE_LOAD)		dat+=GetLoadPage()
 		if(PAGE_RECORDS)	dat+=GetRecordsPage()
 		if(PAGE_LIMBS)		dat+=GetLimbsPage()
 		if(PAGE_OCCUPATION)	dat+=GetOccupationPage()
@@ -93,44 +102,35 @@
 		else dat+=GetRecordsPage() // Protection
 	dat += "</body></html>"
 
-	user << browse(dat, "window=preferences;size=560x510;can_resize=0")
+	user << browse(dat, "window=new_pref;size=560x510;can_resize=0")
 
 /datum/preferences/Topic(href, href_list)
-	var/mob/new_player/user = usr
-	if(!user || !istype(user))
+	var/mob/user = usr
+	if(!user || !user.client)
 		return
+
+	if(href_list["preference"] || href_list["task"]) // OLD Setup Character
+		return ..()
 
 	if(href_list["switch_page"])
 		current_page = text2num(href_list["switch_page"])
 		spawn(2)
 			NewShowChoices(user)
 		return
+
+	else if(href_list["reload"])
+		load_preferences()
+		load_character()
+		req_update_icon = 1
+
 	else if(href_list["rotate"])
 		if(href_list["rotate"] == "right")
 			preview_dir = turn(preview_dir,-90)
 		else
 			preview_dir = turn(preview_dir,90)
 
-	if(href_list["preference"])
-		switch(href_list["preference"])
-			if("reload")
-				load_preferences()
-				load_character()
-/*
-		if("open_load_dialog")
-			if(!IsGuestKey(user.key))
-				spawn(2)
-					open_load_dialog(user)
-
-		if("close_load_dialog")
-			close_load_dialog(user)
-
-		if("changeslot")
-			load_character(text2num(href_list["num"]))
-			close_load_dialog(user)
-*/
-
 	switch(current_page)
+		if(PAGE_LOAD)		HandleLoadTopic(user, href_list)
 		if(PAGE_RECORDS)	HandleRecordsTopic(user, href_list)
 		if(PAGE_LIMBS)		HandleLimbsTopic(user, href_list)
 		if(PAGE_LOADOUT)	HandleLoadOutTopic(user, href_list)
@@ -139,90 +139,144 @@
 		if(PAGE_PREFS)		HandlePrefsTopic(user, href_list)
 		if(PAGE_SPECIES)	HandleSpeciesTopic(user, href_list)
 
+/*
 	if(user.ready)
 		return
+*/
 
 	spawn()
 		NewShowChoices(user)
 	return
 
 
+
+// Page. Generating and Handle.
+
+
+/datum/preferences/proc/GetLoadPage()
+	var/dat = "<tt><center>"
+	var/savefile/S = new /savefile(path)
+	if(S)
+		dat += "<b>Select a character slot to load:</b><hr>"
+		var/name
+		for(var/i=1, i<= config.character_slots, i++)
+			S.cd = "/character[i]"
+			S["real_name"] >> name
+			var/removable = 1
+			if(!name)
+				name = "Character[i]"
+				removable = 0
+			if(i==default_slot)
+				name = "<b>[name]</b>"
+			dat += "<a href='?src=\ref[src];character=load;num=[i]'>[name]</a>"
+			if(removable)
+				dat += " <a href='?src=\ref[src];character=delete;num=[i]'>\[X]</a>"
+			dat += "<br>"
+	dat += "</center></tt>"
+	return dat
+
+/datum/preferences/proc/HandleLoadTopic(mob/user, list/href_list)
+	switch(href_list["character"])
+		if("load")
+			load_preferences()
+			load_character(text2num(href_list["num"]))
+			req_update_icon = 1
+			current_page = PAGE_RECORDS
+		if("delete")
+			delete_character(href_list["num"])
+
+
 /datum/preferences/proc/GetRecordsPage()
 	var/dat = "<table><tr><td width='340px'>"
 	dat += "<b>General Information</b><br>"
-	dat += "Name: <a href='byond://?src=\ref[src];name=input'>[real_name]</a><br>"
-	dat += "(<a href='byond://?src=\ref[src];name=random'>Random Name</a>) "
-	dat += "(<a href='byond://?src=\ref[src];name=random_always'>Always Random Name: [random_name ? "Yes" : "No"]</a>)"
+	dat += "Name: <a id='name' href='?src=\ref[src];name=input'>[real_name]</a><br>"
+	dat += "(<a href='?src=\ref[src];name=random'>Random Name</a>) "
+	dat += "(<a href='?src=\ref[src];name=random_always'>Always Random Name: [random_name ? "Yes" : "No"]</a>)"
 	dat += "<br>"
 
-	dat += "Species: <a href='byond://?src=\ref[src];switch_page=[PAGE_SPECIES]'>[species]</a><br>"
-//	dat += "Secondary Language:<br><a href='byond://?src=\ref[src];language=input'>[language]</a><br>"
-	dat += "Gender: <a href='byond://?src=\ref[src];gender=switch'>[gender == MALE ? "Male" : "Female"]</a><br>"
-	dat += "Body build: <a href='byond://?src=\ref[src];build=switch'>[body]</a><br>"
+	dat += "Species: <a href='?src=\ref[src];switch_page=[PAGE_SPECIES]'>[species]</a><br>"
+//	dat += "Secondary Language:<br><a href='?src=\ref[src];language=input'>[language]</a><br>"
+	dat += "Gender: <a href='?src=\ref[src];gender=switch'>[gender == MALE ? "Male" : "Female"]</a><br>"
+	dat += "Body build: <a href='?src=\ref[src];build=switch'>[body]</a><br>"
 
 	if(current_species.flags & HAS_SKIN_TONE)
 		dat += "Skin Tone: <a href='?src=\ref[src];skin_tone=input'>[skin_tone]/220<br></a>"
 
 	dat += "<table style='border-collapse:collapse'>"
-	dat += "<tr><td>Hair:</td><td><a href='byond://?src=\ref[src];hair=color'>Color "
-	dat += "<span class='box' style='background-color:[hair_color];'></span></a>"
-	dat += "Style: <a href='byond://?src=\ref[src];hair=style'>[h_style]</a></td></tr>"
+	dat += "<tr><td>Hair:</td><td><a href='?src=\ref[src];hair=color'>Color "
+	dat += "<span class='box' style='background-color:[hair_color]'></span></a>"
+	dat += "Style: <a href='?src=\ref[src];hair=style'>[h_style]</a></td></tr>"
 
-	dat += "<tr><td>Facial:</td><td><a href='byond://?src=\ref[src];facial=color'>Color "
-	dat += "<span class='box' style='background-color:[facial_color];'></span></a> "
-	dat += " Style: <a href='byond://?src=\ref[src];facial=style'>[f_style]</a></td></tr>"
+	dat += "<tr><td>Facial:</td><td><a href='?src=\ref[src];facial=color'>Color "
+	dat += "<span class='box' style='background-color:[facial_color]'></span></a> "
+	dat += " Style: <a href='?src=\ref[src];facial=style'>[f_style]</a></td></tr>"
 
 	dat += "<tr><td>Eyes:</td>"
-	dat += "<td><a href='byond://?src=\ref[src];eyes=color'>Color "
-	dat += "<span class='box' style='background-color:[eyes_color];'></span></a></td></tr>"
+	dat += "<td><a href='?src=\ref[src];eyes=color'>Color "
+	dat += "<span class='box' style='background-color:[eyes_color]'></span></a></td></tr>"
 
 	if(current_species.flags & HAS_SKIN_COLOR)
 		dat += "<tr><td>Skin color:</td>"
-		dat += "<td><a href='byond://?src=\ref[src];skin=color'>Color "
-		dat += "<span class='box' style='background-color:[skin_color];'></span></a></td></tr>"
+		dat += "<td><a href='?src=\ref[src];skin=color'>Color "
+		dat += "<span class='box' style='background-color:[skin_color]'></span></a></td></tr>"
 	dat += "</table>"
 
-	dat += "Age: <a href='byond://?src=\ref[src];age=input'>[age]</a><br>"
-	dat += "Spawn Point: <a href='byond://?src=\ref[src];spawnpoint=input'>[spawnpoint]</a><br>"
-	dat += "Corporate mail: <a href='byond://?src=\ref[src];mail=input'>[email ? email : "\[RANDOM MAIL\]"]</a>@mail.nt<br>"
-	dat += "Add your mail to public catalogs: <a href='byond://?src=\ref[src];mail=public'>[email_is_public?"Yes":"No"]</a>"
+	dat += "Age: <a href='?src=\ref[src];age=input'>[age]</a><br>"
+	dat += "Spawn Point: <a href='?src=\ref[src];spawnpoint=input'>[spawnpoint]</a><br>"
+	dat += "Corporate mail: <a href='?src=\ref[src];mail=input'>[email ? email : "\[RANDOM MAIL\]"]</a>@mail.nt<br>"
+	dat += "Add your mail to public catalogs: <a href='?src=\ref[src];mail=public'>[email_is_public?"Yes":"No"]</a>"
 
 	dat += "<br><br><b>Background Information</b><br>"
 	dat += "Nanotrasen Relation: <a href ='?src=\ref[src];nt_relation=input'>[nanotrasen_relation]</a><br>"
-	dat += "Home system: <a href='byond://?src=\ref[src];home_system=input'>[home_system]</a><br>"
-	dat += "Citizenship: <a href='byond://?src=\ref[src];citizenship=input'>[citizenship]</a><br>"
-	dat += "Faction: <a href='byond://?src=\ref[src];faction=input'>[faction]</a><br>"
-	dat += "Religion: <a href='byond://?src=\ref[src];religion=input'>[religion]</a>"
+	dat += "Home system: <a href='?src=\ref[src];home_system=input'>[home_system]</a><br>"
+	dat += "Citizenship: <a href='?src=\ref[src];citizenship=input'>[citizenship]</a><br>"
+	dat += "Faction: <a href='?src=\ref[src];faction=input'>[faction]</a><br>"
+	dat += "Religion: <a href='?src=\ref[src];religion=input'>[religion]</a>"
 
 	dat += "</td><td style='vertical-align:top'>"
 
-	dat += "<b>Preview</b><br><a href='byond://?src=\ref[src];rotate=right'>&lt;&lt;&lt;</a> <a href='byond://?src=\ref[src];rotate=left'>&gt;&gt;&gt;</a><br>"
+	dat += "<b>Preview</b><br><a href='?src=\ref[src];rotate=right'>&lt;&lt;&lt;</a> <a href='?src=\ref[src];rotate=left'>&gt;&gt;&gt;</a><br>"
 	dat += "<img src=new_previewicon[preview_dir].png height=64 width=64>"
 	dat += "<img src=new_previewicon[turn(preview_dir,-90)].png height=64 width=64><br>"
 
 	dat += "<br><b>Set Character Records</b><br>"
-	dat += "<a href='byond://?src=\ref[src];records=med'>Medical Records</a><br>"
-	dat += "<span style='white-space: nowrap;'>[TextPreview(med_record,26)]</span>"
-	dat += "<br><a href='byond://?src=\ref[src];records=gen'>Employment Records</a><br>"
-	dat += "<span style='white-space: nowrap;'>[TextPreview(gen_record,26)]</span>"
-	dat += "<br><a href='byond://?src=\ref[src];records=sec'>Security Records</a><br>"
-	dat += "<span style='white-space: nowrap;'>[TextPreview(sec_record,26)]</span>"
-	dat += "<br><a href='byond://?src=\ref[src];records=exp'>Exploitable Record</a><br>"
-	dat += "<span style='white-space: nowrap;'>[TextPreview(exploit_record,26)]</span>"
+	dat += "<a href='?src=\ref[src];records=med'>Medical Records</a><br>"
+	dat += "<span style='white-space: nowrap'>[TextPreview(med_record,26)]</span>"
+	dat += "<br><a href='?src=\ref[src];records=gen'>Employment Records</a><br>"
+	dat += "<span style='white-space: nowrap'>[TextPreview(gen_record,26)]</span>"
+	dat += "<br><a href='?src=\ref[src];records=sec'>Security Records</a><br>"
+	dat += "<span style='white-space: nowrap'>[TextPreview(sec_record,26)]</span>"
+	dat += "<br><a href='?src=\ref[src];records=exp'>Exploitable Record</a><br>"
+	dat += "<span style='white-space: nowrap'>[TextPreview(exploit_record,26)]</span>"
 
 	dat += "<br><br>"
+
+	dat += "<table style='position:relative; left:-3px'>"
+	dat += "<tr><td>Backpack:</td>\
+		<td>	<a href ='?src=\ref[src];bag=input'><b>[backbaglist[backbag]]</b></a></td></tr>"
+	dat += "<tr><td>Underwear:</td>\
+		<td><a href ='?src=\ref[src];underwear=input'><b>[underwear]</b></a></td></tr>"
+	dat += "<tr><td>Undershirt:</td>\
+		<td><a href='?src=\ref[src];undershirt=input'><b>[undershirt]</b></a></td></tr>"
+	dat += "<tr><td>Socks:</td>\
+		<td><a href='?src=\ref[src];socks=input'><b>[socks]</b></a></td></tr>"
+	dat += "</table>"
+
+/*
 	dat += "<table style='position:relative; left:-3px'><tr><td>Need Glasses?<br>Coughing?<br>Nervousness?<br>Paraplegia?</td><td>"
-	dat += "<a href='byond://?src=\ref[src];disabilities=glasses'>[disabilities & NEARSIGHTED ? "Yes" : "No"]</a><br>"
-	dat += "<a href='byond://?src=\ref[src];disabilities=coughing'>[disabilities & COUGHING ? "Yes" : "No"]</a><br>"
-	dat += "<a href='byond://?src=\ref[src];disabilities=nervousness'>[disabilities & NERVOUS ? "Yes" : "No"]</a><br>"
-	dat += "<a href='byond://?src=\ref[src];disabilities=paraplegia'>[disabilities & PARAPLEGIA ? "Yes" : "No"]</a>"
+	dat += "<a href='?src=\ref[src];disabilities=glasses'>[disabilities & NEARSIGHTED ? "Yes" : "No"]</a><br>"
+	dat += "<a href='?src=\ref[src];disabilities=coughing'>[disabilities & COUGHING ? "Yes" : "No"]</a><br>"
+	dat += "<a href='?src=\ref[src];disabilities=nervousness'>[disabilities & NERVOUS ? "Yes" : "No"]</a><br>"
+	dat += "<a href='?src=\ref[src];disabilities=paraplegia'>[disabilities & PARAPLEGIA ? "Yes" : "No"]</a>"
 	dat += "</td></tr></table>"
+*/
+
 
 	dat += "</td></tr></table>"
 
 	return dat
 
-/datum/preferences/proc/HandleRecordsTopic(mob/new_player/user, list/href_list)
+/datum/preferences/proc/HandleRecordsTopic(mob/user, list/href_list)
 	if(href_list["name"]) switch(href_list["name"])
 		if("input")
 			var/raw_name = input(user, "Choose your character's name:", "Character Preference")  as text|null
@@ -230,6 +284,7 @@
 				var/new_name = sanitizeName(raw_name)
 				if(new_name)
 					real_name = new_name
+					send_byjax(user, "new_pref.browser", "name", real_name)
 				else
 					user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] \
 					characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
@@ -255,9 +310,8 @@
 		sanitize_body_build()
 
 	else if(href_list["build"])
-		body = next_in_list(body, get_body_build_list(gender, current_species.body_builds))
+		body = next_in_list(body, current_species.get_body_build_list(gender))
 		req_update_icon = 1
-		sanitize_body_build()
 
 	else if(href_list["hair"])
 		switch(href_list["hair"])
@@ -278,7 +332,6 @@
 				if(new_h_style && new_h_style != h_style)
 					req_update_icon = 1
 					h_style = new_h_style
-
 
 	else if(href_list["facial"])
 		switch(href_list["facial"])
@@ -347,7 +400,6 @@
 
 		if("public")
 			email_is_public = !email_is_public
-
 
 	else if(href_list["nt_relation"])
 		var/new_relation = input(user, "Choose your relation to NT.\
@@ -428,10 +480,11 @@
 				exploit_record = cp1251_to_utf8(post_edit_utf8(expmsg))
 	return
 
+
 /datum/preferences/proc/GetLimbsPage()
 	var/dat = "<style>div.block{border: 3px solid black;margin: 3px 0px;padding: 4px 0px;}</style>"
-	dat += "<table style='max-height:400px;height:400px;'>"
-	dat += "<tr style='vertical-align:top;'><td><div style='max-width:230px;width:230px;height:100%;overflow-y:auto;border:solid;padding:3px'>"
+	dat += "<table style='max-height:400px;height:400px'>"
+	dat += "<tr style='vertical-align:top'><td><div style='max-width:230px;width:230px;height:100%;overflow-y:auto;border:solid;padding:3px'>"
 	dat += modifications_types[current_organ]
 	dat += "</div></td><td style='margin-left:10px;width-max:285px;width:285px;border:solid'>"
 	dat += "<table><tr><td style='width:105px; text-align:right'>"
@@ -443,22 +496,22 @@
 			dat += "<div><b><span style='background-color:pink'>[organ_tag_to_name[organ]]</span></b> "
 		else
 			dat += "<div><b>[organ_tag_to_name[organ]]</b> "
-		dat += "<a href='byond://?src=\ref[src];color=[organ]'><span class='box' style='background-color:[modifications_colors[organ]];'></span></a>"
-		dat += "<br><a href='byond://?src=\ref[src];organ=[organ]'>[disp_name]</a></div>"
+		dat += "<a href='?src=\ref[src];color=[organ]'><span class='box' style='background-color:[modifications_colors[organ]]'></span></a>"
+		dat += "<br><a href='?src=\ref[src];organ=[organ]'>[disp_name]</a></div>"
 
 	dat += "</td><td style='width:80px;text-align:center'><img src=new_previewicon[preview_dir].png height=64 width=64>"
-	dat += "<br><a href='byond://?src=\ref[src];rotate=right'>&lt;&lt;&lt;</a> <a href='byond://?src=\ref[src];rotate=left'>&gt;&gt;&gt;</a></td>"
+	dat += "<br><a href='?src=\ref[src];rotate=right'>&lt;&lt;&lt;</a> <a href='?src=\ref[src];rotate=left'>&gt;&gt;&gt;</a></td>"
 	dat += "<td style='width:95px'>"
 
 	for(var/organ in l_organs)
 		var/datum/body_modification/mod = get_modification(organ)
 		var/disp_name = mod ? mod.short_name : "Nothing"
-		dat += "<div><a href='byond://?src=\ref[src];color=[organ]'><span class='box' style='background-color:[modifications_colors[organ]];'></span></a>"
+		dat += "<div><a href='?src=\ref[src];color=[organ]'><span class='box' style='background-color:[modifications_colors[organ]]'></span></a>"
 		if(organ == current_organ)
 			dat += " <b><span style='background-color:pink'>[organ_tag_to_name[organ]]</span></b>"
 		else
 			dat += " <b>[organ_tag_to_name[organ]]</b>"
-		dat += "<br><a href='byond://?src=\ref[src];organ=[organ]'>[disp_name]</a></div>"
+		dat += "<br><a href='?src=\ref[src];organ=[organ]'>[disp_name]</a></div>"
 
 	dat += "</td></tr></table><hr>"
 
@@ -474,7 +527,7 @@
 			dat += "<td width='33%'><b><span style='background-color:pink'>[organ_tag_to_name[organ]]</span></b>"
 		else
 			dat += "<td width='33%'><b>[organ_tag_to_name[organ]]</b>"
-		dat += "<br><a href='byond://?src=\ref[src];organ=[organ]'>[disp_name]</a></td>"
+		dat += "<br><a href='?src=\ref[src];organ=[organ]'>[disp_name]</a></td>"
 
 		if(++counter >= 3)
 			dat += "</tr><tr align='center'>"
@@ -502,7 +555,7 @@
 			check_childred_modifications(child_organ)
 	return
 
-/datum/preferences/proc/HandleLimbsTopic(mob/new_player/user, list/href_list)
+/datum/preferences/proc/HandleLimbsTopic(mob/user, list/href_list)
 	if(href_list["organ"])
 		current_organ = href_list["organ"]
 
@@ -521,9 +574,10 @@
 			check_childred_modifications(current_organ)
 			req_update_icon = 1
 
+
 /datum/preferences/proc/GetLoadOutPage()
 //	loadout
-/datum/preferences/proc/HandleLoadOutTopic(mob/new_player/user, list/href_list)
+/datum/preferences/proc/HandleLoadOutTopic(mob/user, list/href_list)
 
 
 /datum/preferences/proc/GetOccupationPage()
@@ -563,7 +617,7 @@
 		lastJob = job
 		var/job_name = rank
 		if(job.alt_titles)
-			job_name = "<a href=\"byond://?src=\ref[src];task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a>"
+			job_name = "<a href=\"?src=\ref[src];task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a>"
 		if(jobban_isbanned(user, rank))
 			dat += "<del>[job_name]</del></td><td><b> \[BANNED]</b></td></tr>"
 			continue
@@ -618,7 +672,7 @@
 
 	return dat
 
-/datum/preferences/proc/HandleOccupationTopic(mob/new_player/user, list/href_list)
+/datum/preferences/proc/HandleOccupationTopic(mob/user, list/href_list)
 	switch(href_list["task"])
 		if("random")
 			if(alternate_option == GET_RANDOM_JOB || alternate_option == BE_ASSISTANT)
@@ -640,38 +694,38 @@
 
 
 /datum/preferences/proc/GetSiliconPage()
-/datum/preferences/proc/HandleSiliconTopic(mob/new_player/user, list/href_list)
+/datum/preferences/proc/HandleSiliconTopic(mob/user, list/href_list)
 
 
 /datum/preferences/proc/GetPrefsPage()
 	var/dat = "<table>"
 	dat += {"
 		<tr><td><b>UI:</b></td></tr>
-		<tr><td></td><td>UI Style:</td><td><a href='?src=\ref[src];preference=ui'>[UI_style]</a></td></tr>
-		<tr><td></td><td>Color:</td> <td><a href='?src=\ref[src];preference=UIcolor'><span class='box' style='background-color:[UI_style_color]'></span></a></td></tr>
-		<tr><td></td><td>Alpha(transparency):</td> <td><a href='?src=\ref[src];preference=UIalpha'>[UI_style_alpha]</a></td></tr>
+		<tr><td></td><td>UI Style:</td><td><a href='?src=\ref[src];toggle=ui'>[UI_style]</a></td></tr>
+		<tr><td></td><td>Color:</td> <td><a href='?src=\ref[src];toggle=UIcolor'><span class='box' style='background-color:[UI_style_color]'></span></a></td></tr>
+		<tr><td></td><td>Alpha(transparency):</td> <td><a href='?src=\ref[src];toggle=UIalpha'>[UI_style_alpha]</a></td></tr>
 		<tr><td><b>SOUND:</b></td></tr>
-		<tr><td></td><td>Play admin midis:</td> <td><a href='?src=\ref[src];preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a></td></tr>
-		<tr><td></td><td>Play lobby music:</td> <td><a href='?src=\ref[src];preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</a></td></tr>
-		<tr><td></td><td>Hear Ambience: </td> <td><a href='?src=\ref[src];preference=ambience'>[(toggles & SOUND_AMBIENCE) ? "Yes" : "No"]</a></td></tr>
+		<tr><td></td><td>Play admin midis:</td> <td><a href='?src=\ref[src];toggle=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a></td></tr>
+		<tr><td></td><td>Play lobby music:</td> <td><a href='?src=\ref[src];toggle=lobby_music'>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</a></td></tr>
+		<tr><td></td><td>Hear Ambience: </td> <td><a href='?src=\ref[src];toggle=ambience'>[(toggles & SOUND_AMBIENCE) ? "Yes" : "No"]</a></td></tr>
 		<tr><td><b>GHOST:</b></td></tr>
-		<tr><td></td><td>Ghost ears:</td> <td><a href='?src=\ref[src];preference=ghost_ears'>[(chat_toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</a></td></tr>
-		<tr><td></td><td>Ghost sight:</td> <td><a href=?src=\ref[src];preference=ghost_sight'>[(chat_toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearest Creatures"]</a></td></tr>
-		<tr><td></td><td>Ghost radio:</td> <td><a href='?src=\ref[src];preference=ghost_radio'>[(chat_toggles & CHAT_GHOSTRADIO) ? "All Chatter" : "Nearest Speakers"]</a></td></tr>
-		<tr><td></td><td>Hear dead chat:</td> <td><a href='?src=\ref[src];preference=dead_chat'>[(chat_toggles & CHAT_DEAD) ? "Yes" : "No"]</a></td></tr>
+		<tr><td></td><td>Ghost ears:</td> <td><a href='?src=\ref[src];toggle=ghost_ears'>[(chat_toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</a></td></tr>
+		<tr><td></td><td>Ghost sight:</td> <td><a href=?src=\ref[src];toggle=ghost_sight'>[(chat_toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearest Creatures"]</a></td></tr>
+		<tr><td></td><td>Ghost radio:</td> <td><a href='?src=\ref[src];toggle=ghost_radio'>[(chat_toggles & CHAT_GHOSTRADIO) ? "All Chatter" : "Nearest Speakers"]</a></td></tr>
+		<tr><td></td><td>Hear dead chat:</td> <td><a href='?src=\ref[src];toggle=dead_chat'>[(chat_toggles & CHAT_DEAD) ? "Yes" : "No"]</a></td></tr>
 		<tr><td><b>CHAT:</b></td></tr>
-		<tr><td></td><td>Hear OOC:</td> <td><a href='?src=\ref[src];preference=head_ooc'>[(chat_toggles & CHAT_OOC) ? "Yes" : "No"]</a></td></tr>
-		<tr><td></td><td>Hear LOOC:</td> <td><a href='?src=\ref[src];preference=head_looc'>[(chat_toggles & CHAT_LOOC) ? "Yes" : "No"]</a></td></tr>
-		<tr><td></td><td>Hide Chat Tags:</td> <td><a href='?src=\ref[src];preference=chat_tags'>[(toggles & CHAT_NOICONS) ? "Yes" : "No"]</a></td></tr>
-		<tr><td></td><td>Emote Localization:</td> <td><a href='?src=\ref[src];preference=emote_localization'>[(toggles & RUS_AUTOEMOTES) ? "Enabled" : "Disabled"]</a></td></tr>
-		<tr><td></td><td>Show MOTD:</td> <td><a href='?src=\ref[src];preference=show_motd'>[(toggles & HIDE_MOTD) ? "Disabled" : "Enabled"]</a></td></tr>
+		<tr><td></td><td>Hear OOC:</td> <td><a href='?src=\ref[src];toggle=head_ooc'>[(chat_toggles & CHAT_OOC) ? "Yes" : "No"]</a></td></tr>
+		<tr><td></td><td>Hear LOOC:</td> <td><a href='?src=\ref[src];toggle=head_looc'>[(chat_toggles & CHAT_LOOC) ? "Yes" : "No"]</a></td></tr>
+		<tr><td></td><td>Hide Chat Tags:</td> <td><a href='?src=\ref[src];toggle=chat_tags'>[(toggles & CHAT_NOICONS) ? "Yes" : "No"]</a></td></tr>
+		<tr><td></td><td>Emote Localization:</td> <td><a href='?src=\ref[src];toggle=emote_localization'>[(toggles & RUS_AUTOEMOTES) ? "Enabled" : "Disabled"]</a></td></tr>
+		<tr><td></td><td>Show MOTD:</td> <td><a href='?src=\ref[src];toggle=show_motd'>[(toggles & HIDE_MOTD) ? "Disabled" : "Enabled"]</a></td></tr>
 		</table>
 	"}
 
 	return dat
 
-/datum/preferences/proc/HandlePrefsTopic(mob/new_player/user, list/href_list)
-	switch(href_list["preference"])
+/datum/preferences/proc/HandlePrefsTopic(mob/user, list/href_list)
+	switch(href_list["toggle"])
 		if("ui")
 			switch(UI_style)
 				if("Midnight")
@@ -720,7 +774,7 @@
 			toggles ^= HIDE_MOTD
 
 /datum/preferences/proc/GetSpeciesPage()
-/datum/preferences/proc/HandleSpeciesTopic(mob/new_player/user, list/href_list)
+/datum/preferences/proc/HandleSpeciesTopic(mob/user, list/href_list)
 
 
 #undef PAGE_RECORDS

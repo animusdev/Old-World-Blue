@@ -1,9 +1,10 @@
+/datum/species/proc/get_body_build(var/gender, var/prefered)
+	for(var/datum/body_build/BB in body_builds)
+		if( (!prefered || BB.name == prefered) && (gender in BB.genders) )
+			return BB
 
-/datum/species/proc/get_blood_colour(var/mob/living/carbon/human/H)
-	if(H)
-		var/datum/robolimb/company = H.isSynthetic()
-		if(company)
-			return company.blood_color
-		else
-			return blood_color
-
+/datum/species/proc/get_body_build_list(var/gender)
+	. = list()
+	for(var/datum/body_build/BB in body_builds)
+		if(gender in BB.genders)
+			. += BB.name

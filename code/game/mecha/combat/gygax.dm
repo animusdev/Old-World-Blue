@@ -17,7 +17,8 @@
 	max_equip = 3
 
 /obj/mecha/combat/gygax/dark
-	desc = "A lightweight exosuit used by NanoTrasen Heavy Asset Protection. A significantly upgraded Gygax security mech."
+	desc = "A lightweight exosuit used by NanoTrasen Heavy Asset Protection. \
+			A significantly upgraded Gygax security mech."
 	name = "Dark Gygax"
 	icon_state = "darkgygax"
 	initial_icon = "darkgygax"
@@ -32,14 +33,10 @@
 
 /obj/mecha/combat/gygax/dark/New()
 	..()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/teleporter
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay
-	ME.attach(src)
+	attach(new/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot)
+	attach(new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang)
+	attach(new /obj/item/mecha_parts/mecha_equipment/teleporter)
+	attach(new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay)
 	return
 
 /obj/mecha/combat/gygax/dark/add_cell(var/obj/item/weapon/cell/C=null)
@@ -73,14 +70,13 @@
 	return
 
 /obj/mecha/combat/gygax/dyndomove(direction)
-	if(!..()) return
-	if(overload)
-		health--
-		if(health < initial(health) - initial(health)/3)
-			overload = 0
-			step_in = initial(step_in)
-			step_energy_drain = initial(step_energy_drain)
-			src.occupant_message("<font color='red'>Leg actuators damage threshold exceded. Disabling overload.</font>")
+	if(!..() || !overload) return
+	health--
+	if(health < initial(health) - initial(health)/3)
+		overload = 0
+		step_in = initial(step_in)
+		step_energy_drain = initial(step_energy_drain)
+		src.occupant_message("<font color='red'>Leg actuators damage threshold exceded. Disabling overload.</font>")
 	return
 
 
@@ -90,13 +86,14 @@
 	return output
 
 /obj/mecha/combat/gygax/get_commands()
-	var/output = {"<div class='wr'>
-						<div class='header'>Special</div>
-						<div class='links'>
-						<a href='?src=\ref[src];toggle_leg_overload=1'>Toggle leg actuators overload</a>
-						</div>
-						</div>
-						"}
+	var/output = {"
+		<div class='wr'>
+			<div class='header'>Special</div>
+			<div class='links'>
+				<a href='?src=\ref[src];toggle_leg_overload=1'>Toggle leg actuators overload</a>
+			</div>
+		</div>
+	"}
 	output += ..()
 	return output
 

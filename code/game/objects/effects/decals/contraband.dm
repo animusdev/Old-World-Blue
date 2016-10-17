@@ -121,7 +121,7 @@
 	//Looks like it's uncluttered enough. Place the poster.
 	user << "<span class='notice'>You start placing the poster on the wall...</span>"
 
-	if(do_after(user, 17, 5, 1))
+	if(do_after(user, 17))
 		user.drop_from_inventory(src, new_loc)
 		placement_dir = get_dir(W, new_loc)
 		if(placement_dir&NORTH)

@@ -24,6 +24,8 @@
 	if(!base_state)
 		base_state = icon_state
 		base_wear_state = wear_state
+	else
+		base_wear_state = copytext(wear_state,1,-5)
 
 /obj/item/clothing/suit/storage/toggle/varsityred
 	name = "red varsity jacket"

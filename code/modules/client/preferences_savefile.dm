@@ -197,7 +197,6 @@
 	if(!real_name) real_name = random_name(gender)
 	random_name		= sanitize_integer(random_name, 0, 1, initial(random_name))
 	gender			= sanitize_gender(gender)
-	body 			= sanitize_inlist(body, current_species.body_builds, "Default")
 	age				= sanitize_integer(age, current_species.min_age, current_species.max_age, initial(age))
 	hair_color		= sanitize_hexcolor(hair_color, initial(hair_color))
 	facial_color	= sanitize_hexcolor(facial_color, initial(facial_color))
@@ -219,6 +218,8 @@
 	job_engsec_high   = sanitize_integer(job_engsec_high,   0, 65535, initial(job_engsec_high))
 	job_engsec_med    = sanitize_integer(job_engsec_med,    0, 65535, initial(job_engsec_med))
 	job_engsec_low    = sanitize_integer(job_engsec_low,    0, 65535, initial(job_engsec_low))
+
+	sanitize_body_build()
 
 	if(isnull(disabilities)) disabilities = 0
 	if(!player_alt_titles) player_alt_titles = new()
@@ -308,19 +309,22 @@
 	S["religion"] 			<< religion
 
 	S["nanotrasen_relation"] << nanotrasen_relation
-	//S["skin_style"]			<< skin_style
 
 	S["uplinklocation"] << uplinklocation
 	S["exploit_record"]	<< exploit_record
 
 	return 1
 
-/datum/preferences/proc/delete_character()
-	if(!path)				return 0
+/datum/preferences/proc/delete_character(var/slot)
+	if(!path || !slot)			return 0
 	var/savefile/S = new /savefile(path)
 	if(!S)					return 0
-	S.cd = "/"
-	S.dir -= "character[default_slot]"
+	S.cd = "/character[slot]"
+	var/char_name = ""
+	S["real_name"] >> char_name
+	if(char_name && alert("Are you realy wanna delete [char_name]?", "Delete", "Yes", "No") == "Yes")
+		S.cd = "/"
+		S.dir -= "character[slot]"
 
 	return 1
 

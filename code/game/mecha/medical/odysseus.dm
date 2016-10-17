@@ -34,48 +34,12 @@
 				H.glasses = null
 		..()
 		return
-/*
-	verb/set_perspective()
-		set name = "Set client perspective."
-		set category = "Exosuit Interface"
-		set src = usr.loc
-		var/perspective = input("Select a perspective type.",
-                      "Client perspective",
-                      occupant.client.perspective) in list(MOB_PERSPECTIVE,EYE_PERSPECTIVE)
-		world << "[perspective]"
-		occupant.client.perspective = perspective
-		return
-
-	verb/toggle_eye()
-		set name = "Toggle eye."
-		set category = "Exosuit Interface"
-		set src = usr.loc
-		if(occupant.client.eye == occupant)
-			occupant.client.eye = src
-		else
-			occupant.client.eye = occupant
-		world << "[occupant.client.eye]"
-		return
-*/
 
 //TODO - Check documentation for client.eye and client.perspective...
 /obj/item/clothing/glasses/hud/health/mech
 	name = "Integrated Medical Hud"
 
-
 	process_hud(var/mob/M)
-/*
-		world<< "view(M)"
-		for(var/mob/mob in view(M))
-			world << "[mob]"
-		world<< "view(M.client)"
-		for(var/mob/mob in view(M.client))
-			world << "[mob]"
-		world<< "view(M.loc)"
-		for(var/mob/mob in view(M.loc))
-			world << "[mob]"
-*/
-
 		if(!M || M.stat || !(M in view(M)))	return
 		if(!M.client)	return
 		var/client/C = M.client
@@ -121,9 +85,6 @@
 
 /obj/mecha/medical/odysseus/loaded/New()
 	..()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/tool/sleeper
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/tool/sleeper
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun
-	ME.attach(src)
+	attach(new /obj/item/mecha_parts/mecha_equipment/tool/sleeper)
+	attach(new /obj/item/mecha_parts/mecha_equipment/tool/sleeper)
+	attach(new /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun)

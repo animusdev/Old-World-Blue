@@ -1,13 +1,66 @@
-var/list/shatter_sound = list('sound/effects/Glassbr1.ogg','sound/effects/Glassbr2.ogg','sound/effects/Glassbr3.ogg')
-var/list/explosion_sound = list('sound/effects/Explosion1.ogg','sound/effects/Explosion2.ogg')
-var/list/spark_sound = list('sound/effects/sparks1.ogg','sound/effects/sparks2.ogg','sound/effects/sparks3.ogg','sound/effects/sparks4.ogg')
-var/list/rustle_sound = list('sound/effects/rustle1.ogg','sound/effects/rustle2.ogg','sound/effects/rustle3.ogg','sound/effects/rustle4.ogg','sound/effects/rustle5.ogg')
-var/list/punch_sound = list('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg')
-var/list/clown_sound = list('sound/effects/clownstep1.ogg','sound/effects/clownstep2.ogg')
-var/list/swing_hit_sound = list('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg')
-var/list/hiss_sound = list('sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg')
-var/list/page_sound = list('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
-//var/list/gun_sound = list('sound/weapons/Gunshot.ogg', 'sound/weapons/Gunshot2.ogg','sound/weapons/Gunshot3.ogg','sound/weapons/Gunshot4.ogg')
+var/list/shatter_sound = list(
+	'sound/effects/Glassbr1.ogg',
+	'sound/effects/Glassbr2.ogg',
+	'sound/effects/Glassbr3.ogg'
+)
+
+var/list/explosion_sound = list(
+	'sound/effects/Explosion1.ogg',
+	'sound/effects/Explosion2.ogg'
+)
+
+var/list/spark_sound = list(
+	'sound/effects/sparks1.ogg',
+	'sound/effects/sparks2.ogg',
+	'sound/effects/sparks3.ogg',
+	'sound/effects/sparks4.ogg'
+)
+
+var/list/rustle_sound = list(
+	'sound/effects/rustle1.ogg',
+	'sound/effects/rustle2.ogg',
+	'sound/effects/rustle3.ogg',
+	'sound/effects/rustle4.ogg',
+	'sound/effects/rustle5.ogg'
+)
+
+var/list/punch_sound = list(
+	'sound/weapons/punch1.ogg',
+	'sound/weapons/punch2.ogg',
+	'sound/weapons/punch3.ogg',
+	'sound/weapons/punch4.ogg'
+)
+
+var/list/clown_sound = list(
+	'sound/effects/clownstep1.ogg',
+	'sound/effects/clownstep2.ogg'
+)
+
+var/list/swing_hit_sound = list(
+	'sound/weapons/genhit1.ogg',
+	'sound/weapons/genhit2.ogg',
+	'sound/weapons/genhit3.ogg'
+)
+
+var/list/hiss_sound = list(
+	'sound/voice/hiss1.ogg',
+	'sound/voice/hiss2.ogg',
+	'sound/voice/hiss3.ogg',
+	'sound/voice/hiss4.ogg'
+)
+
+var/list/page_sound = list(
+	'sound/effects/pageturn1.ogg',
+	'sound/effects/pageturn2.ogg',
+	'sound/effects/pageturn3.ogg'
+)
+
+/*var/list/gun_sound = list(
+	'sound/weapons/Gunshot.ogg',
+	'sound/weapons/Gunshot2.ogg',
+	'sound/weapons/Gunshot3.ogg',
+	'sound/weapons/Gunshot4.ogg'
+)*/
 
 /proc/playsound(var/atom/source, soundin, vol as num, vary, extrarange as num, falloff, var/is_global)
 
@@ -57,7 +110,8 @@ var/const/FALLOFF_SOUNDS = 0.5
 		//sound volume falloff with distance
 		var/distance = get_dist(T, turf_source)
 
-		S.volume -= max(distance - world.view, 0) * 2 //multiplicative falloff to add on top of natural audio falloff.
+		//multiplicative falloff to add on top of natural audio falloff.
+		S.volume -= max(distance - world.view, 0) * 2
 
 		//sound volume falloff with pressure
 		var/pressure_factor = 1.0
@@ -69,7 +123,7 @@ var/const/FALLOFF_SOUNDS = 0.5
 			var/pressure = min(hearer_env.return_pressure(), source_env.return_pressure())
 
 			if (pressure < ONE_ATMOSPHERE)
-				pressure_factor = max((pressure - SOUND_MINIMUM_PRESSURE)/(ONE_ATMOSPHERE - SOUND_MINIMUM_PRESSURE), 0)
+				pressure_factor = max((pressure-SOUND_MINIMUM_PRESSURE)/(ONE_ATMOSPHERE-SOUND_MINIMUM_PRESSURE), 0)
 		else //in space
 			pressure_factor = 0
 

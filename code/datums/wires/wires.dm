@@ -360,3 +360,33 @@ var/const/POWER = 8
 	solved_txt += "<br>"
 
 	return solved_txt
+
+
+/obj/item/weapon/paper/wires/
+	name = "ulol"
+
+
+
+/obj/item/weapon/paper/wires/airlock
+	name = "List of an airlock wires"
+
+/obj/item/weapon/paper/wires/airlock/New()
+	info = "[(all_solved_wires[/obj/machinery/door/airlock])]"
+	info_links = info
+	icon_state = "paper_words"
+
+/obj/item/weapon/paper/wires/apc
+	name = "List of an APC wires"
+
+/obj/item/weapon/paper/wires/apc/New()
+	info = "[(all_solved_wires[/obj/machinery/power/apc])]"
+	info_links = info
+	icon_state = "paper_words"
+
+/obj/item/weapon/paper/wires/alarm
+	name = "List of an air alarm wires"
+
+/obj/item/weapon/paper/wires/alarm/New()
+	info = "[(all_solved_wires[/obj/machinery/alarm])]"
+	info_links = info
+	icon_state = "paper_words"

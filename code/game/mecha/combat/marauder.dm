@@ -23,7 +23,8 @@
 	max_equip = 4
 
 /obj/mecha/combat/marauder/seraph
-	desc = "Heavy-duty, command-type exosuit. This is a custom model, utilized only by high-ranking military personnel."
+	desc = "Heavy-duty, command-type exosuit. \
+			This is a custom model, utilized only by high-ranking military personnel."
 	name = "Seraph"
 	icon_state = "seraph"
 	initial_icon = "seraph"
@@ -43,37 +44,23 @@
 	operation_req_access = list(access_syndicate)
 	wreckage = /obj/effect/decal/mecha_wreckage/mauler
 
-/obj/mecha/combat/marauder/New()
+/obj/mecha/combat/marauder/preloaded/New()
 	..()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/explosive
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay(src)
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src)
-	ME.attach(src)
+	attach(new /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse)
+	attach(new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/explosive)
+	attach(new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay(src))
+	attach(new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src))
 	src.smoke_system.set_up(3, 0, src)
 	src.smoke_system.attach(src)
 	return
 
 /obj/mecha/combat/marauder/seraph/New()
-	..()//Let it equip whatever is needed.
-	var/obj/item/mecha_parts/mecha_equipment/ME
-	if(equipment.len)//Now to remove it and equip anew.
-		for(ME in equipment)
-			equipment -= ME
-			qdel(ME)
-	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot(src)
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/explosive(src)
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/teleporter(src)
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay(src)
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src)
-	ME.attach(src)
+	..()
+	attach(new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot(src))
+	attach(new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/explosive(src))
+	attach(new /obj/item/mecha_parts/mecha_equipment/teleporter(src))
+	attach(new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay(src))
+	attach(new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src))
 	return
 
 /obj/mecha/combat/marauder/Destroy()
@@ -185,23 +172,24 @@
 
 /obj/mecha/combat/marauder/get_stats_part()
 	var/output = ..()
-	output += {"<b>Smoke:</b> [smoke]
-					<br>
-					<b>Thrusters:</b> [thrusters?"on":"off"]
-					"}
+	output += {"
+		<b>Smoke:</b> [smoke]<br>
+		<b>Thrusters:</b> [thrusters?"on":"off"]
+	"}
 	return output
 
 
 /obj/mecha/combat/marauder/get_commands()
-	var/output = {"<div class='wr'>
-						<div class='header'>Special</div>
-						<div class='links'>
-						<a href='?src=\ref[src];toggle_thrusters=1'>Toggle thrusters</a><br>
-						<a href='?src=\ref[src];toggle_zoom=1'>Toggle zoom mode</a><br>
-						<a href='?src=\ref[src];smoke=1'>Smoke</a>
-						</div>
-						</div>
-						"}
+	var/output = {"
+		<div class='wr'>
+			<div class='header'>Special</div>
+			<div class='links'>
+				<a href='?src=\ref[src];toggle_thrusters=1'>Toggle thrusters</a><br>
+				<a href='?src=\ref[src];toggle_zoom=1'>Toggle zoom mode</a><br>
+				<a href='?src=\ref[src];smoke=1'>Smoke</a>
+			</div>
+		</div>
+	"}
 	output += ..()
 	return output
 

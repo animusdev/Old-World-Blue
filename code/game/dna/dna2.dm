@@ -81,8 +81,7 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	// From old dna.
 	var/b_type = "A+"  // Should probably change to an integer => string map but I'm lazy.
 	var/body_build = "Default"
-	var/real_name          // Stores the real name of the person who originally got this dna datum. Used primarily for changelings,
-
+	var/real_name      // Stores the real name of the person who originally got this dna datum.
 	// New stuff
 	var/species = "Human"
 
@@ -193,7 +192,9 @@ var/global/list/datum/dna/gene/dna_genes[0]
 // Used in hair and facial styles (value being the index and maxvalue being the len of the hairstyle list)
 /datum/dna/proc/SetUIValueRange(var/block,var/value,var/maxvalue,var/defer=0)
 	if (block<=0) return
-	if (value==0) value = 1   // FIXME: hair/beard/eye RGB values if they are 0 are not set, this is a work around we'll encode it in the DNA to be 1 instead.
+	// FIXME: hair/beard/eye RGB values if they are 0 are not set,
+	// this is a work around we'll encode it in the DNA to be 1 instead.
+	if (value==0) value = 1
 	ASSERT(maxvalue<=4095)
 	var/range = (4095 / maxvalue)
 	if(value)

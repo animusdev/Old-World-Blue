@@ -309,7 +309,11 @@ var/list/donator_icons
 			if(5) //every 5 ticks check if there is a slot available
 				if(living_player_count() < config.hard_popcap)
 					if(next_in_line && next_in_line.client)
-						next_in_line << "<span class='userdanger'>A slot has opened! You have approximately 20 seconds to join. <a href='?src=\ref[next_in_line];late_join=override'>\>\>Join Game\<\<</a></span>"
+						next_in_line << {"
+							<span class='userdanger'>A slot has opened!
+							You have approximately 20 seconds to join.
+							<a href='?src=\ref[next_in_line];late_join=override'>\>\>Join Game\<\<</a></span>
+						"}
 						next_in_line << sound('sound/misc/notice1.ogg')
 						next_in_line.LateChoices()
 						return

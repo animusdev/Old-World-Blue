@@ -21,23 +21,34 @@
 	ion_trail.set_up(src)
 	ion_trail.start()
 
+obj/mecha/working/hoverpod/cargo/New()
+	attach(new /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp)
+	attach(new /obj/item/mecha_parts/mecha_equipment/tool/passenger)
+
 //Modified phazon code
 /obj/mecha/working/hoverpod/Topic(href, href_list)
 	..()
 	if (href_list["toggle_stabilization"])
 		stabilization_enabled = !stabilization_enabled
-		send_byjax(src.occupant,"exosuit.browser","stabilization_command","[stabilization_enabled?"Dis":"En"]able thruster stabilization")
+		send_byjax(
+			src.occupant,
+			"exosuit.browser",
+			"stabilization_command",
+			"[stabilization_enabled?"Dis":"En"]able thruster stabilization"
+		)
 		src.occupant_message("\blue Thruster stabilization [stabilization_enabled? "enabled" : "disabled"].")
 		return
 
 /obj/mecha/working/hoverpod/get_commands()
-	var/output = {"<div class='wr'>
-						<div class='header'>Special</div>
-						<div class='links'>
-						<a href='?src=\ref[src];toggle_stabilization=1'><span id="stabilization_command">[stabilization_enabled?"Dis":"En"]able thruster stabilization</span></a><br>
-						</div>
-						</div>
-						"}
+	var/output = {"
+		<div class='wr'>
+		<div class='header'>Special</div>
+		<div class='links'>
+		<a href='?src=\ref[src];toggle_stabilization=1'>\
+		<span id="stabilization_command">[stabilization_enabled?"Dis":"En"]able thruster stabilization</span></a><br>
+		</div>
+		</div>
+	"}
 	output += ..()
 	return output
 
@@ -51,7 +62,7 @@
 			ion_trail.start()
 		if (stabilization_enabled)
 			return 1
-	
+
 	return ..()
 
 //these three procs overriden to play different sounds
@@ -85,10 +96,8 @@
 
 /obj/mecha/working/hoverpod/combatpod/New()
 	..()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/explosive
-	ME.attach(src)
+	attach(new /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser)
+	attach(new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/explosive)
 
 
 /obj/mecha/working/hoverpod/shuttlepod
@@ -96,7 +105,5 @@
 
 /obj/mecha/working/hoverpod/shuttlepod/New()
 	..()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/tool/passenger
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/tool/passenger
-	ME.attach(src)
+	attach(new /obj/item/mecha_parts/mecha_equipment/tool/passenger)
+	attach(new /obj/item/mecha_parts/mecha_equipment/tool/passenger)

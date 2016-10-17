@@ -15,9 +15,11 @@
 		var/turf/T = get_turf(src)
 		for(var/atom/movable/M in contents)
 			M.forceMove(T)
-		user.visible_message("<span class='notice'>[user] pries \the [src] open.</span>", \
-							 "<span class='notice'>You pry open \the [src].</span>", \
-							 "<span class='notice'>You hear splitting wood.</span>")
+		user.visible_message(
+			"<span class='notice'>[user] pries \the [src] open.</span>",
+			"<span class='notice'>You pry open \the [src].</span>",
+			"<span class='notice'>You hear splitting wood.</span>"
+		)
 		qdel(src)
 	else
 		return attack_hand(user)
@@ -30,16 +32,8 @@
 	desc = "It comes in a box for the fabricator's sake. Where does the wood come from? ... And why is it lighter?"
 	icon_state = "mulecrate"
 
-/obj/structure/largecrate/hoverpod/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/crowbar))
-		var/obj/item/mecha_parts/mecha_equipment/ME
-		var/obj/mecha/working/hoverpod/H = new (loc)
-
-		ME = new /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp
-		ME.attach(H)
-		ME = new /obj/item/mecha_parts/mecha_equipment/tool/passenger
-		ME.attach(H)
-	..()
+/obj/structure/largecrate/hoverpod/New()
+	new /obj/mecha/working/hoverpod/cargo (src)
 
 /obj/structure/largecrate/animal
 	icon_state = "mulecrate"

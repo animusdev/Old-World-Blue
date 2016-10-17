@@ -57,7 +57,8 @@ var/list/mechtoys = list(
 		return prob(60)
 
 	var/obj/structure/bed/B = A
-	if (istype(A, /obj/structure/bed) && B.buckled_mob)//if it's a bed/chair and someone is buckled, it will not pass
+	//if it's a bed/chair and someone is buckled, it will not pass
+	if (istype(A, /obj/structure/bed) && B.buckled_mob)
 		return 0
 
 	if(istype(A, /obj/vehicle))	//no vehicles
@@ -89,7 +90,8 @@ var/list/mechtoys = list(
 			if (prob(5))
 				qdel(src)
 
-/obj/structure/plasticflaps/mining //A specific type for mining that doesn't allow airflow because of them damn crates
+//A specific type for mining that doesn't allow airflow because of them damn crates
+/obj/structure/plasticflaps/mining
 	name = "airtight plastic flaps"
 	desc = "Heavy duty, airtight, plastic flaps."
 
@@ -128,7 +130,7 @@ var/list/mechtoys = list(
 	var/points = 50
 	var/points_per_process = 1
 	var/points_per_slip = 2
-	var/points_per_crate = 5
+	var/points_per_crate = 1.5
 	var/points_per_platinum = 5 // 5 points per sheet
 	var/points_per_phoron = 5
 	//control
@@ -152,7 +154,8 @@ var/list/mechtoys = list(
 	proc/process()
 		points += points_per_process
 
-	//To stop things being sent to centcomm which should not be sent to centcomm. Recursively checks for these types.
+	// To stop things being sent to centcomm which should not be sent to centcomm.
+	// Recursively checks for these types.
 	proc/forbidden_atoms_check(atom/A)
 		if(istype(A,/mob/living))
 			return 1
@@ -181,17 +184,17 @@ var/list/mechtoys = list(
 
 			// Must be in a crate!
 			if(istype(MA,/obj/structure/closet/crate))
-				callHook("sell_crate", list(MA, area_shuttle))
-
-				points += points_per_crate
+				var/obj/structure/closet/crate/CR = MA
+				callHook("sell_crate", list(CR, area_shuttle))
+				points += CR.points_per_crate
 				var/find_slip = 1
 
-				for(var/atom in MA)
+				for(var/atom in CR)
 					// Sell manifests
 					var/atom/A = atom
 					if(find_slip && istype(A,/obj/item/weapon/paper/manifest))
 						var/obj/item/weapon/paper/manifest/slip = A
-						if(!slip.is_copy && slip.stamped && slip.stamped.len) //yes, the clown stamp will work. clown is the highest authority on the station, it makes sense
+						if(!slip.is_copy && slip.stamped && slip.stamped.len)
 							points += points_per_slip
 							find_slip = 0
 						continue
@@ -263,7 +266,7 @@ var/list/mechtoys = list(
 					var/list/L = SP.access // access var is a plain var, we need a list
 					A.req_access = L.Copy()
 				else
-					world << "<span class='danger'>Supply pack with invalid access restriction [SP.access] encountered!</span>"
+					world.log << "ERROR: Supply pack with invalid access [SP.access]. TYPE: [SP.type]"
 
 			var/list/contains
 			if(istype(SP,/datum/supply_packs/randomised))
