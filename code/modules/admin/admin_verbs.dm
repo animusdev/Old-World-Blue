@@ -1063,10 +1063,10 @@ var/list/admin_verbs_mentor = list(
 	if(check_rights(R_ADMIN|R_MOD))
 		if (H.paralysis == 0)
 			H.paralysis = 1000
-			msg = "has paralyzed [key_name(H)]."
+			msg = " has paralyzed [key_name(H)]."
 		else
 			H.paralysis = 0
-			msg = "has unparalyzed [key_name(H)]."
-		message_admins(msg)
-		log_admin(msg)
+			msg = " has unparalyzed [key_name(H)]."
+		message_admins(key_name_admin(usr) + msg)
+		log_admin(key_name(usr) + msg)
 

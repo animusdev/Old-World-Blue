@@ -172,7 +172,7 @@
 	qdel(preview_icon_side)
 	qdel(preview_icon)
 
-	var/datum/body_build/body_build = get_body_build(gender, body)
+	var/datum/body_build/body_build = current_species.get_body_build(gender, body)
 	var/g = "_m"
 	if(gender == FEMALE)
 		g = "_f"
@@ -180,7 +180,7 @@
 	g+=b
 
 	var/icon/icobase
-	var/datum/species/current_species = all_species[species]
+//	var/datum/species/current_species = all_species[species]
 
 	if(current_species)
 		icobase = current_species.icobase

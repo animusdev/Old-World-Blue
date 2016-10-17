@@ -9,7 +9,7 @@
 	var/was_bloodied
 	var/blood_color
 	var/tmp/last_bumped = 0
-	var/pass_flags = 0
+	var/tmp/pass_flags = 0
 	var/throwpass = 0
 	var/germ_level = GERM_LEVEL_AMBIENT // The higher the germ level, the more germ on the atom.
 	var/simulated = 1 //filter for actions - used by lighting overlays
@@ -83,7 +83,8 @@
 	P.on_hit(src, 0, def_zone)
 	. = 0
 
-/atom/proc/in_contents_of(container)//can take class or object instance as argument
+//can take class or object instance as argument
+/atom/proc/in_contents_of(container)
 	if(ispath(container))
 		if(istype(src.loc, container))
 			return 1
@@ -140,11 +141,15 @@ its easier to just keep the beam vertical.
 	//of range or to another z-level, then the beam will stop.  Otherwise it will
 	//continue to draw.
 
-		set_dir(get_dir(src,BeamTarget))	//Causes the source of the beam to rotate to continuosly face the BeamTarget.
+		//Causes the source of the beam to rotate to continuosly face the BeamTarget.
+		set_dir(get_dir(src,BeamTarget))
 
-		for(var/obj/effect/overlay/beam/O in orange(10,src))	//This section erases the previously drawn beam because I found it was easier to
-			if(O.BeamSource==src)				//just draw another instance of the beam instead of trying to manipulate all the
-				qdel(O)							//pieces to a new orientation.
+		//This section erases the previously drawn beam
+		//because I found it was easier to just draw another instance of the beam
+		//instead of trying to manipulate all the pieces to a new orientation.
+		for(var/obj/effect/overlay/beam/O in orange(10,src))
+			if(O.BeamSource==src)
+				qdel(O)
 		var/Angle=round(Get_Angle(src,BeamTarget))
 		var/icon/I=new(icon,icon_state)
 		I.Turn(Angle)
@@ -183,8 +188,10 @@ its easier to just keep the beam vertical.
 					Pixel_y+=32
 			X.pixel_x=Pixel_x
 			X.pixel_y=Pixel_y
-		sleep(3)	//Changing this to a lower value will cause the beam to follow more smoothly with movement, but it will also be more laggy.
-					//I've found that 3 ticks provided a nice balance for my use.
+		//Changing this to a lower value will cause the beam to follow more smoothly with movement,
+		// but it will also be more laggy.
+		//I've found that 3 ticks provided a nice balance for my use.
+		sleep(3)
 	for(var/obj/effect/overlay/beam/O in orange(10,src)) if(O.BeamSource==src) qdel(O)
 
 
@@ -207,7 +214,8 @@ its easier to just keep the beam vertical.
 
 	return return_distance ? get_dist(src, user) : 0
 
-// called by mobs when e.g. having the atom as their machine, pulledby, loc (AKA mob being inside the atom) or buckled var set.
+// called by mobs when e.g. having the atom as:
+// their machine, pulledby, loc (AKA being inside the atom) or buckled var set.
 // see code/modules/mob/mob_movement.dm for more.
 /atom/proc/relaymove()
 	return
@@ -237,16 +245,16 @@ its easier to just keep the beam vertical.
 /atom/proc/add_hiddenprint(mob/living/M as mob)
 	if(isnull(M)) return
 	if(isnull(M.key)) return
-	if (ishuman(M))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if (!istype(H.dna, /datum/dna))
 			return 0
 		if (H.gloves)
 			if(src.fingerprintslast != H.key)
-				src.fingerprintshidden += text("\[[time_stamp()]\] (Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
+				src.fingerprintshidden += "\[[time_stamp()]\] (Wearing gloves). Real name: [H.real_name], Key: [H.key]"
 				src.fingerprintslast = H.key
 			return 0
-		if (!( src.fingerprints ))
+		if (!src.fingerprints)
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += text("\[[time_stamp()]\] Real name: [], Key: []",H.real_name, H.key)
 				src.fingerprintslast = H.key
@@ -286,7 +294,7 @@ its easier to just keep the beam vertical.
 		//Now, deal with gloves.
 		if (H.gloves && H.gloves != src)
 			if(fingerprintslast != H.key)
-				fingerprintshidden += text("\[[]\](Wearing gloves). Real name: [], Key: []",time_stamp(), H.real_name, H.key)
+				fingerprintshidden += "\[[time_stamp()]\](Wearing gloves). Real name: [H.real_name], Key: [H.key]"
 				fingerprintslast = H.key
 			H.gloves.add_fingerprint(M)
 
@@ -313,40 +321,42 @@ its easier to just keep the beam vertical.
 		// Add the fingerprints
 		//
 		if(fingerprints[full_print])
-			switch(stringpercent(fingerprints[full_print]))		//tells us how many stars are in the current prints.
+			//tells us how many stars are in the current prints.
+			switch(stringpercent(fingerprints[full_print]))
 
 				if(28 to 32)
-					if(prob(1))
-						fingerprints[full_print] = full_print 		// You rolled a one buddy.
+					if(prob(1)) // You rolled a one buddy.
+						fingerprints[full_print] = full_print
 					else
 						fingerprints[full_print] = stars(full_print, rand(0,40)) // 24 to 32
 
 				if(24 to 27)
-					if(prob(3))
-						fingerprints[full_print] = full_print     	//Sucks to be you.
+					if(prob(3)) //Sucks to be you.
+						fingerprints[full_print] = full_print
 					else
 						fingerprints[full_print] = stars(full_print, rand(15, 55)) // 20 to 29
 
 				if(20 to 23)
-					if(prob(5))
-						fingerprints[full_print] = full_print		//Had a good run didn't ya.
+					if(prob(5)) //Had a good run didn't ya.
+						fingerprints[full_print] = full_print
 					else
 						fingerprints[full_print] = stars(full_print, rand(30, 70)) // 15 to 25
 
 				if(16 to 19)
-					if(prob(5))
-						fingerprints[full_print] = full_print		//Welp.
+					if(prob(5)) //Welp.
+						fingerprints[full_print] = full_print
 					else
 						fingerprints[full_print]  = stars(full_print, rand(40, 100))  // 0 to 21
 
 				if(0 to 15)
-					if(prob(5))
-						fingerprints[full_print] = stars(full_print, rand(0,50)) 	// small chance you can smudge.
+					if(prob(5)) // small chance you can smudge.
+						fingerprints[full_print] = stars(full_print, rand(0,50))
 					else
 						fingerprints[full_print] = full_print
 
 		else
-			fingerprints[full_print] = stars(full_print, rand(0, 20))	//Initial touch, not leaving much evidence the first time.
+			//Initial touch, not leaving much evidence the first time.
+			fingerprints[full_print] = stars(full_print, rand(0, 20))
 
 
 		return 1
@@ -373,13 +383,13 @@ its easier to just keep the beam vertical.
 	if(!istype(fingerprintshidden, /list))
 		fingerprintshidden = list()
 
-	//skytodo
-	//A.fingerprints |= fingerprints            //detective
-	//A.fingerprintshidden |= fingerprintshidden    //admin
+	//detective stuff
 	if(A.fingerprints && fingerprints)
-		A.fingerprints |= fingerprints.Copy()            //detective
+		A.fingerprints |= fingerprints.Copy()
+	//admin stuff
+	//A.fingerprintslast = fingerprintslast
 	if(A.fingerprintshidden && fingerprintshidden)
-		A.fingerprintshidden |= fingerprintshidden.Copy()    //admin	A.fingerprintslast = fingerprintslast
+		A.fingerprintshidden |= fingerprintshidden.Copy()
 
 
 //returns 1 if made bloody, returns 0 otherwise
@@ -388,7 +398,8 @@ its easier to just keep the beam vertical.
 	if(flags & NOBLOODY)
 		return 0
 
-	if(!blood_DNA || !istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
+	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
+	if(!blood_DNA || !istype(blood_DNA, /list))
 		blood_DNA = list()
 
 	was_bloodied = 1
@@ -398,8 +409,7 @@ its easier to just keep the beam vertical.
 			M.dna = new /datum/dna(null)
 			M.dna.real_name = M.real_name
 		M.check_dna()
-		blood_color = M.species.get_blood_colour(M)
-	. = 1
+		blood_color = M.get_blood_colour()
 	return 1
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M as mob, var/toxvomit = 0)

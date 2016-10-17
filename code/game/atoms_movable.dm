@@ -25,12 +25,9 @@
 /atom/movable/Del()
 	if(isnull(gcDestroyed) && loc)
 		testing("GC: -- [type] was deleted via del() rather than qdel() --")
-		crash_with("GC: -- [type] was deleted via del() rather than qdel() --") // stick a stack trace in the runtime logs
-	else if(isnull(gcDestroyed))
-		testing("GC: [type] was deleted via GC without qdel()") //Not really a huge issue but from now on, please qdel()
-	else
-		testing("GC: [type] was deleted via GC with qdel()")
-	..()
+
+		// stick a stack trace in the runtime logs
+		crash_with("GC: -- [type] was deleted via del() rather than qdel() --")
 */
 
 /atom/movable/Destroy()
@@ -102,7 +99,8 @@
 				if(A:lying) continue
 				src.throw_impact(A,speed)
 			if(isobj(A))
-				if(A.density && !A.throwpass)	// **TODO: Better behaviour for windows which are dense, but shouldn't always stop movement
+				// **TODO: Better behaviour for windows which are dense, but shouldn't always stop movement
+				if(A.density && !A.throwpass)
 					src.throw_impact(A,speed)
 
 /atom/movable/proc/throw_at(atom/target, range, speed, thrower)
@@ -138,12 +136,20 @@
 		var/error = dist_x/2 - dist_y
 
 
-
-		while(src && target &&((((src.x < target.x && dx == EAST) || (src.x > target.x && dx == WEST)) && dist_travelled < range) || (a && a.has_gravity == 0)  || istype(src.loc, /turf/space)) && src.throwing && istype(src.loc, /turf))
-			// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
+		// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile,
+		// or hit something, or hit the end of the map, or someone picks it up
+		while(
+			src && target && \
+			src.throwing && \
+			istype(src.loc, /turf) && ( \
+				(((src.x<target.x && dx==EAST) || (src.x>target.x && dx==WEST)) && dist_travelled < range) || \
+				(a && a.has_gravity == 0)  || istype(src.loc, /turf/space) \
+			)
+		) //while
 			if(error < 0)
 				var/atom/step = get_step(src, dy)
-				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
+				// going off the edge of the map makes get_step return null, don't let things go off the edge
+				if(!step)
 					break
 				src.Move(step)
 				hit_check(speed)
@@ -155,7 +161,8 @@
 					sleep(1)
 			else
 				var/atom/step = get_step(src, dx)
-				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
+				// going off the edge of the map makes get_step return null, don't let things go off the edge
+				if(!step)
 					break
 				src.Move(step)
 				hit_check(speed)
@@ -168,11 +175,20 @@
 			a = get_area(src.loc)
 	else
 		var/error = dist_y/2 - dist_x
-		while(src && target &&((((src.y < target.y && dy == NORTH) || (src.y > target.y && dy == SOUTH)) && dist_travelled < range) || (a && a.has_gravity == 0)  || istype(src.loc, /turf/space)) && src.throwing && istype(src.loc, /turf))
-			// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
+		// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile,
+		// or hit something, or hit the end of the map, or someone picks it up
+		while(
+			src && target && \
+			src.throwing && \
+			istype(src.loc, /turf) && ( \
+				(((src.y<target.y && dy==NORTH) || (src.y>target.y && dy==SOUTH)) && dist_travelled < range) || \
+				(a && a.has_gravity == 0)  || istype(src.loc, /turf/space) \
+			)
+		) //while
 			if(error < 0)
 				var/atom/step = get_step(src, dx)
-				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
+				// going off the edge of the map makes get_step return null, don't let things go off the edge
+				if(!step)
 					break
 				src.Move(step)
 				hit_check(speed)
@@ -184,7 +200,8 @@
 					sleep(1)
 			else
 				var/atom/step = get_step(src, dy)
-				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
+				// going off the edge of the map makes get_step return null, don't let things go off the edge
+				if(!step)
 					break
 				src.Move(step)
 				hit_check(speed)
@@ -194,7 +211,6 @@
 				if(dist_since_sleep >= speed)
 					dist_since_sleep = 0
 					sleep(1)
-
 			a = get_area(src.loc)
 
 	//done throwing, either because it hit something or it finished moving

@@ -21,12 +21,10 @@
 	max_equip = 4
 
 
-/obj/mecha/combat/phazon/New()
+/obj/mecha/combat/phazon/preloaded/New()
 	..()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/tool/rcd
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/gravcatapult
-	ME.attach(src)
+	attach(new /obj/item/mecha_parts/mecha_equipment/tool/rcd)
+	attach(new /obj/item/mecha_parts/mecha_equipment/gravcatapult)
 	return
 
 /obj/mecha/combat/phazon/Bump(var/atom/obstacle)
@@ -69,14 +67,15 @@
 	return
 
 /obj/mecha/combat/phazon/get_commands()
-	var/output = {"<div class='wr'>
-						<div class='header'>Special</div>
-						<div class='links'>
-						<a href='?src=\ref[src];phasing=1'><span id="phasing_command">[phasing?"Dis":"En"]able phasing</span></a><br>
-						<a href='?src=\ref[src];switch_damtype=1'>Change melee damage type</a><br>
-						</div>
-						</div>
-						"}
+	var/output = {"
+		<div class='wr'>
+		<div class='header'>Special</div>
+		<div class='links'>
+		<a href='?src=\ref[src];phasing=1'><span id="phasing_command">[phasing?"Dis":"En"]able phasing</span></a><br>
+		<a href='?src=\ref[src];switch_damtype=1'>Change melee damage type</a><br>
+		</div>
+		</div>
+	"}
 	output += ..()
 	return output
 

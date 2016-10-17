@@ -9,7 +9,8 @@
 	requires_power = 0 				(defaults to 1)
 	music = "music/music.ogg"		(defaults to "music/music.ogg")
 
-NOTE: there are two lists of areas in the end of this file: centcom and station itself. Please maintain these lists valid. --rastaf0
+NOTE: there are two lists of areas in the end of this file: centcom and station itself.
+Please maintain these lists valid. --rastaf0
 
 */
 
@@ -47,19 +48,24 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/has_gravity = 1
 	var/obj/machinery/power/apc/apc = null
 	var/no_air = null
-//	var/list/lights				// list of all lights on this area
-	var/list/all_doors = list()		//Added by Strumpetplaya - Alarm Change - Contains a list of doors adjacent to this area
+	var/list/all_doors = list()		//- Contains a list of doors adjacent to this area
 	var/air_doors_activated = 0
-	var/list/ambience = list('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
+	var/list/ambience = list(
+		'sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg',
+		'sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg',
+		'sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg',
+		'sound/ambience/ambigen11.ogg','sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg'
+	)
 	var/list/forced_ambience = null
 	var/sound_env = 2	//reverb preset for sounds played in this area, see sound datum reference for more
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
-/*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
+/*I am far too lazy to make it a proper list of areas
+so I'll just make it run the usual telepot routine at the start of the game*/
 var/list/teleportlocs = list()
 
 /hook/startup/proc/setupTeleportLocs()
 	for(var/area/AR in world)
-		if(istype(AR, /area/shuttle) || istype(AR, /area/syndicate_station) || istype(AR, /area/wizard_station)) continue
+		if(is_type_in_list(AR, list(/area/shuttle, /area/syndicate_station, /area/wizard_station))) continue
 		if(teleportlocs.Find(AR.name)) continue
 		var/turf/picked = pick(get_area_turfs(AR.type))
 		if (picked.z in config.station_levels)
@@ -75,7 +81,9 @@ var/list/ghostteleportlocs = list()
 /hook/startup/proc/setupGhostTeleportLocs()
 	for(var/area/AR in world)
 		if(ghostteleportlocs.Find(AR.name)) continue
-		if(istype(AR, /area/turret_protected/aisat) || istype(AR, /area/derelict) || istype(AR, /area/tdome) || istype(AR, /area/shuttle/specops/centcom))
+		if(is_type_in_list(
+			AR, list(/area/turret_protected/aisat, /area/derelict, /area/tdome, /area/shuttle/specops/centcom)
+		))
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 		var/turf/picked = pick(get_area_turfs(AR.type))
@@ -102,7 +110,10 @@ var/list/ghostteleportlocs = list()
 	power_light = 0
 	power_equip = 0
 	power_environ = 0
-	ambience = list('sound/ambience/ambispace.ogg','sound/music/title2.ogg','sound/music/space.ogg','sound/music/main.ogg','sound/music/traitor.ogg')
+	ambience = list(
+		'sound/ambience/ambispace.ogg','sound/music/title2.ogg','sound/music/space.ogg',
+		'sound/music/main.ogg','sound/music/traitor.ogg'
+	)
 
 area/space/atmosalert()
 	return
@@ -798,29 +809,38 @@ area/space/atmosalert()
 	name = "Substation"
 	icon_state = "substation"
 
-/area/maintenance/substation/engineering // Probably will be connected to engineering SMES room, as wires cannot be crossed properly without them sharing powernets.
+// Probably will be connected to engineering SMES room,
+// as wires cannot be crossed properly without them sharing powernets.
+/area/maintenance/substation/engineering
 	name = "Engineering Substation"
 
 // No longer used:
-/area/maintenance/substation/medical_science // Medbay and Science. Each has it's own separated machinery, but it originates from the same room.
+// Medbay and Science. Each has it's own separated machinery, but it originates from the same room.
+/area/maintenance/substation/medical_science
 	name = "Medical Research Substation"
 
-/area/maintenance/substation/medical // Medbay
+// Medbay
+/area/maintenance/substation/medical
 	name = "Medical Substation"
 
-/area/maintenance/substation/research // Research
+// Research
+/area/maintenance/substation/research
 	name = "Research Substation"
 
-/area/maintenance/substation/civilian_east // Bar, kitchen, dorms, ...
+// Bar, kitchen, dorms, ...
+/area/maintenance/substation/civilian_east
 	name = "Civilian East Substation"
 
-/area/maintenance/substation/civilian_west // Cargo, PTS, locker room, probably arrivals, ...)
+// Cargo, PTS, locker room, probably arrivals, ...
+/area/maintenance/substation/civilian_west
 	name = "Civilian West Substation"
 
-/area/maintenance/substation/command // AI and central cluster. This one will be between HoP office and meeting room (probably).
+// AI and central cluster. This one will be between HoP office and meeting room (probably).
+/area/maintenance/substation/command
 	name = "Command Substation"
 
-/area/maintenance/substation/security // Security, Brig, Permabrig, etc.
+// Security, Brig, Permabrig, etc.
+/area/maintenance/substation/security
 	name = "Security Substation"
 
 
@@ -1017,7 +1037,11 @@ area/crew_quarters/barman
 /area/chapel/main
 	name = "\improper Chapel"
 	icon_state = "chapel"
-	ambience = list('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg','sound/music/traitor.ogg')
+	ambience = list(
+		'sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg',
+		'sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg',
+		'sound/music/traitor.ogg'
+	)
 
 /area/chapel/office
 	name = "\improper Chapel Office"
@@ -1089,7 +1113,10 @@ area/crew_quarters/barman
 /area/engineering/
 	name = "\improper Engineering"
 	icon_state = "engineering"
-	ambience = list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg')
+	ambience = list(
+		'sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg',
+		'sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg'
+	)
 
 /area/engineering/atmos
  	name = "\improper Atmospherics"
@@ -1410,24 +1437,6 @@ area/crew_quarters/barman
 /area/security/tactical
 	name = "\improper Security - Tactical Equipment"
 	icon_state = "Tactical"
-
-
-/*
-	New()
-		..()
-
-		spawn(10) //let objects set up first
-			for(var/turf/turfToGrayscale in src)
-				if(turfToGrayscale.icon)
-					var/icon/newIcon = icon(turfToGrayscale.icon)
-					newIcon.GrayScale()
-					turfToGrayscale.icon = newIcon
-				for(var/obj/objectToGrayscale in turfToGrayscale) //1 level deep, means tables, apcs, locker, etc, but not locker contents
-					if(objectToGrayscale.icon)
-						var/icon/newIcon = icon(objectToGrayscale.icon)
-						newIcon.GrayScale()
-						objectToGrayscale.icon = newIcon
-*/
 
 /area/security/nuke_storage
 	name = "\improper Vault"
@@ -1927,7 +1936,10 @@ area/crew_quarters/barman
 
 // Telecommunications Satellite
 /area/tcommsat/
-	ambience = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
+	ambience = list(
+		'sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg',
+		'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg'
+	)
 
 /area/tcommsat/entrance
 	name = "\improper Telecoms Teleporter"
@@ -1940,22 +1952,34 @@ area/crew_quarters/barman
 /area/turret_protected/tcomsat
 	name = "\improper Telecoms Satellite"
 	icon_state = "tcomsatlob"
-	ambience = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
+	ambience = list(
+		'sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg',
+		'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg'
+	)
 
 /area/turret_protected/tcomfoyer
 	name = "\improper Telecoms Foyer"
 	icon_state = "tcomsatentrance"
-	ambience = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
+	ambience = list(
+		'sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg',
+		'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg'
+	)
 
 /area/turret_protected/tcomwest
 	name = "\improper Telecommunications Satellite West Wing"
 	icon_state = "tcomsatwest"
-	ambience = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
+	ambience = list(
+		'sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg',
+		'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg'
+	)
 
 /area/turret_protected/tcomeast
 	name = "\improper Telecommunications Satellite East Wing"
 	icon_state = "tcomsateast"
-	ambience = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
+	ambience = list(
+		'sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg',
+		'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg'
+	)
 
 /area/tcommsat/computer
 	name = "\improper Telecoms Control Room"
@@ -1999,8 +2023,9 @@ area/crew_quarters/barman
 	icon_state = "away3"
 	luminosity = 0
 
+// this is to keep the vault area being entirely lit because of requires_power
 /area/awaymission/wwvaultdoors
-	name = "\improper Wild West Vault Doors"  // this is to keep the vault area being entirely lit because of requires_power
+	name = "\improper Wild West Vault Doors"
 	icon_state = "away2"
 	requires_power = 0
 	luminosity = 0
@@ -2099,7 +2124,7 @@ area/crew_quarters/barman
 		var/sound/S = null
 		var/sound_delay = 0
 		if(prob(25))
-			S = sound(file=pick('sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag3.ogg'), volume=100)
+			S = sound(pick('sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag3.ogg'), volume=100)
 			sound_delay = rand(0, 50)
 
 		for(var/mob/living/carbon/human/H in src)

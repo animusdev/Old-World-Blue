@@ -34,9 +34,7 @@
 					return
 				if (src.client.handle_spam_prevention(message,MUTE_IC))
 					return
-			if (stat)
-				return
-			if(!(message))
+			if (stat || !message)
 				return
 			return custom_emote(m_type, message)
 
@@ -54,15 +52,20 @@
 
 		if ("help")
 			var/all_emotes = ""
-			src << emotes_list.len
 			for(var/emote in emotes_list)
 				all_emotes += ", [emote]"
-			src << "\blue Possible emotes: [copytext(all_emotes, 3)]"
+			usr << "\blue Possible emotes: [copytext(all_emotes, 3)]"
 		else
 			if(act in emotes_list)
 				var/datum/emote/E = emotes_list[act]
 				E.act(src)
-			else src << "\blue Unusable emote '[act]'. Say *help for a list."
+			else
+				if(findtext(act, "s", -1))
+					act = copytext(act, 1, -1)
+				if(act in emotes_list)
+					var/datum/emote/E = emotes_list[act]
+					E.act(src)
+				else src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
 
 	if (message)
 		log_emote("[name]/[key] : [message]")

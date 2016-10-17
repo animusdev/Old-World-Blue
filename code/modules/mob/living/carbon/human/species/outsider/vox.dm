@@ -46,7 +46,7 @@
 
 	inherent_verbs = list(
 		/mob/living/carbon/human/proc/leap
-		)
+	)
 
 	has_organ = list(
 		O_HEART =    /obj/item/organ/internal/heart,
@@ -56,12 +56,19 @@
 		O_BRAIN =    /obj/item/organ/internal/brain,
 		O_EYES =     /obj/item/organ/internal/eyes,
 		"stack" =    /obj/item/organ/internal/stack/vox
-		)
-	restricted_jobs = list("Captain","Head of Personnel","Head of Security","Chief Engineer","Research Director",\
-					"Chief Medical Officer", "Warden", "Detective", "Security Officer", "Station Engineer",\
-					"Atmospheric Technician","Medical Doctor","Geneticist","Psychiatrist","Chemist","Paramedic",\
-					"Scientist", "Roboticist", "Xenobiologist", "Bartender", "Gardener", "Chef", "Librarian",\
-					"Quartermaster", "Lawyer", "Internal Affairs Agent", "Chaplain")
+	)
+
+	body_builds = list(
+		new/datum/body_build/vox
+	)
+
+	restricted_jobs = list(
+		"Captain","Head of Personnel","Head of Security","Chief Engineer","Research Director",
+		"Chief Medical Officer", "Warden", "Detective", "Security Officer", "Station Engineer",
+		"Atmospheric Technician","Medical Doctor","Geneticist","Psychiatrist","Chemist","Paramedic",
+		"Scientist", "Roboticist", "Xenobiologist", "Bartender", "Gardener", "Chef", "Librarian",
+		"Quartermaster", "Lawyer", "Internal Affairs Agent", "Chaplain"
+	)
 
 /datum/species/vox/get_random_name(var/gender)
 	var/datum/language/species_language = all_languages[default_language]

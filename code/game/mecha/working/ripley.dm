@@ -42,8 +42,7 @@
 
 /obj/mecha/working/ripley/deathripley/New()
 	..()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/tool/safety_clamp
-	ME.attach(src)
+	attach(new /obj/item/mecha_parts/mecha_equipment/tool/safety_clamp)
 	return
 
 /obj/mecha/working/ripley/lagan
@@ -59,19 +58,9 @@
 /obj/mecha/working/ripley/lagan/New()
 	..()
 	//Attach drill
-	var/obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill/D = new /obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill
-	D.attach(src)
-
+	attach(new /obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill)
 	//Attach hydrolic clamp
-	var/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp/HC = new /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp
-	HC.attach(src)
-	for(var/obj/item/mecha_parts/mecha_tracking/B in src.contents)//Deletes the beacon so it can't be found easily
-		qdel (B)
-	
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/tool/passenger
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/tool/passenger
-	ME.attach(src)
+	attach(new /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp)
+	attach(new /obj/item/mecha_parts/mecha_equipment/tool/passenger)
+	attach(new /obj/item/mecha_parts/mecha_equipment/tool/passenger)
 	return
-
-

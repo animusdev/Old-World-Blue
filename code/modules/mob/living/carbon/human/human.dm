@@ -8,9 +8,7 @@
 	var/list/hud_list[10]
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
 
-/mob/living/carbon/human/New(var/new_loc, var/new_species = null, var/datum/preferences/prefs = null)
-
-	body_build = get_body_build(gender)
+/mob/living/carbon/human/New(var/new_loc, var/new_species = null)
 
 	if(!dna)
 		dna = new /datum/dna(null)
@@ -18,9 +16,9 @@
 
 	if(!species)
 		if(new_species)
-			set_species(new_species,1,prefs)
+			set_species(new_species,1)
 		else
-			set_species(prefs = prefs)
+			set_species()
 
 	real_name = species.get_random_name(gender)
 	name = real_name
@@ -1069,7 +1067,7 @@
 	else
 		usr << "\blue [self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)]."
 
-/mob/living/carbon/human/proc/set_species(var/new_species, var/default_colour, var/datum/preferences/prefs = null)
+/mob/living/carbon/human/proc/set_species(var/new_species, var/default_colour)
 
 	if(!dna)
 		if(!new_species)
@@ -1097,6 +1095,8 @@
 
 	species = all_species[new_species]
 
+	fix_body_build()
+
 	if(species.language)
 		add_language(species.language)
 
@@ -1107,14 +1107,14 @@
 		//Apply colour.
 		skin_color = species.base_color
 	else
-		skin_color = (prefs!=null) ? prefs.skin_color : "#000000"
+		skin_color = "#000000"
 
 	if(species.holder_type)
 		holder_type = species.holder_type
 
 	icon_state = lowertext(species.name)
 
-	species.create_organs(src, prefs)
+	species.create_organs(src)
 
 	species.handle_post_spawn(src)
 

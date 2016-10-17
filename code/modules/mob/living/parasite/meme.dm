@@ -221,25 +221,20 @@ mob/living/parasite/meme/verb/Thought()
 		use_points(50)
 		return
 
-	var/list/candidates = indoctrinated.Copy()
-	if(!(src.host in candidates))
-		candidates.Add(src.host)
-
 	var/mob/target = select_indoctrinated("Thought", "Select a target which will hear your thought.")
 	if(!target) return
 
 	var/speaker = input("Select the voice in which you would like to make yourself heard.", "Voice") as null|text
 	if(!speaker) return
 
-	var/message = input("What would you like to say?", "Message") as null
+	var/message = input("What would you like to say?", "Message") as null|text
 	if(!message) return
 	//message = sanitize_uni(message)
 
 	// Use the points at the end rather than the beginning, because the user might cancel
 	if(!use_points(50)) return
 
-	message = say_quote(message)
-	var/rendered = "<span class='game say'><span class='name'>[speaker]</span> <span class='message'>[message]</span></span>"
+	var/rendered = "<span class='game say'><span class='name'>[speaker]</span> <span class='message'>[say_quote(message)] [message]</span></span>"
 	target.show_message(rendered)
 
 	usr << "<i>You make [target] hear:</i> [rendered]"
@@ -425,7 +420,7 @@ mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob 
 		src << "<b>Your host can't speak..</b>"
 		return
 
-	for(var/mob/M in view(host)+src)
+	for(var/mob/M in view(host))
 		M.show_message("<B>[host]</B> screams something incoherent!",2) // 2 stands for hearable message
 
 	// Find out whether the target can hear
@@ -446,7 +441,7 @@ mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob 
 //	message_admins("[src.key] has jumped (meme) to [target]")
 
 // Jump to an attuned mob for free
-mob/living/parasite/meme/verb/AttunedJump(mob/living/carbon/human/target as mob in view(host) - usr - usr:host)
+mob/living/parasite/meme/verb/AttunedJump(mob/living/carbon/human/target as mob in view(host)&indoctrinated)
 	set category = "Meme"
 	set name	 = "Attuned Jump(0)"
 	set desc     = "Move to a mob in sight that you have already attuned."

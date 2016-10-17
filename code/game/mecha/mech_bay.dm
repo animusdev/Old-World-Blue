@@ -223,6 +223,7 @@
 	if(istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda))
 		if(allowed(user))
 			locked = !locked
+			user << "<span class='notice'>[recharge_port] now [!locked?"un":null]locked</span>"
 	else if(istype(I, /obj/item/weapon/card/emag) && locked)
 		locked = 0
 
@@ -242,7 +243,7 @@
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
-        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
+	// for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "mech_bay_console.tmpl", "Mech Bay Control Console", 500, 325)
 		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)

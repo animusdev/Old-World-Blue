@@ -23,7 +23,7 @@
 
 	var/mob/living/carbon/human/H = M
 	if(istype(H))
-		var/obj/item/organ/external/temp = get_organ(hand ? BP_L_HAND : BP_R_HAND)
+		var/obj/item/organ/external/temp = H.get_organ(H.hand ? BP_L_HAND : BP_R_HAND)
 		if(!temp || !temp.is_usable())
 			H << "\red You can't use your hand."
 			return

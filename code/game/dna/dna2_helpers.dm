@@ -157,7 +157,8 @@
 			H.gender = FEMALE
 		else
 			H.gender = MALE
-	H.body_build = get_body_build(H.gender, dna.body_build)
+	H.body_build = H.species.get_body_build(H.gender, dna.body_build)
+	H.fix_body_build()
 
 	//Hair
 	var/hair = dna.GetUIValueRange(DNA_UI_HAIR_STYLE,hair_styles_list.len)

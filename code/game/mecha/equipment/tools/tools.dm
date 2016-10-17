@@ -7,7 +7,7 @@
 	var/obj/mecha/working/ripley/cargo_holder
 	required_type = /obj/mecha/working
 
-	attach(obj/mecha/M as obj)
+	attached(obj/mecha/M as obj)
 		..()
 		cargo_holder = M
 		return
@@ -519,12 +519,12 @@
 				return 1
 		return 0
 
-	attach(obj/mecha/M as obj)
+	attached(obj/mecha/M as obj)
 		..()
 		chassis.proc_res["dynattackby"] = src
 		return
 
-	detach()
+	detached()
 		chassis.proc_res["dynattackby"] = null
 		..()
 		return
@@ -569,13 +569,13 @@
 				return 1
 		return 0
 
-	attach(obj/mecha/M as obj)
+	attached(obj/mecha/M as obj)
 		..()
 		chassis.proc_res["dynbulletdamage"] = src
 		chassis.proc_res["dynhitby"] = src
 		return
 
-	detach()
+	detached()
 		chassis.proc_res["dynbulletdamage"] = null
 		chassis.proc_res["dynhitby"] = null
 		..()
@@ -647,7 +647,7 @@
 		pr_repair_droid = null
 		..()
 
-	attach(obj/mecha/M as obj)
+	attached(obj/mecha/M as obj)
 		..()
 		droid_overlay = new(src.icon, icon_state = "repair_droid")
 		M.overlays += droid_overlay
@@ -658,7 +658,7 @@
 		..()
 		return
 
-	detach()
+	detached()
 		chassis.overlays -= droid_overlay
 		pr_repair_droid.stop()
 		..()
@@ -741,14 +741,14 @@
 		pr_energy_relay = null
 		..()
 
-	detach()
+	detached()
 		pr_energy_relay.stop()
 //		chassis.proc_res["dynusepower"] = null
 		chassis.proc_res["dyngetcharge"] = null
 		..()
 		return
 
-	attach(obj/mecha/M)
+	attached(obj/mecha/M)
 		..()
 		chassis.proc_res["dyngetcharge"] = src
 //		chassis.proc_res["dynusepower"] = src
@@ -869,7 +869,7 @@
 		pr_mech_generator.set_delay(equip_cooldown)
 		return
 
-	detach()
+	detached()
 		pr_mech_generator.stop()
 		..()
 		return
@@ -1023,7 +1023,7 @@
 	var/obj/mecha/working/ripley/cargo_holder
 	required_type = /obj/mecha/working/ripley
 
-	attach(obj/mecha/M as obj)
+	attached(obj/mecha/M as obj)
 		..()
 		cargo_holder = M
 		return
@@ -1139,12 +1139,12 @@
 	occupant = null
 	return
 
-/obj/item/mecha_parts/mecha_equipment/tool/passenger/attach()
+/obj/item/mecha_parts/mecha_equipment/tool/passenger/attached()
 	..()
 	if (chassis)
 		chassis.verbs |= /obj/mecha/proc/move_inside_passenger
 
-/obj/item/mecha_parts/mecha_equipment/tool/passenger/detach()
+/obj/item/mecha_parts/mecha_equipment/tool/passenger/detached()
 	if(occupant)
 		occupant_message("Unable to detach [src] - equipment occupied.")
 		return
@@ -1236,12 +1236,12 @@
 		if(!(locate(src.type) in M.equipment) && !M.proc_res["dyndomove"])
 			return ..()
 
-	detach()
+	detached()
 		..()
 		chassis.proc_res["dyndomove"] = null
 		return
 
-	attach(obj/mecha/M as obj)
+	attached(obj/mecha/M as obj)
 		..()
 		if(!ion_trail)
 			ion_trail = new

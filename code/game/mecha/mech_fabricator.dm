@@ -559,9 +559,9 @@
 				left_part += output_parts_list(part_set)
 				left_part += "<hr><a href='?src=\ref[src];screen=main'>Return</a>"
 	dat = {"<html>
-			  <head>
-			  <title>[src.name]</title>
-				<style>
+		<head>
+			<title>[src.name]</title>
+			<style>
 				span.deficiency{color: red}
 				.res_name {font-weight: bold; text-transform: capitalize;}
 				.red {color: #f00;}
@@ -572,12 +572,12 @@
 				html, body {padding: 0px; margin: 0px;}
 				h1 {font-size: 18px; margin: 5px 0px;}
 				</style>
-				<script language='javascript' type='text/javascript'>
+			<script language='javascript' type='text/javascript'>
 				[js_byjax]
-				</script>
-				</head><body>
-				<body>
-				<table style='width: 100%;'>
+			</script>
+		</head>
+		<body>
+			<table style='width: 100%;'>
 				<tr>
 				<td style='width: 70%; padding-right: 10px;'>
 				[left_part]
@@ -586,9 +586,9 @@
 				[list_queue()]
 				</td>
 				<tr>
-				</table>
-				</body>
-				</html>"}
+			</table>
+		</body>
+		</html>"}
 	user << browse(dat, "window=mecha_fabricator;size=1000x400")
 	onclose(user, "mecha_fabricator")
 	return
@@ -686,10 +686,11 @@
 			return
 
 		if(part)
-			temp = {"<h1>[part] description:</h1>
-						[part.desc]<br>
-						<a href='?src=\ref[src];clear_temp=1'>Return</a>
-						"}
+			temp = {"
+				<h1>[part] description:</h1>
+				[part.desc]<br>
+				<a href='?src=\ref[src];clear_temp=1'>Return</a>
+			"}
 	if(href_list["remove_mat"] && href_list["material"])
 		temp = "Ejected [remove_material(href_list["material"],text2num(href_list["remove_mat"]))] of [href_list["material"]]<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
 	src.updateUsrDialog()

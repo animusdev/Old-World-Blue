@@ -222,9 +222,11 @@
 			else
 				user << "<span class='notice'>The [affecting.name] is cut open, you'll need more than a bandage!</span>"
 
+
 /obj/item/stack/medical/splint
 	name = "medical splints"
 	singular_name = "medical splint"
+	desc = "Modular splints capable of supporting and immobilizing bones in both limbs and appendages."
 	icon_state = "splint"
 	amount = 5
 	max_amount = 5
@@ -261,7 +263,7 @@
 				"<span class='danger'>You start to apply \the [src] to your [limb].</span>",
 				"<span class='danger'>You hear something being wrapped.</span>"
 			)
-		if(do_after(user, 50))
+		if(do_mob(user, H, 50))
 			if (H != user)
 				user.visible_message(
 					"<span class='danger'>[user] finishes applying \the [src] to [H]'s [limb].</span>",

@@ -4,7 +4,10 @@ var/global/list/additional_antag_types = list()
 /datum/game_mode
 	var/name = "invalid"
 	var/round_description = "How did you even vote this in?"
-	var/extended_round_description = "This roundtype should not be spawned, let alone votable. Someone contact a developer and tell them the game's broken again."
+	var/extended_round_description = {"
+		This roundtype should not be spawned, let alone votable. \
+		Someone contact a developer and tell them the game's broken again.
+	"}
 	var/config_tag = null
 	var/votable = 1
 	var/probability = 0
@@ -283,7 +286,9 @@ var/global/list/additional_antag_types = list()
 		spawn(rand(100,150))
 			announce_ert_disabled()
 
-	//Assign all antag types for this game mode. Any players spawned as antags earlier should have been removed from the pending list, so no need to worry about those.
+	//Assign all antag types for this game mode.
+	//Any players spawned as antags earlier should have been removed from the pending list,
+	// so no need to worry about those.
 	for(var/datum/antagonist/antag in antag_templates)
 		if(!(antag.flags & ANTAG_OVERRIDE_JOB))
 			antag.attempt_spawn() //select antags to be spawned
@@ -334,7 +339,12 @@ var/global/list/additional_antag_types = list()
 		"radical Skrellian transevolutionaries",
 		"classified security operations"
 		)
-	command_announcement.Announce("The presence of [pick(reasons)] in the region is tying up all available local emergency resources; emergency response teams cannot be called at this time, and post-evacuation recovery efforts will be substantially delayed.","Emergency Transmission")
+	command_announcement.Announce(
+		"The presence of [pick(reasons)] in the region is tying up all available local emergency resources; \
+		emergency response teams cannot be called at this time, \
+		and post-evacuation recovery efforts will be substantially delayed.",
+		"Emergency Transmission"
+	)
 
 /datum/game_mode/proc/check_finished()
 	if(emergency_shuttle.returned() || station_was_nuked)
@@ -349,7 +359,8 @@ var/global/list/additional_antag_types = list()
 		return 1
 	return 0
 
-/datum/game_mode/proc/cleanup()	//This is called when the round has ended but not the game, if any cleanup would be necessary in that case.
+//This is called when the round has ended but not the game, if any cleanup would be necessary in that case.
+/datum/game_mode/proc/cleanup()
 	return
 
 /datum/game_mode/proc/declare_completion()
@@ -367,7 +378,13 @@ var/global/list/additional_antag_types = list()
 	var/ghosts = 0
 	var/escaped_total = 0
 
-	var/list/area/escape_locations = list(/area/shuttle/escape/centcom, /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod5/centcom)
+	var/list/area/escape_locations = list(
+		/area/shuttle/escape/centcom,
+		/area/shuttle/escape_pod1/centcom,
+		/area/shuttle/escape_pod2/centcom,
+		/area/shuttle/escape_pod3/centcom,
+		/area/shuttle/escape_pod5/centcom
+	)
 
 	for(var/mob/M in player_list)
 		if(M.client)
@@ -389,13 +406,17 @@ var/global/list/additional_antag_types = list()
 
 	return 0
 
-/datum/game_mode/proc/check_win() //universal trigger to be called at mob death, nuke explosion, etc. To be called from everywhere.
+//universal trigger to be called at mob death, nuke explosion, etc. To be called from everywhere.
+/datum/game_mode/proc/check_win()
 	return 0
 
 /datum/game_mode/proc/send_intercept()
 
-	var/intercepttext = "<FONT size = 3><B>Cent. Com. Update</B> Requested status information:</FONT><HR>"
-	intercepttext += "<B> In case you have misplaced your copy, attached is a list of personnel whom reliable sources&trade; suspect may be affiliated with subversive elements:</B><br>"
+	var/intercepttext = {"
+		<FONT size = 3><B>Cent. Com. Update</B> Requested status information:</FONT><HR>"
+		<B>In case you have misplaced your copy, attached is a list of personnel
+		whom reliable sources&trade; suspect may be affiliated with subversive elements:</B><br>
+	"}
 
 	var/list/disregard_roles = list()
 	for(var/antag_type in all_antag_types)
@@ -484,9 +505,12 @@ var/global/list/additional_antag_types = list()
 					players -= player
 					break
 
-	return candidates		// Returns: The number of people who had the antagonist role set to yes, regardless of recomended_enemies, if that number is greater than required_enemies
-							//			required_enemies if the number of people with that role set to yes is less than recomended_enemies,
-							//			Less if there are not enough valid players in the game entirely to make required_enemies.
+	// Returns:
+	//	1. The number of people who had the antagonist role set to yes, regardless of recomended_enemies,
+	//	   if that number is greater than required_enemies
+	//	2. required_enemies if the number of people with that role set to yes is less than recomended_enemies
+	//	3. Less if there are not enough valid players in the game entirely to make required_enemies.
+	return candidates
 
 /datum/game_mode/proc/num_players()
 	. = 0
@@ -540,7 +564,8 @@ proc/display_roundstart_logout_report()
 				msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<font color='#ffcc00'><b>Disconnected</b></font>)\n"
 
 		if(L.ckey && L.client)
-			if(L.client.inactivity >= (ROUNDSTART_LOGOUT_REPORT_TIME / 2))	//Connected, but inactive (alt+tabbed or something)
+			//Connected, but inactive (alt+tabbed or something)
+			if(L.client.inactivity >= (ROUNDSTART_LOGOUT_REPORT_TIME / 2))
 				msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<font color='#ffcc00'><b>Connected, Inactive</b></font>)\n"
 				continue //AFK client
 			if(L.stat)

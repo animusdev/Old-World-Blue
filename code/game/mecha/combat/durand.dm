@@ -1,5 +1,6 @@
 /obj/mecha/combat/durand
-	desc = "An aging combat exosuit utilized by the Nanotrasen corporation. Originally developed to combat hostile alien lifeforms."
+	desc = "An aging combat exosuit utilized by the Nanotrasen corporation. \
+			Originally developed to combat hostile alien lifeforms."
 	name = "Durand"
 	icon_state = "durand"
 	initial_icon = "durand"
@@ -15,14 +16,7 @@
 	var/defence_deflect = 35
 	wreckage = /obj/effect/decal/mecha_wreckage/durand
 
-/*
-/obj/mecha/combat/durand/New()
-	..()
-	weapons += new /datum/mecha_weapon/ballistic/lmg(src)
-	weapons += new /datum/mecha_weapon/ballistic/scattershot(src)
-	selected_weapon = weapons[1]
-	return
-*/
+
 
 /obj/mecha/combat/durand/relaymove(mob/user,direction)
 	if(defence)
@@ -58,13 +52,14 @@
 	return output
 
 /obj/mecha/combat/durand/get_commands()
-	var/output = {"<div class='wr'>
-						<div class='header'>Special</div>
-						<div class='links'>
-						<a href='?src=\ref[src];toggle_defence_mode=1'>Toggle defence mode</a>
-						</div>
-						</div>
-						"}
+	var/output= {"
+		<div class='wr'>
+			<div class='header'>Special</div>
+			<div class='links'>
+				<a href='?src=\ref[src];toggle_defence_mode=1'>Toggle defence mode</a>
+			</div>
+		</div>
+	"}
 	output += ..()
 	return output
 

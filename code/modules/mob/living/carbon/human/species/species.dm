@@ -142,7 +142,9 @@
 		BP_R_FOOT = new /datum/organ_description/foot/right
 	)
 
-	var/list/body_builds = list("Default")
+	var/list/body_builds = list(
+		new/datum/body_build
+	)
 
 	// Bump vars
 	var/bump_flag = HUMAN	// What are we considered to be when bumped?
@@ -159,7 +161,6 @@
 	var/tmp/evolution_points = 0 //How many points race have for abilities
 
 /datum/species/New()
-
 	//If the species has eyes, they are the default vision organ
 	if(!vision_organ && has_organ[O_EYES])
 		vision_organ = O_EYES
@@ -211,7 +212,7 @@
 		H.equip_to_slot_or_del(new custom_survival_gear(H), slot_r_hand)
 
 
-/datum/species/proc/create_organs(var/mob/living/carbon/human/H, var/datum/preferences/prefs = null) //Handles creation of mob organs.
+/datum/species/proc/create_organs(var/mob/living/carbon/human/H,) //Handles creation of mob organs.
 
 	for(var/obj/item/organ/organ in (H.organs|H.internal_organs))
 		qdel(organ)
