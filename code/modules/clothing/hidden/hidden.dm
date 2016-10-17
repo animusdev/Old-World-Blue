@@ -4,6 +4,11 @@
 	desc = "Totally what you think it is"
 	w_class = 1
 
+/obj/item/clothing/hidden/New()
+	..()
+	if(!wear_state)
+		wear_state = icon_state
+
 /*
 /obj/item/clothing/hidden/mob_can_equip(M as mob, slot, disable_warning = 0)
 	if(slot == slot_socks)
