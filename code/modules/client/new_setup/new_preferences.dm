@@ -617,7 +617,7 @@
 		lastJob = job
 		var/job_name = rank
 		if(job.alt_titles)
-			job_name = "<a href=\"?src=\ref[src];task=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a>"
+			job_name = "<a href=\"?src=\ref[src];act=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a>"
 		if(jobban_isbanned(user, rank))
 			dat += "<del>[job_name]</del></td><td><b> \[BANNED]</b></td></tr>"
 			continue
@@ -635,7 +635,7 @@
 
 		dat += "</td><td width='40%'>"
 
-		dat += "<a href='?src=\ref[src];task=input;text=[rank]'>"
+		dat += "<a href='?src=\ref[src];act=input;text=[rank]'>"
 
 		if(rank == "Assistant")//Assistant is special
 			if(job_civilian_low & ASSISTANT)
@@ -661,19 +661,19 @@
 
 	switch(alternate_option)
 		if(GET_RANDOM_JOB)
-			dat += "<br><u><a href='?src=\ref[src];task=random'><font color=green>Get random job if preferences unavailable</font></a></u><br>"
+			dat += "<br><u><a href='?src=\ref[src];act=random'><font color=green>Get random job if preferences unavailable</font></a></u><br>"
 		if(BE_ASSISTANT)
-			dat += "<br><u><a href='?src=\ref[src];task=random'><font color=red>Be assistant if preference unavailable</font></a></u><br>"
+			dat += "<br><u><a href='?src=\ref[src];act=random'><font color=red>Be assistant if preference unavailable</font></a></u><br>"
 		if(RETURN_TO_LOBBY)
-			dat += "<br><u><a href='?src=\ref[src];task=random'><font color=purple>Return to lobby if preference unavailable</font></a></u><br>"
+			dat += "<br><u><a href='?src=\ref[src];act=random'><font color=purple>Return to lobby if preference unavailable</font></a></u><br>"
 
-	dat += "<a href='?src=\ref[src];task=reset'>\[Reset\]</a>"
+	dat += "<a href='?src=\ref[src];act=reset'>\[Reset\]</a>"
 	dat += "</center></tt>"
 
 	return dat
 
 /datum/preferences/proc/HandleOccupationTopic(mob/user, list/href_list)
-	switch(href_list["task"])
+	switch(href_list["act"])
 		if("random")
 			if(alternate_option == GET_RANDOM_JOB || alternate_option == BE_ASSISTANT)
 				alternate_option += 1

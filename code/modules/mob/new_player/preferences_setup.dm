@@ -225,13 +225,19 @@
 
 	if(underwear && current_species.flags & HAS_UNDERWEAR)
 		var/obj/item/clothing/hidden/H = all_underwears[underwear]
-		preview_icon.Blend(icon(body_build.hidden_icon, initial(H.wear_state)), ICON_OVERLAY)
+		var/t_state = initial(H.wear_state)
+		if(!t_state) t_state = initial(H.icon_state)
+		preview_icon.Blend(icon(body_build.hidden_icon, t_state), ICON_OVERLAY)
 	if(socks)
 		var/obj/item/clothing/hidden/H = all_socks[socks]
-		preview_icon.Blend(icon(body_build.hidden_icon, initial(H.wear_state)), ICON_OVERLAY)
+		var/t_state = initial(H.wear_state)
+		if(!t_state) t_state = initial(H.icon_state)
+		preview_icon.Blend(icon(body_build.hidden_icon, t_state), ICON_OVERLAY)
 	if(undershirt && current_species.flags & HAS_UNDERWEAR)
 		var/obj/item/clothing/hidden/H = all_undershirts[undershirt]
-		preview_icon.Blend(icon(body_build.hidden_icon, initial(H.wear_state)), ICON_OVERLAY)
+		var/t_state = initial(H.wear_state)
+		if(!t_state) t_state = initial(H.icon_state)
+		preview_icon.Blend(icon(body_build.hidden_icon, t_state), ICON_OVERLAY)
 
 
 	// Eyes color
