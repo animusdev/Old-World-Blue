@@ -152,7 +152,7 @@ var/global/list/borg_sprites = list(
 ////CONSTRUCTOR////
 /datum/borg_sprite/constructor
 	name = "Constructor"
-	icon_state = "constructor"
+	icon_state = "constructiondrone"
 	module = MOD_ENG
 
 ////ENGINEER////
