@@ -618,49 +618,6 @@ var/global/list/gear_datums = list()
 
 // Attachments
 
-/datum/gear/amulete
-	display_name = "basic"
-	slot = slot_tie
-
-/datum/gear/amulete/aquila
-	display_name = "aquila"
-	path = /obj/item/clothing/accessory/amulet/aquila
-
-/datum/gear/armband_cargo
-	display_name = "armband, cargo"
-	path = /obj/item/clothing/accessory/armband/cargo
-	slot = slot_tie
-
-/datum/gear/armband_emt
-	display_name = "armband, EMT"
-	path = /obj/item/clothing/accessory/armband/medgreen
-	slot = slot_tie
-
-/datum/gear/armband_engineering
-	display_name = "armband, engineering"
-	path = /obj/item/clothing/accessory/armband/engine
-	slot = slot_tie
-
-/datum/gear/armband_hydroponics
-	display_name = "armband, hydroponics"
-	path = /obj/item/clothing/accessory/armband/hydro
-	slot = slot_tie
-
-/datum/gear/armband_medical
-	display_name = "armband, medical"
-	path = /obj/item/clothing/accessory/armband/med
-	slot = slot_tie
-
-/datum/gear/armband
-	display_name = "armband, red"
-	path = /obj/item/clothing/accessory/armband
-	slot = slot_tie
-
-/datum/gear/armband_science
-	display_name = "armband, science"
-	path = /obj/item/clothing/accessory/armband/science
-	slot = slot_tie
-
 /datum/gear/armpit
 	display_name = "holster, armpit"
 	path = /obj/item/clothing/accessory/holster/armpit
@@ -679,87 +636,181 @@ var/global/list/gear_datums = list()
 	slot = slot_tie
 	allowed_roles = list("Captain", "Head of Personnel", "Security Officer", "Warden", "Head of Security", "Detective")
 
+/datum/gear/amulete
+	display_name = "basic"
+	slot = slot_tie
+
+/datum/gear/amulete/aquila
+	display_name = "aquila"
+	path = /obj/item/clothing/accessory/amulet/aquila
+
+/datum/gear/accessory
+	display_name = "armband, red"
+	path = /obj/item/clothing/accessory/armband
+	slot = slot_tie
+
+/datum/gear/accessory/cargo
+	display_name = "armband, cargo"
+	path = /obj/item/clothing/accessory/armband/cargo
+
+/datum/gear/accessory/emt
+	display_name = "armband, EMT"
+	path = /obj/item/clothing/accessory/armband/medgreen
+
+/datum/gear/accessory/engineering
+	display_name = "armband, engineering"
+	path = /obj/item/clothing/accessory/armband/engine
+
+/datum/gear/accessory/hydroponics
+	display_name = "armband, hydroponics"
+	path = /obj/item/clothing/accessory/armband/hydro
+
+/datum/gear/accessory/medical
+	display_name = "armband, medical"
+	path = /obj/item/clothing/accessory/armband/med
+
+/datum/gear/accessory/science
+	display_name = "armband, science"
+	path = /obj/item/clothing/accessory/armband/science
+
+/datum/gear/accessory/tie/blue
+	display_name = "tie, blue"
+	path = /obj/item/clothing/accessory/blue
+
+/datum/gear/accessory/tie/blue_clip
+	display_name = "tie, blue with clip"
+	path = /obj/item/clothing/accessory/blue_clip
+
+/datum/gear/accessory/tie/blue_long
+	display_name = "tie, blue long"
+	path = /obj/item/clothing/accessory/blue_long
+
+/datum/gear/accessory/tie/red
+	display_name = "tie, red"
+	path = /obj/item/clothing/accessory/red
+
+/datum/gear/accessory/tie/red_clip
+	display_name = "tie, red with clip"
+	path = /obj/item/clothing/accessory/red_clip
+
+/datum/gear/accessory/tie/red_long
+	display_name = "tie, red long"
+	path = /obj/item/clothing/accessory/red_long
+
+/datum/gear/accessory/tie/yellow
+	display_name = "tie, yellow"
+	path = /obj/item/clothing/accessory/yellow
+
+/datum/gear/accessory/tie/navy
+	display_name = "tie, navy blue"
+	path = /obj/item/clothing/accessory/navy
+
+/datum/gear/accessory/tie/horrible
+	display_name = "tie, socially disgraceful"
+	path = /obj/item/clothing/accessory/horrible
+
+/datum/gear/accessory/scarf
+	display_name = "tie-scarf, black"
+	path = /obj/item/clothing/accessory/scarf/black
+
+/datum/gear/accessory/scarf/red
+	display_name = "tie-scarf, red"
+	path = /obj/item/clothing/accessory/scarf/red
+
+/datum/gear/accessory/scarf/white
+	display_name = "tie-scarf, white"
+	path = /obj/item/clothing/accessory/scarf/white
+
+/datum/gear/accessory/scarf/green
+	display_name = "tie-scarf, green"
+	path = /obj/item/clothing/accessory/scarf/green
+
+/datum/gear/accessory/scarf/darkblue
+	display_name = "tie-scarf, darkblue"
+	path = /obj/item/clothing/accessory/scarf/darkblue
+
+/datum/gear/accessory/scarf/purple
+	display_name = "tie-scarf, purple"
+	path = /obj/item/clothing/accessory/scarf/purple
+
+/datum/gear/accessory/scarf/yellow
+	display_name = "tie-scarf, yellow"
+	path = /obj/item/clothing/accessory/scarf/yellow
+
+/datum/gear/accessory/scarf/orange
+	display_name = "tie-scarf, orange"
+	path = /obj/item/clothing/accessory/scarf/orange
+
+/datum/gear/accessory/scarf/lightblue
+	display_name = "tie-scarf, lightblue"
+	path = /obj/item/clothing/accessory/scarf/lightblue
+
+/datum/gear/accessory/scarf/zebra
+	display_name = "tie-scarf, zebra"
+	path = /obj/item/clothing/accessory/scarf/zebra
+
+/datum/gear/accessory/scarf/christmas
+	display_name = "tie-scarf, christmas"
+	path = /obj/item/clothing/accessory/scarf/christmas
+
 /datum/gear/suspenders
 	display_name = "suspenders"
 	path = /obj/item/clothing/accessory/suspenders
 	slot = slot_tie
 
-/datum/gear/tie_blue
-	display_name = "tie, blue"
-	path = /obj/item/clothing/accessory/blue
-	slot = slot_tie
+/datum/gear/accessory/suitjacket
+	display_name = "suit jacket, tan"
+	path = /obj/item/clothing/accessory/tan_jacket
 
-/datum/gear/tie_red
-	display_name = "tie, red"
-	path = /obj/item/clothing/accessory/red
-	slot = slot_tie
+/datum/gear/accessory/suitjacket/charcoal
+	display_name = "suit jacket, charcoal"
+	path = /obj/item/clothing/accessory/charcoal_jacket
 
-/datum/gear/tie_horrible
-	display_name = "tie, socially disgraceful"
-	path = /obj/item/clothing/accessory/horrible
-	slot = slot_tie
+/datum/gear/accessory/suitjacket/navy
+	display_name = "suit jacket, navy blue"
+	path = /obj/item/clothing/accessory/navy_jacket
 
-/datum/gear/scarf/black
-	display_name = "tie-scarf, black"
-	path = /obj/item/clothing/accessory/scarf/black
-	slot = slot_tie
+/datum/gear/accessory/suitjacket/burgundy
+	display_name = "suit jacket, burgundy"
+	path = /obj/item/clothing/accessory/burgundy_jacket
 
-/datum/gear/scarf/red
-	display_name = "tie-scarf, red"
-	path = /obj/item/clothing/accessory/scarf/red
-	slot = slot_tie
+/datum/gear/accessory/suitjacket/checkered
+	display_name = "suit jacket, checkered"
+	path = /obj/item/clothing/accessory/checkered_jacket
 
-/datum/gear/scarf/white
-	display_name = "tie-scarf, white"
-	path = /obj/item/clothing/accessory/scarf/white
-	slot = slot_tie
-
-/datum/gear/scarf/green
-	display_name = "tie-scarf, green"
-	path = /obj/item/clothing/accessory/scarf/green
-	slot = slot_tie
-
-/datum/gear/scarf/darkblue
-	display_name = "tie-scarf, darkblue"
-	path = /obj/item/clothing/accessory/scarf/darkblue
-	slot = slot_tie
-
-/datum/gear/scarf/purple
-	display_name = "tie-scarf, purple"
-	path = /obj/item/clothing/accessory/scarf/purple
-	slot = slot_tie
-
-/datum/gear/scarf/yellow
-	display_name = "tie-scarf, yellow"
-	path = /obj/item/clothing/accessory/scarf/yellow
-	slot = slot_tie
-
-/datum/gear/scarf/orange
-	display_name = "tie-scarf, orange"
-	path = /obj/item/clothing/accessory/scarf/orange
-	slot = slot_tie
-
-/datum/gear/scarf/lightblue
-	display_name = "tie-scarf, lightblue"
-	path = /obj/item/clothing/accessory/scarf/lightblue
-	slot = slot_tie
-
-/datum/gear/brown_vest
+/datum/gear/accessory/brown_vest
 	display_name = "webbing, engineering"
 	path = /obj/item/clothing/accessory/storage/brown_vest
-	slot = slot_tie
-	allowed_roles = list("Station Engineer","Atmospheric Technician","Chief Engineer")
+	allowed_roles = list("Station Engineer","Atmospheric Technician","Chief Engineer","Security Officer","Detective","Head of Security","Warden","Paramedic","Chief Medical Officer","Medical Doctor")
 
-/datum/gear/black_vest
+/datum/gear/accessory/black_vest
 	display_name = "webbing, security"
 	path = /obj/item/clothing/accessory/storage/black_vest
-	slot = slot_tie
-	allowed_roles = list("Security Officer","Head of Security","Warden")
+	allowed_roles = list("Station Engineer","Atmospheric Technician","Chief Engineer","Security Officer","Detective","Head of Security","Warden","Paramedic","Chief Medical Officer","Medical Doctor")
 
-/datum/gear/webbing
+/datum/gear/accessory/white_vest
+	display_name = "webbing, medical"
+	path = /obj/item/clothing/accessory/storage/white_vest
+	allowed_roles = list("Station Engineer","Atmospheric Technician","Chief Engineer","Security Officer","Detective","Head of Security","Warden","Paramedic","Chief Medical Officer","Medical Doctor")
+
+/datum/gear/accessory/brown_drop_pouches
+	display_name = "drop pouches, engineering"
+	path = /obj/item/clothing/accessory/storage/brown_drop_pouches
+	allowed_roles = list("Station Engineer","Atmospheric Technician","Chief Engineer","Security Officer","Detective","Head of Security","Warden","Paramedic","Chief Medical Officer","Medical Doctor")
+
+/datum/gear/accessory/black_drop_pouches
+	display_name = "drop pouches, security"
+	path = /obj/item/clothing/accessory/storage/black_drop_pouches
+	allowed_roles = list("Station Engineer","Atmospheric Technician","Chief Engineer","Security Officer","Detective","Head of Security","Warden","Paramedic","Chief Medical Officer","Medical Doctor")
+
+/datum/gear/accessory/white_drop_pouches
+	display_name = "drop pouches, medical"
+	path = /obj/item/clothing/accessory/storage/white_drop_pouches
+	allowed_roles = list("Station Engineer","Atmospheric Technician","Chief Engineer","Security Officer","Detective","Head of Security","Warden","Paramedic","Chief Medical Officer","Medical Doctor")
+
+/datum/gear/accessory/webbing
 	display_name = "webbing, simple"
 	path = /obj/item/clothing/accessory/storage/webbing
-	slot = slot_tie
 	cost = 2
 
 // Suit slot

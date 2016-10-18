@@ -187,6 +187,9 @@
 
 	if(!istype(user,/mob/living)) return
 
+	if(istype(W,/obj/item/clothing/accessory) || istype(W, /obj/item/weapon/hand_labeler))
+		return ..()
+
 	if(istype(src.loc,/mob/living))
 		user << "<span class='danger'>How do you propose to modify a voidsuit while it is being worn?</span>"
 		return

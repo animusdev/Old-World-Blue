@@ -936,6 +936,7 @@
 #include "code\modules\client\new_setup\preview.dm"
 #include "code\modules\clothing\chameleon.dm"
 #include "code\modules\clothing\clothing.dm"
+#include "code\modules\clothing\clothing_accessories.dm"
 #include "code\modules\clothing\accessories\accessory.dm"
 #include "code\modules\clothing\accessories\armband.dm"
 #include "code\modules\clothing\accessories\badges.dm"

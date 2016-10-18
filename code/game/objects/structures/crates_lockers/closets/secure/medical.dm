@@ -92,7 +92,38 @@
 		new /obj/item/clothing/under/rank/medical/paramedic_dark(src)
 		return
 
+/obj/structure/closet/secure_closet/paramedic
+	name = "paramedic locker"
+	desc = "Supplies for a first responder."
+	icon_state = "medical"
+	icon_opened = "medicalopen"
+	icon_broken = "medicalbroken"
+	req_access = list(access_medical_equip)
 
+
+	New()
+		..()
+		new /obj/item/weapon/storage/box/autoinjectors(src)
+		new /obj/item/weapon/storage/box/syringes(src)
+		new /obj/item/weapon/reagent_containers/glass/beaker/bottle/inaprovaline(src)
+		new /obj/item/weapon/reagent_containers/glass/beaker/bottle/antitoxin(src)
+		new /obj/item/weapon/storage/belt/medical/emt(src)
+		new /obj/item/clothing/mask/gas(src)
+		new /obj/item/clothing/suit/storage/toggle/fr_jacket(src)
+//		new /obj/item/clothing/suit/storage/toggle/labcoat/emt(src)
+		new /obj/item/device/radio/headset/headset_med/alt(src)
+		new /obj/item/weapon/cartridge/medical(src)
+		new /obj/item/device/flashlight(src)
+		new /obj/item/weapon/tank/emergency_oxygen/engi(src)
+		new /obj/item/clothing/glasses/hud/health(src)
+		new /obj/item/device/healthanalyzer(src)
+		new /obj/item/device/radio/off(src)
+		new /obj/random/medical(src)
+		new /obj/item/weapon/crowbar(src)
+		new /obj/item/weapon/extinguisher/mini(src)
+//		new /obj/item/weapon/storage/box/freezer(src)
+		new /obj/item/clothing/accessory/storage/white_vest(src)
+		return
 
 /obj/structure/closet/secure_closet/CMO
 	name = "chief medical officer's locker"
