@@ -5,8 +5,8 @@
 	slot = "utility"
 	var/obj/item/holstered = null
 
-/obj/item/clothing/accessory/holster/proc/holster(obj/item/I, mob/user as mob)
-	if(holstered)
+/obj/item/clothing/accessory/holster/proc/holster(var/obj/item/I, var/mob/living/user)
+	if(holstered && istype(user))
 		user << "<span class='warning'>There is already \a [holstered] holstered here!</span>"
 		return
 
@@ -20,6 +20,11 @@
 	holstered.add_fingerprint(user)
 	w_class = max(w_class, holstered.w_class)
 	user.visible_message("<span class='notice'>[user] holsters \the [holstered].</span>", "<span class='notice'>You holster \the [holstered].</span>")
+	name = "occupied [initial(name)]"
+
+/obj/item/clothing/accessory/holster/proc/clear_holster()
+	holstered = null
+	name = initial(name)
 
 /obj/item/clothing/accessory/holster/proc/unholster(mob/user as mob)
 	if(!holstered)
@@ -30,7 +35,7 @@
 	else
 		if(user.a_intent == I_HURT)
 			usr.visible_message(
-				"\red [user] draws \the [holstered], ready to shoot!</span>",
+				"<span class='danger'>[user] draws \the [holstered], ready to shoot!</span>",
 				"<span class='warning'>You draw \the [holstered], ready to shoot!</span>"
 				)
 		else
@@ -40,8 +45,8 @@
 				)
 		user.put_in_hands(holstered)
 		holstered.add_fingerprint(user)
-		holstered = null
 		w_class = initial(w_class)
+		clear_holster()
 
 /obj/item/clothing/accessory/holster/attack_hand(mob/user as mob)
 	if (has_suit)	//if we are part of a suit
@@ -61,10 +66,11 @@
 
 /obj/item/clothing/accessory/holster/examine(mob/user)
 	. = ..()
-	if (holstered)
-		user << "A [holstered] is holstered here."
-	else
-		user << "It is empty."
+	if(. <= 4)
+		if (holstered)
+			user << "A [holstered] is holstered here."
+		else
+			user << "It is empty."
 
 /obj/item/clothing/accessory/holster/on_attached(obj/item/clothing/under/S, mob/user as mob)
 	..()
@@ -111,8 +117,7 @@
 /obj/item/clothing/accessory/holster/waist
 	name = "waist holster"
 	desc = "A handgun holster. Made of expensive leather."
-	icon_state = "holster"
-	overlay_state = "holster_low"
+	icon_state = "holster_low"
 
 /obj/item/clothing/accessory/holster/hip
 	name = "hip holster"

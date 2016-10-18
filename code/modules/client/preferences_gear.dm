@@ -622,26 +622,6 @@ var/global/list/gear_datums = list()
 	display_name = "basic"
 	slot = slot_tie
 
-/datum/gear/amulete/khorne
-	display_name = "amulete, khorne"
-	path = /obj/item/clothing/accessory/amulet/khorne
-
-/datum/gear/amulete/nurgle
-	display_name = "amulete, nurgle"
-	path = /obj/item/clothing/accessory/amulet/nurgle
-
-/datum/gear/amulete/slaanesh
-	display_name = "amulete, slaanesh"
-	path = /obj/item/clothing/accessory/amulet/slaanesh
-
-/datum/gear/amulete/tzeench
-	display_name = "amulete, tzeench"
-	path = /obj/item/clothing/accessory/amulet/tzeench
-
-/datum/gear/amulete/chaos
-	display_name = "amulete, chaos"
-	path = /obj/item/clothing/accessory/amulet/chaos
-
 /datum/gear/amulete/aquila
 	display_name = "aquila"
 	path = /obj/item/clothing/accessory/amulet/aquila

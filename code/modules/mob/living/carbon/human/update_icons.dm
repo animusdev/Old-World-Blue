@@ -477,7 +477,8 @@ var/global/list/damage_icon_parts = list()
 			standing = image(w_uniform.icon_override, "[w_uniform.icon_state][w_uniform:rolled_down>0?"_d":""]")
 		else
 			standing = image(body_build.uniform_icon, "[w_uniform.icon_state][w_uniform:rolled_down>0?"_d":""]")
-		if(w_uniform.color) standing.color = w_uniform.color
+		standing.color = w_uniform.color
+
 		//apply blood overlay
 		if(w_uniform.blood_DNA)
 			var/image/bloodsies	= image(species.blood_mask, "uniformblood[body_build.index]")
@@ -487,8 +488,11 @@ var/global/list/damage_icon_parts = list()
 		//accessories
 		var/obj/item/clothing/under/under = w_uniform
 		if(istype(under) && under.accessories.len)
+			var/image/accessory
 			for(var/obj/item/clothing/accessory/A in under.accessories)
-				standing.overlays |= A.get_mob_overlay(body_build)
+				accessory = image(body_build.ties_icon, A.icon_state)
+				accessory.color = A.color
+				standing.overlays |= accessory
 
 		overlays_standing[UNIFORM_LAYER]	= standing
 	else
@@ -523,13 +527,12 @@ var/global/list/damage_icon_parts = list()
 		else
 			standing = image(body_build.gloves_icon, t_state)
 
-		if(gloves.color) standing.color = gloves.color
-
 		if(gloves.blood_DNA)
 			var/image/bloodsies	= image(species.blood_mask, "bloodyhands[body_build.index]")
 			bloodsies.color = gloves.blood_color
 			standing.overlays	+= bloodsies
 		gloves.screen_loc = ui_gloves
+		standing.color = gloves.color
 		overlays_standing[GLOVES_LAYER]	= standing
 	else
 		if(blood_DNA)
@@ -543,11 +546,14 @@ var/global/list/damage_icon_parts = list()
 
 /mob/living/carbon/human/update_inv_glasses(var/update_icons=1)
 	if(glasses)
-
+		var/image/standing
 		if(glasses.icon_override)
-			overlays_standing[GLASSES_LAYER] = image(glasses.icon_override, glasses.icon_state)
+			standing = image(glasses.icon_override, glasses.icon_state)
 		else
-			overlays_standing[GLASSES_LAYER]= image(body_build.glasses_icon, glasses.icon_state)
+			standing = image(body_build.glasses_icon, glasses.icon_state)
+		standing.color = glasses.color
+		overlays_standing[GLASSES_LAYER] = standing
+
 	else
 		overlays_standing[GLASSES_LAYER]	= null
 
@@ -589,12 +595,11 @@ var/global/list/damage_icon_parts = list()
 		else
 			standing = image(body_build.shoes_icon, shoes.icon_state)
 
-		if(shoes.color) standing.color = shoes.color
-
 		if(shoes.blood_DNA)
 			var/image/bloodsies = image(species.blood_mask, "shoeblood[body_build.index]")
 			bloodsies.color = shoes.blood_color
 			standing.overlays += bloodsies
+		standing.color = shoes.color
 		overlays_standing[SHOES_LAYER] = standing
 	else
 		if(feet_blood_DNA)
@@ -634,7 +639,6 @@ var/global/list/damage_icon_parts = list()
 		else
 			standing = image(body_build.hat_icon, t_state)
 
-		if(head.color) standing.color = head.color
 
 		if(head.blood_DNA)
 			var/image/bloodsies = image(species.blood_mask, "helmetblood")
@@ -646,6 +650,7 @@ var/global/list/damage_icon_parts = list()
 			if(hat.on && light_overlay_cache[hat.light_overlay])
 				standing.overlays |= light_overlay_cache[hat.light_overlay]
 
+		standing.color = head.color
 		overlays_standing[HEAD_LAYER] = standing
 
 	else
@@ -668,7 +673,9 @@ var/global/list/damage_icon_parts = list()
 			for(var/obj/item/i in belt.contents)
 				var/i_state = i.item_state
 				if(!i_state) i_state = i.icon_state
-				standing.overlays	+= image('icons/mob/belt.dmi', i_state)
+				standing.overlays	+= image(body_build.belt_icon, i_state)
+
+		standing.color = belt.color
 
 		overlays_standing[BELT_LAYER] = standing
 	else
@@ -690,19 +697,19 @@ var/global/list/damage_icon_parts = list()
 			standing = image(wear_suit.icon_override, t_state)
 		else
 			standing = image(body_build.suit_icon, t_state)
+		standing.color = wear_suit.color
 
 		if( istype(wear_suit, /obj/item/clothing/suit/straight_jacket) )
 			drop_from_inventory(handcuffed)
 			drop_l_hand()
 			drop_r_hand()
 
-		if(wear_suit.color) standing.color = wear_suit.color
-
 		if(wear_suit.blood_DNA)
 			var/obj/item/clothing/suit/S = wear_suit
-			var/image/bloodsies = image(species.blood_mask, "[S.blood_overlay_type]blood[body_build.index]")
-			bloodsies.color = wear_suit.blood_color
-			standing.overlays	+= bloodsies
+			if(istype(S)) //You can put non-suits in your suit slot (diona nymphs etc).
+				var/image/bloodsies = image(species.blood_mask, "[S.blood_overlay_type]blood[body_build.index]")
+				bloodsies.color = wear_suit.blood_color
+				standing.overlays	+= bloodsies
 
 		overlays_standing[SUIT_LAYER]	= standing
 		update_tail_showing(0)
@@ -710,9 +717,11 @@ var/global/list/damage_icon_parts = list()
 	else
 		overlays_standing[SUIT_LAYER]	= null
 		update_tail_showing(0)
-		update_inv_shoes(0)
 
 	update_collar(0)
+
+	//hide/show shoes if necessary
+	update_inv_shoes(0)
 
 	if(update_icons)   update_icons()
 
@@ -731,8 +740,7 @@ var/global/list/damage_icon_parts = list()
 			standing = image(wear_mask.icon_override, wear_mask.icon_state)
 		else
 			standing = image(body_build.mask_icon, wear_mask.icon_state)
-
-		if(wear_mask.color) standing.color = wear_mask.color
+		standing.color = wear_mask.color
 
 		if( !istype(wear_mask, /obj/item/clothing/mask/smokable/cigarette) && wear_mask.blood_DNA )
 			var/image/bloodsies = image(species.blood_mask, "maskblood[body_build.index]")
@@ -771,9 +779,8 @@ var/global/list/damage_icon_parts = list()
 			standing = image(body_build.back_icon, t_state)
 			underlay = image(body_build.back_icon, "[t_state]_u")
 
-		if(back.color)
-			standing.color = back.color
-			if(underlay) underlay.color = back.color
+		standing.color = back.color
+		if(underlay) underlay.color = back.color
 
 		//create the image
 		overlays_standing[BACK_LAYER] = standing
@@ -804,7 +811,7 @@ var/global/list/damage_icon_parts = list()
 	if(client)
 		client.screen |= contents
 		if(hud_used)
-			hud_used.hidden_inventory_update() 	//Updates the screenloc of the items on the 'other' inventory bar
+			hud_used.hidden_inventory_update()	//Updates the screenloc of the items on the 'other' inventory bar
 
 
 /mob/living/carbon/human/update_inv_handcuffed(var/update_icons=1)
@@ -812,14 +819,14 @@ var/global/list/damage_icon_parts = list()
 		drop_r_hand()
 		drop_l_hand()
 		stop_pulling()	//TODO: should be handled elsewhere
-		overlays_standing[HANDCUFF_LAYER]	= image('icons/mob/mob.dmi', "handcuff1")
+		overlays_standing[HANDCUFF_LAYER]	= image(body_build.misk_icon, "handcuff1")
 	else
 		overlays_standing[HANDCUFF_LAYER]	= null
 	if(update_icons)   update_icons()
 
 /mob/living/carbon/human/update_inv_legcuffed(var/update_icons=1)
 	if(legcuffed)
-		overlays_standing[LEGCUFF_LAYER]	= image('icons/mob/mob.dmi', "legcuff1")
+		overlays_standing[LEGCUFF_LAYER]	= image(body_build.misk_icon, "legcuff1")
 		if(src.m_intent != "walk")
 			src.m_intent = "walk"
 			if(src.hud_used && src.hud_used.move_intent)
@@ -964,7 +971,6 @@ var/global/list/damage_icon_parts = list()
 	else
 		set_tail_state("[species.tail]_static")
 
-
 	if(update_icons)
 		update_icons()
 
@@ -985,7 +991,7 @@ var/global/list/damage_icon_parts = list()
 		if(wear_suit.icon_state in C.IconStates())
 			standing = image(C, wear_suit.icon_state)
 
-	overlays_standing[COLLAR_LAYER]	= standing
+	overlays_standing[COLLAR_LAYER] = standing
 
 	if(update_icons)   update_icons()
 

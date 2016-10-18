@@ -9,60 +9,36 @@
 	var/slot = "decor"
 	var/obj/item/clothing/under/has_suit = null		//the suit the tie may be attached to
 	var/image/inv_overlay = null	//overlay used when attached to clothing.
-	var/image/mob_overlay = null
-	var/image/slim_overlay = null
-	var/overlay_state = null
 
-/obj/item/clothing/accessory/proc/get_inv_overlay()
-	if(!inv_overlay)
-		if(!mob_overlay)
-			get_mob_overlay()
 
-		var/tmp_icon_state = "[overlay_state? "[overlay_state]" : "[icon_state]"]"
-		if(icon_override)
-			if("[tmp_icon_state]_tie" in icon_states(icon_override))
-				tmp_icon_state = "[tmp_icon_state]_tie"
-		inv_overlay = image(icon = mob_overlay.icon, icon_state = tmp_icon_state, dir = SOUTH)
-	return inv_overlay
-
-/obj/item/clothing/accessory/proc/get_mob_overlay(var/body_build = 0)
-	var/image/tmp_overlay = body_build ? slim_overlay : mob_overlay
-	if(!tmp_overlay)
-		var/tmp_icon_state = "[overlay_state? "[overlay_state]" : "[icon_state]"]"
-		if(icon_override)
-			if("[tmp_icon_state]_mob" in icon_states(icon_override))
-				tmp_icon_state = "[tmp_icon_state]_mob"
-			tmp_overlay = image("icon" = icon_override, "icon_state" = "[tmp_icon_state]")
-		else
-			if(body_build)
-				tmp_overlay = image("icon" = INV_ACCESSORIES_SLIM_ICON, "icon_state" = "[tmp_icon_state]")
-			else
-				tmp_overlay = image("icon" = INV_ACCESSORIES_DEF_ICON, "icon_state" = "[tmp_icon_state]")
-
-		if(body_build)
-			slim_overlay = tmp_overlay
-		else
-			mob_overlay = tmp_overlay
-	return tmp_overlay
+/obj/item/clothing/accessory/Destroy()
+	on_removed()
+	return ..()
 
 //when user attached an accessory to S
-/obj/item/clothing/accessory/proc/on_attached(obj/item/clothing/under/S, mob/user as mob)
+/obj/item/clothing/accessory/proc/on_attached(var/obj/item/clothing/S, var/mob/user)
 	if(!istype(S))
 		return
 	has_suit = S
 	loc = has_suit
-	has_suit.overlays += get_inv_overlay()
+	if(!inv_overlay)
+		inv_overlay = image('icons/mob/ties.dmi', icon_state)
+	has_suit.overlays += inv_overlay
 
-	user << "<span class='notice'>You attach [src] to [has_suit].</span>"
-	src.add_fingerprint(user)
+	if(user)
+		user << "<span class='notice'>You attach \the [src] to \the [has_suit].</span>"
+		src.add_fingerprint(user)
 
-/obj/item/clothing/accessory/proc/on_removed(mob/user as mob)
+/obj/item/clothing/accessory/proc/on_removed(var/mob/user)
 	if(!has_suit)
 		return
-	has_suit.overlays -= get_inv_overlay()
+	has_suit.overlays -= inv_overlay
 	has_suit = null
-	usr.put_in_hands(src)
-	src.add_fingerprint(user)
+	if(user)
+		usr.put_in_hands(src)
+		src.add_fingerprint(user)
+	else
+		src.forceMove(get_turf(src))
 
 //default attackby behaviour
 /obj/item/clothing/accessory/attackby(obj/item/I, mob/user)
@@ -82,82 +58,38 @@
 	name = "red tie"
 	icon_state = "redtie"
 
-/obj/item/clothing/accessory/scarf/black
-	name = "black scarf"
-	icon_state = "blackscarf"
-	desc = "A stylish scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks."
+/obj/item/clothing/accessory/blue_clip
+	name = "blue tie with a clip"
+	icon_state = "bluecliptie"
 
-/obj/item/clothing/accessory/scarf/red
-	name = "red scarf"
-	icon_state = "redscarf"
+/obj/item/clothing/accessory/blue_long
+	name = "blue long tie"
+	icon_state = "bluelongtie"
 
-/obj/item/clothing/accessory/scarf/green
-	name = "green scarf"
-	icon_state = "greenscarf"
+/obj/item/clothing/accessory/red_clip
+	name = "red tie with a clip"
+	icon_state = "redcliptie"
 
-/obj/item/clothing/accessory/scarf/darkblue
-	name = "dark blue scarf"
-	icon_state = "darkbluescarf"
+/obj/item/clothing/accessory/red_long
+	name = "red long tie"
+	icon_state = "redlongtie"
 
-/obj/item/clothing/accessory/scarf/purple
-	name = "purple scarf"
-	icon_state = "purplescarf"
+/obj/item/clothing/accessory/black
+	name = "black tie"
+	icon_state = "blacktie"
 
-/obj/item/clothing/accessory/scarf/yellow
-	name = "yellow scarf"
-	icon_state = "yellowscarf"
+/obj/item/clothing/accessory/yellow
+	name = "yellow tie"
+	icon_state = "yellowtie"
 
-/obj/item/clothing/accessory/scarf/orange
-	name = "orange scarf"
-	icon_state = "orangescarf"
-
-/obj/item/clothing/accessory/scarf/lightblue
-	name = "light blue scarf"
-	icon_state = "lightbluescarf"
-
-/obj/item/clothing/accessory/scarf/white
-	name = "white scarf"
-	icon_state = "whitescarf"
+/obj/item/clothing/accessory/navy
+	name = "navy tie"
+	icon_state = "navytie"
 
 /obj/item/clothing/accessory/horrible
 	name = "horrible tie"
 	desc = "A neosilk clip-on tie. This one is disgusting."
 	icon_state = "horribletie"
-
-/obj/item/clothing/accessory/suspenders
-	name = "suspenders"
-	desc = "They suspend the illusion of the mime's play."
-	icon = 'icons/obj/clothing/belts.dmi'
-	icon_state = "suspenders"
-
-/obj/item/clothing/accessory/amulet
-	slot_flags = SLOT_TIE|SLOT_MASK
-	desc = "An ancient amulet adorned with pictures"
-
-/obj/item/clothing/accessory/amulet/aquila
-	name = "aquila"
-	desc = "You can see the Emperor smiling in the reflection."
-	icon_state = "aquila"
-
-/obj/item/clothing/accessory/amulet/khorne
-	name = "khorne amulet"
-	icon_state = "khorne_amulet"
-
-/obj/item/clothing/accessory/amulet/nurgle
-	name = "nurgle amulet"
-	icon_state = "nurgle_amulet"
-
-/obj/item/clothing/accessory/amulet/slaanesh
-	name = "slaanesh amulet"
-	icon_state = "slaanesh_amulet"
-
-/obj/item/clothing/accessory/amulet/tzeench
-	name = "tzeench amulet"
-	icon_state = "tzeentch_amulet"
-
-/obj/item/clothing/accessory/amulet/chaos
-	name = "chaos undivided amulet"
-	icon_state = "chaos_amulet"
 
 /obj/item/clothing/accessory/stethoscope
 	name = "stethoscope"
@@ -230,7 +162,7 @@
 
 /obj/item/clothing/accessory/medal/conduct
 	name = "distinguished conduct medal"
-	desc = "A bronze medal awarded for distinguished conduct. Whilst a great honor, this is most basic award given by Nanotrasen. It is often awarded by a captain to a member of their crew."
+	desc = "A bronze medal awarded for distinguished conduct. Whilst a great honor, this is most basic award on offer. It is often awarded by a captain to a member of their crew."
 
 /obj/item/clothing/accessory/medal/bronze_heart
 	name = "bronze heart medal"
@@ -252,7 +184,7 @@
 
 /obj/item/clothing/accessory/medal/silver/security
 	name = "robust security award"
-	desc = "An award for distinguished combat and sacrifice in defence of Nanotrasen's commercial interests. Often awarded to security staff."
+	desc = "An award for distinguished combat and sacrifice in defence of corporate commercial interests. Often awarded to security staff."
 
 /obj/item/clothing/accessory/medal/gold
 	name = "gold medal"
@@ -261,8 +193,88 @@
 
 /obj/item/clothing/accessory/medal/gold/captain
 	name = "medal of captaincy"
-	desc = "A golden medal awarded exclusively to those promoted to the rank of captain. It signifies the codified responsibilities of a captain to Nanotrasen, and their undisputable authority over their crew."
+	desc = "A golden medal awarded exclusively to those promoted to the rank of captain. It signifies the codified responsibilities of a captain, and their undisputable authority over their crew."
 
 /obj/item/clothing/accessory/medal/gold/heroism
 	name = "medal of exceptional heroism"
-	desc = "An extremely rare golden medal awarded only by CentComm. To recieve such a medal is the highest honor and as such, very few exist. This medal is almost never awarded to anybody but commanders."
+	desc = "An extremely rare golden medal awarded only by high ranking officials. To recieve such a medal is the highest honor and as such, very few exist. This medal is almost never awarded to anybody but distinguished veteran staff."
+
+//Scarves
+
+/obj/item/clothing/accessory/scarf
+	name = "scarf"
+	desc = "A stylish scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks."
+
+/obj/item/clothing/accessory/scarf/red
+	name = "red scarf"
+	icon_state = "redscarf"
+
+/obj/item/clothing/accessory/scarf/green
+	name = "green scarf"
+	icon_state = "greenscarf"
+
+/obj/item/clothing/accessory/scarf/darkblue
+	name = "dark blue scarf"
+	icon_state = "darkbluescarf"
+
+/obj/item/clothing/accessory/scarf/purple
+	name = "purple scarf"
+	icon_state = "purplescarf"
+
+/obj/item/clothing/accessory/scarf/yellow
+	name = "yellow scarf"
+	icon_state = "yellowscarf"
+
+/obj/item/clothing/accessory/scarf/orange
+	name = "orange scarf"
+	icon_state = "orangescarf"
+
+/obj/item/clothing/accessory/scarf/lightblue
+	name = "light blue scarf"
+	icon_state = "lightbluescarf"
+
+/obj/item/clothing/accessory/scarf/white
+	name = "white scarf"
+	icon_state = "whitescarf"
+
+/obj/item/clothing/accessory/scarf/black
+	name = "black scarf"
+	icon_state = "blackscarf"
+
+/obj/item/clothing/accessory/scarf/zebra
+	name = "zebra scarf"
+	icon_state = "zebrascarf"
+
+/obj/item/clothing/accessory/scarf/christmas
+	name = "christmas scarf"
+	icon_state = "christmasscarf"
+
+/obj/item/clothing/accessory/amulet
+	slot_flags = SLOT_TIE|SLOT_MASK
+	desc = "An ancient amulet adorned with pictures"
+
+/obj/item/clothing/accessory/amulet/aquila
+	name = "aquila"
+	desc = "You can see the Emperor smiling in the reflection."
+	icon_state = "aquila"
+/*
+/obj/item/clothing/accessory/amulet/khorne
+	name = "khorne amulet"
+	icon_state = "khorne_amulet"
+
+/obj/item/clothing/accessory/amulet/nurgle
+	name = "nurgle amulet"
+	icon_state = "nurgle_amulet"
+
+/obj/item/clothing/accessory/amulet/slaanesh
+	name = "slaanesh amulet"
+	icon_state = "slaanesh_amulet"
+
+/obj/item/clothing/accessory/amulet/tzeench
+	name = "tzeench amulet"
+	icon_state = "tzeentch_amulet"
+
+/obj/item/clothing/accessory/amulet/chaos
+	name = "chaos undivided amulet"
+	icon_state = "chaos_amulet"
+*/

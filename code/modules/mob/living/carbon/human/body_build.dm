@@ -31,7 +31,7 @@
 	shoes_icon		= 'icons/mob/feet_f.dmi'
 	belt_icon		= 'icons/mob/belt_f.dmi'
 	back_icon		= 'icons/mob/back_f.dmi'
-	ties_icon		= 'icons/mob/ties_f.dmi'
+	ties_icon		= 'icons/mob/ties_slim.dmi'
 	hidden_icon 	= 'icons/mob/hidden_f.dmi'
 	rig_back		= 'icons/mob/rig_back_slim.dmi'
 

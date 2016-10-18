@@ -48,7 +48,7 @@
 
 /obj/item/clothing/accessory/badge/holo/cord
 	icon_state = "holobadge-cord"
-	slot_flags = SLOT_MASK | SLOT_TIE
+	slot_flags = SLOT_MASK | SLOT_TIE | SLOT_BELT
 
 /obj/item/clothing/accessory/badge/holo/attack_self(mob/user as mob)
 	if(!stored_name)
@@ -97,3 +97,9 @@
 		new /obj/item/clothing/accessory/badge/holo/cord(src)
 		..()
 		return
+
+/obj/item/clothing/accessory/badge/sec/detective
+	name = "investigator's badge"
+	desc = "An immaculately polished gold security badge on leather. Labeled 'Investigator.'"
+	icon_state = "badge"
+	slot_flags = SLOT_TIE | SLOT_BELT
