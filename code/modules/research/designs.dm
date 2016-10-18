@@ -286,12 +286,6 @@ datum/design/circuit/order/supply
 	req_tech = list("programming" = 3)
 	build_path = /obj/item/weapon/circuitboard/order/supply
 
-datum/design/circuit/order/supply/qm
-	name = "quartermaster control console"
-	id = "supplycomp"
-	req_tech = list("programming" = 4)
-	build_path = /obj/item/weapon/circuitboard/order/supply/qm
-
 datum/design/circuit/comm_monitor
 	name = "telecommunications monitoring console"
 	id = "comm_monitor"

@@ -4,7 +4,7 @@
 #define SUPPLY_STATION_AREATYPE "/area/supply/station" //Type of the supply shuttle area for station
 #define SUPPLY_DOCK_AREATYPE "/area/supply/dock"	//Type of the supply shuttle area for dock
 
-//Supply packs are in /code/datums/supplypacks.dm
+//Supply packs are in /code/datums/supplypacks/*
 //Computers are in /code/game/machinery/computer/supply.dm
 
 var/datum/controller/supply/supply_controller = new()
@@ -47,10 +47,11 @@ var/list/mechtoys = list(
 	layer = 4
 	explosion_resistance = 5
 	var/list/mobs_can_pass = list(
+		/mob/living/bot,
 		/mob/living/carbon/slime,
 		/mob/living/simple_animal/mouse,
 		/mob/living/silicon/robot/drone
-		)
+	)
 
 /obj/structure/plasticflaps/CanPass(atom/A, turf/T)
 	if(istype(A) && A.checkpass(PASSGLASS))
@@ -123,13 +124,12 @@ var/list/mechtoys = list(
 	var/datum/supply_packs/object = null
 	var/orderedby = null
 	var/comment = null
-	var/cost = 0
 
 /datum/controller/supply
 	//supply points
 	var/points = 50
 	var/points_per_process = 1
-	var/points_per_slip = 2
+	var/points_per_slip = 5
 	var/points_per_crate = 1.5
 	var/points_per_platinum = 5 // 5 points per sheet
 	var/points_per_phoron = 5
@@ -280,9 +280,10 @@ var/list/mechtoys = list(
 
 			for(var/typepath in contains)
 				if(!typepath)	continue
-				var/atom/B2 = new typepath(A)
-				if(SP.amount && B2:amount) B2:amount = SP.amount
-				if(slip) slip.info += "<li>[B2.name]</li>" //add the item to the manifest
+				var/number_of_items = max(1, contains[typepath])
+				for(var/j = 1 to number_of_items)
+					var/atom/B2 = new typepath(A)
+					if(slip) slip.info += "<li>[B2.name]</li>" //add the item to the manifest
 
 			//manifest finalisation
 			if(slip)

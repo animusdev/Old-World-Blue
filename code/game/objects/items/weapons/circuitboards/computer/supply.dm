@@ -1,5 +1,5 @@
 #ifndef T_BOARD
-#error T_BOARD macro is not defined but we need it! 
+#error T_BOARD macro is not defined but we need it!
 #endif
 
 /obj/item/weapon/circuitboard/order/supply
@@ -7,11 +7,6 @@
 	build_path = /obj/machinery/computer/order/supply
 	origin_tech = "programming=3"
 	var/contraband_enabled = 0
-
-/obj/item/weapon/circuitboard/order/supply/qm
-	name = T_BOARD("quartermaster control console")
-	build_path = /obj/machinery/computer/order/supply/qm
-	origin_tech = "programming=4"
 
 /obj/item/weapon/circuitboard/order/supply/construct(var/obj/machinery/computer/order/supply/SC)
 	if (..(SC))
