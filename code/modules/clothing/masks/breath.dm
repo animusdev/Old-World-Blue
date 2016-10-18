@@ -17,9 +17,9 @@
 	var/hanging = 0
 
 /obj/item/clothing/mask/breath/toggleable/proc/adjust_mask(mob/user)
-	if(Adjacent(user) && user.canmove && !user.stat)
+	if(user.canmove && !user.stat)
 		src.hanging = !src.hanging
-		if(!src.hanging)
+		if (src.hanging)
 			gas_transfer_coefficient = 1
 			body_parts_covered = body_parts_covered & ~FACE
 			item_flags = item_flags & ~AIRTIGHT
@@ -37,14 +37,15 @@
 	adjust_mask(user)
 
 /obj/item/clothing/mask/breath/toggleable/verb/toggle()
-		set category = "Object"
-		set name = "Adjust mask"
-		set src in usr
+	set category = "Object"
+	set name = "Adjust mask"
+	set src in usr
 
-		adjust_mask(usr)
+	adjust_mask(usr)
 
 /obj/item/clothing/mask/breath/toggleable/AltClick()
-	adjust_mask(usr)
+	if(src in usr)
+		adjust_mask(usr)
 
 /obj/item/clothing/mask/breath/toggleable/medical
 	desc = "A close-fitting sterile mask that can be connected to an air supply."

@@ -11,6 +11,7 @@
 		new /obj/item/weapon/storage/box/autoinjectors(src)
 		new /obj/item/weapon/storage/box/pillbottles(src)
 		new /obj/item/weapon/reagent_containers/glass/beaker(src)
+		new /obj/item/weapon/reagent_containers/glass/beaker(src)
 		new /obj/item/weapon/reagent_containers/dropper(src)
 		new /obj/item/weapon/reagent_containers/glass/beaker/bottle/inaprovaline(src)
 		new /obj/item/weapon/reagent_containers/glass/beaker/bottle/inaprovaline(src)
@@ -50,7 +51,7 @@
 
 	New()
 		..()
-		switch(pick(1,2,3))
+		switch(rand(3))
 			if(1)
 				new /obj/item/weapon/storage/backpack/medic(src)
 			if(2)
@@ -102,7 +103,7 @@
 
 	New()
 		..()
-		switch(pick(1,2,3))
+		switch(rand(3))
 			if(1)
 				new /obj/item/weapon/storage/backpack/medic(src)
 			if(2)
@@ -147,6 +148,7 @@
 
 	New()
 		..()
+		new /obj/item/weapon/storage/box/pillbottles(src)
 		new /obj/item/weapon/storage/box/pillbottles(src)
 		return
 

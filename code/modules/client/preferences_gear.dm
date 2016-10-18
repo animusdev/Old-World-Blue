@@ -352,29 +352,41 @@ var/global/list/gear_datums = list()
 	slot = slot_wear_mask
 	cost = 2
 
-/datum/gear/redscarf
-	display_name = "facescarf, red"
-	path = /obj/item/clothing/mask/redscarf
+/datum/gear/mask/scarf
 	slot = slot_wear_mask
 	cost = 2
 
-/datum/gear/greenscarf
-	display_name = "facescarf, green"
-	path = /obj/item/clothing/mask/greenscarf
-	slot = slot_wear_mask
-	cost = 2
+/datum/gear/mask/scarf/blue
+	display_name = "scarf, blue"
+	path = /obj/item/clothing/mask/scarf/blue
 
-/datum/gear/bluescarf
-	display_name = "facescarf, blue"
-	path = /obj/item/clothing/mask/bluescarf
-	slot = slot_wear_mask
-	cost = 2
+/datum/gear/mask/scarf/red_white
+	display_name = "scarf, red and white"
+	path = /obj/item/clothing/mask/scarf/redwhite
 
-/datum/gear/arafatka
-	display_name = "facescarf, shemagh"
+/datum/gear/mask/scarf/red
+	display_name = "scarf, red"
+	path = /obj/item/clothing/mask/scarf/red
+
+/datum/gear/mask/scarf/green
+	display_name = "scarf, green"
+	path = /obj/item/clothing/mask/scarf/green
+
+/datum/gear/mask/scarf/stripedred
+	display_name = "scarf, striped red"
+	path = /obj/item/clothing/mask/scarf/long_red
+
+/datum/gear/mask/scarf/stripedgreen
+	display_name = "scarf, striped green"
+	path = /obj/item/clothing/mask/scarf/long_green
+
+/datum/gear/mask/scarf/stripedblue
+	display_name = "scarf, striped blue"
+	path = /obj/item/clothing/mask/scarf/long_blue
+
+/datum/gear/scarf/arafatka
+	display_name = "scarf, shemagh"
 	path = /obj/item/clothing/mask/arafatka
-	slot = slot_wear_mask
-	cost = 2
 
 // Uniform slot
 
@@ -708,63 +720,48 @@ var/global/list/gear_datums = list()
 	slot = slot_tie
 
 /datum/gear/scarf/black
-	display_name = "scarf, black"
+	display_name = "tie-scarf, black"
 	path = /obj/item/clothing/accessory/scarf/black
 	slot = slot_tie
 
 /datum/gear/scarf/red
-	display_name = "scarf, red"
+	display_name = "tie-scarf, red"
 	path = /obj/item/clothing/accessory/scarf/red
 	slot = slot_tie
 
 /datum/gear/scarf/white
-	display_name = "scarf, white"
+	display_name = "tie-scarf, white"
 	path = /obj/item/clothing/accessory/scarf/white
 	slot = slot_tie
 
 /datum/gear/scarf/green
-	display_name = "scarf, green"
+	display_name = "tie-scarf, green"
 	path = /obj/item/clothing/accessory/scarf/green
 	slot = slot_tie
 
 /datum/gear/scarf/darkblue
-	display_name = "scarf, darkblue"
+	display_name = "tie-scarf, darkblue"
 	path = /obj/item/clothing/accessory/scarf/darkblue
 	slot = slot_tie
 
 /datum/gear/scarf/purple
-	display_name = "scarf, purple"
+	display_name = "tie-scarf, purple"
 	path = /obj/item/clothing/accessory/scarf/purple
 	slot = slot_tie
 
 /datum/gear/scarf/yellow
-	display_name = "scarf, yellow"
+	display_name = "tie-scarf, yellow"
 	path = /obj/item/clothing/accessory/scarf/yellow
 	slot = slot_tie
 
 /datum/gear/scarf/orange
-	display_name = "scarf, orange"
+	display_name = "tie-scarf, orange"
 	path = /obj/item/clothing/accessory/scarf/orange
 	slot = slot_tie
 
 /datum/gear/scarf/lightblue
-	display_name = "scarf, lightblue"
+	display_name = "tie-scarf, lightblue"
 	path = /obj/item/clothing/accessory/scarf/lightblue
-	slot = slot_tie
-
-/datum/gear/scarf/stripedredscarf
-	display_name = "scarf, striped red"
-	path = /obj/item/clothing/accessory/stripedredscarf
-	slot = slot_tie
-
-/datum/gear/scarf/stripedgreenscarf
-	display_name = "scarf, striped green"
-	path = /obj/item/clothing/accessory/stripedgreenscarf
-	slot = slot_tie
-
-/datum/gear/scarf/stripedbluescarf
-	display_name = "scarf, striped blue"
-	path = /obj/item/clothing/accessory/stripedbluescarf
 	slot = slot_tie
 
 /datum/gear/brown_vest

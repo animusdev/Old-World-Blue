@@ -43,10 +43,14 @@
 	siemens_coefficient = 0.7
 	body_parts_covered = FACE|EYES
 
+/obj/item/clothing/mask/gas/swat_old
+	name = "\improper SWAT alternative mask"
+	icon_state = "swat_new"
+
 /obj/item/clothing/mask/gas/swat/vox
 	name = "\improper alien mask"
 	desc = "Clearly not designed for a human face."
-	body_parts_covered = 0 //Hack to allow vox to eat while wearing this mask.
+	item_flags = BLOCK_GAS_SMOKE_EFFECT | AIRTIGHT | FLEXIBLEMATERIAL
 	species_restricted = list("Vox")
 
 /obj/item/clothing/mask/gas/syndicate
@@ -73,6 +77,12 @@
 	icon_state = "mime"
 	item_state = "mime"
 
+/obj/item/clothing/mask/gas/sexymime
+	name = "sexy mime mask"
+	desc = "A traditional female mime's mask."
+	icon_state = "sexymime"
+	item_state = "sexymime"
+
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"
 	desc = "A mask used when acting as a monkey."
@@ -80,15 +90,10 @@
 	item_state = "monkeymask"
 	body_parts_covered = HEAD|FACE|EYES
 
-/obj/item/clothing/mask/gas/sexymime
-	name = "sexy mime mask"
-	desc = "A traditional female mime's mask."
-	icon_state = "sexymime"
-	item_state = "sexymime"
-
 /obj/item/clothing/mask/gas/death_commando
 	name = "Death Commando Mask"
-	icon_state = "death_commando_mask"
+	icon_state = "cicero"
+//	icon_state = "death_commando_mask" ?
 	item_state = "death_commando_mask"
 	siemens_coefficient = 0.2
 
@@ -108,3 +113,9 @@
 	desc = "A face-covering tactical mask that can be connected to an air supply. Filters harmful gases from the air."
 	icon_state = "security"
 	item_state = "security"
+
+/obj/item/clothing/mask/gas/security_alt
+	name = "security gasmask"
+	desc = "That's a standard-issue gasmask of the NT security service. Looks too dystopian, isn't it?"
+	icon_state = "secgasmask"
+	item_state = "secgasmask"

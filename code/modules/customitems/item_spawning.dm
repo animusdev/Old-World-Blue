@@ -92,7 +92,7 @@
 	current_data = new()
 	current_data.assoc_key = "d00kn00kem"
 	current_data.character_name = "Lorenzo Shere"
-	current_data.item_path = /obj/item/clothing/mask/D00k_N00kem
+	current_data.item_path = /obj/item/clothing/mask/gas/D00k_N00kem
 	L |= current_data
 
 	current_data = new()

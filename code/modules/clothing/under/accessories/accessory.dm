@@ -119,18 +119,6 @@
 	name = "white scarf"
 	icon_state = "whitescarf"
 
-/obj/item/clothing/accessory/stripedredscarf
-	name = "striped red scarf"
-	icon_state = "stripedredscarf"
-
-/obj/item/clothing/accessory/stripedgreenscarf
-	name = "striped green scarf"
-	icon_state = "stripedgreenscarf"
-
-/obj/item/clothing/accessory/stripedbluescarf
-	name = "striped blue scarf"
-	icon_state = "stripedbluescarf"
-
 /obj/item/clothing/accessory/horrible
 	name = "horrible tie"
 	desc = "A neosilk clip-on tie. This one is disgusting."

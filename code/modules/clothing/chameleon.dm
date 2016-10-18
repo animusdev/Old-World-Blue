@@ -267,7 +267,7 @@ var/global/list/chameleons = list(
 	var/style_list = "mask"
 	New()
 		..()
-		initialize_chameleon_list(style_list, parent_type)
+		initialize_chameleon_list(style_list, parent_type, list(/obj/item/clothing/mask/scarf))
 
 /obj/item/clothing/mask/chameleon/emp_act(severity)
 	name = "gas mask"

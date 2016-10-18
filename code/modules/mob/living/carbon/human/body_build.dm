@@ -27,7 +27,7 @@
 	gloves_icon		= 'icons/mob/hands_f.dmi'
 	glasses_icon	= 'icons/mob/eyes_f.dmi'
 	ears_icon		= 'icons/mob/ears_f.dmi'
-	mask_icon		= 'icons/mob/mask_f.dmi'
+	mask_icon		= 'icons/mob/mask_slim.dmi'
 	shoes_icon		= 'icons/mob/feet_f.dmi'
 	belt_icon		= 'icons/mob/belt_f.dmi'
 	back_icon		= 'icons/mob/back_f.dmi'

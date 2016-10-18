@@ -1912,7 +1912,7 @@
 "aKN" = (/mob/living/simple_animal/mouse/brown/Tom,/turf/simulated/floor{icon_state = "vault"; dir = 6},/area/security/nuke_storage)
 "aKO" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 6},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor{icon_state = "vault"},/area/security/nuke_storage)
 "aKP" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 8},/turf/simulated/floor{icon_state = "vault"; dir = 10},/area/security/nuke_storage)
-"aKQ" = (/obj/structure/safe,/obj/item/weapon/material/sword/katana,/obj/item/clothing/under/syndicate/tacticool,/obj/item/clothing/mask/ninjascarf,/turf/simulated/floor{icon_state = "vault"; dir = 4},/area/security/nuke_storage)
+"aKQ" = (/obj/structure/safe,/obj/item/weapon/material/sword/katana,/obj/item/clothing/under/syndicate/tacticool,/obj/item/clothing/mask/scarf/ninja,/turf/simulated/floor{icon_state = "vault"; dir = 4},/area/security/nuke_storage)
 "aKR" = (/obj/item/device/radio/intercom{freerange = 0; frequency = 1459; name = "Station Intercom (General)"; pixel_x = -30},/obj/machinery/vending/cola,/turf/simulated/floor,/area/gateway)
 "aKS" = (/obj/item/weapon/stool,/turf/simulated/floor,/area/gateway)
 "aKT" = (/obj/machinery/hologram/holopad,/turf/simulated/floor,/area/gateway)
