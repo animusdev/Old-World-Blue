@@ -126,6 +126,7 @@
 	S["facial_style_name"]	>> f_style
 	S["underwear"]			>> underwear
 	S["undershirt"]			>> undershirt
+	S["socks"]				>> socks
 	S["backbag"]			>> backbag
 	S["b_type"]				>> b_type
 
@@ -266,6 +267,7 @@
 	S["eyes_color"]			<< eyes_color
 	S["underwear"]			<< underwear
 	S["undershirt"]			<< undershirt
+	S["socks"]				<< socks
 	S["backbag"]			<< backbag
 	S["b_type"]				<< b_type
 	S["spawnpoint"]			<< spawnpoint
