@@ -736,7 +736,8 @@
 /obj/mecha/proc/detach(var/obj/item/mecha_parts/mecha_equipment/E, atom/moveto=null)
 	if(!E || !E in equipment)
 		return
-	moveto = moveto || get_turf(src)
+	if(!moveto)
+		moveto = get_turf(src)
 	if(E.detached())
 		E.Move(moveto)
 		equipment -= E
