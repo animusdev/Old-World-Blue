@@ -187,7 +187,7 @@
 
 
 /datum/preferences/proc/GetRecordsPage()
-	var/dat = "<table><tr><td width='340px'>"
+	var/dat = "<table><tr><td width='320px'>"
 	dat += "<b>General Information</b><br>"
 	dat += "Name: <a id='name' href='?src=\ref[src];name=input'>[real_name]</a><br>"
 	dat += "(<a href='?src=\ref[src];name=random'>Random Name</a>) "
@@ -200,7 +200,7 @@
 	dat += "Body build: <a href='?src=\ref[src];build=switch'>[body]</a><br>"
 
 	if(current_species.flags & HAS_SKIN_TONE)
-		dat += "Skin Tone: <a href='?src=\ref[src];skin_tone=input'>[skin_tone]/220<br></a>"
+		dat += "Skin Tone: <a href='?src=\ref[src];skin_tone=input'>[skin_tone]/220</a><br>"
 
 	dat += "<table style='border-collapse:collapse'>"
 	dat += "<tr><td>Hair:</td><td><a href='?src=\ref[src];hair=color'>Color "
@@ -208,8 +208,8 @@
 	dat += "Style: <a href='?src=\ref[src];hair=style'>[h_style]</a></td></tr>"
 
 	dat += "<tr><td>Facial:</td><td><a href='?src=\ref[src];facial=color'>Color "
-	dat += "<span class='box' style='background-color:[facial_color]'></span></a> "
-	dat += " Style: <a href='?src=\ref[src];facial=style'>[f_style]</a></td></tr>"
+	dat += "<span class='box' style='background-color:[facial_color]'></span></a>"
+	dat += "Style: <a href='?src=\ref[src];facial=style'>[f_style]</a></td></tr>"
 
 	dat += "<tr><td>Eyes:</td>"
 	dat += "<td><a href='?src=\ref[src];eyes=color'>Color "
@@ -235,7 +235,8 @@
 
 	dat += "</td><td style='vertical-align:top'>"
 
-	dat += "<b>Preview</b><br><a href='?src=\ref[src];rotate=right'>&lt;&lt;&lt;</a> <a href='?src=\ref[src];rotate=left'>&gt;&gt;&gt;</a><br>"
+	dat += "<b>Preview</b><br><a href='?src=\ref[src];rotate=right'>&lt;&lt;&lt;</a> \
+			<a href='?src=\ref[src];rotate=left'>&gt;&gt;&gt;</a><br>"
 	dat += "<img src=new_previewicon[preview_dir].png height=64 width=64>"
 	dat += "<img src=new_previewicon[turn(preview_dir,-90)].png height=64 width=64><br>"
 
@@ -253,13 +254,13 @@
 
 	dat += "<table style='position:relative; left:-3px'>"
 	dat += "<tr><td>Backpack:</td>\
-		<td>	<a href ='?src=\ref[src];bag=input'><b>[backbaglist[backbag]]</b></a></td></tr>"
+		<td>	<a href ='?src=\ref[src];inventory=back'>[backbaglist[backbag]]</a></td></tr>"
 	dat += "<tr><td>Underwear:</td>\
-		<td><a href ='?src=\ref[src];underwear=input'><b>[underwear]</b></a></td></tr>"
+		<td><a href ='?src=\ref[src];inventory=underwear'>[underwear]</a></td></tr>"
 	dat += "<tr><td>Undershirt:</td>\
-		<td><a href='?src=\ref[src];undershirt=input'><b>[undershirt]</b></a></td></tr>"
+		<td><a href='?src=\ref[src];inventory=undershirt'>[undershirt]</a></td></tr>"
 	dat += "<tr><td>Socks:</td>\
-		<td><a href='?src=\ref[src];socks=input'><b>[socks]</b></a></td></tr>"
+		<td><a href='?src=\ref[src];inventory=socks'>[socks]</a></td></tr>"
 	dat += "</table>"
 
 /*
@@ -478,6 +479,31 @@
 						rhtml_decode(edit_utf8(exploit_record))) as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
 			if(expmsg != null)
 				exploit_record = cp1251_to_utf8(post_edit_utf8(expmsg))
+
+	else if(href_list["inventory"]) switch(href_list["inventory"])
+		if("back")
+			var/new_backbag = input(usr, "Choose your character's style of bag:", "Character Preference")  as null|anything in backbaglist
+			if(new_backbag)
+				backbag = backbaglist.Find(new_backbag)
+		if("socks")
+			var/new_socks = input(usr, "Choose your character's socks:", "Character Preference") as null|anything in all_socks
+			if (new_socks)
+				socks = new_socks
+			else
+				new_socks = "None"
+		if("underwear")
+			var/new_underwear = input(usr, "Choose your character's underwear:", "Character Preference")  as null|anything in all_underwears
+			if(new_underwear)
+				underwear = new_underwear
+			else
+				underwear = "None"
+		if("undershirt")
+			var/new_undershirt = input(usr, "Choose your character's undershirt:", "Character Preference") as null|anything in all_undershirts
+			if (new_undershirt)
+				undershirt = new_undershirt
+			else
+				new_undershirt = "None"
+
 	return
 
 
@@ -661,11 +687,14 @@
 
 	switch(alternate_option)
 		if(GET_RANDOM_JOB)
-			dat += "<br><u><a href='?src=\ref[src];act=random'><font color=green>Get random job if preferences unavailable</font></a></u><br>"
+			dat += "<br><u><a href='?src=\ref[src];act=random'>\
+				<font color=green>Get random job if preferences unavailable</font></a></u><br>"
 		if(BE_ASSISTANT)
-			dat += "<br><u><a href='?src=\ref[src];act=random'><font color=red>Be assistant if preference unavailable</font></a></u><br>"
+			dat += "<br><u><a href='?src=\ref[src];act=random'>\
+				<font color=red>Be assistant if preference unavailable</font></a></u><br>"
 		if(RETURN_TO_LOBBY)
-			dat += "<br><u><a href='?src=\ref[src];act=random'><font color=purple>Return to lobby if preference unavailable</font></a></u><br>"
+			dat += "<br><u><a href='?src=\ref[src];act=random'>\
+				<font color=purple>Return to lobby if preference unavailable</font></a></u><br>"
 
 	dat += "<a href='?src=\ref[src];act=reset'>\[Reset\]</a>"
 	dat += "</center></tt>"
@@ -698,8 +727,8 @@
 
 
 /datum/preferences/proc/GetPrefsPage()
-	var/dat = "<table>"
-	dat += {"
+	var/dat = {"
+		<table>
 		<tr><td><b>UI:</b></td></tr>
 		<tr><td></td><td>UI Style:</td><td><a href='?src=\ref[src];toggle=ui'>[UI_style]</a></td></tr>
 		<tr><td></td><td>Color:</td> <td><a href='?src=\ref[src];toggle=UIcolor'><span class='box' style='background-color:[UI_style_color]'></span></a></td></tr>

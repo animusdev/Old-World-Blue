@@ -64,16 +64,19 @@ datum/preferences
 					temp.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
 			preview_icon.Blend(temp, ICON_OVERLAY)
 
+		// Underwear
 		if(underwear && current_species.flags & HAS_UNDERWEAR)
 			var/obj/item/clothing/hidden/H = all_underwears[underwear]
 			var/t_state = initial(H.wear_state)
 			if(!t_state) t_state = initial(H.icon_state)
 			preview_icon.Blend(icon(body_build.hidden_icon, t_state), ICON_OVERLAY)
+		// Socks
 		if(socks)
 			var/obj/item/clothing/hidden/H = all_socks[socks]
 			var/t_state = initial(H.wear_state)
 			if(!t_state) t_state = initial(H.icon_state)
 			preview_icon.Blend(icon(body_build.hidden_icon, t_state), ICON_OVERLAY)
+		// Undershirt
 		if(undershirt && current_species.flags & HAS_UNDERWEAR)
 			var/obj/item/clothing/hidden/H = all_undershirts[undershirt]
 			var/t_state = initial(H.wear_state)
