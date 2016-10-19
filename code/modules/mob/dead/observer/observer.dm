@@ -428,12 +428,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	. = ..()
 	if(.)
 		update_following()
-/*
+
 /mob/Life()
 	// to catch teleports etc which directly set loc
 	update_following()
 	return ..()
-*/
+
 /mob/proc/check_holy(var/turf/T)
 	return 0
 
