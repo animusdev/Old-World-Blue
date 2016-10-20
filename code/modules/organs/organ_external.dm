@@ -191,22 +191,21 @@
 		var/obj/item/I = pick(removable_objects)
 		I.loc = get_turf(user) //just in case something was embedded that is not an item
 		if(istype(I))
-			if(!(user.l_hand && user.r_hand))
-				user.put_in_hands(I)
+			user.put_in_hands(I)
 		user.visible_message("<span class='danger'>\The [user] rips \the [I] out of \the [src]!</span>")
 		return //no eating the limb until everything's been removed
 	return ..()
 
 /obj/item/organ/external/examine(mob/user, return_dist=1)
 	.=..()
-	if(.<=1 || isobserver(usr))
+	if(.<=3 || isobserver(usr))
 		for(var/obj/item/I in contents)
 			if(istype(I, /obj/item/organ))
 				continue
 			usr << "<span class='danger'>There is \a [I] sticking out of it.</span>"
 	return
 
-/obj/item/organ/external/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/organ/external/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
 	switch(stage)
 		if(0)
 			if(istype(W,/obj/item/weapon/scalpel))
@@ -223,8 +222,7 @@
 				if(contents.len)
 					var/obj/item/removing = pick(contents)
 					removing.loc = get_turf(user.loc)
-					if(!(user.l_hand && user.r_hand))
-						user.put_in_hands(removing)
+					user.put_in_hands(removing)
 					user.visible_message("<span class='danger'><b>[user]</b> extracts [removing] from [src] with [W]!</span>")
 				else
 					user.visible_message("<span class='danger'><b>[user]</b> fishes around fruitlessly in [src] with [W].</span>")
@@ -541,14 +539,18 @@ This function completely restores a damaged organ to perfect condition.
 The INFECTION_LEVEL values defined in setup.dm control the time it takes to reach the different
 infection levels. Since infection growth is exponential, you can adjust the time it takes to get
 from one germ_level to another using the rough formula:
+
 desired_germ_level = initial_germ_level*e^(desired_time_in_seconds/1000)
+
 So if I wanted it to take an average of 15 minutes to get from level one (100) to level two
 I would set INFECTION_LEVEL_TWO to 100*e^(15*60/1000) = 245. Note that this is the average time,
 the actual time is dependent on RNG.
+
 INFECTION_LEVEL_ONE		below this germ level nothing happens, and the infection doesn't grow
 INFECTION_LEVEL_TWO		above this germ level the infection will start to spread to internal and adjacent organs
 INFECTION_LEVEL_THREE	above this germ level the player will take additional toxin damage per second, and will die in minutes without
 						antitox. also, above this germ level you will need to overdose on spaceacillin to reduce the germ_level.
+
 Note that amputating the affected organ does in fact remove the infection from the player's body.
 */
 /obj/item/organ/external/proc/update_germs()
@@ -698,8 +700,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	for(var/datum/wound/W in wounds)
 		if(!W.internal) //so IB doesn't count towards crit/paincrit
 			if(W.damage_type == BURN)
-
-
 				burn_dam += W.damage
 			else
 				brute_dam += W.damage
@@ -798,11 +798,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 			parent_organ.wounds |= W
 			parent_organ.update_damages()
 		else
-			var/obj/item/organ/external/stump/stump = new (victim, 0, src)
+			var/obj/item/organ/external/stump/stump = new (victim, src)
 			if(status & ORGAN_ROBOT)
 				stump.robotize()
 			stump.wounds |= W
-			victim.organs |= stump
 			stump.update_damages()
 
 	spawn(1)
@@ -830,12 +829,16 @@ Note that amputating the affected organ does in fact remove the infection from t
 					I.loc = get_turf(src)
 			qdel(src)
 		if(DROPLIMB_BLUNT)
-			var/obj/effect/decal/cleanable/blood/gibs/gore = new victim.species.single_gib_type(get_turf(victim))
-			if(victim.species.flesh_color)
-				gore.fleshcolor = victim.species.flesh_color
-			if(victim.species.blood_color)
-				gore.basecolor = victim.species.blood_color
-			gore.update_icon()
+			var/obj/effect/decal/cleanable/blood/gibs/gore
+			if(robotic >= ORGAN_ROBOT)
+				gore = new /obj/effect/decal/cleanable/blood/gibs/robot(get_turf(victim))
+			else
+				gore = new /obj/effect/decal/cleanable/blood/gibs(get_turf(victim))
+				if(victim && victim.species)
+					gore.fleshcolor = victim.species.flesh_color
+					gore.basecolor = victim.species.blood_color
+					gore.update_icon()
+
 			gore.throw_at(get_edge_target_turf(src,pick(alldirs)),rand(1,3),30)
 
 			for(var/obj/item/organ/internal/I in internal_organs)
