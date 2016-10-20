@@ -60,10 +60,7 @@ datum/objective/assassinate
 	find_target_by_role(role, role_type=0)
 		..(role, role_type)
 		if(target && target.current)
-			explanation_text = {"
-				Assassinate [target.current.real_name],
-				the [!role_type ? target.assigned_role : target.special_role].
-			"}
+			explanation_text = "Assassinate [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]."
 		else
 			explanation_text = "Free Objective"
 		return target
@@ -89,10 +86,7 @@ datum/objective/anti_revolution/execute
 	find_target()
 		..()
 		if(target && target.current)
-			explanation_text = {"
-				[target.current.real_name], the [target.assigned_role]
-				has extracted confidential information above their clearance. Execute \him[target.current].
-			"}
+			explanation_text = "[target.current.real_name], the [target.assigned_role] has extracted confidential information above their clearance. Execute \him[target.current]."
 		else
 			explanation_text = "Free Objective"
 		return target
@@ -101,10 +95,7 @@ datum/objective/anti_revolution/execute
 	find_target_by_role(role, role_type=0)
 		..(role, role_type)
 		if(target && target.current)
-			explanation_text = {"
-				[target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]
-				has extracted confidential information above their clearance. Execute \him[target.current].
-			"}
+			explanation_text = "[target.current.real_name], the [!role_type ? target.assigned_role : target.special_role] has extracted confidential information above their clearance. Execute \him[target.current]."
 		else
 			explanation_text = "Free Objective"
 		return target
@@ -124,9 +115,7 @@ datum/objective/anti_revolution/brig
 	find_target()
 		..()
 		if(target && target.current)
-			explanation_text = {"
-				Brig [target.current.real_name], the [target.assigned_role] for 20 minutes to set an example.
-			"}
+			explanation_text = "Brig [target.current.real_name], the [target.assigned_role] for 20 minutes to set an example."
 		else
 			explanation_text = "Free Objective"
 		return target
@@ -135,10 +124,7 @@ datum/objective/anti_revolution/brig
 	find_target_by_role(role, role_type=0)
 		..(role, role_type)
 		if(target && target.current)
-			explanation_text = {"
-				Brig [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]
-				for 20 minutes to set an example.
-			"}
+			explanation_text = "Brig [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role] for 20 minutes to set an example."
 		else
 			explanation_text = "Free Objective"
 		return target
@@ -161,10 +147,7 @@ datum/objective/anti_revolution/demote
 	find_target()
 		..()
 		if(target && target.current)
-			explanation_text = {"
-				[target.current.real_name], the [target.assigned_role]
-				has been classified as harmful to NanoTrasen's goals. Demote \him[target.current] to assistant.
-			"}
+			explanation_text = "[target.current.real_name], the [target.assigned_role] has been classified as harmful to NanoTrasen's goals. Demote \him[target.current] to assistant."
 		else
 			explanation_text = "Free Objective"
 		return target
@@ -172,10 +155,7 @@ datum/objective/anti_revolution/demote
 	find_target_by_role(role, role_type=0)
 		..(role, role_type)
 		if(target && target.current)
-			explanation_text = {"
-				[target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]
-				has been classified as harmful to NanoTrasen's goals. Demote \him[target.current] to assistant.
-			"}
+			explanation_text = "[target.current.real_name], the [!role_type ? target.assigned_role : target.special_role] has been classified as harmful to NanoTrasen's goals. Demote \him[target.current] to assistant."
 		else
 			explanation_text = "Free Objective"
 		return target
@@ -210,10 +190,7 @@ datum/objective/debrain//I want braaaainssss
 	find_target_by_role(role, role_type=0)
 		..(role, role_type)
 		if(target && target.current)
-			explanation_text = {"
-				Steal the brain of [target.current.real_name]
-				the [!role_type ? target.assigned_role : target.special_role].
-			"}
+			explanation_text = "Steal the brain of [target.current.real_name] the [!role_type ? target.assigned_role : target.special_role]."
 		else
 			explanation_text = "Free Objective"
 		return target
@@ -248,9 +225,7 @@ datum/objective/protect//The opposite of killing a dude.
 	find_target_by_role(role, role_type=0)
 		..(role, role_type)
 		if(target && target.current)
-			explanation_text = {"
-				Protect [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role].
-			"}
+			explanation_text = "Protect [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]."
 		else
 			explanation_text = "Free Objective"
 		return target
@@ -307,10 +282,7 @@ datum/objective/block
 		return 1
 
 datum/objective/silence
-	explanation_text = {"
-		Do not allow anyone to escape the station.
-		Only allow the shuttle to be called when everyone is dead and your story is the only one left.
-	"}
+	explanation_text = "Do not allow anyone to escape the station. Only allow the shuttle to be called when everyone is dead and your story is the only one left."
 
 	check_completion()
 		if(!emergency_shuttle.returned())
@@ -394,10 +366,7 @@ datum/objective/brig
 	find_target_by_role(role, role_type=0)
 		..(role, role_type)
 		if(target && target.current)
-			explanation_text = {"
-				Have [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]
-				brigged for 10 minutes.
-			"}
+			explanation_text = "Have [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role] brigged for 10 minutes."
 		else
 			explanation_text = "Free Objective"
 		return target
@@ -425,11 +394,7 @@ datum/objective/harm
 	find_target()
 		..()
 		if(target && target.current)
-			explanation_text = {"
-				Make an example of [target.current.real_name], the [target.assigned_role].
-				Break one of their bones, detach one of their limbs or disfigure their face.
-				Make sure they're alive when you do it.
-			"}
+			explanation_text = "Make an example of [target.current.real_name], the [target.assigned_role]. Break one of their bones, detach one of their limbs or disfigure their face. Make sure they're alive when you do it."
 		else
 			explanation_text = "Free Objective"
 		return target
@@ -438,12 +403,7 @@ datum/objective/harm
 	find_target_by_role(role, role_type=0)
 		..(role, role_type)
 		if(target && target.current)
-			explanation_text = {"
-				Make an example of [target.current.real_name],
-				the [!role_type ? target.assigned_role : target.special_role].
-				Break one of their bones, detach one of their limbs or disfigure their face.
-				Make sure they're alive when you do it.
-			"}
+			explanation_text = "Make an example of [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]. Break one of their bones, detach one of their limbs or disfigure their face. Make sure they're alive when you do it."
 		else
 			explanation_text = "Free Objective"
 		return target
@@ -726,9 +686,7 @@ datum/objective/heist/kidnap
 			target = pick(possible_targets)
 
 		if(target && target.current)
-			explanation_text = {"
-				We can get a good price for [target.current.real_name], the [target.assigned_role]. Take them alive.
-			"}
+			explanation_text = "We can get a good price for [target.current.real_name], the [target.assigned_role]. Take them alive."
 		else
 			explanation_text = "Free Objective"
 		return target
@@ -910,10 +868,7 @@ datum/objective/heist/salvage
 
 /datum/objective/cult/survive/New()
 	..()
-	explanation_text = {"
-		Our knowledge must live on.
-		Make sure at least [target_amount] acolytes escape on the shuttle to spread their work on an another station.
-		"}
+	explanation_text = "Our knowledge must live on. Make sure at least [target_amount] acolytes escape on the shuttle to spread their work on an another station."
 
 /datum/objective/cult/survive/check_completion()
 	var/acolytes_survived = 0
@@ -930,10 +885,7 @@ datum/objective/heist/salvage
 		return 0
 
 /datum/objective/cult/eldergod
-	explanation_text = {"
-		Summon Nar-Sie via the use of the appropriate rune (Hell join self).
-		It will only work if nine cultists stand on and around it. The convert rune is join blood self.
-	"}
+	explanation_text = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it. The convert rune is join blood self."
 
 /datum/objective/cult/eldergod/check_completion()
 	return (locate(/obj/singularity/narsie/large) in machines)
@@ -949,10 +901,7 @@ datum/objective/heist/salvage
 				possible_targets += player.mind
 	if(possible_targets.len > 0)
 		target = pick(possible_targets)
-	if(target) explanation_text = {"
-		Sacrifice [target.name], the [target.assigned_role].
-		You will need the sacrifice rune (Hell blood join) and three acolytes to do so.
-	"}
+	if(target) explanation_text = "Sacrifice [target.name], the [target.assigned_role]. You will need the sacrifice rune (Hell blood join) and three acolytes to do so."
 
 /datum/objective/cult/sacrifice/check_completion()
 	return (target && cult && cult.sacrificed.Find(target))
@@ -969,10 +918,7 @@ datum/objective/heist/salvage
 /datum/objective/rev/find_target_by_role(role, role_type=0)
 	..(role, role_type)
 	if(target && target.current)
-		explanation_text = {"
-			Assassinate, capture or convert [target.current.real_name],
-			the [!role_type ? target.assigned_role : target.special_role].
-		"}
+		explanation_text = "Assassinate, capture or convert [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]."
 	else
 		explanation_text = "Free Objective"
 	return target
