@@ -22,17 +22,19 @@ var/global/list/chameleons = list(
 	chameleons[style_list] = styles
 	return
 
-/obj/item/proc/change_item_appearance(var/obj/item/new_type)
-	if(!new_type) return
-	desc = initial(new_type.desc)
-	name = initial(new_type.name)
-	icon = initial(new_type.icon)
-	icon_state = initial(new_type.icon_state)
-	item_state = initial(new_type.item_state)
-	item_state_slots = initial(new_type.item_state_slots)
-	body_parts_covered = initial(new_type.body_parts_covered)
-	flags_inv = initial(new_type.flags_inv)
-	description_info = initial(new_type.description_info)
+/proc/change_item_appearance(var/obj/item/clothing/C, var/obj/item/clothing/new_type)
+	if(!istype(C) || new_type) return
+	C.desc = initial(new_type.desc)
+	C.name = initial(new_type.name)
+	C.icon = initial(new_type.icon)
+	C.icon_state = initial(new_type.icon_state)
+	C.item_state = initial(new_type.item_state)
+	C.wear_state = initial(new_type.wear_state)
+
+	C.item_state_slots = initial(new_type.item_state_slots)
+	C.body_parts_covered = initial(new_type.body_parts_covered)
+	C.flags_inv = initial(new_type.flags_inv)
+	C.description_info = initial(new_type.description_info)
 
 
 //*****************
