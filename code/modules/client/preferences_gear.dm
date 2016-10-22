@@ -386,7 +386,7 @@ var/global/list/gear_datums = list()
 
 /datum/gear/scarf/arafatka
 	display_name = "scarf, shemagh"
-	path = /obj/item/clothing/mask/arafatka
+	path = /obj/item/clothing/mask/scarf/arafatka
 
 // Uniform slot
 

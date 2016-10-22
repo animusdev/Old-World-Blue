@@ -157,7 +157,7 @@
 	item_state = "arafatka"
 	slot_flags = SLOT_HEAD|SLOT_MASK
 
-/obj/item/clothing/mask/arafatka/equipped(mob/living/carbon/human/H, var/slot)
+/obj/item/clothing/mask/scarf/arafatka/equipped(mob/living/carbon/human/H, var/slot)
 	..()
 	if(slot == slot_wear_mask)
 		body_parts_covered = FACE
@@ -232,8 +232,10 @@
 	name = "black bandana"
 	desc = "A fine black bandana with nanotech lining."
 	w_class = 1
-	flags_inv = HIDEFACE
+	body_parts_covered = FACE
 	slot_flags = SLOT_MASK
+	flags_inv = HIDEFACE
+	item_flags = FLEXIBLEMATERIAL
 	icon_state = "bandblack"
 	item_state = "bandblack"
 	var/tied = 0
@@ -244,11 +246,13 @@
 		if (src.tied)
 			flags_inv = flags_inv & ~HIDEFACE
 			slot_flags = SLOT_HEAD
+			body_parts_covered = HEAD
 			icon_state = "[icon_state]_up"
 			item_state = "[item_state]_up"
 			usr << "You tie the bandana so that it can be worn on the head."
 		else
 			flags_inv = initial(flags_inv)
+			body_parts_covered = FACE
 			slot_flags = initial(slot_flags)
 			icon_state = initial(icon_state)
 			item_state = initial(item_state)
