@@ -82,7 +82,7 @@
 
 	overlays.Cut()
 	if(stat == 0)
-		overlays += "eyes-[icon_state]"
+		overlays += "[icon_state]-eyes"
 	else
 		overlays -= "eyes"
 
