@@ -552,6 +552,19 @@ var/global/list/borg_sprites = list(
 	icon_state = "cyberflower-janitor"
 	module = MOD_JAN
 
+////MOTILE////
+/datum/borg_sprite/motile
+	name = "Motile"
+	icon_state = "motile"
+
+/datum/borg_sprite/motile/security
+	icon_state = "motile-security"
+	module = MOD_SEC
+
+/datum/borg_sprite/motile/combat
+	icon_state = "motile-combat"
+	module = MOD_CMB
+
 #undef MOD_STD
 #undef MOD_SEC
 #undef MOD_SRV
