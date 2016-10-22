@@ -732,6 +732,8 @@
 	if(!selected)
 		selected = E
 	E.attached(src)
+	send_byjax(occupant,"exosuit.browser","eq_list",get_equipment_list())
+	send_byjax(occupant,"exosuit.browser","equipment_menu",get_equipment_menu(),"dropdowns")
 
 /obj/mecha/proc/detach(var/obj/item/mecha_parts/mecha_equipment/E, atom/moveto=null)
 	if(!E || !E in equipment)
@@ -743,6 +745,8 @@
 		equipment -= E
 		if(selected == E)
 			selected = null
+		send_byjax(occupant,"exosuit.browser","eq_list",get_equipment_list())
+		send_byjax(occupant,"exosuit.browser","equipment_menu",get_equipment_menu(),"dropdowns")
 		log_message("[E] removed from equipment.")
 	return
 

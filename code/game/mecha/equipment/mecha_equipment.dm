@@ -31,13 +31,6 @@
 	..()
 	return
 
-/obj/item/mecha_parts/mecha_equipment/proc/update_chassis_page()
-	if(chassis)
-		send_byjax(chassis.occupant,"exosuit.browser","eq_list",chassis.get_equipment_list())
-		send_byjax(chassis.occupant,"exosuit.browser","equipment_menu",chassis.get_equipment_menu(),"dropdowns")
-		return 1
-	return
-
 /obj/item/mecha_parts/mecha_equipment/proc/update_equip_info()
 	if(chassis)
 		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
@@ -50,7 +43,6 @@
 		listclearnulls(chassis.equipment)
 		if(chassis.selected == src)
 			chassis.selected = null
-		src.update_chassis_page()
 		chassis.occupant_message("<font color='red'>The [src] is destroyed!</font>")
 		chassis.log_append_to_last("[src] is destroyed.",1)
 		if(istype(src, /obj/item/mecha_parts/mecha_equipment/weapon))
@@ -104,14 +96,12 @@
 
 /obj/item/mecha_parts/mecha_equipment/proc/attached(obj/mecha/M as obj)
 	chassis = M
-	src.update_chassis_page()
-	return
+	return 1
 
 /obj/item/mecha_parts/mecha_equipment/proc/detached()
-	update_chassis_page()
 	chassis = null
 	set_ready_state(1)
-	return
+	return 1
 
 
 /obj/item/mecha_parts/mecha_equipment/Topic(href,href_list)
