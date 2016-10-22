@@ -159,11 +159,13 @@
 	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
 	var/tforce = 0
 	if(ismob(AM))
-		tforce = 40
+		tforce = 10
+		var/mob/living/M = AM
+		M.apply_damage(tforce)
 	else if(isobj(AM))
 		var/obj/item/I = AM
 		tforce = I.throwforce
-	if(reinf) tforce *= 0.25
+	if(reinf) tforce *= 0.5
 	if(health - tforce <= 7 && !reinf)
 		anchored = 0
 		update_nearby_icons()
@@ -238,6 +240,9 @@
 					M.Weaken(5)
 					M.apply_damage(20)
 					hit(50)
+			user.attack_log += "\[[time_stamp()]\]<font color='red'> Smashed [M.name] ([M.ckey]) against \the [src]</font>"
+			M.attack_log += "\[[time_stamp()]\]<font color='orange'> Smashed against \the [src] by [user.name] ([user.ckey])</font>"
+			msg_admin_attack("[key_name(user)] smashed [key_name(M)] against \the [src]")
 			return
 
 	if(W.flags & NOBLUDGEON) return
