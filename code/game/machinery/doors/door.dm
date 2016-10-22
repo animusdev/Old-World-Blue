@@ -189,7 +189,9 @@
 	visible_message("<span class='danger'>[src.name] was hit by [AM].</span>")
 	var/tforce = 0
 	if(ismob(AM))
-		tforce = 15 * (speed/5)
+		tforce = 5 * (speed/5)
+		var/mob/living/M = AM
+		M.apply_damage(tforce)
 	else
 		tforce = AM:throwforce * (speed/5)
 	playsound(src.loc, hitsound, 100, 1)
