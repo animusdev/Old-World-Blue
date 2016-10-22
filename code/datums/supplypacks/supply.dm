@@ -82,7 +82,7 @@
 
 /datum/supply_packs/supply/mule
 	name = "Mulebot Crate"
-	contains = list()
+	contains = list(/obj/machinery/bot/mulebot)
 	cost = 20
 	containertype = /obj/structure/largecrate/mule
 	containername = "Mulebot Crate"
