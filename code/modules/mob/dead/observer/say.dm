@@ -16,21 +16,32 @@
 
 /mob/observer/dead/emote(var/act, var/type, var/message)
 	//message = sanitize(message) - already sanitized in verb/me_verb()
-
-	if(!message)
-		return
+	if(!src.client.holder)
+		if(!config.dsay_allowed)
+			src << "<span class='danger'>Deadchat is globally muted.</span>"
+			return
 
 	if(act != "me")
 		return
 
 	log_emote("Ghost/[src.key] : [message]")
 
-	if(src.client)
-		if(src.client.prefs.muted & MUTE_DEADCHAT)
+	if(client)
+		if(client.prefs.muted & MUTE_DEADCHAT)
 			src << "\red You cannot emote in deadchat (muted)."
 			return
+		if(!(client.prefs.chat_toggles & CHAT_DEAD))
+			src << "<span class='danger'>You have deadchat muted.</span>"
+			return
 
-	. = src.emote_dead(message)
+	if(!message)
+		message = sanitize(input(src, "Choose an emote to display.") as text|null)
+
+	if(message)
+		log_emote("Ghost/[src.key] : [message]")
+		say_dead_direct(message, src)
+
+	return
 
 
 /mob/observer/dead/hear_say(var/message, var/verb = "says", var/datum/language/language = null, var/alt_name = "",var/italics = 0, var/mob/speaker = null, var/sound/speech_sound, var/sound_vol)

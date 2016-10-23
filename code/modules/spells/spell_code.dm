@@ -176,7 +176,9 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 /////////////////////
 /*Checkers, cost takers, message makers, etc*/
 
-/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+//checks if the spell can be cast based on its settings;
+//skipcharge is used when an additional cast_check is called inside the spell
+/spell/proc/cast_check(skipcharge = 0,mob/living/user = usr)
 
 	if(!(src in user.spell_list) && holder == user)
 		error("[user] utilized the spell '[src]' without having it.")
