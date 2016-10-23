@@ -145,6 +145,7 @@
 	force_divisor = 0.7 // 10/42 with hardness 60 (steel) and 0.25 unwielded divisor
 	sharp = 1
 	edge = 1
+	pry = 1
 	w_class = 4.0
 	slot_flags = SLOT_BACK
 	force_wielded = 30

@@ -15,6 +15,7 @@
 		Ideally, sprite_sheets_refit should be used for "hard" clothing items that can't change shape very well to fit the wearer (e.g. helmets, hardsuits).
 	*/
 	var/list/sprite_sheets_refit = null
+	var/ear_protection = 0
 
 //Updates the icons of the mob wearing the clothing item, if any.
 /obj/item/clothing/proc/update_clothing_icon()

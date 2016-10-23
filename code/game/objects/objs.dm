@@ -10,6 +10,7 @@
 	var/tmp/throwforce = 1
 	var/tmp/sharp = 0		// whether this object cuts
 	var/tmp/edge = 0		// whether this object is more likely to dismember
+	var/tmp/pry = 0			//Used in attackby() to open doors
 	var/tmp/in_use = 0 // If we have a user using us, this will be set on. We will check if the user has stopped using us, and thus stop updating and LAGGING EVERYTHING!
 
 	var/damtype = "brute"

@@ -402,8 +402,7 @@ var/list/global/slot_flags_enumeration = list(
 //The default action is attack_self().
 //Checks before we get to here are: mob is alive, mob is not restrained, paralyzed, asleep, resting, laying, item is on the mob.
 /obj/item/proc/ui_action_click()
-	if( src in usr )
-		attack_self(usr)
+	attack_self(usr)
 
 
 /obj/item/proc/IsShield()

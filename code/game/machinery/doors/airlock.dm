@@ -330,7 +330,7 @@ About the new airlock wires panel:
 
 
 /obj/machinery/door/airlock/bumpopen(mob/living/user as mob) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
-	if(istype(user) && !issilicon(usr))
+	if(!issilicon(usr))
 		if(src.isElectrified())
 			if(!src.justzap)
 				if(src.shock(user, 100))
@@ -798,23 +798,27 @@ About the new airlock wires panel:
 			else
 				spawn(0)	close(1)
 
-	else if(istype(C, /obj/item/weapon/material/twohanded/fireaxe) && !arePowerSystemsOn())
-		if(locked)
-			user << "<span class='notice'>The airlock's bolts prevent it from being forced.</span>"
-		else if( !welded && !operating )
-			if(density)
-				var/obj/item/weapon/material/twohanded/fireaxe/F = C
-				if(F.wielded)
-					spawn(0)	open(1)
+	// Check if we're using a crowbar or armblade, and if the airlock's unpowered for whatever reason (off, broken, etc).
+	else if(istype(C, /obj/item/weapon))
+		var/obj/item/weapon/W = C
+		if((W.pry == 1) && !arePowerSystemsOn())
+			if(locked)
+				user << "<span class='notice'>The airlock's bolts prevent it from being forced.</span>"
+			else if( !welded && !operating )
+				if(istype(C, /obj/item/weapon/material/twohanded/fireaxe)) // If this is a fireaxe, make sure it's held in two hands.
+					var/obj/item/weapon/material/twohanded/fireaxe/F = C
+					if(!F.wielded)
+						user << "<span class='warning'>You need to be wielding \the [F] to do that.</span>"
+						return
+				// At this point, it's an armblade or a fireaxe that passed the wielded test, let's try to open it.
+				if(density)
+					spawn(0)
+						open(1)
 				else
-					user << "<span class='warning'>You need to be wielding \the [C] to do that.</span>"
-			else
-				var/obj/item/weapon/material/twohanded/fireaxe/F = C
-				if(F.wielded)
-					spawn(0)	close(1)
-				else
-					user << "<span class='warning'>You need to be wielding \the [C] to do that.</span>"
-
+					spawn(0)
+						close(1)
+		else
+			..()
 	else
 		..()
 	return
@@ -1028,7 +1032,7 @@ About the new airlock wires panel:
 	if(wires)
 		qdel(wires)
 		wires = null
-	..()
+	return ..()
 
 // Most doors will never be deconstructed over the course of a round,
 // so as an optimization defer the creation of electronics until
@@ -1065,7 +1069,8 @@ About the new airlock wires panel:
 	update_icon()
 
 /obj/machinery/door/airlock/proc/prison_open()
-	src.unlock()
-	src.open()
-	src.lock()
+	if(arePowerSystemsOn())
+		src.unlock()
+		src.open()
+		src.lock()
 	return

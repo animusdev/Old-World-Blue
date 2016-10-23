@@ -244,7 +244,7 @@
 		user << "<span class='danger'>\The [src] is welded shut!</span>"
 		return
 
-	if(istype(C, /obj/item/weapon/crowbar) || istype(C,/obj/item/weapon/material/twohanded/fireaxe))
+	if(C.pry == 1)
 		if(operating)
 			return
 

@@ -1,3 +1,9 @@
+/mob/living/carbon/human/get_ear_protection()
+	for(var/obj/item/clothing/C in list(l_ear, r_ear, head))
+		if(istype(C))
+			. += C.ear_protection
+	return
+
 /mob/living/carbon/human/proc/get_blood_colour()
 	var/datum/robolimb/company = isSynthetic()
 	if(company)

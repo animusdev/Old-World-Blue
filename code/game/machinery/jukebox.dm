@@ -94,10 +94,8 @@
 		if(emagged)
 			playsound(src.loc, 'sound/items/AirHorn.ogg', 100, 1)
 			for(var/mob/living/carbon/M in ohearers(6, src))
-				if(ishuman(M))
-					var/mob/living/carbon/human/H = M
-					if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
-						continue
+				if(M.get_ear_protection() >= 2)
+					continue
 				M.sleeping = 0
 				M.stuttering += 20
 				M.ear_deaf += 30
