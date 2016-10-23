@@ -56,35 +56,34 @@
 /mob/living/carbon/human/Stat()
 	..()
 	if(statpanel("Status"))
-		stat(null, "Intent: [a_intent]")
-		stat(null, "Move Mode: [m_intent]")
+		stat("Intent:", "[a_intent]")
+		stat("Move Mode:", "[m_intent]")
 		if(emergency_shuttle)
 			var/eta_status = emergency_shuttle.get_status_panel_eta()
 			if(eta_status)
 				stat(null, eta_status)
 
-		/*if (internal)
+		if (internal)
 			if (!internal.air_contents)
 				qdel(internal)
 			else
 				stat("Internal Atmosphere Info", internal.name)
 				stat("Tank Pressure", internal.air_contents.return_pressure())
-				stat("Distribution Pressure", internal.distribute_pressure)*/
+				stat("Distribution Pressure", internal.distribute_pressure)
 
 		if(species)
 			species.Stat(src)
 
-		/*if(back && istype(back,/obj/item/weapon/rig))
+		if(back && istype(back,/obj/item/weapon/rig))
 			var/obj/item/weapon/rig/suit = back
 			var/cell_status = "ERROR"
 			if(suit.cell) cell_status = "[suit.cell.charge]/[suit.cell.maxcharge]"
-			stat(null, "Suit charge: [cell_status]")*/
+			stat(null, "Suit charge: [cell_status]")
 
 		if(mind)
 			if(mind.changeling)
 				stat("Chemical Storage", mind.changeling.chem_charges)
 				stat("Genetic Damage Time", mind.changeling.geneticdamage)
-
 
 /mob/living/carbon/human/ex_act(severity)
 	if(!blinded)
@@ -145,12 +144,12 @@
 	var/weapon_message = "Explosive Blast"
 
 	for(var/obj/item/organ/external/temp in organs)
-		switch(temp.name)
+		switch(temp.organ_tag)
 			if(BP_HEAD)
 				update |= temp.take_damage(b_loss * 0.2, f_loss * 0.2, used_weapon = weapon_message)
 			if(BP_CHEST)
 				update |= temp.take_damage(b_loss * 0.4, f_loss * 0.4, used_weapon = weapon_message)
-			if(BP_L_ARM,BP_R_ARM,BP_L_LEG,BP_R_LEG,BP_R_FOOT,BP_L_FOOT,BP_R_HAND,BP_L_HAND)
+			else
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 	if(update)	UpdateDamageIcon()
 
@@ -179,21 +178,21 @@
 		updatehealth()
 	return
 
-/mob/living/carbon/human/proc/implant_loyalty(mob/living/carbon/human/M, override = FALSE) // Won't override by default.
+/mob/living/carbon/human/proc/implant_loyalty(override = FALSE) // Won't override by default.
 	if(!config.use_loyalty_implants && !override) return // Nuh-uh.
 
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)
-	L.imp_in = M
+	var/obj/item/weapon/implant/loyalty/L = new (src)
+	L.imp_in = src
 	L.implanted = 1
-	var/obj/item/organ/external/affected = M.organs_by_name[BP_HEAD]
+	var/obj/item/organ/external/affected = src.organs_by_name[BP_HEAD]
 	affected.implants += L
 	L.part = affected
 	L.implanted(src)
 
 /mob/living/carbon/human/proc/is_loyalty_implanted()
-	for(var/L in contents)
+	for(var/L in src.contents)
 		if(istype(L, /obj/item/weapon/implant/loyalty))
-			for(var/obj/item/organ/external/O in organs)
+			for(var/obj/item/organ/external/O in src.organs)
 				if(L in O.implants)
 					return 1
 	return 0
@@ -241,7 +240,7 @@
 
 	// Other incidentals.
 	if(istype(suit) && suit.has_sensor == 1)
-		dat += "<BR><A href='?src=\ref[src];item=sensors'>Set sensors.</A>"
+		dat += "<BR><A href='?src=\ref[src];item=sensors'>Set sensors</A>"
 	if(handcuffed)
 		dat += "<BR><A href='?src=\ref[src];item=[slot_handcuffed]'>Handcuffed</A>"
 	if(legcuffed)
@@ -327,7 +326,7 @@
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name()
 	var/obj/item/organ/external/head = get_organ(BP_HEAD)
-	if(!head || head.disfigured || (head.status & ORGAN_DESTROYED) || !real_name || (HUSK in mutations) )	//disfigured. use id-name if possible
+	if(!head || head.disfigured || head.is_stump() || !real_name || (HUSK in mutations) )	//disfigured. use id-name if possible
 		return "Unknown"
 	return real_name
 
@@ -352,6 +351,7 @@
 //Removed the horrible safety parameter. It was only being used by ninja code anyways.
 //Now checks siemens_coefficient of the affected area by default
 /mob/living/carbon/human/electrocute_act(var/shock_damage, var/obj/source, var/base_siemens_coeff = 1.0, var/def_zone = null)
+
 	if(status_flags & GODMODE)	return 0	//godmode
 
 	if (!def_zone)
@@ -841,7 +841,7 @@
 	set name = "Project mind"
 	set category = "Superpower"
 
-	if(stat!=CONSCIOUS)
+	if(stat)
 		reset_view(0)
 		remoteview_target = null
 		return
@@ -969,6 +969,11 @@
 	verbs += /mob/living/carbon/human/proc/bloody_doodle
 	return 1 //we applied blood to the item
 
+/mob/living/carbon/human/proc/get_full_print()
+	if(!dna ||!dna.uni_identity)
+		return
+	return md5(dna.uni_identity)
+
 /mob/living/carbon/human/clean_blood(var/clean_feet)
 	.=..()
 
@@ -1060,12 +1065,10 @@
 		return
 
 	usr << "You must[self ? "" : " both"] remain still until counting is finished."
-	var/time = world.time
-	sleep(60)
-	if(usr.l_move_time >= time)	//checks if our mob has moved during the sleep()
-		usr << "You moved while counting. Try again."
+	if(do_mob(usr, src, 60))
+		usr << "<span class='notice'>[self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)].</span>"
 	else
-		usr << "\blue [self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)]."
+		usr << "<span class='warning'>You failed to check the pulse. Try again.</span>"
 
 /mob/living/carbon/human/proc/set_species(var/new_species, var/default_colour)
 
@@ -1268,10 +1271,14 @@
 /mob/living/carbon/human/getDNA()
 	if(species.flags & NO_SCAN)
 		return null
+	if(isSynthetic())
+		return
 	..()
 
 /mob/living/carbon/human/setDNA()
 	if(species.flags & NO_SCAN)
+		return
+	if(isSynthetic())
 		return
 	..()
 
@@ -1304,8 +1311,8 @@
 		return
 	usr.next_move = world.time + 20
 
-	if(usr.stat > 0)
-		usr << "You are unconscious and cannot do that!"
+	if(usr.stat)
+		usr << "You are unconcious and cannot do that!"
 		return
 
 	if(usr.restrained())
@@ -1390,10 +1397,6 @@
 		return
 	return ..()
 
-/mob/living/carbon/human/proc/get_full_print()
-	if(!dna ||!dna.uni_identity)
-		return
-	return md5(dna.uni_identity)
 
 /mob/living/carbon/human/proc/check_has_mouth()
 	// Todo, check stomach organ when implemented.

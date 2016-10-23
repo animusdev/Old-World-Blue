@@ -327,17 +327,4 @@
 	return
 
 /datum/species/proc/Stat(var/mob/living/carbon/human/H)
-	if (H.internal)
-		if (!H.internal.air_contents)
-			qdel(H.internal)
-		else
-			stat("Internal Atmosphere Info", H.internal.name)
-			stat("Tank Pressure", H.internal.air_contents.return_pressure())
-			stat("Distribution Pressure", H.internal.distribute_pressure)
-
-	if(H.back && istype(H.back,/obj/item/weapon/rig))
-		var/obj/item/weapon/rig/suit = H.back
-		var/cell_status = "ERROR"
-		if(suit.cell) cell_status = "[suit.cell.charge]/[suit.cell.maxcharge]"
-		stat(null, "Suit charge: [cell_status]")
 	return
