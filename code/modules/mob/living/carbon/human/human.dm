@@ -734,6 +734,14 @@
 			xylophone=0
 	return
 
+/mob/living/proc/check_has_mouth()
+	return 1
+
+/mob/living/carbon/human/check_has_mouth()
+	// Todo, check stomach organ when implemented.
+	return get_organ(BP_HEAD)
+
+
 /mob/living/carbon/human/proc/vomit()
 
 	if(species.flags & IS_SYNTHETIC)
@@ -1398,6 +1406,7 @@
 	return ..()
 
 
-/mob/living/carbon/human/proc/check_has_mouth()
-	// Todo, check stomach organ when implemented.
-	return get_organ(BP_HEAD)
+
+/mob/living/carbon/human/is_muzzled()
+	return (wear_mask && (istype(wear_mask, /obj/item/clothing/mask/muzzle) || istype(src.wear_mask, /obj/item/weapon/grenade)))
+
