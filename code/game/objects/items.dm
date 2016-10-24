@@ -49,6 +49,7 @@
 
 	var/icon_override = null  //Used to override hardcoded clothing dmis in human clothing proc.
 
+	var/wear_state = ""   // If set used instead icon_state for on-mob clothing overlays.
 	var/item_state = null // Used to specify the item state for the on-mob overlays.
 	var/item_state_slots = null //overrides the default item_state for particular slots.
 

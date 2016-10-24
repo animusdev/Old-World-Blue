@@ -1,7 +1,6 @@
 /obj/item/clothing
 	name = "clothing"
 	siemens_coefficient = 0.9
-	var/wear_state = "" 				//If set used instead icon_state for mob drawing.
 	var/list/species_restricted = null //Only these species can wear this kit.
 	var/gunshot_residue //Used by forensics.
 

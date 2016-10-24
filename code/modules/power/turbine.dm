@@ -179,12 +179,11 @@
 		return
 	if (usr.stat || usr.restrained() )
 		return
-	if (!(ishuman(usr) || ticker) && ticker.mode.name != "monkey")
-		if(!istype(usr, /mob/living/silicon/ai))
-			usr << "\red You don't have the dexterity to do this!"
-			return
+	if (!ishuman(usr) && !istype(usr, /mob/living/silicon/ai))
+		usr << "\red You don't have the dexterity to do this!"
+		return
 
-	if (( usr.machine==src && ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
+	if ((istype(src.loc, /turf) && Adjacent(usr)) || istype(usr, /mob/living/silicon/ai))
 
 
 		if( href_list["close"] )

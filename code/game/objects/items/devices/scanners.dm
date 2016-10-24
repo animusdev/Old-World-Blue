@@ -170,7 +170,7 @@ REAGENT SCANNER
 		user.show_message("\blue Key: Suffocation/Toxin/Burns/Brute", 1)
 		user.show_message("\blue Body Temperature: ???", 1)
 		return
-	if (!(ishuman(usr) || ticker) && ticker.mode.name != "monkey")
+	if (!ishuman(usr))
 		usr << "\red You don't have the dexterity to do this!"
 		return
 	user.visible_message("<span class='notice'> [user] has analyzed [M]'s vitals.</span>","<span class='notice'> You have analyzed [M]'s vitals.</span>")
@@ -346,7 +346,7 @@ REAGENT SCANNER
 
 	if (user.stat)
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if (!ishuman(usr))
 		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 
@@ -388,9 +388,6 @@ REAGENT SCANNER
 		return
 	if (crit_fail)
 		user << "\red This device has critically failed and is no longer functional!"
-		return
-	if (!(ishuman(user) || ticker) && ticker.mode.name != "monkey")
-		user << "\red You don't have the dexterity to do this!"
 		return
 	if(reagents.total_volume)
 		var/list/blood_traces = list()
@@ -448,9 +445,6 @@ REAGENT SCANNER
 	if(!proximity)
 		return
 	if (user.stat)
-		return
-	if (!(ishuman(user) || ticker) && ticker.mode.name != "monkey")
-		user << "\red You don't have the dexterity to do this!"
 		return
 	if(!istype(O))
 		return

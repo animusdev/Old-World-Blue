@@ -211,8 +211,7 @@
 	else
 		H.equip_to_slot_or_del(new custom_survival_gear(H), slot_r_hand)
 
-
-/datum/species/proc/create_organs(var/mob/living/carbon/human/H,) //Handles creation of mob organs.
+/datum/species/proc/create_organs(var/mob/living/carbon/human/H) //Handles creation of mob organs.
 
 	for(var/obj/item/organ/organ in (H.organs|H.internal_organs))
 		qdel(organ)

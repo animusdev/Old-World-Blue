@@ -691,9 +691,9 @@ var/global/list/damage_icon_parts = list()
 		wear_suit.screen_loc = ui_oclothing
 
 		var/image/standing
-		var/t_state = wear_suit.icon_state
-		if(istype(wear_suit, /obj/item/clothing))
-			t_state = wear_suit:wear_state
+		var/t_state = wear_suit.wear_state
+		if(!t_state)
+			t_state = wear_suit.icon_state
 
 		if(wear_suit.icon_override)
 			standing = image(wear_suit.icon_override, t_state)
@@ -869,7 +869,7 @@ var/global/list/damage_icon_parts = list()
 			t_state += "_r"
 			t_icon = r_hand.icon_override
 		else
-			t_icon = INV_R_HAND_DEF_ICON
+			t_icon = 'icons/mob/items/righthand.dmi'
 
 		overlays_standing[R_HAND_LAYER] = image(t_icon, t_state)
 
@@ -901,7 +901,7 @@ var/global/list/damage_icon_parts = list()
 			t_state += "_l"
 			t_icon = l_hand.icon_override
 		else
-			t_icon = INV_L_HAND_DEF_ICON
+			t_icon = 'icons/mob/items/lefthand.dmi'
 
 		overlays_standing[L_HAND_LAYER] = image(t_icon, t_state)
 

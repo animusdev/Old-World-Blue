@@ -14,12 +14,11 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"alien candidate" = 1, //always show                 // 6
 	"positronic brain" = 1,                              // 7
 	"cultist" = IS_MODE_COMPILED("cult"),                // 8
-	"infested monkey" = IS_MODE_COMPILED("monkey"),      // 9
-	"ninja" = "true",                                    // 10
-	"raider" = IS_MODE_COMPILED("heist"),                // 11
-	"diona" = 1,                                         // 12
-	"loyalist" = IS_MODE_COMPILED("revolution"),         // 13
-	"pAI candidate" = 1, // -- TLE                       // 14
+	"ninja" = "true",                                    // 9
+	"raider" = IS_MODE_COMPILED("heist"),                // 10
+	"diona" = 1,                                         // 11
+	"loyalist" = IS_MODE_COMPILED("revolution"),         // 12
+	"pAI candidate" = 1, // -- TLE                       // 13
 )
 
 //used for alternate_option
