@@ -79,3 +79,7 @@
 #define TANK_FRAGMENT_PRESSURE (50.*ONE_ATMOSPHERE) // Boom 3x3 base explosion.
 #define TANK_FRAGMENT_SCALE    (10.*ONE_ATMOSPHERE) // +1 for each SCALE kPa above threshold. Was 2 atm.
 
+//Flags for zone sleeping
+#define ZONE_ACTIVE   1
+#define ZONE_SLEEPING 0
+

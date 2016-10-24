@@ -77,10 +77,6 @@
 #define MUTE  2
 #define DEAF  4
 
-// /mob/var/stat things.
-#define CONSCIOUS   0
-#define UNCONSCIOUS 1
-#define DEAD        2
 
 // Channel numbers for power.
 #define EQUIP   1
@@ -113,55 +109,6 @@
 #define GAS_CO2 (1 << 3)
 #define GAS_N2O (1 << 4)
 
-#define IS_MODE_COMPILED(MODE) (ispath(text2path("/datum/game_mode/"+(MODE))))
-
-// Damage things. TODO: Merge these down to reduce on defines.
-// Way to waste perfectly good damage-type names (BRUTE) on this... If you were really worried about case sensitivity, you could have just used lowertext(damagetype) in the proc.
-#define BRUTE     "brute"
-#define BURN      "fire"
-#define TOX       "tox"
-#define OXY       "oxy"
-#define CLONE     "clone"
-#define HALLOSS   "halloss"
-
-#define CUT       "cut"
-#define BRUISE    "bruise"
-#define PIERCE    "pierce"
-
-#define STUN      "stun"
-#define WEAKEN    "weaken"
-#define PARALYZE  "paralize"
-#define IRRADIATE "irradiate"
-#define AGONY     "agony"     // Added in PAIN!
-#define SLUR      "slur"
-#define STUTTER   "stutter"
-#define EYE_BLUR  "eye_blur"
-#define DROWSY    "drowsy"
-
-// I hate adding defines like this but I'd much rather deal with bitflags than lists and string searches.
-#define BRUTELOSS 1
-#define FIRELOSS  2
-#define TOXLOSS   4
-#define OXYLOSS   8
-
-// Bitflags defining which status effects could be or are inflicted on a mob.
-#define CANSTUN     1
-#define CANWEAKEN   2
-#define CANPARALYSE 4
-#define CANPUSH     8
-#define LEAPING     16
-#define PASSEMOTES  32    // Mob has a cortical borer or holders inside of it that need to see emotes.
-#define GODMODE     4096
-#define FAKEDEATH   8192  // Replaces stuff like changeling.changeling_fakedeath.
-#define DISFIGURED  16384 // I'll probably move this elsewhere if I ever get wround to writing a bitflag mob-damage system.
-#define XENO_HOST   32768 // Tracks whether we're gonna be a baby alien's mummy.
-
-// Grab levels.
-#define GRAB_PASSIVE    1
-#define GRAB_AGGRESSIVE 2
-#define GRAB_NECK       3
-#define GRAB_UPGRADING  4
-#define GRAB_KILL       5
 
 // Security levels.
 #define SEC_LEVEL_GREEN 0
@@ -195,34 +142,10 @@
 //Some mob defines below
 #define AI_CAMERA_LUMINOSITY 6
 
-#define BORGMESON 1
-#define BORGTHERM 2
-#define BORGXRAY  4
-
 // Some arbitrary defines to be used by self-pruning global lists. (see master_controller)
 #define PROCESS_KILL 26 // Used to trigger removal from a processing list.
 
-#define HOSTILE_STANCE_IDLE      1
-#define HOSTILE_STANCE_ALERT     2
-#define HOSTILE_STANCE_ATTACK    3
-#define HOSTILE_STANCE_ATTACKING 4
-#define HOSTILE_STANCE_TIRED     5
-
 #define ROUNDSTART_LOGOUT_REPORT_TIME 6000 // Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
-
-// Organ defines.
-#define ORGAN_CUT_AWAY   1
-#define ORGAN_GAUZED     2
-#define ORGAN_ATTACHABLE 4
-#define ORGAN_BLEEDING   8
-#define ORGAN_BROKEN     32
-#define ORGAN_DESTROYED  64
-#define ORGAN_ROBOT      128
-#define ORGAN_SPLINTED   256
-#define SALVED           512
-#define ORGAN_DEAD       1024
-#define ORGAN_MUTATED    2048
-#define ORGAN_ASSISTED   4096
 
 // Preference toggles.
 #define SOUND_ADMINHELP 1
@@ -254,41 +177,6 @@
 #define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY)
 #define CHAT_TOGGLES_DEFAULT (CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_ATTACKLOGS|CHAT_ADMINLOGS|CHAT_LOOC)
 
-#define BE_TRAITOR    1
-#define BE_OPERATIVE  2
-#define BE_CHANGELING 4
-#define BE_MEME       8
-#define BE_WIZARD     16
-#define BE_MALF       32
-#define BE_REV        64
-#define BE_ALIEN      128
-#define BE_AI         256
-#define BE_CULTIST    512
-#define BE_MONKEY     1024
-#define BE_NINJA      2048
-#define BE_RAIDER     4096
-#define BE_PLANT      8192
-#define BE_LOYALIST   16384
-#define BE_PAI        32768
-
-var/list/be_special_flags = list(
-	"Traitor"          = BE_TRAITOR,
-	"Operative"        = BE_OPERATIVE,
-	"Changeling"       = BE_CHANGELING,
-	"Wizard"           = BE_WIZARD,
-	"Malf AI"          = BE_MALF,
-	"Revolutionary"    = BE_REV,
-	"Xenomorph"        = BE_ALIEN,
-	"Positronic Brain" = BE_AI,
-	"Cultist"          = BE_CULTIST,
-	"Monkey"           = BE_MONKEY,
-	"Ninja"            = BE_NINJA,
-	"Raider"           = BE_RAIDER,
-	"Diona"            = BE_PLANT,
-	"Loyalist"         = BE_LOYALIST,
-	"pAI"              = BE_PAI
-)
-
 // Languages.
 #define LANGUAGE_HUMAN  1
 #define LANGUAGE_ALIEN  2
@@ -299,34 +187,6 @@ var/list/be_special_flags = list(
 
 #define LANGUAGE_UNIVERSAL 65535
 
-#define LEFT  1
-#define RIGHT 2
-
-// For secHUDs and medHUDs and variants. The number is the location of the image on the list hud_list of humans.
-#define      HEALTH_HUD 1 // A simple line rounding the mob's number health.
-#define      STATUS_HUD 2 // Alive, dead, diseased, etc.
-#define          ID_HUD 3 // The job asigned to your ID.
-#define      WANTED_HUD 4 // Wanted, released, paroled, security status.
-#define    IMPLOYAL_HUD 5 // Loyality implant.
-#define     IMPCHEM_HUD 6 // Chemical implant.
-#define    IMPTRACK_HUD 7 // Tracking implant.
-#define SPECIALROLE_HUD 8 // AntagHUD image.
-#define  STATUS_HUD_OOC 9 // STATUS_HUD without virus DB check for someone being ill.
-#define 	  LIFE_HUD 10 // STATUS_HUD that only reports dead or alive
-
-// Pulse levels, very simplified.
-#define PULSE_NONE    0 // So !M.pulse checks would be possible.
-#define PULSE_SLOW    1 // <60     bpm
-#define PULSE_NORM    2 //  60-90  bpm
-#define PULSE_FAST    3 //  90-120 bpm
-#define PULSE_2FAST   4 // >120    bpm
-#define PULSE_THREADY 5 // Occurs during hypovolemic shock
-#define GETPULSE_HAND 0 // Less accurate. (hand)
-#define GETPULSE_TOOL 1 // More accurate. (med scanner, sleeper, etc.)
-
-// Body builds
-#define BODY_DEFAULT	0	// Default body build
-#define BODY_SLIM		1	// Slim body build
 
 // Species flags.
 #define NO_BLOOD          1     // Vessel var is not filled with blood, cannot bleed out.
@@ -363,42 +223,6 @@ var/list/be_special_flags = list(
 #define NO_TALK_MSG 128 // Do not show the "\The [speaker] talks into \the [radio]" message
 #define NO_STUTTER  256 // No stuttering, slurring, or other speech problems
 #define COMMON_VERBS 512 // Robots will apply regular verbs to this.
-//Flags for zone sleeping
-#define ZONE_ACTIVE   1
-#define ZONE_SLEEPING 0
-
-/*
- *	Germs and infections.
-*/
-
-#define GERM_LEVEL_AMBIENT  110 // Maximum germ level you can reach by standing still.
-#define GERM_LEVEL_MOVE_CAP 200 // Maximum germ level you can reach by running around.
-
-#define INFECTION_LEVEL_ONE   100
-#define INFECTION_LEVEL_TWO   500
-#define INFECTION_LEVEL_THREE 1000
-
-/*
- *	Shuttles.
-*/
-
-// These define the time taken for the shuttle to get to the space station, and the time before it leaves again.
-#define SHUTTLE_PREPTIME                300 // 5 minutes = 300 seconds - after this time, the shuttle departs centcom and cannot be recalled.
-#define SHUTTLE_LEAVETIME               180 // 3 minutes = 180 seconds - the duration for which the shuttle will wait at the station after arriving.
-#define SHUTTLE_TRANSIT_DURATION        300 // 5 minutes = 300 seconds - how long it takes for the shuttle to get to the station.
-#define SHUTTLE_TRANSIT_DURATION_RETURN 120 // 2 minutes = 120 seconds - for some reason it takes less time to come back, go figure.
-
-// Shuttle moving status.
-#define SHUTTLE_IDLE      0
-#define SHUTTLE_WARMUP    1
-#define SHUTTLE_INTRANSIT 2
-
-// Ferry shuttle processing status.
-#define IDLE_STATE   0
-#define WAIT_LAUNCH  1
-#define FORCE_LAUNCH 2
-#define WAIT_ARRIVE  3
-#define WAIT_FINISH  4
 
 // computer3 error codes, move lower in the file when it passes dev -Sayu
 #define PROG_CRASH          1  // Generic crash.
@@ -454,18 +278,6 @@ var/list/be_special_flags = list(
 #define  AIR_DAMAGE_MODIFIER 2.025  // More means less damage from hot air scalding lungs, less = more damage. (default 2.025)
 #define INFINITY             1.#INF
 
-// Setting this much higher than 1024 could allow spammers to DOS the server easily.
-#define MAX_MESSAGE_LEN       1024
-#define MAX_PAPER_MESSAGE_LEN 12288
-#define MAX_BOOK_MESSAGE_LEN  36864
-#define MAX_LNAME_LEN         64
-#define MAX_NAME_LEN          26
-
-// Event defines.
-#define EVENT_LEVEL_MUNDANE  1
-#define EVENT_LEVEL_MODERATE 2
-#define EVENT_LEVEL_MAJOR    3
-
 // Suit sensor levels
 #define SUIT_SENSOR_OFF      0
 #define SUIT_SENSOR_BINARY   1
@@ -478,137 +290,14 @@ var/list/be_special_flags = list(
 #define STATUS_DISABLED 0 // RED Visability
 #define STATUS_CLOSE -1 // Close the interface
 
-//General-purpose life speed define for plants.
-#define HYDRO_SPEED_MULTIPLIER 1
-
-// Robot AI notifications
-#define ROBOT_NOTIFICATION_NEW_UNIT 1
-#define ROBOT_NOTIFICATION_NEW_NAME 2
-#define ROBOT_NOTIFICATION_NEW_MODULE 3
-#define ROBOT_NOTIFICATION_MODULE_RESET 4
-
 #define BOMBCAP_DVSTN_RADIUS (max_explosion_range/4)
 #define BOMBCAP_HEAVY_RADIUS (max_explosion_range/2)
 #define BOMBCAP_LIGHT_RADIUS max_explosion_range
 #define BOMBCAP_FLASH_RADIUS (max_explosion_range*1.5)
 
-#define DEFAULT_JOB_TYPE /datum/job/assistant
-
-// Appearance change flags
-#define APPEARANCE_UPDATE_DNA 1
-#define APPEARANCE_RACE	(2|APPEARANCE_UPDATE_DNA)
-#define APPEARANCE_GENDER (4|APPEARANCE_UPDATE_DNA)
-#define APPEARANCE_SKIN 8
-#define APPEARANCE_HAIR 16
-#define APPEARANCE_HAIR_COLOR 32
-#define APPEARANCE_FACIAL_HAIR 64
-#define APPEARANCE_FACIAL_HAIR_COLOR 128
-#define APPEARANCE_EYE_COLOR 256
-#define APPEARANCE_ALL_HAIR (APPEARANCE_HAIR|APPEARANCE_HAIR_COLOR|APPEARANCE_FACIAL_HAIR|APPEARANCE_FACIAL_HAIR_COLOR)
-#define APPEARANCE_ALL 511
-
-// Mode/antag template macros.
-#define MODE_BORER "borer"
-#define MODE_XENOMORPH "xeno"
-#define MODE_LOYALIST "loyalist"
-#define MODE_MUTINEER "mutineer"
-#define MODE_COMMANDO "commando"
-#define MODE_DEATHSQUAD "deathsquad"
-#define MODE_ERT "ert"
-#define MODE_MERCENARY "mercenary"
-#define MODE_NINJA "ninja"
-#define MODE_RAIDER "raider"
-#define MODE_WIZARD "wizard"
-#define MODE_CHANGELING "changeling"
-#define MODE_CULTIST "cultist"
-#define MODE_HIGHLANDER "highlander"
-#define MODE_MONKEY "monkey"
-#define MODE_RENEGADE "renegade"
-#define MODE_REVOLUTIONARY "revolutionary"
-#define MODE_LOYALIST "loyalist"
-#define MODE_MALFUNCTION "malf"
-#define MODE_TRAITOR "traitor"
-#define MODE_MEME "meme"
-
-#define MIN_SUPPLIED_LAW_NUMBER 15
-#define MAX_SUPPLIED_LAW_NUMBER 50
-
-//Area flags, possibly more to come
-#define RAD_SHIELDED 1 //shielded from radiation, clearly
-
-//intent flags, why wasn't this done the first time?
-#define I_HELP		"help"
-#define I_DISARM	"disarm"
-#define I_GRAB		"grab"
-#define I_HURT		"harm"
-
-/*
-	These are used Bump() code for living mobs, in the mob_bump_flag, mob_swap_flags, and mob_push_flags vars to determine whom can bump/swap with whom.
-*/
-#define HUMAN 1
-#define MONKEY 2
-#define ALIEN 4
-#define ROBOT 8
-#define SLIME 16
-#define SIMPLE_ANIMAL 32
-#define HEAVY 64
-
-#define ALLMOBS (HUMAN|MONKEY|ALIEN|ROBOT|SLIME|SIMPLE_ANIMAL|HEAVY)
-
 #define NEXT_MOVE_DELAY 8
 
-#define DROPLIMB_EDGE 0
-#define DROPLIMB_BLUNT 1
-#define DROPLIMB_BURN 2
 
-// Custom layer definitions, supplementing the default TURF_LAYER, MOB_LAYER, etc.
-#define DOOR_OPEN_LAYER 2.7		//Under all objects if opened. 2.7 due to tables being at 2.6
-#define DOOR_CLOSED_LAYER 3.1	//Above most items if closed
-#define LIGHTING_LAYER 11
-#define HUD_LAYER 20
-#define OBFUSCATION_LAYER 21	//Where images covering the view for eyes are put
-#define SCREEN_LAYER 22			//Mob HUD/effects layer
-
-
-/////////////////
-////WIZARD //////
-/////////////////
-
-/*		WIZARD SPELL FLAGS		*/
-#define GHOSTCAST		1	//can a ghost cast it?
-#define NEEDSCLOTHES	2	//does it need the wizard garb to cast? Nonwizard spells should not have this
-#define NEEDSHUMAN		4	//does it require the caster to be human?
-#define Z2NOCAST		8	//if this is added, the spell can't be cast at centcomm
-#define STATALLOWED		16	//if set, the user doesn't have to be conscious to cast. Required for ghost spells
-#define IGNOREPREV		32	//if set, each new target does not overlap with the previous one
-//The following flags only affect different types of spell, and therefore overlap
-//Targeted spells
-#define INCLUDEUSER		64	//does the spell include the caster in its target selection?
-#define SELECTABLE		128	//can you select each target for the spell?
-//AOE spells
-#define IGNOREDENSE		64	//are dense turfs ignored in selection?
-#define IGNORESPACE		128	//are space turfs ignored in selection?
-//End split flags
-#define CONSTRUCT_CHECK	256	//used by construct spells - checks for nullrods
-#define NO_BUTTON		512	//spell won't show up in the HUD with this
-
-//invocation
-#define SpI_SHOUT	"shout"
-#define SpI_WHISPER	"whisper"
-#define SpI_EMOTE	"emote"
-#define SpI_NONE	"none"
-
-//upgrading
-#define Sp_SPEED	"speed"
-#define Sp_POWER	"power"
-#define Sp_TOTAL	"total"
-
-//casting costs
-#define Sp_RECHARGE	"recharge"
-#define Sp_CHARGES	"charges"
-#define Sp_HOLDVAR	"holdervar"
-
-///////WIZ END/////////
 
 //singularity defines
 #define STAGE_ONE 	1
@@ -654,9 +343,6 @@ var/list/be_special_flags = list(
 #define WALL_CAN_OPEN 1
 #define WALL_OPENING 2
 
-#define DEFAULT_WALL_MATERIAL "steel"
-#define DEFAULT_TABLE_MATERIAL "plastic"
-
 //default item on-mob icons
 #define INV_HEAD_DEF_ICON 'icons/mob/head.dmi'
 #define INV_BACK_DEF_ICON 'icons/mob/back.dmi'
@@ -673,18 +359,6 @@ var/list/be_special_flags = list(
 //#define INV_W_UNIFORM_SLIM_ICON 'icons/mob/uniform_f.dmi'
 #define INV_ACCESSORIES_SLIM_ICON 'icons/mob/ties_f.dmi'
 
-
-#define SHARD_SHARD "shard"
-#define SHARD_SHRAPNEL "shrapnel"
-#define SHARD_STONE_PIECE "piece"
-#define SHARD_SPLINTER "splinters"
-#define SHARD_NONE ""
-
-#define MATERIAL_UNMELTABLE 1
-#define MATERIAL_BRITTLE 2
-#define MATERIAL_PADDING 4
-
-#define TABLE_BRITTLE_MATERIAL_MULTIPLIER 4 // Amount table damage is multiplied by if it is made of a brittle material (e.g. glass)
 
 #define FOR_DVIEW(type, range, center, invis_flags) \
 	dview_mob.loc = center; \

@@ -36,9 +36,3 @@
 #define CE_PULSE      "xcardic" // increases or decreases heart rate
 #define CE_NOPULSE    "heartstop" // stops heartbeat
 
-//carbon taste sensitivity defines, used in mob/living/carbon/proc/ingest
-#define TASTE_HYPERSENSITIVE 3 //anything below 5%
-#define TASTE_SENSITIVE 2 //anything below 7%
-#define TASTE_NORMAL 1 //anything below 15%
-#define TASTE_DULL 0.5 //anything below 30%
-#define TASTE_NUMB 0.1 //anything below 150%
