@@ -924,7 +924,7 @@
 
 /mob/living/carbon/human/revive()
 
-	if(species && !(species.flags & NO_BLOOD))
+	if(should_have_organ(O_HEART))
 		vessel.add_reagent("blood",species.blood_volume-vessel.total_volume)
 		fixblood()
 
@@ -1046,7 +1046,7 @@
 					src << msg
 
 				organ.take_damage(rand(1,3), 0, 0)
-				if(!(organ.status & ORGAN_ROBOT) && !(species.flags & NO_BLOOD)) //There is no blood in protheses.
+				if(!(organ.status & ORGAN_ROBOT) && (should_have_organ(O_HEART))) //There is no blood in protheses.
 					organ.status |= ORGAN_BLEEDING
 					src.adjustToxLoss(rand(1,3))
 
@@ -1409,8 +1409,6 @@
 		get_scooped(H)
 		return
 	return ..()
-
-
 
 /mob/living/carbon/human/is_muzzled()
 	return (wear_mask && (istype(wear_mask, /obj/item/clothing/mask/muzzle) || istype(src.wear_mask, /obj/item/weapon/grenade)))

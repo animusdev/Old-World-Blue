@@ -349,7 +349,7 @@
 	var/safe_pressure_min = species.breath_pressure // Minimum safe partial pressure of breathable gas in kPa
 
 	// Lung damage increases the minimum safe pressure.
-	if(species.has_organ[O_LUNGS])
+	if(should_have_organ(O_LUNGS))
 		var/obj/item/organ/internal/lungs/L = internal_organs_by_name[O_LUNGS]
 		if(isnull(L))
 			safe_pressure_min = INFINITY //No lungs, how are you breathing?
@@ -877,7 +877,7 @@
 	else				//ALIVE. LIGHTS ARE ON
 		updatehealth()	//TODO
 
-		if(health <= config.health_threshold_dead || (species.has_organ[O_BRAIN] && !has_brain()))
+		if(health <= config.health_threshold_dead || (should_have_organ(O_BRAIN) && !has_brain()))
 			death()
 			blinded = 1
 			silent = 0

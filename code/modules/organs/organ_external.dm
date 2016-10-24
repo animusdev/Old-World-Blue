@@ -692,10 +692,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	status &= ~ORGAN_BLEEDING
 	var/clamped = 0
 
-	var/mob/living/carbon/human/H
-	if(ishuman(owner))
-		H = owner
-
 	//update damage counts
 	for(var/datum/wound/W in wounds)
 		if(!W.internal) //so IB doesn't count towards crit/paincrit
@@ -704,7 +700,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			else
 				brute_dam += W.damage
 
-		if(!(status & ORGAN_ROBOT) && W.bleeding() && (H && !(H.species.flags & NO_BLOOD)))
+		if(!(status & ORGAN_ROBOT) && W.bleeding() && (owner && owner.should_have_organ(O_HEART)))
 			W.bleed_timer--
 			status |= ORGAN_BLEEDING
 
@@ -713,7 +709,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		number_wounds += W.amount
 
 	//things tend to bleed if they are CUT OPEN
-	if (open && !clamped && (H && !(H.species.flags & NO_BLOOD)))
+	if (open && !clamped && owner && owner.should_have_organ(O_HEART))
 		status |= ORGAN_BLEEDING
 
 	//Bone fractures

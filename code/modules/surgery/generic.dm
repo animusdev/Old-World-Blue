@@ -98,7 +98,7 @@
 			"\blue You have constructed a prepared incision on and within [target]'s [affected.name] with \the [tool].",)
 		affected.open = 1
 
-		if(istype(target) && !(target.species.flags & NO_BLOOD))
+		if(istype(target) && target.should_have_organ(O_HEART))
 			affected.status |= ORGAN_BLEEDING
 
 		affected.createwound(CUT, 1)
@@ -142,7 +142,7 @@
 		"\blue You have made an incision on [target]'s [affected.name] with \the [tool].",)
 		affected.open = 1
 
-		if(istype(target) && !(target.species.flags & NO_BLOOD))
+		if(istype(target) && target.should_have_organ(O_HEART))
 			affected.status |= ORGAN_BLEEDING
 		playsound(target.loc, 'sound/weapons/bladeslice.ogg', 50, 1)
 

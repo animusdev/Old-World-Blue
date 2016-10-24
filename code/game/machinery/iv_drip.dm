@@ -102,7 +102,7 @@
 			if(NOCLONE in T.mutations)
 				return
 
-			if(T.species && T.species.flags & NO_BLOOD)
+			if(!T.should_have_organ(O_HEART))
 				return
 
 			// If the human is losing too much blood, beep.

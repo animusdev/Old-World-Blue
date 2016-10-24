@@ -272,7 +272,7 @@
 		msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
 	var/ssd_msg = get_ssd()
-	if(ssd_msg && (!species.has_organ[O_BRAIN] || has_brain()) && stat != DEAD)
+	if(ssd_msg && (!should_have_organ(O_BRAIN) || has_brain()) && stat != DEAD)
 		if(!key)
 			msg += "<span class='deadsay'>[t_He] [t_is] [ssd_msg]. It doesn't look like [t_he] [t_is] waking up anytime soon.</span>\n"
 		else if(!client)

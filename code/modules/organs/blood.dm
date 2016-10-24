@@ -19,7 +19,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 40
 	vessel = new/datum/reagents(species.blood_volume)
 	vessel.my_atom = src
 
-	if(species && species.flags & NO_BLOOD) //We want the var for safety but we can do without the actual blood.
+	if(!should_have_organ(O_HEART)) //We want the var for safety but we can do without the actual blood.
 		return
 
 	vessel.add_reagent("blood",species.blood_volume)
@@ -39,7 +39,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 40
 	if(in_stasis)
 		return
 
-	if(species && species.flags & NO_BLOOD)
+	if(!should_have_organ(O_HEART))
 		return
 
 	if(stat != DEAD && bodytemperature >= 170)	//Dead or cryosleep people do not pump the blood.
@@ -63,7 +63,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 40
 
 		// Damaged heart virtually reduces the blood volume, as the blood isn't
 		// being pumped properly anymore.
-		if(species && species.has_organ[O_HEART])
+		if(species && should_have_organ(O_HEART))
 			var/obj/item/organ/internal/heart/heart = internal_organs_by_name[O_HEART]
 
 			if(!heart)
@@ -141,7 +141,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 40
 		blood_splatter(src,src)
 
 /mob/living/carbon/human/proc/remove_blood(var/amt)
-	if(species && species.flags & NO_BLOOD) //TODO: Make drips come from the reagents instead.
+	if(!should_have_organ(O_HEART)) //TODO: Make drips come from the reagents instead.
 		return 0
 
 	if(!amt)
@@ -191,7 +191,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 40
 //For humans, blood does not appear from blue, it comes from vessels.
 /mob/living/carbon/human/take_blood(obj/item/weapon/reagent_containers/container, var/amount)
 
-	if(species && species.flags & NO_BLOOD)
+	if(!should_have_organ(O_HEART))
 		return null
 
 	if(vessel.get_reagent_amount("blood") < amount)
@@ -219,7 +219,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 40
 //Transfers blood from reagents to vessel, respecting blood types compatability.
 /mob/living/carbon/human/inject_blood(var/datum/reagent/blood/injected, var/amount)
 
-	if(species && species.flags & NO_BLOOD)
+	if(!should_have_organ(O_HEART))
 		reagents.add_reagent("blood", amount, injected.data)
 		reagents.update_total()
 		return

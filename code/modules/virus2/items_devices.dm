@@ -15,7 +15,7 @@
 
 	if (ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(H.species && H.species.flags & NO_BLOOD)
+		if(!H.should_have_organ(O_HEART))
 			report("Scan aborted: The target does not have blood.", user)
 			return
 
