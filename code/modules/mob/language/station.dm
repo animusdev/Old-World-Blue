@@ -75,22 +75,6 @@
 	colour = "solcom"
 	key = "1"
 
-/datum/language/machine
-	name = "EAL"
-	desc = "A language of encoded tones that allow for IPCs to communicate auditorily between each other in a manner that allows for easier transfer of information."
-	speech_verb = "beeps"
-	ask_verb = "beeps"
-	exclaim_verb = "loudly beeps"
-	colour = "say_quote"
-	key = "6"
-	flags = WHITELISTED
-	syllables = list("beep","beep","beep","beep","beep","boop","boop","boop","bop","bop","dee","dee","doo","doo","hiss","hss","buzz","buzz","bzz","ksssh","keey","wurr","wahh","tzzz")
-
-/datum/language/machine/get_random_name()
-	if(prob(70))
-		return "[pick(list("PBU","HIU","SINA","ARMA","OSI"))]-[rand(100, 999)]"
-	return pick(ai_names)
-
 	//syllables are at the bottom of the file
 
 /datum/language/human/get_spoken_verb(var/msg_end)
@@ -109,6 +93,27 @@
 			return capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 	else
 		return ..()
+
+/datum/language/machine
+	name = "Encoded Audio Language"
+	desc = "A language of encoded tones that allow for IPCs to communicate auditorily between each other in a manner that allows for easier transfer of information."
+	speech_verb = "whistles"
+	ask_verb = "chirps"
+	exclaim_verb = "whistles loudly"
+	colour = "changeling"
+	key = "6"
+	flags = WHITELISTED|NO_STUTTER
+	syllables = list("beep","beep","beep","beep","beep","boop","boop","boop","bop","bop","dee","dee","doo","doo","hiss","hss","buzz","buzz","bzz","ksssh","keey","wurr","wahh","tzzz")
+/*
+/datum/language/machine/can_speak_special(var/mob/speaker)
+	return speaker.isSynthetic()
+*/
+
+/datum/language/machine/get_random_name()
+	if(prob(70))
+		return "[pick(list("PBU","HIU","SINA","ARMA","OSI"))]-[rand(100, 999)]"
+	else
+		return pick(ai_names)
 
 //Syllable Lists
 /*

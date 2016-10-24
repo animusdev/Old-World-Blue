@@ -35,6 +35,14 @@
 
 	return 0
 
+/mob/living/carbon/human/proc/should_have_organ(var/organ_check)
+	return 0
+
+/mob/living/carbon/human/proc/can_feel_pain(var/check_organ)
+	if(isSynthetic())
+		return 0
+	return !(species.flags & NO_PAIN)
+
 /mob/living/carbon/human/proc/set_body_build(var/prefered = "Default")
 	species.get_body_build(prefered)
 	fix_body_build()
