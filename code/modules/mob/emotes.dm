@@ -154,7 +154,7 @@ var/global/list/emotes_list = list()
 	key = "deathgasp"
 	m_type = EMOTE_HEARABLE
 	act(var/mob/living/carbon/human/H)
-		return H.custom_emote(EMOTE_VISIBLE, H.species.death_message)
+		return H.custom_emote(EMOTE_VISIBLE, H.get_death_message())
 
 /datum/emote/drool
 	key = "drool"

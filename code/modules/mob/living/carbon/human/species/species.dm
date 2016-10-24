@@ -30,6 +30,7 @@
 	var/icon/icon_template                               // Used for mob icon generation for non-32x32 species.
 	var/is_small
 	var/show_ssd = "fast asleep"
+	var/virus_immune
 	var/hunger_factor = 0.05                             // Multiplier for hunger.
 	var/taste_sensitivity = TASTE_NORMAL
 

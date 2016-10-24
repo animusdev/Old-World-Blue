@@ -41,7 +41,7 @@
 	//big suits/masks/helmets make it hard to tell their gender and age
 	if(!skipjumpsuit || !skipface)
 
-		var/t_appeal = "<b><font color='[species.flesh_color]'>[species.name]</font></b>"
+		var/t_appeal = "<b><font color='[get_flesh_colour()]'>[species.name]</font></b>"
 		switch(gender)
 			if(MALE)
 				t_He = "He"
@@ -271,11 +271,12 @@
 	if(getBrainLoss() >= 60)
 		msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
-	if(species.show_ssd && (!species.has_organ[O_BRAIN] || has_brain()) && stat != DEAD)
+	var/ssd_msg = get_ssd()
+	if(ssd_msg && (!species.has_organ[O_BRAIN] || has_brain()) && stat != DEAD)
 		if(!key)
-			msg += "<span class='deadsay'>[t_He] [t_is] fast asleep. It doesn't look like [t_he] [t_is] waking up anytime soon.</span>\n"
+			msg += "<span class='deadsay'>[t_He] [t_is] [ssd_msg]. It doesn't look like [t_he] [t_is] waking up anytime soon.</span>\n"
 		else if(!client)
-			msg += "<span class='deadsay'>[t_He] [t_is] [species.show_ssd].</span>\n"
+			msg += "<span class='deadsay'>[t_He] [t_is] [ssd_msg].</span>\n"
 
 	var/list/wound_flavor_text = list()
 	var/list/is_destroyed = list()

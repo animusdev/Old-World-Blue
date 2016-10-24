@@ -275,7 +275,7 @@
 		BP_L_HAND = new /datum/organ_description/hand/left/diona,
 		BP_R_HAND = new /datum/organ_description/hand/right/diona,
 		BP_L_FOOT = new /datum/organ_description/foot/left/diona,
-		BP_R_FOOT = new /datum/organ_description/foot/right/diona,
+		BP_R_FOOT = new /datum/organ_description/foot/right/diona
 	)
 
 	inherent_verbs = list(
@@ -385,6 +385,10 @@
 
 /datum/species/machine/equip_survival_gear(var/mob/living/carbon/human/H)
 	return
+
+/datum/species/machine/handle_post_spawn(var/mob/living/carbon/human/H)
+	for(var/obj/item/organ/O in H.organs)
+		O.robotize()
 
 /datum/species/machine/handle_death(var/mob/living/carbon/human/H)
 	..()

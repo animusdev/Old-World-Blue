@@ -4,22 +4,6 @@
 			. += C.ear_protection
 	return
 
-/mob/living/carbon/human/proc/get_blood_colour()
-	var/datum/robolimb/company = isSynthetic()
-	if(company)
-		return company.blood_color
-	else
-		return species.blood_color
-
-/mob/living/carbon/human/proc/get_ssd()
-	if(looksSynthetic())
-		return "flashing a 'system offline' light"
-	else
-		return species.show_ssd
-
-/mob/living/carbon/human/proc/get_knockout_message()
-	return isSynthetic() ? "encounters a hardware fault and suddenly reboots!" : species.knockout_message
-
 // This is the 'mechanical' check for synthetic-ness, not appearance
 // Returns the company that made the synthetic
 /mob/living/carbon/human/isSynthetic()
@@ -64,3 +48,30 @@
 			return 1
 	world.log << "Can't find possible body_build. Gender = [gender], Species = [species]"
 	return 0
+
+/mob/living/carbon/human/proc/get_knockout_message()
+	return isSynthetic() ? "encounters a hardware fault and suddenly reboots!" : species.knockout_message
+
+/mob/living/carbon/human/proc/get_ssd()
+	if(looksSynthetic())
+		return "flashing a 'system offline' light"
+	else
+		return species.show_ssd
+
+/mob/living/carbon/human/proc/get_death_message()
+	return (isSynthetic() ? "gives one shrill beep before falling lifeless." : species.death_message)
+
+/mob/living/carbon/human/proc/get_blood_colour()
+	var/datum/robolimb/company = isSynthetic()
+	if(company)
+		return company.blood_color
+	else
+		return species.blood_color
+
+/mob/living/carbon/human/proc/is_virus_immune()
+	return isSynthetic() || species.virus_immune
+
+/mob/living/carbon/human/proc/get_flesh_colour()
+	return isSynthetic() ? SYNTH_FLESH_COLOUR : species.flesh_color
+
+

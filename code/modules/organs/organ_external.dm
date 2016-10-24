@@ -789,6 +789,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	var/mob/living/carbon/human/victim = owner //Keep a reference for post-removed().
 	var/obj/item/organ/external/parent_organ = parent
+
+	var/use_flesh_colour = owner.get_flesh_colour()
+	var/use_blood_colour = owner.get_blood_colour()
+
 	removed(null, ignore_children)
 	victim.traumatic_shock += 60
 
@@ -834,10 +838,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 				gore = new /obj/effect/decal/cleanable/blood/gibs/robot(get_turf(victim))
 			else
 				gore = new /obj/effect/decal/cleanable/blood/gibs(get_turf(victim))
-				if(victim && victim.species)
-					gore.fleshcolor = victim.species.flesh_color
-					gore.basecolor = victim.species.blood_color
-					gore.update_icon()
+				gore.fleshcolor = use_flesh_colour
+				gore.basecolor =  use_blood_colour
+				gore.update_icon()
 
 			gore.throw_at(get_edge_target_turf(src,pick(alldirs)),rand(1,3),30)
 

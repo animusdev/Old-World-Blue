@@ -30,7 +30,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 /mob/living/carbon/human/proc/fixblood()
 	for(var/datum/reagent/blood/B in vessel.reagent_list)
 		if(B.id == "blood")
-			B.data = list(	"donor"=src,"viruses"=null,"species"=species.name,"blood_DNA"=dna.unique_enzymes,"blood_colour"= species.blood_color,"blood_type"=dna.b_type,	\
+			B.data = list(	"donor"=src,"viruses"=null,"species"=species.name,"blood_DNA"=dna.unique_enzymes,"blood_colour"= get_blood_colour(),"blood_type"=dna.b_type,	\
 							"resistances"=null,"trace_chem"=null, "virus2" = null, "antibodies" = list())
 			B.color = B.data["blood_colour"]
 
@@ -177,7 +177,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	// Putting this here due to return shenanigans.
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
-		B.data["blood_colour"] = H.species.blood_color
+		B.data["blood_colour"] = H.get_blood_colour()
 		B.color = B.data["blood_colour"]
 
 	var/list/temp_chem = list()

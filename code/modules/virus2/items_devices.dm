@@ -8,12 +8,11 @@
 	item_state = "electronic"
 	flags = CONDUCT
 
-/obj/item/device/antibody_scanner/attack(mob/M as mob, mob/user as mob)
-	if(!istype(M,/mob/living/carbon))
+/obj/item/device/antibody_scanner/attack(mob/living/carbon/C as mob, mob/user as mob)
+	if(!istype(C))
 		report("Scan aborted: Incompatible target.", user)
 		return
 
-	var/mob/living/carbon/C = M
 	if (ishuman(C))
 		var/mob/living/carbon/human/H = C
 		if(H.species && H.species.flags & NO_BLOOD)
