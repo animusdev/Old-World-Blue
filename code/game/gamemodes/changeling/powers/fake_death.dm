@@ -25,7 +25,6 @@
 		return
 	C << "<span class='notice'>We will attempt to regenerate our form.</span>"
 
-	C.status_flags |= FAKEDEATH		//play dead
 	C.update_canmove()
 	C.remove_changeling_powers()
 
