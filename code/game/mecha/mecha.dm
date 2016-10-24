@@ -704,10 +704,10 @@
 				V.show_message("The [W] bounces off [src.name] armor.", 1)
 */
 	else
-		src.occupant_message("<font color='red'><b>[user] hits [src] with [W].</b></font>")
+		src.occupant_message("<span class='danderous'>[user] hits [src] with [W].</span>")
 		user.visible_message(
-			"<font color='red'><b>[user] hits [src] with [W].</b></font>",
-			"<font color='red'><b>You hit [src] with [W].</b></font>"
+			"<span class='danderous'>[user] hits [src] with [W].</span>",
+			"<span class='danderous'>You hit [src] with [W].</span>"
 		)
 		src.take_damage(W.force,W.damtype)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
