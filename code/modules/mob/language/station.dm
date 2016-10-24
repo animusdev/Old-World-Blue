@@ -7,6 +7,15 @@
 	colour = "soghun"
 	key = "q"
 	syllables = list("hs","zt","kr","st","sh")
+	speech_sounds = list(
+		'sound/voice/rootspeak/rootspeak1.ogg',
+		'sound/voice/rootspeak/rootspeak2.ogg',
+		'sound/voice/rootspeak/rootspeak3.ogg',
+		'sound/voice/rootspeak/rootspeak4.ogg',
+		'sound/voice/rootspeak/rootspeak5.ogg',
+		'sound/voice/rootspeak/rootspeak6.ogg',
+		'sound/voice/rootspeak/rootspeak7.ogg',
+		'sound/voice/rootspeak/rootspeak8.ogg')
 
 /datum/language/diona/get_random_name()
 	var/new_name = "[pick(list("To Sleep Beneath","Wind Over","Embrace of","Dreams of","Witnessing","To Walk Beneath","Approaching the"))]"
@@ -66,6 +75,18 @@
 	key = "k"
 	flags = WHITELISTED
 	syllables = list("qr","qrr","xuq","qil","quum","xuqm","vol","xrim","zaoo","qu-uu","qix","qoo","zix","*","!")
+	speech_sounds = list(
+		'sound/voice/skrellian/skrellian1.ogg',
+		'sound/voice/skrellian/skrellian2.ogg',
+		'sound/voice/skrellian/skrellian3.ogg',
+		'sound/voice/skrellian/skrellian4.ogg',
+		'sound/voice/skrellian/skrellian5.ogg',
+		'sound/voice/skrellian/skrellian6.ogg',
+		'sound/voice/skrellian/skrellian7.ogg',
+		'sound/voice/skrellian/skrellian8.ogg',
+		'sound/voice/skrellian/skrellian9.ogg',
+		'sound/voice/skrellian/skrellian10.ogg',
+		'sound/voice/skrellian/skrellian11.ogg')
 
 /datum/language/human
 	name = "Sol Common"
@@ -74,17 +95,6 @@
 	whisper_verb = "whispers"
 	colour = "solcom"
 	key = "1"
-
-/datum/language/machine
-	name = "EAL"
-	desc = "A language of encoded tones that allow for IPCs to communicate auditorily between each other in a manner that allows for easier transfer of information."
-	speech_verb = "beeps"
-	ask_verb = "beeps"
-	exclaim_verb = "loudly beeps"
-	colour = "say_quote"
-	key = "6"
-	flags = WHITELISTED
-	syllables = list("beep","beep","beep","beep","beep","boop","boop","boop","bop","bop","dee","dee","doo","doo","hiss","hss","buzz","buzz","bzz","ksssh","keey","wurr","wahh","tzzz")
 
 /datum/language/machine/get_random_name()
 	if(prob(70))
