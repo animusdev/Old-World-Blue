@@ -97,7 +97,9 @@
 	return 1
 
 /mob/living/carbon/human/breathe()
-	if(!in_stasis || !should_have_organ(O_LUNGS))
+	if(!should_have_organ(O_LUNGS))
+		return
+	if(!in_stasis)
 		..()
 
 // Calculate how vulnerable the human is to under- and overpressure.
