@@ -356,6 +356,7 @@
 	brute_mod = 0.5
 	burn_mod = 1
 	show_ssd = "flashing a 'system offline' glyph on their monitor"
+	virus_immune = 1
 
 	warning_low_pressure = 50
 	hazard_low_pressure = 0

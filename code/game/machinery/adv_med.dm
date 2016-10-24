@@ -285,6 +285,7 @@
 		"bicaridine_amount" = H.reagents.get_reagent_amount("bicaridine"),
 		"dermaline_amount" = H.reagents.get_reagent_amount("dermaline"),
 		"blood_amount" = H.vessel.get_reagent_amount("blood"),
+		"percent" = round(H.vessel.get_reagent_amount("blood") / H.species.blood_volume*100),
 		"disabilities" = H.sdisabilities,
 		"tg_diseases_list" = H.viruses.Copy(),
 		"lung_ruptured" = H.is_lung_ruptured(),
@@ -323,7 +324,7 @@
 	if(occ["borer_present"])
 		dat += "Large growth detected in frontal lobe, possibly cancerous. Surgical removal is recommended.<br>"
 
-	dat += text("[]\tBlood Level %: [] ([] units)</FONT><BR>", (occ["blood_amount"] > 448 ?"<font color='blue'>" : "<font color='red'>"), occ["blood_amount"]*100 / 560, occ["blood_amount"])
+	dat += text("[]\tBlood Level %: [] ([] units)</FONT><BR>", (occ["percent"] > BLOOD_VOLUME_SAFE ?"<font color='blue'>" : "<font color='red'>"), occ["percent"], occ["blood_amount"])
 
 	dat += text("Inaprovaline: [] units<BR>", occ["inaprovaline_amount"])
 	dat += text("Soporific: [] units<BR>", occ["stoxin_amount"])

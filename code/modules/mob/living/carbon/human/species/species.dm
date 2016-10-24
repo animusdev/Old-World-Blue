@@ -31,6 +31,7 @@
 	var/is_small
 	var/show_ssd = "fast asleep"
 	var/virus_immune
+	var/blood_volume = 560                               // Initial blood volume.
 	var/hunger_factor = 0.05                             // Multiplier for hunger.
 	var/taste_sensitivity = TASTE_NORMAL
 
