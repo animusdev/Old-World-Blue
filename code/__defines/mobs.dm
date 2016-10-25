@@ -3,6 +3,9 @@
 #define UNCONSCIOUS 1
 #define DEAD        2
 
+#define MESSAGE_VISIBLE  1
+#define MESSAGE_HEARABLE 2
+
 // Bitflags defining which status effects could be or are inflicted on a mob.
 #define CANSTUN     0x1
 #define CANWEAKEN   0x2

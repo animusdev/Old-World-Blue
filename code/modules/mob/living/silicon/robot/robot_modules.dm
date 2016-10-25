@@ -28,6 +28,7 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	var/languages = list(LANGUAGE_SOL_COMMON = 1, LANGUAGE_TRADEBAND = 1, LANGUAGE_UNATHI = 0,\
 						LANGUAGE_SIIK_TAJR = 0, LANGUAGE_SKRELLIAN = 0, LANGUAGE_GUTTER = 0,\
 						LANGUAGE_SIIK_MAAS = 0, LANGUAGE_SURZHYK = 0)
+	var/list/emotes = list()
 	var/module_type = "Standard"
 	//var/sprites = list()
 	var/can_be_pushed = 1
@@ -54,6 +55,13 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 
 	if(R.radio)
 		R.radio.recalculateChannels()
+
+	if(emotes.len)
+		var/list/tmp_emotes = emotes.Copy()
+		emotes.Cut()
+		for(var/T in tmp_emotes)
+			var/datum/emote/E = new T
+			emotes[E.key] = E
 
 /obj/item/weapon/robot_module/proc/Reset(var/mob/living/silicon/robot/R)
 	R.module = null
@@ -361,6 +369,7 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 /obj/item/weapon/robot_module/security
 	name = "security robot module"
 	channels = list("Security" = 1)
+	emotes = list(/datum/emote/law, /datum/emote/halt)
 	networks = list(NETWORK_SECURITY)
 	subsystems = list(/mob/living/silicon/proc/subsystem_crew_monitor)
 	can_be_pushed = 0
