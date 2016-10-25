@@ -71,7 +71,7 @@ var/global/list/chameleons = list(
 		return
 
 	var/newtype = chameleons[style_list][picked]
-	change_item_appearance(newtype)
+	change_item_appearance(src,newtype)
 	update_clothing_icon()
 
 //*****************
@@ -108,7 +108,7 @@ var/global/list/chameleons = list(
 	if(!picked)
 		return
 	var/newtype = chameleons[style_list][picked]
-	change_item_appearance(newtype)
+	change_item_appearance(src, newtype)
 	update_clothing_icon()
 
 
@@ -145,7 +145,7 @@ var/global/list/chameleons = list(
 	if(!picked)
 		return
 	var/newtype = chameleons[style_list][picked]
-	change_item_appearance(newtype)
+	change_item_appearance(src, newtype)
 	update_clothing_icon()
 
 //*******************
@@ -182,7 +182,7 @@ var/global/list/chameleons = list(
 	if(!picked)
 		return
 	var/newtype = chameleons[style_list][picked]
-	change_item_appearance(newtype)
+	change_item_appearance(src, newtype)
 	update_clothing_icon()
 
 //**********************
@@ -220,7 +220,7 @@ var/global/list/chameleons = list(
 	if(!picked)
 		return
 	var/newtype = chameleons[style_list][picked]
-	change_item_appearance(newtype)
+	change_item_appearance(src, newtype)
 
 //********************
 //**Chameleon Gloves**
@@ -253,7 +253,7 @@ var/global/list/chameleons = list(
 	if(!picked)
 		return
 	var/newtype = chameleons[style_list][picked]
-	change_item_appearance(newtype)
+	change_item_appearance(src, newtype)
 	update_clothing_icon()
 
 //******************
@@ -287,7 +287,7 @@ var/global/list/chameleons = list(
 	if(!picked)
 		return
 	var/newtype = chameleons[style_list][picked]
-	change_item_appearance(newtype)
+	change_item_appearance(src, newtype)
 	update_clothing_icon()
 
 //*********************
@@ -321,7 +321,7 @@ var/global/list/chameleons = list(
 	if(!picked)
 		return
 	var/newtype = chameleons[style_list][picked]
-	change_item_appearance(newtype)
+	change_item_appearance(src, newtype)
 	update_clothing_icon()
 
 //*****************
@@ -360,4 +360,4 @@ var/global/list/chameleons = list(
 
 	var/picked = input("Select backpack to change it to", "Chameleon Backpack") as null|anything in chameleons[style_list]
 	var/newtype = chameleons[style_list][picked]
-	change_item_appearance(newtype)
+	change_item_appearance(src, newtype)
