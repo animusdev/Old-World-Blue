@@ -47,7 +47,7 @@
 	containername = "\"Odysseus\" Circuit Crate"
 	access = access_robotics
 
-/datum/supply_packs/exosuit_mod
+/datum/supply_packs/robotics/exosuit_mod
 	contains = list(/obj/item/device/kit/paint/ripley)
 	name = "APLU classic modkit"
 	cost = 50
@@ -62,42 +62,42 @@
 	containername = "heavy crate"
 
 
-/datum/supply_packs/exosuit_mod/aplured
+/datum/supply_packs/robotics/exosuit_mod/aplured
 	contains = list(/obj/item/device/kit/paint/ripley/flames_red)
 	name = "APLU flames red modkit"
 	cost = 60
 
-/datum/supply_packs/exosuit_mod/aplublue
+/datum/supply_packs/robotics/exosuit_mod/aplublue
 	contains = list(/obj/item/device/kit/paint/ripley/flames_blue)
 	name = "APLU flames blue modkit"
 	cost = 60
 
-/datum/supply_packs/exosuit_mod/durand
+/datum/supply_packs/robotics/exosuit_mod/durand
 	contains = list(/obj/item/device/kit/paint/durand)
 	name = "Durand classic exosuit modkit"
 	cost = 75
 
-/datum/supply_packs/exosuit_mod/durand/seraph
+/datum/supply_packs/robotics/exosuit_mod/durand/seraph
 	contains = list(/obj/item/device/kit/paint/durand/seraph)
 	name = "Durand seraph exosuit modkit"
 	cost = 80
 
-/datum/supply_packs/exosuit_mod/durand/phazon
+/datum/supply_packs/robotics/exosuit_mod/durand/phazon
 	contains = list(/obj/item/device/kit/paint/durand/phazon)
 	name = "Durand phazon exosuit modkit"
 	cost = 80
 
-/datum/supply_packs/exosuit_mod/gygax
+/datum/supply_packs/robotics/exosuit_mod/gygax
 	contains = list(/obj/item/device/kit/paint/gygax)
 	name = "Gygax classic exosuit modkit"
 	cost = 75
 
-/datum/supply_packs/exosuit_mod/gygax/darkgygax
+/datum/supply_packs/robotics/exosuit_mod/gygax/darkgygax
 	contains = list(/obj/item/device/kit/paint/gygax/darkgygax)
 	name = "Gygax darkgygax exosuit modkit"
 	cost = 80
 
-/datum/supply_packs/exosuit_mod/gygax/recitence
+/datum/supply_packs/robotics/exosuit_mod/gygax/recitence
 	contains = list(/obj/item/device/kit/paint/gygax/recitence)
 	name = "Gygax recitence exosuit modkit"
 	cost = 80
