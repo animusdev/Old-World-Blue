@@ -59,11 +59,11 @@
 /datum/species/unathi
 	name = "Unathi"
 	name_plural = "Unathi"
-	icobase = 'icons/mob/human_races/r_lizard.dmi'
-	deform = 'icons/mob/human_races/r_def_lizard.dmi'
+	icobase = 'icons/mob/human_races/unathi.dmi'
+	deform = 'icons/mob/human_races/unathi_def.dmi'
 	language = "Sinta'unathi"
 	tail = "sogtail"
-	tail_animation = 'icons/mob/species/unathi/tail.dmi'
+	tail_animation = 'icons/mob/human_races/unathi_tail.dmi'
 	unarmed_attacks = list(
 		new /datum/unarmed_attack/stomp,
 		new /datum/unarmed_attack/kick,
@@ -130,11 +130,11 @@
 /datum/species/tajaran
 	name = "Tajara"
 	name_plural = "Tajaran"
-	icobase = 'icons/mob/human_races/r_tajaran.dmi'
-	deform = 'icons/mob/human_races/r_def_tajaran.dmi'
+	icobase = 'icons/mob/human_races/tajaran.dmi'
+	deform = 'icons/mob/human_races/tajaran_def.dmi'
 	language = "Siik'tajr"
 	tail = "tajtail"
-	tail_animation = 'icons/mob/species/tajaran/tail.dmi'
+	tail_animation = 'icons/mob/human_races/tajaran_tail.dmi'
 	unarmed_attacks = list(
 		new /datum/unarmed_attack/stomp,
 		new /datum/unarmed_attack/kick,
@@ -193,8 +193,8 @@
 /datum/species/skrell
 	name = "Skrell"
 	name_plural = "Skrell"
-	icobase = 'icons/mob/human_races/r_skrell.dmi'
-	deform = 'icons/mob/human_races/r_def_skrell.dmi'
+	icobase = 'icons/mob/human_races/skrell.dmi'
+	deform = 'icons/mob/human_races/skrell_def.dmi'
 	language = "Skrellian"
 	primitive_form = "Neaera"
 	unarmed_attacks = list(new /datum/unarmed_attack/punch)
@@ -229,8 +229,8 @@
 /datum/species/diona
 	name = "Diona"
 	name_plural = "Dionaea"
-	icobase = 'icons/mob/human_races/r_diona.dmi'
-	deform = 'icons/mob/human_races/r_def_plant.dmi'
+	icobase = 'icons/mob/human_races/diona.dmi'
+	deform = 'icons/mob/human_races/diona_def.dmi'
 	language = "Rootspeak"
 	unarmed_attacks = list(
 		new /datum/unarmed_attack/stomp,
@@ -345,8 +345,8 @@
 	name = "Machine"
 	name_plural = "machines"
 
-	icobase = 'icons/mob/human_races/r_machine.dmi'
-	deform = 'icons/mob/human_races/r_machine.dmi'
+	icobase = 'icons/mob/human_races/machine.dmi'
+	deform = 'icons/mob/human_races/machine.dmi'
 	language = "EAL"
 	unarmed_attacks = list(
 		new /datum/unarmed_attack/punch
