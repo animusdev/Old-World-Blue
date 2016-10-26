@@ -42,7 +42,7 @@
 
 	for(var/mob/living/M in range(range, src))
 		if(iscarbon(M))
-			var/mob/living/carbon/C
+			var/mob/living/carbon/C = M
 			if(!C.mind || !C.mind.changeling)
 				if(C.get_ear_protection() >= 2)
 					continue
