@@ -17,6 +17,7 @@
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "l_arm"
 	construction_time = 200
+	matter = list(DEFAULT_WALL_MATERIAL = 12000)
 	construction_cost = list(DEFAULT_WALL_MATERIAL=18000)
 
 /obj/item/robot_parts/r_arm
@@ -24,6 +25,7 @@
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "r_arm"
 	construction_time = 200
+	matter = list(DEFAULT_WALL_MATERIAL = 12000)
 	construction_cost = list(DEFAULT_WALL_MATERIAL=18000)
 
 /obj/item/robot_parts/l_leg
@@ -31,6 +33,7 @@
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "l_leg"
 	construction_time = 200
+	matter = list(DEFAULT_WALL_MATERIAL = 10000)
 	construction_cost = list(DEFAULT_WALL_MATERIAL=15000)
 
 /obj/item/robot_parts/r_leg
@@ -38,6 +41,7 @@
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "r_leg"
 	construction_time = 200
+	matter = list(DEFAULT_WALL_MATERIAL = 10000)
 	construction_cost = list(DEFAULT_WALL_MATERIAL=15000)
 
 /obj/item/robot_parts/chest
@@ -45,6 +49,7 @@
 	desc = "A heavily reinforced case containing cyborg logic boards, with space for a standard power cell."
 	icon_state = "chest"
 	construction_time = 350
+	matter = list(DEFAULT_WALL_MATERIAL = 32000)
 	construction_cost = list(DEFAULT_WALL_MATERIAL=40000)
 	var/wires = 0.0
 	var/obj/item/weapon/cell/cell = null
@@ -54,6 +59,7 @@
 	desc = "A standard reinforced braincase, with spine-plugged neural socket and sensor gimbals."
 	icon_state = "head"
 	construction_time = 350
+	matter = list(DEFAULT_WALL_MATERIAL = 20000)
 	construction_cost = list(DEFAULT_WALL_MATERIAL=25000)
 	var/obj/item/device/flash/flash1 = null
 	var/obj/item/device/flash/flash2 = null
@@ -63,6 +69,7 @@
 	desc = "A complex metal backbone with standard limb sockets and pseudomuscle anchors."
 	icon_state = "robo_suit"
 	construction_time = 500
+	matter = list(DEFAULT_WALL_MATERIAL = 42000)
 	construction_cost = list(DEFAULT_WALL_MATERIAL=50000)
 	var/obj/item/robot_parts/l_arm/l_arm = null
 	var/obj/item/robot_parts/r_arm/r_arm = null
@@ -72,11 +79,7 @@
 	var/obj/item/robot_parts/head/head = null
 	var/created_name = ""
 
-/obj/item/robot_parts/robot_suit/New()
-	..()
-	src.updateicon()
-
-/obj/item/robot_parts/robot_suit/proc/updateicon()
+/obj/item/robot_parts/robot_suit/update_icon()
 	src.overlays.Cut()
 	if(src.l_arm)
 		src.overlays += "l_arm+o"
@@ -112,55 +115,77 @@
 			qdel(src)
 		else
 			user << "<span class='warning'>You need one sheet of metal to arm the robot frame.</span>"
-	if(istype(W, /obj/item/robot_parts/l_leg))
-		if(src.l_leg)	return
-		user.drop_item()
-		W.loc = src
-		src.l_leg = W
-		src.updateicon()
 
-	if(istype(W, /obj/item/robot_parts/r_leg))
-		if(src.r_leg)	return
-		user.drop_item()
-		W.loc = src
-		src.r_leg = W
-		src.updateicon()
+	if(istype(W, /obj/item/weapon/wrench))
+		var/obj/item/robot_parts/selected = input("Select part for detach", "Detach") \
+			as null|anything in list(head, chest, r_arm, l_arm, l_leg, r_leg)
+		if(!Adjacent(user) || !selected) return
 
-	if(istype(W, /obj/item/robot_parts/l_arm))
-		if(src.l_arm)	return
-		user.drop_item()
-		W.loc = src
-		src.l_arm = W
-		src.updateicon()
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+		if(!do_after(user, 30, src))
+			user << "<span class='notice'>You stop detaching [selected].</span>"
+			return
 
-	if(istype(W, /obj/item/robot_parts/r_arm))
-		if(src.r_arm)	return
-		user.drop_item()
-		W.loc = src
-		src.r_arm = W
-		src.updateicon()
-
-	if(istype(W, /obj/item/robot_parts/chest))
-		if(src.chest)	return
-		if(W:wires && W:cell)
-			user.drop_item()
-			W.loc = src
-			src.chest = W
-			src.updateicon()
-		else if(!W:wires)
-			user << "<span class='warning'>You need to attach wires to it first!</span>"
+		if(selected == head)
+			head = null
+		else if(selected == chest)
+			chest = null
+		else if(selected == r_arm)
+			r_arm = null
+		else if(selected == l_arm)
+			l_arm = null
+		else if(selected == r_leg)
+			r_leg = null
+		else if(selected == l_leg)
+			l_leg = null
 		else
-			user << "<span class='warning'>You need to attach a cell to it first!</span>"
+			return
 
-	if(istype(W, /obj/item/robot_parts/head))
-		if(src.head)	return
-		if(W:flash2 && W:flash1)
-			user.drop_item()
-			W.loc = src
-			src.head = W
-			src.updateicon()
+		selected.forceMove(get_turf(src))
+		src.update_icon()
+		user.visible_message(
+			"<span class='notice'>[user] detached [selected] from [src].</span>",
+			"<span class='notice'>You had successfuly detach [selected] from [src].</span>",
+			"<span class='warning'>You have hear how something metallic hit the floor</span>"
+		)
+		return
+
+	if(istype(W, /obj/item/robot_parts))
+		if(istype(W, /obj/item/robot_parts/l_leg))
+			if(src.l_leg)	return
+			src.l_leg = W
+		else if(istype(W, /obj/item/robot_parts/r_leg))
+			if(src.r_leg)	return
+			src.r_leg = W
+		else if(istype(W, /obj/item/robot_parts/l_arm))
+			if(src.l_arm)	return
+			src.l_arm = W
+		else if(istype(W, /obj/item/robot_parts/r_arm))
+			if(src.r_arm)	return
+			src.r_arm = W
+		else if(istype(W, /obj/item/robot_parts/chest))
+			if(src.chest)	return
+			if(!W:wires)
+				user << "<span class='warning'>You need to attach wires to it first!</span>"
+				return
+			else if(!W:cell)
+				user << "<span class='warning'>You need to attach a cell to it first!</span>"
+				return
+			else
+				src.chest = W
+		else if(istype(W, /obj/item/robot_parts/head))
+			if(src.head)	return
+			if(W:flash2 && W:flash1)
+				src.head = W
+			else
+				user << "<span class='warning'>You need to attach a flash to it first!</span>"
+				return
 		else
-			user << "<span class='warning'>You need to attach a flash to it first!</span>"
+			return
+
+		user.drop_item()
+		W.loc = src
+		src.update_icon()
 
 	if(istype(W, /obj/item/device/mmi))
 		var/obj/item/device/mmi/M = W
@@ -190,7 +215,7 @@
 				user << "<span class='warning'>This [W] does not seem to fit.</span>"
 				return
 
-			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc), unfinished = 1)
+			var/mob/living/silicon/robot/O = new (get_turf(loc), unfinished = 1)
 			if(!O)	return
 
 			user.drop_item()
@@ -237,23 +262,40 @@
 
 /obj/item/robot_parts/chest/attackby(obj/item/W as obj, mob/user as mob)
 	..()
-	if(istype(W, /obj/item/weapon/cell))
+	if(isscrewdriver(W))
+		if(cell)
+			user << "<span class='warning'>You eject the cell!</span>"
+			user.put_in_hands(cell)
+			cell = null
+		else
+			user << "<span class='warning'There is nothing to eject.</span>"
+		return
+	else if(istype(W, /obj/item/weapon/cell))
 		if(src.cell)
 			user << "<span class='warning'>You have already inserted a cell!</span>"
-			return
 		else
 			user.drop_item()
 			W.loc = src
 			src.cell = W
 			user << "<span class='notice'>You insert the cell!</span>"
-	if(istype(W, /obj/item/stack/cable_coil))
+		return
+	else if(iswirecutter(W))
+		if(wires)
+			var/obj/item/stack/cable_coil/cut/C = new(src.loc)
+			C.color = wires
+			wires = 0
+			user.put_in_hands(C)
+			user << "<span class='warning'>You cut the wire!</span>"
+		else
+			user << "<span class='warning'>There is no wire inside!</span>"
+	else if(iswire(W))
 		if(src.wires)
 			user << "<span class='warning'>You have already inserted wire!</span>"
 			return
 		else
 			var/obj/item/stack/cable_coil/coil = W
 			coil.use(1)
-			src.wires = 1.0
+			src.wires = W.color
 			user << "<span class='notice'>You insert the wire!</span>"
 	return
 
@@ -269,6 +311,18 @@
 				add_flashes(W,user)
 		else
 			add_flashes(W,user)
+	else if(isscrewdriver(W) && (flash1 || flash2))
+		if(flash2)
+			user.put_in_hands(flash2)
+			user.visible_message("<span class='notice'>[user] eject [flash2] from [src].</span>")
+			flash2 = null
+		else if(flash1)
+			user.put_in_hands(flash1)
+			user.visible_message("<span class='notice'>[user] eject [flash1] from [src].</span>")
+			flash1 = null
+		else
+			user << "<span class='warning'There is nothing to eject.</span>"
+			return
 	else if(istype(W, /obj/item/weapon/stock_parts/manipulator))
 		user << "<span class='notice'>You install some manipulators and modify the head, creating a functional spider-bot!</span>"
 		new /mob/living/simple_animal/spiderbot(get_turf(loc))
@@ -278,17 +332,15 @@
 		return
 	return
 
-/obj/item/robot_parts/head/proc/add_flashes(obj/item/W as obj, mob/user as mob) //Made into a seperate proc to avoid copypasta
+//Made into a seperate proc to avoid copypasta
+/obj/item/robot_parts/head/proc/add_flashes(obj/item/W as obj, mob/user as mob)
 	if(src.flash1 && src.flash2)
 		user << "<span class='notice'>You have already inserted the eyes!</span>"
 		return
 	else if(src.flash1)
-		user.drop_item()
-		W.loc = src
 		src.flash2 = W
-		user << "<span class='notice'>You insert the flash into the eye socket!</span>"
 	else
-		user.drop_item()
-		W.loc = src
 		src.flash1 = W
-		user << "<span class='notice'>You insert the flash into the eye socket!</span>"
+	user.drop_item()
+	W.loc = src
+	user << "<span class='notice'>You insert the flash into the eye socket!</span>"
