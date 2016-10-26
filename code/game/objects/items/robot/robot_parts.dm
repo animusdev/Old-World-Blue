@@ -103,7 +103,7 @@
 	if(istype(W, /obj/item/stack/material) && W.get_material_name() == DEFAULT_WALL_MATERIAL && !l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
 		var/obj/item/stack/material/M = W
 		if (M.use(1))
-			var/obj/item/weapon/secbot_assembly/ed209_assembly/B = new /obj/item/weapon/secbot_assembly/ed209_assembly
+			var/obj/item/weapon/secbot_assembly/ed209_assembly/B = new(loc)
 			B.loc = get_turf(src)
 			user << "<span class='notice'>You armed the robot frame.</span>"
 			if (user.get_inactive_hand()==src)
