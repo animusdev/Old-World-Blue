@@ -474,11 +474,8 @@ var/global/list/damage_icon_parts = list()
 	if(w_uniform)
 		w_uniform.screen_loc = ui_iclothing
 
-		var/image/standing
-		if(w_uniform.icon_override)
-			standing = image(w_uniform.icon_override, "[w_uniform.icon_state][w_uniform:rolled_down>0?"_d":""]")
-		else
-			standing = image(body_build.uniform_icon, "[w_uniform.icon_state][w_uniform:rolled_down>0?"_d":""]")
+		var/image/standing = image(w_uniform.icon_override ? w_uniform.icon_override : body_build.uniform_icon)
+		standing.icon_state = w_uniform.wear_state ? w_uniform.wear_state : w_uniform.icon_state
 		standing.color = w_uniform.color
 
 		//apply blood overlay
@@ -783,9 +780,7 @@ var/global/list/damage_icon_parts = list()
 			standing = image(back.icon_override, icon_state = t_state)
 			underlay = image(back.icon_override, icon_state = "[t_state]_u")
 		else if(istype(back, /obj/item/weapon/rig))
-			//If this is a rig and a mob_icon is set, it will take species into account in the rig update_icon() proc.
-			var/obj/item/weapon/rig/rig = back
-			standing = image(rig.mob_icon, icon_state = t_state)
+			standing = image(body_build.rig_back, t_state)
 		else
 			standing = image(body_build.back_icon, t_state)
 			underlay = image(body_build.back_icon, "[t_state]_u")

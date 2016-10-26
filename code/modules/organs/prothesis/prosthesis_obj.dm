@@ -1,7 +1,7 @@
 /obj/item/prosthesis
 	name = "posthesis"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
-	icon = 'icons/obj/prothesis.dmi'
+	icon = 'icons/obj/prosthesis.dmi'
 	item_state = "buildpipe"
 	icon_state = "blank"
 	flags = CONDUCT

@@ -278,12 +278,6 @@
 #define  AIR_DAMAGE_MODIFIER 2.025  // More means less damage from hot air scalding lungs, less = more damage. (default 2.025)
 #define INFINITY             1.#INF
 
-// Suit sensor levels
-#define SUIT_SENSOR_OFF      0
-#define SUIT_SENSOR_BINARY   1
-#define SUIT_SENSOR_VITAL    2
-#define SUIT_SENSOR_TRACKING 3
-
 // NanoUI flags
 #define STATUS_INTERACTIVE 2 // GREEN Visability
 #define STATUS_UPDATE 1 // ORANGE Visability

@@ -1019,7 +1019,7 @@
 	desc = "No bother to sink or swim when you can just float!"
 	icon_state = "inflatable"
 	item_state = "inflatable"
-	icon = 'icons/obj/clothing/belts.dmi'
+	icon = 'icons/obj/clothing/belts/icon.dmi'
 	slot_flags = SLOT_BELT
 
 /obj/item/toy/tv
