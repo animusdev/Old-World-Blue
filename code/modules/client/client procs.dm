@@ -132,10 +132,15 @@
 		admins += src
 		holder.owner = src
 
-	else if(config.panicbuner && get_player_age(ckey)<1) //first connection
+	else if(config.panic_bunker && get_player_age(ckey)<1) //first connection
 		src << "Sorry but the server is currently not accepting connections from never before seen players."
 		del(src)
 		return 0
+
+
+
+	if (config.notify_new_player_age >= 0)
+		message_admins("New user: [key_name_admin(src)] is connecting here for the first time.")
 
 	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
 	prefs = preferences_datums[ckey]
