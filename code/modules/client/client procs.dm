@@ -139,8 +139,6 @@
 
 
 
-	if (config.notify_new_player_age >= 0)
-		message_admins("New user: [key_name_admin(src)] is connecting here for the first time.")
 
 	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
 	prefs = preferences_datums[ckey]
