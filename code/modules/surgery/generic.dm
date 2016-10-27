@@ -167,7 +167,10 @@
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if(..())
 			var/obj/item/organ/external/affected = target.get_organ(target_zone)
-			return affected && affected.open && (affected.status & ORGAN_BLEEDING)
+			if(affected && affected.open && (affected.status & ORGAN_BLEEDING))
+				return 1
+			else
+				return 0
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
