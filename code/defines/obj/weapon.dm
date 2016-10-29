@@ -84,7 +84,7 @@
 	if(concealed_blade)
 		name = initial(name)
 		icon_state = initial(icon_state)
-		item_state = initial(icon_state)
+		item_state = initial(item_state)
 	else
 		name = "cane shaft"
 		icon_state = "nullrod"
