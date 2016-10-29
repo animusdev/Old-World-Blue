@@ -2188,7 +2188,7 @@
 "Qd" = (/obj/structure/dispenser/oxygen,/turf/simulated/shuttle/floor4,/area/shuttle/specops/centcom)
 "Qe" = (/obj/structure/table/steel_reinforced,/obj/item/weapon/storage/box/donut,/turf/simulated/shuttle/floor4,/area/shuttle/specops/centcom)
 "Qf" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/shuttle/floor4,/area/shuttle/specops/centcom)
-"Qg" = (/obj/structure/table/rack,/obj/machinery/light,/obj/item/weapon/tank/jetpack/carbondioxide{step_x = 1},/obj/item/weapon/tank/jetpack/carbondioxide{step_x = 1},/turf/simulated/shuttle/floor4,/area/shuttle/specops/centcom)
+"Qg" = (/obj/structure/table/rack,/obj/machinery/light,/obj/item/weapon/tank/jetpack/carbondioxide,/turf/simulated/shuttle/floor4,/area/shuttle/specops/centcom)
 "Qh" = (/turf/simulated/shuttle/wall{icon_state = "diagonalWall3"},/area/shuttle/specops/centcom)
 "Qi" = (/obj/machinery/door/airlock/centcom{name = "Crew Area"; opacity = 1; req_access = list(103)},/turf/simulated/shuttle/floor4,/area/shuttle/specops/centcom)
 "Qj" = (/obj/structure/bed/chair{dir = 1},/turf/simulated/shuttle/floor4,/area/shuttle/specops/centcom)
