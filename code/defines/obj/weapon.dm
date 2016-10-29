@@ -67,6 +67,7 @@
 		user.update_inv_l_hand(0)
 		user.update_inv_r_hand()
 		concealed_blade = null
+		update_icon()
 	else
 		..()
 
