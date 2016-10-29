@@ -1262,7 +1262,6 @@
 #include "code\modules\mob\living\carbon\alien\emote.dm"
 #include "code\modules\mob\living\carbon\alien\life.dm"
 #include "code\modules\mob\living\carbon\alien\progression.dm"
-#include "code\modules\mob\living\carbon\alien\say.dm"
 #include "code\modules\mob\living\carbon\alien\update_icons.dm"
 #include "code\modules\mob\living\carbon\alien\diona\diona.dm"
 #include "code\modules\mob\living\carbon\alien\diona\diona_attacks.dm"
