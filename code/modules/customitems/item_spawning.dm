@@ -135,7 +135,7 @@
 	current_data = new()
 	current_data.assoc_key = "solareclipse84"
 	current_data.req_titles = list("Head of Security", "Security Officer")
-	current_data.character_name = "Dallas Brun"
+	current_data.character_name = "Aiden McMurray"
 	current_data.item_path = /obj/item/clothing/head/beret/army/solar
 	L |= current_data
 
