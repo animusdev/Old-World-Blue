@@ -77,6 +77,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggledrones,
 	/client/proc/check_customitem_activity,
 	/client/proc/man_up,
+	/client/proc/stop_sounds,
 	/client/proc/panicbunker,
 	/client/proc/stickybanpanel,
 	/client/proc/global_man_up,
