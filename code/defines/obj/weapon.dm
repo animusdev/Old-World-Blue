@@ -67,6 +67,7 @@
 		user.update_inv_l_hand(0)
 		user.update_inv_r_hand()
 		concealed_blade = null
+		update_icon()
 	else
 		..()
 
@@ -84,7 +85,7 @@
 	if(concealed_blade)
 		name = initial(name)
 		icon_state = initial(icon_state)
-		item_state = initial(icon_state)
+		item_state = initial(item_state)
 	else
 		name = "cane shaft"
 		icon_state = "nullrod"
