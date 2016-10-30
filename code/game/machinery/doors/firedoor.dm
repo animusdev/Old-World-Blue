@@ -395,7 +395,7 @@
 //These are playing merry hell on ZAS.  Sorry fellas :(
 
 /obj/machinery/door/firedoor/border_only
-/*
+
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
 	glass = 1 //There is a glass window so you can see through the door
 			  //This is needed due to BYOND limitations in controlling visibility
@@ -431,7 +431,7 @@
 		if(istype(source)) air_master.tiles_to_update += source
 		if(istype(destination)) air_master.tiles_to_update += destination
 		return 1
-*/
+
 
 /obj/machinery/door/firedoor/multi_tile
 	icon = 'icons/obj/doors/DoorHazard2x1.dmi'
