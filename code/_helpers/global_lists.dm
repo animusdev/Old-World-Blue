@@ -49,11 +49,9 @@ var/list/obj/item/device/uplink/world_uplinks = list()
 //Preferences stuff
 	//Hairstyles
 var/global/list/hair_styles_list = list()			//stores /datum/sprite_accessory/hair indexed by name
-var/global/list/hair_styles_male_list = list()
-var/global/list/hair_styles_female_list = list()
+var/global/list/hair_styles_by_species = list()
 var/global/list/facial_hair_styles_list = list()	//stores /datum/sprite_accessory/facial_hair indexed by name
-var/global/list/facial_hair_styles_male_list = list()
-var/global/list/facial_hair_styles_female_list = list()
+var/global/list/facial_hair_styles_by_species = list()
 
 	// Hidden slots
 var/global/list/all_underwears = list("None")
@@ -131,12 +129,10 @@ var/global/list/endgame_safespawns = list()
 			del(H)
 			continue
 		hair_styles_list[H.name] = H
-		switch(H.gender)
-			if(MALE)	hair_styles_male_list += H.name
-			if(FEMALE)	hair_styles_female_list += H.name
-			else
-				hair_styles_male_list += H.name
-				hair_styles_female_list += H.name
+		for(var/species in H.species_allowed)
+			if(!hair_styles_by_species[species])
+				hair_styles_by_species[species] = list()
+			hair_styles_by_species[species] += H.name
 
 	//Facial Hair - Initialise all /datum/sprite_accessory/facial_hair into an list indexed by facialhair-style name
 	paths = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
@@ -146,12 +142,10 @@ var/global/list/endgame_safespawns = list()
 			del(H)
 			continue
 		facial_hair_styles_list[H.name] = H
-		switch(H.gender)
-			if(MALE)	facial_hair_styles_male_list += H.name
-			if(FEMALE)	facial_hair_styles_female_list += H.name
-			else
-				facial_hair_styles_male_list += H.name
-				facial_hair_styles_female_list += H.name
+		for(var/species in H.species_allowed)
+			if(!facial_hair_styles_by_species[species])
+				facial_hair_styles_by_species[species] = list()
+			facial_hair_styles_by_species[species] += H.name
 
 	// Undershirt list
 	paths = typesof(/obj/item/clothing/hidden/undershirt) - /obj/item/clothing/hidden/undershirt

@@ -17,6 +17,32 @@
 	conversion in savefile.dm
 */
 
+/proc/get_hair_styles_list(var/species, var/gender)
+	var/list/species_list = hair_styles_by_species[species]
+	if(!species_list || !species_list.len)
+		return list("Bald")
+
+	var/list/valid_hairstyles = list()
+	for(var/style in species_list)
+		var/datum/sprite_accessory/S = hair_styles_list[style]
+		if(S.gender != gender)
+			continue
+		valid_hairstyles += style
+	return valid_hairstyles
+
+/proc/get_facial_styles_list(var/species, var/gender)
+	var/list/species_list = facial_hair_styles_by_species[species]
+	if(!species_list || !species_list.len)
+		return list("Shaved")
+
+	var/list/valid_hairstyles = list()
+	for(var/style in species_list)
+		var/datum/sprite_accessory/S = facial_hair_styles_list[style]
+		if(S.gender != gender)
+			continue
+		valid_hairstyles += style
+	return valid_hairstyles
+
 /datum/sprite_accessory
 
 	var/icon			// the icon file the accessory is located in

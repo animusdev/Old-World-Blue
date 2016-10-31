@@ -819,22 +819,23 @@ var/list/admin_verbs_mentor = list(
 
 	var/mob/living/carbon/human/M = input("Select mob.", "Edit Appearance") as null|anything in human_mob_list
 
-	if(!ishuman(M))
+	if(!istype(M))
 		usr << "\red You can only do this to humans!"
 		return
 	var/datum/species/S = M.species
 	if(!S) S = all_species["Human"]
 
-	switch(alert("Are you sure you wish to edit this mob's appearance? Skrell, Unathi, Vox and Tajaran can result in unintended consequences.",,"Yes","No"))
-		if("No")
-			return
-	var/new_facial = input("Please select facial hair color.", "Character Generation") as color
-	if(new_facial)
-		M.facial_color = new_facial
+	if(alert("Are you sure you wish to edit this mob's appearance?",,"Yes","No") != "Yes")
+		return
 
-	var/new_hair = input("Please select hair color.", "Character Generation") as color
-	if(new_hair)
-		M.hair_color = new_hair
+	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
+	if (new_gender)
+		if(new_gender == "Male")
+			M.gender = MALE
+		else
+			M.gender = FEMALE
+
+	// TODO: Body_build
 
 	if(S.flags & HAS_EYE_COLOR)
 		var/new_eyes = input("Please select eye color.", "Character Generation") as color
@@ -853,23 +854,24 @@ var/list/admin_verbs_mentor = list(
 			M.s_tone =  -M.s_tone + 35
 
 	// hair
-	var/new_hstyle = input(usr, "Select a hair style", "Grooming")  as null|anything in hair_styles_list
+	var/new_hstyle = input(usr, "Select a hair style", "Grooming") \
+		as null|anything in get_hair_styles_list(S.get_bodytype(), M.gender)
 	if(new_hstyle)
 		M.h_style = new_hstyle
 
+	var/new_hair = input("Please select hair color.", "Character Generation") as color
+	if(new_hair)
+		M.hair_color = new_hair
+
 	// facial hair
-	var/new_fstyle = input(usr, "Select a facial hair style", "Grooming")  as null|anything in facial_hair_styles_list
+	var/new_fstyle = input(usr, "Select a facial hair style", "Grooming") \
+		as null|anything in get_facial_styles_list(S.get_bodytype(), M.gender)
 	if(new_fstyle)
 		M.f_style = new_fstyle
 
-	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
-	if (new_gender)
-		if(new_gender == "Male")
-			M.gender = MALE
-		else
-			M.gender = FEMALE
-
-	// TODO: Body_build
+	var/new_facial = input("Please select facial hair color.", "Character Generation") as color
+	if(new_facial)
+		M.facial_color = new_facial
 
 	M.dna.ResetUIFrom(M)
 	M.dna.real_name = M.real_name
