@@ -121,6 +121,19 @@ var/global/list/endgame_safespawns = list()
 /proc/makeDatumRefLists()
 	var/list/paths
 
+	var/rkey = 0
+	paths = typesof(/datum/species)-/datum/species
+	for(var/T in paths)
+		rkey++
+		var/datum/species/S = new T
+		S.race_key = rkey //Used in mob icon caching.
+		all_species[S.name] = S
+
+		if(!(S.flags & IS_RESTRICTED))
+			playable_species += S.name
+		if(S.flags & IS_WHITELISTED)
+			whitelisted_species += S.name
+
 	//Hair - Initialise all /datum/sprite_accessory/hair into an list indexed by hair-style name
 	paths = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
 	for(var/path in paths)
@@ -184,19 +197,6 @@ var/global/list/endgame_safespawns = list()
 	for(var/T in paths)
 		var/datum/language/L = new T
 		all_languages[L.name] = L
-
-	var/rkey = 0
-	paths = typesof(/datum/species)-/datum/species
-	for(var/T in paths)
-		rkey++
-		var/datum/species/S = new T
-		S.race_key = rkey //Used in mob icon caching.
-		all_species[S.name] = S
-
-		if(!(S.flags & IS_RESTRICTED))
-			playable_species += S.name
-		if(S.flags & IS_WHITELISTED)
-			whitelisted_species += S.name
 
 	for(var/organ in organ_structure)
 		var/list/organ_data = organ_structure[organ]
