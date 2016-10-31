@@ -453,8 +453,7 @@
 			user << "\The [W] is too [W.w_class < 3? "small" : "large"] to fit here."
 			return
 
-		user.drop_item()
-		W.loc = src
+		user.unEquip(W, src)
 		cell = W
 		user.visible_message(\
 			"<span class='warning'>[user.name] has inserted the power cell to [src.name]!</span>",\

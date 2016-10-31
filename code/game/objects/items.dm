@@ -464,9 +464,9 @@ var/list/global/slot_flags_enumeration = list(
 				if(eyes.robotic <= 1) //robot eyes bleeding might be a bit silly
 					M << "<span class='danger'>Your eyes start to bleed profusely!</span>"
 			if(prob(50))
-				if(M.stat != 2)
+				if(!M.stat)
 					M << "<span class='warning'>You drop what you're holding and clutch at your eyes!</span>"
-					M.drop_item()
+					M.drop_active_hand()
 				M.eye_blurry += 10
 				M.Paralyse(1)
 				M.Weaken(4)

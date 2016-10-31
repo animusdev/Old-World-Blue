@@ -110,8 +110,7 @@
 					user << "\blue You place the circuit board inside the frame."
 					src.icon_state = "1"
 					src.circuit = P
-					user.drop_item()
-					P.loc = src
+					user.drop_from_inventory(P, src)
 				else
 					user << "\red This frame does not accept circuit boards of this type!"
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)

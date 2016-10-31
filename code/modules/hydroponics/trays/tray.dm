@@ -520,8 +520,7 @@
 		if(seed)
 			user << "<span class='danger'>[src] is already occupied!</span>"
 		else
-			user.drop_item()
-			qdel(O)
+			user.drop_from_inventory(O)
 
 			var/obj/machinery/apiary/A = new(src.loc)
 			A.icon = src.icon

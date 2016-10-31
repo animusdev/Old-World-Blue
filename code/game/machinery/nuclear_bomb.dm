@@ -88,8 +88,7 @@ var/bomb_set
 
 	if (src.extended)
 		if (istype(O, /obj/item/weapon/disk/nuclear))
-			usr.drop_item()
-			O.loc = src
+			usr.drop_from_inventory(O, src)
 			src.auth = O
 			src.add_fingerprint(user)
 			return
@@ -292,8 +291,7 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user as mob)
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/disk/nuclear))
-					usr.drop_item()
-					I.loc = src
+					usr.drop_from_inventory(I, src)
 					src.auth = I
 		if (src.auth)
 			if (href_list["type"])

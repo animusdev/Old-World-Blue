@@ -232,7 +232,8 @@
 		if(mmi.brainmob)
 			mind.transfer_to(mmi.brainmob)
 		else
-			src << "<span class='danger'>Oops! Something went very wrong, your MMI was unable to receive your mind. You have been ghosted. Please make a bug report so we can fix this bug.</span>"
+			src << "<span class='danger'>Oops! Something went very wrong, your MMI was unable to receive your mind. \
+			You have been ghosted. Please make a bug report so we can fix this bug.</span>"
 			ghostize()
 			//ERROR("A borg has been destroyed, but its MMI lacked a brainmob, so the mind could not be transferred. Player: [ckey].")
 		mmi = null
@@ -454,7 +455,8 @@
 	return 2
 
 /mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
+	// fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
+	if (istype(W, /obj/item/weapon/handcuffs))
 		return
 
 	if(opened) // Are they trying to insert something?
@@ -464,7 +466,7 @@
 				C.installed = 1
 				C.wrapped = W
 				C.install()
-				user.drop_item()
+				user.unEquip(W)
 				W.loc = null
 
 				var/obj/item/robot_parts/robot_component/WC = W
@@ -571,8 +573,7 @@
 		else if(W.w_class != 3)
 			user << "\The [W] is too [W.w_class < 3? "small" : "large"] to fit here."
 		else
-			user.drop_item()
-			W.loc = src
+			user.unEquip(W, src)
 			cell = W
 			user << "You insert the power cell."
 
@@ -607,7 +608,8 @@
 		else
 			user << "Unable to locate a radio."
 
-	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda)||istype(W, /obj/item/weapon/card/robot))			// trying to unlock the interface with an ID card
+	// trying to unlock the interface with an ID card
+	else if(is_type_in_list(W, list(/obj/item/weapon/card/id, /obj/item/device/pda, /obj/item/weapon/card/robot)))
 		if(emagged)//still allow them to open the cover
 			user << "The interface seems slightly damaged"
 		if(opened)
@@ -696,8 +698,7 @@
 		else
 			if(U.action(src))
 				usr << "You apply the upgrade to [src]!"
-				usr.drop_item()
-				U.loc = src
+				usr.unEquip(U, src)
 			else
 				usr << "Upgrade error!"
 
@@ -1009,7 +1010,7 @@
 		return
 
 	while(triesleft--)
-		icontype = input("Select an icon! [triesleft ? "You have [triesleft] more chances." : "This is your last try."]", "Robot", null, null) in module_sprites
+		icontype = input("Select an icon! [triesleft?"You have [triesleft] more chances.":"This is your last try."]", "Robot", null, null) in module_sprites
 		sprite_data = borg_sprites[module.module_type][icontype]
 
 		updateicon()
@@ -1065,14 +1066,31 @@
 		return
 	switch(notifytype)
 		if(ROBOT_NOTIFICATION_NEW_UNIT) //New Robot
-			connected_ai << "<br><br><span class='notice'>NOTICE - New [lowertext(braintype)] connection detected: <a href='byond://?src=\ref[connected_ai];track2=\ref[connected_ai];track=\ref[src]'>[name]</a></span><br>"
+			connected_ai << {"
+					<br><br><span class='notice'>
+					NOTICE - New [lowertext(braintype)] connection detected:
+					<a href='byond://?src=\ref[connected_ai];track2=\ref[connected_ai];track=\ref[src]'>[name]</a>
+					</span><br>
+				"}
 		if(ROBOT_NOTIFICATION_NEW_MODULE) //New Module
-			connected_ai << "<br><br><span class='notice'>NOTICE - [braintype] module change detected: [name] has loaded the [first_arg].</span><br>"
+			connected_ai << {"
+				<br><br><span class='notice'>
+				NOTICE - [braintype] module change detected: [name] has loaded the [first_arg].
+				</span><br>
+			"}
 		if(ROBOT_NOTIFICATION_MODULE_RESET)
-			connected_ai << "<br><br><span class='notice'>NOTICE - [braintype] module reset detected: [name] has unloaded the [first_arg].</span><br>"
+			connected_ai << {"
+				<br><br><span class='notice'>
+				NOTICE - [braintype] module reset detected: [name] has unloaded the [first_arg].
+				</span><br>
+			"}
 		if(ROBOT_NOTIFICATION_NEW_NAME) //New Name
 			if(first_arg != second_arg)
-				connected_ai << "<br><br><span class='notice'>NOTICE - [braintype] reclassification detected: [first_arg] is now designated as [second_arg].</span><br>"
+				connected_ai << {"
+					<br><br><span class='notice'>
+					NOTICE - [braintype] reclassification detected: [first_arg] is now designated as [second_arg].
+					</span><br>
+				"}
 
 /mob/living/silicon/robot/proc/disconnect_from_ai()
 	if(connected_ai)

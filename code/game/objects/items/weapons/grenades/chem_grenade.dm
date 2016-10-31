@@ -102,10 +102,8 @@
 				user << "\red The grenade can not hold more containers."
 				return
 			else
-				if(W.reagents.total_volume)
+				if(W.reagents.total_volume && user.unEquip(W, src))
 					user << "\blue You add \the [W] to the assembly."
-					user.drop_item()
-					W.loc = src
 					beakers += W
 					stage = 1
 					name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"

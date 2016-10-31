@@ -33,8 +33,7 @@
 /obj/item/weapon/clipboard/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if(istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/photo))
-		user.drop_item()
-		W.loc = src
+		user.drop_from_inventory(W, src)
 		if(istype(W, /obj/item/weapon/paper))
 			toppaper = W
 		user << "<span class='notice'>You clip the [W] onto \the [src].</span>"
@@ -42,7 +41,7 @@
 
 	else if(istype(W, /obj/item/weapon/pen))
 		if(!haspen)
-			usr.drop_item()
+			usr.drop_from_inventory(W, src)
 			W.loc = src
 			haspen = W
 			usr << "<span class='notice'>You slot the pen into \the [src].</span>"

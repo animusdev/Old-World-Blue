@@ -162,11 +162,12 @@
 		user << "Something is already loaded into the machine."
 		return
 	if(istype(B, /obj/item/weapon/reagent_containers/glass) || istype(B, /obj/item/weapon/reagent_containers/food))
+		if(!user.unEquip(B, src))
+			return
 		if(!accept_glass && istype(B,/obj/item/weapon/reagent_containers/food))
 			user << "<span class='notice'>This machine only accepts beakers</span>"
+			return
 		src.beaker =  B
-		user.drop_item()
-		B.loc = src
 		user << "You set [B] on the machine."
 		nanomanager.update_uis(src) // update all UIs attached to src
 		return
@@ -187,7 +188,10 @@
 	energy = 100
 	accept_glass = 1
 	max_energy = 100
-	dispensable_reagents = list("water","ice","coffee","cream","tea","icetea","cola","spacemountainwind","dr_gibb","space_up","tonic","sodawater","lemon_lime","sugar","orangejuice","limejuice","watermelonjuice")
+	dispensable_reagents = list(
+		"water","ice","coffee","cream","tea","icetea","cola","spacemountainwind","dr_gibb","space_up","tonic",
+		"sodawater","lemon_lime","sugar","orangejuice","limejuice","watermelonjuice"
+	)
 
 /obj/machinery/chem_dispenser/soda/attackby(var/obj/item/weapon/B as obj, var/mob/user as mob)
 	..()
@@ -212,7 +216,10 @@
 	accept_glass = 1
 	max_energy = 100
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
-	dispensable_reagents = list("lemon_lime","sugar","orangejuice","limejuice","sodawater","tonic","beer","kahlua","whiskey","wine","vodka","gin","rum","tequilla","vermouth","cognac","ale","mead")
+	dispensable_reagents = list(
+		"lemon_lime","sugar","orangejuice","limejuice","sodawater","tonic","beer","kahlua","whiskey","wine","vodka",
+		"gin","rum","tequilla","vermouth","cognac","ale","mead"
+	)
 
 /obj/machinery/chem_dispenser/beer/attackby(var/obj/item/weapon/B as obj, var/mob/user as mob)
 	..()
@@ -246,7 +253,12 @@
 	beaker = null
 	recharged = 0
 	hackedcheck = 0
-	dispensable_reagents = list("inaprovaline","ryetalyn","paracetamol","tramadol","oxycodone","sterilizine","leporazine","kelotane","dermaline","dexalin","dexalinp","tricordrazine","anti_toxin","synaptizine","hyronalin","arithrazine","alkysine","imidazoline","peridaxon","bicaridine","hyperzine","rezadone","spaceacillin","ethylredoxrazine","stoxin","chloralhydrate","cryoxadone","clonexadone")
+	dispensable_reagents = list(
+		"inaprovaline","ryetalyn","paracetamol","tramadol","oxycodone","sterilizine","leporazine","kelotane",
+		"dermaline","dexalin","dexalinp","tricordrazine","anti_toxin","synaptizine","hyronalin","arithrazine",
+		"alkysine","imidazoline","peridaxon","bicaridine","hyperzine","rezadone","spaceacillin","ethylredoxrazine",
+		"stoxin","chloralhydrate","cryoxadone","clonexadone"
+	)
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -296,28 +308,24 @@
 	return
 
 /obj/machinery/chem_master/attackby(var/obj/item/weapon/B as obj, var/mob/user as mob)
-
 	if(istype(B, /obj/item/weapon/reagent_containers/glass))
-
 		if(src.beaker)
 			user << "A beaker is already loaded into the machine."
 			return
+		if(!user.unEquip(B, src))
+			return
 		src.beaker = B
-		user.drop_item()
-		B.loc = src
 		user << "You add the beaker to the machine!"
 		src.updateUsrDialog()
 		icon_state = "mixer1"
 
 	else if(istype(B, /obj/item/weapon/storage/pill_bottle))
-
 		if(src.loaded_pill_bottle)
 			user << "A pill bottle is already loaded into the machine."
 			return
 
 		src.loaded_pill_bottle = B
-		user.drop_item()
-		B.loc = src
+		user.drop_from_inventory(B, src)
 		user << "You add the pill bottle into the dispenser slot!"
 		src.updateUsrDialog()
 	return
@@ -350,11 +358,27 @@
 					var/A = G.name
 					var/B = G.data["blood_type"]
 					var/C = G.data["blood_DNA"]
-					dat += "<TITLE>Chemmaster 3000</TITLE>Chemical infos:<BR><BR>Name:<BR>[A]<BR><BR>Description:<BR>Blood Type: [B]<br>DNA: [C]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
+					dat += {"
+						<TITLE>Chemmaster 3000</TITLE>Chemical infos:<BR><BR>
+						Name:<BR>[A]<BR><BR>
+						Description:<BR>Blood Type: [B]<br>
+						DNA: [C]<BR><BR><BR>
+						<A href='?src=\ref[src];main=1'>(Back)</A>
+					"}
 				else
-					dat += "<TITLE>Chemmaster 3000</TITLE>Chemical infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
+					dat += {"
+						<TITLE>Chemmaster 3000</TITLE>Chemical infos:<BR><BR>
+						Name:<BR>[href_list["name"]]<BR><BR>
+						Description:<BR>[href_list["desc"]]<BR><BR><BR>
+						<A href='?src=\ref[src];main=1'>(Back)</A>
+					"}
 			else
-				dat += "<TITLE>Condimaster 3000</TITLE>Condiment infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
+				dat += {"
+					<TITLE>Condimaster 3000</TITLE>Condiment infos:<BR><BR>
+					Name:<BR>[href_list["name"]]<BR><BR>
+					Description:<BR>[href_list["desc"]]<BR><BR><BR>
+					<A href='?src=\ref[src];main=1'>(Back)</A>
+				"}
 			usr << browse(dat, "window=chem_master;size=575x400")
 			return
 
@@ -745,11 +769,13 @@
 							if(!D)
 								CRASH("We weren't able to get the advance disease from the archive.")
 
-							dat += "<b>Disease Agent:</b> [D?"[D.agent] - <A href='?src=\ref[src];create_virus_culture=[disease_creation]'>Create virus culture bottle</A>":"none"]<BR>"
-							dat += "<b>Common name:</b> [(D.name||"none")]<BR>"
-							dat += "<b>Description: </b> [(D.desc||"none")]<BR>"
-							dat += "<b>Spread:</b> [(D.spread||"none")]<BR>"
-							dat += "<b>Possible cure:</b> [(D.cure||"none")]<BR><BR>"
+							dat += {"
+								<b>Disease Agent:</b> [D?"[D.agent] - <A href='?src=\ref[src];create_virus_culture=[disease_creation]'>Create virus culture bottle</A>":"none"]<BR>"
+								<b>Common name:</b> [(D.name||"none")]<BR>"
+								<b>Description: </b> [(D.desc||"none")]<BR>"
+								<b>Spread:</b> [(D.spread||"none")]<BR>"
+								<b>Possible cure:</b> [(D.cure||"none")]<BR><BR>
+							"}
 
 							if(istype(D, /datum/disease/advance))
 								var/datum/disease/advance/A = D
@@ -782,8 +808,10 @@
 					dat += "nothing<BR>"
 			else
 				dat += "nothing<BR>"
-		dat += "<BR><A href='?src=\ref[src];eject=1'>Eject beaker</A>[((R.total_volume&&R.reagent_list.len) ? "-- <A href='?src=\ref[src];empty_beaker=1'>Empty beaker</A>":"")]<BR>"
-		dat += "<A href='?src=\ref[user];mach_close=pandemic'>Close</A>"
+		dat += "<BR><A href='?src=\ref[src];eject=1'>Eject beaker</A>"
+		if(R.total_volume&&R.reagent_list.len)
+			dat += "-- <A href='?src=\ref[src];empty_beaker=1'>Empty beaker</A>"
+		dat += "<BR><A href='?src=\ref[user];mach_close=pandemic'>Close</A>"
 
 	user << browse("<TITLE>[src.name]</TITLE><BR>[dat]", "window=pandemic;size=575x400")
 	onclose(user, "pandemic")
@@ -798,8 +826,7 @@
 			return
 
 		src.beaker =  I
-		user.drop_item()
-		I.loc = src
+		user.drop_from_inventory(I, src)
 		user << "You add the beaker to the machine!"
 		src.updateUsrDialog()
 		icon_state = "mixer1"
@@ -844,16 +871,11 @@
 
 /obj/machinery/reagentgrinder/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
-	if (istype(O,/obj/item/weapon/reagent_containers/glass) || \
-		istype(O,/obj/item/weapon/reagent_containers/glass/drinks/drinkingglass) || \
-		istype(O,/obj/item/weapon/reagent_containers/glass/drinks/shaker))
-
+	if (istype(O,/obj/item/weapon/reagent_containers/glass))
 		if (beaker)
 			return 1
-		else
+		else if(user.unEquip(O, src))
 			src.beaker =  O
-			user.drop_item()
-			O.loc = src
 			update_icon()
 			src.updateUsrDialog()
 			return 0

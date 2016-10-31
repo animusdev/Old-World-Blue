@@ -102,7 +102,7 @@
 	src.add_fingerprint(usr)
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
 		usr << "\blue You put [W] back to [src]."
-		user.drop_item()
+		user.drop_from_inventory(W)
 		qdel(W)
 		return
 	else if (istype(W, /obj/item/weapon/wrench))

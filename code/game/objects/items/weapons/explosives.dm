@@ -43,7 +43,7 @@
 	user << "Planting explosives..."
 
 	if(do_after(user, 50) && in_range(user, target))
-		user.drop_item()
+		user.drop_from_inventory(src)
 		src.target = target
 		loc = null
 

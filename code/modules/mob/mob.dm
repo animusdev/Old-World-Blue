@@ -746,8 +746,8 @@
 		density = initial(density)
 
 	if(downed)
-		drop_l_hand()
-		drop_r_hand()
+		drop_active_hand()
+		drop_inactive_hand()
 
 	for(var/obj/item/weapon/grab/G in grabbed_by)
 		if(G.state >= GRAB_AGGRESSIVE)
@@ -757,10 +757,10 @@
 	//Temporarily moved here from the various life() procs
 	//I'm fixing stuff incrementally so this will likely find a better home.
 	//It just makes sense for now. ~Carn
-	if( update_icon )	//forces a full overlay update
+	if(update_icon)	//forces a full overlay update
 		update_icon = 0
 		regenerate_icons()
-	else if( lying != lying_prev )
+	else if(lying != lying_prev)
 		update_icons()
 
 	return canmove

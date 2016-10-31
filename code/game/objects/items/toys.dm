@@ -241,7 +241,7 @@
 	attackby(obj/item/I as obj, mob/user as mob)
 		if(istype(I, /obj/item/toy/ammo/crossbow))
 			if(bullets <= 4)
-				user.drop_item()
+				user.drop_from_inventory(I)
 				qdel(I)
 				bullets++
 				user << "\blue You load the foam dart into the crossbow."

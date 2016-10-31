@@ -130,9 +130,7 @@
 	if(!I)
 		return
 
-	user.drop_item()
-	if(I)
-		I.loc = src
+	user.unEquip(I, src)
 
 	user << "You place \the [I] into the [src]."
 	for(var/mob/M in viewers(src))

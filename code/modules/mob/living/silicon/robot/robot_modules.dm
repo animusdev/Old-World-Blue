@@ -25,9 +25,16 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	flags = CONDUCT
 	var/channels = list()
 	var/networks = list()
-	var/languages = list(LANGUAGE_SOL_COMMON = 1, LANGUAGE_TRADEBAND = 1, LANGUAGE_UNATHI = 0,\
-						LANGUAGE_SIIK_TAJR = 0, LANGUAGE_SKRELLIAN = 0, LANGUAGE_GUTTER = 0,\
-						LANGUAGE_SIIK_MAAS = 0, LANGUAGE_SURZHYK = 0)
+	var/languages = list(
+		LANGUAGE_SOL_COMMON = 1,
+		LANGUAGE_TRADEBAND = 1,
+		LANGUAGE_UNATHI = 0,
+		LANGUAGE_SIIK_TAJR = 0,
+		LANGUAGE_SKRELLIAN = 0,
+		LANGUAGE_GUTTER = 0,
+		LANGUAGE_SIIK_MAAS = 0,
+		LANGUAGE_SURZHYK = 0
+	)
 	var/list/emotes = list()
 	var/module_type = "Standard"
 	//var/sprites = list()
@@ -214,7 +221,7 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	src.emag.reagents.add_reagent("pacid", 250)
 	src.emag.name = "Polyacid spray"
 
-	var/datum/matter_synth/medicine = new /datum/matter_synth/medicine(10000)
+	var/datum/matter_synth/medicine/medicine = new(10000)
 	synths += medicine
 
 	var/obj/item/stack/nanopaste/N = new /obj/item/stack/nanopaste(src)
@@ -258,24 +265,24 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	src.emag.reagents.add_reagent("pacid", 250)
 	src.emag.name = "Polyacid spray"
 
-	var/datum/matter_synth/medicine = new /datum/matter_synth/medicine(15000)
+	var/datum/matter_synth/medicine/medicine = new(15000)
 	synths += medicine
 
-	var/obj/item/stack/medical/ointment/O = new /obj/item/stack/medical/ointment(src)
-	var/obj/item/stack/medical/bruise_pack/B = new /obj/item/stack/medical/bruise_pack(src)
-	var/obj/item/stack/medical/splint/S = new /obj/item/stack/medical/splint(src)
+	var/obj/item/stack/medical/ointment/O = new (src)
+	src.modules += O
 	O.uses_charge = 1
 	O.charge_costs = list(1000)
 	O.synths = list(medicine)
+	var/obj/item/stack/medical/bruise_pack/B = new (src)
+	src.modules += B
 	B.uses_charge = 1
 	B.charge_costs = list(1000)
 	B.synths = list(medicine)
+	var/obj/item/stack/medical/splint/S = new (src)
+	src.modules += S
 	S.uses_charge = 1
 	S.charge_costs = list(1000)
 	S.synths = list(medicine)
-	src.modules += O
-	src.modules += B
-	src.modules += S
 
 	return
 
@@ -321,17 +328,17 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	src.modules += new /obj/item/device/pipe_painter(src)
 	src.emag = new /obj/item/borg/stun(src)
 
-	var/datum/matter_synth/metal = new /datum/matter_synth/metal(60000)
-	var/datum/matter_synth/glass = new /datum/matter_synth/glass(40000)
-	var/datum/matter_synth/plasteel = new /datum/matter_synth/plasteel(30000)
-	var/datum/matter_synth/wire = new /datum/matter_synth/wire()
+	var/datum/matter_synth/metal/metal = new (60000)
 	synths += metal
+	var/datum/matter_synth/glass/glass = new (40000)
 	synths += glass
+	var/datum/matter_synth/plasteel/plasteel = new (30000)
 	synths += plasteel
+	var/datum/matter_synth/wire/wire = new()
 	synths += wire
 
 
-	var/obj/item/weapon/matter_decompiler/MD = new /obj/item/weapon/matter_decompiler(src)
+	var/obj/item/weapon/matter_decompiler/MD = new (src)
 	MD.metal = metal
 	MD.glass = glass
 	src.modules += MD
@@ -344,15 +351,15 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	G.synths = list(glass)
 	src.modules += G
 
-	var/obj/item/stack/rods/cyborg/R = new /obj/item/stack/rods/cyborg(src)
+	var/obj/item/stack/rods/cyborg/R = new (src)
 	R.synths = list(metal)
 	src.modules += R
 
-	var/obj/item/stack/cable_coil/cyborg/C = new /obj/item/stack/cable_coil/cyborg(src)
+	var/obj/item/stack/cable_coil/cyborg/C = new (src)
 	C.synths = list(wire)
 	src.modules += C
 
-	var/obj/item/stack/tile/steel/cyborg/S = new /obj/item/stack/tile/steel/cyborg(src)
+	var/obj/item/stack/tile/steel/cyborg/S = new (src)
 	S.synths = list(metal)
 	src.modules += S
 
@@ -434,16 +441,16 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	name = "service robot module"
 	channels = list("Service" = 1)
 	languages = list(
-					LANGUAGE_SOL_COMMON	= 1,
-					LANGUAGE_UNATHI		= 1,
-					LANGUAGE_SIIK_MAAS	= 1,
-					LANGUAGE_SIIK_TAJR	= 0,
-					LANGUAGE_SKRELLIAN	= 1,
-					LANGUAGE_ROOTSPEAK	= 1,
-					LANGUAGE_TRADEBAND	= 1,
-					LANGUAGE_GUTTER		= 1,
-					LANGUAGE_SURZHYK	= 1
-				)
+		LANGUAGE_SOL_COMMON	= 1,
+		LANGUAGE_UNATHI		= 1,
+		LANGUAGE_SIIK_MAAS	= 1,
+		LANGUAGE_SIIK_TAJR	= 0,
+		LANGUAGE_SKRELLIAN	= 1,
+		LANGUAGE_ROOTSPEAK	= 1,
+		LANGUAGE_TRADEBAND	= 1,
+		LANGUAGE_GUTTER		= 1,
+		LANGUAGE_SURZHYK	= 1
+	)
 
 /obj/item/weapon/robot_module/clerical/butler
 	module_type = "Service"
@@ -556,10 +563,10 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	src.modules += new /obj/item/weapon/hand_tele(src)
 	src.emag = new /obj/item/weapon/card/emag (src)
 
-	var/datum/matter_synth/nanite = new /datum/matter_synth/nanite(10000)
+	var/datum/matter_synth/nanite/nanite = new(10000)
 	synths += nanite
 
-	var/obj/item/stack/nanopaste/N = new /obj/item/stack/nanopaste(src)
+	var/obj/item/stack/nanopaste/N = new(src)
 	N.uses_charge = 1
 	N.charge_costs = list(1000)
 	N.synths = list(nanite)
@@ -571,13 +578,13 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	name = "illegal robot module"
 	module_type = "Synicate"
 	languages = list(
-					LANGUAGE_SOL_COMMON = 1,
-					LANGUAGE_TRADEBAND = 1,
-					LANGUAGE_UNATHI = 0,
-					LANGUAGE_SIIK_TAJR = 0,
-					LANGUAGE_SKRELLIAN = 0,
-					LANGUAGE_GUTTER = 1
-					)
+		LANGUAGE_SOL_COMMON = 1,
+		LANGUAGE_TRADEBAND = 1,
+		LANGUAGE_UNATHI = 0,
+		LANGUAGE_SIIK_TAJR = 0,
+		LANGUAGE_SKRELLIAN = 0,
+		LANGUAGE_GUTTER = 1
+	)
 
 /obj/item/weapon/robot_module/syndicate/New(var/mob/living/silicon/robot/R)
 	..()
@@ -587,7 +594,7 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	src.modules += new /obj/item/weapon/gun/energy/pulse_rifle/destroyer(src)
 	src.modules += new /obj/item/weapon/card/emag(src)
 	src.modules += new /obj/item/weapon/crowbar(src)
-	var/jetpack = new/obj/item/weapon/tank/jetpack/carbondioxide(src)
+	var/jetpack = new /obj/item/weapon/tank/jetpack/carbondioxide(src)
 	src.modules += jetpack
 	R.internals = jetpack
 	return
@@ -632,18 +639,18 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	src.emag = new /obj/item/weapon/pickaxe/plasmacutter(src)
 	src.emag.name = "Plasma Cutter"
 
-	var/datum/matter_synth/metal = new /datum/matter_synth/metal(25000)
-	var/datum/matter_synth/glass = new /datum/matter_synth/glass(25000)
-	var/datum/matter_synth/wood = new /datum/matter_synth/wood(2000)
-	var/datum/matter_synth/plastic = new /datum/matter_synth/plastic(1000)
-	var/datum/matter_synth/wire = new /datum/matter_synth/wire(30)
+	var/datum/matter_synth/metal/metal = new (25000)
+	var/datum/matter_synth/glass/glass = new (25000)
+	var/datum/matter_synth/wood/wood = new (2000)
+	var/datum/matter_synth/plastic/plastic = new (1000)
+	var/datum/matter_synth/wire/wire = new (30)
 	synths += metal
 	synths += glass
 	synths += wood
 	synths += plastic
 	synths += wire
 
-	var/obj/item/weapon/matter_decompiler/MD = new /obj/item/weapon/matter_decompiler(src)
+	var/obj/item/weapon/matter_decompiler/MD = new (src)
 	MD.metal = metal
 	MD.glass = glass
 	MD.wood = wood
@@ -658,15 +665,15 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	G.synths = list(glass)
 	src.modules += G
 
-	var/obj/item/stack/rods/cyborg/R = new /obj/item/stack/rods/cyborg(src)
+	var/obj/item/stack/rods/cyborg/R = new (src)
 	R.synths = list(metal)
 	src.modules += R
 
-	var/obj/item/stack/cable_coil/cyborg/C = new /obj/item/stack/cable_coil/cyborg(src)
+	var/obj/item/stack/cable_coil/cyborg/C = new (src)
 	C.synths = list(wire)
 	src.modules += C
 
-	var/obj/item/stack/tile/steel/cyborg/S = new /obj/item/stack/tile/steel/cyborg(src)
+	var/obj/item/stack/tile/steel/cyborg/S = new (src)
 	S.synths = list(metal)
 	src.modules += S
 
@@ -674,7 +681,7 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	RG.synths = list(metal, glass)
 	src.modules += RG
 
-	var/obj/item/stack/tile/wood/cyborg/WT = new /obj/item/stack/tile/wood/cyborg(src)
+	var/obj/item/stack/tile/wood/cyborg/WT = new (src)
 	WT.synths = list(wood)
 	src.modules += WT
 

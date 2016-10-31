@@ -206,8 +206,7 @@
 		if(istype(W, /obj/item/weapon/reagent_containers/glass))
 			if(!beaker)
 				beaker = W
-				user.drop_item()
-				beaker.loc = src
+				user.drop_from_inventory(beaker, src)
 				user.visible_message("[user] adds \a [beaker] to \the [src]!", "You add \a [beaker] to \the [src]!")
 				src.updateUsrDialog()
 				return

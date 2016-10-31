@@ -119,7 +119,7 @@
 
 		if(uses<1)
 			user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
-			user.drop_item()
+			user.drop_from_inventory(src)
 			var/obj/item/weapon/card/emag_broken/junk = new(user.loc)
 			junk.add_fingerprint(user)
 			qdel(src)

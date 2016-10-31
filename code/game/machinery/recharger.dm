@@ -71,8 +71,8 @@ obj/machinery/recharger/attackby(obj/item/weapon/G as obj, mob/user as mob)
 			if(!L.stored_computer.battery)
 				user << "There's no battery in it!"
 				return
-		user.drop_item()
-		G.loc = src
+		if(!user.unEquip(G, src)) // Build in hand weapons. To be shure.
+			return
 		charging = G
 		update_icon()
 

@@ -29,36 +29,38 @@
 //items that use internal storage have the option of calling this to emulate default storage MouseDrop behaviour.
 //returns 1 if the master item's parent's MouseDrop() should be called, 0 otherwise. It's strange, but no other way of
 //doing it without the ability to call another proc's parent, really.
-/obj/item/weapon/storage/internal/proc/handle_mousedrop(mob/user as mob, obj/over_object as obj)
-	if (ishuman(user) || issmall(user)) //so monkeys can take off their backpacks -- Urist
+/obj/item/weapon/storage/internal/proc/handle_mousedrop(mob/living/carbon/human/user as mob, obj/over_object as obj)
+	if(!istype(user))
+		return 0
 
-		if (istype(user.loc,/obj/mecha)) // stops inventory actions in a mech
-			return 0
+	if (istype(user.loc,/obj/mecha)) // stops inventory actions in a mech
+		return 0
 
-		if(over_object == user && Adjacent(user)) // this must come before the screen objects only block
-			src.open(user)
-			return 0
+	if(over_object == user && Adjacent(user)) // this must come before the screen objects only block
+		src.open(user)
+		return 0
 
-		if (!( istype(over_object, /obj/screen) ))
-			return 1
+	if (!istype(over_object, /obj/screen))
+		return 1
 
-		//makes sure master_item is equipped before putting it in hand, so that we can't drag it into our hand from miles away.
-		//there's got to be a better way of doing this...
-		if (!(master_item.loc == user) || (master_item.loc && master_item.loc.loc == user))
-			return 0
+	//makes sure master_item is equipped before putting it in hand, so that we can't drag it into our hand from miles away.
+	//there's got to be a better way of doing this...
+	if (!(master_item.loc == user) || (master_item.loc && master_item.loc.loc == user))
+		return 0
 
-		if (!( user.restrained() ) && !( user.stat ))
-			switch(over_object.name)
-				if(BP_R_HAND)
-					if(user.unEquip(master_item))
-						if(!user.put_in_r_hand(master_item))
-							user.drop_from_inventory(master_item)
-				if(BP_L_HAND)
-					if(user.unEquip(master_item))
-						if(!user.put_in_l_hand(master_item))
-							user.drop_from_inventory(master_item)
-			master_item.add_fingerprint(user)
-			return 0
+	if (user.restrained() || user.stat)
+		return 0
+
+	switch(over_object.name)
+		if(BP_R_HAND)
+			if(user.unEquip(master_item))
+				if(!user.put_in_r_hand(master_item))
+					user.drop_from_inventory(master_item)
+		if(BP_L_HAND)
+			if(user.unEquip(master_item))
+				if(!user.put_in_l_hand(master_item))
+					user.drop_from_inventory(master_item)
+	master_item.add_fingerprint(user)
 	return 0
 
 //items that use internal storage have the option of calling this to emulate default storage attack_hand behaviour.

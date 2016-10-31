@@ -183,8 +183,7 @@
 		else
 			return
 
-		user.drop_item()
-		W.loc = src
+		user.drop_from_inventory(W, src)
 		src.update_icon()
 
 	if(istype(W, /obj/item/device/mmi))
@@ -218,9 +217,9 @@
 			var/mob/living/silicon/robot/O = new (get_turf(loc), unfinished = 1)
 			if(!O)	return
 
-			user.drop_item()
+			user.unEquip(M)
 
-			O.mmi = W
+			O.mmi = M
 			O.invisibility = 0
 			O.custom_name = created_name
 			O.updatename("Default")
@@ -228,7 +227,11 @@
 			M.brainmob.mind.transfer_to(O)
 
 			if(O.mind && O.mind.special_role)
-				O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
+				O.mind.store_memory({"
+					In case you look at this after being borged,
+					the objectives are only here until I find a way to make them not show up for you,
+					as I can't simply delete them without screwing up round-end reporting. --NeoFite
+				"})
 
 			O.job = "Cyborg"
 
@@ -274,8 +277,7 @@
 		if(src.cell)
 			user << "<span class='warning'>You have already inserted a cell!</span>"
 		else
-			user.drop_item()
-			W.loc = src
+			user.drop_from_inventory(W, src)
 			src.cell = W
 			user << "<span class='notice'>You insert the cell!</span>"
 		return
@@ -326,7 +328,7 @@
 	else if(istype(W, /obj/item/weapon/stock_parts/manipulator))
 		user << "<span class='notice'>You install some manipulators and modify the head, creating a functional spider-bot!</span>"
 		new /mob/living/simple_animal/spiderbot(get_turf(loc))
-		user.drop_item()
+		user.drop_from_inventory(W)
 		qdel(W)
 		qdel(src)
 		return
@@ -341,6 +343,5 @@
 		src.flash2 = W
 	else
 		src.flash1 = W
-	user.drop_item()
-	W.loc = src
+	user.drop_from_inventory(W, src)
 	user << "<span class='notice'>You insert the flash into the eye socket!</span>"

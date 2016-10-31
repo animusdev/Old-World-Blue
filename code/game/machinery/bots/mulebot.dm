@@ -95,8 +95,7 @@
 		playsound(src.loc, 'sound/effects/sparks1.ogg', 100, 0)
 	else if(istype(I,/obj/item/weapon/cell) && open && !cell)
 		var/obj/item/weapon/cell/C = I
-		user.drop_item()
-		C.loc = src
+		user.drop_from_inventory(C, src)
 		cell = C
 		updateDialog()
 	else if(istype(I,/obj/item/weapon/screwdriver))
@@ -279,9 +278,8 @@
 				if(open && !cell)
 					var/obj/item/weapon/cell/C = usr.get_active_hand()
 					if(istype(C))
-						usr.drop_item()
+						usr.drop_from_inventory(C, src)
 						cell = C
-						C.loc = src
 						C.add_fingerprint(usr)
 
 						usr.visible_message("\blue [usr] inserts a power cell into [src].", "\blue You insert the power cell into [src].")

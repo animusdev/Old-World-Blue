@@ -17,7 +17,7 @@
 
 		var/obj/item/clothing/accessory/A = I
 		if(can_attach_accessory(A))
-			user.drop_item()
+			user.drop_from_inventory(A)
 			attach_accessory(user, A)
 			return
 		else
@@ -40,23 +40,25 @@
 	return ..()
 
 /obj/item/clothing/MouseDrop(var/obj/over_object)
-	if (ishuman(usr) || issmall(usr))
-		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
-		if (!(src.loc == usr))
-			return
+	if(!ishuman(usr))
+		return
 
-		if (( usr.restrained() ) || ( usr.stat ))
-			return
+	var/mob/living/carbon/human/H = usr
+	//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
+	if(src.loc != H)
+		return
 
-		if (!usr.unEquip(src))
-			return
+	if(H.restrained() || H.stat)
+		return
 
-		switch(over_object.name)
-			if("r_hand")
-				usr.put_in_r_hand(src)
-			if("l_hand")
-				usr.put_in_l_hand(src)
-		src.add_fingerprint(usr)
+	switch(over_object.name)
+		if("r_hand")
+			if(!H.put_in_r_hand(src))
+				H.unEquip(src)
+		if("l_hand")
+			if(!H.put_in_l_hand(src))
+				H.unEquip(src)
+	src.add_fingerprint(H)
 
 /obj/item/clothing/examine(mob/user, return_dist=1)
 	.=..()
