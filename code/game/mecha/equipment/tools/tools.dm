@@ -1237,8 +1237,8 @@
 			return ..()
 
 	detached()
-		..()
 		chassis.proc_res["dyndomove"] = null
+		..()
 		return
 
 	attached(obj/mecha/M as obj)
