@@ -43,7 +43,7 @@
 				dat += "<A href='?src=\ref[src];screen=2'>2. Emergency Full Destruct</A><BR>"
 			if(screen == 1)
 				for(var/mob/living/silicon/robot/R in mob_list)
-					if(istype(usr, /mob/living/silicon/ai))
+					if(isAI(usr))
 						if (R.connected_ai != usr)
 							continue
 					if(istype(usr, /mob/living/silicon/robot))

@@ -150,7 +150,7 @@
 
 /obj/machinery/power/turbine/interact(mob/user)
 
-	if ( (get_dist(src, user) > 1 ) || (stat & (NOPOWER|BROKEN)) && (!istype(user, /mob/living/silicon/ai)) )
+	if ( (get_dist(src, user) > 1 ) || (stat & (NOPOWER|BROKEN)) && (!isAI(user)) )
 		user.machine = null
 		user << browse(null, "window=turbine")
 		return
@@ -180,7 +180,7 @@
 	if (usr.stat || usr.restrained() || !usr.IsAdvancedToolUser())
 		return
 
-	if ((istype(src.loc, /turf) && Adjacent(usr)) || istype(usr, /mob/living/silicon/ai))
+	if ((istype(src.loc, /turf) && Adjacent(usr)) || isAI(usr))
 		if( href_list["close"] )
 			usr << browse(null, "window=turbine")
 			usr.machine = null

@@ -193,7 +193,7 @@ What a mess.*/
 				active1 = null
 
 			if("Log In")
-				if (istype(usr, /mob/living/silicon/ai))
+				if (isAI(usr))
 					src.active1 = null
 					src.authenticated = usr.name
 					src.rank = "AI"
