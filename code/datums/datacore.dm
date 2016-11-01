@@ -59,7 +59,7 @@ var/global/ManifestJSON
 		else
 			assignment = "Unassigned"
 
-		var/id = add_zero(num2hex(rand(1, 1.6777215E7)), 6)	//this was the best they could come up with? A large random number? *sigh*
+		var/id = generate_record_id()
 		var/icon/front = new(get_id_photo(H), dir = SOUTH)
 		var/icon/side = new(get_id_photo(H), dir = WEST)
 		//General Record
@@ -340,18 +340,21 @@ using /datum/datacore/proc/manifest_inject( ), or manifest_insert( )
 			misc[++misc.len] = list("name" = name, "rank" = rank, "active" = isactive)
 
 
-	PDA_Manifest = list(\
-		"heads" = heads,\
-		"sec" = sec,\
-		"eng" = eng,\
-		"med" = med,\
-		"sci" = sci,\
-		"civ" = civ,\
-		"bot" = bot,\
-		"misc" = misc\
+	PDA_Manifest = list(
+		"heads" = heads,
+		"sec" = sec,
+		"eng" = eng,
+		"med" = med,
+		"sci" = sci,
+		"civ" = civ,
+		"bot" = bot,
+		"misc" = misc
 		)
 	ManifestJSON = list2json(PDA_Manifest)
 	return
+
+/proc/generate_record_id()
+	return add_zero(num2hex(rand(1, 65535)), 4)	//no point generating higher numbers because of the limitations of num2hex
 
 /proc/get_id_photo(var/mob/living/carbon/human/H, var/assigned_role)
 
