@@ -169,9 +169,6 @@ var/bomb_set
 			usr << "\red You don't have the dexterity to do this!"
 			return 1
 
-		if (!ishuman(user))
-			usr << "\red You don't have the dexterity to do this!"
-			return 1
 		user.set_machine(src)
 		var/dat = text("<TT><B>Nuclear Fission Explosive</B><BR>\nAuth. Disk: <A href='?src=\ref[];auth=1'>[]</A><HR>", src, (src.auth ? "++++++++++" : "----------"))
 		if (src.auth)

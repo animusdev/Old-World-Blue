@@ -289,7 +289,7 @@
 		return
 	if(!istype(usr, /mob/living))
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
+	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		//Authenticate
 		if (href_list["auth"])
 			if(auth)

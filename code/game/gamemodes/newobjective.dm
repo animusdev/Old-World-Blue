@@ -1228,7 +1228,7 @@ datum
 
 
 			check_completion()
-				if(!istype(owner.current, /mob/living/silicon))
+				if(!issilicon(owner.current))
 					return 0
 				if(!emergency_shuttle.returned())
 					return 0

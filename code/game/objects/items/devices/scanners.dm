@@ -343,10 +343,8 @@ REAGENT SCANNER
 
 	if (user.stat)
 		return
-	if (!ishuman(usr))
-		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	if (!user.IsAdvancedToolUser())
 		return
-
 	analyze_gases(src, user)
 	return
 

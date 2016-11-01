@@ -137,7 +137,7 @@
 
 			if(P && (P.loc == src) && istype(P, /obj/item/weapon/paper) )
 
-				if(!(ishuman(usr) || isobserver(usr) || istype(usr, /mob/living/silicon)))
+				if(!(ishuman(usr) || isobserver(usr) || issilicon(usr)))
 					usr << browse("<HTML><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY>[stars(P.info)][P.stamps]</BODY></HTML>", "window=[P.name]")
 					onclose(usr, "[P.name]")
 				else

@@ -88,8 +88,7 @@
 
 /turf/simulated/wall/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
-	if (!user.)
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	if (!user.IsAdvancedToolUser())
 		return
 
 	user.next_move = world.time + 8

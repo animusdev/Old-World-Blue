@@ -624,7 +624,7 @@ About the new airlock wires panel:
 
 /obj/machinery/door/airlock/attack_hand(mob/user as mob)
 	user.next_move = world.time + 8
-	if(!istype(usr, /mob/living/silicon))
+	if(!issilicon(usr))
 		if(src.isElectrified())
 			if(src.shock(user, 100))
 				return
@@ -716,7 +716,7 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/attackby(C as obj, mob/user as mob)
 	user.next_move = world.time + 8
 	//world << text("airlock attackby src [] obj [] mob []", src, C, user)
-	if(!istype(usr, /mob/living/silicon))
+	if(!issilicon(usr))
 		if(src.isElectrified())
 			if(src.shock(user, 75))
 				return
