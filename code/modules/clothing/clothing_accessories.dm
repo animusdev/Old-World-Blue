@@ -53,11 +53,11 @@
 
 	switch(over_object.name)
 		if("r_hand")
-			if(!H.put_in_r_hand(src))
-				H.unEquip(src)
+			if(H.unEquip(src))
+				H.put_in_r_hand(src)
 		if("l_hand")
-			if(!H.put_in_l_hand(src))
-				H.unEquip(src)
+			if(H.unEquip(src))
+				H.put_in_l_hand(src)
 	src.add_fingerprint(H)
 
 /obj/item/clothing/examine(mob/user, return_dist=1)
