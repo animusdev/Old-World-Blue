@@ -141,20 +141,3 @@
 			M.show_message(message)
 	src.show_message(message)
 
-/mob/proc/hear_sleep(var/message)
-	var/heard = ""
-	if(prob(15))
-		var/list/punctuation = list(",", "!", ".", ";", "?")
-		var/list/messages = splittext(message, " ")
-		var/R = rand(1, messages.len)
-		var/heardword = messages[R]
-		if(copytext(heardword,1, 1) in punctuation)
-			heardword = copytext(heardword,2)
-		if(copytext(heardword,-1) in punctuation)
-			heardword = copytext(heardword,1,lentext(heardword))
-		heard = "<span class = 'game_say'>...You hear something about...[heardword]</span>"
-
-	else
-		heard = "<span class = 'game_say'>...<i>You almost hear someone talking</i>...</span>"
-
-	src << heard
