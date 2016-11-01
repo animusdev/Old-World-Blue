@@ -25,6 +25,8 @@
 		if(message_mode == "general")
 			message_mode = null
 		return aiRadio.talk_into(src,message,message_mode,verb,speaking)
+	else if(holo)
+		return holopad_talk(message, verb, speaking)
 
 /mob/living/silicon/pai/handle_message_mode(message_mode, message, verb, speaking, used_radios, alt_name)
 	..()
@@ -62,7 +64,7 @@
 	message = trim(message)
 
 	if (!message)
-		return
+		return 1
 
 	var/obj/machinery/hologram/holopad/H = src.holo
 	if(H && H.masters[src])//If there is a hologram and its master is the user.
