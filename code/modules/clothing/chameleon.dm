@@ -1,5 +1,5 @@
-var/global/list/chameleons = list(
-	"under" = list(),
+var/global/list/chameleons_categories = list(
+	"uniform" = list(),
 	"head" = list(),
 	"suit" = list(),
 	"shoes" = list(),
@@ -11,19 +11,19 @@ var/global/list/chameleons = list(
 )
 
 /obj/item/proc/initialize_chameleon_list(var/style_list = "", var/basic_type, var/list/blocked = list())
-	var/list/check = chameleons[style_list]
+	var/list/check = chameleons_categories[style_list]
 	if(check && check.len) return
-	src.permeability_coefficient = 0.90
-	chameleons[style_list] = list("protect")
+	permeability_coefficient = 0.90
+	chameleons_categories[style_list] = list("protect")
 	var/list/styles = list()
 	for(var/T in typesof(basic_type) - blocked - type)
 		var/obj/O = T
 		styles[initial(O.name)] = T
-	chameleons[style_list] = styles
+	chameleons_categories[style_list] = styles
 	return
 
 /proc/change_item_appearance(var/obj/item/clothing/C, var/obj/item/clothing/new_type)
-	if(!istype(C) || new_type) return
+	if(!istype(C) || !new_type) return
 	C.desc = initial(new_type.desc)
 	C.name = initial(new_type.name)
 	C.icon = initial(new_type.icon)
@@ -36,7 +36,6 @@ var/global/list/chameleons = list(
 	C.flags_inv = initial(new_type.flags_inv)
 	C.description_info = initial(new_type.description_info)
 
-
 //*****************
 //**Cham Jumpsuit**
 //*****************
@@ -48,7 +47,7 @@ var/global/list/chameleons = list(
 	item_state = "bl_suit"
 	desc = "It's a plain jumpsuit. It seems to have a small dial on the wrist."
 	origin_tech = "syndicate=3"
-	var/style_list = "under"
+	var/style_list = "uniform"
 	New()
 		..()
 		initialize_chameleon_list(style_list, parent_type, list(/obj/item/clothing/under/gimmick))
@@ -66,11 +65,11 @@ var/global/list/chameleons = list(
 	set category = "Object"
 	set src in usr
 
-	var/picked = input("Select jumpsuit to change it to", "Chameleon Jumpsuit") as null|anything in chameleons[style_list]
+	var/picked = input("Select jumpsuit to change it to", "Chameleon Jumpsuit") as null|anything in chameleons_categories[style_list]
 	if(!picked)
 		return
 
-	var/newtype = chameleons[style_list][picked]
+	var/newtype = chameleons_categories[style_list][picked]
 	change_item_appearance(src,newtype)
 	update_clothing_icon()
 
@@ -104,10 +103,10 @@ var/global/list/chameleons = list(
 	set category = "Object"
 	set src in usr
 
-	var/picked = input("Select headwear to change it to", "Chameleon Hat") as null|anything in chameleons[style_list]
+	var/picked = input("Select headwear to change it to", "Chameleon Hat") as null|anything in chameleons_categories[style_list]
 	if(!picked)
 		return
-	var/newtype = chameleons[style_list][picked]
+	var/newtype = chameleons_categories[style_list][picked]
 	change_item_appearance(src, newtype)
 	update_clothing_icon()
 
@@ -141,10 +140,10 @@ var/global/list/chameleons = list(
 	set category = "Object"
 	set src in usr
 
-	var/picked = input("Select exosuit to change it to", "Chameleon Exosuit") as null|anything in chameleons[style_list]
+	var/picked = input("Select exosuit to change it to", "Chameleon Exosuit") as null|anything in chameleons_categories[style_list]
 	if(!picked)
 		return
-	var/newtype = chameleons[style_list][picked]
+	var/newtype = chameleons_categories[style_list][picked]
 	change_item_appearance(src, newtype)
 	update_clothing_icon()
 
@@ -178,10 +177,10 @@ var/global/list/chameleons = list(
 	set category = "Object"
 	set src in usr
 
-	var/picked = input("Select shoes to change it to", "Chameleon Shoes") as null|anything in chameleons[style_list]
+	var/picked = input("Select shoes to change it to", "Chameleon Shoes") as null|anything in chameleons_categories[style_list]
 	if(!picked)
 		return
-	var/newtype = chameleons[style_list][picked]
+	var/newtype = chameleons_categories[style_list][picked]
 	change_item_appearance(src, newtype)
 	update_clothing_icon()
 
@@ -216,10 +215,10 @@ var/global/list/chameleons = list(
 	set category = "Object"
 	set src in usr
 
-	var/picked = input("Select backpack to change it to", "Chameleon Backpack") as null|anything in chameleons[style_list]
+	var/picked = input("Select backpack to change it to", "Chameleon Backpack") as null|anything in chameleons_categories[style_list]
 	if(!picked)
 		return
-	var/newtype = chameleons[style_list][picked]
+	var/newtype = chameleons_categories[style_list][picked]
 	change_item_appearance(src, newtype)
 
 //********************
@@ -249,10 +248,10 @@ var/global/list/chameleons = list(
 	set category = "Object"
 	set src in usr
 
-	var/picked = input("Select gloves to change it to", "Chameleon Gloves") as null|anything in chameleons[style_list]
+	var/picked = input("Select gloves to change it to", "Chameleon Gloves") as null|anything in chameleons_categories[style_list]
 	if(!picked)
 		return
-	var/newtype = chameleons[style_list][picked]
+	var/newtype = chameleons_categories[style_list][picked]
 	change_item_appearance(src, newtype)
 	update_clothing_icon()
 
@@ -283,10 +282,10 @@ var/global/list/chameleons = list(
 	set category = "Object"
 	set src in usr
 
-	var/picked = input("Select mask to change it to", "Chameleon Mask") as null|anything in chameleons[style_list]
+	var/picked = input("Select mask to change it to", "Chameleon Mask") as null|anything in chameleons_categories[style_list]
 	if(!picked)
 		return
-	var/newtype = chameleons[style_list][picked]
+	var/newtype = chameleons_categories[style_list][picked]
 	change_item_appearance(src, newtype)
 	update_clothing_icon()
 
@@ -317,10 +316,10 @@ var/global/list/chameleons = list(
 	set category = "Object"
 	set src in usr
 
-	var/picked = input("Select glasses to change it to", "Chameleon Glasses") as null|anything in chameleons[style_list]
+	var/picked = input("Select glasses to change it to", "Chameleon Glasses") as null|anything in chameleons_categories[style_list]
 	if(!picked)
 		return
-	var/newtype = chameleons[style_list][picked]
+	var/newtype = chameleons_categories[style_list][picked]
 	change_item_appearance(src, newtype)
 	update_clothing_icon()
 
@@ -358,6 +357,6 @@ var/global/list/chameleons = list(
 	set category = "Object"
 	set src in usr
 
-	var/picked = input("Select backpack to change it to", "Chameleon Backpack") as null|anything in chameleons[style_list]
-	var/newtype = chameleons[style_list][picked]
+	var/picked = input("Select backpack to change it to", "Chameleon Backpack") as null|anything in chameleons_categories[style_list]
+	var/newtype = chameleons_categories[style_list][picked]
 	change_item_appearance(src, newtype)
