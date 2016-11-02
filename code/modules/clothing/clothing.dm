@@ -43,6 +43,9 @@
 	if (!..())
 		return 0
 
+	if(slot in list(slot_l_hand, slot_r_hand))
+		return 1
+
 	if(species_restricted && ishuman(M))
 		var/exclusive = null
 		var/wearable = null
