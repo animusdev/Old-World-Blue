@@ -14,7 +14,10 @@
 	slowdown = (shoes? max(0, shoes.slowdown): 0) + 1 //So you can't put on magboots to make you walk faster.
 	slowdown += 2
 
-/obj/item/clothing/shoes/magboots/mob_can_equip(mob/user)
+/obj/item/clothing/shoes/magboots/mob_can_equip(mob/user, slot)
+	if(slot != slot_shoes)
+		return ..()
+
 	var/mob/living/carbon/human/H = user
 
 	if(H.shoes)
