@@ -48,26 +48,33 @@
 	access = access_robotics
 
 /datum/supply_packs/robotics/exosuit_mod
-	contains = list(/obj/item/device/kit/paint/ripley)
-	name = "APLU classic modkit"
 	cost = 50
 	containertype = /obj/structure/closet/crate
 	containername = "heavy crate"
 
-/datum/supply_packs/exosuit_mod/apludeath
+/datum/supply_packs/robotics/exosuit_mod/aplu
+	contains = list(/obj/item/device/kit/paint/ripley)
+	name = "APLU classic modkit"
+
+/datum/supply_packs/robotics/exosuit_mod/aplu/medic
+	contains = list(/obj/item/device/kit/paint/ripley/medic)
+	name = "APLU medical modkit"
+	containertype = /obj/structure/closet/crate
+	containername = "heavy crate"
+
+/datum/supply_packs/robotics/exosuit_mod/aplu/death
 	contains = list(/obj/item/device/kit/paint/ripley/death)
 	name = "APLU death modkit"
 	cost = 60
 	containertype = /obj/structure/closet/crate
 	containername = "heavy crate"
 
-
-/datum/supply_packs/robotics/exosuit_mod/aplured
+/datum/supply_packs/robotics/exosuit_mod/aplu/red
 	contains = list(/obj/item/device/kit/paint/ripley/flames_red)
 	name = "APLU flames red modkit"
 	cost = 60
 
-/datum/supply_packs/robotics/exosuit_mod/aplublue
+/datum/supply_packs/robotics/exosuit_mod/aplu/blue
 	contains = list(/obj/item/device/kit/paint/ripley/flames_blue)
 	name = "APLU flames blue modkit"
 	cost = 60

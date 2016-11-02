@@ -118,6 +118,12 @@
 	new_icon = "ripley-old"
 	allowed_types = list("ripley")
 
+/obj/item/device/kit/paint/ripley/medic
+	name = "Medical APLU customisation kit"
+	new_name = "APLU \"Mercy\""
+	new_desc = "A very retro APLU unit; didn't they retire these back in 2543?"
+	new_icon = "medicalripley"
+
 /obj/item/device/kit/paint/ripley/death
 	name = "\"Reaper\" APLU customisation kit"
 	new_name = "APLU \"Reaper\""
