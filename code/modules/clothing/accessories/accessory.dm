@@ -7,7 +7,7 @@
 	slot_flags = SLOT_TIE
 	w_class = 2.0
 	var/slot = "decor"
-	var/obj/item/clothing/under/has_suit = null		//the suit the tie may be attached to
+	var/obj/item/clothing/has_suit = null		//the suit the tie may be attached to
 	var/image/inv_overlay = null	//overlay used when attached to clothing.
 
 
