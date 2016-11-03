@@ -15,11 +15,11 @@
 	satchel = /obj/item/weapon/storage/backpack/satchel_eng
 	duffle = /obj/item/weapon/storage/backpack/duffle/engie
 
-	backpacks = list(
-		/obj/item/weapon/storage/backpack/industrial,\
-		/obj/item/weapon/storage/backpack/satchel_eng,\
-		/obj/item/weapon/storage/backpack/satchel
-		)
+	backpack  = /obj/item/weapon/storage/backpack/industrial
+	satchel_j = /obj/item/weapon/storage/backpack/satchel_eng
+	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/eng
+	messanger = /obj/item/weapon/storage/backpack/messenger/eng
+
 
 
 

@@ -248,7 +248,7 @@
 	desc = "A green satchel for plant related work."
 	icon_state = "satchel_hyd"
 
-/obj/item/weapon/storage/backpack/satchel/cap
+/obj/item/weapon/storage/backpack/satchel/captain
 	name = "captain's satchel"
 	desc = "An exclusive satchel for officers."
 	icon_state = "satchel-cap"
@@ -306,7 +306,7 @@
 	icon_state = "courierbagmed"
 	item_state = "medicalpack"
 
-/obj/item/weapon/storage/backpack/messenger/viro
+/obj/item/weapon/storage/backpack/messenger/vir
 	name = "virology messenger bag"
 	desc = "A sterile backpack worn over one shoulder.  This one is in Virology colors."
 	icon_state = "courierbagviro"
@@ -324,7 +324,7 @@
 	icon_state = "courierbagcom"
 	item_state = "captainpack"
 
-/obj/item/weapon/storage/backpack/messenger/engi
+/obj/item/weapon/storage/backpack/messenger/eng
 	name = "engineering messenger bag"
 	icon_state = "courierbagengi"
 	item_state = "engiepack"

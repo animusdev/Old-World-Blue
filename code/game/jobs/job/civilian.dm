@@ -84,11 +84,9 @@
 	gloves = /obj/item/clothing/gloves/botanic_leather
 	ear = /obj/item/device/radio/headset/headset_service
 
-	backpacks = list(
-		/obj/item/weapon/storage/backpack/hydroponics,
-		/obj/item/weapon/storage/backpack/satchel_hyd,
-		/obj/item/weapon/storage/backpack/satchel
-	)
+	backpack  = /obj/item/weapon/storage/backpack/hydroponics
+	satchel_j = /obj/item/weapon/storage/backpack/satchel/hyd
+	messanger = /obj/item/weapon/storage/backpack/messenger/hyd
 
 	put_in_backpack = list(
 		/obj/item/device/analyzer/plant_analyzer

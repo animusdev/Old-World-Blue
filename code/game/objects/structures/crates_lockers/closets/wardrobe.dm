@@ -26,6 +26,13 @@
 
 /obj/structure/closet/wardrobe/red/New()
 	..()
+	for(i in 1 to 3)
+		switch(rand(5))
+			if(1) new /obj/item/weapon/storage/backpack/security(src)
+			if(2) new /obj/item/weapon/storage/backpack/satchel/sec(src)
+			if(3) new /obj/item/weapon/storage/backpack/satchel/sec(src)
+			if(4) new /obj/item/weapon/storage/backpack/dufflebag/sec(src)
+			if(5) new /obj/item/weapon/storage/backpack/messenger/sec(src)
 	new /obj/item/clothing/under/rank/security(src)
 	new /obj/item/clothing/under/rank/security(src)
 	new /obj/item/clothing/under/rank/security(src)
@@ -38,12 +45,14 @@
 	new /obj/item/clothing/head/beret/sec(src)
 	new /obj/item/clothing/head/beret/sec(src)
 	new /obj/item/clothing/head/beret/sec(src)
+	new /obj/item/clothing/mask/bandana/red(src)
+	new /obj/item/clothing/mask/bandana/red(src)
+	new /obj/item/clothing/mask/bandana/red(src)
 	new /obj/item/clothing/accessory/armband(src)
 	new /obj/item/clothing/accessory/armband(src)
 	new /obj/item/clothing/accessory/armband(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
-	new /obj/item/clothing/accessory/holster/armpit(src)
-	new /obj/item/clothing/accessory/holster/armpit(src)
+	new /obj/item/clothing/accessory/holster/waist(src)
 	new /obj/item/clothing/accessory/holster/waist(src)
 	new /obj/item/clothing/accessory/holster/hip(src)
 	return
@@ -68,7 +77,6 @@
 	new /obj/item/clothing/under/rank/security/dnavy(src)
 	new /obj/item/clothing/under/rank/security/dnavy(src)
 	return
-
 
 /obj/structure/closet/wardrobe/pink
 	name = "pink wardrobe"
@@ -105,6 +113,7 @@
 	new /obj/item/clothing/mask/bandana(src)
 	new /obj/item/clothing/mask/bandana(src)
 	new /obj/item/clothing/mask/bandana(src)
+	new /obj/item/weapon/storage/backpack/messenger/black(src)
 	return
 
 
@@ -366,6 +375,8 @@
 	new /obj/item/clothing/suit/storage/toggle/labcoat/virologist(src)
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/clothing/mask/surgical(src)
+	new /obj/item/weapon/storage/backpack/virology(src)
+	new /obj/item/weapon/storage/backpack/satchel/vir(src)
 	return
 
 
@@ -446,11 +457,15 @@
 	new /obj/item/clothing/mask/balaclava/tactical(src)
 	new /obj/item/clothing/mask/balaclava(src)
 	new /obj/item/clothing/glasses/sunglasses/sechud/tactical(src)
-	new /obj/item/weapon/storage/belt/security/tactical(src)
+	if(prob(25))
+		new /obj/item/weapon/storage/belt/security/tactical/bandolier(src)
+	else
+		new /obj/item/weapon/storage/belt/security/tactical(src)
 	if(prob(10))
 		new /obj/item/clothing/mask/bandana/skull(src)
 	new /obj/item/clothing/shoes/jackboots(src)
 	new /obj/item/clothing/gloves/black(src)
+	new /obj/item/clothing/under/pants/camo(src)
 	return
 
 /obj/structure/closet/wardrobe/ert
