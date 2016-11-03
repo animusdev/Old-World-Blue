@@ -3,8 +3,8 @@
 	//The name of the job
 	var/title = "BASIC"
 	//Job access. The use of minimal_access or access is determined by a config setting: config.jobs_have_minimal_access
-	var/list/minimal_access = list()      // Useful for servers which prefer to only have access given to the places a job absolutely needs (Larger server population)
-	var/list/access = list()              // Useful for servers which either have fewer players, so each person needs to fill more than one role, or servers which like to give more access, so players can't hide forever in their super secure departments (I'm looking at you, chemistry!)
+	var/list/minimal_access = list()      // Only have access given to the places a job absolutely needs.
+	var/list/addcional_access = list()    // Additionasl access. Need be enabled in config.
 	var/flag = 0 	                      // Bitflags for the job
 	var/department_flag = 0
 	var/faction = "None"	              // Players will be allowed to spawn in as jobs that are set to "Station"
@@ -14,8 +14,8 @@
 	var/supervisors = null                // Supervisors, who this person answers to directly
 	var/selection_color = "#ffffff"       // Selection screen color
 	var/list/alt_titles                   // List of alternate titles, if any
-	var/req_admin_notify                  // If this is set to 1, a text is printed to the player when jobs are assigned, telling him that he should let admins know that he has to disconnect.
-	var/minimal_player_age = 0            // If you have use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_age days old. (meaning they first signed in at least that many days before.)
+	var/req_admin_notify                  // Telling player that he should let admins know that he has to disconnect.
+	var/minimal_player_age = 0            // Add a requirement for players to be at least minimal_player_age days old.
 	var/department = null                 // Does this position have a department tag?
 	var/head_position = 0                 // Is this position Command?
 	var/minimum_character_age = 0
@@ -47,8 +47,8 @@
 	var/duffle = /obj/item/weapon/storage/backpack/duffle
 
 	var/list/backpacks = list(
-		/obj/item/weapon/storage/backpack,\
-		/obj/item/weapon/storage/backpack/satchel_norm,\
+		/obj/item/weapon/storage/backpack,
+		/obj/item/weapon/storage/backpack/satchel_norm,
 		/obj/item/weapon/storage/backpack/satchel
 	)
 
@@ -150,7 +150,7 @@ For copy-pasting:
 			if(COMPANY_OPPOSED)		loyalty = 0.70
 
 	//give them an account in the station database
-	var/money_amount = (rand(5,50) + rand(5, 50)) * loyalty * economic_modifier * (H.species ? economic_species_modifier[H.species.type] : 2)
+	var/money_amount = rand(10,100) * loyalty * economic_modifier * (H.species ? economic_species_modifier[H.species.type] : 2)
 	var/datum/money_account/M = create_account(H.real_name, money_amount, null)
 	if(H.mind)
 		var/remembered_info = ""
@@ -169,11 +169,12 @@ For copy-pasting:
 
 /datum/job/proc/get_access()
 	if(!config || config.jobs_have_minimal_access)
-		return src.minimal_access.Copy()
+		return minimal_access.Copy()
 	else
-		return src.access.Copy()
+		return minimal_access.Copy() | addcional_access.Copy()
 
-//If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
+//If the configuration option is set to require players to be logged as old enough to play certain jobs,
+// then this proc checks that they are, otherwise it just returns 1
 /datum/job/proc/player_old_enough(client/C)
 	return (available_in_days(C) == 0) //Available in 0 days = available right now = player is old enough to play.
 

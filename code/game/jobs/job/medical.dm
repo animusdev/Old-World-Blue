@@ -31,12 +31,11 @@
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
 	economic_modifier = 10
-	access = list(access_medical, access_medical_equip, access_morgue, access_genetics, access_heads,
-			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-			access_keycard_auth, access_sec_doors, access_psychiatrist, access_eva, access_external_airlocks, access_maint_tunnels)
-	minimal_access = list(access_medical, access_medical_equip, access_morgue, access_genetics, access_heads,
-			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-			access_keycard_auth, access_sec_doors, access_psychiatrist, access_eva, access_external_airlocks, access_maint_tunnels)
+	minimal_access = list(
+		access_heads, access_RC_announce, access_keycard_auth, access_sec_doors, access_eva,
+		access_cmo,  access_medical, access_medical_equip, access_morgue, access_genetics,
+		access_chemistry, access_virology, access_surgery,  access_psychiatrist,
+		access_external_airlocks, access_maint_tunnels)
 
 	minimum_character_age = 27
 	minimal_player_age = 30
@@ -56,8 +55,10 @@
 	total_positions = 5
 	spawn_positions = 3
 	economic_modifier = 7
-	access = list(access_medical, access_medical_equip, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
-	minimal_access = list(access_medical, access_medical_equip, access_morgue, access_surgery, access_virology, access_genetics)
+	addcional_access = list(access_chemistry)
+	minimal_access = list(
+		access_medical, access_medical_equip, access_morgue, access_surgery, access_virology, access_genetics
+	)
 	alt_titles = list("Surgeon","Emergency Physician","Nurse","Virologist")
 	minimal_player_age = 14
 
@@ -108,7 +109,7 @@
 	total_positions = 2
 	spawn_positions = 2
 	economic_modifier = 5
-	access = list(access_medical, access_medical_equip, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
+	addcional_access = list(access_morgue, access_surgery, access_virology, access_genetics)
 	minimal_access = list(access_medical, access_medical_equip, access_chemistry)
 	alt_titles = list("Pharmacist")
 	minimum_character_age = 20
@@ -141,7 +142,7 @@
 	spawn_positions = 2
 	supervisors = "the chief medical officer and research director"
 	economic_modifier = 7
-	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_research)
+	addcional_access = list(access_surgery, access_chemistry, access_virology)
 	minimal_access = list(access_medical, access_morgue, access_genetics, access_research, access_medical_equip)
 
 	uniform = /obj/item/clothing/under/rank/geneticist
@@ -163,7 +164,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	economic_modifier = 5
-	access = list(access_medical, access_medical_equip, access_morgue, access_psychiatrist)
+	addcional_access = list(access_morgue)
 	minimal_access = list(access_medical, access_medical_equip, access_psychiatrist)
 	alt_titles = list("Psychologist")
 	minimum_character_age = 20
@@ -189,8 +190,11 @@
 	total_positions = 2
 	spawn_positions = 2
 	economic_modifier = 4
-	access = list(access_medical, access_medical_equip, access_morgue, access_surgery, access_chemistry, access_virology, access_eva, access_maint_tunnels, access_external_airlocks, access_psychiatrist)
-	minimal_access = list(access_medical, access_medical_equip, access_morgue, access_eva, access_maint_tunnels, access_external_airlocks)
+	addcional_access = list(access_surgery, access_chemistry, access_virology, access_psychiatrist)
+	minimal_access = list(
+		access_medical, access_medical_equip, access_morgue, access_eva, access_maint_tunnels,
+		access_external_airlocks
+	)
 	alt_titles = list("Emergency Medical Technician")
 
 	uniform = /obj/item/clothing/under/rank/medical/black
