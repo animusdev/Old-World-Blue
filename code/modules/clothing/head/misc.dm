@@ -294,3 +294,7 @@
 	icon_state = "beret_white"
 	item_state = "beret_white"
 
+/obj/item/clothing/head/beret/army/solar
+	name = "Armored army beret"
+	desc = "That's the khaki-colored beret. Has a NTCI insignia on it"
+	armor = list(melee = 50, bullet = 15, laser = 50,energy = 10, bomb = 25, bio = 0, rad = 0)

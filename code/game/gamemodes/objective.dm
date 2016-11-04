@@ -265,7 +265,7 @@ datum/objective/block
 	explanation_text = "Do not allow any organic lifeforms to escape on the shuttle alive."
 
 	check_completion()
-		if(!istype(owner.current, /mob/living/silicon))
+		if(!issilicon(owner.current))
 			return 0
 		if(!emergency_shuttle.returned())
 			return 0
@@ -553,7 +553,7 @@ datum/objective/steal
 				for(var/obj/item/device/aicard/C in all_items) //Check for ai card
 					for(var/mob/living/silicon/ai/M in C)
 						//See if any AI's are alive inside that card.
-						if(istype(M, /mob/living/silicon/ai) && M.stat != DEAD)
+						if(isAI(M) && M.stat != DEAD)
 							return 1
 
 				for(var/mob/living/silicon/ai/ai in world)

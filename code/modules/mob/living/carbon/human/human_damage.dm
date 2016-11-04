@@ -23,7 +23,7 @@
 
 	if(status_flags & GODMODE)	return 0	//godmode
 
-	if(species && species.has_organ[O_BRAIN])
+	if(should_have_organ(O_BRAIN))
 		var/obj/item/organ/internal/brain/sponge = internal_organs_by_name[O_BRAIN]
 		if(sponge)
 			sponge.take_damage(amount)
@@ -37,7 +37,7 @@
 
 	if(status_flags & GODMODE)	return 0	//godmode
 
-	if(species && species.has_organ[O_BRAIN])
+	if(should_have_organ(O_BRAIN))
 		var/obj/item/organ/internal/brain/sponge = internal_organs_by_name[O_BRAIN]
 		if(sponge)
 			sponge.damage = min(max(amount, 0),(maxHealth*2))
@@ -51,7 +51,7 @@
 
 	if(status_flags & GODMODE)	return 0	//godmode
 
-	if(species && species.has_organ[O_BRAIN])
+	if(should_have_organ(O_BRAIN))
 		var/obj/item/organ/internal/brain/sponge = internal_organs_by_name[O_BRAIN]
 		if(sponge)
 			brainloss = min(sponge.damage,maxHealth*2)
@@ -177,19 +177,19 @@
 
 // Defined here solely to take species flags into account without having to recast at mob/living level.
 /mob/living/carbon/human/getOxyLoss()
-	if(species.flags & NO_BREATHE)
+	if(!should_have_organ(O_LUNGS))
 		oxyloss = 0
 	return ..()
 
 /mob/living/carbon/human/adjustOxyLoss(var/amount)
-	if(species.flags & NO_BREATHE)
+	if(!should_have_organ(O_LUNGS))
 		oxyloss = 0
 	else
 		amount = amount*species.oxy_mod
 		..(amount)
 
 /mob/living/carbon/human/setOxyLoss(var/amount)
-	if(species.flags & NO_BREATHE)
+	if(!should_have_organ(O_LUNGS))
 		oxyloss = 0
 	else
 		..()
@@ -307,9 +307,10 @@ In most cases it makes more sense to use apply_damage() instead! And make sure t
 This function restores the subjects blood to max.
 */
 /mob/living/carbon/human/proc/restore_blood()
-	if(!(species.flags & NO_BLOOD))
-		var/blood_volume = vessel.get_reagent_amount("blood")
-		vessel.add_reagent("blood",560.0-blood_volume)
+	if(!should_have_organ(O_HEART))
+		return
+	if(vessel.total_volume < species.blood_volume)
+		vessel.add_reagent("blood", species.blood_volume - vessel.total_volume)
 
 /*
 This function restores all organs.

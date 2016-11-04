@@ -304,15 +304,19 @@
 /obj/machinery/alarm/update_icon()
 	if(buildstage == 0)//air alarm on a wall
 		icon_state = "alarm_b0"
+		set_light(0)
 		return
 	if(buildstage == 1)//air alar witch circuit
 		icon_state = "alarm_b1"
+		set_light(0)
 		return
 	if(wiresexposed)//air alarm witch wire
 		icon_state = "alarmx"
+		set_light(0)
 		return
-	if((stat & (NOPOWER|BROKEN)) || shorted)//air alarm not working
+	if((stat & (NOPOWER|BROKEN)) || shorted)
 		icon_state = "alarmp"
+		set_light(0)
 		return
 
 
@@ -320,13 +324,19 @@
 	if (alarm_area.atmosalm)
 		icon_level = max(icon_level, 1)	//if there's an atmos alarm but everything is okay locally, no need to go past yellow
 
+	var/new_color = null
 	switch(icon_level)
 		if (0)
 			icon_state = "alarm0"
+			new_color = "#03A728"
 		if (1)
 			icon_state = "alarm2" //yes, alarm2 is yellow alarm
+			new_color = "#EC8B2F"
 		if (2)
 			icon_state = "alarm1"
+			new_color = "#DA0205"
+
+	set_light(l_range = 2, l_power = 0.5, l_color = new_color)
 
 /obj/machinery/alarm/receive_signal(datum/signal/signal)
 	if(stat & (NOPOWER|BROKEN))
@@ -487,7 +497,7 @@
 		remote_connection = href["remote_connection"]	// Remote connection means we're non-adjacent/connecting from another computer
 		remote_access = href["remote_access"]			// Remote access means we also have the privilege to alter the air alarm.
 
-	data["locked"] = locked && !user.isSilicon()
+	data["locked"] = locked && !issilicon(user)
 	data["remote_connection"] = remote_connection
 	data["remote_access"] = remote_access
 	data["rcon"] = rcon_setting
@@ -495,7 +505,7 @@
 
 	populate_status(data)
 
-	if(!(locked && !remote_connection) || remote_access || user.isSilicon())
+	if(!(locked && !remote_connection) || remote_access || issilicon(user))
 		populate_controls(data)
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
@@ -608,7 +618,7 @@
 	if(buildstage != 2)
 		return STATUS_CLOSE
 
-	if(aidisabled && user.isMobAI())
+	if(aidisabled && isAI(user))
 		user << "<span class='warning'>AI control for \the [src] interface has been disabled.</span>"
 		return STATUS_CLOSE
 
@@ -653,7 +663,7 @@
 
 	// hrefs that need the AA unlocked -walter0o
 	var/extra_href = state.href_list(usr)
-	if(!(locked && !extra_href["remote_connection"]) || extra_href["remote_access"] || usr.isSilicon())
+	if(!(locked && !extra_href["remote_connection"]) || extra_href["remote_access"] || issilicon(usr))
 		if(href_list["command"])
 			var/device_id = href_list["id_tag"]
 			switch(href_list["command"])
@@ -1009,7 +1019,7 @@ FIRE ALARM
 	var/area/A = src.loc
 	var/d1
 	var/d2
-	if (ishuman(user) || istype(user, /mob/living/silicon))
+	if (ishuman(user) || issilicon(user))
 		A = A.loc
 
 		if (A.fire)
@@ -1050,7 +1060,7 @@ FIRE ALARM
 	if (buildstage != 2)
 		return
 
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
+	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (issilicon(usr)))
 		usr.set_machine(src)
 		if (href_list["reset"])
 			src.reset()
@@ -1154,7 +1164,7 @@ Just a object used in constructing fire alarms
 	ASSERT(isarea(A))
 	var/d1
 	var/d2
-	if (ishuman(user) || istype(user, /mob/living/silicon/ai))
+	if (ishuman(user) || isAI(user))
 
 		if (A.party)
 			d1 = text("<A href='?src=\ref[];reset=1'>No Party :(</A>", src)
@@ -1205,7 +1215,7 @@ Just a object used in constructing fire alarms
 	..()
 	if (usr.stat || stat & (BROKEN|NOPOWER))
 		return
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
+	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(loc, /turf))) || (isAI(usr)))
 		usr.machine = src
 		if (href_list["reset"])
 			reset()

@@ -295,7 +295,7 @@
 				return
 
 		if(Target.Adjacent(src))
-			if(istype(Target, /mob/living/silicon)) // Glomp the silicons
+			if(issilicon(Target)) // Glomp the silicons
 				if(!Atkcool)
 					a_intent = I_HURT
 					UnarmedAttack(Target)

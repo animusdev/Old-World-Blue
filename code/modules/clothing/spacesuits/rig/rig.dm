@@ -49,7 +49,6 @@
 	var/obj/item/rig_module/vision/visor                      // Kinda shitty to have a var for a module, but saves time.
 	var/obj/item/rig_module/voice/speech                      // As above.
 	var/mob/living/carbon/human/wearer                        // The person currently wearing the rig.
-	var/image/mob_icon                                        // Holder for on-mob icon.
 	var/list/installed_modules = list()                       // Power consumption/use bookkeeping.
 
 	// Rig status vars.
@@ -140,7 +139,6 @@
 		piece.name = "[suit_type] [initial(piece.name)]"
 		piece.desc = "It seems to be part of a [src.name]."
 		piece.icon_state = "[initial(icon_state)]"
-		piece.wear_state = piece.icon_state
 		piece.min_cold_protection_temperature = min_cold_protection_temperature
 		piece.max_heat_protection_temperature = max_heat_protection_temperature
 		if(piece.siemens_coefficient > siemens_coefficient) //So that insulated gloves keep their insulation.
@@ -463,15 +461,11 @@
 
 /obj/item/weapon/rig/update_icon(var/update_mob_icon)
 
-	//TODO: Maybe consider a cache for this (use mob_icon as blank canvas, use suit icon overlay).
 	overlays.Cut()
-	if(!mob_icon || update_mob_icon)
-		mob_icon = image("icon" = 'icons/mob/rig_back.dmi', "icon_state" = "[icon_state]")
-
 	if(installed_modules.len)
 		for(var/obj/item/rig_module/module in installed_modules)
 			if(module.suit_overlay)
-				chest.overlays += image("icon" = 'icons/mob/rig_modules.dmi', "icon_state" = "[module.suit_overlay]", "dir" = SOUTH)
+				chest.overlays += image('icons/obj/clothing/rig/modules.dmi', module.suit_overlay, SOUTH)
 
 	if(wearer)
 		wearer.update_inv_shoes()

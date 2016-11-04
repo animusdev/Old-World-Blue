@@ -1020,58 +1020,32 @@ proc/get_mob_with_client_list()
 
 //Quick type checks for some tools
 var/global/list/common_tools = list(
-/obj/item/stack/cable_coil,
-/obj/item/weapon/wrench,
-/obj/item/weapon/weldingtool,
-/obj/item/weapon/screwdriver,
-/obj/item/weapon/wirecutters,
-/obj/item/device/multitool,
-/obj/item/weapon/crowbar)
+	/obj/item/stack/cable_coil,
+	/obj/item/weapon/wrench,
+	/obj/item/weapon/weldingtool,
+	/obj/item/weapon/screwdriver,
+	/obj/item/weapon/wirecutters,
+	/obj/item/device/multitool,
+	/obj/item/weapon/crowbar
+)
 
-/proc/istool(O)
-	if(O && is_type_in_list(O, common_tools))
-		return 1
-	return 0
+#define istool(O) is_type_in_list(O, common_tools)
 
-/proc/iswrench(O)
-	if(istype(O, /obj/item/weapon/wrench))
-		return 1
-	return 0
+#define iswrench(O) istype(O, /obj/item/weapon/wrench)
 
-/proc/iswelder(O)
-	if(istype(O, /obj/item/weapon/weldingtool))
-		return 1
-	return 0
+#define iswelder(O) istype(O, /obj/item/weapon/weldingtool)
 
-/proc/iscoil(O)
-	if(istype(O, /obj/item/stack/cable_coil))
-		return 1
-	return 0
+#define iscoil(O) istype(O, /obj/item/stack/cable_coil)
 
-/proc/iswirecutter(O)
-	if(istype(O, /obj/item/weapon/wirecutters))
-		return 1
-	return 0
+#define iswirecutter(O) istype(O, /obj/item/weapon/wirecutters)
 
-/proc/isscrewdriver(O)
-	if(istype(O, /obj/item/weapon/screwdriver))
-		return 1
-	return 0
+#define isscrewdriver(O) istype(O, /obj/item/weapon/screwdriver)
 
-/proc/ismultitool(O)
-	if(istype(O, /obj/item/device/multitool))
-		return 1
-	return 0
+#define ismultitool(O) istype(O, /obj/item/device/multitool)
 
-/proc/iscrowbar(O)
-	if(istype(O, /obj/item/weapon/crowbar))
-		return 1
-	return 0
+#define iscrowbar(O) istype(O, /obj/item/weapon/crowbar)
 
-/proc/iswire(O)
-	if(istype(O, /obj/item/stack/cable_coil))
-		return 1
-	return 0
+#define iswire(O) istype(O, /obj/item/stack/cable_coil)
 
 proc/is_hot(obj/item/W as obj)
 	switch(W.type)

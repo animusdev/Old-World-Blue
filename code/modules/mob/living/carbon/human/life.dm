@@ -97,6 +97,8 @@
 	return 1
 
 /mob/living/carbon/human/breathe()
+	if(!should_have_organ(O_LUNGS))
+		return
 	if(!in_stasis)
 		..()
 
@@ -164,7 +166,8 @@
 			make_jittery(1000)
 	if (disabilities & COUGHING)
 		if ((prob(5) && paralysis <= 1))
-			drop_item()
+			drop_active_hand()
+			drop_inactive_hand()
 			spawn( 0 )
 				emote("cough")
 				return
@@ -194,7 +197,7 @@
 	if(getBrainLoss() >= 35)
 		if(7 <= rn && rn <= 9) if(get_active_hand())
 			src << "<span class='danger'>Your hand won't respond properly, you drop what you're holding!</span>"
-			drop_item()
+			drop_active_hand()
 	if(getBrainLoss() >= 45)
 		if(10 <= rn && rn <= 12)
 			if(prob(50))
@@ -349,7 +352,7 @@
 	var/safe_pressure_min = species.breath_pressure // Minimum safe partial pressure of breathable gas in kPa
 
 	// Lung damage increases the minimum safe pressure.
-	if(species.has_organ[O_LUNGS])
+	if(should_have_organ(O_LUNGS))
 		var/obj/item/organ/internal/lungs/L = internal_organs_by_name[O_LUNGS]
 		if(isnull(L))
 			safe_pressure_min = INFINITY //No lungs, how are you breathing?
@@ -877,7 +880,7 @@
 	else				//ALIVE. LIGHTS ARE ON
 		updatehealth()	//TODO
 
-		if(health <= config.health_threshold_dead || (species.has_organ[O_BRAIN] && !has_brain()))
+		if(health <= config.health_threshold_dead || (should_have_organ(O_BRAIN) && !has_brain()))
 			death()
 			blinded = 1
 			silent = 0
@@ -983,13 +986,9 @@
 			ear_deaf = max(ear_deaf, 1)
 		else if(ear_deaf)			//deafness, heals slowly over time
 			ear_deaf = max(ear_deaf-1, 0)
-		else if(istype(l_ear, /obj/item/clothing/ears/earmuffs) || istype(r_ear, /obj/item/clothing/ears/earmuffs))
-			var/obj/item/clothing/ears/earmuffs/mp3/HeadPhone
-			if(istype(l_ear,/obj/item/clothing/ears/earmuffs/mp3))
-				HeadPhone = l_ear
-			if(!HeadPhone||(HeadPhone&&HeadPhone.up))
-				ear_damage = max(ear_damage-0.15, 0)
-				ear_deaf = max(ear_deaf, 1)
+		else if(get_ear_protection() >= 2)	//resting your ears with earmuffs heals ear damage faster
+			ear_damage = max(ear_damage-0.15, 0)
+			ear_deaf = max(ear_deaf, 1)
 		else if(ear_damage < 25)	//ear damage heals slowly under this threshold. otherwise you'll need earmuffs
 			ear_damage = max(ear_damage-0.05, 0)
 
@@ -1391,7 +1390,7 @@
 		src << "<span class='danger'>[pick("It hurts so much", "You really need some painkillers", "Dear god, the pain")]!</span>"
 
 	if(shock_stage >= 30)
-		if(shock_stage == 30) emote("me",1,"is having trouble keeping their eyes open.")
+		if(shock_stage == 30) custom_emote(1,"is having trouble keeping their eyes open.")
 		eye_blurry = max(2, eye_blurry)
 		stuttering = max(stuttering, 5)
 
@@ -1399,7 +1398,7 @@
 		src << "<span class='danger'>[pick("The pain is excruciating", "Please, just end the pain", "Your whole body is going numb")]!</span>"
 
 	if (shock_stage >= 60)
-		if(shock_stage == 60) emote("me",1,"'s body becomes limp.")
+		if(shock_stage == 60) custom_emote(1,"'s body becomes limp.")
 		if (prob(2))
 			src << "<span class='danger'>[pick("The pain is excruciating", "Please, just end the pain", "Your whole body is going numb")]!</span>"
 			Weaken(20)
@@ -1415,7 +1414,7 @@
 			Paralyse(5)
 
 	if(shock_stage == 150)
-		emote("me",1,"can no longer stand, collapsing!")
+		custom_emote(1,"can no longer stand, collapsing!")
 		Weaken(20)
 
 	if(shock_stage >= 150)

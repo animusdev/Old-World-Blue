@@ -163,8 +163,8 @@
 	tail = "xenos_drone_tail"
 	rarity_value = 5
 
-	icobase = 'icons/mob/human_races/xenos/r_xenos_drone.dmi'
-	deform =  'icons/mob/human_races/xenos/r_xenos_drone.dmi'
+	icobase = 'icons/mob/human_races/xenos/drone.dmi'
+	deform =  'icons/mob/human_races/xenos/drone.dmi'
 
 	has_organ = list(
 		O_HEART =           /obj/item/organ/internal/heart,
@@ -202,8 +202,8 @@
 	total_health = 150
 	tail = "xenos_hunter_tail"
 
-	icobase = 'icons/mob/human_races/xenos/r_xenos_hunter.dmi'
-	deform =  'icons/mob/human_races/xenos/r_xenos_hunter.dmi'
+	icobase = 'icons/mob/human_races/xenos/hunter.dmi'
+	deform =  'icons/mob/human_races/xenos/hunter.dmi'
 
 	has_organ = list(
 		O_HEART =           /obj/item/organ/internal/heart,
@@ -230,8 +230,8 @@
 	total_health = 125
 	tail = "xenos_sentinel_tail"
 
-	icobase = 'icons/mob/human_races/xenos/r_xenos_sentinel.dmi'
-	deform =  'icons/mob/human_races/xenos/r_xenos_sentinel.dmi'
+	icobase = 'icons/mob/human_races/xenos/sentinel.dmi'
+	deform =  'icons/mob/human_races/xenos/sentinel.dmi'
 
 	has_organ = list(
 		O_HEART =           /obj/item/organ/internal/heart,
@@ -262,8 +262,8 @@
 	tail = "xenos_queen_tail"
 	rarity_value = 10
 
-	icobase = 'icons/mob/human_races/xenos/r_xenos_queen.dmi'
-	deform =  'icons/mob/human_races/xenos/r_xenos_queen.dmi'
+	icobase = 'icons/mob/human_races/xenos/queen.dmi'
+	deform =  'icons/mob/human_races/xenos/queen.dmi'
 
 	has_organ = list(
 		O_HEART =           /obj/item/organ/internal/heart,

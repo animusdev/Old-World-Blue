@@ -84,12 +84,11 @@ Note: Must be placed within 3 tiles of the R&D Console
 			return
 		busy = 1
 		loaded_item = O
-		user.drop_item()
-		O.loc = src
-		user << "<span class='notice'>You add \the [O] to \the [src]!</span>"
-		flick("d_analyzer_la", src)
-		spawn(10)
-			update_icon()
-			busy = 0
-		return 1
+		if(user.unEquip(O, src))
+			user << "<span class='notice'>You add \the [O] to \the [src]!</span>"
+			flick("d_analyzer_la", src)
+			spawn(10)
+				update_icon()
+				busy = 0
+			return 1
 	return

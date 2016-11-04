@@ -102,16 +102,15 @@ var/list/lawchanges    = list() // Stores who uploaded laws to which silicon-bas
 var/list/reg_dna       = list()
 //var/list/traitobj    = list()
 
-var/CELLRATE = 0.002 // Multiplier for watts per tick <> cell storage (e.g., 0.02 means if there is a load of 1000 watts, 20 units will be taken from a cell per second)
-                     // It's a conversion constant. power_used*CELLRATE = charge_provided, or charge_used/CELLRATE = power_provided
-var/CHARGELEVEL = 0.0005 // Cap for how fast cells charge, as a percentage-per-tick (0.01 means cellcharge is capped to 1% per second)
+// Multiplier for watts per tick <> cell storage
+//(e.g., 0.02 means if there is a load of 1000 watts, 20 units will be taken from a cell per second)
+// It's a conversion constant. power_used*CELLRATE = charge_provided, or charge_used/CELLRATE = power_provided
+var/CELLRATE = 0.002
 
-var/shuttle_z        = 2  // Default.
-var/airtunnel_start  = 68 // Default.
-var/airtunnel_stop   = 68 // Default.
-var/airtunnel_bottom = 72 // Default.
 
-var/list/monkeystart     = list()
+// Cap for how fast cells charge, as a percentage-per-tick (0.01 means cellcharge is capped to 1% per second)
+var/CHARGELEVEL = 0.0005
+
 var/list/wizardstart     = list()
 var/list/newplayer_start = list()
 
@@ -207,9 +206,6 @@ var/DBConnection/dbcon_old = new() // /tg/station database (Old database) -- see
 
 // Reference list for disposal sort junctions. Filled up by sorting junction's New()
 /var/list/tagger_locations = list()
-
-// Added for Xenoarchaeology, might be useful for other stuff.
-var/global/list/alphabet_uppercase = list("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
 
 // Chemistry lists.
 var/list/tachycardics  = list("coffee", "inaprovaline", "hyperzine", "nitroglycerin", "thirteenloko", "nicotine") // Increase heart rate.

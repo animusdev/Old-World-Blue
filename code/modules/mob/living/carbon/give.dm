@@ -1,4 +1,4 @@
-mob/living/carbon/verb/give(var/mob/living/carbon/target in view(1)-usr)
+/mob/living/carbon/verb/give(var/mob/living/carbon/target in view(1)-usr)
 	set category = "IC"
 	set name = "Give"
 	if(!istype(target) || target.stat == 2 || usr.stat == 2|| target.client == null)
@@ -30,7 +30,9 @@ mob/living/carbon/verb/give(var/mob/living/carbon/target in view(1)-usr)
 					target << "<span class='warning'>Your hands are full.</span>"
 					usr << "<span class='warning'>Their hands are full.</span>"
 					return
-				usr.drop_item()
+				if(!usr.unEquip(I))
+					usr << "<span class='warning'>You can't drop [I]</span>"
+					return
 				target.put_in_hands(I)
 				target.visible_message("<span class='notice'>[usr.name] handed \the [I.name] to [target.name].</span>")
 			if("No")

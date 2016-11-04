@@ -55,24 +55,24 @@
 	if(src.broken > 0)
 		if(src.broken == 2 && istype(O, /obj/item/weapon/screwdriver)) // If it's broken and they're using a screwdriver
 			user.visible_message( \
-				"\blue [user] starts to fix part of the microwave.", \
-				"\blue You start to fix part of the microwave." \
+				"\blue [user] starts to fix part of the microwave.",
+				"\blue You start to fix part of the microwave."
 			)
 			if (do_after(user,20))
-				user.visible_message( \
-					"\blue [user] fixes part of the microwave.", \
-					"\blue You have fixed part of the microwave." \
+				user.visible_message(
+					"\blue [user] fixes part of the microwave.",
+					"\blue You have fixed part of the microwave."
 				)
 				src.broken = 1 // Fix it a bit
 		else if(src.broken == 1 && istype(O, /obj/item/weapon/wrench)) // If it's broken and they're doing the wrench
 			user.visible_message( \
-				"\blue [user] starts to fix part of the microwave.", \
-				"\blue You start to fix part of the microwave." \
+				"\blue [user] starts to fix part of the microwave.",
+				"\blue You start to fix part of the microwave."
 			)
 			if (do_after(user,20))
-				user.visible_message( \
-					"\blue [user] fixes the microwave.", \
-					"\blue You have fixed the microwave." \
+				user.visible_message(
+					"\blue [user] fixes the microwave.",
+					"\blue You have fixed the microwave."
 				)
 				src.icon_state = "mw"
 				src.broken = 0 // Fix it!
@@ -83,14 +83,14 @@
 			return 1
 	else if(src.dirty==100) // The microwave is all dirty so can't be used!
 		if(istype(O, /obj/item/weapon/reagent_containers/spray/cleaner)) // If they're trying to clean it then let them
-			user.visible_message( \
-				"\blue [user] starts to clean the microwave.", \
-				"\blue You start to clean the microwave." \
+			user.visible_message(
+				"\blue [user] starts to clean the microwave.",
+				"\blue You start to clean the microwave."
 			)
 			if (do_after(user,20))
-				user.visible_message( \
-					"\blue [user]  has cleaned  the microwave.", \
-					"\blue You have cleaned the microwave." \
+				user.visible_message(
+					"\blue [user]  has cleaned  the microwave.",
+					"\blue You have cleaned the microwave."
 				)
 				src.dirty = 0 // It's clean!
 				src.broken = 0 // just to be sure
@@ -107,20 +107,19 @@
 			var/obj/item/stack/S = O
 			new O.type (src)
 			S.use(1)
-			user.visible_message( \
-				"\blue [user] has added one of [O] to \the [src].", \
-				"\blue You add one of [O] to \the [src].")
+			user.visible_message(
+				"\blue [user] has added one of [O] to \the [src].",
+				"\blue You add one of [O] to \the [src]."
+			)
 			return
 		else
-		//	user.remove_from_mob(O)	//This just causes problems so far as I can tell. -Pete
-			user.drop_item()
-			O.loc = src
-			user.visible_message( \
-				"\blue [user] has added \the [O] to \the [src].", \
-				"\blue You add \the [O] to \the [src].")
+			user.drop_from_inventory(O, src)
+			user.visible_message(
+				"\blue [user] has added \the [O] to \the [src].",
+				"\blue You add \the [O] to \the [src]."
+			)
 			return
 	else if(istype(O,/obj/item/weapon/reagent_containers/glass) || \
-	        istype(O,/obj/item/weapon/reagent_containers/glass/drinks) || \
 	        istype(O,/obj/item/weapon/reagent_containers/food/condiment) \
 		)
 		if (!O.reagents)
@@ -154,11 +153,11 @@
 /obj/machinery/microwave/interact(mob/user as mob) // The microwave Menu
 	var/dat = ""
 	if(src.broken > 0)
-		dat = {"<TT>Bzzzzttttt</TT>"}
+		dat = "<TT>Bzzzzttttt</TT>"
 	else if(src.operating)
-		dat = {"<TT>Microwaving in progress!<BR>Please wait...!</TT>"}
+		dat = "<TT>Microwaving in progress!<BR>Please wait...!</TT>"
 	else if(src.dirty==100)
-		dat = {"<TT>This microwave is dirty!<BR>Please clean it before use!</TT>"}
+		dat = "<TT>This microwave is dirty!<BR>Please clean it before use!</TT>"
 	else
 		var/list/items_counts = new
 		var/list/items_measures = new
@@ -185,12 +184,12 @@
 		for (var/O in items_counts)
 			var/N = items_counts[O]
 			if (!(O in items_measures))
-				dat += {"<B>[capitalize(O)]:</B> [N] [lowertext(O)]\s<BR>"}
+				dat += "<B>[capitalize(O)]:</B> [N] [lowertext(O)]\s<BR>"
 			else
 				if (N==1)
-					dat += {"<B>[capitalize(O)]:</B> [N] [items_measures[O]]<BR>"}
+					dat += "<B>[capitalize(O)]:</B> [N] [items_measures[O]]<BR>"
 				else
-					dat += {"<B>[capitalize(O)]:</B> [N] [items_measures_p[O]]<BR>"}
+					dat += "<B>[capitalize(O)]:</B> [N] [items_measures_p[O]]<BR>"
 
 		for (var/datum/reagent/R in reagents.reagent_list)
 			var/display_name = R.name
@@ -198,16 +197,16 @@
 				display_name = "Hotsauce"
 			if (R.id == "frostoil")
 				display_name = "Coldsauce"
-			dat += {"<B>[display_name]:</B> [R.volume] unit\s<BR>"}
+			dat += "<B>[display_name]:</B> [R.volume] unit\s<BR>"
 
 		if (items_counts.len==0 && reagents.reagent_list.len==0)
-			dat = {"<B>The microwave is empty</B><BR>"}
+			dat = "<B>The microwave is empty</B><BR>"
 		else
-			dat = {"<b>Ingredients:</b><br>[dat]"}
+			dat = "<b>Ingredients:</b><br>[dat]"
 		dat += {"<HR><BR>\
-<A href='?src=\ref[src];action=cook'>Turn on!<BR>\
-<A href='?src=\ref[src];action=dispose'>Eject ingredients!<BR>\
-"}
+			<A href='?src=\ref[src];action=cook'>Turn on!<BR>\
+			<A href='?src=\ref[src];action=dispose'>Eject ingredients!<BR>\
+		"}
 
 	user << browse("<HEAD><TITLE>Microwave Controls</TITLE></HEAD><TT>[dat]</TT>", "window=microwave")
 	onclose(user, "microwave")

@@ -133,22 +133,25 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/chest/affected = target.get_organ(target_zone)
 
-		user.visible_message("\blue [user] puts \the [tool] inside [target]'s [get_cavity(affected)] cavity.", \
-		"\blue You put \the [tool] inside [target]'s [get_cavity(affected)] cavity." )
-		if (tool.w_class > get_max_wclass(affected)/2 && prob(50))
-			user << "\red You tear some blood vessels trying to fit such a big object in this cavity."
-			var/datum/wound/internal_bleeding/I = new (10)
-			affected.wounds += I
-			affected.owner.custom_pain("You feel something rip in your [affected.name]!", 1)
-		user.drop_item()
-		affected.implants += tool
-		tool.loc = affected
+		if(user.unEquip(tool, affected))
+			user.visible_message(
+				"\blue [user] puts \the [tool] inside [target]'s [get_cavity(affected)] cavity.",
+				"\blue You put \the [tool] inside [target]'s [get_cavity(affected)] cavity."
+			)
+			if (tool.w_class > get_max_wclass(affected)/2 && prob(50))
+				user << "\red You tear some blood vessels trying to fit such a big object in this cavity."
+				var/datum/wound/internal_bleeding/I = new (10)
+				affected.wounds += I
+				affected.owner.custom_pain("You feel something rip in your [affected.name]!", 1)
+			affected.implants += tool
 		affected.cavity = 0
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/chest/affected = target.get_organ(target_zone)
-		user.visible_message("\red [user]'s hand slips, scraping tissue inside [target]'s [affected.name] with \the [tool]!", \
-		"\red Your hand slips, scraping tissue inside [target]'s [affected.name] with \the [tool]!")
+		user.visible_message(
+			"\red [user]'s hand slips, scraping tissue inside [target]'s [affected.name] with \the [tool]!",
+			"\red Your hand slips, scraping tissue inside [target]'s [affected.name] with \the [tool]!"
+		)
 		affected.createwound(CUT, 20)
 
 //////////////////////////////////////////////////////////////////

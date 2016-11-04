@@ -319,17 +319,13 @@
 			if("color")
 				var/datum/sprite_accessory/H = hair_styles_list[h_style]
 				if(H.do_colouration)
-					var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference", hair_color) as color|null
-					if(new_hair && new_hair!=hair_color)
+					var/new_color = input(user, "Choose your character's hair colour:", "Character Preference", hair_color) as color|null
+					if(new_color && new_color!=hair_color)
 						req_update_icon = 1
-						hair_color = new_hair
+						hair_color = new_color
 			if("style")
-				var/list/valid_hairstyles = gender==MALE ? hair_styles_male_list : hair_styles_female_list
-				for(var/hairstyle in hair_styles_list)
-					var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-					if(!(species in S.species_allowed))
-						valid_hairstyles -= hairstyle
-				var/new_h_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in valid_hairstyles
+				var/new_h_style = input(user, "Choose your character's hair style:", "Character Preference", h_style)\
+					as null|anything in get_hair_styles_list(current_species.get_bodytype(), gender)
 				if(new_h_style && new_h_style != h_style)
 					req_update_icon = 1
 					h_style = new_h_style
@@ -339,17 +335,13 @@
 			if("color")
 				var/datum/sprite_accessory/F = facial_hair_styles_list[f_style]
 				if(F.do_colouration)
-					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference", facial_color) as color|null
-					if(new_facial && new_facial!=facial_color)
+					var/new_color = input(user, "Choose your character's facial-hair colour:", "Character Preference", facial_color) as color|null
+					if(new_color && new_color!=facial_color)
 						req_update_icon = 1
-						facial_color = new_facial
+						facial_color = new_color
 			if("style")
-				var/list/valid_facialhairstyles = gender==MALE ? facial_hair_styles_male_list : facial_hair_styles_female_list
-				for(var/facialhairstyle in valid_facialhairstyles)
-					var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
-					if(!(species in S.species_allowed))
-						valid_facialhairstyles -= facialhairstyle
-				var/new_f_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in valid_facialhairstyles
+				var/new_f_style = input(user, "Choose your character's facial-hair style:", "Character Preference", f_style) \
+					as null|anything in get_facial_styles_list(current_species.get_bodytype(), gender)
 				if(new_f_style && new_f_style!=f_style)
 					req_update_icon = 1
 					f_style = new_f_style

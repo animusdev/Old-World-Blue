@@ -19,7 +19,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 		var/datum/shuttle/shuttle = shuttles[shuttle_tag]
 		shuttle.init_docking_controllers()
 		shuttle.dock() //makes all shuttles docked to something at round start go into the docked state
-	
+
 	for(var/obj/machinery/embedded_controller/C in machines)
 		if(istype(C.program, /datum/computer/file/embedded_program/docking))
 			C.program.tag = null //clear the tags, 'cause we don't need 'em anymore
@@ -127,7 +127,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 
 	supply_controller.shuttle = shuttle
 
-	// Admin shuttles.
+	/*/ Admin shuttles.
 	shuttle = new()
 	shuttle.location = 1
 	shuttle.warmup_time = 10
@@ -153,7 +153,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 	shuttle = new()
 	shuttle.area_offsite = locate(/area/shuttle/alien/base)
 	shuttle.area_station = locate(/area/shuttle/alien/mine)
-	shuttles["Alien"] = shuttle
+	shuttles["Alien"] = shuttle*/
 	//process_shuttles += shuttle	//don't need to process this. It can only be moved using admin magic anyways.
 
 	// Public shuttles
@@ -237,7 +237,7 @@ var/global/datum/shuttle_controller/shuttle_controller
 		"Mining Asteroid" = locate(/area/syndicate_station/mining),
 		"Arrivals dock" = locate(/area/syndicate_station/arrivals_dock),
 		)
-	
+
 	MS.docking_controller_tag = "merc_shuttle"
 	MS.destination_dock_targets = list(
 		"Mercenary Base" = "merc_base",

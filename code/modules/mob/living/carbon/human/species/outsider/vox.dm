@@ -1,8 +1,8 @@
 /datum/species/vox
 	name = "Vox"
 	name_plural = "Vox"
-	icobase = 'icons/mob/human_races/r_vox.dmi'
-	deform = 'icons/mob/human_races/r_def_vox.dmi'
+	icobase = 'icons/mob/human_races/vox.dmi'
+	deform = 'icons/mob/human_races/vox_def.dmi'
 	default_language = "Vox-pidgin"
 	language = "Galactic Common"
 	unarmed_attacks = list(

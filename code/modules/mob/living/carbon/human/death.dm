@@ -15,7 +15,7 @@
 		I.throw_at(get_edge_target_turf(src,pick(alldirs)), rand(1,3), round(30/I.w_class))
 
 	..(species.gibbed_anim)
-	gibs(loc, viruses, dna, null, species.flesh_color, species.blood_color)
+	gibs(loc, viruses, dna, null, get_flesh_colour(), get_blood_colour())
 
 /mob/living/carbon/human/dust()
 	if(species)
@@ -58,11 +58,10 @@
 	if(!gibbed && species.death_sound)
 		playsound(loc, species.death_sound, 80, 1, 1)
 
-
 	if(ticker && ticker.mode)
 		ticker.mode.check_win()
 
-	return ..(gibbed,species.death_message)
+	return ..(gibbed,get_death_message())
 
 /mob/living/carbon/human/proc/ChangeToHusk()
 	if(HUSK in mutations)	return

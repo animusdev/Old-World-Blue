@@ -101,7 +101,7 @@
 	switch(build_step)
 		if(0, 1)
 			if(istype(W, /obj/item/robot_parts/l_leg) || istype(W, /obj/item/robot_parts/r_leg))
-				user.drop_item()
+				user.drop_from_inventory(W)
 				qdel(W)
 				build_step++
 				user << "<span class='notice'>You add the robot leg to [src].</span>"
@@ -115,7 +115,7 @@
 
 		if(2)
 			if(istype(W, /obj/item/clothing/suit/storage/vest))
-				user.drop_item()
+				user.drop_from_inventory(W)
 				qdel(W)
 				build_step++
 				user << "<span class='notice'>You add the armor to [src].</span>"
@@ -132,7 +132,7 @@
 					user << "<span class='notice'>You welded the vest to [src].</span>"
 		if(4)
 			if(istype(W, /obj/item/clothing/head/helmet/security))
-				user.drop_item()
+				user.drop_from_inventory(W)
 				qdel(W)
 				build_step++
 				user << "<span class='notice'>You add the helmet to [src].</span>"
@@ -142,7 +142,7 @@
 
 		if(5)
 			if(isprox(W))
-				user.drop_item()
+				user.drop_from_inventory(W)
 				qdel(W)
 				build_step++
 				user << "<span class='notice'>You add the prox sensor to [src].</span>"
@@ -166,13 +166,13 @@
 
 		if(7)
 			if(istype(W, /obj/item/weapon/gun/energy/taser))
-				name = "taser ED-209 assembly"
-				build_step++
-				user << "<span class='notice'>You add [W] to [src].</span>"
-				item_state = "ed209_taser"
-				icon_state = "ed209_taser"
-				user.drop_item()
-				qdel(W)
+				if(user.unEquip(W)) // Stop dropping mouned guns
+					name = "taser ED-209 assembly"
+					build_step++
+					user << "<span class='notice'>You add [W] to [src].</span>"
+					item_state = "ed209_taser"
+					icon_state = "ed209_taser"
+					qdel(W)
 
 		if(8)
 			if(istype(W, /obj/item/weapon/screwdriver))
@@ -191,7 +191,7 @@
 				user << "<span class='notice'>You complete the ED-209.</span>"
 				var/turf/T = get_turf(src)
 				new /mob/living/bot/secbot/ed209(T,created_name,lasercolor)
-				user.drop_item()
+				user.drop_from_inventory(W)
 				qdel(W)
 				user.drop_from_inventory(src)
 				qdel(src)

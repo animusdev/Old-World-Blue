@@ -52,8 +52,7 @@
 				user << "\red The [name] blinks red as you try to insert the cell!"
 				return
 
-			user.drop_item()
-			W.loc = src
+			user.drop_from_inventory(W, src)
 			charging = W
 			user.visible_message("[user] inserts a cell into the charger.", "You insert a cell into the charger.")
 			chargelevel = -1

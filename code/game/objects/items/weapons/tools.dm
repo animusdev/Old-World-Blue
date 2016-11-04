@@ -437,6 +437,7 @@
 	slot_flags = SLOT_BELT
 	force = 5.0
 	throwforce = 7.0
+	pry = 1
 	item_state = "crowbar"
 	w_class = 2.0
 	matter = list(DEFAULT_WALL_MATERIAL = 50)

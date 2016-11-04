@@ -60,13 +60,9 @@
 
 /obj/structure/table/MouseDrop_T(obj/O as obj, mob/user as mob)
 
-	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
+	if (!istype(O, /obj/item/weapon) || user.get_active_hand() != O)
 		return ..()
-	if(isrobot(user))
-		return
-	user.drop_item()
-	if (O.loc != src.loc)
-		step(O, get_dir(O, src))
+	user.unEquip(O, src.loc)
 	return
 
 
@@ -111,8 +107,10 @@
 			return
 
 	// Handle dismantling or placing things on the table from here on.
+/*
 	if(isrobot(user))
 		return
+*/
 
 	if(W.loc != user) // This should stop mounted modules ending up outside the module.
 		return
@@ -131,7 +129,7 @@
 		user << "<span class='warning'>There's nothing to put \the [W] on! Try adding plating to \the [src] first.</span>"
 		return
 
-	user.drop_item(src.loc)
+	user.unEquip(W, src.loc)
 	return
 
 /obj/structure/table/attack_tk() // no telehulk sorry

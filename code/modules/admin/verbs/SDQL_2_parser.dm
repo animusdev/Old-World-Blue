@@ -216,10 +216,12 @@
 //call_query:	'CALL' call_function ['ON' select_list [('FROM' | 'IN') from_list] ['WHERE' bool_expression]]
 	call_query(i, list/node)
 		var/list/func = list()
-		i = call_function(i + 1, func)
+		var/list/arguments = list()
+		i = call_function(i + 1, func, arguments)
 
 		node += "call"
 		node["call"] = func
+		node["args"] = arguments
 
 		if(tokenl(i) != "on")
 			return i
@@ -247,7 +249,6 @@
 			node["where"] = where
 
 		return i
-
 
 //select_list:	select_item [',' select_list]
 	select_list(i, list/node)
@@ -402,13 +403,23 @@
 
 		return i + 1
 
-
 //call_function:	<function name> ['(' [arguments] ')']
-	call_function(i, list/node)
-
-		parse_error("Sorry, function calls aren't available yet")
-
-		return i
+	call_function(i, list/node, list/arguments)
+		if(length(tokenl(i)))
+			node += token(i++)
+			if(token(i) != "(")
+				parse_error("Expected ( but found '[token(i)]'")
+			else if(token(i + 1) != ")")
+				do
+					i = expression(i + 1, arguments)
+					if(token(i) == ",")
+						continue
+				while(token(i) && token(i) != ")")
+			else
+				i++
+		else
+			parse_error("Expected a function but found nothing")
+		return i + 1
 
 
 //select_function:	count_function

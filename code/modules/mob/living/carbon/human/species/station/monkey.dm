@@ -3,8 +3,8 @@
 	name_plural = "Monkeys"
 	blurb = "Ook."
 
-	icobase = 'icons/mob/human_races/monkeys/r_monkey.dmi'
-	deform = 'icons/mob/human_races/monkeys/r_monkey.dmi'
+	icobase = 'icons/mob/human_races/monkeys/monkey.dmi'
+	deform = 'icons/mob/human_races/monkeys/monkey.dmi'
 	damage_overlays = 'icons/mob/human_races/masks/dam_monkey.dmi'
 	damage_mask = 'icons/mob/human_races/masks/dam_mask_monkey.dmi'
 	blood_mask = 'icons/mob/human_races/masks/blood_monkey.dmi'
@@ -55,8 +55,8 @@
 	name = "Farwa"
 	name_plural = "Farwa"
 
-	icobase = 'icons/mob/human_races/monkeys/r_farwa.dmi'
-	deform = 'icons/mob/human_races/monkeys/r_farwa.dmi'
+	icobase = 'icons/mob/human_races/monkeys/farwa.dmi'
+	deform = 'icons/mob/human_races/monkeys/farwa.dmi'
 
 	greater_form = "Tajaran"
 	default_language = "Farwa"
@@ -69,8 +69,8 @@
 	name = "Neaera"
 	name_plural = "Neaera"
 
-	icobase = 'icons/mob/human_races/monkeys/r_neaera.dmi'
-	deform = 'icons/mob/human_races/monkeys/r_neaera.dmi'
+	icobase = 'icons/mob/human_races/monkeys/neaera.dmi'
+	deform = 'icons/mob/human_races/monkeys/neaera.dmi'
 
 	greater_form = "Skrell"
 	default_language = "Neaera"
@@ -84,8 +84,8 @@
 	name = "Stok"
 	name_plural = "Stok"
 
-	icobase = 'icons/mob/human_races/monkeys/r_stok.dmi'
-	deform = 'icons/mob/human_races/monkeys/r_stok.dmi'
+	icobase = 'icons/mob/human_races/monkeys/stok.dmi'
+	deform = 'icons/mob/human_races/monkeys/stok.dmi'
 
 	tail = "stoktail"
 	greater_form = "Unathi"

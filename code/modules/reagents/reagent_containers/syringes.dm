@@ -99,7 +99,7 @@
 						var/datum/reagent/B
 						if(ishuman(T))
 							var/mob/living/carbon/human/H = T
-							if(H.species && H.species.flags & NO_BLOOD)
+							if(!H.should_have_organ(O_HEART))
 								H.reagents.trans_to_obj(src, amount)
 							else
 								B = T.take_blood(src, amount)

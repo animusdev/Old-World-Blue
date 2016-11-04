@@ -63,8 +63,7 @@
 /obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
-			user.drop_item()
-			W.loc = src
+			user.drop_from_inventory(W, src)
 			src.diskette = W
 			user << "You insert [W]."
 			src.updateUsrDialog()
@@ -357,6 +356,10 @@
 		else
 			scantemp = "Error: No signs of intelligence detected."
 		return
+
+	if(subject.isSynthetic())
+		scantemp = "Error: Majority of subject is non-organic."
+		return
 	if (subject.suiciding == 1)
 		scantemp = "Error: Subject's brain is not responding to scanning stimuli."
 		return
@@ -376,13 +379,13 @@
 	subject.dna.check_integrity()
 
 	var/datum/dna2/record/R = new /datum/dna2/record()
-	R.dna=subject.dna
+	R.dna = subject.dna
 	R.ckey = subject.ckey
-	R.id= copytext(md5(subject.real_name), 2, 6)
-	R.name=R.dna.real_name
-	R.types=DNA2_BUF_UI|DNA2_BUF_UE|DNA2_BUF_SE
-	R.languages=subject.languages
-	R.flavor=subject.flavor_texts.Copy()
+	R.id = copytext(md5(subject.real_name), 2, 6)
+	R.name = R.dna.real_name
+	R.types = DNA2_BUF_UI|DNA2_BUF_UE|DNA2_BUF_SE
+	R.languages = subject.languages
+	R.flavor = subject.flavor_texts.Copy()
 
 	//Add an implant if needed
 	var/obj/item/weapon/implant/health/imp = locate(/obj/item/weapon/implant/health, subject)
@@ -397,13 +400,13 @@
 	if (!isnull(subject.mind)) //Save that mind so traitors can continue traitoring after cloning.
 		R.mind = "\ref[subject.mind]"
 
-	src.records += R
+	records += R
 	scantemp = "Subject successfully scanned."
 
 //Find a specific record by key.
 /obj/machinery/computer/cloning/proc/find_record(var/find_key)
 	var/selected_record = null
-	for(var/datum/dna2/record/R in src.records)
+	for(var/datum/dna2/record/R in records)
 		if (R.ckey == find_key)
 			selected_record = R
 			break
