@@ -27,7 +27,7 @@ All grippers is here
 		/obj/item/weapon/tank,
 		/obj/item/weapon/circuitboard,
 		/obj/item/weapon/smes_coil
-		)
+	)
 
 	var/obj/item/wrapped = null // Item currently being held.
 
@@ -118,10 +118,16 @@ All grippers is here
 	set desc = "Release an item from your magnetic gripper."
 	set category = "Robot Commands"
 
+	drop_to(get_turf(src))
+
+
+/obj/item/weapon/gripper/proc/drop_to(var/atom/target)
+	if(!target) target = get_turf(src)
+
 	if(!wrapped)
 		//There's some weirdness with items being lost inside the arm. Trying to fix all cases. ~Z
 		for(var/obj/item/thing in src.contents)
-			thing.loc = get_turf(src)
+			thing.forceMove(target)
 		return
 
 	if(wrapped.loc != src)
@@ -129,9 +135,9 @@ All grippers is here
 		return
 
 	src.loc << "<span class='danger'>You drop \the [wrapped].</span>"
-	wrapped.loc = get_turf(src)
+	wrapped.loc = target
 	wrapped = null
-	//update_icon()
+
 
 /obj/item/weapon/gripper/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(wrapped) 	//The force of the wrapped obj gets set to zero during the attack() and afterattack().

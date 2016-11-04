@@ -327,12 +327,11 @@
 
 				M.Weaken(1)
 				qdel(G)
+	else if(!src.unEquip(item, loc))
+		return
+
 
 	if(!item) return //Grab processing has a chance of returning null
-
-
-	if(!src.unEquip(item, loc))
-		return
 
 	//actually throw it!
 	if (item)

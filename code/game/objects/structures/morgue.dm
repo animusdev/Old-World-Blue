@@ -18,6 +18,7 @@
 	dir = EAST
 	density = 1
 	var/obj/structure/m_tray/connected = null
+	var/list/occupants = list()
 	anchored = 1.0
 
 /obj/structure/morgue/Destroy()
@@ -26,12 +27,28 @@
 		connected = null
 	return ..()
 
-/obj/structure/morgue/proc/update()
+/obj/structure/morgue/proc/get_occupants()
+	occupants.Cut()
+	for(var/mob/living/carbon/human/H in contents)
+		occupants += H
+	for(var/obj/structure/closet/body_bag/B in contents)
+		occupants += B.get_occupants()
+
+/obj/structure/morgue/proc/update(var/broadcast=0)
 	if (src.connected)
 		src.icon_state = "morgue0"
 	else
 		if (src.contents.len)
 			src.icon_state = "morgue2"
+			get_occupants()
+			for (var/mob/living/carbon/human/H in occupants)
+				if(H.isSynthetic() || H.suiciding || !H.ckey || !H.client || (NOCLONE in H.mutations) || (H.species && H.species.flags & NO_SCAN))
+					src.icon_state = "morgue2"
+					break
+				else
+					src.icon_state = "morgue3"
+					if(broadcast)
+						broadcast_medical_hud_message("[src] was able to establish a mental interface with occupant.", src)
 		else
 			src.icon_state = "morgue1"
 	return
@@ -170,7 +187,7 @@
 	if (user != O)
 		for(var/mob/B in viewers(user, 3))
 			if ((B.client && !( B.blinded )))
-				B << text("\red [] stuffs [] into []!", user, O, src)
+				B << "<span class='warning'>\The [user] stuffs [O] into [src]!</span>"
 	return
 
 
@@ -235,13 +252,13 @@
 
 /obj/structure/crematorium/attack_hand(mob/user as mob)
 //	if (cremating) AWW MAN! THIS WOULD BE SO MUCH MORE FUN ... TO WATCH
-//		user.show_message("\red Uh-oh, that was a bad idea.", 1)
+//		user.show_message("<span class='warning'>Uh-oh, that was a bad idea.</span>", 1)
 //		//usr << "Uh-oh, that was a bad idea."
 //		src:loc:poison += 20000000
 //		src:loc:firelevel = src:loc:poison
 //		return
 	if (cremating)
-		usr << "\red It's locked."
+		usr << "<span class='warning'>It's locked.</span>"
 		return
 	if ((src.connected) && (src.locked == 0))
 		for(var/atom/movable/A as mob|obj in src.connected.loc)
@@ -310,7 +327,7 @@
 
 	if(contents.len <= 0)
 		for (var/mob/M in viewers(src))
-			M.show_message("\red You hear a hollow crackle.", 1)
+			M.show_message("<span class='warning'>You hear a hollow crackle.</span>", 1)
 			return
 
 	else
@@ -319,7 +336,7 @@
 			return
 
 		for (var/mob/M in viewers(src))
-			M.show_message("\red You hear a roar as the crematorium activates.", 1)
+			M.show_message("<span class='warning'>You hear a roar as the crematorium activates.</span>", 1)
 
 		cremating = 1
 		locked = 1
@@ -397,7 +414,7 @@
 	if (user != O)
 		for(var/mob/B in viewers(user, 3))
 			if ((B.client && !( B.blinded )))
-				B << text("\red [] stuffs [] into []!", user, O, src)
+				B << "<span class='warning'>[user] stuffs [O] into [src]!</span>"
 			//Foreach goto(99)
 	return
 

@@ -59,12 +59,10 @@
 		return ..()
 
 	if(!scan && access_change_ids in id_card.access)
-		user.drop_item()
-		id_card.loc = src
+		user.drop_from_inventory(id_card, src)
 		scan = id_card
 	else if(!modify)
-		user.drop_item()
-		id_card.loc = src
+		user.drop_from_inventory(id_card, src)
 		modify = id_card
 
 	nanomanager.update_uis(src)
@@ -157,8 +155,7 @@
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
-					usr.drop_item()
-					I.loc = src
+					usr.drop_from_inventory(I, src)
 					modify = I
 
 		if ("scan")
@@ -174,8 +171,7 @@
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
-					usr.drop_item()
-					I.loc = src
+					usr.drop_from_inventory(I, src)
 					scan = I
 
 		if("access")
@@ -222,7 +218,7 @@
 		if ("reg")
 			if (is_authenticated())
 				var/t2 = modify
-				if ((modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
+				if ((modify == t2 && (in_range(src, usr) || (issilicon(usr))) && istype(loc, /turf)))
 					var/temp_name = sanitizeName(href_list["reg"])
 					if(temp_name)
 						modify.registered_name = temp_name
@@ -233,7 +229,7 @@
 		if ("account")
 			if (is_authenticated())
 				var/t2 = modify
-				if ((modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
+				if ((modify == t2 && (in_range(src, usr) || (issilicon(usr))) && istype(loc, /turf)))
 					var/account_num = text2num(href_list["account"])
 					modify.associated_account_number = account_num
 			nanomanager.update_uis(src)

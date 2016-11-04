@@ -92,7 +92,7 @@
 	//check if it doesn't require any access at all
 	if(src.check_access(null))
 		return 1
-	if(istype(M, /mob/living/silicon))
+	if(issilicon(M))
 		//AI can do whatever he wants
 		return 1
 	else if(ishuman(M))

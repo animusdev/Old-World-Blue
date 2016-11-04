@@ -25,11 +25,11 @@
 	if(stage == 1)
 		if(prob(5))
 			affected_mob << "\red You feel a stinging pain in your abdomen!"
-			affected_mob.emote("me",1,"winces slightly.")
+			affected_mob.custom_emote(1,"winces slightly.")
 	if(stage > 1)
 		if(prob(3))
 			affected_mob << "\red You feel a stabbing pain in your abdomen!"
-			affected_mob.emote("me",1,"winces painfully.")
+			affected_mob.custom_emote(1,"winces painfully.")
 			affected_mob.adjustToxLoss(1)
 	if(stage > 2)
 		if(prob(1))

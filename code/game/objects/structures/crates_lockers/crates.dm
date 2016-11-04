@@ -69,13 +69,10 @@
 
 /obj/structure/closet/crate/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(opened)
-		if(isrobot(user))
-			return
+// TODO. Consider rig modules in unEquip()
 		if(W.loc != user) // This should stop mounted modules ending up outside the module.
 			return
-		user.drop_item()
-		if(W)
-			W.forceMove(src.loc)
+		user.unEquip(W, src.loc)
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
 	else if(istype(W, /obj/item/stack/cable_coil))
@@ -90,8 +87,7 @@
 	else if(istype(W, /obj/item/device/radio/electropack))
 		if(rigged)
 			user  << "<span class='notice'>You attach [W] to [src].</span>"
-			user.drop_item()
-			W.forceMove(src)
+			user.drop_from_inventory(W, src)
 			return
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(rigged)

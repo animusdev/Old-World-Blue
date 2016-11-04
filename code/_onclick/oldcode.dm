@@ -38,7 +38,7 @@
 
 
 	// ------- AI -------
-	else if (istype(usr, /mob/living/silicon/ai))
+	else if (isAI(usr))
 		var/mob/living/silicon/ai/ai = usr
 		if (ai.control_disabled)
 			return
@@ -115,12 +115,12 @@
 		return
 
 	// ------- PARALYSIS, STUN, WEAKENED, DEAD, (And not AI) -------
-	if (((usr.paralysis || usr.stunned || usr.weakened) && !istype(usr, /mob/living/silicon/ai)) || usr.stat != 0)
+	if (((usr.paralysis || usr.stunned || usr.weakened) && !isAI(usr)) || usr.stat != 0)
 		return
 
 	// ------- CLICKING STUFF IN CONTAINERS -------
 	if ((!( src in usr.contents ) && (((!( isturf(src) ) && (!( isturf(src.loc) ) && (src.loc && !( isturf(src.loc.loc) )))) || !( isturf(usr.loc) )) && (src.loc != usr.loc && (!( istype(src, /obj/screen) ) && !( usr.contents.Find(src.loc) ))))))
-		if (istype(usr, /mob/living/silicon/ai))
+		if (isAI(usr))
 			var/mob/living/silicon/ai/ai = usr
 			if (ai.control_disabled)
 				return
@@ -130,7 +130,7 @@
 	// ------- 1 TILE AWAY -------
 	var/t5
 	// ------- AI CAN CLICK ANYTHING -------
-	if(istype(usr, /mob/living/silicon/ai))
+	if(isAI(usr))
 		t5 = 1
 	// ------- CYBORG CAN CLICK ANYTHING WHEN NOT HOLDING STUFF -------
 	else if(istype(usr, /mob/living/silicon/robot) && !W)
@@ -291,7 +291,7 @@
 						src.attack_alien(usr, usr.hand)
 					else if (istype(usr, /mob/living/carbon/alien/larva))
 						src.attack_larva(usr)
-					else if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot))
+					else if (isAI(usr) || istype(usr, /mob/living/silicon/robot))
 						src.attack_ai(usr, usr.hand)
 					else if(istype(usr, /mob/living/carbon/slime))
 						src.attack_slime(usr)
@@ -305,7 +305,7 @@
 				src.hand_p(usr, usr.hand)
 			else if (istype(usr, /mob/living/carbon/alien/humanoid))
 				src.hand_al(usr, usr.hand)
-			else if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot))
+			else if (isAI(usr) || istype(usr, /mob/living/silicon/robot))
 				src.hand_a(usr, usr.hand)
 
 	else

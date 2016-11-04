@@ -3,8 +3,8 @@
 	name_plural = "slimes"
 	is_small = 1
 
-	icobase = 'icons/mob/human_races/r_slime.dmi'
-	deform = 'icons/mob/human_races/r_slime.dmi'
+	icobase = 'icons/mob/human_races/slime.dmi'
+	deform = 'icons/mob/human_races/slime.dmi'
 
 	language = "Sol Common" //todo?
 	unarmed_attacks = list(

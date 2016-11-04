@@ -135,7 +135,7 @@
 	if(!language in languages || length(key)>1) return 0
 
 	if(!key)
-		for(var/n_key in default_lang_keys)
+		for(var/n_key in list("2", "3", "4", "5", "6", "7", "8", "9"))
 			if(!n_key in language_keys)
 				key = n_key
 				break

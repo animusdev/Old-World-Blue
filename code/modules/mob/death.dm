@@ -73,8 +73,8 @@
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
-	drop_r_hand()
-	drop_l_hand()
+	drop_active_hand()
+	drop_inactive_hand()
 
 	if(healths)
 		healths.icon_state = "health6"

@@ -1,3 +1,27 @@
+//The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
+var/list/slot_equipment_priority = list(
+	slot_back,
+	slot_wear_id,
+	slot_w_uniform,
+	slot_wear_suit,
+	slot_socks,
+	slot_wear_mask,
+	slot_head,
+	slot_shoes,
+	slot_underwear,
+	slot_undershirt,
+	slot_gloves,
+	slot_l_ear,
+	slot_r_ear,
+	slot_glasses,
+	slot_belt,
+	slot_s_store,
+	slot_tie,
+	slot_l_store,
+	slot_r_store
+)
+
+
 //This proc is called whenever someone clicks an inventory ui slot.
 /mob/proc/attack_ui(slot)
 	var/obj/item/W = get_active_hand()
@@ -38,29 +62,6 @@
 /mob/proc/equip_to_slot_or_del(obj/item/W as obj, slot)
 	return equip_to_slot_if_possible(W, slot, 1, 1, 0)
 
-//The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
-var/list/slot_equipment_priority = list( \
-		slot_back,\
-		slot_wear_id,\
-		slot_w_uniform,\
-		slot_wear_suit,\
-		slot_socks,\
-		slot_wear_mask,\
-		slot_head,\
-		slot_shoes,\
-		slot_underwear,\
-		slot_undershirt,\
-		slot_gloves,\
-		slot_l_ear,\
-		slot_r_ear,\
-		slot_glasses,\
-		slot_belt,\
-		slot_s_store,\
-		slot_tie,\
-		slot_l_store,\
-		slot_r_store\
-	)
-
 //Checks if a given slot can be accessed at this time, either to equip or unequip I
 /mob/proc/slot_is_accessible(var/slot, var/obj/item/I, mob/user=null)
 	return 1
@@ -96,70 +97,29 @@ var/list/slot_equipment_priority = list( \
 
 //Returns the thing in our active hand
 /mob/proc/get_active_hand()
-	if(hand)	return l_hand
-	else		return r_hand
+	return null
 
 //Returns the thing in our inactive hand
 /mob/proc/get_inactive_hand()
-	if(hand)	return r_hand
-	else		return l_hand
-
-//Puts the item into your l_hand if possible and calls all necessary triggers/updates. returns 1 on success.
-/mob/proc/put_in_l_hand(var/obj/item/W)
-	if(lying)			return 0
-	if(!istype(W))		return 0
-	if(!l_hand)
-		W.forceMove(src)		//TODO: move to equipped?
-		l_hand = W
-		W.layer = 20	//TODO: move to equipped?
-//		l_hand.screen_loc = ui_lhand
-		W.equipped(src,slot_l_hand)
-		if(client)	client.screen |= W
-		if(pulling == W) stop_pulling()
-		update_inv_l_hand()
-		return 1
-	return 0
-
-//Puts the item into your r_hand if possible and calls all necessary triggers/updates. returns 1 on success.
-/mob/proc/put_in_r_hand(var/obj/item/W)
-	if(lying)			return 0
-	if(!istype(W))		return 0
-	if(!r_hand)
-		W.forceMove(src)
-		r_hand = W
-		W.layer = 20
-//		r_hand.screen_loc = ui_rhand
-		W.equipped(src,slot_r_hand)
-		if(client)	client.screen |= W
-		if(pulling == W) stop_pulling()
-		update_inv_r_hand()
-		return 1
-	return 0
+	return null
 
 //Puts the item into our active hand if possible. returns 1 on success.
 /mob/proc/put_in_active_hand(var/obj/item/W)
-	if(hand)	return put_in_l_hand(W)
-	else		return put_in_r_hand(W)
+	return 0
 
 //Puts the item into our inactive hand if possible. returns 1 on success.
 /mob/proc/put_in_inactive_hand(var/obj/item/W)
-	if(hand)	return put_in_r_hand(W)
-	else		return put_in_l_hand(W)
+	return 0
 
 //Puts the item our active hand if possible. Failing that it tries our inactive hand. Returns 1 on success.
 //If both fail it drops it on the floor and returns 0.
 //This is probably the main one you need to know :)
 /mob/proc/put_in_hands(var/obj/item/W)
 	if(!W)		return 0
-	if(put_in_active_hand(W))
-		return 1
-	else if(put_in_inactive_hand(W))
-		return 1
-	else
-		W.forceMove(get_turf(src))
-		W.layer = initial(W.layer)
-		W.dropped()
-		return 0
+	W.forceMove(get_turf(src))
+	W.layer = initial(W.layer)
+	W.dropped()
+	return 0
 
 // Removes an item from inventory and places it in the target atom.
 // If canremove or other conditions need to be checked then use unEquip instead.
@@ -168,26 +128,19 @@ var/list/slot_equipment_priority = list( \
 		if(!Target)
 			Target = loc
 
-		remove_from_mob(W)
+		remove_from_mob(W, Target)
 		if(!(W && W.loc)) return 1 // self destroying objects (tk, grabs)
 
-		W.forceMove(Target)
 		update_icons()
 		return 1
 	return 0
 
-//Drops the item in our left hand
-/mob/proc/drop_l_hand(var/atom/Target)
-	return unEquip(l_hand, Target)
-
-//Drops the item in our right hand
-/mob/proc/drop_r_hand(var/atom/Target)
-	return unEquip(r_hand, Target)
-
 //Drops the item in our active hand. TODO: rename this to drop_active_hand or something
-/mob/proc/drop_item(var/atom/Target)
-	if(hand)	return drop_l_hand(Target)
-	else		return drop_r_hand(Target)
+/mob/proc/drop_active_hand(var/atom/Target)
+	return 0
+
+/mob/proc/drop_inactive_hand(var/atom/Target)
+	return 0
 
 /*
 	Removes the object from any slots the mob might have, calling the appropriate icon update proc.
@@ -221,7 +174,8 @@ var/list/slot_equipment_priority = list( \
 		return 1
 
 	var/slot = get_inventory_slot(I)
-	if(slot && !I.mob_can_unequip(src, slot))
+	if(!slot || !I.mob_can_unequip(src, slot))
+		usr << "<span class='warning'>You can't unequip [I]!</span>"
 		return 0
 
 	drop_from_inventory(I, Target)
@@ -236,7 +190,7 @@ var/list/slot_equipment_priority = list( \
 	return slot
 
 //Attemps to remove an object on a mob.
-/mob/proc/remove_from_mob(var/obj/O)
+/mob/proc/remove_from_mob(var/obj/O, var/atom/Target)
 	src.u_equip(O)
 	if (src.client)
 		src.client.screen -= O
@@ -244,7 +198,7 @@ var/list/slot_equipment_priority = list( \
 	O.screen_loc = null
 	if(istype(O, /obj/item))
 		var/obj/item/I = O
-		I.forceMove(src.loc)
+		I.forceMove(Target ? Target : src.loc)
 		I.dropped(src)
 	return 1
 
@@ -257,26 +211,3 @@ var/list/slot_equipment_priority = list( \
 		if(slot_back) return back
 		if(slot_wear_mask) return wear_mask
 	return null
-
-//Outdated but still in use apparently. This should at least be a human proc.
-/mob/proc/get_equipped_items()
-	var/list/items = new/list()
-
-	if(hasvar(src,"back")) if(src:back) items += src:back
-	if(hasvar(src,"belt")) if(src:belt) items += src:belt
-	if(hasvar(src,"l_ear")) if(src:l_ear) items += src:l_ear
-	if(hasvar(src,"r_ear")) if(src:r_ear) items += src:r_ear
-	if(hasvar(src,"glasses")) if(src:glasses) items += src:glasses
-	if(hasvar(src,"gloves")) if(src:gloves) items += src:gloves
-	if(hasvar(src,"head")) if(src:head) items += src:head
-	if(hasvar(src,"shoes")) if(src:shoes) items += src:shoes
-	if(hasvar(src,"wear_id")) if(src:wear_id) items += src:wear_id
-	if(hasvar(src,"wear_mask")) if(src:wear_mask) items += src:wear_mask
-	if(hasvar(src,"wear_suit")) if(src:wear_suit) items += src:wear_suit
-//	if(hasvar(src,"w_radio")) if(src:w_radio) items += src:w_radio  commenting this out since headsets go on your ears now PLEASE DON'T BE MAD KEELIN
-	if(hasvar(src,"w_uniform")) if(src:w_uniform) items += src:w_uniform
-
-	//if(hasvar(src,BP_L_HAND)) if(src:l_hand) items += src:l_hand
-	//if(hasvar(src,BP_R_HAND)) if(src:r_hand) items += src:r_hand
-
-	return items

@@ -37,7 +37,13 @@
 	if(!client)
 
 		if(vocal && prob(1))
-			var/message = pick("Radar, put a mask on!", "There's always a catch, and it's the best there is.", "I knew it, I should've been a plastic surgeon.", "What kind of medbay is this? Everyone's dropping like dead flies.", "Delicious!")
+			var/message = pick(\
+				"Radar, put a mask on!",
+				"There's always a catch, and it's the best there is.",
+				"I knew it, I should've been a plastic surgeon.",
+				"What kind of medbay is this? Everyone's dropping like dead flies.",
+				"Delicious!"\
+			)
 			say(message)
 
 		if(patient)
@@ -164,10 +170,9 @@
 			user << "<span class='notice'>There is already a beaker loaded.</span>"
 			return
 
-		user.drop_item()
-		O.loc = src
-		reagent_glass = O
-		user << "<span class='notice'>You insert [O].</span>"
+		if(user.unEquip(O, src))
+			reagent_glass = O
+			user << "<span class='notice'>You insert [O].</span>"
 		return
 	else
 		..()
@@ -343,16 +348,16 @@
 		switch(build_step)
 			if(0)
 				if(istype(W, /obj/item/device/healthanalyzer))
-					user.drop_item()
-					qdel(W)
-					build_step++
-					user << "<span class='notice'>You add the health sensor to [src].</span>"
-					name = "First aid/robot arm/health analyzer assembly"
-					overlays += image('icons/obj/aibots.dmi', "na_scanner")
+					if(user.unEquip(W)) // Mounted Healhanalyzer and so on.
+						qdel(W)
+						build_step++
+						user << "<span class='notice'>You add the health sensor to [src].</span>"
+						name = "First aid/robot arm/health analyzer assembly"
+						overlays += image('icons/obj/aibots.dmi', "na_scanner")
 
 			if(1)
 				if(isprox(W))
-					user.drop_item()
+					user.drop_from_inventory(W)
 					qdel(W)
 					user << "<span class='notice'>You complete the Medibot! Beep boop.</span>"
 					var/turf/T = get_turf(src)

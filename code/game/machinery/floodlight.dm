@@ -124,8 +124,7 @@
 			if(cell)
 				user << "There is a power cell already installed."
 			else
-				user.drop_item()
-				W.loc = src
+				user.drop_from_inventory(W, src)
 				cell = W
 				user << "You insert the power cell."
 	update_icon()

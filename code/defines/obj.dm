@@ -93,7 +93,7 @@
 	flags = CONDUCT
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		user.drop_item()
+		user.unEquip(src)
 		src.throw_at(target, throw_range, throw_speed, user)
 
 /obj/effect/stop

@@ -180,7 +180,7 @@
 		visible_message("<span class='danger'>You hear a loud metallic grinding sound.</span>")
 		return
 	use_power(1000)
-	visible_message("<span class='danger'>You hear a loud squelchy grinding sound.</span>")
+	visible_message("<span class='danger'>You hear a loud [occupant.isSynthetic() ? "metallic" : "squelchy"] grinding sound.</span>")
 	src.operating = 1
 	update_icon()
 
@@ -199,7 +199,7 @@
 	else if(ishuman(src.occupant))
 		var/mob/living/carbon/human/H = occupant
 		slab_name = src.occupant.real_name
-		slab_type = H.species.meat_type
+		slab_type = H.isSynthetic() ? /obj/item/stack/material/steel : H.species.meat_type
 
 	// Small mobs don't give as much nutrition.
 	if(src.occupant.small)

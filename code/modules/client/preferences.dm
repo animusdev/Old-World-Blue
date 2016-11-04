@@ -14,12 +14,11 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"alien candidate" = 1, //always show                 // 6
 	"positronic brain" = 1,                              // 7
 	"cultist" = IS_MODE_COMPILED("cult"),                // 8
-	"infested monkey" = IS_MODE_COMPILED("monkey"),      // 9
-	"ninja" = "true",                                    // 10
-	"raider" = IS_MODE_COMPILED("heist"),                // 11
-	"diona" = 1,                                         // 12
-	"loyalist" = IS_MODE_COMPILED("revolution"),         // 13
-	"pAI candidate" = 1, // -- TLE                       // 14
+	"ninja" = "true",                                    // 9
+	"raider" = IS_MODE_COMPILED("heist"),                // 10
+	"diona" = 1,                                         // 11
+	"loyalist" = IS_MODE_COMPILED("revolution"),         // 12
+	"pAI candidate" = 1, // -- TLE                       // 13
 )
 
 //used for alternate_option
@@ -1077,42 +1076,17 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						current_species = all_species[species_preview]
 						sanitize_body_build()
 
-						//grab one of the valid hair styles for the newly chosen species
-						var/list/valid_hairstyles = list()
-						for(var/hairstyle in hair_styles_list)
-							var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-							if(gender == MALE && S.gender == FEMALE)
-								continue
-							if(gender == FEMALE && S.gender == MALE)
-								continue
-							if( !(species in S.species_allowed))
-								continue
-							valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
+						var/datum/sprite_accessory/HS = hair_styles_list[h_style]
+						if(HS.gender != gender || !(current_species.get_bodytype() in HS.species_allowed))
+							//grab one of the valid hair styles for the newly chosen species
+							var/list/hairstyles = get_hair_styles_list(current_species.get_bodytype(), gender)
+							h_style = pick(hairstyles)
 
-						if(valid_hairstyles.len)
-							h_style = pick(valid_hairstyles)
-						else
-							//this shouldn't happen
-							h_style = hair_styles_list["Bald"]
-
-						//grab one of the valid facial hair styles for the newly chosen species
-						var/list/valid_facialhairstyles = list()
-						for(var/facialhairstyle in facial_hair_styles_list)
-							var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
-							if(gender == MALE && S.gender == FEMALE)
-								continue
-							if(gender == FEMALE && S.gender == MALE)
-								continue
-							if( !(species in S.species_allowed))
-								continue
-
-							valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
-
-						if(valid_facialhairstyles.len)
-							f_style = pick(valid_facialhairstyles)
-						else
-							//this shouldn't happen
-							f_style = facial_hair_styles_list["Shaved"]
+						HS = facial_hair_styles_list[f_style]
+						if(HS.gender != gender || !(current_species.get_bodytype() in HS.species_allowed))
+							//grab one of the valid facial hair styles for the newly chosen species
+							var/list/facialstyles = get_facial_styles_list(current_species.get_bodytype(), gender)
+							f_style = pick(facialstyles)
 
 						//reset hair colour and skin colour
 						hair_color = initial(hair_color)
@@ -1124,7 +1098,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 
 					for(var/L in all_languages)
 						var/datum/language/lang = all_languages[L]
-						if((lang.flags & PUBLIC))
+						if(lang.flags & PUBLIC)
 							new_languages += lang.name
 
 					for(var/L in current_species.secondary_langs)
@@ -1150,15 +1124,8 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 							hair_color = new_hair
 
 				if("h_style")
-					var/list/valid_hairstyles = list()
-					for(var/hairstyle in hair_styles_list)
-						var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-						if( !(species in S.species_allowed))
-							continue
-
-						valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
-
-					var/new_h_style = input(usr, "Choose your character's hair style:", "Character Preference")  as null|anything in valid_hairstyles
+					var/new_h_style = input(usr, "Choose your character's hair style:", "Character Preference", h_style) \
+						as null|anything in get_hair_styles_list(current_species.get_bodytype(), gender)
 					if(new_h_style)
 						h_style = new_h_style
 
@@ -1168,19 +1135,8 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 						facial_color = new_facial
 
 				if("f_style")
-					var/list/valid_facialhairstyles = list()
-					for(var/facialhairstyle in facial_hair_styles_list)
-						var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
-						if(gender == MALE && S.gender == FEMALE)
-							continue
-						if(gender == FEMALE && S.gender == MALE)
-							continue
-						if( !(species in S.species_allowed))
-							continue
-
-						valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
-
-					var/new_f_style = input(usr, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in valid_facialhairstyles
+					var/new_f_style = input(usr, "Choose your character's facial-hair style:", "Character Preference", f_style) \
+					as null|anything in get_facial_styles_list(current_species.get_bodytype(), gender)
 					if(new_f_style)
 						f_style = new_f_style
 

@@ -185,7 +185,7 @@
 	if(current_species)
 		icobase = current_species.icobase
 	else
-		icobase = 'icons/mob/human_races/r_human.dmi'
+		icobase = 'icons/mob/human_races/human.dmi'
 
 	preview_icon = new /icon('icons/mob/human.dmi', "blank")
 

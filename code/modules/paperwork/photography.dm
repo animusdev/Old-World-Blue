@@ -102,26 +102,29 @@ var/global/photo_count = 0
 
 /obj/item/weapon/storage/photo_album/MouseDrop(obj/over_object as obj)
 
-	if(ishuman(usr))
-		var/mob/M = usr
-		if(!( istype(over_object, /obj/screen) ))
-			return ..()
-		playsound(loc, "rustle", 50, 1, -5)
-		if((!( M.restrained() ) && !( M.stat ) && M.back == src))
-			switch(over_object.name)
-				if(BP_R_HAND)
-					M.u_equip(src)
-					M.put_in_r_hand(src)
-				if(BP_L_HAND)
-					M.u_equip(src)
-					M.put_in_l_hand(src)
-			add_fingerprint(usr)
-			return
-		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
-			if(usr.s_active)
-				usr.s_active.close(usr)
-			show_to(usr)
-			return
+	if(!ishuman(usr))
+		return
+
+	var/mob/living/carbon/human/H = usr
+	if(!istype(over_object, /obj/screen))
+		return ..()
+
+	playsound(loc, "rustle", 50, 1, -5)
+	if(!H.restrained() && !H.stat && H.back == src)
+		switch(over_object.name)
+			if(BP_R_HAND)
+				if(H.unEquip(src))
+					H.put_in_r_hand(src)
+			if(BP_L_HAND)
+				if(H.unEquip(src))
+					H.put_in_l_hand(src)
+		add_fingerprint(usr)
+		return
+	if(over_object == H && in_range(src, H) || H.contents.Find(src))
+		if(H.s_active)
+			H.s_active.close(H)
+		show_to(H)
+		return
 	return
 
 /*********
@@ -170,7 +173,7 @@ var/global/photo_count = 0
 			user << "<span class='notice'>[src] still has some film in it!</span>"
 			return
 		user << "<span class='notice'>You insert [I] into [src].</span>"
-		user.drop_item()
+		user.drop_from_inventory(I)
 		qdel(I)
 		pictures_left = pictures_max
 		return

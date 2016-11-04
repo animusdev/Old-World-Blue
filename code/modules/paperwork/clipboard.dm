@@ -33,8 +33,7 @@
 /obj/item/weapon/clipboard/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if(istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/photo))
-		user.drop_item()
-		W.loc = src
+		user.drop_from_inventory(W, src)
 		if(istype(W, /obj/item/weapon/paper))
 			toppaper = W
 		user << "<span class='notice'>You clip the [W] onto \the [src].</span>"
@@ -42,7 +41,7 @@
 
 	else if(istype(W, /obj/item/weapon/pen))
 		if(!haspen)
-			usr.drop_item()
+			usr.drop_from_inventory(W, src)
 			W.loc = src
 			haspen = W
 			usr << "<span class='notice'>You slot the pen into \the [src].</span>"
@@ -138,7 +137,7 @@
 
 			if(P && (P.loc == src) && istype(P, /obj/item/weapon/paper) )
 
-				if(!(ishuman(usr) || isobserver(usr) || istype(usr, /mob/living/silicon)))
+				if(!(ishuman(usr) || isobserver(usr) || issilicon(usr)))
 					usr << browse("<HTML><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY>[stars(P.info)][P.stamps]</BODY></HTML>", "window=[P.name]")
 					onclose(usr, "[P.name]")
 				else

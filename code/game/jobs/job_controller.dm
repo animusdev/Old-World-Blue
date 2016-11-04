@@ -387,49 +387,54 @@ var/global/datum/controller/occupations/job_master
 
 		if(job)
 
-			//Equip custom gear loadout.
-			var/list/custom_equip_slots = list() //If more than one item takes the same slot, all after the first one spawn in storage.
-//			var/list/custom_equip_leftovers = list()
-			if(H.client.prefs.gear && H.client.prefs.gear.len && job.title != "Cyborg" && job.title != "AI")
-				for(var/thing in H.client.prefs.gear)
-					var/datum/gear/G = gear_datums[thing]
-					if(G)
-						var/permitted
-						if(G.allowed_roles)
-							for(var/job_name in G.allowed_roles)
-								if(job.title == job_name)
-									permitted = 1
-						else
-							permitted = 1
+			if(job.title != "Cyborg" && job.title != "AI")
 
-						if(G.whitelisted && !is_alien_whitelisted(H, G.whitelisted))
-							permitted = 0
+				var/hidden_type = all_socks[H.client.prefs.socks]
+				if(hidden_type)
+					H.equip_to_slot_or_del(new hidden_type, slot_socks)
+				hidden_type = all_underwears[H.client.prefs.underwear]
+				if(hidden_type)
+					H.equip_to_slot_or_del(new hidden_type, slot_underwear)
+				hidden_type = all_undershirts[H.client.prefs.undershirt]
+				if(hidden_type)
+					H.equip_to_slot_or_del(new hidden_type, slot_undershirt)
 
-						if(!permitted)
-							H << "<span class='warning'>Your current job or whitelist status does not permit you to spawn with [thing]!</span>"
-							continue
-
-						if(G.slot && !(G.slot in custom_equip_slots))
-							// This is a miserable way to fix the loadout overwrite bug, but the alternative requires
-							// adding an arg to a bunch of different procs. Will look into it after this merge. ~ Z
-							if(G.slot == slot_wear_mask || G.slot == slot_wear_suit || G.slot == slot_head)
-								//custom_equip_leftovers += thing
-								spawn_in_storage.Add(thing)
-							else if(H.equip_to_slot_or_del(new G.path(H), G.slot))
-								H << "\blue Equipping you with [thing]!"
-								custom_equip_slots.Add(G.slot)
+				//Equip custom gear loadout.
+				var/list/custom_equip_slots = list() //If more than one item takes the same slot, all after the first one spawn in storage.
+	//			var/list/custom_equip_leftovers = list()
+				if(H.client.prefs.gear && H.client.prefs.gear.len)
+					for(var/thing in H.client.prefs.gear)
+						var/datum/gear/G = gear_datums[thing]
+						if(G)
+							var/permitted
+							if(G.allowed_roles)
+								for(var/job_name in G.allowed_roles)
+									if(job.title == job_name)
+										permitted = 1
 							else
-//								custom_equip_leftovers.Add(thing)
-								spawn_in_storage.Add(thing)
-						else
-							spawn_in_storage += thing
-			var/hidden_type = all_socks[H.client.prefs.socks]
-			if(hidden_type)
-				H.equip_to_slot_or_del(new hidden_type, slot_socks)
-			hidden_type = all_underwears[H.client.prefs.underwear]
-			if(hidden_type) H.equip_to_slot_or_del(new hidden_type, slot_underwear)
-			hidden_type = all_undershirts[H.client.prefs.undershirt]
-			if(hidden_type) H.equip_to_slot_or_del(new hidden_type, slot_undershirt)
+								permitted = 1
+
+							if(G.whitelisted && !is_alien_whitelisted(H, G.whitelisted))
+								permitted = 0
+
+							if(!permitted)
+								H << "<span class='warning'>Your current job or whitelist status does not permit you to spawn with [thing]!</span>"
+								continue
+
+							if(G.slot && !(G.slot in custom_equip_slots))
+								// This is a miserable way to fix the loadout overwrite bug, but the alternative requires
+								// adding an arg to a bunch of different procs. Will look into it after this merge. ~ Z
+								if(G.slot == slot_wear_mask || G.slot == slot_wear_suit || G.slot == slot_head)
+									//custom_equip_leftovers += thing
+									spawn_in_storage.Add(thing)
+								else if(H.equip_to_slot_or_del(new G.path(H), G.slot))
+									H << "\blue Equipping you with [thing]!"
+									custom_equip_slots.Add(G.slot)
+								else
+	//								custom_equip_leftovers.Add(thing)
+									spawn_in_storage.Add(thing)
+							else
+								spawn_in_storage += thing
 			//Equip job items.
 			job.equip(H)
 			job.setup_account(H)

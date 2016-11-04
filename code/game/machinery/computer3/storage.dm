@@ -125,9 +125,8 @@
 				usr << "There's already a disk in [src]!"
 				return
 
+			usr.drop_from_inventory(O, src)
 			usr << "You insert [O] into [src]."
-			usr.drop_item()
-			O.loc = src
 			inserted = O
 			writeprotect = inserted.writeprotect
 

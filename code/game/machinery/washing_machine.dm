@@ -81,9 +81,8 @@
 	if(istype(W,/obj/item/weapon/pen/crayon) || istype(W,/obj/item/weapon/stamp))
 		if( state in list(	1, 3, 6 ) )
 			if(!crayon)
-				user.drop_item()
+				user.drop_from_inventory(W, src)
 				crayon = W
-				crayon.loc = src
 			else
 				..()
 		else
@@ -146,8 +145,7 @@
 
 		if(contents.len < 5)
 			if ( state in list(1, 3) )
-				user.drop_item()
-				W.loc = src
+				user.drop_from_inventory(W, src)
 				state = 3
 			else
 				user << "\blue You can't put the item in right now."

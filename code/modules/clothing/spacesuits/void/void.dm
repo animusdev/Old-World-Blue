@@ -12,15 +12,15 @@
 	//Species-specific stuff.
 	species_restricted = list("exclude","Unathi","Tajara","Skrell","Diona","Vox", "Xenomorph")
 	sprite_sheets_refit = list(
-		"Unathi" = 'icons/mob/species/unathi/helmet.dmi',
-		"Tajara" = 'icons/mob/species/tajaran/helmet.dmi',
-		"Skrell" = 'icons/mob/species/skrell/helmet.dmi',
-		)
+		"Unathi" = 'icons/obj/clothing/hats/mob_unathi.dmi',
+		"Tajara" = 'icons/obj/clothing/hats/mob_tajaran.dmi',
+		"Skrell" = 'icons/obj/clothing/hats/mob_skrell.dmi',
+	)
 	sprite_sheets_obj = list(
-		"Unathi" = 'icons/obj/clothing/species/unathi/hats.dmi',
-		"Tajara" = 'icons/obj/clothing/species/tajaran/hats.dmi',
-		"Skrell" = 'icons/obj/clothing/species/skrell/hats.dmi',
-		)
+		"Unathi" = 'icons/obj/clothing/hats/icon_unathi.dmi',
+		"Tajara" = 'icons/obj/clothing/hats/icon_tajaran.dmi',
+		"Skrell" = 'icons/obj/clothing/hats/icon_skrell.dmi',
+	)
 
 	light_overlay = "helmet_light"
 
@@ -37,15 +37,15 @@
 
 	species_restricted = list("exclude","Unathi","Tajara","Diona","Vox", "Xenomorph")
 	sprite_sheets_refit = list(
-		"Unathi" = 'icons/mob/species/unathi/suit.dmi',
-		"Tajara" = 'icons/mob/species/tajaran/suit.dmi',
-		"Skrell" = 'icons/mob/species/skrell/suit.dmi',
-		)
+		"Unathi" = 'icons/obj/clothing/suits/mob_unathi.dmi',
+		"Tajara" = 'icons/obj/clothing/suits/mob_tajaran.dmi',
+		"Skrell" = 'icons/obj/clothing/suits/mob_skrell.dmi',
+	)
 	sprite_sheets_obj = list(
-		"Unathi" = 'icons/obj/clothing/species/unathi/suits.dmi',
-		"Tajara" = 'icons/obj/clothing/species/tajaran/suits.dmi',
-		"Skrell" = 'icons/obj/clothing/species/skrell/suits.dmi',
-		)
+		"Unathi" = 'icons/obj/clothing/suits/icon_unathi.dmi',
+		"Tajara" = 'icons/obj/clothing/suits/icon_tajaran.dmi',
+		"Skrell" = 'icons/obj/clothing/suits/icon_skrell.dmi',
+	)
 
 	//Breach thresholds, should ideally be inherited by most (if not all) voidsuits.
 	//With 0.2 resiliance, will reach 10 breach damage after 3 laser carbine blasts or 8 smg hits.
@@ -219,8 +219,7 @@
 			user << "\The [src] already has a helmet installed."
 		else
 			user << "You attach \the [W] to \the [src]'s helmet mount."
-			user.drop_item()
-			W.loc = src
+			user.drop_from_inventory(W, src)
 			src.helmet = W
 		return
 	else if(istype(W,/obj/item/clothing/shoes/magboots))
@@ -228,8 +227,7 @@
 			user << "\The [src] already has magboots installed."
 		else
 			user << "You attach \the [W] to \the [src]'s boot mounts."
-			user.drop_item()
-			W.loc = src
+			user.drop_from_inventory(W, src)
 			boots = W
 		return
 	else if(istype(W,/obj/item/weapon/tank))
@@ -239,8 +237,7 @@
 			user << "\The [W] cannot be inserted into \the [src]'s storage compartment."
 		else
 			user << "You insert \the [W] into \the [src]'s storage compartment."
-			user.drop_item()
-			W.loc = src
+			user.drop_from_inventory(W, src)
 			tank = W
 		return
 

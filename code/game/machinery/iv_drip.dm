@@ -34,7 +34,7 @@
 			overlays += filling
 
 /obj/machinery/iv_drip/MouseDrop(over_object, src_location, over_location)
-	if(!ishuman(usr)) return
+	if(!ishuman(usr) && !istype(usr, /mob/living/silicon/robot)) return
 	if(in_range(src, usr) && ishuman(over_object) && get_dist(over_object, src) <= 1)
 		if(attached)
 			visible_message("[src.attached] is detached from \the [src]")
@@ -52,8 +52,7 @@
 			user << "There is already a reagent container loaded!"
 			return
 
-		user.drop_item()
-		W.loc = src
+		user.drop_from_inventory(W, src)
 		src.beaker = W
 		user << "You attach \the [W] to \the [src]."
 		src.update_icon()
@@ -102,11 +101,11 @@
 			if(NOCLONE in T.mutations)
 				return
 
-			if(T.species && T.species.flags & NO_BLOOD)
+			if(!T.should_have_organ(O_HEART))
 				return
 
 			// If the human is losing too much blood, beep.
-			if(T.vessel.get_reagent_amount("blood") < BLOOD_VOLUME_SAFE) if(prob(5))
+			if(((T.vessel.get_reagent_amount("blood")/T.species.blood_volume)*100) < BLOOD_VOLUME_SAFE)
 				visible_message("\The [src] beeps loudly.")
 
 			var/datum/reagent/B = T.take_blood(beaker,amount)

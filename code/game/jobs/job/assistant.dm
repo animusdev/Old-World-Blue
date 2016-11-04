@@ -9,7 +9,6 @@
 	supervisors = "absolutely everyone"
 	selection_color = "#dddddd"
 	economic_modifier = 1
-	access = list(access_maint_tunnels)			//See /datum/job/assistant/get_access()
 	minimal_access = list(access_maint_tunnels)	//See /datum/job/assistant/get_access()
 	alt_titles = list("Security Cadet","Technical Assistant","Medical Intern","Research Assistant","Visitor","Private Eye")
 

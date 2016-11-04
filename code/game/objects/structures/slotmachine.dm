@@ -99,13 +99,13 @@
 		if ((cash.worth > 0) && (cash.worth<=100) && (bet + cash.worth <= 100))
 			user << "<span class='info'>You insert [cash.worth] Thalers into [src].</span>"
 			bet += cash.worth
-			user.drop_item()
+			user.drop_from_inventory(cash)
 			qdel(cash)
 		else
 			user << "\red You must bet 1-100 Thalers!"
 	else if (istype(S, /obj/item/weapon/coin))
 		user << "\blue You add the [S.name] into the [src]. It will slightly increase chance to win."
-		user.drop_item()
+		user.drop_from_inventory(S)
 		bet = 100
 		plays = 45
 		qdel(S)

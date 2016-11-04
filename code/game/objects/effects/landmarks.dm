@@ -7,24 +7,10 @@
 
 /obj/effect/landmark/New()
 	..()
-	tag = text("landmark*[]", name)
+	tag = "landmark*[name]"
 	invisibility = 101
 
 	switch(name)			//some of these are probably obsolete
-		if("shuttle")
-			shuttle_z = z
-			qdel(src)
-			return
-		if("airtunnel_stop")
-			airtunnel_stop = x
-		if("airtunnel_start")
-			airtunnel_start = x
-		if("airtunnel_bottom")
-			airtunnel_bottom = y
-		if("monkey")
-			monkeystart += loc
-			qdel(src)
-			return
 		if("start")
 			newplayer_start += loc
 			qdel(src)

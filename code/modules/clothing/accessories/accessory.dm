@@ -1,13 +1,13 @@
 /obj/item/clothing/accessory
 	name = "tie"
 	desc = "A neosilk clip-on tie."
-	icon = 'icons/obj/clothing/ties.dmi'
+	icon = 'icons/obj/clothing/acessories/icon.dmi'
 	icon_state = "bluetie"
 	item_state = ""	//no inhands
 	slot_flags = SLOT_TIE
 	w_class = 2.0
 	var/slot = "decor"
-	var/obj/item/clothing/under/has_suit = null		//the suit the tie may be attached to
+	var/obj/item/clothing/has_suit = null		//the suit the tie may be attached to
 	var/image/inv_overlay = null	//overlay used when attached to clothing.
 
 
@@ -22,7 +22,7 @@
 	has_suit = S
 	loc = has_suit
 	if(!inv_overlay)
-		inv_overlay = image('icons/mob/ties.dmi', icon_state)
+		inv_overlay = image('icons/obj/clothing/acessories/mob_default.dmi', icon_state)
 	has_suit.overlays += inv_overlay
 
 	if(user)

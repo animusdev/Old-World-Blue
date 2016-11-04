@@ -5,6 +5,16 @@
 /mob/living/silicon/robot/get_active_hand()
 	return module_active
 
+/mob/living/silicon/robot/unEquip(obj/item/I, var/atom/Target)
+	if(istype(module_active, /obj/item/weapon/gripper))
+		var/obj/item/weapon/gripper/G = module_active
+		G.drop_to(Target)
+		usr << "<span class='warning'>You can't unequip [I]!</span>"
+	return 0
+
+/mob/living/silicon/robot/drop_active_hand(var/atom/target)
+	return unEquip(get_active_hand(), target)
+
 /*-------TODOOOOOOOOOO--------*/
 
 //Verbs used by hotkeys.

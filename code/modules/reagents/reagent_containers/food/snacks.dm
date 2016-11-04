@@ -168,7 +168,15 @@
 
 	if (is_sliceable())
 		//these are used to allow hiding edge items in food that is not on a table/tray
-		var/can_slice_here = isturf(src.loc) && ((locate(/obj/structure/table) in src.loc) || (locate(/obj/machinery/optable) in src.loc) || (locate(/obj/item/weapon/tray) in src.loc))
+		var/can_slice_here = 0
+		if(isturf(src.loc))
+			if(locate(/obj/structure/table) in src.loc)
+				can_slice_here = 1
+			else if(locate(/obj/machinery/optable) in src.loc)
+				can_slice_here = 1
+			else if(locate(/obj/item/weapon/tray) in src.loc)
+				can_slice_here = 1
+
 		var/hide_item = !has_edge(W) || !can_slice_here
 
 		if (hide_item)
@@ -189,10 +197,16 @@
 
 			var/slices_lost = 0
 			if (W.w_class > 3)
-				user.visible_message("<span class='notice'>\The [user] crudely slices \the [src] with [W]!</span>", "<span class='notice'>You crudely slice \the [src] with your [W]!</span>")
+				user.visible_message(
+					"<span class='notice'>\The [user] crudely slices \the [src] with [W]!</span>",
+					"<span class='notice'>You crudely slice \the [src] with your [W]!</span>"
+				)
 				slices_lost = rand(1,min(1,round(slices_num/2)))
 			else
-				user.visible_message("<span class='notice'>\The [user] slices \the [src]!</span>", "<span class='notice'>You slice \the [src]!</span>")
+				user.visible_message(
+					"<span class='notice'>\The [user] slices \the [src]!</span>",
+					"<span class='notice'>You slice \the [src]!</span>"
+				)
 
 			var/reagents_per_slice = reagents.total_volume/slices_num
 			for(var/i=1 to (slices_num-slices_lost))
@@ -2924,8 +2938,7 @@
 			for(var/obj/item/pizzabox/i in box.boxes)
 				boxestoadd += i
 			if( (boxes.len+1) + boxestoadd.len <= 5 )
-				user.drop_item()
-				box.loc = src
+				user.drop_from_inventory(box, src)
 				box.boxes = list() // Clear the box boxes so we don't have boxes inside boxes. - Xzibit
 				src.boxes.Add( boxestoadd )
 
@@ -2943,8 +2956,7 @@
 	if( istype(I, /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/) ) // Long ass fucking object name
 
 		if( src.open )
-			user.drop_item()
-			I.loc = src
+			user.drop_from_inventory(I, src)
 			src.pizza = I
 
 			update_icon()

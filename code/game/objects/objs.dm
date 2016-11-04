@@ -10,6 +10,7 @@
 	var/tmp/throwforce = 1
 	var/tmp/sharp = 0		// whether this object cuts
 	var/tmp/edge = 0		// whether this object is more likely to dismember
+	var/tmp/pry = 0			//Used in attackby() to open doors
 	var/tmp/in_use = 0 // If we have a user using us, this will be set on. We will check if the user has stopped using us, and thus stop updating and LAGGING EVERYTHING!
 
 	var/damtype = "brute"
@@ -72,7 +73,7 @@
 			if ((M.client && M.machine == src))
 				is_in_use = 1
 				src.attack_hand(M)
-		if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot))
+		if (isAI(usr) || istype(usr, /mob/living/silicon/robot))
 			if (!(usr in nearby))
 				if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
 					is_in_use = 1

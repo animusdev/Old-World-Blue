@@ -374,9 +374,9 @@
 /obj/item/weapon/spellbook/oneuse/forcewall/recoil(mob/user as mob)
 	..()
 	user <<"<span class='warning'>You suddenly feel very solid!</span>"
-	var/obj/structure/closet/statue/S = new /obj/structure/closet/statue(user.loc, user)
+	var/obj/structure/closet/statue/S = new(user.loc, user)
 	S.timer = 30
-	user.drop_item()
+	user.drop_from_inventory(src)
 
 
 /obj/item/weapon/spellbook/oneuse/knock
