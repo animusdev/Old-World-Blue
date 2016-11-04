@@ -95,7 +95,6 @@
 		"Your chilly flesh stands out in goosebumps."
 		)
 
-	gluttonous = 1
 
 
 
@@ -202,7 +201,7 @@
 //	restricted_jobs = list()
 //	accent = list()
 //	accentFL = list()
-	allow_slim_fem = 0
+//	allow_slim_fem = 0
 
 	//Species Abilities
 //	evolution_points = 0 //How many points race have for abilities
