@@ -179,8 +179,8 @@
 
 						var/obj/item/device/radio/headset/headset_to_add = item_to_add
 
-						usr.drop_item()
-						headset_to_add.loc = src
+						if(!usr.unEquip(item_to_add, src))
+							return
 						src.ears = headset_to_add
 						usr << "You fit the headset onto [src]."
 

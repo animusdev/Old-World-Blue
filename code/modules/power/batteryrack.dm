@@ -49,7 +49,7 @@
 /obj/machinery/power/smes/batteryrack/update_icon()
 	overlays.Cut()
 	if(stat & BROKEN)	return
-	
+
 	if(!br_cache)
 		br_cache = list()
 		br_cache.len = 7
@@ -60,7 +60,7 @@
 		br_cache[5] = image('icons/obj/power.dmi', "gsmes_og2")
 		br_cache[6] = image('icons/obj/power.dmi', "gsmes_og3")
 		br_cache[7] = image('icons/obj/power.dmi', "gsmes_og4")
-	
+
 	if (output_attempt)
 		overlays += br_cache[1]
 	if(inputting)
@@ -99,9 +99,8 @@
 		else if ((istype(W, /obj/item/weapon/stock_parts/capacitor) && (capacitors_amount < 5)) || (istype(W, /obj/item/weapon/cell) && (cells_amount < 5)))
 			if (charge < (capacity / 100))
 				if (!output_attempt && !input_attempt)
-					user.drop_item()
+					user.unEquip(W, src)
 					component_parts += W
-					W.loc = src
 					RefreshParts()
 					user << "<span class='notice'>You upgrade the [src] with [W.name].</span>"
 				else

@@ -493,7 +493,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 /obj/machinery/newscaster/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
+	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (issilicon(usr)))
 		usr.set_machine(src)
 		if(href_list["set_channel_name"])
 			src.channel_name = cp1251_to_utf8(sanitizeSafe(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", ""), MAX_LNAME_LEN))
@@ -788,8 +788,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 	if(istype(user.get_active_hand(), /obj/item/weapon/photo))
 		var/obj/item/photo = user.get_active_hand()
-		user.drop_item()
-		photo.loc = src
+		user.drop_from_inventory(photo, src)
 		photo_data = new(photo, 0)
 	else if(istype(user,/mob/living/silicon))
 		var/mob/living/silicon/tempAI = user

@@ -210,8 +210,7 @@
 
 		if(do_after(user, 40))
 			if(!src) return
-			user.drop_item()
-			W.loc = src
+			user.drop_from_inventory(W, src)
 			user << "\blue You installed the airlock electronics!"
 			src.state = 2
 			src.name = "Near finished Airlock Assembly"

@@ -33,3 +33,30 @@
 	name = "checkered suit jacket"
 	desc = "Lucky suit jacket."
 	icon_state = "checkered_jacket"
+
+
+/obj/item/clothing/accessory/chaps
+	name = "brown chaps"
+	desc = "A pair of loose, brown leather chaps."
+	icon_state = "chaps"
+
+/obj/item/clothing/accessory/chaps/black
+	name = "black chaps"
+	desc = "A pair of loose, black leather chaps."
+	icon_state = "chaps_black"
+
+
+/obj/item/clothing/accessory/hawaii
+	name = "flower-pattern shirt"
+	desc = "You probably need some welder googles to look at this."
+	icon_state = "hawaii"
+
+/obj/item/clothing/accessory/hawaii/red
+	icon_state = "hawaii2"
+
+/obj/item/clothing/accessory/hawaii/random
+	name = "flower-pattern shirt"
+
+/obj/item/clothing/accessory/hawaii/random/New()
+	if(prob(50))
+		icon_state = "hawaii2"

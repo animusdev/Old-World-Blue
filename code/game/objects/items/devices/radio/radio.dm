@@ -565,8 +565,7 @@
 			return
 
 		if(!keyslot)
-			user.drop_item()
-			W.loc = src
+			user.drop_from_inventory(W, src)
 			keyslot = W
 
 		recalculateChannels()

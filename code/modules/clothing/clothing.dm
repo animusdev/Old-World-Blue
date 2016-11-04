@@ -1,7 +1,6 @@
 /obj/item/clothing
 	name = "clothing"
 	siemens_coefficient = 0.9
-	var/wear_state = "" 				//If set used instead icon_state for mob drawing.
 	var/list/species_restricted = null //Only these species can wear this kit.
 	var/gunshot_residue //Used by forensics.
 
@@ -15,6 +14,7 @@
 		Ideally, sprite_sheets_refit should be used for "hard" clothing items that can't change shape very well to fit the wearer (e.g. helmets, hardsuits).
 	*/
 	var/list/sprite_sheets_refit = null
+	var/ear_protection = 0
 
 //Updates the icons of the mob wearing the clothing item, if any.
 /obj/item/clothing/proc/update_clothing_icon()
@@ -31,8 +31,6 @@
 
 /obj/item/clothing/New()
 	..()
-	if(!wear_state)
-		wear_state = icon_state
 	if(starting_accessories)
 		for(var/T in starting_accessories)
 			var/obj/item/clothing/accessory/tie = new T(src)
@@ -44,6 +42,9 @@
 	//if we can't equip the item anyway, don't bother with species_restricted (cuts down on spam)
 	if (!..())
 		return 0
+
+	if(slot in list(slot_l_hand, slot_r_hand))
+		return 1
 
 	if(species_restricted && ishuman(M))
 		var/exclusive = null
@@ -73,7 +74,7 @@
 	//Set species_restricted list
 	switch(target_species)
 		if("Human", "Skrell")	//humanoid bodytypes
-			species_restricted = list("exclude","Unathi","Tajara","Diona","Vox", "Xenomorph")
+			species_restricted = list("Human", "Skrell") //skrell/humans can wear each other's suits
 		else
 			species_restricted = list(target_species)
 
@@ -95,9 +96,8 @@
 	//Set species_restricted list
 	switch(target_species)
 		if("Skrell")
-			species_restricted = list("exclude","Unathi","Tajara","Diona","Vox", "Xenomorph")
-		if("Human")
-			species_restricted = list("exclude","Skrell","Unathi","Tajara","Diona","Vox", "Xenomorph")
+			species_restricted = list("Human", "Skrell") //skrell helmets fit humans too
+
 		else
 			species_restricted = list(target_species)
 
@@ -191,7 +191,7 @@
 	name = "gloves"
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	w_class = 2.0
-	icon = 'icons/obj/clothing/gloves.dmi'
+	icon = 'icons/obj/clothing/gloves/icon.dmi'
 	siemens_coefficient = 0.75
 	var/wired = 0
 	var/obj/item/weapon/cell/cell = 0
@@ -242,7 +242,7 @@
 //Head
 /obj/item/clothing/head
 	name = "head"
-	icon = 'icons/obj/clothing/hats.dmi'
+	icon = 'icons/obj/clothing/hats/icon.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_HEAD
 	w_class = 2.0
@@ -282,9 +282,9 @@
 	overlays.Cut()
 	if(on)
 		if(!light_overlay_cache["[light_overlay]_icon"])
-			light_overlay_cache["[light_overlay]_icon"] = image("icon" = 'icons/obj/light_overlays.dmi', "icon_state" = "[light_overlay]")
-		if(!light_overlay_cache["[light_overlay]"])
-			light_overlay_cache["[light_overlay]"] = image("icon" = 'icons/mob/light_overlays.dmi', "icon_state" = "[light_overlay]")
+			light_overlay_cache["[light_overlay]_icon"] = image('icons/obj/light_overlays.dmi', light_overlay)
+		if(!light_overlay_cache[light_overlay])
+			light_overlay_cache[light_overlay] = image('icons/mob/light_overlays.dmi', light_overlay)
 		overlays |= light_overlay_cache["[light_overlay]_icon"]
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -299,7 +299,7 @@
 //Mask
 /obj/item/clothing/mask
 	name = "mask"
-	icon = 'icons/obj/clothing/masks.dmi'
+	icon = 'icons/obj/clothing/masks/icon.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_MASK
 	body_parts_covered = FACE|EYES
@@ -320,7 +320,7 @@
 //Shoes
 /obj/item/clothing/shoes
 	name = "shoes"
-	icon = 'icons/obj/clothing/shoes.dmi'
+	icon = 'icons/obj/clothing/shoes/icon.dmi'
 	desc = "Comfortable-looking shoes."
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	siemens_coefficient = 0.9
@@ -343,7 +343,7 @@
 ///////////////////////////////////////////////////////////////////////
 //Suit
 /obj/item/clothing/suit
-	icon = 'icons/obj/clothing/suits.dmi'
+	icon = 'icons/obj/clothing/suits/icon.dmi'
 	name = "suit"
 	var/fire_resist = T0C+100
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
@@ -362,7 +362,7 @@
 ///////////////////////////////////////////////////////////////////////
 //Under clothing
 /obj/item/clothing/under
-	icon = 'icons/obj/clothing/uniforms.dmi'
+	icon = 'icons/obj/clothing/uniforms/icon.dmi'
 	name = "under"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	permeability_coefficient = 0.90
@@ -378,9 +378,8 @@
 		*/
 	var/displays_id = 1
 	var/rolled_down = -1 //0 = unrolled, 1 = rolled, -1 = cannot be toggled
+//	var/status = 0 //0 = default, 1 = rolled dows, 2 = cannot be toggled
 
-	//convenience var for defining the icon state for the overlay used when the clothing is worn.
-	//Also used by rolling/unrolling.
 	valid_accessory_slots = list("utility","armband","decor")
 	restricted_accessory_slots = list("utility", "armband")
 

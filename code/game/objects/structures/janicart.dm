@@ -28,9 +28,8 @@
 
 /obj/structure/janitorialcart/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/storage/bag/trash) && !mybag)
-		user.drop_item()
+		user.drop_from_inventory(I, src)
 		mybag = I
-		I.loc = src
 		update_icon()
 		updateUsrDialog()
 		user << "<span class='notice'>You put [I] into [src].</span>"
@@ -45,33 +44,29 @@
 				playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 				return
 		if(!mymop)
-			user.drop_item()
+			user.drop_from_inventory(I, src)
 			mymop = I
-			I.loc = src
 			update_icon()
 			updateUsrDialog()
 			user << "<span class='notice'>You put [I] into [src].</span>"
 
 	else if(istype(I, /obj/item/weapon/reagent_containers/spray) && !myspray)
-		user.drop_item()
+		user.drop_from_inventory(I, src)
 		myspray = I
-		I.loc = src
 		update_icon()
 		updateUsrDialog()
 		user << "<span class='notice'>You put [I] into [src].</span>"
 
 	else if(istype(I, /obj/item/device/lightreplacer) && !myreplacer)
-		user.drop_item()
+		user.drop_from_inventory(I, src)
 		myreplacer = I
-		I.loc = src
 		update_icon()
 		updateUsrDialog()
 		user << "<span class='notice'>You put [I] into [src].</span>"
 
 	else if(istype(I, /obj/item/weapon/caution))
 		if(signs < 4)
-			user.drop_item()
-			I.loc = src
+			user.drop_from_inventory(I, src)
 			signs++
 			update_icon()
 			updateUsrDialog()
@@ -201,8 +196,7 @@
 		user << "Hold [I] in one of your hands while you drive this [callme]."
 	else if(istype(I, /obj/item/weapon/storage/bag/trash))
 		user << "<span class='notice'>You hook the trashbag onto the [callme].</span>"
-		user.drop_item()
-		I.loc = src
+		user.drop_from_inventory(I, src)
 		mybag = I
 
 

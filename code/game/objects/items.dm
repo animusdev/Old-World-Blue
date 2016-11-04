@@ -49,6 +49,7 @@
 
 	var/icon_override = null  //Used to override hardcoded clothing dmis in human clothing proc.
 
+	var/wear_state = ""   // If set used instead icon_state for on-mob clothing overlays.
 	var/item_state = null // Used to specify the item state for the on-mob overlays.
 	var/item_state_slots = null //overrides the default item_state for particular slots.
 
@@ -402,8 +403,7 @@ var/list/global/slot_flags_enumeration = list(
 //The default action is attack_self().
 //Checks before we get to here are: mob is alive, mob is not restrained, paralyzed, asleep, resting, laying, item is on the mob.
 /obj/item/proc/ui_action_click()
-	if( src in usr )
-		attack_self(usr)
+	attack_self(usr)
 
 
 /obj/item/proc/IsShield()
@@ -464,9 +464,9 @@ var/list/global/slot_flags_enumeration = list(
 				if(eyes.robotic <= 1) //robot eyes bleeding might be a bit silly
 					M << "<span class='danger'>Your eyes start to bleed profusely!</span>"
 			if(prob(50))
-				if(M.stat != 2)
+				if(!M.stat)
 					M << "<span class='warning'>You drop what you're holding and clutch at your eyes!</span>"
-					M.drop_item()
+					M.drop_active_hand()
 				M.eye_blurry += 10
 				M.Paralyse(1)
 				M.Weaken(4)

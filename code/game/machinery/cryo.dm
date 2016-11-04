@@ -177,8 +177,7 @@
 			return
 
 		beaker = W
-		user.drop_item()
-		beaker.loc = src
+		user.unEquip(W, src)
 		user.visible_message("[user] adds \a [W] to \the [src]!", "You add \a [W] to \the [src]!")
 
 	else if(istype(W, /obj/item/weapon/grab))

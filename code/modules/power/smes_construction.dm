@@ -365,10 +365,9 @@
 					return
 
 				usr << "You install the coil into the SMES unit!"
-				user.drop_item()
+				user.unEquip(W, src)
 				cur_coils ++
 				component_parts += W
-				W.loc = src
 				recalc_coils()
 			else
 				usr << "\red You can't insert more coils to this SMES unit!"

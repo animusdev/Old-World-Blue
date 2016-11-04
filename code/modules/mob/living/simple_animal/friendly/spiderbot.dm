@@ -84,11 +84,10 @@
 			positronic = 1
 			add_language("Robot Talk")
 
-		user.drop_item()
+		user.unEquip(O, src)
 		src.mmi = O
 		src.transfer_personality(O)
 
-		O.loc = src
 		src.update_icon()
 		return 1
 

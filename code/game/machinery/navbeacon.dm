@@ -30,7 +30,7 @@ var/global/list/navbeacons			// no I don't like putting this in, but it will do 
 
 		var/turf/T = loc
 		hide(T.intact)
-		
+
 		// add beacon to MULE bot beacon list
 		if(freq == 1400)
 			if(!navbeacons)
@@ -195,7 +195,7 @@ Transponder Codes:<UL>"}
 		..()
 		if (usr.stat)
 			return
-		if ((in_range(src, usr) && istype(src.loc, /turf)) || (istype(usr, /mob/living/silicon)))
+		if ((in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
 			if(open && !locked)
 				usr.set_machine(src)
 

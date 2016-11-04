@@ -25,9 +25,9 @@
 	return
 
 /obj/item/weapon/gift/attack_self(mob/user as mob)
-	user.drop_item()
+	user.unEquip(src)
 	if(src.gift)
-		user.put_in_active_hand(gift)
+		user.put_in_hands(gift)
 		src.gift.add_fingerprint(user)
 	else
 		user << "\blue The gift was empty!"
@@ -171,8 +171,8 @@
 					return
 
 				src.amount -= a_used
-				user.drop_item()
-				var/obj/item/weapon/gift/G = new /obj/item/weapon/gift( src.loc )
+				user.drop_from_inventory(W)
+				var/obj/item/weapon/gift/G = new(src.loc)
 				G.size = W.w_class
 				G.w_class = G.size + 1
 				G.icon_state = text("gift[]", G.size)

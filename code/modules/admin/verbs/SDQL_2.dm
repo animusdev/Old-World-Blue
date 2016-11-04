@@ -1,7 +1,7 @@
 
 
 /client/proc/SDQL2_query(query_text as message)
-	set category = "Admin"
+	set category = "Debug"
 	if(!check_rights(R_DEBUG))  //Shouldn't happen... but just to be safe.
 		message_admins("\red ERROR: Non-admin [usr.key] attempted to execute a SDQL query!")
 		log_admin("Non-admin [usr.key] attempted to execute a SDQL query!")
@@ -66,6 +66,20 @@
 		if("delete")
 			for(var/datum/d in objs)
 				qdel(d)
+
+
+		if("call")
+			var/list/call_list = query_tree["call"]
+			var/list/args_list = query_tree["args"]
+
+			for(var/datum/d in objs)
+				for(var/v in call_list)
+					// To stop any procs which sleep from executing slowly.
+					if(d)
+						if(hascall(d, v))
+							// Replace _ with a space because BYOND doesn't like it in call, hascall loves it though! (Really I can't believe this myself)
+							var/sanitized_v = replacetext(v, "_", " ")
+							spawn() call(d, sanitized_v)(arglist(args_list)) // Spawn in case the function sleeps.
 
 		if("select")
 			var/text = ""

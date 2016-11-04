@@ -112,7 +112,7 @@
 /obj/machinery/sleep_console/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
+	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr)))
 		usr.set_machine(src)
 		if (href_list["chemical"])
 			if (src.connected)
@@ -206,8 +206,7 @@
 		if(istype(W, /obj/item/weapon/reagent_containers/glass))
 			if(!beaker)
 				beaker = W
-				user.drop_item()
-				beaker.loc = src
+				user.drop_from_inventory(beaker, src)
 				user.visible_message("[user] adds \a [beaker] to \the [src]!", "You add \a [beaker] to \the [src]!")
 				src.updateUsrDialog()
 				return

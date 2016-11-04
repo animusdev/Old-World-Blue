@@ -60,7 +60,7 @@ proc/get_radio_key_from_channel(var/channel)
 	var/speech_problem_flag = 0
 
 	if((HULK in mutations) && health >= 25 && length(message))
-		message = "[uppertext(message)]!!!"
+		message = "[ruppertext(message)]!!!"
 		verb = pick("yells","roars","hollers")
 		speech_problem_flag = 1
 	if(slurring)
@@ -104,7 +104,7 @@ proc/get_radio_key_from_channel(var/channel)
 			return
 
 	if(stat)
-		if(stat == 2)
+		if(stat == DEAD)
 			return say_dead(message)
 		return
 
@@ -211,15 +211,16 @@ proc/get_radio_key_from_channel(var/channel)
 	var/list/listening_obj = list()
 
 	if(T)
-		//make sure the air can transmit speech - speaker's side
+		//Air is too thin to carry sound at all, contact speech only
 		var/datum/gas_mixture/environment = T.return_air()
 		var/pressure = (environment)? environment.return_pressure() : 0
 		if(pressure < SOUND_MINIMUM_PRESSURE)
 			message_range = 1
 
-		if (pressure < ONE_ATMOSPHERE*0.4) //sound distortion pressure, to help clue people in that the air is thin, even if it isn't a vacuum yet
+		//Air is nearing minimum levels, make text italics as a hint, and muffle sound
+		if (pressure < ONE_ATMOSPHERE*0.4)
 			italics = 1
-			sound_vol *= 0.5 //muffle the sound a bit, so it's like we're actually talking through contact
+			sound_vol *= 0.5
 
 		var/list/hear = hear(message_range, T)
 		var/list/hearturfs = list()
@@ -274,7 +275,8 @@ proc/get_radio_key_from_channel(var/channel)
 	if(!client) return
 
 	if(sdisabilities & DEAF || ear_deaf)
-		if(!language || !(language.flags & INNATE)) // INNATE is the flag for audible-emote-language, so we don't want to show an "x talks but you cannot hear them" message if it's set
+		// INNATE is the flag for audible-emote-language, so we don't want to show an "x talks but you cannot hear them" message if it's set
+		if(!language || !(language.flags & INNATE))
 			if(speaker == src)
 				src << "<span class='warning'>You cannot hear yourself speak!</span>"
 			else
@@ -303,16 +305,16 @@ proc/get_radio_key_from_channel(var/channel)
 			if (!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in view(src)))
 				message = stars(message)
 
-		if(!(language.flags & INNATE)) // skip understanding checks for INNATE languages
-			if(!say_understands(speaker,language))
-				if(istype(speaker,/mob/living/simple_animal))
-					var/mob/living/simple_animal/S = speaker
-					message = pick(S.speak)
+	if(!(language && language.flags & INNATE)) // skip understanding checks for INNATE languages
+		if(!say_understands(speaker,language))
+			if(istype(speaker,/mob/living/simple_animal))
+				var/mob/living/simple_animal/S = speaker
+				message = pick(S.speak)
+			else
+				if(language)
+					message = language.scramble(message)
 				else
-					if(language)
-						message = language.scramble(message)
-					else
-						message = stars(message)
+					message = stars(message)
 
 	..()
 
@@ -330,26 +332,44 @@ proc/get_radio_key_from_channel(var/channel)
 		return
 
 	//non-verbal languages are garbled if you can't see the speaker. Yes, this includes if they are inside a closet.
-	if (language)
-		if(language.flags & NONVERBAL)
-			if (!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in view(src)))
-				message = stars(message)
+	if (language && language.flags & NONVERBAL)
+		if (!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in view(src)))
+			message = stars(message)
 
-		if(!(language.flags & INNATE)) // skip understanding checks for INNATE languages
-			if(!say_understands(speaker,language))
-				if(istype(speaker,/mob/living/simple_animal))
-					var/mob/living/simple_animal/S = speaker
-					if(S.speak && S.speak.len)
-						message = pick(S.speak)
-					else
-						return
+	// skip understanding checks for INNATE languages
+	if(!(language && language.flags & INNATE))
+		if(!say_understands(speaker,language))
+			if(istype(speaker,/mob/living/simple_animal))
+				var/mob/living/simple_animal/S = speaker
+				if(S.speak && S.speak.len)
+					message = pick(S.speak)
 				else
-					if(language)
-						message = language.scramble(message)
-					else
-						message = stars(message)
+					return
+			else
+				if(language)
+					message = language.scramble(message)
+				else
+					message = stars(message)
 
 		if(hard_to_hear)
 			message = stars(message)
 
 	..()
+
+/mob/living/proc/hear_sleep(var/message)
+	var/heard = ""
+	if(prob(15))
+		var/list/punctuation = list(",", "!", ".", ";", "?")
+		var/list/messages = splittext(message, " ")
+		var/R = rand(1, messages.len)
+		var/heardword = messages[R]
+		if(copytext(heardword,1, 1) in punctuation)
+			heardword = copytext(heardword,2)
+		if(copytext(heardword,-1) in punctuation)
+			heardword = copytext(heardword,1,lentext(heardword))
+		heard = "<span class = 'game_say'>...You hear something about...[heardword]</span>"
+
+	else
+		heard = "<span class = 'game_say'>...<i>You almost hear someone talking</i>...</span>"
+
+	src << heard

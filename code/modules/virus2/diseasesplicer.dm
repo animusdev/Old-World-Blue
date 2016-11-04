@@ -22,8 +22,7 @@
 			return
 
 		dish = I
-		c.drop_item()
-		I.loc = src
+		c.drop_from_inventory(dish, src)
 
 	if(istype(I,/obj/item/weapon/diseasedisk))
 		user << "You upload the contents of the disk onto the buffer."

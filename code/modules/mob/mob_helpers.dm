@@ -12,18 +12,6 @@
 			return 1
 	return 0
 
-/mob/proc/isSilicon()
-	return 0
-
-/mob/living/silicon/isSilicon()
-	return 1
-
-/mob/proc/isMobAI()
-	return 0
-
-/mob/living/silicon/ai/isMobAI()
-	return 1
-
 /mob/proc/isSynthetic()
 	return 0
 
@@ -144,13 +132,13 @@ var/list/global/nearest_part = list(
 	var/ran_zone = zone
 	while (ran_zone == zone)
 		ran_zone = pick (
-			organ_rel_size[BP_HEAD]; BP_HEAD,
-			organ_rel_size[BP_CHEST]; BP_CHEST,
-			organ_rel_size[BP_GROIN]; BP_GROIN,
-			organ_rel_size[BP_L_ARM]; BP_L_ARM,
-			organ_rel_size[BP_R_ARM]; BP_R_ARM,
-			organ_rel_size[BP_L_LEG]; BP_L_LEG,
-			organ_rel_size[BP_R_LEG]; BP_R_LEG,
+			organ_rel_size[BP_HEAD];   BP_HEAD,
+			organ_rel_size[BP_CHEST];  BP_CHEST,
+			organ_rel_size[BP_GROIN];  BP_GROIN,
+			organ_rel_size[BP_L_ARM];  BP_L_ARM,
+			organ_rel_size[BP_R_ARM];  BP_R_ARM,
+			organ_rel_size[BP_L_LEG];  BP_L_LEG,
+			organ_rel_size[BP_R_LEG];  BP_R_LEG,
 			organ_rel_size[BP_L_HAND]; BP_L_HAND,
 			organ_rel_size[BP_R_HAND]; BP_R_HAND,
 			organ_rel_size[BP_L_FOOT]; BP_L_FOOT,

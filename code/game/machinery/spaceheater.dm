@@ -55,9 +55,8 @@
 				// insert cell
 				var/obj/item/weapon/cell/C = usr.get_active_hand()
 				if(istype(C))
-					user.drop_item()
+					user.drop_from_inventory(C, src)
 					cell = C
-					C.loc = src
 					C.add_fingerprint(usr)
 
 					user.visible_message("\blue [user] inserts a power cell into [src].", "\blue You insert the power cell into [src].")
@@ -113,7 +112,7 @@
 /obj/machinery/space_heater/Topic(href, href_list)
 	if (usr.stat)
 		return
-	if ((in_range(src, usr) && istype(src.loc, /turf)) || (istype(usr, /mob/living/silicon)))
+	if ((in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
 		usr.set_machine(src)
 
 		switch(href_list["op"])
@@ -138,9 +137,8 @@
 				if(panel_open && !cell)
 					var/obj/item/weapon/cell/C = usr.get_active_hand()
 					if(istype(C))
-						usr.drop_item()
+						usr.drop_from_inventory(C, src)
 						cell = C
-						C.loc = src
 						C.add_fingerprint(usr)
 						power_change()
 						usr.visible_message("\blue [usr] inserts \the [C] into \the [src].", "\blue You insert \the [C] into \the [src].")

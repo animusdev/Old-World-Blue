@@ -2,8 +2,8 @@
 	name = "Golem"
 	name_plural = "golems"
 
-	icobase = 'icons/mob/human_races/r_golem.dmi'
-	deform = 'icons/mob/human_races/r_golem.dmi'
+	icobase = 'icons/mob/human_races/golem.dmi'
+	deform = 'icons/mob/human_races/golem.dmi'
 
 	language = "Sol Common" //todo?
 	unarmed_attacks = list(

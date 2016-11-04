@@ -38,6 +38,7 @@
 /obj/item/clothing/accessory/badge/attack(mob/living/carbon/human/M, mob/living/user)
 	if(isliving(user))
 		user.visible_message("<span class='danger'>[user] invades [M]'s personal space, thrusting [src] into their face insistently.</span>","<span class='danger'>You invade [M]'s personal space, thrusting [src] into their face insistently.</span>")
+		user.do_attack_animation(M)
 
 //.Holobadges.
 /obj/item/clothing/accessory/badge/holo
@@ -103,3 +104,35 @@
 	desc = "An immaculately polished gold security badge on leather. Labeled 'Investigator.'"
 	icon_state = "badge"
 	slot_flags = SLOT_TIE | SLOT_BELT
+
+/obj/item/clothing/accessory/badge/holo/warden
+	name = "warden's holobadge"
+	desc = "A silver corporate security badge. Stamped with the words 'Warden.'"
+	icon_state = "silverbadge"
+	slot_flags = SLOT_TIE | SLOT_BELT
+
+/obj/item/clothing/accessory/badge/holo/hos
+	name = "head of security's holobadge"
+	desc = "An immaculately polished gold security badge. Labeled 'Head of Security.'"
+	icon_state = "goldbadge"
+	slot_flags = SLOT_TIE | SLOT_BELT
+
+/obj/item/clothing/accessory/badge/holo/detective
+	name = "detective's holobadge"
+	desc = "An immaculately polished gold security badge on leather. Labeled 'Detective.'"
+	icon_state = "marshalbadge"
+	slot_flags = SLOT_TIE | SLOT_BELT
+
+/obj/item/weapon/storage/box/holobadge/hos
+	name = "holobadge box"
+	desc = "A box claiming to contain holobadges."
+	New()
+		new /obj/item/clothing/accessory/badge/holo(src)
+		new /obj/item/clothing/accessory/badge/holo(src)
+		new /obj/item/clothing/accessory/badge/holo/warden(src)
+		new /obj/item/clothing/accessory/badge/holo/detective(src)
+		new /obj/item/clothing/accessory/badge/holo/detective(src)
+		new /obj/item/clothing/accessory/badge/holo/hos(src)
+		new /obj/item/clothing/accessory/badge/holo/cord(src)
+		..()
+		return

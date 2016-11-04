@@ -159,16 +159,13 @@
 	// Usage of insert() preferred, as it also tells result to the user.
 	proc/equip_to_reader(var/obj/item/weapon/card/card, var/mob/living/L)
 		if(!reader)
-			L.drop_item()
-			card.loc = src
+			L.drop_from_inventory(card, src)
 			reader = card
 			return 1
 		return 0
 
 	proc/equip_to_writer(var/obj/item/weapon/card/card, var/mob/living/L)
-		if(!writer && dualslot)
-			L.drop_item()
-			card.loc = src
+		if(!writer && dualslot && L.unEquip(card, src))
 			writer = card
 			return 1
 		return 0

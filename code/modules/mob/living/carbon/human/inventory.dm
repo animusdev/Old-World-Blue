@@ -1,19 +1,63 @@
 /*
 Add fingerprints to items when we put them in our hands.
 This saves us from having to call add_fingerprint() any time something is put in a human's hands programmatically.
-
 */
-/mob/living/carbon/human/put_in_l_hand(var/obj/item/W)
+
+/mob/living/carbon/human/get_active_hand()
+	if(hand)	return l_hand
+	else		return r_hand
+
+/mob/living/carbon/human/get_inactive_hand()
+	if(hand)	return r_hand
+	else		return l_hand
+
+
+/mob/living/carbon/human/proc/put_in_l_hand(var/obj/item/W)
 	var/obj/item/organ/external/tiny/hand = organs_by_name[BP_L_HAND]
 	if(!hand || !hand.is_usable()) return 0
-	. = ..()
+	. = equip_to_slot_if_possible(W, slot_l_hand, 0, 1)
 	if(.) W.add_fingerprint(src)
 
-/mob/living/carbon/human/put_in_r_hand(var/obj/item/W)
+/mob/living/carbon/human/proc/put_in_r_hand(var/obj/item/W)
 	var/obj/item/organ/external/tiny/hand = organs_by_name[BP_R_HAND]
 	if(!hand || !hand.is_usable()) return 0
-	. = ..()
+	. = equip_to_slot_if_possible(W, slot_r_hand, 0, 1)
 	if(.) W.add_fingerprint(src)
+
+/mob/living/carbon/human/put_in_active_hand(var/obj/item/W)
+	if(hand)	return put_in_l_hand(W)
+	else		return put_in_r_hand(W)
+
+/mob/living/carbon/human/put_in_inactive_hand(var/obj/item/W)
+	if(hand)	return put_in_r_hand(W)
+	else		return put_in_l_hand(W)
+
+/mob/living/carbon/human/put_in_hands(var/obj/item/W)
+	if(!W)		return 0
+	if(put_in_active_hand(W))
+		return 1
+	else if(put_in_inactive_hand(W))
+		return 1
+	else
+		return ..()
+
+
+//Drops the item in our left hand
+/mob/living/carbon/human/proc/drop_l_hand(var/atom/Target)
+	return unEquip(l_hand, Target)
+
+//Drops the item in our right hand
+/mob/living/carbon/human/proc/drop_r_hand(var/atom/Target)
+	return unEquip(r_hand, Target)
+
+/mob/living/carbon/human/drop_active_hand(var/atom/Target)
+	if(hand)	return drop_l_hand(Target)
+	else		return drop_r_hand(Target)
+
+/mob/living/carbon/human/drop_inactive_hand(var/atom/Target)
+	if(hand)	return drop_r_hand(Target)
+	else		return drop_l_hand(Target)
+
 
 /mob/living/carbon/human/verb/quick_equip()
 	set name = "quick-equip"
@@ -366,3 +410,24 @@ This saves us from having to call add_fingerprint() any time something is put in
 		if(slot_underwear)  return h_underwear
 		if(slot_undershirt) return h_undershirt
 	return ..()
+
+//Outdated but still in use apparently.
+/mob/living/carbon/human/proc/get_equipped_items()
+	var/list/items = new/list()
+
+	if(back)	items += back
+	if(belt)	items += belt
+	if(l_ear)	items += l_ear
+	if(r_ear)	items += r_ear
+	if(glasses)	items += glasses
+	if(gloves)	items += gloves
+	if(head)	items += head
+	if(shoes)	items += shoes
+	if(wear_id)	items += wear_id
+	if(wear_mask) items += wear_mask
+	if(wear_suit) items += wear_suit
+	if(w_uniform) items += w_uniform
+
+	return items
+
+

@@ -133,6 +133,74 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		updateallghostimages()
 	..()
 
+/mob/observer/dead/verb/abandon_mob()
+	set name = "Respawn"
+	set category = "OOC"
+
+	if (!config.abandon_allowed)
+		usr << "<span class='notice'>Respawn is disabled.</span>"
+		return
+	if (stat != DEAD || !ticker)
+		usr << "<span class='notice'><B>You must be dead to use this!</B></span>"
+		return
+	if (ticker.mode.deny_respawn) //BS12 EDIT
+		usr << "<span class='notice'>Respawn is disabled for this roundtype.</span>"
+		return
+	else
+		var/is_admin = 0
+		if(src.client)
+			is_admin = check_rights(0, 0)
+		var/deathtime = world.time - src.timeofdeath
+		if(!is_admin && isobserver(src))
+			if(has_enabled_antagHUD == 1 && config.antag_hud_restricted)
+				usr << "\blue <B>Upon using the antagHUD you forfeighted the ability to join the round.</B>"
+				return
+		var/deathtimeminutes = round(deathtime / 600)
+		var/pluralcheck = "minute"
+		if(deathtimeminutes == 0)
+			pluralcheck = ""
+		else if(deathtimeminutes == 1)
+			pluralcheck = " [deathtimeminutes] minute and"
+		else if(deathtimeminutes > 1)
+			pluralcheck = " [deathtimeminutes] minutes and"
+		var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10,1)
+		usr << "You have been dead for[pluralcheck] [deathtimeseconds] seconds."
+
+		if (deathtime < config.respawn_time*600)
+			if(is_admin)
+				if(alert("Normal players must wait at least [config.respawn_time] minutes to respawn! Continue?","Warning", "Respawn", "Cancel") == "Cancel")
+					return
+			else
+				usr << "You must wait [config.respawn_time] minutes to respawn!"
+				return
+		else
+			usr << "You can respawn now, enjoy your new life!"
+
+	log_game("[usr.name]/[usr.key] used abandon mob.")
+
+	usr << "\blue <B>Make sure to play a different character, and please roleplay correctly!</B>"
+
+	if(!client)
+		log_game("[usr.key] AM failed due to disconnect.")
+		return
+	client.screen.Cut()
+	if(!client)
+		log_game("[usr.key] AM failed due to disconnect.")
+		return
+
+	announce_ghost_joinleave(client, 0)
+
+	var/mob/new_player/M = new /mob/new_player()
+	if(!client)
+		log_game("[usr.key] AM failed due to disconnect.")
+		qdel(M)
+		return
+
+	M.key = key
+	if(M.mind)
+		M.mind.reset()
+	return
+
 /mob/observer/dead/Topic(href, href_list)
 	if (href_list["track"])
 		var/mob/target = locate(href_list["track"]) in mob_list
@@ -195,14 +263,12 @@ Works together with spawning an observer, noted above.
 		ghost.can_reenter_corpse = can_reenter_corpse
 		ghost.timeofdeath = src.timeofdeath //BS12 EDIT
 		ghost.key = key
-/* WIP
 		if(istype(loc, /obj/structure/morgue))
 			var/obj/structure/morgue/M = loc
 			M.update()
 		else if(istype(loc, /obj/structure/closet/body_bag))
 			var/obj/structure/closet/body_bag/B = loc
 			B.update()
-*/
 		if(ghost.client)
 			ghost.client.time_died_as_mouse = ghost.timeofdeath
 		if(ghost.client && !ghost.client.holder && !config.antag_hud_allowed)		// For new ghosts we remove the verb from even showing up if it's not allowed.
@@ -273,14 +339,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	mind.current.ajourn=0
 	mind.current.key = key
 	mind.current.teleop = null
-/*  WIP
 	if(istype(mind.current.loc, /obj/structure/morgue))
 		var/obj/structure/morgue/M = mind.current.loc
 		M.update(1)
 	else if(istype(mind.current.loc, /obj/structure/closet/body_bag))
 		var/obj/structure/closet/body_bag/B = mind.current.loc
 		B.update(1)
-*/
 	if(!admin_ghosted)
 		announce_ghost_joinleave(mind, 0, "They now occupy their body again.")
 	return 1

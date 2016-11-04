@@ -15,7 +15,7 @@
 	uses -= amt
 	playsound(get_turf(user), 'sound/items/Screwdriver.ogg', 50, 1)
 	if(uses<1)
-		user.drop_item()
+		user.drop_from_inventory(src)
 		qdel(src)
 
 // Root hardsuit kit defines.
@@ -117,6 +117,12 @@
 	new_desc = "A very retro APLU unit; didn't they retire these back in 2543?"
 	new_icon = "ripley-old"
 	allowed_types = list("ripley")
+
+/obj/item/device/kit/paint/ripley/medic
+	name = "Medical APLU customisation kit"
+	new_name = "APLU \"Mercy\""
+	new_desc = "A very retro APLU unit; didn't they retire these back in 2543?"
+	new_icon = "medicalripley"
 
 /obj/item/device/kit/paint/ripley/death
 	name = "\"Reaper\" APLU customisation kit"

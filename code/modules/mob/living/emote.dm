@@ -2,29 +2,26 @@
 
 	if(stat || !use_me && usr == src)
 		src << "You are unable to emote."
-		return
+		return 0
 
-	var/muzzled = is_muzzled()
-	if(m_type == 2 && muzzled) return
+	if(m_type == 2 && is_muzzled()) return 0
 
-	var/input
 	if(!message)
-		input = sanitize(input(src,"Choose an emote to display.") as text|null)
-	else
-		input = message
-	if(input)
-		message = "<B>[src]</B> [input]"
-	else
-		return
+		message = sanitize(input(src,"Choose an emote to display.") as text|null)
 
+	if(message)
+		message = "<B>[src]</B> [message]"
+		. = 1
+	else
+		return 0
 
 	if (message)
 		log_emote("[name]/[key] : [message]")
 
 		var/list/seeing_obj = list() //For objs that need to see emotes.  You can use see_emote(), which is based off of hear_talk()
 
- //Hearing gasp and such every five seconds is not good emotes were not global for a reason.
- // Maybe some people are okay with that.
+// Hearing gasp and such every five seconds is not good emotes were not global for a reason.
+// Maybe some people are okay with that.
 
 		for(var/mob/M in player_list)
 			if (!M.client)
@@ -47,11 +44,10 @@
 
 		// Type 1 (Visual) emotes are sent to anyone in view of the item
 		if (m_type & 1)
-			//for (var/mob/O in viewers(src, null))
-			for (var/mob/O in viewers(get_turf(src), null)) //This may break people with x-ray being able to see emotes across walls,
-															//but this saves many headaches down the road, involving mechs and pAIs.
-															//x-ray is so rare these days anyways.
-
+			//This may break people with x-ray being able to see emotes across walls,
+			//but this saves many headaches down the road, involving mechs and pAIs.
+			//x-ray is so rare these days anyways.
+			for (var/mob/O in viewers(get_turf(src), null))
 				if(O.status_flags & PASSEMOTES)
 
 					for(var/obj/item/weapon/holder/H in O.contents)

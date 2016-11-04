@@ -12,8 +12,8 @@
 /obj/item/weapon/reagent_containers/glass/drinks/bottle/proc/smash(mob/living/target as mob, mob/living/user as mob)
 
 	//Creates a shattering noise and replaces the bottle with a broken_bottle
-	user.drop_item()
-	var/obj/item/weapon/broken_bottle/B = new /obj/item/weapon/broken_bottle(user.loc)
+	user.drop_from_inventory(src)
+	var/obj/item/weapon/broken_bottle/B = new(user.loc)
 	user.put_in_active_hand(B)
 	if(prob(33))
 		new/obj/item/weapon/material/shard(target.loc) // Create a glass shard at the target's location!

@@ -10,8 +10,8 @@
 	var/blurb = "A completely nondescript species."      // A brief lore summary for use in the chargen screen.
 
 	// Icon/appearance vars.
-	var/icobase = 'icons/mob/human_races/r_human.dmi'    // Normal icon set.
-	var/deform = 'icons/mob/human_races/r_def_human.dmi' // Mutated icon set.
+	var/icobase = 'icons/mob/human_races/human.dmi'    // Normal icon set.
+	var/deform = 'icons/mob/human_races/human_def.dmi' // Mutated icon set.
 
 	// Damage overlay and masks.
 	var/damage_overlays = 'icons/mob/human_races/masks/dam_human.dmi'
@@ -30,6 +30,8 @@
 	var/icon/icon_template                               // Used for mob icon generation for non-32x32 species.
 	var/is_small
 	var/show_ssd = "fast asleep"
+	var/virus_immune
+	var/blood_volume = 560                               // Initial blood volume.
 	var/hunger_factor = 0.05                             // Multiplier for hunger.
 	var/taste_sensitivity = TASTE_NORMAL
 
@@ -209,8 +211,7 @@
 	else
 		H.equip_to_slot_or_del(new custom_survival_gear(H), slot_r_hand)
 
-
-/datum/species/proc/create_organs(var/mob/living/carbon/human/H,) //Handles creation of mob organs.
+/datum/species/proc/create_organs(var/mob/living/carbon/human/H) //Handles creation of mob organs.
 
 	for(var/obj/item/organ/organ in (H.organs|H.internal_organs))
 		qdel(organ)

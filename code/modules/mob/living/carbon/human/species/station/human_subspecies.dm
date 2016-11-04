@@ -6,7 +6,7 @@ datum/species/human/vatgrown
 	blurb = "With cloning on the forefront of human scientific advancement, cheap mass production \
 	of bodies is a very real and rather ethically grey industry. Vat-grown humans tend to be paler than \
 	baseline, with no appendix and fewer inherited genetic disabilities, but a weakened metabolism."
-	icobase = 'icons/mob/human_races/r_vatgrown.dmi'
+	icobase = 'icons/mob/human_races/vatgrown.dmi'
 	allow_slim_fem = 1
 
 	flags = CAN_JOIN | HAS_UNDERWEAR | HAS_EYE_COLOR
@@ -31,8 +31,8 @@ datum/species/human/android
 	blurb = "Synths are an artificial life forms designed to look and act like a human.\
 	Most of them have a lab-grown bodies of real flesh, bones, and organs in a way to copy Human physiology and mentality.\
 	Synths have blue biogel instead of blood and strong skeleton, what allows them to work in very hard conditions."
-	icobase = 'icons/mob/human_races/r_android.dmi'
-	deform = 'icons/mob/human_races/r_def_android.dmi'
+	icobase = 'icons/mob/human_races/android.dmi'
+	deform = 'icons/mob/human_races/android_def.dmi'
 	allow_slim_fem = 1
 
 	taste_sensitivity = TASTE_DULL

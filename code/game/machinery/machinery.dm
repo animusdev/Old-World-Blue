@@ -226,14 +226,9 @@ Class Procs:
 		return 1
 	if(user.lying || user.stat)
 		return 1
-	if ( !ishuman(usr) && !istype(usr, /mob/living/silicon))
-		usr << "\red You don't have the dexterity to do this!"
+	if (!user.IsAdvancedToolUser())
 		return 1
-/*
-	//distance checks are made by atom/proc/DblClick
-	if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !istype(user, /mob/living/silicon))
-		return 1
-*/
+
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)

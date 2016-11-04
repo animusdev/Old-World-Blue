@@ -44,7 +44,7 @@ var/global/list/limb_icon_cache = list()
 	overlays.Cut()
 	if(!owner || !owner.species)
 		return
-	if(owner.species.has_organ[O_EYES])
+	if(owner.should_have_organ(O_EYES))
 		var/obj/item/organ/internal/eyes/eyes = owner.internal_organs_by_name[O_EYES]
 		var/icon/eyes_icon
 		if(eyes)
@@ -96,7 +96,7 @@ var/global/list/limb_icon_cache = list()
 		if((status & ORGAN_ROBOT) && !(owner.species && owner.species.flags & IS_SYNTHETIC))
 			mob_icon = new /icon('icons/mob/human_races/robotic.dmi', icon_state)
 		else if(skeletal)
-			mob_icon = new /icon('icons/mob/human_races/r_skeleton.dmi', icon_state)
+			mob_icon = new /icon('icons/mob/human_races/skeleton.dmi', icon_state)
 		else
 			if (status & ORGAN_MUTATED)
 				mob_icon = new /icon(owner.species.deform, icon_state)

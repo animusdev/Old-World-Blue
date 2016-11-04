@@ -108,8 +108,7 @@
 		if (src.holding)
 			return
 		var/obj/item/weapon/tank/T = W
-		user.drop_item()
-		T.loc = src
+		user.unEquip(T, src)
 		src.holding = T
 		update_icon()
 		return
@@ -121,7 +120,7 @@
 			update_icon()
 			return
 		else
-			var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
+			var/obj/machinery/atmospherics/portables_connector/possible_port = locate() in loc
 			if(possible_port)
 				if(connect(possible_port))
 					user << "<span class='notice'>You connect \the [src] to the port.</span>"
@@ -160,12 +159,13 @@
 			return
 
 		var/obj/item/weapon/cell/C = I
-
-		user.drop_item()
+		user.unEquip(C, src)
 		C.add_fingerprint(user)
 		cell = C
-		C.loc = src
-		user.visible_message("<span class='notice'>[user] opens the panel on [src] and inserts [C].</span>", "<span class='notice'>You open the panel on [src] and insert [C].</span>")
+		user.visible_message(
+			"<span class='notice'>[user] opens the panel on [src] and inserts [C].</span>",
+			"<span class='notice'>You open the panel on [src] and insert [C].</span>"
+		)
 		power_change()
 		return
 
@@ -174,7 +174,10 @@
 			user << "<span class='warning'>There is no power cell installed.</span>"
 			return
 
-		user.visible_message("<span class='notice'>[user] opens the panel on [src] and removes [cell].</span>", "<span class='notice'>You open the panel on [src] and remove [cell].</span>")
+		user.visible_message(
+			"<span class='notice'>[user] opens the panel on [src] and removes [cell].</span>",
+			"<span class='notice'>You open the panel on [src] and remove [cell].</span>"
+		)
 		cell.add_fingerprint(user)
 		cell.loc = src.loc
 		cell = null

@@ -17,6 +17,32 @@
 	conversion in savefile.dm
 */
 
+/proc/get_hair_styles_list(var/species, var/gender)
+	var/list/species_list = hair_styles_by_species[species]
+	if(!species_list || !species_list.len)
+		return list("Bald")
+
+	var/list/valid_hairstyles = list()
+	for(var/style in species_list)
+		var/datum/sprite_accessory/S = hair_styles_list[style]
+		if(S.gender != NEUTER && S.gender != gender)
+			continue
+		valid_hairstyles += style
+	return valid_hairstyles
+
+/proc/get_facial_styles_list(var/species, var/gender)
+	var/list/species_list = facial_hair_styles_by_species[species]
+	if(!species_list || !species_list.len)
+		return list("Shaved")
+
+	var/list/valid_hairstyles = list()
+	for(var/style in species_list)
+		var/datum/sprite_accessory/S = facial_hair_styles_list[style]
+		if(S.gender != NEUTER && S.gender != gender)
+			continue
+		valid_hairstyles += style
+	return valid_hairstyles
+
 /datum/sprite_accessory
 
 	var/icon			// the icon file the accessory is located in
@@ -47,6 +73,17 @@
 
 	icon = 'icons/mob/hair.dmi'	  // default icon for all hairs
 
+	bald
+		name = "Bald"
+		icon_state = "bald"
+		gender = MALE
+		New()
+			..()
+			species_allowed = list()
+			for(var/S in all_species)
+				species_allowed += S
+
+
 	afro
 		name = "Afro"
 		icon_state = "afro"
@@ -64,12 +101,6 @@
 		name = "Asymmetrical Bob"
 		icon_state = "asymmbob"
 		gender = FEMALE
-
-	bald
-		name = "Bald"
-		icon_state = "bald"
-		gender = MALE
-		species_allowed = list("Human","Unathi")
 
 	balding
 		name = "Balding Hair"
@@ -709,6 +740,11 @@
 		gender = NEUTER
 		species_allowed = list("Human","Unathi","Tajara","Skrell","Vox","Machine")
 
+		New()
+			..()
+			species_allowed = list()
+			for(var/S in all_species)
+				species_allowed += S
 
 	abe
 		name = "Abraham Lincoln Beard"

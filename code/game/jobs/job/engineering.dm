@@ -39,15 +39,10 @@
 	minimal_player_age = 30
 	ideal_character_age = 50
 
-
-	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
-			            access_teleporter, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
-			            access_heads, access_construction, access_sec_doors,
-			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_ai_upload)
 	minimal_access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
-			            access_teleporter, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
-			            access_heads, access_construction, access_sec_doors,
-			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_ai_upload)
+			access_teleporter, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
+			access_heads, access_construction, access_sec_doors,
+			access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_ai_upload)
 
 	uniform = /obj/item/clothing/under/rank/chief_engineer
 	shoes = /obj/item/clothing/shoes/brown
@@ -65,8 +60,11 @@
 	total_positions = 5
 	spawn_positions = 5
 	minimum_character_age = 20
-	access = list(access_eva, access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction, access_atmospherics)
-	minimal_access = list(access_eva, access_engine, access_engine_equip, access_atmospherics, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction)
+	addcional_access = list(access_atmospherics)
+	minimal_access = list(
+		access_eva, access_engine, access_engine_equip, access_tech_storage,
+		access_maint_tunnels, access_external_airlocks, access_construction
+	)
 	alt_titles = list("Maintenance Technician","Engine Technician","Electrician")
 
 	uniform = /obj/item/clothing/under/rank/engineer
@@ -75,9 +73,9 @@
 	hat = /obj/item/clothing/head/hardhat
 	belt = /obj/item/weapon/storage/belt/utility/full
 
-	put_in_backpack = list(\
+	put_in_backpack = list(
 		/obj/item/device/t_scanner
-		)
+	)
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -102,8 +100,11 @@
 	total_positions = 3
 	spawn_positions = 2
 	minimum_character_age = 23
-	access = list(access_eva, access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction, access_atmospherics, access_external_airlocks)
-	minimal_access = list(access_eva, access_engine, access_atmospherics, access_maint_tunnels, access_emergency_storage, access_construction, access_external_airlocks)
+	addcional_access = list(access_engine_equip, access_tech_storage, access_external_airlocks)
+	minimal_access = list(
+		access_eva, access_engine, access_atmospherics, access_maint_tunnels,
+		access_emergency_storage, access_construction
+	)
 
 	uniform = /obj/item/clothing/under/rank/atmospheric_technician
 	pda = /obj/item/device/pda/atmos

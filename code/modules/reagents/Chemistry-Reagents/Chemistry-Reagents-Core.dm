@@ -75,14 +75,10 @@
 					infect_virus2(M, V.getcopy())
 
 /datum/reagent/blood/affect_touch(var/mob/living/carbon/M, var/alien, var/removed)
-	if(alien == IS_SYNTHETIC)
-		return
-	if(data && data["viruses"])
-		for(var/datum/disease/D in data["viruses"])
-			if(D.spread_type == SPECIAL || D.spread_type == NON_CONTAGIOUS)
-				continue
-			if(D.spread_type in list(CONTACT_FEET, CONTACT_HANDS, CONTACT_GENERAL))
-				M.contract_disease(D)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.isSynthetic())
+			return
 	if(data && data["virus2"])
 		var/list/vlist = data["virus2"]
 		if(vlist.len)

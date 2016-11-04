@@ -340,75 +340,6 @@
 	return
 */
 
-/mob/verb/abandon_mob()
-	set name = "Respawn"
-	set category = "OOC"
-
-	if (!( config.abandon_allowed ))
-		usr << "<span class='notice'>Respawn is disabled.</span>"
-		return
-	if ((stat != 2 || !( ticker )))
-		usr << "<span class='notice'><B>You must be dead to use this!</B></span>"
-		return
-	if (ticker.mode.deny_respawn) //BS12 EDIT
-		usr << "<span class='notice'>Respawn is disabled for this roundtype.</span>"
-		return
-	else
-		var/is_admin = 0
-		if(src.client)
-			is_admin = check_rights(0, 0)
-		var/deathtime = world.time - src.timeofdeath
-		if(!is_admin && isobserver(src))
-			var/mob/observer/dead/G = src
-			if(G.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
-				usr << "\blue <B>Upon using the antagHUD you forfeighted the ability to join the round.</B>"
-				return
-		var/deathtimeminutes = round(deathtime / 600)
-		var/pluralcheck = "minute"
-		if(deathtimeminutes == 0)
-			pluralcheck = ""
-		else if(deathtimeminutes == 1)
-			pluralcheck = " [deathtimeminutes] minute and"
-		else if(deathtimeminutes > 1)
-			pluralcheck = " [deathtimeminutes] minutes and"
-		var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10,1)
-		usr << "You have been dead for[pluralcheck] [deathtimeseconds] seconds."
-
-		if (deathtime < config.respawn_time*600)
-			if(is_admin)
-				if(alert("Normal players must wait at least [config.respawn_time] minutes to respawn! Continue?","Warning", "Respawn", "Cancel") == "Cancel")
-					return
-			else
-				usr << "You must wait [config.respawn_time] minutes to respawn!"
-				return
-		else
-			usr << "You can respawn now, enjoy your new life!"
-
-	log_game("[usr.name]/[usr.key] used abandon mob.")
-
-	usr << "\blue <B>Make sure to play a different character, and please roleplay correctly!</B>"
-
-	if(!client)
-		log_game("[usr.key] AM failed due to disconnect.")
-		return
-	client.screen.Cut()
-	if(!client)
-		log_game("[usr.key] AM failed due to disconnect.")
-		return
-
-	announce_ghost_joinleave(client, 0)
-
-	var/mob/new_player/M = new /mob/new_player()
-	if(!client)
-		log_game("[usr.key] AM failed due to disconnect.")
-		qdel(M)
-		return
-
-	M.key = key
-	if(M.mind)
-		M.mind.reset()
-	return
-
 /client/verb/changes()
 	set name = "Changelog"
 	set category = "OOC"
@@ -626,7 +557,7 @@
 /mob/proc/is_mechanical()
 	if(mind && (mind.assigned_role == "Cyborg" || mind.assigned_role == "AI"))
 		return 1
-	return istype(src, /mob/living/silicon) || get_species() == "Machine"
+	return issilicon(src) || get_species() == "Machine"
 
 /mob/proc/is_ready()
 	return client && !!mind
@@ -746,8 +677,8 @@
 		density = initial(density)
 
 	if(downed)
-		drop_l_hand()
-		drop_r_hand()
+		drop_active_hand()
+		drop_inactive_hand()
 
 	for(var/obj/item/weapon/grab/G in grabbed_by)
 		if(G.state >= GRAB_AGGRESSIVE)
@@ -757,10 +688,10 @@
 	//Temporarily moved here from the various life() procs
 	//I'm fixing stuff incrementally so this will likely find a better home.
 	//It just makes sense for now. ~Carn
-	if( update_icon )	//forces a full overlay update
+	if(update_icon)	//forces a full overlay update
 		update_icon = 0
 		regenerate_icons()
-	else if( lying != lying_prev )
+	else if(lying != lying_prev)
 		update_icons()
 
 	return canmove

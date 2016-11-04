@@ -2,8 +2,8 @@
 	name = "Shadow"
 	name_plural = "shadows"
 
-	icobase = 'icons/mob/human_races/r_shadow.dmi'
-	deform = 'icons/mob/human_races/r_shadow.dmi'
+	icobase = 'icons/mob/human_races/shadow.dmi'
+	deform = 'icons/mob/human_races/shadow.dmi'
 
 	language = "Sol Common" //todo?
 	unarmed_attacks = list(

@@ -1,6 +1,5 @@
 /obj/nano_module/law_manager
 	name = "Law manager"
-
 	var/ion_law	= "IonLaw"
 	var/zeroth_law = "ZerothLaw"
 	var/inherent_law = "InherentLaw"
@@ -138,7 +137,7 @@
 	if(href_list["notify_laws"])
 		owner << "<span class='danger'>Law Notice</span>"
 		owner.laws.show_laws(owner)
-		if(owner.isMobAI())
+		if(isAI(owner))
 			var/mob/living/silicon/ai/AI = owner
 			for(var/mob/living/silicon/robot/R in AI.connected_robots)
 				R << "<span class='danger'>Law Notice</span>"
@@ -165,7 +164,7 @@
 	package_laws(data, "inherent_laws", owner.laws.inherent_laws)
 	package_laws(data, "supplied_laws", owner.laws.supplied_laws)
 
-	data["isAI"] = owner.isMobAI()
+	data["isAI"] = isAI(owner)
 	data["isMalf"] = is_malf(user)
 	data["isSlaved"] = owner.is_slaved()
 	data["isAdmin"] = is_admin(user)

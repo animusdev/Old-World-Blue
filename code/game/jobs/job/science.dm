@@ -14,10 +14,10 @@
 	duffle = /obj/item/weapon/storage/backpack/duffle
 
 	backpacks = list(
-		/obj/item/weapon/storage/backpack/toxins,\
-		/obj/item/weapon/storage/backpack/satchel_tox,\
+		/obj/item/weapon/storage/backpack/toxins,
+		/obj/item/weapon/storage/backpack/satchel_tox,
 		/obj/item/weapon/storage/backpack/satchel
-		)
+	)
 
 /datum/job/science/rd
 	title = "Research Director"
@@ -30,14 +30,10 @@
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
 	economic_modifier = 15
-	access = list(access_rd, access_heads, access_tox, access_genetics, access_morgue,
-			            access_tox_storage, access_teleporter, access_sec_doors,
-			            access_research, access_robotics, access_xenobiology, access_ai_upload, access_tech_storage,
-			            access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch)
-	minimal_access = list(access_rd, access_heads, access_tox, access_genetics, access_morgue,
-			            access_tox_storage, access_teleporter, access_sec_doors,
-			            access_research, access_robotics, access_xenobiology, access_ai_upload, access_tech_storage,
-			            access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch)
+	minimal_access = list(
+		access_rd, access_heads, access_RC_announce, access_keycard_auth, access_teleporter, access_tcomsat,
+		access_research, access_sec_doors, access_ai_upload, access_gateway, access_tech_storage, access_xenoarch,
+		access_tox, access_tox_storage, access_robotics, access_genetics, access_morgue, access_xenobiology)
 
 	minimum_character_age = 30
 	minimal_player_age = 30
@@ -58,7 +54,7 @@
 	total_positions = 5
 	spawn_positions = 3
 	economic_modifier = 7
-	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology, access_xenoarch)
+	addcional_access = list(access_robotics, access_xenobiology)
 	minimal_access = list(access_tox, access_tox_storage, access_research, access_xenoarch)
 	alt_titles = list("Xenoarcheologist", "Anomalist", "Phoron Researcher")
 
@@ -90,7 +86,7 @@
 	total_positions = 3
 	spawn_positions = 2
 	economic_modifier = 7
-	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology, access_hydroponics)
+	addcional_access = list(access_robotics, access_tox, access_tox_storage)
 	minimal_access = list(access_research, access_xenobiology, access_hydroponics, access_tox_storage)
 	alt_titles = list("Xenobotanist")
 
@@ -110,9 +106,7 @@
 	supervisors = "research director"
 	economic_modifier = 5
 	//As a job that handles so many corpses, it makes sense for them to have morgue access.
-	access = list(
-		access_robotics, access_tox, access_tox_storage, access_tech_storage, access_morgue, access_research
-	)
+	addcional_access = list(access_tox, access_tox_storage)
 	minimal_access = list(access_robotics, access_tech_storage, access_morgue, access_research)
 	alt_titles = list("Biomechanical Engineer","Mechatronic Engineer")
 
@@ -130,8 +124,8 @@
 	duffle = /obj/item/weapon/storage/backpack/duffle
 
 	backpacks = list(
-		/obj/item/weapon/storage/backpack,\
-		/obj/item/weapon/storage/backpack/satchel_norm,\
+		/obj/item/weapon/storage/backpack,
+		/obj/item/weapon/storage/backpack/satchel_norm,
 		/obj/item/weapon/storage/backpack/satchel
 	)
 
