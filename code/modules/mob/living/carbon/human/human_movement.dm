@@ -10,6 +10,10 @@
 	if(species.slowdown)
 		tally = species.slowdown
 
+
+	if(resting)
+		tally += 10
+
 	if(embedded_flag)
 		handle_embedded_objects() //Moving with objects stuck in you can cause bad times.
 
