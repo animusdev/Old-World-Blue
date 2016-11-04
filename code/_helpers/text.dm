@@ -306,3 +306,55 @@ proc/TextPreview(var/string,var/len=40)
 	if(C && (C.prefs.toggles & CHAT_NOICONS))
 		return tagdesc
 	return "<IMG src='\ref[text_tag_icons.icon]' class='text_tag' iconstate='[tagname]'" + (tagdesc ? " alt='[tagdesc]'" : "") + ">"
+
+/proc/l33t(T as text)
+//	T = ruppertext(T)
+	var/output = ""
+	for(var/i = 1, i <= length(T), i++)
+		var/a = text2ascii(T, i)
+		switch (a)
+			if(65,97,192,224) output += "4"//A =rus
+			if(66,98,194,226) output += "8"//B =rus
+			if(67,99,209,241) output += "("//C =rus
+			if(68,100,196,228) output += "|)"//D  = Ä
+			if(69,101,197,229,168,184) output += "3"//E =rus = ¨
+			if(70,102)        output += "|="//F
+			if(71,103,193,225) output += "6"//G = Á
+			if(72,104,205,237) output += "|-|"//H = rus
+			if(73,105,200,232,201,233)        output += "!"//I = È = É
+			if(74,106)        output += ")"//J
+			if(75,107,202,234) output += "|<"//K = rus
+			if(76,108,203, 235)        output += "1"//L = Ë
+			if(77,109,204,236) output += "|\\/|"//M = rus
+			if(78,110)        output += "|\\|"//N
+			if(79,111,206,238) output += "0"//O = rus
+			if(80,112,208,240) output += "|>"//P = rus
+			if(81,113,223,255)        output += "9"//Q = ß
+			if(82,114)        output += "|2"//R
+			if(83,115)        output += "5"//S
+			if(84,116,210,242) output += "7"//T = rus
+			if(85,117)        output += "|_|"//U
+			if(86,118)        output += "\\/"//V
+			if(87,119)        output += "\\X/"//W
+			if(88,120,213,245) output += "><"//X = rus
+			if(89,121,211,243) output += "'/"//Y = Ó
+			if(90,122) output += "2"//Z
+			if(195,227) output += "r"//Ã
+			if(198,230) output += ">|<"//Æ
+			if(199,231) output += "z"//Ç
+			if(207,239) output += "||"//Ï
+			if(212,244) output += "<|>"//Ô
+			if(214,246) output += "|_|_"//Ö
+			if(215,246) output += "4"//Ö
+			if(216,248) output += "LLI"//Ø
+			if(217,249) output += "LLL"//Ù
+			if(218,250) output += "'b"//Ú
+			if(219,251) output += "b|"//Û
+			if(220,252) output += "b"//Ü
+			if(221,253) output += "-)"//Ý
+			if(222,254) output += "|-O"//Þ
+
+			else          output += ascii2text(a)
+	world << output
+	return output
+
