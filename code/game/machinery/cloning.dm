@@ -183,6 +183,8 @@
 
 		else if((occupant.health >= heal_level) && (!eject_wait))
 			connected_message("Cloning Process Complete.")
+			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+			broadcast_medical_hud_message("\The [src] signals that the cloning process is complete.")
 			locked = 0
 			go_out()
 			return
