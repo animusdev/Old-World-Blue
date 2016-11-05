@@ -662,7 +662,8 @@
 				downed = 1
 		else if(resting)
 			lying = 1
-			canmove = 0
+			canmove = 1
+
 		else if(stunned)
 			if(src.lying)
 				lying = 1
