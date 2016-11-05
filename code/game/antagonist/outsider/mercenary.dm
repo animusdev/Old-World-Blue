@@ -42,7 +42,8 @@ var/datum/antagonist/mercenary/mercs
 		if(2) player.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(player), slot_back)
 		if(3) player.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(player), slot_back)
 		if(4) player.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(player), slot_back)
-		if(5) player.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/messenger(player), slot_back)
+		if(5) player.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/dufflebag(player), slot_back)
+		if(6) player.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/messenger(player), slot_back)
 	player.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(player.back), slot_in_backpack)
 	player.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/cyanide(player), slot_in_backpack)
 

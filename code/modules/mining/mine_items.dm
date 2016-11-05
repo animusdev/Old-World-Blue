@@ -9,7 +9,7 @@
 
 /obj/structure/closet/secure_closet/miner/New()
 	..()
-	switch(rand(3))
+	switch(rand(4))
 		if(1) new /obj/item/weapon/storage/backpack/industrial(src)
 		if(2) new /obj/item/weapon/storage/backpack/satchel/eng(src)
 		if(3) new /obj/item/weapon/storage/backpack/dufflebag/eng(src)
