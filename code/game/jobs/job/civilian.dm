@@ -86,7 +86,7 @@
 
 	backpack  = /obj/item/weapon/storage/backpack/hydroponics
 	satchel_j = /obj/item/weapon/storage/backpack/satchel/hyd
-	messanger = /obj/item/weapon/storage/backpack/messenger/hyd
+	messenger = /obj/item/weapon/storage/backpack/messenger/hyd
 
 	put_in_backpack = list(
 		/obj/item/device/analyzer/plant_analyzer

@@ -28,8 +28,8 @@ var/datum/announcement/minor/captain_announcement = new(do_newscast = 1)
 	glasses = /obj/item/clothing/glasses/sunglasses
 
 	backpack  = /obj/item/weapon/storage/backpack/captain
-	satchel_j = /obj/item/weapon/storage/backpack/satchel/captain
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/captain
+	satchel_j = /obj/item/weapon/storage/backpack/satchel/cap
+	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/cap
 
 	put_in_backpack = list(
 		/obj/item/weapon/storage/box/ids \

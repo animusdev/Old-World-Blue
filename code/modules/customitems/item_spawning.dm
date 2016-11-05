@@ -50,7 +50,7 @@
 			return
 		else
 			item.item_state_slots = null
-			item.item_icons = null
+			item.sprite_group = null
 
 			item.icon_state = item_icon
 			item.item_state = null

@@ -59,7 +59,7 @@ var/global/list/all_undershirts = list("None")
 var/global/list/all_socks = list("None")
 
 	//Backpacks
-var/global/list/backbaglist = list("None", "Backpack", "Satchel", "Satchel Job", "Dufflebag", "Messanger")
+var/global/list/backbaglist = list("None", "Backpack", "Satchel", "Satchel Job", "Dufflebag", "Messenger")
 var/global/list/exclude_jobs = list(/datum/job/ai,/datum/job/cyborg)
 
 	//Tattoo

@@ -1,7 +1,7 @@
 /obj/item/weapon/storage/belt
 	name = "belt"
 	desc = "Can hold various things."
-	icon = 'icons/obj/clothing/belts/icon.dmi'
+	icon = 'icons/inv_slots/belts/icon.dmi'
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	storage_slots = 7

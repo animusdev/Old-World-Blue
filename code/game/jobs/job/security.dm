@@ -14,7 +14,7 @@
 	backpack  = /obj/item/weapon/storage/backpack/security
 	satchel_j = /obj/item/weapon/storage/backpack/satchel/sec
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
-	messanger = /obj/item/weapon/storage/backpack/messenger/sec
+	messenger = /obj/item/weapon/storage/backpack/messenger/sec
 
 
 /datum/job/security/hos
@@ -95,8 +95,8 @@
 
 	backpack  = /obj/item/weapon/storage/backpack
 	satchel_j = /obj/item/weapon/storage/backpack/satchel/norm
-	dufflebag = /obj/item/weapon/storage/backpack/duffle
-	messanger = /obj/item/weapon/storage/backpack/messenger
+	dufflebag = /obj/item/weapon/storage/backpack/dufflebag
+	messenger = /obj/item/weapon/storage/backpack/messenger
 
 
 /datum/job/security/detective/forentech

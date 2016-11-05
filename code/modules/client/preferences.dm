@@ -1048,7 +1048,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 				if("s_color")
 					skin_color = rgb(rand(0,255), rand(0,255), rand(0,255))
 				if("bag")
-					backbag = rand(1,4)
+					backbag = rand(1,backbaglist.len)
 				if("all")
 					randomize_appearance_for()	//no params needed
 
@@ -1567,8 +1567,8 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 				else if(status == "mechanical")
 					I.robotize()
 
-	if(backbag > 4 || backbag < 1)
-		backbag = 1 //Same as above
+	if(backbag > backbaglist.len || backbag < 1)
+		backbag = pick(backbaglist.len)
 	character.backbag = backbag
 
 	//Debugging report to track down a bug, which randomly assigned the plural gender to people.

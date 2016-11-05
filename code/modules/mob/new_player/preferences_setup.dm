@@ -16,7 +16,7 @@
 	underwear = pick(all_underwears)
 	undershirt = pick(all_undershirts)
 	socks = pick(all_socks)
-	backbag = rand(1,4)
+	backbag = rand(1,backbaglist.len)
 	age = rand(current_species.min_age, current_species.max_age)
 	if(H) copy_to(H,1)
 
@@ -296,7 +296,13 @@
 			if(HT) clothes.Blend(new /icon(body_build.hat_icon, initial(HT.icon_state)), ICON_OVERLAY)
 
 			if( backbag > 1 )
-				var/obj/item/weapon/storage/backpack/BP = J.backpacks[backbag-1]
+				var/obj/item/weapon/storage/backpack/BP = J.backpack
+				switch(backbaglist[backbag])
+					if("Backpack")		BP = J.backpack
+					if("Satchel")		BP = J.satchel
+					if("Satchel Job")	BP = J.satchel_j
+					if("Dufflebag")		BP = J.dufflebag
+					if("Messenger")		BP = J.messenger
 				clothes.Blend(new /icon(body_build.back_icon, initial(BP.icon_state)), ICON_OVERLAY)
 
 	if(clothes)

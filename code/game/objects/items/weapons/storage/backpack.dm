@@ -5,11 +5,7 @@
 /obj/item/weapon/storage/backpack
 	name = "backpack"
 	desc = "You wear this on your back and put items into it."
-	icon = 'icons/obj/clothing/back/icon.dmi'
-	item_icons = list(
-		slot_l_hand_str = 'icons/mob/items/lefthand_backpacks.dmi',
-		slot_r_hand_str = 'icons/mob/items/righthand_backpacks.dmi',
-		)
+	icon = 'icons/inv_slots/back/icon.dmi'
 	icon_state = "backpack"
 	w_class = 4
 	slot_flags = SLOT_BACK
@@ -156,7 +152,7 @@
 	desc = "A large dufflebag for holding extra weapons ammunition and supplies."
 	icon_state = "duffle_syndieammo"
 
-/obj/item/weapon/storage/backpack/dufflebag/captain
+/obj/item/weapon/storage/backpack/dufflebag/cap
 	name = "colony director's dufflebag"
 	desc = "A large dufflebag for holding extra captainly goods."
 	icon_state = "duffle_captain"
@@ -248,7 +244,7 @@
 	desc = "A green satchel for plant related work."
 	icon_state = "satchel_hyd"
 
-/obj/item/weapon/storage/backpack/satchel/captain
+/obj/item/weapon/storage/backpack/satchel/cap
 	name = "captain's satchel"
 	desc = "An exclusive satchel for officers."
 	icon_state = "satchel-cap"
@@ -342,7 +338,7 @@
 
 /obj/item/weapon/storage/backpack/messenger/black
 	icon_state = "courierbagblk"
-
+/*
 /obj/item/weapon/storage/backpack/purse
 	name = "purse"
 	desc = "A small, fashionable bag typically worn over the shoulder."
@@ -351,3 +347,4 @@
 	w_class = ITEMSIZE_LARGE
 	max_w_class = ITEMSIZE_NORMAL
 	max_storage_space = ITEMSIZE_COST_NORMAL * 5
+*/

@@ -1,5 +1,5 @@
 /obj/item/clothing/hidden/undershirt
-	icon = 'icons/obj/clothing/hidden/icon.dmi'
+	icon = 'icons/inv_slots/hidden/icon.dmi'
 	wear_slot = slot_undershirt
 	slot_name = "undershirt"
 

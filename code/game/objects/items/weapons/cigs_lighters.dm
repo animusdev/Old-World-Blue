@@ -289,7 +289,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/weapon/cigbutt
 	name = "cigarette butt"
 	desc = "A manky old cigarette butt."
-	icon = 'icons/obj/clothing/masks/icon.dmi'
+	icon = 'icons/inv_slots/masks/icon.dmi'
 	icon_state = "cigbutt"
 	w_class = 1
 	slot_flags = SLOT_EARS

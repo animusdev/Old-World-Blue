@@ -45,8 +45,8 @@
 	var/backpack  = /obj/item/weapon/storage/backpack
 	var/satchel   = /obj/item/weapon/storage/backpack/satchel
 	var/satchel_j = /obj/item/weapon/storage/backpack/satchel/norm
-	var/dufflebag = /obj/item/weapon/storage/backpack/duffle
-	var/messanger = /obj/item/weapon/storage/backpack/messenger
+	var/dufflebag = /obj/item/weapon/storage/backpack/dufflebag
+	var/messenger = /obj/item/weapon/storage/backpack/messenger
 
 	//This will be put in backpack. List ordered by priority!
 	var/list/put_in_backpack = list()
@@ -72,7 +72,7 @@ For copy-pasting:
 	satchel   =
 	satchel_j =
 	dufflebag =
-	messanger =
+	messenger =
 
 	put_in_backpack = list(
 	)
@@ -94,7 +94,7 @@ For copy-pasting:
 			if("Satchel")		backpack_type = satchel
 			if("Satchel Job")	backpack_type = satchel_j
 			if("Dufflebag")		backpack_type = dufflebag
-			if("Messanger")		backpack_type = messanger
+			if("Messenger")		backpack_type = messenger
 
 		var/obj/item/weapon/storage/backpack/BPK = new backpack_type(H)
 		if(H.equip_to_slot_or_del(BPK, slot_back,1))

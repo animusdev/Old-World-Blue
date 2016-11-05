@@ -62,7 +62,7 @@
 /obj/random/armor
 	name = "random plate carrier"
 	desc = "This is a random plate carrier."
-	icon = 'icons/obj/clothing/suits/icon.dmi'
+	icon = 'icons/inv_slots/suits/icon.dmi'
 	icon_state = "secheavyvest_badge"
 	item_to_spawn()
 		return pick(prob(3);/obj/item/clothing/suit/storage/vest/seclight,\

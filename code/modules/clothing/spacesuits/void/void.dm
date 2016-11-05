@@ -12,14 +12,14 @@
 	//Species-specific stuff.
 	species_restricted = list("exclude","Unathi","Tajara","Skrell","Diona","Vox", "Xenomorph")
 	sprite_sheets_refit = list(
-		"Unathi" = 'icons/obj/clothing/hats/mob_unathi.dmi',
-		"Tajara" = 'icons/obj/clothing/hats/mob_tajaran.dmi',
-		"Skrell" = 'icons/obj/clothing/hats/mob_skrell.dmi',
+		"Unathi" = 'icons/inv_slots/hats/mob_unathi.dmi',
+		"Tajara" = 'icons/inv_slots/hats/mob_tajaran.dmi',
+		"Skrell" = 'icons/inv_slots/hats/mob_skrell.dmi',
 	)
 	sprite_sheets_obj = list(
-		"Unathi" = 'icons/obj/clothing/hats/icon_unathi.dmi',
-		"Tajara" = 'icons/obj/clothing/hats/icon_tajaran.dmi',
-		"Skrell" = 'icons/obj/clothing/hats/icon_skrell.dmi',
+		"Unathi" = 'icons/inv_slots/hats/icon_unathi.dmi',
+		"Tajara" = 'icons/inv_slots/hats/icon_tajaran.dmi',
+		"Skrell" = 'icons/inv_slots/hats/icon_skrell.dmi',
 	)
 
 	light_overlay = "helmet_light"
@@ -37,14 +37,14 @@
 
 	species_restricted = list("exclude","Unathi","Tajara","Diona","Vox", "Xenomorph")
 	sprite_sheets_refit = list(
-		"Unathi" = 'icons/obj/clothing/suits/mob_unathi.dmi',
-		"Tajara" = 'icons/obj/clothing/suits/mob_tajaran.dmi',
-		"Skrell" = 'icons/obj/clothing/suits/mob_skrell.dmi',
+		"Unathi" = 'icons/inv_slots/suits/mob_unathi.dmi',
+		"Tajara" = 'icons/inv_slots/suits/mob_tajaran.dmi',
+		"Skrell" = 'icons/inv_slots/suits/mob_skrell.dmi',
 	)
 	sprite_sheets_obj = list(
-		"Unathi" = 'icons/obj/clothing/suits/icon_unathi.dmi',
-		"Tajara" = 'icons/obj/clothing/suits/icon_tajaran.dmi',
-		"Skrell" = 'icons/obj/clothing/suits/icon_skrell.dmi',
+		"Unathi" = 'icons/inv_slots/suits/icon_unathi.dmi',
+		"Tajara" = 'icons/inv_slots/suits/icon_tajaran.dmi',
+		"Skrell" = 'icons/inv_slots/suits/icon_skrell.dmi',
 	)
 
 	//Breach thresholds, should ideally be inherited by most (if not all) voidsuits.

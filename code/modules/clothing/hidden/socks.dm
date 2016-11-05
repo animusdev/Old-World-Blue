@@ -1,5 +1,5 @@
 /obj/item/clothing/hidden/socks
-	icon = 'icons/obj/clothing/hidden/icon.dmi'
+	icon = 'icons/inv_slots/hidden/icon.dmi'
 	wear_slot = slot_socks
 	slot_name = "socks"
 	species_restricted = list("Human", "Skrell")

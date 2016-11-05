@@ -13,7 +13,7 @@
 	backpack  = /obj/item/weapon/storage/backpack/medic
 	satchel_j = /obj/item/weapon/storage/backpack/satchel/med
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
-	messanger = /obj/item/weapon/storage/backpack/messenger/med
+	messenger = /obj/item/weapon/storage/backpack/messenger/med
 
 
 /datum/job/medical/cmo
@@ -120,7 +120,7 @@
 	backpack  = /obj/item/weapon/storage/backpack/chemistry
 	satchel_j = /obj/item/weapon/storage/backpack/satchel/chem
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
-	messanger = /obj/item/weapon/storage/backpack/messenger/chem
+	messenger = /obj/item/weapon/storage/backpack/messenger/chem
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -151,7 +151,7 @@
 	backpack  = /obj/item/weapon/storage/backpack/genetics
 	satchel_j = /obj/item/weapon/storage/backpack/satchel/gen
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
-	messanger = /obj/item/weapon/storage/backpack/messenger/med
+	messenger = /obj/item/weapon/storage/backpack/messenger/med
 
 
 /datum/job/medical/psychiatrist

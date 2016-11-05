@@ -11,14 +11,10 @@
 	ear = /obj/item/device/radio/headset/headset_eng
 	custom_survival_gear = /obj/item/weapon/storage/box/engineer
 
-	backpack = /obj/item/weapon/storage/backpack/industrial
-	satchel = /obj/item/weapon/storage/backpack/satchel_eng
-	duffle = /obj/item/weapon/storage/backpack/duffle/engie
-
 	backpack  = /obj/item/weapon/storage/backpack/industrial
-	satchel_j = /obj/item/weapon/storage/backpack/satchel_eng
+	satchel_j = /obj/item/weapon/storage/backpack/satchel/eng
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/eng
-	messanger = /obj/item/weapon/storage/backpack/messenger/eng
+	messenger = /obj/item/weapon/storage/backpack/messenger/eng
 
 
 

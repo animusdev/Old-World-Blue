@@ -31,7 +31,7 @@
 		switch(rand(4))
 			if(1) new /obj/item/weapon/storage/backpack(src)
 			if(2) new /obj/item/weapon/storage/backpack/satchel/norm(src)
-			if(3) new /obj/item/weapon/storage/backpack/duffle(src)
+			if(3) new /obj/item/weapon/storage/backpack/dufflebag(src)
 			if(4) new /obj/item/weapon/storage/backpack/messenger(src)
 		new /obj/item/clothing/under/rank/qm(src)
 		new /obj/item/clothing/shoes/brown(src)

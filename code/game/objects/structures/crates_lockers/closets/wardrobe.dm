@@ -26,7 +26,7 @@
 
 /obj/structure/closet/wardrobe/red/New()
 	..()
-	for(i in 1 to 3)
+	for(var/i in 1 to 3)
 		switch(rand(5))
 			if(1) new /obj/item/weapon/storage/backpack/security(src)
 			if(2) new /obj/item/weapon/storage/backpack/satchel/sec(src)
@@ -457,10 +457,7 @@
 	new /obj/item/clothing/mask/balaclava/tactical(src)
 	new /obj/item/clothing/mask/balaclava(src)
 	new /obj/item/clothing/glasses/sunglasses/sechud/tactical(src)
-	if(prob(25))
-		new /obj/item/weapon/storage/belt/security/tactical/bandolier(src)
-	else
-		new /obj/item/weapon/storage/belt/security/tactical(src)
+	new /obj/item/weapon/storage/belt/security/tactical(src)
 	if(prob(10))
 		new /obj/item/clothing/mask/bandana/skull(src)
 	new /obj/item/clothing/shoes/jackboots(src)

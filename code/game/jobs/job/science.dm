@@ -9,13 +9,9 @@
 	shoes = /obj/item/clothing/shoes/white
 	suit = /obj/item/clothing/suit/storage/toggle/labcoat/science
 
-	backpack = /obj/item/weapon/storage/backpack/toxins
-	satchel = /obj/item/weapon/storage/backpack/satchel_tox
-	duffle = /obj/item/weapon/storage/backpack/duffle
-
 	backpack  = /obj/item/weapon/storage/backpack/toxins
 	satchel_j = /obj/item/weapon/storage/backpack/satchel/tox
-	messanger = /obj/item/weapon/storage/backpack/messenger/tox
+	messenger = /obj/item/weapon/storage/backpack/messenger/tox
 
 
 /datum/job/science/rd
@@ -118,7 +114,7 @@
 	backpack  = /obj/item/weapon/storage/backpack
 	satchel_j = /obj/item/weapon/storage/backpack/satchel/norm
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag
-	messanger = /obj/item/weapon/storage/backpack/messenger/black
+	messenger = /obj/item/weapon/storage/backpack/messenger/black
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
