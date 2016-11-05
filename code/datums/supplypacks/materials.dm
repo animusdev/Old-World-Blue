@@ -36,16 +36,17 @@
 	containername = "Plastic sheets crate"
 
 /datum/supply_packs/materials/cardboard_sheets
-	contains = list(/obj/item/stack/material/cardboard/full)
 	name = "50 cardboard sheets"
+	contains = list(/obj/item/stack/material/cardboard/full)
 	cost = 10
 	containertype = /obj/structure/closet/crate
 	containername = "Cardboard sheets crate"
 
 /datum/supply_packs/materials/carpet
-	name = "Imported carpet"
-	containertype = /obj/structure/closet/crate
-	containername = "Imported carpet crate"
+	name = "50 imported carpets"
+	contains = list(/obj/item/stack/tile/carpet/full)
 	cost = 15
-	contains = list(/obj/item/stack/tile/carpet)
+	containertype = /obj/structure/closet/crate
+	containername = "Imported carpets crate"
+
 
