@@ -42,15 +42,11 @@
 	var/glasses = null
 	var/suit_store = null
 
-	var/backpack = /obj/item/weapon/storage/backpack
-	var/satchel = /obj/item/weapon/storage/backpack/satchel_norm
-	var/duffle = /obj/item/weapon/storage/backpack/duffle
-
-	var/list/backpacks = list(
-		/obj/item/weapon/storage/backpack,
-		/obj/item/weapon/storage/backpack/satchel_norm,
-		/obj/item/weapon/storage/backpack/satchel
-	)
+	var/backpack  = /obj/item/weapon/storage/backpack
+	var/satchel   = /obj/item/weapon/storage/backpack/satchel
+	var/satchel_j = /obj/item/weapon/storage/backpack/satchel/norm
+	var/dufflebag = /obj/item/weapon/storage/backpack/dufflebag
+	var/messenger = /obj/item/weapon/storage/backpack/messenger
 
 	//This will be put in backpack. List ordered by priority!
 	var/list/put_in_backpack = list()
@@ -72,11 +68,13 @@ For copy-pasting:
 	glasses =
 	hat =
 
-	backpack =
-	satchel =
-	duffle =
+	backpack  =
+	satchel   =
+	satchel_j =
+	dufflebag =
+	messenger =
 
-	put_in_backpack = list(\
+	put_in_backpack = list(
 	)
 */
 
@@ -86,10 +84,19 @@ For copy-pasting:
 	//Put items in hands
 	if(hand) H.equip_to_slot_or_del(new hand (H), slot_l_hand)
 
+	var/backpack_category = backbaglist[H.backbag]
+
 	//Put items in backpack
-	if( H.backbag != 1 )
-		var/backpack = backpacks[H.backbag-1]
-		var/obj/item/weapon/storage/backpack/BPK = new backpack(H)
+	if( backpack_category != "None" )
+		var/backpack_type = backpack
+		switch(backpack_category)
+			if("Backpack")		backpack_type = backpack
+			if("Satchel")		backpack_type = satchel
+			if("Satchel Job")	backpack_type = satchel_j
+			if("Dufflebag")		backpack_type = dufflebag
+			if("Messenger")		backpack_type = messenger
+
+		var/obj/item/weapon/storage/backpack/BPK = new backpack_type(H)
 		if(H.equip_to_slot_or_del(BPK, slot_back,1))
 			for( var/path in put_in_backpack )
 				new path(BPK)

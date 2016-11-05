@@ -29,16 +29,16 @@
 	armor = list(melee = 50, bullet = 5, laser = 20,energy = 5, bomb = 55, bio = 100, rad = 20)
 	light_overlay = "helmet_light_dual"
 	sprite_sheets_refit = list(
-		"Unathi" = 'icons/obj/clothing/hats/mob_unathi.dmi',
-		"Tajara" = 'icons/obj/clothing/hats/mob_tajaran.dmi',
-		"Skrell" = 'icons/obj/clothing/hats/mob_skrell.dmi',
-		"Vox"    = 'icons/obj/clothing/hats/mob_vox.dmi'
+		"Unathi" = 'icons/inv_slots/hats/mob_unathi.dmi',
+		"Tajara" = 'icons/inv_slots/hats/mob_tajaran.dmi',
+		"Skrell" = 'icons/inv_slots/hats/mob_skrell.dmi',
+		"Vox"    = 'icons/inv_slots/hats/mob_vox.dmi'
 	)
 	sprite_sheets_obj = list(
-		"Unathi" = 'icons/obj/clothing/hats/icon_unathi.dmi',
-		"Tajara" = 'icons/obj/clothing/hats/icon_tajaran.dmi',
-		"Skrell" = 'icons/obj/clothing/hats/icon_skrell.dmi',
-		"Vox"    = 'icons/obj/clothing/hats/icon_vox.dmi'
+		"Unathi" = 'icons/inv_slots/hats/icon_unathi.dmi',
+		"Tajara" = 'icons/inv_slots/hats/icon_tajaran.dmi',
+		"Skrell" = 'icons/inv_slots/hats/icon_skrell.dmi',
+		"Vox"    = 'icons/inv_slots/hats/icon_vox.dmi'
 	)
 
 /obj/item/clothing/suit/space/void/mining
@@ -48,16 +48,16 @@
 	item_state = "mining_voidsuit"
 	armor = list(melee = 50, bullet = 5, laser = 20,energy = 5, bomb = 55, bio = 100, rad = 20)
 	sprite_sheets_refit = list(
-		"Unathi" = 'icons/obj/clothing/suits/mob_unathi.dmi',
-		"Tajara" = 'icons/obj/clothing/suits/mob_tajaran.dmi',
-		"Skrell" = 'icons/obj/clothing/suits/mob_skrell.dmi',
-		"Vox"    = 'icons/obj/clothing/suits/mob_vox.dmi'
+		"Unathi" = 'icons/inv_slots/suits/mob_unathi.dmi',
+		"Tajara" = 'icons/inv_slots/suits/mob_tajaran.dmi',
+		"Skrell" = 'icons/inv_slots/suits/mob_skrell.dmi',
+		"Vox"    = 'icons/inv_slots/suits/mob_vox.dmi'
 	)
 	sprite_sheets_obj = list(
-		"Unathi" = 'icons/obj/clothing/suits/icon_unathi.dmi',
-		"Tajara" = 'icons/obj/clothing/suits/icon_tajaran.dmi',
-		"Skrell" = 'icons/obj/clothing/suits/icon_skrell.dmi',
-		"Vox"    = 'icons/obj/clothing/suits/icon_vox.dmi'
+		"Unathi" = 'icons/inv_slots/suits/icon_unathi.dmi',
+		"Tajara" = 'icons/inv_slots/suits/icon_tajaran.dmi',
+		"Skrell" = 'icons/inv_slots/suits/icon_skrell.dmi',
+		"Vox"    = 'icons/inv_slots/suits/icon_vox.dmi'
 	)
 
 //Medical Rig

@@ -105,10 +105,6 @@ If you have any questions/constructive-comments/bugs-to-report/or have a massivl
 Please contact me on #coderbus IRC. ~Carn x
 */
 
-//Human Underlays Indexes////////
-#define BACK_UNDERLAY			1
-#define TOTAL_UNDERLAYS			1
-
 //Human Overlays Indexes/////////
 #define MUTATIONS_LAYER			1
 #define DAMAGE_LAYER			2
@@ -141,7 +137,6 @@ Please contact me on #coderbus IRC. ~Carn x
 
 /mob/living/carbon/human
 	var/list/overlays_standing[TOTAL_LAYERS]
-	var/list/underlays_standing[TOTAL_UNDERLAYS]
 	var/previous_damage_appearance // store what the body last looked like, so we only have to update it if something changed
 
 //UPDATES OVERLAYS FROM OVERLAYS_LYING/OVERLAYS_STANDING
@@ -170,8 +165,6 @@ Please contact me on #coderbus IRC. ~Carn x
 		icon = stand_icon
 		for(var/image/I in overlays_standing)
 			overlays += I
-		for(var/image/I in underlays_standing)
-			underlays += I
 
 	if(lying && !species.prone_icon) //Only rotate them if we're not drawing a specific icon for being prone.
 		var/matrix/M = matrix()
@@ -765,35 +758,23 @@ var/global/list/damage_icon_parts = list()
 		back.screen_loc = ui_back	//TODO
 
 		//determine state to use
-		var/t_state
-		if(back.item_state_slots && back.item_state_slots[slot_back_str])
-			t_state = back.item_state_slots[slot_back_str]
-		else if(back.item_state)
-			t_state = back.item_state
-		else
-			t_state = back.icon_state
+		var/t_state = back.wear_state ? back.wear_state : back.icon_state
 
 		//determine the icon to use
 		var/image/standing
-		var/image/underlay
 		if(back.icon_override)
-			standing = image(back.icon_override, icon_state = t_state)
-			underlay = image(back.icon_override, icon_state = "[t_state]_u")
+			standing = image(back.icon_override, t_state)
 		else if(istype(back, /obj/item/weapon/rig))
 			standing = image(body_build.rig_back, t_state)
 		else
 			standing = image(body_build.back_icon, t_state)
-			underlay = image(body_build.back_icon, "[t_state]_u")
 
 		standing.color = back.color
-		if(underlay) underlay.color = back.color
 
 		//create the image
 		overlays_standing[BACK_LAYER] = standing
-		underlays_standing[BACK_UNDERLAY] = underlay
 	else
 		overlays_standing[BACK_LAYER] = null
-		underlays_standing[BACK_UNDERLAY] = null
 
 	if(update_icons)
 		update_icons()
@@ -856,16 +837,7 @@ var/global/list/damage_icon_parts = list()
 		else
 			t_state = r_hand.icon_state
 
-		//determine icon to use
-		var/icon/t_icon
-		if(r_hand.item_icons && (slot_r_hand_str in r_hand.item_icons))
-			t_icon = r_hand.item_icons[slot_r_hand_str]
-		else if(r_hand.icon_override)
-			t_state += "_r"
-			t_icon = r_hand.icon_override
-		else
-			t_icon = 'icons/mob/items/righthand.dmi'
-
+		var/icon/t_icon = body_build.get_inhand_icon(r_hand.sprite_group, RIGHT)
 		overlays_standing[R_HAND_LAYER] = image(t_icon, t_state)
 
 		if (handcuffed) drop_r_hand() //this should be moved out of icon code
@@ -889,15 +861,7 @@ var/global/list/damage_icon_parts = list()
 			t_state = l_hand.icon_state
 
 		//determine icon to use
-		var/icon/t_icon
-		if(l_hand.item_icons && (slot_l_hand_str in l_hand.item_icons))
-			t_icon = l_hand.item_icons[slot_l_hand_str]
-		else if(l_hand.icon_override)
-			t_state += "_l"
-			t_icon = l_hand.icon_override
-		else
-			t_icon = 'icons/mob/items/lefthand.dmi'
-
+		var/icon/t_icon = body_build.get_inhand_icon(l_hand.sprite_group, LEFT)
 		overlays_standing[L_HAND_LAYER] = image(t_icon, t_state)
 
 		if (handcuffed) drop_l_hand() //This probably should not be here

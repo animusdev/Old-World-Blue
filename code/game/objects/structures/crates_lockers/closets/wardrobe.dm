@@ -26,6 +26,12 @@
 
 /obj/structure/closet/wardrobe/red/New()
 	..()
+	for(var/i in 1 to 3)
+		switch(rand(4))
+			if(1) new /obj/item/weapon/storage/backpack/security(src)
+			if(2) new /obj/item/weapon/storage/backpack/satchel/sec(src)
+			if(3) new /obj/item/weapon/storage/backpack/dufflebag/sec(src)
+			if(4) new /obj/item/weapon/storage/backpack/messenger/sec(src)
 	new /obj/item/clothing/under/rank/security(src)
 	new /obj/item/clothing/under/rank/security(src)
 	new /obj/item/clothing/under/rank/security(src)
@@ -38,12 +44,14 @@
 	new /obj/item/clothing/head/beret/sec(src)
 	new /obj/item/clothing/head/beret/sec(src)
 	new /obj/item/clothing/head/beret/sec(src)
+	new /obj/item/clothing/mask/bandana/red(src)
+	new /obj/item/clothing/mask/bandana/red(src)
+	new /obj/item/clothing/mask/bandana/red(src)
 	new /obj/item/clothing/accessory/armband(src)
 	new /obj/item/clothing/accessory/armband(src)
 	new /obj/item/clothing/accessory/armband(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
-	new /obj/item/clothing/accessory/holster/armpit(src)
-	new /obj/item/clothing/accessory/holster/armpit(src)
+	new /obj/item/clothing/accessory/holster/waist(src)
 	new /obj/item/clothing/accessory/holster/waist(src)
 	new /obj/item/clothing/accessory/holster/hip(src)
 	return
@@ -68,7 +76,6 @@
 	new /obj/item/clothing/under/rank/security/dnavy(src)
 	new /obj/item/clothing/under/rank/security/dnavy(src)
 	return
-
 
 /obj/structure/closet/wardrobe/pink
 	name = "pink wardrobe"
@@ -105,6 +112,7 @@
 	new /obj/item/clothing/mask/bandana(src)
 	new /obj/item/clothing/mask/bandana(src)
 	new /obj/item/clothing/mask/bandana(src)
+	new /obj/item/weapon/storage/backpack/messenger/black(src)
 	return
 
 
@@ -299,6 +307,11 @@
 	new /obj/item/clothing/shoes/white(src)
 	new /obj/item/clothing/shoes/white(src)
 	new /obj/item/clothing/shoes/white(src)
+	for(var/i in 1 to 2)
+		switch(rand(3))
+			if(1) new /obj/item/weapon/storage/backpack/toxins(src)
+			if(2) new /obj/item/weapon/storage/backpack/satchel/tox(src)
+			if(3) new /obj/item/weapon/storage/backpack/messenger/tox(src)
 	return
 
 /obj/structure/closet/wardrobe/robotics_black
@@ -318,6 +331,11 @@
 	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/device/radio/headset/headset_rob(src)
 	new /obj/item/device/radio/headset/headset_rob(src)
+	for(var/i in 1 to 2)
+		switch(rand(3))
+			if(1) new /obj/item/weapon/storage/backpack/toxins(src)
+			if(2) new /obj/item/weapon/storage/backpack/satchel/tox(src)
+			if(4) new /obj/item/weapon/storage/backpack/messenger/tox(src)
 	return
 
 
@@ -334,6 +352,12 @@
 	new /obj/item/clothing/shoes/white(src)
 	new /obj/item/clothing/suit/storage/toggle/labcoat/chemist(src)
 	new /obj/item/clothing/suit/storage/toggle/labcoat/chemist(src)
+	for(var/i in 1 to 2)
+		switch(rand(4))
+			if(1) new /obj/item/weapon/storage/backpack/chemistry(src)
+			if(2) new /obj/item/weapon/storage/backpack/satchel/chem(src)
+			if(3) new /obj/item/weapon/storage/backpack/dufflebag/med(src)
+			if(4) new /obj/item/weapon/storage/backpack/messenger/chem(src)
 	return
 
 
@@ -349,6 +373,12 @@
 	new /obj/item/clothing/shoes/white(src)
 	new /obj/item/clothing/suit/storage/toggle/labcoat/genetics(src)
 	new /obj/item/clothing/suit/storage/toggle/labcoat/genetics(src)
+	for(var/i in 1 to 2)
+		switch(rand(4))
+			if(1) new /obj/item/weapon/storage/backpack/genetics(src)
+			if(2) new /obj/item/weapon/storage/backpack/satchel/gen(src)
+			if(3) new /obj/item/weapon/storage/backpack/dufflebag/med(src)
+			if(4) new /obj/item/weapon/storage/backpack/messenger/med(src)
 	return
 
 
@@ -366,6 +396,12 @@
 	new /obj/item/clothing/suit/storage/toggle/labcoat/virologist(src)
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/clothing/mask/surgical(src)
+	for(var/i in 1 to 2)
+		switch(rand(4))
+			if(1) new /obj/item/weapon/storage/backpack/virology(src)
+			if(2) new /obj/item/weapon/storage/backpack/satchel/vir(src)
+			if(3) new /obj/item/weapon/storage/backpack/dufflebag/med(src)
+			if(4) new /obj/item/weapon/storage/backpack/messenger/vir(src)
 	return
 
 
@@ -451,6 +487,7 @@
 		new /obj/item/clothing/mask/bandana/skull(src)
 	new /obj/item/clothing/shoes/jackboots(src)
 	new /obj/item/clothing/gloves/black(src)
+	new /obj/item/clothing/under/pants/camo(src)
 	return
 
 /obj/structure/closet/wardrobe/ert
@@ -492,4 +529,26 @@
 	new /obj/item/clothing/under/scratch(src)
 	new /obj/item/weapon/storage/backpack/satchel(src)
 	new /obj/item/weapon/storage/backpack/satchel(src)
+	return
+
+/obj/structure/closet/cabinet/captain
+	name = "colony director's wardrobe"
+
+/obj/structure/closet/wardrobe/captain/New()
+	..()
+	for(var/i in 1 to 2)
+		switch(rand(3))
+			if(1) new /obj/item/weapon/storage/backpack/captain(src)
+			if(2) new /obj/item/weapon/storage/backpack/satchel/cap(src)
+			if(3) new /obj/item/weapon/storage/backpack/dufflebag/cap(src)
+	new /obj/item/clothing/suit/captunic(src)
+	new /obj/item/clothing/suit/captunic/capjacket(src)
+	new /obj/item/clothing/under/rank/captain(src)
+	new /obj/item/clothing/shoes/brown(src)
+	new /obj/item/clothing/gloves/captain(src)
+	new /obj/item/clothing/under/dress/dress_cap(src)
+	new /obj/item/clothing/under/captainformal(src)
+	new /obj/item/clothing/head/beret/centcom/captain(src)
+	new /obj/item/clothing/under/gimmick/rank/captain/suit(src)
+	new /obj/item/clothing/glasses/sunglasses(src)
 	return

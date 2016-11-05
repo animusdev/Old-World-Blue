@@ -53,10 +53,10 @@
 	var/item_state = null // Used to specify the item state for the on-mob overlays.
 	var/item_state_slots = null //overrides the default item_state for particular slots.
 
-	// Used to specify the icon file to be used when the item is worn. If not set the default icon for that slot will be used.
-	// If icon_override or sprite_sheets are set they will take precendence over this, assuming they apply to the slot in question.
-	// Only slot_l_hand/slot_r_hand are implemented at the moment. Others to be implemented as needed.
-	var/tmp/list/item_icons = null
+	// Specify the icon file to be used when the item is holding.
+	// If not set the default icon for that slot will be used.
+	// If icon_override or sprite_sheets are set they will take precendence over this.
+	var/tmp/sprite_group = null
 
 
 	/* Species-specific sprite sheets for inventory sprites

@@ -465,7 +465,7 @@
 	if(installed_modules.len)
 		for(var/obj/item/rig_module/module in installed_modules)
 			if(module.suit_overlay)
-				chest.overlays += image('icons/obj/clothing/rig/modules.dmi', module.suit_overlay, SOUTH)
+				chest.overlays += image('icons/inv_slots/rig/modules.dmi', module.suit_overlay, SOUTH)
 
 	if(wearer)
 		wearer.update_inv_shoes()

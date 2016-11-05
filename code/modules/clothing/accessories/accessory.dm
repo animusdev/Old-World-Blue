@@ -1,7 +1,7 @@
 /obj/item/clothing/accessory
 	name = "tie"
 	desc = "A neosilk clip-on tie."
-	icon = 'icons/obj/clothing/acessories/icon.dmi'
+	icon = 'icons/inv_slots/acessories/icon.dmi'
 	icon_state = "bluetie"
 	item_state = ""	//no inhands
 	slot_flags = SLOT_TIE
@@ -22,7 +22,7 @@
 	has_suit = S
 	loc = has_suit
 	if(!inv_overlay)
-		inv_overlay = image('icons/obj/clothing/acessories/mob_default.dmi', icon_state)
+		inv_overlay = image('icons/inv_slots/acessories/mob_default.dmi', icon_state)
 	has_suit.overlays += inv_overlay
 
 	if(user)

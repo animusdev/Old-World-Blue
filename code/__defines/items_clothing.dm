@@ -178,3 +178,13 @@
 #define SUIT_SENSOR_BINARY   1
 #define SUIT_SENSOR_VITAL    2
 #define SUIT_SENSOR_TRACKING 3
+
+
+// In-hand overlay
+#define SPRITE_STORAGE  "storage"
+#define SPRITE_UNIFORMS "uniform"
+#define SPRITE_GLOVES   "gloves"
+#define SPRITE_SUITS    "suits"
+#define SPRITE_MASKS    "masks"
+#define SPRITE_HATS     "hats"
+#define SPRITE_GUNS     "gun"

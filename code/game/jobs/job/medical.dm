@@ -10,15 +10,11 @@
 	ear = /obj/item/device/radio/headset/headset_med
 	pda = /obj/item/device/pda/medical
 
-	backpack = /obj/item/weapon/storage/backpack/medic
-	satchel = /obj/item/weapon/storage/backpack/satchel_med
-	duffle = /obj/item/weapon/storage/backpack/duffle/med
+	backpack  = /obj/item/weapon/storage/backpack/medic
+	satchel_j = /obj/item/weapon/storage/backpack/satchel/med
+	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
+	messenger = /obj/item/weapon/storage/backpack/messenger/med
 
-	backpacks = list(
-		/obj/item/weapon/storage/backpack/medic,\
-		/obj/item/weapon/storage/backpack/satchel_med,\
-		/obj/item/weapon/storage/backpack/satchel
-		)
 
 /datum/job/medical/cmo
 	title = "Chief Medical Officer"
@@ -48,6 +44,7 @@
 	suit_store = /obj/item/device/flashlight/pen
 	ear = /obj/item/device/radio/headset/heads/cmo
 	hand = /obj/item/weapon/storage/firstaid/adv
+
 
 /datum/job/medical/doctor
 	title = "Medical Doctor"
@@ -83,8 +80,10 @@
 					H.equip_to_slot_or_del(new /obj/item/clothing/mask/surgical(H), slot_wear_mask)
 					switch(H.backbag)
 						if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/virology(H), slot_back)
-						if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_vir(H), slot_back)
+						if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/vir(H), slot_back)
 						if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
+						if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/dufflebag/med(H), slot_back)
+						if(6) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/messenger/vir(H), slot_back)
 				if("Medical Doctor")
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
 					H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/toggle/labcoat(H), slot_wear_suit)
@@ -99,7 +98,6 @@
 						H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/purple(H), slot_w_uniform)
 		..()
 		return 1
-
 
 
 //Chemist is a medical job damnit	//YEAH FUCK YOU SCIENCE	-Pete	//Guys, behave -Erro
@@ -119,11 +117,10 @@
 	pda = /obj/item/device/pda/chemist
 	suit = /obj/item/clothing/suit/storage/toggle/labcoat/chemist
 
-	backpacks = list(
-		/obj/item/weapon/storage/backpack/chemistry,\
-		/obj/item/weapon/storage/backpack/satchel_chem,\
-		/obj/item/weapon/storage/backpack/satchel
-		)
+	backpack  = /obj/item/weapon/storage/backpack/chemistry
+	satchel_j = /obj/item/weapon/storage/backpack/satchel/chem
+	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
+	messenger = /obj/item/weapon/storage/backpack/messenger/chem
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -151,11 +148,10 @@
 	suit = /obj/item/clothing/suit/storage/toggle/labcoat/genetics
 	suit_store = /obj/item/device/flashlight/pen
 
-	backpacks = list(
-		/obj/item/weapon/storage/backpack/genetics,\
-		/obj/item/weapon/storage/backpack/satchel_gen,\
-		/obj/item/weapon/storage/backpack/satchel
-		)
+	backpack  = /obj/item/weapon/storage/backpack/genetics
+	satchel_j = /obj/item/weapon/storage/backpack/satchel/gen
+	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
+	messenger = /obj/item/weapon/storage/backpack/messenger/med
 
 
 /datum/job/medical/psychiatrist

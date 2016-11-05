@@ -27,14 +27,9 @@ var/datum/announcement/minor/captain_announcement = new(do_newscast = 1)
 	ear = /obj/item/device/radio/headset/heads/captain
 	glasses = /obj/item/clothing/glasses/sunglasses
 
-	backpack = /obj/item/weapon/storage/backpack/captain
-	satchel = /obj/item/weapon/storage/backpack/satchel_cap
-
-	backpacks = list(
-		/obj/item/weapon/storage/backpack/captain,
-		/obj/item/weapon/storage/backpack/satchel_cap,
-		/obj/item/weapon/storage/backpack/satchel
-		)
+	backpack  = /obj/item/weapon/storage/backpack/captain
+	satchel_j = /obj/item/weapon/storage/backpack/satchel/cap
+	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/cap
 
 	put_in_backpack = list(
 		/obj/item/weapon/storage/box/ids \
