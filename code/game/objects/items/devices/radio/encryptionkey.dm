@@ -1,6 +1,6 @@
 
 /obj/item/device/encryptionkey/
-	name = "standard encrpytion key"
+	name = "standard encryption key"
 	desc = "An encryption key for a radio headset. Contains cypherkeys."
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "cypherkey"
@@ -11,9 +11,6 @@
 	var/translate_hive = 0
 	var/syndie = 0
 	var/list/channels = list()
-
-
-/obj/item/device/encryptionkey/New()
 
 /obj/item/device/encryptionkey/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
