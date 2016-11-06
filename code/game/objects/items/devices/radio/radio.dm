@@ -58,7 +58,8 @@
 	if(freerange)
 		if(frequency < 1200 || frequency > 1600)
 			frequency = sanitize_frequency(frequency, maxf)
-	// The max freq is higher than a regular headset to decrease the chance of people listening in, if you use the higher channels.
+	// The max freq is higher than a regular headset to decrease the chance of people listening in,
+	//  if you use the higher channels.
 	else if (frequency < 1441 || frequency > maxf)
 		//world.log << "[src] ([type]) has a frequency of [frequency], sanitizing."
 		frequency = sanitize_frequency(frequency, maxf)
@@ -82,17 +83,24 @@
 	var/dat = "<html><head><title>[src]</title></head><body><TT>"
 
 	if(!istype(src, /obj/item/device/radio/headset)) //Headsets dont get a mic button
-		dat += "Microphone: [broadcasting ? "<A href='byond://?src=\ref[src];talk=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];talk=1'>Disengaged</A>"]<BR>"
+		if(broadcasting)
+			dat += "Microphone: <A href='byond://?src=\ref[src];talk=0'>Engaged</A><BR>"
+		else
+			dat += "Microphone: <A href='byond://?src=\ref[src];talk=1'>Disengaged</A><BR>"
+
+	if(listening)
+		dat += "Speaker: <A href='byond://?src=\ref[src];listen=0'>Engaged</A><BR>"
+	else
+		dat += "Speaker: <A href='byond://?src=\ref[src];listen=1'>Disengaged</A><BR>"
 
 	dat += {"
-				Speaker: [listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
-				Frequency:
-				<A href='byond://?src=\ref[src];freq=-10'>-</A>
-				<A href='byond://?src=\ref[src];freq=-2'>-</A>
-				[format_frequency(frequency)]
-				<A href='byond://?src=\ref[src];freq=2'>+</A>
-				<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
-				"}
+		Frequency:
+		<A href='byond://?src=\ref[src];freq=-10'>-</A>
+		<A href='byond://?src=\ref[src];freq=-2'>-</A>
+		[format_frequency(frequency)]
+		<A href='byond://?src=\ref[src];freq=2'>+</A>
+		<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+	"}
 
 	for (var/ch_name in channels)
 		dat+=text_sec_channel(ch_name, channels[ch_name])
@@ -112,7 +120,7 @@
 	return {"
 			<B>[chan_name]</B><br>
 			Speaker: <A href='byond://?src=\ref[src];ch_name=[chan_name];listen=[!list]'>[list ? "Engaged" : "Disengaged"]</A><BR>
-			"}
+		"}
 
 /obj/item/device/radio/proc/ToggleBroadcast()
 	broadcasting = !broadcasting && !(wires.IsIndexCut(WIRE_TRANSMIT) || wires.IsIndexCut(WIRE_SIGNAL))
@@ -206,8 +214,9 @@
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!M || !message) return 0
 
-	//  Uncommenting this. To the above comment:
-	// 	The permacell radios aren't suppose to be able to transmit, this isn't a bug and this "fix" is just making radio wires useless. -Giacom
+	// Uncommenting this. To the above comment:
+	// The permacell radios aren't suppose to be able to transmit,
+	//  this isn't a bug and this "fix" is just making radio wires useless. -Giacom
 	if(wires.IsIndexCut(WIRE_TRANSMIT)) // The device has to have all its wires and shit intact
 		return 0
 
@@ -349,7 +358,8 @@
 		//THIS IS TEMPORARY. YEAH RIGHT
 		if(!connection)	return 0	//~Carn
 
-		/* --- Intercoms can only broadcast to other intercoms, but bounced radios can broadcast to bounced radios and intercoms --- */
+		/* --- Intercoms can only broadcast to other intercoms,
+		but bounced radios can broadcast to bounced radios and intercoms --- */
 		var/filter_type = 2
 		if(istype(src, /obj/item/device/radio/intercom))
 			filter_type = 1
@@ -572,7 +582,9 @@
 		else
 			subspace_transmission = 0
 			usr << "Subspace Transmission is disabled"
-		if(subspace_transmission == 0)//Simple as fuck, clears the channel list to prevent talking/listening over them if subspace transmission is disabled
+		//Simple as fuck, clears the channel list
+		// to prevent talking/listening over them if subspace transmission is disabled
+		if(subspace_transmission == 0)
 			channels = list()
 		else
 			recalculateChannels()
@@ -591,17 +603,25 @@
 		return
 
 	var/dat = "<html><head><title>[src]</title></head><body><TT>"
+	if(listening)
+		dat += "Speaker: <A href='byond://?src=\ref[src];listen=0'>Engaged</A><BR>"
+	else
+		dat += "Speaker: <A href='byond://?src=\ref[src];listen=1'>Disengaged</A><BR>"
+
 	dat += {"
-				Speaker: [listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
-				Frequency:
-				<A href='byond://?src=\ref[src];freq=-10'>-</A>
-				<A href='byond://?src=\ref[src];freq=-2'>-</A>
-				[format_frequency(frequency)]
-				<A href='byond://?src=\ref[src];freq=2'>+</A>
-				<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
-				<A href='byond://?src=\ref[src];mode=1'>Toggle Broadcast Mode</A><BR>
-				Loudspeaker: [shut_up ? "<A href='byond://?src=\ref[src];shutup=0'>Disengaged</A>" : "<A href='byond://?src=\ref[src];shutup=1'>Engaged</A>"]<BR>
-				"}
+		Frequency:
+		<A href='byond://?src=\ref[src];freq=-10'>-</A>
+		<A href='byond://?src=\ref[src];freq=-2'>-</A>
+		[format_frequency(frequency)]
+		<A href='byond://?src=\ref[src];freq=2'>+</A>
+		<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+		<A href='byond://?src=\ref[src];mode=1'>Toggle Broadcast Mode</A><BR>
+
+	"}
+	if(shut_up)
+		dat += "Loudspeaker: <A href='byond://?src=\ref[src];shutup=0'>Disengaged</A><BR>"
+	else
+		dat += "Loudspeaker: <A href='byond://?src=\ref[src];shutup=1'>Engaged</A><BR>"
 
 	if(subspace_transmission)//Don't even bother if subspace isn't turned on
 		for (var/ch_name in channels)
@@ -658,16 +678,20 @@
 		return
 
 	var/dat = "<html><head><title>[src]</title></head><body><TT>"
+	if(listening)
+		dat += "Speaker: <A href='byond://?src=\ref[src];listen=0'>Engaged</A><BR>"
+	else
+		dat += "Speaker: <A href='byond://?src=\ref[src];listen=1'>Disengaged</A><BR>"
+
 	dat += {"
-				Speaker: [listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
-				Frequency:
-				<A href='byond://?src=\ref[src];freq=-10'>-</A>
-				<A href='byond://?src=\ref[src];freq=-2'>-</A>
-				[format_frequency(frequency)]
-				<A href='byond://?src=\ref[src];freq=2'>+</A>
-				<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
-				<A href='byond://?src=\ref[src];mode=1'>Toggle Broadcast Mode</A><BR>
-				"}
+		Frequency:
+		<A href='byond://?src=\ref[src];freq=-10'>-</A>
+		<A href='byond://?src=\ref[src];freq=-2'>-</A>
+		[format_frequency(frequency)]
+		<A href='byond://?src=\ref[src];freq=2'>+</A>
+		<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+		<A href='byond://?src=\ref[src];mode=1'>Toggle Broadcast Mode</A><BR>
+	"}
 
 	if(subspace_transmission)//Don't even bother if subspace isn't turned on
 		for (var/ch_name in channels)
@@ -687,7 +711,9 @@
 		else
 			subspace_transmission = 0
 			usr << "Subspace Transmission is disabled"
-		if(subspace_transmission == 0)//Simple as fuck, clears the channel list to prevent talking/listening over them if subspace transmission is disabled
+		//Simple as fuck, clears the channel list
+		// to prevent talking/listening over them if subspace transmission is disabled
+		if(subspace_transmission == 0)
 			channels = list()
 		else
 			recalculateChannels()
