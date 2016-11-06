@@ -353,3 +353,21 @@
 	cold_protection = UPPER_TORSO|ARMS
 	min_cold_protection_temperature = T0C - 20
 	siemens_coefficient = 0.7
+
+/obj/item/clothing/suit/storage/native
+	name = "tajaran fur jacket"
+	icon_state = "native"
+	item_state = "native"
+	cold_protection = UPPER_TORSO|ARMS
+	body_parts_covered = UPPER_TORSO|ARMS
+	min_cold_protection_temperature = T0C - 20
+	desc = "Nice fur collar, hipster!"
+
+/obj/item/clothing/suit/fluffy_priest
+	name = "tajaran monk suit"
+	icon_state = "fluffy_priest"
+	item_state = "fluffy_priest"
+	cold_protection = UPPER_TORSO|ARMS
+	body_parts_covered = UPPER_TORSO|ARMS
+	min_cold_protection_temperature = T0C - 15
+	desc = "Do you have time to talk about our Lord and Savior S'randarr?"

@@ -1012,6 +1012,20 @@ var/global/list/gear_datums = list()
 	slot = slot_wear_suit
 	whitelisted = "Tajara" // You do have a monopoly on a fur suit tho
 
+/datum/gear/native
+	display_name = "traditional clothing (Tajaran)"
+	path = /obj/item/clothing/suit/storage/native
+	cost = 3
+	slot = slot_wear_suit
+	/*whitelisted = "Tajara"*/
+
+/datum/gear/fluffy_priest
+	display_name = "priest robe (Tajaran)"
+	path = /obj/item/clothing/suit/fluffy_priest
+	cost = 3
+	slot = slot_wear_suit
+	/*whitelisted = "Tajara"*/
+
 /datum/gear/ianshirt
 	display_name = "Worn shirt"
 	path = /obj/item/clothing/suit/ianshirt
