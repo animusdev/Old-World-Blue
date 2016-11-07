@@ -48,6 +48,10 @@
 		if (istype(W, /obj/item/weapon/grab))
 			src.MouseDrop_T(W:affecting, user)      //act like they were dragged onto the closet
 		user.unEquip(W, src.loc)
+	else if(istype(W, /obj/item/device/pda))
+		var/obj/item/device/pda/P = W
+		if(P.id)
+			return src.attackby(P.id)
 	else if(istype(W, /obj/item/weapon/card/id))
 		if(src.broken)
 			user << "<span class='warning'>It appears to be broken.</span>"
