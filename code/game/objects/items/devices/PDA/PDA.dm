@@ -843,10 +843,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						if("1")		// Configure pAI device
 							pai.attack_self(U)
 						if("2")		// Eject pAI device
-							var/turf/T = get_turf_or_move(src.loc)
-							if(T)
-								pai.loc = T
-								pai = null
+							usr.put_in_hands(pai)
+							pai = null
 
 		else
 			mode = text2num(href_list["choice"])
@@ -940,8 +938,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		message = "<span class='warning'>[message]</span>"
 		M.show_message(message, 1)
 
+/obj/item/device/pda/AltClick(mob/living/carbon/human/user)
+	if(src in user)
+		remove_id()
+	else
+		return ..()
+
 /obj/item/device/pda/proc/remove_id()
-	if (id)
+	if(id)
 		if (ismob(loc))
 			var/mob/M = loc
 			M.put_in_hands(id)
