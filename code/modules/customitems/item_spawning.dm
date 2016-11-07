@@ -200,6 +200,29 @@
 
 	custom_items["nikiss2000"] = L
 
+
+
+///Nikiton///
+
+
+
+	L = list()
+	current_data = new()
+	current_data.assoc_key = "nikiton"
+	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
+	current_data.character_name = "Leroy Woodward"
+	current_data.item_path = /obj/item/clothing/accessory/nikiton
+	L |= current_data
+
+	current_data = new()
+	current_data.assoc_key = "nikiton"
+	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
+	current_data.character_name = "Leroy Woodward"
+	current_data.item_path = /obj/item/clothing/shoes/jackboots/combat/nikiton
+	L |= current_data
+
+	custom_items["nikiton"] = L
+
 ////Subber////
 
 	L = list()

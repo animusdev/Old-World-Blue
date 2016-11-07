@@ -86,6 +86,13 @@
 	name = "navy tie"
 	icon_state = "navytie"
 
+
+/obj/item/clothing/accessory/nikiton
+	name = "Purple Heart"
+	desc = "The Purple Heart is a NanoTrasen military decoration awarded in the name of the Director to those badly wounded or killed while serving.FOR MILITARY MERIT Leroy Woodward"
+	icon_state = "bronze_heart"
+
+
 /obj/item/clothing/accessory/horrible
 	name = "horrible tie"
 	desc = "A neosilk clip-on tie. This one is disgusting."
