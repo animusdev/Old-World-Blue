@@ -20,7 +20,7 @@
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
 	R.my_atom = src
-	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/bottle(src)
+	beaker = new(src)
 
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/biogenerator(src)
