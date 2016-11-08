@@ -1061,7 +1061,7 @@
 "uu" = (/obj/machinery/telecomms/bus/preset_cent,/turf/unsimulated/floor{icon_state = "green"; dir = 1},/area/centcom/control)
 "uv" = (/obj/machinery/telecomms/processor/preset_cent,/turf/unsimulated/floor{icon_state = "green"; dir = 1},/area/centcom/control)
 "uw" = (/obj/machinery/telecomms/server/presets/centcomm,/turf/unsimulated/floor{icon_state = "green"; dir = 1},/area/centcom/control)
-"ux" = (/obj/machinery/account_database{name = "CentComm Accounts database"},/turf/unsimulated/floor{icon_state = "green"; dir = 5},/area/centcom/control)
+"ux" = (/obj/machinery/computer/account_database{name = "CentComm Accounts database"},/turf/unsimulated/floor{icon_state = "green"; dir = 5},/area/centcom/control)
 "uy" = (/obj/machinery/computer/teleporter,/turf/unsimulated/floor{icon_state = "engine"},/area/centcom/control)
 "uz" = (/obj/machinery/teleport/station,/turf/unsimulated/floor{icon_state = "engine"},/area/centcom/control)
 "uA" = (/obj/machinery/teleport/hub,/turf/unsimulated/floor{icon_state = "engine"},/area/centcom/control)
