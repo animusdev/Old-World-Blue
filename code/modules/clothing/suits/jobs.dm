@@ -245,6 +245,11 @@
 					/obj/item/device/flashlight/pen,/obj/item/stack/medical,/obj/item/device/radio)
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 10, rad = 10)
 
+/obj/item/clothing/suit/storage/fr_jacket/emerald
+	name = "EMS jacket"
+	desc = "Emerald jacket worn by medical first responders."
+	icon_state = "labcoat_emt"
+
 //Investigator
 /obj/item/clothing/suit/storage/toggle/investigator
 	name = "investigator jacket"

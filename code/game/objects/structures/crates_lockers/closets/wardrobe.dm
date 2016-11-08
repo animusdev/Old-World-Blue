@@ -552,3 +552,25 @@
 	new /obj/item/clothing/under/gimmick/rank/captain/suit(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	return
+
+/obj/structure/closet/wardrobe/ems
+	name = "EMS wardrobe"
+	icon_state = "ems"
+
+/obj/structure/closet/wardrobe/ems/New()
+	..()
+	new /obj/item/clothing/head/soft/emt(src)
+	new /obj/item/clothing/head/soft/emt(src)
+	new /obj/item/clothing/head/soft/emt/emerald(src)
+	new /obj/item/clothing/head/soft/emt/emerald(src)
+	new /obj/item/clothing/under/rank/medical/paramedic_dark(src)
+	new /obj/item/clothing/under/rank/medical/paramedic_dark(src)
+	new /obj/item/clothing/under/rank/medical/black(src)
+	new /obj/item/clothing/under/rank/medical/black(src)
+	new /obj/item/clothing/suit/storage/paramedic(src)
+	new /obj/item/clothing/suit/storage/paramedic(src)
+	new /obj/item/clothing/suit/storage/fr_jacket/emerald(src)
+	new /obj/item/clothing/suit/storage/fr_jacket/emerald(src)
+	new /obj/item/clothing/shoes/jackboots(src)
+	new /obj/item/clothing/shoes/jackboots(src)
+	return

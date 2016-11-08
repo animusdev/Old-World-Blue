@@ -80,6 +80,11 @@
 	desc = "It's a backpack especially designed for use in a sterile environment."
 	icon_state = "medicalpack"
 
+/obj/item/weapon/storage/backpack/emt
+	name = "medical backpack"
+	desc = "It's a backpack made for the ones who know no rest."
+	icon_state = "emtpack"
+
 /obj/item/weapon/storage/backpack/security
 	name = "security backpack"
 	desc = "It's a very robust backpack."
@@ -163,7 +168,7 @@
 	icon_state = "duffle_med"
 
 /obj/item/weapon/storage/backpack/dufflebag/emt
-	name = "EMT dufflebag"
+	name = "EMS dufflebag"
 	desc = "A large dufflebag for holding extra medical supplies. This one has reflective stripes!"
 	icon_state = "duffle_emt"
 
@@ -208,6 +213,12 @@
 	desc = "A sterile satchel used in medical departments."
 	icon_state = "satchel-med"
 	item_state = "medicalpack"
+
+/obj/item/weapon/storage/backpack/satchel/emt
+	name = "paramedic satchel"
+	desc = "A sterile satchel with paramedics colours."
+	icon_state = "satchel-emt"
+	item_state = "captainpack"
 
 /obj/item/weapon/storage/backpack/satchel/vir
 	name = "virologist satchel"
@@ -301,6 +312,11 @@
 	desc = "A sterile backpack worn over one shoulder used in medical departments."
 	icon_state = "courierbagmed"
 	item_state = "medicalpack"
+
+/obj/item/weapon/storage/backpack/messenger/emt
+	name = "EMS messenger bag"
+	desc = "A sterile backpack worn over one shoulder, designed for paramedical personnel."
+	icon_state = "courierbagemt"
 
 /obj/item/weapon/storage/backpack/messenger/vir
 	name = "virology messenger bag"

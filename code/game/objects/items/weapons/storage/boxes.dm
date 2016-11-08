@@ -83,6 +83,21 @@
 		new /obj/item/clothing/gloves/white/latex(src)
 		new /obj/item/clothing/gloves/white/latex(src)
 
+/obj/item/weapon/storage/box/gloves/emt
+	name = "box of nitrile gloves"
+	desc = "Contains black gloves."
+	icon_state = "nitrile"
+
+	New()
+		..()
+		new /obj/item/clothing/gloves/white/latex/emt(src)
+		new /obj/item/clothing/gloves/white/latex/emt(src)
+		new /obj/item/clothing/gloves/white/latex/emt(src)
+		new /obj/item/clothing/gloves/white/latex/emt(src)
+		new /obj/item/clothing/gloves/white/latex/emt(src)
+		new /obj/item/clothing/gloves/white/latex/emt(src)
+		new /obj/item/clothing/gloves/white/latex/emt(src)
+
 /obj/item/weapon/storage/box/masks
 	name = "box of sterile masks"
 	desc = "This box contains masks of sterility."
