@@ -89,7 +89,9 @@
 
 /obj/item/clothing/accessory/nikiton
 	name = "Purple Heart"
-	desc = "The Purple Heart is a NanoTrasen military decoration awarded in the name of the Director to those badly wounded or killed while serving.FOR MILITARY MERIT Leroy Woodward"
+	desc = "The Purple Heart is a NanoTrasen military decoration awarded in the name of the Director to those badly wounded or killed while serving.\n\
+	FOR MILITARY MERIT\n\
+	 Leroy Woodward"
 	icon_state = "bronze_heart"
 
 
