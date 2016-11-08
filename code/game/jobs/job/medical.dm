@@ -193,17 +193,24 @@
 	)
 	alt_titles = list("Emergency Medical Technician")
 
-	uniform = /obj/item/clothing/under/rank/medical/black
+	uniform = /obj/item/clothing/under/rank/medical/paramedic_dark
 	suit = /obj/item/clothing/suit/storage/vest/ems
+	hat = /obj/item/clothing/head/soft/emt
 	shoes = /obj/item/clothing/shoes/jackboots
+	pda = /obj/item/device/pda/emt
 	belt = /obj/item/weapon/storage/belt/medical/emt
 	hand = /obj/item/weapon/storage/firstaid/adv
 	custom_survival_gear = /obj/item/weapon/storage/box/engineer
+
+	backpack  = /obj/item/weapon/storage/backpack/emt
+	satchel_j = /obj/item/weapon/storage/backpack/satchel/emt
+	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/emt
+	messenger = /obj/item/weapon/storage/backpack/messenger/emt
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		if (H.mind && H.mind.role_alt_title)
 			switch(H.mind.role_alt_title)
 				if("Emergency Medical Technician")
-					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/paramedic(H), slot_w_uniform)
+					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/paramedic_dark(H), slot_w_uniform)
 		return ..()

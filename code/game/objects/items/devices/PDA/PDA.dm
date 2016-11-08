@@ -71,6 +71,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-m"
 
+/obj/item/device/pda/emt
+	default_cartridge = /obj/item/weapon/cartridge/medical
+	icon_state = "pda-para"
+
 /obj/item/device/pda/viro
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-v"

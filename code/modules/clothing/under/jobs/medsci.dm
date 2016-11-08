@@ -153,7 +153,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
 
 /obj/item/clothing/under/rank/medical/paramedic_dark
-	name = "dark short sleeve medical jumpsuit"
+	name = "EMS medical jumpsuit"
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one has a cross on the chest denoting that the wearer is trained medical personnel."
 	icon_state = "paramedic_dark"
 	item_state = "bl_suit"
