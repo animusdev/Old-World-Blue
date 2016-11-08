@@ -16,6 +16,8 @@
 #define BANTYPE_JOB_TEMP    4
 #define BANTYPE_ANY_FULLBAN 5 // Used to locate stuff to unban.
 
+#define ROUNDSTART_LOGOUT_REPORT_TIME 6000 // Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
+
 // Admin permissions.
 #define R_BUILDMODE     0x1
 #define R_ADMIN         0x2

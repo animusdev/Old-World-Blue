@@ -1,4 +1,32 @@
+#define DEBUG
+
 #define subtypesof(type) (typesof(type) - type)
+
+// Turf-only flags.
+#define NOJAUNT 1 // This is used in literally one place, turf.dm, to block ethereal jaunt.
+
+#define TRANSITIONEDGE 7 // Distance from edge to move to another z-level.
+
+// Invisibility constants.
+#define INVISIBILITY_LIGHTING             20
+#define INVISIBILITY_LEVEL_ONE            35
+#define INVISIBILITY_LEVEL_TWO            45
+#define INVISIBILITY_OBSERVER             60
+#define INVISIBILITY_EYE		          61
+
+#define SEE_INVISIBLE_LIVING              25
+#define SEE_INVISIBLE_OBSERVER_NOLIGHTING 15
+#define SEE_INVISIBLE_LEVEL_ONE           35
+#define SEE_INVISIBLE_LEVEL_TWO           45
+#define SEE_INVISIBLE_CULT		          60
+#define SEE_INVISIBLE_OBSERVER            61
+
+#define SEE_INVISIBLE_MINIMUM 5
+#define INVISIBILITY_MAXIMUM 100
+
+// Some arbitrary defines to be used by self-pruning global lists. (see master_controller)
+#define PROCESS_KILL 26 // Used to trigger removal from a processing list.
+
 // For secHUDs and medHUDs and variants. The number is the location of the image on the list hud_list of humans.
 #define      HEALTH_HUD 1 // A simple line rounding the mob's number health.
 #define      STATUS_HUD 2 // Alive, dead, diseased, etc.
@@ -91,7 +119,7 @@
 #define OBFUSCATION_LAYER 21	//Where images covering the view for eyes are put
 #define SCREEN_LAYER 22			//Mob HUD/effects layer
 
-#define DEFAULT_TABLE_MATERIAL "plastic"
+	#define DEFAULT_TABLE_MATERIAL "plastic"
 #define DEFAULT_WALL_MATERIAL "steel"
 
 #define SHARD_SHARD "shard"
@@ -105,3 +133,9 @@
 #define MATERIAL_PADDING    0x4
 
 #define TABLE_BRITTLE_MATERIAL_MULTIPLIER 4 // Amount table damage is multiplied by if it is made of a brittle material (e.g. glass)
+
+#define BOMBCAP_DVSTN_RADIUS (max_explosion_range/4)
+#define BOMBCAP_HEAVY_RADIUS (max_explosion_range/2)
+#define BOMBCAP_LIGHT_RADIUS max_explosion_range
+#define BOMBCAP_FLASH_RADIUS (max_explosion_range*1.5)
+

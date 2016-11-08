@@ -1,3 +1,14 @@
+#define GAME_STATE_PREGAME		1
+#define GAME_STATE_SETTING_UP	2
+#define GAME_STATE_PLAYING		3
+#define GAME_STATE_FINISHED		4
+
+// Security levels.
+#define SEC_LEVEL_GREEN 0
+#define SEC_LEVEL_BLUE  1
+#define SEC_LEVEL_RED   2
+#define SEC_LEVEL_DELTA 3
+
 #define BE_TRAITOR    0x1
 #define BE_OPERATIVE  0x2
 #define BE_CHANGELING 0x4
