@@ -279,50 +279,43 @@
 			msg += "<span class='deadsay'>[t_He] [t_is] [ssd_msg].</span>\n"
 
 	var/list/wound_flavor_text = list()
-	var/list/is_destroyed = list()
-	var/list/is_bleeding = list()
 
 	for(var/organ_tag in species.has_limbs)
 
-		var/datum/organ_description/organ_data = species.has_limbs[organ_tag]
-		is_destroyed[organ_data.name] = 1
-
 		var/obj/item/organ/external/E = organs_by_name[organ_tag]
+
 		if(!E)
-			wound_flavor_text[organ_data.name] = "<span class='warning'><b>[t_He] is missing [t_his] [organ_data.name].</b></span>\n"
-		else if(E.is_stump())
-			wound_flavor_text[organ_data.name] = "<span class='warning'><b>[t_He] has a stump where [t_his] [organ_data.name] should be.</b></span>\n"
-		else
-			is_destroyed[organ_data.name] = 0
+			wound_flavor_text["[organ_tag]"] = "<b>[t_He] is missing [t_his] [organ_tag].</b>\n"
 			continue
 
-	for(var/obj/item/organ/external/temp in organs)
-		if(temp)
-			if(temp.status & ORGAN_DESTROYED)
-				is_destroyed[temp.name] = 1
-				wound_flavor_text[temp.name] = "<span class='warning'><b>[t_He] [t_is] missing [t_his] [temp.name].</b></span>\n"
-				continue
-			if(temp.status & ORGAN_ROBOT)
-				if(!(temp.brute_dam + temp.burn_dam))
-					if(!species.flags & IS_SYNTHETIC)
-						wound_flavor_text[temp.name] = "<span class='warning'>[t_He] [t_has] a robot [temp.name]!</span>\n"
-						continue
-				else
-					wound_flavor_text[temp.name] = "<span class='warning'>[t_He] has a robot [temp.name]. It has[temp.get_wounds_desc()]!</span>\n"
-			else if(temp.wounds.len > 0 || temp.open)
-				if(temp.is_stump() && temp.parent_organ && organs_by_name[temp.parent_organ])
-					var/obj/item/organ/external/parent = organs_by_name[temp.parent_organ]
-					wound_flavor_text[temp.name] = "<span class='warning'>[t_He] has [temp.get_wounds_desc()] on [t_his] [parent.name].</span><br>"
-				else
-					wound_flavor_text[temp.name] = "<span class='warning'>[t_He] has [temp.get_wounds_desc()] on [t_his] [temp.name].</span><br>"
-				if(temp.status & ORGAN_BLEEDING)
-					is_bleeding[temp.name] = "<span class='danger'>[capitalize(t_his)] [temp.name] is bleeding!</span><br>"
+		wound_flavor_text["[E.name]"] = ""
+
+		var/obj/item/clothing/hidden
+		var/list/clothing_items = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes)
+		for(var/obj/item/clothing/C in clothing_items)
+			if(istype(C) && (C.body_parts_covered & E.body_part))
+				hidden = C
+					break
+
+		if(hidden && user != src)
+			if(E.status & ORGAN_BLEEDING && !(hidden.item_flags & THICKMATERIAL)) //not through a spacesuit
+				wound_flavor_text["[hidden.name]"] = "[t_He] has blood soaking through [hidden]!<br>"
+		else
+			if(E.is_stump())
+				wound_flavor_text["[E.name]"] += "<b>[t_He] has a stump where [t_his] [E.name] should be.</b>\n"
+				if((E.wounds.len || E.open) && E.parent)
+					wound_flavor_text["[E.name]"] += "[t_He] has [E.get_wounds_desc()] on [t_his] [E.parent.name].<br>"
 			else
-				wound_flavor_text[temp.name] = ""
-			if(temp.dislocated == 2)
-				wound_flavor_text[temp.name] += "<span class='warning'>[capitalize(t_his)] [temp.joint] is dislocated!</span><br>"
-			if(((temp.status & ORGAN_BROKEN) && temp.brute_dam > temp.min_broken_damage) || (temp.status & ORGAN_MUTATED))
-				wound_flavor_text[temp.name] += "<span class='warning'>[capitalize(t_his)] [temp.name] is dented and swollen!</span><br>"
+				if(!IS_SYNTHETIC && E.robotic >= ORGAN_ROBOT && (E.parent && E.parent.robotic < ORGAN_ROBOT))
+					wound_flavor_text["[E.name]"] = "[t_He] has a [E.name].\n"
+				if(E.wounds.len || E.open)
+					wound_flavor_text["[E.name]"] += "[t_He] has [E.get_wounds_desc()] on [t_his] [E.name].<br>"
+
+		if(!hidden || distance <=1)
+			if(E.dislocated > 0)
+				wound_flavor_text["[E.name]"] += "[capitalize(t_his)]] [E.joint] is dislocated!<br>"
+			if(((E.status & ORGAN_BROKEN) && E.brute_dam > E.min_broken_damage) || (E.status & ORGAN_MUTATED))
+				wound_flavor_text["[E.name]"] += "[capitalize(t_his)] [E.name] is dented and swollen!<br>"
 
 	//Handles the text strings being added to the actual description.
 	//If they have something that covers the limb, and it is not missing, put flavortext.  If it is covered but bleeding, add other flavortext.
@@ -397,11 +390,11 @@
 		msg += "<span class='danger'>[src] [t_has] blood running from under [t_his] gloves!</span>\n"
 	*/
 
+	msg += "<span class='warning'>"
 	for(var/limb in wound_flavor_text)
 		msg += wound_flavor_text[limb]
-		is_bleeding[limb] = null
-	for(var/limb in is_bleeding)
-		msg += is_bleeding[limb]
+	msg += "</span>"
+
 	for(var/implant in get_visible_implants(0))
 		msg += "<span class='danger'>[src] [t_has] \a [implant] sticking out of [t_his] flesh!</span>\n"
 	if(digitalcamo)

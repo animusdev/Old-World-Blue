@@ -147,7 +147,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 40
 	if(!amt)
 		return 0
 
-	vessel.remove_reagent("blood",amt)
+	return	vessel.remove_reagent("blood",amt)
 
 /****************************************************
 				BLOOD TRANSFERS
