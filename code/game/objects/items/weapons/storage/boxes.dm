@@ -83,7 +83,7 @@
 		new /obj/item/clothing/gloves/white/latex(src)
 		new /obj/item/clothing/gloves/white/latex(src)
 
-/obj/item/weapon/storage/box/gloves/emt
+/obj/item/weapon/storage/box/ems
 	name = "box of nitrile gloves"
 	desc = "Contains black gloves."
 	icon_state = "nitrile"
