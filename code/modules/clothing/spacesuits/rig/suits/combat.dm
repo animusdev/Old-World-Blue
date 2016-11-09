@@ -8,6 +8,7 @@
 	suit_type = "combat hardsuit"
 	armor = list(melee = 80, bullet = 65, laser = 50, energy = 15, bomb = 80, bio = 100, rad = 60)
 	slowdown = 1
+	siemens_coefficient = 0
 	offline_slowdown = 3
 	offline_vision_restriction = 1
 

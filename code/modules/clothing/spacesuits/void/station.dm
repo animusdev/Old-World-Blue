@@ -89,7 +89,7 @@
 	icon_state = "rig0-sec"
 	item_state = "sec_helm"
 	armor = list(melee = 60, bullet = 10, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 10)
-	siemens_coefficient = 0.7
+	siemens_coefficient = 0.3
 	light_overlay = "helmet_light_dual"
 
 /obj/item/clothing/suit/space/void/security
@@ -103,7 +103,7 @@
 		/obj/item/weapon/gun,/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,
 		/obj/item/weapon/melee/baton
 	)
-	siemens_coefficient = 0.7
+	siemens_coefficient = 0.3
 
 //Atmospherics Rig (BS12)
 /obj/item/clothing/head/helmet/space/void/atmos
