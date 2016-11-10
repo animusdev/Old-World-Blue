@@ -115,7 +115,7 @@
 		suiciding = 1
 		viewers(src) << "<span class='danger'>[src] is powering down. It looks like \he's trying to commit suicide.</span>"
 		//put em at -175
-		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
+		adjustFireLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
 
 /mob/living/silicon/robot/verb/suicide()
@@ -135,7 +135,7 @@
 		suiciding = 1
 		viewers(src) << "<span class='danger'>[src] is powering down. It looks like \he's trying to commit suicide.</span>"
 		//put em at -175
-		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
+		adjustFireLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
 
 /mob/living/silicon/pai/verb/suicide()
