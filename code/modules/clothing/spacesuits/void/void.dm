@@ -130,7 +130,7 @@
 /obj/item/clothing/suit/space/void/verb/toggle_helmet()
 
 	set name = "Toggle Helmet"
-	set category = "Object"
+	set category = "Voidsuit"
 	set src in usr
 
 	if(!istype(src.loc,/mob/living)) return
@@ -160,10 +160,42 @@
 			H << "<span class='info'>You deploy your suit helmet, sealing you off from the world.</span>"
 	helmet.update_light(H)
 
+
+
+
+/obj/item/clothing/suit/space/void/verb/toggle_boots()
+
+	set name = "Toggle Magboots"
+	set category = "Voidsuit"
+	set src in usr
+
+	if(!istype(src.loc,/mob/living)) return
+
+	if(!boots)
+		usr << "There is no magboots installed."
+		return
+
+	var/mob/living/carbon/human/H = usr
+
+	if(!istype(H)) return
+	if(H.stat) return
+	if(H.wear_suit != src) return
+
+	if(H.shoes == boots)
+		H << "<span class='notice'>You retract your suit helmet.</span>"
+		boots.canremove = 1
+		H.drop_from_inventory(boots)
+		boots.loc = src
+	else
+		if(H.equip_to_slot_if_possible(boots, slot_shoes))
+			boots.pickup(H)
+			boots.canremove = 0
+			H << "<span class='info'>You deploy your suit magboots</span>"
+
 /obj/item/clothing/suit/space/void/verb/eject_tank()
 
 	set name = "Eject Voidsuit Tank"
-	set category = "Object"
+	set category = "Voidsuit"
 	set src in usr
 
 	if(!istype(src.loc,/mob/living)) return
