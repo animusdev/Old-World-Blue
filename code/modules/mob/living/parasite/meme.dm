@@ -51,6 +51,7 @@ mob/living/parasite/proc/exit_host()
 // === MEME ===
 // ============
 mob/living/parasite/meme/
+	desc = "If you see this description - meme code fucked up"
 
 // Memes use points for many actions
 // The maximum amount of points a meme can gather.
@@ -132,7 +133,8 @@ mob/living/parasite/meme/death()
 	del src
 
 // When a meme speaks, it speaks through its host
-mob/living/parasite/meme/say(message as text)
+mob/living/parasite/meme/say(var/message as text)
+	message = sanitize(message)
 	if(dormant)
 		usr << "\red You're dormant!"
 		return
@@ -143,7 +145,8 @@ mob/living/parasite/meme/say(message as text)
 	return host.say(message, 1)
 
 // Same as speak, just with whisper
-mob/living/parasite/meme/whisper(message as text)
+mob/living/parasite/meme/whisper(var/message as text)
+	message = sanitize(message)
 	if(dormant)
 		usr << "\red You're dormant!"
 		return
@@ -229,7 +232,7 @@ mob/living/parasite/meme/verb/Thought()
 
 	var/message = input("What would you like to say?", "Message") as null|text
 	if(!message) return
-	//message = sanitize_uni(message)
+	message = sanitize(message)
 
 	// Use the points at the end rather than the beginning, because the user might cancel
 	if(!use_points(50)) return
