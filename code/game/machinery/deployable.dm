@@ -1,11 +1,9 @@
 /*
 CONTAINS:
-
 Deployable items
 Barricades
 
 for reference:
-
 	access_security = 1
 	access_brig = 2
 	access_armory = 3
@@ -50,7 +48,6 @@ for reference:
 	access_court = 42
 	access_clown = 43
 	access_mime = 44
-
 */
 
 //Barricades!
@@ -83,34 +80,36 @@ for reference:
 	return material
 
 /obj/structure/barricade/attackby(obj/item/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/stack))
+	if(istype(W, /obj/item/stack))
 		var/obj/item/stack/D = W
 		if(D.get_material_name() != material.name)
 			return //hitting things with the wrong type of stack usually doesn't produce messages, and probably doesn't need to.
-		if (health < maxhealth)
-			if (D.get_amount() < 1)
+		if(health < maxhealth)
+			if(D.get_amount() < 1)
 				user << "<span class='warning'>You need one sheet of [material.display_name] to repair \the [src].</span>"
 				return
 			visible_message("<span class='notice'>[user] begins to repair \the [src].</span>")
 			if(do_after(user,20) && health < maxhealth)
-				if (D.use(1))
+				if(D.use(1))
 					health = maxhealth
 					visible_message("<span class='notice'>[user] repairs \the [src].</span>")
 				return
 		return
 	else
+		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 		switch(W.damtype)
 			if("fire")
-				src.health -= W.force * 1
+				health -= W.force * 1
 			if("brute")
-				src.health -= W.force * 0.75
+				health -= W.force * 0.75
 			else
-		if (src.health <= 0)
+		if(health <= 0)
 			visible_message("<span class='danger'>The barricade is smashed apart!</span>")
 			dismantle()
 			qdel(src)
 			return
 		..()
+
 /obj/structure/barricade/proc/dismantle()
 	material.place_dismantled_product(get_turf(src))
 	qdel(src)
@@ -123,8 +122,8 @@ for reference:
 			qdel(src)
 			return
 		if(2.0)
-			src.health -= 25
-			if (src.health <= 0)
+			health -= 25
+			if(health <= 0)
 				visible_message("<span class='danger'>\The [src] is blown apart!</span>")
 				dismantle()
 			return

@@ -38,15 +38,6 @@
 		return
 
 	else if(TK in mutations)
-		switch(get_dist(src,A))
-			if(1 to 5) // not adjacent may mean blocked by window
-				next_move += 2
-			if(5 to 7)
-				next_move += 5
-			if(8 to 15)
-				next_move += 10
-			if(16 to 128)
-				return
 		A.attack_tk(src)
 
 /mob/living/RestrainedClickOn(var/atom/A)
@@ -64,6 +55,7 @@
 	if(!..())
 		return 0
 
+	setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	A.attack_generic(src,rand(5,6),"bitten")
 
 /*
@@ -85,6 +77,9 @@
 			Feedstop()
 		return
 
+	//should have already been set if we are attacking a mob, but it doesn't hurt and will cover attacking non-mobs too
+	setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
+
 	var/mob/living/M = A
 	if (istype(M))
 
@@ -97,9 +92,7 @@
 				if (powerlevel > 0 && !istype(A, /mob/living/carbon/slime))
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
-						if(H.species.flags & IS_SYNTHETIC)
-							return
-						stunprob *= H.species.siemens_coefficient
+						stunprob *= max(H.species.siemens_coefficient,0)
 
 
 					switch(power * 10)
@@ -155,6 +148,7 @@
 		custom_emote(1,"[friendly] [A]!")
 		return
 
+	setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	var/damage = rand(melee_damage_lower, melee_damage_upper)
 	if(A.attack_generic(src,damage,attacktext,environment_smash) && loc && attack_sound)
 		playsound(loc, attack_sound, 50, 1, 1)

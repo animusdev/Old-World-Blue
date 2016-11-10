@@ -1320,9 +1320,10 @@
 	set desc = "Pop a joint back into place. Extremely painful."
 	set src in view(1)
 
-	if(!isliving(usr) || usr.next_move > world.time)
+	if((!ishuman(usr) && !isrobot(usr)) || !usr.canClick())
 		return
-	usr.next_move = world.time + 20
+
+	usr.setClickCooldown(20)
 
 	if(usr.stat)
 		usr << "You are unconcious and cannot do that!"

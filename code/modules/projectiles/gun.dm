@@ -164,7 +164,7 @@
 	var/_move_delay = firemode.move_delay
 
 	var/shoot_time = (_burst - 1)*_burst_delay
-	user.next_move = world.time + shoot_time  //no clicking on things while shooting
+	user.setClickCooldown(shoot_time) //no clicking on things while shooting
 	if(user.client) user.client.move_delay = world.time + shoot_time //no moving while shooting either
 	next_fire_time = world.time + shoot_time
 
@@ -197,7 +197,7 @@
 	update_held_icon()
 
 	//update timing
-	user.next_move = world.time + 4
+	user.setClickCooldown(DEFAULT_QUICK_COOLDOWN)
 	if(user.client) user.client.move_delay = world.time + _move_delay
 	next_fire_time = world.time + _fire_delay
 

@@ -830,11 +830,11 @@ mob/proc/yank_out_object()
 	set desc = "Remove an embedded item at the cost of bleeding and pain."
 	set src in view(1)
 
-	if(!isliving(usr) || usr.next_move > world.time)
+	if(!ishuman(usr) || !usr.canClick() || !Adjacent(usr))
 		return
-	usr.next_move = world.time + 20
+	usr.setClickCooldown(20)
 
-	if(usr.stat == 1)
+	if(usr.stat)
 		usr << "You are unconcious and cannot do that!"
 		return
 

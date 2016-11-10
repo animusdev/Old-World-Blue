@@ -32,7 +32,8 @@
 	if(ismob(user)) shock(user, 70)
 
 /obj/structure/grille/attack_hand(mob/user as mob)
-	user.next_move = world.time + 8
+
+	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.do_attack_animation(src)
 
@@ -101,7 +102,6 @@
 	spawn(0) healthcheck() //spawn to make sure we return properly if the grille is deleted
 
 /obj/structure/grille/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	user.next_move = world.time + 8
 	if(iswirecutter(W))
 		if(!shock(user, 100))
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
@@ -159,6 +159,7 @@
 //window placing end
 
 	else if(!(W.flags & CONDUCT) || !shock(user, 70))
+		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 		user.do_attack_animation(src)
 		playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 		switch(W.damtype)

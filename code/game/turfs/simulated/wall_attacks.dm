@@ -54,9 +54,9 @@
 
 /turf/simulated/wall/attack_hand(var/mob/user)
 
-	user.next_move = world.time + 8
 	radiate()
 	add_fingerprint(user)
+	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	var/rotting = (locate(/obj/effect/overlay/wallrot) in src)
 	if (HULK in user.mutations)
 		if (rotting || !prob(material.hardness))
@@ -69,8 +69,8 @@
 
 /turf/simulated/wall/attack_generic(var/mob/user, var/damage, var/attack_message, var/wallbreaker)
 
-	user.next_move = world.time + 8
 	radiate()
+	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	var/rotting = (locate(/obj/effect/overlay/wallrot) in src)
 	if(!damage || !wallbreaker)
 		try_touch(user, rotting)
@@ -88,10 +88,8 @@
 
 /turf/simulated/wall/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
-	if (!user.IsAdvancedToolUser())
-		return
+	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 
-	user.next_move = world.time + 8
 	//get the user's location
 	if(!istype(user.loc, /turf))	return	//can't do this stuff whilst inside objects and such
 

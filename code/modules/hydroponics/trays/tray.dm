@@ -528,6 +528,7 @@
 			A.hydrotray_type = src.type
 			qdel(src)
 	else if(O.force && seed)
+		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 		user.visible_message("<span class='danger'>\The [seed.display_name] has been attacked by [user] with \the [O]!</span>")
 		if(!dead)
 			health -= O.force

@@ -522,6 +522,7 @@
 	return
 
 /obj/mecha/attack_hand(mob/user as mob)
+	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	src.log_message("Attack by hand/paw. Attacker - [user].",1)
 
 	if(ishuman(user))
@@ -694,6 +695,7 @@
 	return
 
 /obj/mecha/proc/dynattackby(obj/item/weapon/W as obj, mob/user as mob)
+	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	src.log_message("Attacked by [W]. Attacker - [user]")
 	if(prob(src.deflect_chance))
 		user << "\red \The [W] bounces off [src.name]."
@@ -1772,6 +1774,7 @@
 
 /obj/mecha/attack_generic(var/mob/user, var/damage, var/attack_message)
 
+	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	if(!damage)
 		return 0
 

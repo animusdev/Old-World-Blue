@@ -304,7 +304,7 @@
 		if(piece.loc != src && !(wearer && piece.loc == wearer))
 			if(istype(piece.loc, /mob/living))
 				M = piece.loc
-				M.drop_from_inventory(piece)
+				M.unEquip(piece)
 			piece.forceMove(src)
 
 	if(!istype(wearer) || loc != wearer || wearer.back != src || canremove || !cell || cell.charge <= 0)
