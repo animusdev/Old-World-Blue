@@ -97,6 +97,25 @@
 			togglelock(user)
 	else
 		..()
+	if(istype(W, /obj/item/device/multitool) && locked)
+		var/obj/item/device/multitool/multi = W
+		if(multi.is_hack)
+			user << "<span class='warning'>This multitool is already in use!</span>"
+			return
+		multi.is_hack = 1
+		var/i
+		for(i=0, i<6, i++)
+			user.visible_message("<span class='warning'>[user] picks in wires of the [src.name] with a multitool.</span>",
+			"<span class='warning'>I am trying to reset circuitry lock module ([i]/6)...</span>")
+			if(!do_after(user,200)||opened)
+				multi.in_use=0
+				return
+		locked = 0
+		broken = 1
+		src.update_icon()
+		multi.is_hack=0
+		user.visible_message("<span class='warning'>[user] [locked?"locks":"unlocks"] [name] with a multitool.</span>",
+		"<span class='warning'>I [locked?"enable":"disable"] the locking modules.</span>")
 
 /obj/structure/closet/secure_closet/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
@@ -144,3 +163,4 @@
 	broken = 1
 	locked = 0
 	return ..()
+
