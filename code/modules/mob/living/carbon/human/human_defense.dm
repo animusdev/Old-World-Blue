@@ -151,12 +151,12 @@ emp_act
 /mob/living/carbon/human/proc/check_shields(var/damage = 0, var/attack_text = "the attack")
 	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)
 		var/obj/item/weapon/I = l_hand
-		if(I.IsShield() && (prob(50 - round(damage / 3))))
+		if(I.IsShield() && (prob(80 - round(damage / 3))))
 			visible_message("\red <B>[src] blocks [attack_text] with the [l_hand.name]!</B>")
 			return 1
 	if(r_hand && istype(r_hand, /obj/item/weapon))
 		var/obj/item/weapon/I = r_hand
-		if(I.IsShield() && (prob(50 - round(damage / 3))))
+		if(I.IsShield() && (prob(80 - round(damage / 3))))
 			visible_message("\red <B>[src] blocks [attack_text] with the [r_hand.name]!</B>")
 			return 1
 	if(wear_suit && istype(wear_suit, /obj/item/))
