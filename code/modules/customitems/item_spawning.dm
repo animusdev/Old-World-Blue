@@ -80,28 +80,6 @@
 	var/datum/custom_item/current_data
 	var/list/L
 
-////D00k-N00kem////
-	L = list()
-
-	current_data = new()
-	current_data.assoc_key = "d00kn00kem"
-	current_data.character_name = "Natalia Lynn"
-	current_data.item_path = /obj/item/clothing/suit/storage/labcoat/augmented
-	L |= current_data
-
-	current_data = new()
-	current_data.assoc_key = "d00kn00kem"
-	current_data.character_name = "Lorenzo Shere"
-	current_data.item_path = /obj/item/clothing/mask/gas/D00k_N00kem
-	L |= current_data
-
-	current_data = new()
-	current_data.assoc_key = "d00kn00kem"
-	current_data.character_name = "Lorenzo Shere"
-	current_data.item_path = /obj/item/clothing/suit/storage/labcoat/long
-	L |= current_data
-
-	custom_items["d00kn00kem"] = L
 
 ///Shamah///
 
@@ -137,6 +115,16 @@
 	current_data.req_titles = list("Head of Security", "Security Officer")
 	current_data.character_name = "Aiden McMurray"
 	current_data.item_path = /obj/item/clothing/head/beret/army/solar
+	L |= current_data
+
+	custom_items["solareclipse84"] = L
+
+
+	current_data = new()
+	current_data.assoc_key = "solareclipse84"
+	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
+	current_data.character_name = "Aiden McMurray"
+	current_data.item_path = /obj/item/device/binoculars
 	L |= current_data
 
 	custom_items["solareclipse84"] = L
