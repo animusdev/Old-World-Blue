@@ -256,3 +256,10 @@
 	icon_state = "syndicam"
 	network = list("NUKE")
 	circuit = null
+
+/obj/machinery/computer/security/ert
+	name = "head mounted camera monitor(ERT)"
+	desc = "Used to access the built-in cameras in helmets."
+	icon_state = "cameras"
+	network = list("ERT")
+	circuit = null
