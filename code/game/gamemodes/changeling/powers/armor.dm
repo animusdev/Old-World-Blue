@@ -53,6 +53,7 @@
 
 /obj/item/clothing/head/helmet/space/changeling
 	name = "flesh mass"
+	has_light = 0
 	icon_state = "lingspacehelmet"
 	item_state = "lingspacehelmet"
 	desc = "A covering of pressure and temperature-resistant organic tissue with a glass-like chitin front."

@@ -250,6 +250,7 @@
 	var/light_overlay = "helmet_light"
 	var/light_applied
 	var/brightness_on
+	var/has_light = 1
 	var/on = 0
 
 /obj/item/clothing/head/New()
@@ -258,6 +259,8 @@
 		icon_action_button = "[icon_state]"
 
 /obj/item/clothing/head/attack_self(mob/user)
+	if(has_light == 0)
+		return
 	if(brightness_on)
 		if(!isturf(user.loc))
 			user << "You cannot turn the light on while in this [user.loc]"

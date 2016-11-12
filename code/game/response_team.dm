@@ -127,7 +127,7 @@ proc/trigger_armed_response_team(var/force = 0)
 
 	command_announcement.Announce(
 		"It would appear that an emergency response team was requested for [station_name()]. \
-		We will prepare and send one as soon as possible.", "Central Command"
+		We will prepare and send one as soon as possible. Emergency Response Team - a detachment with special powers, whose task is to rescue the crew and the station. Follow the orders of ERT members. The attack on the group of employees - a particularly serious crime, the penalty for which - life imprisonment or the death penalty.", "Central Command"
 	)
 
 	can_call_ert = 0 // Only one call per round, gentleman.

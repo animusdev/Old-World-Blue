@@ -234,6 +234,7 @@ var/global/photo_count = 0
 	for(var/mob/living/carbon/A in the_turf)
 		if(A.invisibility) continue
 		var/holding = null
+		var/posenow = null
 		if(A.l_hand || A.r_hand)
 			if(A.l_hand) holding = "They are holding \a [A.l_hand]"
 			if(A.r_hand)
@@ -241,11 +242,15 @@ var/global/photo_count = 0
 					holding += " and \a [A.r_hand]"
 				else
 					holding = "They are holding \a [A.r_hand]"
+		if(ishuman(A))
+			if(A.pose) posenow = "They're appears to [A.pose] on this photo."
+
+
 
 		if(!mob_detail)
-			mob_detail = "You can see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]. "
+			mob_detail = "You can see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]. [posenow] "
 		else
-			mob_detail += "You can also see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]."
+			mob_detail += "You can also see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."] [posenow]."
 	return mob_detail
 
 /obj/item/device/camera/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)

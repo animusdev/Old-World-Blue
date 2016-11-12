@@ -334,7 +334,6 @@
 	name = "command messenger bag"
 	desc = "A special backpack worn over one shoulder.  This one is made specifically for officers."
 	icon_state = "courierbagcom"
-	item_state = "captainpack"
 
 /obj/item/weapon/storage/backpack/messenger/eng
 	name = "engineering messenger bag"

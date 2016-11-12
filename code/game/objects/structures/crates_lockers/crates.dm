@@ -187,9 +187,28 @@
 /obj/structure/closet/crate/secure/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(is_type_in_list(W, list(/obj/item/weapon/packageWrap, /obj/item/stack/cable_coil, /obj/item/device/radio/electropack, /obj/item/weapon/wirecutters)))
 		return ..()
-	if(istype(W, /obj/item/weapon/melee/energy/blade))
+	if(istype(W, /obj/item/device/multitool) && locked)
+		var/obj/item/device/multitool/multi = W
+		if(multi.is_hack)
+			user << "<span class='warning'>This multitool is already in use!</span>"
+			return
+		multi.is_hack = 1
+		var/i
+		for(i=0, i<6, i++)
+			user.visible_message("<span class='warning'>[user] picks in wires of the [src.name] with a multitool.</span>",
+			"<span class='warning'>I am trying to reset circuitry lock module ([i]/6)...</span>")
+			if(!do_after(user,200)||opened)
+				multi.in_use=0
+				return
+		locked = 0
+		broken = 1
+		src.update_icon()
+		multi.is_hack=0
+		user.visible_message("<span class='warning'>[user] [locked?"locks":"unlocks"] [name] with a multitool.</span>",
+		"<span class='warning'>I [locked?"enable":"disable"] the locking modules.</span>")
+	else if(istype(W, /obj/item/weapon/melee/energy/blade))
 		emag_act(INFINITY, user)
-	if(!opened)
+	else if(!opened || !brocken)
 		src.togglelock(user)
 		return
 	return ..()
@@ -340,14 +359,9 @@
 
 /obj/structure/closet/crate/radiation/New()
 	..()
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
+	for(var/i in 1 to 4)
+		new /obj/item/clothing/suit/radiation(src)
+		new /obj/item/clothing/head/radiation(src)
 
 /obj/structure/closet/crate/secure/weapon
 	name = "weapons crate"
