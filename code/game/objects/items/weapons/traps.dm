@@ -46,7 +46,7 @@
 			"<span class='notice'>[user] begins freeing [buckled_mob] from \the [src].</span>",
 			"<span class='notice'>You carefully begin to free [buckled_mob] from \the [src].</span>",
 			)
-		if(do_after(user, 60))
+		if(do_after(user, 60) && buckled_mob)
 			user.visible_message("<span class='notice'>[buckled_mob] has been freed from \the [src] by [user].</span>")
 			unbuckle_mob()
 			anchored = 0
