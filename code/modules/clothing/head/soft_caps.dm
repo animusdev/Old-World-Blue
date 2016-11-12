@@ -94,4 +94,4 @@
 /obj/item/clothing/head/soft/emt/emerald
 	name = "EMS cap"
 	desc = "It's a cap worn by the the fastest medical personal on the station. This emerald color is so sexy!"
-	icon_state = "emtsoft_emerald"
+	icon_state = "emtsoftemerald"
