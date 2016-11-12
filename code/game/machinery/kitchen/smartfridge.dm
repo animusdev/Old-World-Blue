@@ -35,10 +35,7 @@
 
 /obj/machinery/smartfridge/Destroy()
 	qdel(wires)
-	for(var/A in item_records)	//Get rid of item records.
-		qdel(A)
-	wires = null
-	return ..()
+	..()
 
 /obj/machinery/smartfridge/proc/accept_check(var/obj/item/O as obj)
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/grown/) || istype(O,/obj/item/seeds/))

@@ -23,9 +23,6 @@ item/resolve_attackby() calls the target atom's attackby() proc.
 	return
 
 /atom/movable/attackby(obj/item/W, mob/user)
-	world << "CONDUCT: [CONDUCT]. Item conduct = [W.flags & CONDUCT]."
-	world << "NOBLUDGEON: [NOBLUDGEON]. Item nobludgeon = [W.flags & NOBLUDGEON]"
-
 	if(!(W.flags & NOBLUDGEON))
 		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
 
