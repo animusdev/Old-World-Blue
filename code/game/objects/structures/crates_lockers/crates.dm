@@ -208,7 +208,7 @@
 		"<span class='warning'>I [locked?"enable":"disable"] the locking modules.</span>")
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))
 		emag_act(INFINITY, user)
-	else if(!opened || !brocken)
+	else if(!opened || !broken)
 		src.togglelock(user)
 		return
 	return ..()
