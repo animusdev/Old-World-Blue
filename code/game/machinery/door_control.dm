@@ -24,25 +24,14 @@
 		user << "Error, no route to host."
 
 /obj/machinery/button/remote/attackby(obj/item/weapon/W, mob/user as mob)
-	/* For later implementation
-	if (istype(W, /obj/item/weapon/screwdriver))
-	{
-		if(wiresexposed)
-			icon_state = "doorctrl0"
-			wiresexposed = 0
+	return attack_hand(user)
 
-		else
-			icon_state = "doorctrl-open"
-			wiresexposed = 1
-
-		return
-	}
-	*/
-	if(istype(W, /obj/item/weapon/card/emag))
+/obj/machinery/button/remote/emag_act(var/remaining_charges, var/mob/user)
+	if(req_access.len || req_one_access.len)
 		req_access = list()
 		req_one_access = list()
 		playsound(src.loc, "sparks", 100, 1)
-	return src.attack_hand(user)
+		return 1
 
 /obj/machinery/button/remote/attack_hand(mob/user as mob)
 	if(..())

@@ -68,22 +68,26 @@
 				src.desc = "Owned by [I.registered_name]."
 		else
 			user << "<span class='warning'>Access Denied</span>"
-	else if( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
-		broken = 1
-		locked = 0
-		desc = "It appears to be broken."
-		update_icon()
-		if(istype(W, /obj/item/weapon/melee/energy/blade))
+	else if(istype(W, /obj/item/weapon/melee/energy/blade))
+		if(emag_act(INFINITY, user, "The locker has been sliced open by [user] with \an [W]!", "You hear metal being sliced and sparks flying."))
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
 			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 			playsound(src.loc, "sparks", 50, 1)
-			for(var/mob/O in viewers(user, 3))
-				O.show_message("\blue The locker has been sliced open by [user] with an energy blade!", 1, "\red You hear metal being sliced and sparks flying.", 2)
 	else
 		user << "<span class='warning'>Access Denied</span>"
 	return
+
+/obj/structure/closet/secure_closet/personal/emag_act(var/remaining_charges, var/mob/user, var/visual_feedback, var/audible_feedback)
+	if(!broken)
+		broken = 1
+		locked = 0
+		desc = "It appears to be broken."
+		update_icon()
+		if(visual_feedback)
+			visible_message("<span class='warning'>[visual_feedback]</span>", "<span class='warning'>[audible_feedback]</span>")
+		return 1
 
 /obj/structure/closet/secure_closet/personal/verb/reset()
 	set src in oview(1) // One square distance

@@ -6,7 +6,7 @@
 	icon_state = "grinder"
 	density = 1
 	anchored = 1
-	req_access = list(access_kitchen,access_morgue)
+	req_access = list(access_kitchen)
 
 	var/operating = 0 //Is it on?
 	var/dirty = 0 // Does it need cleaning?
@@ -84,16 +84,12 @@
 	. = ..()
 	usr << "The safety guard is [emagged ? "<span class='danger'>disabled</span>" : "enabled"]."
 
+/obj/machinery/gibber/emag_act(var/remaining_charges, var/mob/user)
+	emagged = !emagged
+	user << "<span class='danger'>You [emagged ? "disable" : "enable"] the gibber safety guard.</span>"
+	return 1
+
 /obj/machinery/gibber/attackby(var/obj/item/W, var/mob/user)
-
-	if(istype(W,/obj/item/weapon/card))
-		if(!allowed(user) && !istype(W,/obj/item/weapon/card/emag))
-			user << "<span class='danger'>Access denied.</span>"
-			return
-		emagged = !emagged
-		user << "<span class='danger'>You [emagged ? "disable" : "enable"] the gibber safety guard.</span>"
-		return
-
 	var/obj/item/weapon/grab/G = W
 
 	if(!istype(G))

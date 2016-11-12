@@ -281,14 +281,11 @@
 	if((SP.hidden && !hacked) || (SP.contraband && !can_order_contraband) || SP.group != last_viewed_group) return
 	temp += "<A href='?src=\ref[src];doorder=[supply_name]'>[supply_name]</A> Cost: [SP.cost]<BR>"
 
-/obj/machinery/computer/order/supply/attackby(I as obj, user as mob)
-	if(istype(I,/obj/item/weapon/card/emag) && !hacked)
-		user << "\blue Special supplies unlocked."
+/obj/machinery/computer/order/supply/emag_act(var/remaining_charges, var/mob/user)
+	if(!hacked)
+		user << "<span class='notice'>Special supplies unlocked.</span>"
 		hacked = 1
-		return
-	else
-		..()
-	return
+		return 1
 
 /obj/machinery/computer/order/supply/proc/post_signal(var/command)
 

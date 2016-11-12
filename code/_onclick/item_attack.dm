@@ -1,14 +1,32 @@
+/*
+=== Item Click Call Sequences ===
+These are the default click code call sequences used when clicking on stuff with an item.
+
+Atoms:
+
+mob/ClickOn() calls the item's resolve_attackby() proc.
+item/resolve_attackby() calls the target atom's attackby() proc.
+
+*/
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
 	return
+
+//I would prefer to rename this to attack(), but that would involve touching hundreds of files.
+/obj/item/proc/resolve_attackby(atom/A, mob/user)
+	add_fingerprint(user)
+	return A.attackby(src, user)
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user)
 	return
 
 /atom/movable/attackby(obj/item/W, mob/user)
-	if(!W.flags & NOBLUDGEON)
+	world << "CONDUCT: [CONDUCT]. Item conduct = [W.flags & CONDUCT]."
+	world << "NOBLUDGEON: [NOBLUDGEON]. Item nobludgeon = [W.flags & NOBLUDGEON]"
+
+	if(!(W.flags & NOBLUDGEON))
 		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
 
 /mob/living/attackby(obj/item/I, mob/user)

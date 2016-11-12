@@ -37,15 +37,17 @@
 	if (..(C))
 		network = C.network.Copy()
 
+/obj/item/weapon/circuitboard/security/emag_act(var/remaining_charges, var/mob/user)
+	if(emagged)
+		user << "Circuit lock is already removed."
+		return
+	user << "<span class='notice'>You override the circuit lock and open controls.</span>"
+	emagged = 1
+	locked = 0
+	return 1
+
 /obj/item/weapon/circuitboard/security/attackby(obj/item/I as obj, mob/user as mob)
-	if(istype(I,/obj/item/weapon/card/emag))
-		if(emagged)
-			user << "Circuit lock is already removed."
-			return
-		user << "\blue You override the circuit lock and open controls."
-		emagged = 1
-		locked = 0
-	else if(istype(I,/obj/item/weapon/card/id))
+	if(istype(I,/obj/item/weapon/card/id))
 		if(emagged)
 			user << "<span class='warning'>Circuit lock does not respond.</span>"
 			return
