@@ -6,6 +6,7 @@
 	layer = MOB_LAYER
 	universal_speak = 1
 	density = 0
+
 	var/obj/item/weapon/card/id/botcard = null
 	var/list/botcard_access = list()
 	var/on = 1
@@ -87,9 +88,6 @@
 		else
 			user << "<span class='notice'>[src] does not need a repair.</span>"
 		return
-	else if (istype(O, /obj/item/weapon/card/emag) && !emagged)
-		Emag(user)
-		return
 	else
 		..()
 
@@ -111,9 +109,8 @@
 	else
 		..()
 
-/mob/living/bot/proc/Emag(var/mob/user)
-	log_and_message_admins("emagged [src]")
-	return
+/mob/living/bot/emag_act(var/remaining_charges, var/mob/user)
+	return 0
 
 /mob/living/bot/proc/turn_on()
 	if(stat)
