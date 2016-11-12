@@ -56,8 +56,8 @@
 	return 0
 
 /obj/machinery/smartfridge/secure/extract
-	name = "\improper Slime Extract Storage"
-	desc = "A refrigerated storage unit for slime extracts"
+	name = "\improper Biological Sample Storage"
+	desc = "A refrigerated storage unit for xenobiological samples."
 	req_access = list(access_research)
 
 /obj/machinery/smartfridge/secure/extract/accept_check(var/obj/item/O as obj)
@@ -121,7 +121,7 @@
 /obj/machinery/smartfridge/drying_rack
 	name = "\improper Drying Rack"
 	desc = "A machine for drying plants."
-	icon_state = "drying_rack_on"
+	icon_state = "drying_rack"
 	icon_on = "drying_rack_on"
 	icon_off = "drying_rack"
 
@@ -239,14 +239,13 @@
 		user << "<span class='notice'>\The [src] smartly refuses [O].</span>"
 		return 1
 
-/obj/machinery/smartfridge/secure/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(istype(O, /obj/item/weapon/card/emag))
+/obj/machinery/smartfridge/secure/emag_act(var/remaining_charges, var/mob/user)
+	if(!emagged)
 		emagged = 1
 		locked = -1
 		user << "You short out the product lock on [src]."
-		return
+		return 1
 
-	..()
 
 /obj/machinery/smartfridge/attack_ai(mob/user as mob)
 	attack_hand(user)

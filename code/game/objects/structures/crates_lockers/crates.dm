@@ -5,9 +5,9 @@
 	desc = "A rectangular steel crate."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "crate"
-	var/points_per_crate = 5
 	icon_opened = "crateopen"
 	climbable = 1
+	var/points_per_crate = 5
 //	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
 	var/rigged = 0
 
@@ -69,7 +69,7 @@
 
 /obj/structure/closet/crate/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(opened)
-// TODO. Consider rig modules in unEquip()
+		// TODO. Consider rig modules in unEquip()
 		if(W.loc != user) // This should stop mounted modules ending up outside the module.
 			return
 		user.unEquip(W, src.loc)
@@ -187,7 +187,6 @@
 /obj/structure/closet/crate/secure/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(is_type_in_list(W, list(/obj/item/weapon/packageWrap, /obj/item/stack/cable_coil, /obj/item/device/radio/electropack, /obj/item/weapon/wirecutters)))
 		return ..()
-
 	if(istype(W, /obj/item/device/multitool) && locked)
 		var/obj/item/device/multitool/multi = W
 		if(multi.is_hack)
@@ -207,7 +206,15 @@
 		multi.is_hack=0
 		user.visible_message("<span class='warning'>[user] [locked?"locks":"unlocks"] [name] with a multitool.</span>",
 		"<span class='warning'>I [locked?"enable":"disable"] the locking modules.</span>")
-	if(locked && (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)))
+	else if(istype(W, /obj/item/weapon/melee/energy/blade))
+		emag_act(INFINITY, user)
+	else if(!opened || !brocken)
+		src.togglelock(user)
+		return
+	return ..()
+
+/obj/structure/closet/crate/secure/emag_act(var/remaining_charges, var/mob/user)
+	if(!broken)
 		overlays.Cut()
 		overlays += emag
 		overlays += sparks
@@ -216,11 +223,7 @@
 		src.locked = 0
 		src.broken = 1
 		user << "<span class='notice'>You unlock \the [src].</span>"
-		return
-	if(!opened)
-		src.togglelock(user)
-		return
-	return ..()
+		return 1
 
 /obj/structure/closet/crate/secure/emp_act(severity)
 	for(var/obj/O in src)
@@ -246,11 +249,11 @@
 	..()
 
 /obj/structure/closet/crate/plastic
-	points_per_crate = 1
 	name = "plastic crate"
 	desc = "A rectangular plastic crate."
 	icon_state = "plasticcrate"
 	icon_opened = "plasticcrateopen"
+	points_per_crate = 1
 
 /obj/structure/closet/crate/internals
 	name = "internals crate"
@@ -273,7 +276,7 @@
 
 /obj/structure/closet/crate/contraband
 	name = "Poster crate"
-	desc = "A random assortment of posters manufactured by providers NOT listed under Nanotrasen's whitelist."
+	desc = "A random assortment of posters manufactured by providers NOT listed under NanoTrasen's whitelist."
 	icon_state = "crate"
 	icon_opened = "crateopen"
 */
@@ -356,14 +359,9 @@
 
 /obj/structure/closet/crate/radiation/New()
 	..()
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
+	for(var/i in 1 to 4)
+		new /obj/item/clothing/suit/radiation(src)
+		new /obj/item/clothing/head/radiation(src)
 
 /obj/structure/closet/crate/secure/weapon
 	name = "weapons crate"

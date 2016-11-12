@@ -107,7 +107,7 @@
 	var/sdepth = A.storage_depth(src)
 	if((!isturf(A) && A == loc) || (sdepth != -1 && sdepth <= 1))
 		if(W)
-			var/resolved = A.attackby(W,src)
+			var/resolved = W.resolve_attackby(A, src)
 			if(!resolved && A && W)
 				W.afterattack(A, src, 1, params) // 1 indicates adjacency
 		else
@@ -127,7 +127,7 @@
 		if(A.Adjacent(src)) // see adjacent.dm
 			if(W)
 				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-				var/resolved = A.attackby(W,src)
+				var/resolved = W.resolve_attackby(A,src)
 				if(!resolved && A && W)
 					W.afterattack(A, src, 1, params) // 1: clicking something Adjacent
 			else

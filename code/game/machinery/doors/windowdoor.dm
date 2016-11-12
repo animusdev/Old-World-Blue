@@ -24,10 +24,16 @@
 		src.base_state = src.icon_state
 	return
 
+/obj/machinery/door/window/update_icon()
+	if(density)
+		icon_state = base_state
+	else
+		icon_state = "[base_state]open"
+
 /obj/machinery/door/window/proc/shatter(var/display_message = 1)
 	new /obj/item/weapon/material/shard(src.loc)
-	var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src.loc)
-	CC.amount = 2
+	new /obj/item/weapon/material/shard(src.loc)
+	new /obj/item/stack/cable_coil(src.loc, 1)
 	var/obj/item/weapon/airlock_electronics/ae
 	if(!electronics)
 		ae = new/obj/item/weapon/airlock_electronics( src.loc )
@@ -72,12 +78,11 @@
 					sleep(50)
 					close()
 		return
-	var/mob/M = AM // we've returned by here if M is not a mob
 	if (!( ticker ))
 		return
 	if (src.operating)
 		return
-	if (src.density && !M.small && src.allowed(AM))
+	if (src.density && src.allowed(AM))
 		open()
 		if(src.check_access(null))
 			sleep(50)
@@ -104,43 +109,39 @@
 		return 1
 
 /obj/machinery/door/window/open()
-	if (src.operating == 1) //doors can still open when emag-disabled
+	if (operating == 1) //doors can still open when emag-disabled
 		return 0
 	if (!ticker)
 		return 0
-	if(!src.operating) //in case of emag
-		src.operating = 1
-	flick(text("[]opening", src.base_state), src)
+	if (!operating) //in case of emag
+		operating = 1
+	flick(text("[src.base_state]opening"), src)
 	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
-	src.icon_state = text("[]open", src.base_state)
 	sleep(10)
 
 	explosion_resistance = 0
-	src.density = 0
-//	src.sd_SetOpacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
+	density = 0
+	update_icon()
 	update_nearby_tiles()
 
 	if(operating == 1) //emag again
-		src.operating = 0
+		operating = 0
 	return 1
 
 /obj/machinery/door/window/close()
-	if (src.operating)
+	if (operating)
 		return 0
 	src.operating = 1
 	flick(text("[]closing", src.base_state), src)
 	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
-	src.icon_state = src.base_state
 
-	src.density = 1
+	density = 1
+	update_icon()
 	explosion_resistance = initial(explosion_resistance)
-//	if(src.visible)
-//		SetOpacity(1)	//TODO: why is this here? Opaque windoors? ~Carn
 	update_nearby_tiles()
 
 	sleep(10)
-
-	src.operating = 0
+	operating = 0
 	return 1
 
 /obj/machinery/door/window/take_damage(var/damage)
@@ -164,6 +165,14 @@
 			return
 	return src.attackby(user, user)
 
+/obj/machinery/door/window/emag_act(var/remaining_charges, var/mob/user)
+	if (density && operable())
+		operating = -1
+		flick("[src.base_state]spark", src)
+		sleep(6)
+		open()
+		return 1
+
 /obj/machinery/door/window/attackby(obj/item/weapon/I as obj, mob/user as mob)
 
 	//If it's in the process of opening/closing, ignore the click
@@ -171,18 +180,14 @@
 		return
 
 	//Emags and ninja swords? You may pass.
-	if (src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
-		src.operating = -1
-		if(istype(I, /obj/item/weapon/melee/energy/blade))
+	if (istype(I, /obj/item/weapon/melee/energy/blade))
+		if(emag_act(10, user))
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
 			playsound(src.loc, "sparks", 50, 1)
 			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 			visible_message("<span class='warning'>The glass door was sliced open by [user]!</span>")
-		flick("[src.base_state]spark", src)
-		sleep(6)
-		open()
 		return 1
 
 	//If it's emagged, crowbar can pry electronics out.
@@ -195,9 +200,9 @@
 			var/obj/structure/windoor_assembly/wa = new/obj/structure/windoor_assembly(src.loc)
 			if (istype(src, /obj/machinery/door/window/brigdoor))
 				wa.secure = "secure_"
-				wa.name = "Secure Wired Windoor Assembly"
+				wa.name = "secure wired windoor assembly"
 			else
-				wa.name = "Wired Windoor Assembly"
+				wa.name = "wired windoor assembly"
 			if (src.base_state == "right" || src.base_state == "rightsecure")
 				wa.facing = "r"
 			wa.set_dir(src.dir)
