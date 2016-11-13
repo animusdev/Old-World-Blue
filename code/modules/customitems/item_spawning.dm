@@ -80,6 +80,17 @@
 	var/datum/custom_item/current_data
 	var/list/L
 
+///Fox231///
+
+	L = list()
+
+	current_data = new()
+	current_data.assoc_key = "fox231"
+	current_data.character_name = "Zoy Anderson"
+	current_data.item_path = /obj/item/clothing/under/phantom
+	L |= current_data
+
+	custom_items["fox231"] = L
 
 ///Shamah///
 
