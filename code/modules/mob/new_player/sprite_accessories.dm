@@ -160,6 +160,22 @@
 		icon_state = "hbraid"
 		gender = FEMALE
 
+	buisness
+		name = "Buisness Hair"
+		icon_state = "business"
+
+	buisness2
+		name = "Buisness Hair 2"
+		icon_state = "business2"
+
+	buisness3
+		name = "Buisness Hair 3"
+		icon_state = "business3"
+
+	buisness4
+		name = "Buisness Hair 4"
+		icon_state = "business4"
+
 	bun
 		name = "Bun"
 		icon_state = "bun"
