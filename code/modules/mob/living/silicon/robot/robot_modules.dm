@@ -224,8 +224,8 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	var/datum/matter_synth/medicine/medicine = new(10000)
 	synths += medicine
 
-	var/obj/item/stack/nanopaste/N = new /obj/item/stack/nanopaste(src)
-	var/obj/item/stack/medical/advanced/bruise_pack/B = new /obj/item/stack/medical/advanced/bruise_pack(src)
+	var/obj/item/stack/nanopaste/N = new(src)
+	var/obj/item/stack/medical/bruise_pack/advanced/B = new(src)
 	N.uses_charge = 1
 	N.charge_costs = list(1000)
 	N.synths = list(medicine)

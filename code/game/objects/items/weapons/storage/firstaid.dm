@@ -102,11 +102,11 @@
 	..()
 	if (empty) return
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector( src )
-	new /obj/item/stack/medical/advanced/bruise_pack(src)
-	new /obj/item/stack/medical/advanced/bruise_pack(src)
-	new /obj/item/stack/medical/advanced/bruise_pack(src)
-	new /obj/item/stack/medical/advanced/ointment(src)
-	new /obj/item/stack/medical/advanced/ointment(src)
+	new /obj/item/stack/medical/bruise_pack/advanced(src)
+	new /obj/item/stack/medical/bruise_pack/advanced(src)
+	new /obj/item/stack/medical/bruise_pack/advanced(src)
+	new /obj/item/stack/medical/ointment/advanced(src)
+	new /obj/item/stack/medical/ointment/advanced(src)
 	new /obj/item/stack/medical/splint(src)
 	return
 
@@ -144,7 +144,7 @@
 	new /obj/item/weapon/surgicaldrill(src)
 	new /obj/item/weapon/bonegel(src)
 	new /obj/item/weapon/FixOVein(src)
-	new /obj/item/stack/medical/advanced/bruise_pack(src)
+	new /obj/item/stack/medical/bruise_pack/advanced(src)
 
 	make_exact_fit()
 
