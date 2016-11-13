@@ -135,7 +135,6 @@
 
 	custom_items["solareclipse84"] = L
 
-
 //Egorkor///
 
 	L = list()
@@ -148,6 +147,21 @@
 	L |= current_data
 
 	custom_items["egorkor"] = L
+
+
+///simonmoore///
+
+	L = list()
+
+	current_data = new()
+	current_data.assoc_key = "elektronika71"
+	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
+	current_data.character_name = "Weston Ludwig"
+	current_data.item_path = /obj/item/clothing/accessory/shepard
+	L |= current_data
+
+	custom_items["elektronika71"] = L
+
 ////Wajtswv////
 
 	L = list()
