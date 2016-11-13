@@ -16,8 +16,8 @@
 	var/list/secured_mobs = list()
 
 /obj/machinery/suspension_gen/New()
-	src.cell = new/obj/item/weapon/cell/high(src)
 	..()
+	src.cell = new /obj/item/weapon/cell/high(src)
 
 /obj/machinery/suspension_gen/process()
 	set background = 1
@@ -44,7 +44,7 @@
 			if(!suspension_field.contents.len)
 				suspension_field.icon_state = "energynet"
 				suspension_field.overlays += "shield2"
-			I.loc = suspension_field
+			I.forceMove(suspension_field)
 
 		for(var/mob/living/simple_animal/M in T)
 			M.weakened = max(M.weakened, 3)
@@ -55,7 +55,7 @@
 		if(cell.charge <= 0)
 			deactivate()
 
-/obj/machinery/suspension_gen/interact(mob/user as mob)
+/obj/machinery/suspension_gen/interact(var/mob/user)
 	var/dat = "<b>Multi-phase mobile suspension field generator MK II \"Steadfast\"</b><br>"
 	if(cell)
 		var/colour = "red"
@@ -220,17 +220,19 @@
 		else
 			user << "<span class='warning'>Remove [auth_card] first.</span>"
 
-/obj/machinery/suspension_gen/proc/attempt_unlock(var/obj/item/weapon/card/C)
-	if(!open)
-		if(istype(C, /obj/item/weapon/card/emag) && cell.charge > 0)
-			//put sparks here
-			if(prob(95))
-				locked = 0
+/obj/machinery/suspension_gen/proc/attempt_unlock(var/obj/item/weapon/card/C, var/mob/user)
+	if(!panel_open)
+		if(istype(C, /obj/item/weapon/card/emag))
+			C.resolve_attackby(src, user)
 		else if(istype(C, /obj/item/weapon/card/id) && check_access(C))
 			locked = 0
-
 		if(!locked)
 			return 1
+
+/obj/machinery/suspension_gen/emag_act(var/remaining_charges, var/mob/user)
+	if(cell.charge > 0 && locked)
+		locked = 0
+		return 1
 
 //checks for whether the machine can be activated or not should already have occurred by this point
 /obj/machinery/suspension_gen/proc/activate()
@@ -299,7 +301,7 @@
 	//drop anything we picked up
 	var/turf/T = get_turf(suspension_field)
 
-	for(var/mob/M in T)
+	for(var/mob/living/M in T)
 		M << "<span class='info'>You no longer feel like floating.</span>"
 		M.weakened = min(M.weakened, 3)
 
@@ -309,7 +311,6 @@
 	icon_state = "suspension2"
 
 /obj/machinery/suspension_gen/Destroy()
-	//safety checks: clear the field and drop anything it's holding
 	deactivate()
 	..()
 
@@ -341,6 +342,6 @@
 	var/field_type = "chlorine"
 
 /obj/effect/suspension_field/Destroy()
-	for(var/obj/I in src)
+	for(var/atom/movable/I in src)
 		I.loc = src.loc
 	..()

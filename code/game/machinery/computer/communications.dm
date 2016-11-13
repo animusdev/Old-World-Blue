@@ -264,11 +264,11 @@
 
 	src.updateUsrDialog()
 
-/obj/machinery/computer/communications/attackby(var/obj/I as obj, var/mob/user as mob)
-	if(istype(I,/obj/item/weapon/card/emag/))
+/obj/machinery/computer/communications/emag_act(var/remaining_charges, var/mob/user)
+	if(!emagged)
 		src.emagged = 1
 		user << "You scramble the communication routing circuits!"
-	..()
+		return 1
 
 /obj/machinery/computer/communications/attack_ai(var/mob/user as mob)
 	return src.attack_hand(user)
@@ -519,10 +519,10 @@
 
 
 /proc/is_relay_online()
-    for(var/obj/machinery/bluespacerelay/M in world)
-        if(M.stat == 0)
-            return 1
-    return 0
+	for(var/obj/machinery/bluespacerelay/M in world)
+		if(M.stat == 0)
+			return 1
+	return 0
 
 /obj/machinery/computer/communications/proc/post_status(var/command, var/data1, var/data2)
 

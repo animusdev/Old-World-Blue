@@ -223,8 +223,8 @@
 	attack_hand(usr)
 	return
 
-/mob/living/bot/medbot/Emag(var/mob/user)
-	..()
+/mob/living/bot/medbot/emag_act(var/remaining_uses, var/mob/user)
+	. = ..()
 	if(!emagged)
 		if(user)
 			user << "<span class='warning'>You short out [src]'s reagent synthesis circuits.</span>"

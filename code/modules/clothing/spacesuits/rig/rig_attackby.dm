@@ -1,6 +1,6 @@
-/obj/item/weapon/rig/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/weapon/rig/attackby(obj/item/W as obj, mob/living/user as mob)
 
-	if(!istype(user,/mob/living)) return 0
+	if(!istype(user)) return 0
 
 	if(electrified != 0)
 		if(shock(user)) //Handles removing charge from the cell, as well. No need to do that here.
@@ -16,13 +16,6 @@
 		if(subverted)
 			locked = 0
 			user << "<span class='danger'>It looks like the locking system has been shorted out.</span>"
-			return
-		else if(istype(W, /obj/item/weapon/card/emag))
-			req_access.Cut()
-			req_one_access.Cut()
-			locked = 0
-			subverted = 1
-			user << "<span class='danger'>You short out the access protocol for the suit.</span>"
 			return
 
 		if((!req_access || !req_access.len) && (!req_one_access || !req_one_access.len))
@@ -193,3 +186,12 @@
 		if(shock(user)) //Handles removing charge from the cell, as well. No need to do that here.
 			return
 	..()
+
+/obj/item/weapon/rig/emag_act(var/remaining_charges, var/mob/user)
+	if(!subverted)
+		req_access.Cut()
+		req_one_access.Cut()
+		locked = 0
+		subverted = 1
+		user << "<span class='danger'>You short out the access protocol for the suit.</span>"
+		return 1
