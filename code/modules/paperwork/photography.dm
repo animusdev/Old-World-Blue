@@ -55,6 +55,12 @@ var/global/photo_count = 0
 	else
 		user << "<span class='notice'>It is too far away.</span>"
 
+/obj/item/weapon/photo/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	if(user.zone_sel.selecting == O_EYES)
+		user.visible_message("<span class='notice'> [user] holds up a paper and shows it to [M]. </span>",\
+			"<span class='notice'>You show the paper to [M]. </span>")
+		M.examinate(src)
+
 /obj/item/weapon/photo/proc/show(mob/user as mob)
 	user << browse_rsc(img, "tmp_photo_[id].png")
 	user << browse("<html><head><title>[name]</title></head>" \
@@ -78,9 +84,10 @@ var/global/photo_count = 0
 	return
 
 
-/obj/item/weapon/photo/custom/attack_self(mob/user as mob)
+/obj/item/weapon/photo/custom/show(mob/user)
 	if(!img)
-		img = input("Set image for phote") as icon
+		img = input("Set image for photo") as icon
+		if(!img) return
 		var/icon/small_img = icon(img)
 		var/icon/ic = icon('icons/obj/items.dmi',"photo")
 		small_img.Scale(8, 8)

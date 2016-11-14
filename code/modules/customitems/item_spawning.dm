@@ -111,7 +111,7 @@
 	current_data = new()
 	current_data.assoc_key = "lethalghost"
 	current_data.character_name = "April Evans"
-	current_data.item_path = /obj/item/weapon/photo/custom
+	current_data.item_path = /obj/item/clothing/accessory/locket/Evans
 	L |= current_data
 
 	custom_items["lethalghost"] = L
