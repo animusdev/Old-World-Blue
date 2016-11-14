@@ -2303,7 +2303,7 @@
 "aSo" = (/obj/structure/disposalpipe/segment,/obj/machinery/hologram/holopad,/turf/simulated/floor,/area/hydroponics)
 "aSp" = (/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor,/area/hydroponics)
 "aSq" = (/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor,/area/hydroponics)
-"aSr" = (/obj/structure/table/rack{dir = 1},/obj/item/clothing/glasses/sunglasses/red,/obj/item/clothing/mask/chameleon,/turf/simulated/floor/plating,/area/maintenance/library)
+"aSr" = (/obj/structure/table/rack{dir = 1},/obj/item/clothing/glasses/sunglasses/red,/obj/item/chameleon/mask,/turf/simulated/floor/plating,/area/maintenance/library)
 "aSs" = (/obj/machinery/bookbinder,/turf/simulated/floor/wood,/area/library)
 "aSt" = (/obj/machinery/libraryscanner,/turf/simulated/floor/wood,/area/library)
 "aSu" = (/obj/machinery/door/airlock/glass{name = "Chapel Office"; req_access = list(22)},/obj/structure/cable/green{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor{icon_state = "dark"},/area/chapel/office)

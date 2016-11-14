@@ -1661,5 +1661,5 @@ datum/design/item/chameleon
 	desc = "A kit of dangerous, high-tech equipment with changeable looks."
 	id = "chameleon"
 	req_tech = list("syndicate" = 2)
-	materials = list("$metal" = 500)
-	build_path = /obj/item/weapon/storage/box/syndie_kit/chameleon
+	materials = list("$metal" = 300, "$glass" = 100)
+	build_path = /obj/item/chameleon

@@ -1,28 +1,42 @@
 var/global/list/chameleons_categories = list(
 	"uniform" = list(),
-	"head" = list(),
+	"hat" = list(),
 	"suit" = list(),
 	"shoes" = list(),
 	"backpack" = list(),
 	"gloves" = list(),
 	"mask" = list(),
-	"glasses" = list(),
-	"projectile" = list()
+	"glasses" = list()
 )
 
-/obj/item/proc/initialize_chameleon_list(var/style_list = "", var/basic_type, var/list/blocked = list())
-	var/list/check = chameleons_categories[style_list]
+/hook/startup/proc/populate_chameleons_lists()
+	initialize_chameleon_list("uniform", /obj/item/clothing/under, list(/obj/item/clothing/under/gimmick))
+	initialize_chameleon_list("hat", /obj/item/clothing/head)
+	initialize_chameleon_list("suit", /obj/item/clothing/suit,list(
+		/obj/item/clothing/suit/cyborg_suit,
+		/obj/item/clothing/suit/justice,
+		/obj/item/clothing/suit/storage/greatcoat)
+	)
+	initialize_chameleon_list("shoes", /obj/item/clothing/shoes, list(
+		/obj/item/clothing/shoes/syndigaloshes,
+		/obj/item/clothing/shoes/cyborg)
+	)
+	initialize_chameleon_list("gloves", /obj/item/clothing/gloves)
+	initialize_chameleon_list("mask", /obj/item/clothing/mask, list(/obj/item/clothing/mask/scarf))
+	initialize_chameleon_list("glasses", /obj/item/clothing/glasses)
+	return 1
+
+/proc/initialize_chameleon_list(category = "", var/basic_type, var/list/blocked = list())
+	var/list/check = chameleons_categories[category]
 	if(check && check.len) return
-	permeability_coefficient = 0.90
-	chameleons_categories[style_list] = list("protect")
 	var/list/styles = list()
-	for(var/T in typesof(basic_type) - blocked - type)
+	for(var/T in subtypesof(basic_type) - blocked)
 		var/obj/O = T
 		styles[initial(O.name)] = T
-	chameleons_categories[style_list] = styles
+	chameleons_categories[category] = styles
 	return
 
-/proc/change_item_appearance(var/obj/item/clothing/C, var/obj/item/clothing/new_type)
+/proc/change_item_appearance(var/obj/item/C, var/obj/item/clothing/new_type)
 	if(!istype(C) || !new_type) return
 	C.desc = initial(new_type.desc)
 	C.name = initial(new_type.name)
@@ -31,158 +45,224 @@ var/global/list/chameleons_categories = list(
 	C.item_state = initial(new_type.item_state)
 	C.wear_state = initial(new_type.wear_state)
 
+	C.slot_flags = initial(new_type.slot_flags)
+
 	C.item_state_slots = initial(new_type.item_state_slots)
 	C.body_parts_covered = initial(new_type.body_parts_covered)
 	C.flags_inv = initial(new_type.flags_inv)
 	C.description_info = initial(new_type.description_info)
 
+/obj/item/chameleon
+	name = "chameleon module"
+	desc = "Miniature hologram generator."
+	permeability_coefficient = 0.90
+	icon = 'icons/obj/device.dmi'
+	icon_state = "shield0"
+	origin_tech = "syndicate=2"
+	var/category = ""
+	var/obj/item/captured_item
+
+/obj/item/chameleon/attack_self(var/mob/living/user)
+	if(in_use) return
+	if(category)
+		change(user)
+
+/obj/item/chameleon/resolve_attackby(obj/item/A, mob/user)
+	if(!category && !captured_item)
+		if(istype(A, /obj/item/clothing/under))
+			category = "uniform"
+		else if(istype(A, /obj/item/clothing/head))
+			category = "hat"
+		else if(istype(A, /obj/item/clothing/suit))
+			category = "suit"
+		else if(istype(A, /obj/item/clothing/shoes))
+			category = "shoes"
+		else if(istype(A, /obj/item/clothing/gloves))
+			category = "gloves"
+		else if(istype(A, /obj/item/clothing/mask))
+			category = "mask"
+		else if(istype(A, /obj/item/clothing/glasses))
+			category = "glasses"
+		if(category)
+			if(!isturf(A.loc))
+				user << "<span class='warning'>You must place [A] on flat surface for attaching [src]!</span>"
+				category = ""
+				return 1
+			user.drop_from_inventory(src, A.loc)
+			captured_item = A
+			src.w_class = captured_item.w_class
+			A.forceMove(src)
+			change_item_appearance(src, captured_item.type)
+			user << "<span class='notice'>You attach [src] to [captured_item]</span>"
+			return 1
+	return ..()
+
+
+/obj/item/chameleon/proc/change(var/mob/living/user)
+	set name = "Change Item Appearance"
+	set desc = "Change item appearance"
+	set category = "Object"
+	set src in usr
+
+	if(in_use) return
+	in_use = 1
+	if(!user)
+		user = usr
+	var/picked = input("Select [category] to change it to", "Chameleon Setup") \
+		as null|anything in chameleons_categories[category]
+	if(!picked || !src in usr)
+		return
+	var/newtype = chameleons_categories[category][picked]
+	change_item_appearance(src, newtype)
+
+	update_icon()
+
+	in_use = 0
+
+/obj/item/chameleon/update_icon()
+	..() // Blood overlay and so on.
+	// Kostily time!
+	var/mob/living/carbon/human/user = loc
+	if(!istype(user)) return
+
+	if(src == user.get_active_hand() || src == user.get_inactive_hand())
+		update_held_icon()
+	else
+		switch(category)
+			if("uniform")	user.update_inv_w_uniform()
+			if("hat")		user.update_inv_head()
+			if("suit")		user.update_inv_wear_suit()
+			if("shoes")		user.update_inv_shoes()
+			if("backpack")	user.update_inv_back()
+			if("gloves")	user.update_inv_gloves()
+			if("mask")		user.update_inv_wear_mask()
+			if("glasses")	user.update_inv_glasses()
+
 //*****************
 //**Cham Jumpsuit**
 //*****************
 
-/obj/item/clothing/under/chameleon
+/obj/item/chameleon/under
 //starts off as black
 	name = "black jumpsuit"
 	icon_state = "black"
 	item_state = "bl_suit"
 	desc = "It's a plain jumpsuit. It seems to have a small dial on the wrist."
 	origin_tech = "syndicate=3"
-	var/style_list = "uniform"
-	New()
-		..()
-		initialize_chameleon_list(style_list, parent_type, list(/obj/item/clothing/under/gimmick))
+	category = "uniform"
 
-/obj/item/clothing/under/chameleon/emp_act(severity)
+/obj/item/chameleon/under/emp_act(severity)
 	name = "psychedelic"
 	desc = "Groovy!"
 	icon_state = "psyche"
-	item_state_slots[slot_w_uniform_str] = "psyche"
 	update_icon()
-	update_clothing_icon()
-
-/obj/item/clothing/under/chameleon/verb/change()
-	set name = "Change Jumpsuit Appearance"
-	set category = "Object"
-	set src in usr
-
-	var/picked = input("Select jumpsuit to change it to", "Chameleon Jumpsuit") as null|anything in chameleons_categories[style_list]
-	if(!picked)
-		return
-
-	var/newtype = chameleons_categories[style_list][picked]
-	change_item_appearance(src,newtype)
-	update_clothing_icon()
 
 //*****************
 //**Chameleon Hat**
 //*****************
 
-/obj/item/clothing/head/chameleon
+/obj/item/chameleon/head
 	name = "grey cap"
 	icon_state = "greysoft"
 	item_state = "greysoft"
 	desc = "It looks like a plain hat, but upon closer inspection, \
 			there's an advanced holographic array installed inside. It seems to have a small dial inside."
-	origin_tech = "syndicate=3"
 	body_parts_covered = 0
-	var/style_list = "head"
-	New()
-		..()
-		initialize_chameleon_list(style_list, parent_type)
+	category = "hat"
 
-/obj/item/clothing/head/chameleon/emp_act(severity)
+/obj/item/chameleon/head/emp_act(severity)
 	name = "grey cap"
 	desc = "It's a baseball hat in a tasteful grey colour."
 	icon_state = "greysoft"
 	update_icon()
-	update_clothing_icon()
-	update_clothing_icon()
-
-/obj/item/clothing/head/chameleon/verb/change()
-	set name = "Change Hat/Helmet Appearance"
-	set category = "Object"
-	set src in usr
-
-	var/picked = input("Select headwear to change it to", "Chameleon Hat") as null|anything in chameleons_categories[style_list]
-	if(!picked)
-		return
-	var/newtype = chameleons_categories[style_list][picked]
-	change_item_appearance(src, newtype)
-	update_clothing_icon()
-
 
 //******************
 //**Chameleon Suit**
 //******************
 
-/obj/item/clothing/suit/chameleon
+/obj/item/chameleon/suit
 	name = "armor"
 	icon_state = "armor"
 	item_state = "armor"
 	desc = "It appears to be a vest of standard armor, except this is embedded with a hidden holographic cloaker, \
 			allowing it to change it's appearance, but offering no protection.. It seems to have a small dial inside."
-	origin_tech = "syndicate=3"
-	var/style_list = "suit"
-	New()
-		..()
-		initialize_chameleon_list(style_list, parent_type, list(/obj/item/clothing/suit/cyborg_suit,\
-									/obj/item/clothing/suit/justice, /obj/item/clothing/suit/storage/greatcoat))
+	category = "suit"
 
-/obj/item/clothing/suit/chameleon/emp_act(severity)
+/obj/item/chameleon/suit/emp_act(severity)
 	name = "armor"
 	desc = "An armored vest that protects against some damage."
 	icon_state = "armor"
 	update_icon()
-	update_clothing_icon()
-
-/obj/item/clothing/suit/chameleon/verb/change()
-	set name = "Change Exosuit Appearance"
-	set category = "Object"
-	set src in usr
-
-	var/picked = input("Select exosuit to change it to", "Chameleon Exosuit") as null|anything in chameleons_categories[style_list]
-	if(!picked)
-		return
-	var/newtype = chameleons_categories[style_list][picked]
-	change_item_appearance(src, newtype)
-	update_clothing_icon()
 
 //*******************
 //**Chameleon Shoes**
 //*******************
 
-/obj/item/clothing/shoes/chameleon
+/obj/item/chameleon/shoes
 	name = "black shoes"
 	icon_state = "black"
 	item_state = "black"
 	desc = "They're comfy black shoes, with clever cloaking technology built in.\
 			It seems to have a small dial on the back of each shoe."
-	origin_tech = "syndicate=3"
-	var/style_list = "shoes"
-	New()
-		..()
-		initialize_chameleon_list(style_list, parent_type,\
-			list(/obj/item/clothing/shoes/syndigaloshes, /obj/item/clothing/shoes/cyborg))
+	category = "shoes"
 
-/obj/item/clothing/shoes/chameleon/emp_act(severity)
+/obj/item/chameleon/shoes/emp_act(severity)
 	name = "black shoes"
 	desc = "A pair of black shoes."
 	icon_state = "black"
 	item_state = "black"
 	update_icon()
-	update_clothing_icon()
 
-/obj/item/clothing/shoes/chameleon/verb/change()
-	set name = "Change Footwear Appearance"
-	set category = "Object"
-	set src in usr
+//********************
+//**Chameleon Gloves**
+//********************
 
-	var/picked = input("Select shoes to change it to", "Chameleon Shoes") as null|anything in chameleons_categories[style_list]
-	if(!picked)
-		return
-	var/newtype = chameleons_categories[style_list][picked]
-	change_item_appearance(src, newtype)
-	update_clothing_icon()
+/obj/item/chameleon/gloves
+	name = "black gloves"
+	icon_state = "black"
+	item_state = "bgloves"
+	desc = "It looks like a pair of gloves, but it seems to have a small dial inside."
+	category = "gloves"
+
+/obj/item/chameleon/gloves/emp_act(severity)
+	name = "black gloves"
+	desc = "It looks like a pair of gloves, but it seems to have a small dial inside."
+	icon_state = "black"
+	update_icon()
+
+//******************
+//**Chameleon Mask**
+//******************
+
+/obj/item/chameleon/mask
+	name = "gas mask"
+	icon_state = "gas_alt"
+	item_state = "gas_alt"
+	desc = "It looks like a plain gask mask, but on closer inspection, it seems to have a small dial inside."
+	category = "mask"
+
+/obj/item/chameleon/mask/emp_act(severity)
+	name = "gas mask"
+	desc = "It's a gas mask."
+	icon_state = "gas_alt"
+	update_icon()
+
+//*********************
+//**Chameleon Glasses**
+//*********************
+
+/obj/item/chameleon/glasses
+	name = "Optical Meson Scanner"
+	icon_state = "meson"
+	item_state = "glasses"
+	desc = "It looks like a plain set of mesons, but on closer inspection, it seems to have a small dial inside."
+	category = "glasses"
+
+/obj/item/chameleon/glasses/emp_act(severity)
+	name = "Optical Meson Scanner"
+	desc = "It's a set of mesons."
+	icon_state = "meson"
+	update_icon()
 
 //**********************
 //**Chameleon Backpack**
@@ -193,12 +273,13 @@ var/global/list/chameleons_categories = list(
 	icon_state = "backpack"
 	item_state = "backpack"
 	desc = "A backpack outfitted with cloaking tech. It seems to have a small dial inside, kept away from the storage."
-	origin_tech = "syndicate=3"
-	var/style_list = "backpack"
-	New()
-		..()
-		initialize_chameleon_list(style_list, parent_type,\
-			list(/obj/item/weapon/storage/backpack/satchel/withwallet))
+	var/list/styles = list()
+
+/obj/item/weapon/storage/backpack/chameleon/New()
+	if(styles && styles.len) return
+	for(var/T in typesof(/obj/item/weapon/storage/backpack) - type)
+		var/obj/O = T
+		styles[initial(O.name)] = T
 
 /obj/item/weapon/storage/backpack/chameleon/emp_act(severity)
 	name = "backpack"
@@ -206,122 +287,18 @@ var/global/list/chameleons_categories = list(
 	icon_state = "backpack"
 	item_state = "backpack"
 	update_icon()
-	if (ismob(src.loc))
-		var/mob/M = src.loc
-		M.update_inv_back()
 
 /obj/item/weapon/storage/backpack/chameleon/verb/change()
 	set name = "Change Backpack Appearance"
 	set category = "Object"
 	set src in usr
 
-	var/picked = input("Select backpack to change it to", "Chameleon Backpack") as null|anything in chameleons_categories[style_list]
-	if(!picked)
-		return
-	var/newtype = chameleons_categories[style_list][picked]
+	var/picked = input("Select backpack to change it to", "Chameleon Backpack") as null|anything in styles
+	if(!picked) return
+
+	var/newtype = styles[picked]
 	change_item_appearance(src, newtype)
 
-//********************
-//**Chameleon Gloves**
-//********************
-
-/obj/item/clothing/gloves/chameleon
-	name = "black gloves"
-	icon_state = "black"
-	item_state = "bgloves"
-	desc = "It looks like a pair of gloves, but it seems to have a small dial inside."
-	origin_tech = "syndicate=3"
-	var/style_list = "gloves"
-	New()
-		..()
-		initialize_chameleon_list(style_list, parent_type)
-
-/obj/item/clothing/gloves/chameleon/emp_act(severity)
-	name = "black gloves"
-	desc = "It looks like a pair of gloves, but it seems to have a small dial inside."
-	icon_state = "black"
-	update_icon()
-	update_clothing_icon()
-
-/obj/item/clothing/gloves/chameleon/verb/change()
-	set name = "Change Gloves Appearance"
-	set category = "Object"
-	set src in usr
-
-	var/picked = input("Select gloves to change it to", "Chameleon Gloves") as null|anything in chameleons_categories[style_list]
-	if(!picked)
-		return
-	var/newtype = chameleons_categories[style_list][picked]
-	change_item_appearance(src, newtype)
-	update_clothing_icon()
-
-//******************
-//**Chameleon Mask**
-//******************
-
-/obj/item/clothing/mask/chameleon
-	name = "gas mask"
-	icon_state = "gas_alt"
-	item_state = "gas_alt"
-	desc = "It looks like a plain gask mask, but on closer inspection, it seems to have a small dial inside."
-	origin_tech = "syndicate=3"
-	var/style_list = "mask"
-	New()
-		..()
-		initialize_chameleon_list(style_list, parent_type, list(/obj/item/clothing/mask/scarf))
-
-/obj/item/clothing/mask/chameleon/emp_act(severity)
-	name = "gas mask"
-	desc = "It's a gas mask."
-	icon_state = "gas_alt"
-	update_icon()
-	update_clothing_icon()
-
-/obj/item/clothing/mask/chameleon/verb/change()
-	set name = "Change Mask Appearance"
-	set category = "Object"
-	set src in usr
-
-	var/picked = input("Select mask to change it to", "Chameleon Mask") as null|anything in chameleons_categories[style_list]
-	if(!picked)
-		return
-	var/newtype = chameleons_categories[style_list][picked]
-	change_item_appearance(src, newtype)
-	update_clothing_icon()
-
-//*********************
-//**Chameleon Glasses**
-//*********************
-
-/obj/item/clothing/glasses/chameleon
-	name = "Optical Meson Scanner"
-	icon_state = "meson"
-	item_state = "glasses"
-	desc = "It looks like a plain set of mesons, but on closer inspection, it seems to have a small dial inside."
-	origin_tech = "syndicate=3"
-	var/style_list = "glasses"
-	New()
-		..()
-		initialize_chameleon_list(style_list, parent_type)
-
-/obj/item/clothing/glasses/chameleon/emp_act(severity)
-	name = "Optical Meson Scanner"
-	desc = "It's a set of mesons."
-	icon_state = "meson"
-	update_icon()
-	update_clothing_icon()
-
-/obj/item/clothing/glasses/chameleon/verb/change()
-	set name = "Change Glasses Appearance"
-	set category = "Object"
-	set src in usr
-
-	var/picked = input("Select glasses to change it to", "Chameleon Glasses") as null|anything in chameleons_categories[style_list]
-	if(!picked)
-		return
-	var/newtype = chameleons_categories[style_list][picked]
-	change_item_appearance(src, newtype)
-	update_clothing_icon()
 
 //*****************
 //**Chameleon Gun**
@@ -337,10 +314,14 @@ var/global/list/chameleons_categories = list(
 	origin_tech = "combat=2;materials=2;syndicate=8"
 	ammo_type = "/obj/item/ammo_casing/chameleon"
 	matter = list()
-	var/style_list = "projectile"
-	New()
-		..()
-		initialize_chameleon_list(style_list, parent_type)
+	var/global/list/styles = list()
+
+/obj/item/weapon/gun/projectile/chameleon/New()
+	..()
+	if(styles && styles.len) return
+	for(var/T in subtypesof(/obj/item/weapon/gun/projectile) - type)
+		var/obj/O = T
+		styles[initial(O.name)] = T
 
 /obj/item/weapon/gun/projectile/chameleon/emp_act(severity)
 	name = "desert eagle"
@@ -357,6 +338,8 @@ var/global/list/chameleons_categories = list(
 	set category = "Object"
 	set src in usr
 
-	var/picked = input("Select backpack to change it to", "Chameleon Backpack") as null|anything in chameleons_categories[style_list]
-	var/newtype = chameleons_categories[style_list][picked]
+	var/picked = input("Select backpack to change it to", "Chameleon Backpack") as null|anything in styles
+	if(!picked) return
+
+	var/newtype = styles[picked]
 	change_item_appearance(src, newtype)
