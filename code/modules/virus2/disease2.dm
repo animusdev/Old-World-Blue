@@ -45,7 +45,7 @@
 	var/list/res = list()
 	for (var/specie in all_species)
 		var/datum/species/S = all_species[specie]
-		if(!S.virus_immune  && S.flags & CAN_JOIN)
+		if(!S.virus_immune && S.flags & CAN_JOIN)
 			meat += S
 	if(meat.len)
 		var/num = rand(1,meat.len)

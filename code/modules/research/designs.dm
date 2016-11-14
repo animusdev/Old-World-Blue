@@ -137,11 +137,6 @@ datum/design/circuit/operating
 	id = "operating"
 	build_path = /obj/item/weapon/circuitboard/operating
 
-datum/design/circuit/pandemic
-	name = "PanD.E.M.I.C. 2200"
-	id = "pandemic"
-	build_path = /obj/item/weapon/circuitboard/pandemic
-
 datum/design/circuit/scan_console
 	name = "DNA machine"
 	id = "scan_console"

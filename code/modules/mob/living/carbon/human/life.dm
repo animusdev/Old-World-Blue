@@ -797,7 +797,7 @@
 
 	if(status_flags & GODMODE)	return 0	//godmode
 
-	var/obj/item/organ/internal/node/light_organ = locate() in internal_organs //LETHALGHOST: Check this.
+	var/obj/item/organ/internal/node/light_organ = locate() in internal_organs
 
 	if(!isSynthetic())
 		if(light_organ && !light_organ.is_broken())
@@ -1500,9 +1500,6 @@
 
 	if (BITTEST(hud_updateflag, STATUS_HUD))
 		var/foundVirus = 0
-		for(var/datum/disease/D in viruses)
-			if(!D.hidden[SCANNER])
-				foundVirus++
 		for (var/ID in virus2)
 			if (ID in virusDB)
 				foundVirus = 1
