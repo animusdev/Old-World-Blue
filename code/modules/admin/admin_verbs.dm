@@ -110,7 +110,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
-        /client/proc/everyone_random,
+	/client/proc/everyone_random,
 	/client/proc/cinematic,
 	/datum/admins/proc/toggle_aliens,
 	/datum/admins/proc/toggle_space_ninja,
@@ -160,7 +160,7 @@ var/list/admin_verbs_server = list(
 	/client/proc/nanomapgen_DumpImage
 	)
 var/list/admin_verbs_debug = list(
-        /client/proc/getruntimelog,                     /*allows us to access runtime logs to somebody*/
+	/client/proc/getruntimelog,                     /*allows us to access runtime logs to somebody*/
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
 	/client/proc/kill_air,

@@ -307,7 +307,7 @@ var/global/list/chameleons_categories = list(
 	max_shells = 7
 	caliber = ".45"
 	origin_tech = "combat=2;materials=2;syndicate=3"
-	ammo_type = "/obj/item/ammo_casing/chameleon"
+	ammo_type = /obj/item/ammo_casing/chameleon
 	matter = list()
 
 /obj/item/weapon/gun/projectile/chameleon/New()

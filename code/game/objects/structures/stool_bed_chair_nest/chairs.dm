@@ -231,7 +231,7 @@
 	base_icon = "schair"
 
 /obj/structure/bed/chair/plastic/shuttle/New(var/newloc)
-  ..(newloc, "plastic", "plastic")
+	..(newloc, "plastic", "plastic")
 
 
 /obj/structure/bed/chair/plastic/shuttle/set_dir()

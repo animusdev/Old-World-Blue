@@ -50,7 +50,7 @@
 	name = "Empty boxes"
 	contains = list(/obj/item/weapon/storage/box = 10)
 	cost = 10
-	containertype = "/obj/structure/closet/crate"
+	containertype = /obj/structure/closet/crate
 	containername = "Empty box crate"
 
 /datum/supply_packs/supply/bureaucracy
