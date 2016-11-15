@@ -1454,6 +1454,24 @@ var/global/list/gear_datums = list()
 	cost = 2
 	slot = slot_wear_suit
 
+/datum/gear/flannel
+	display_name = "grey flannel"
+	path = /obj/item/clothing/suit/storage/flannel
+	cost = 2
+	slot = slot_wear_suit
+
+/datum/gear/flannelred
+	display_name = "red flannel"
+	path = /obj/item/clothing/suit/storage/flannel/red
+	cost = 2
+	slot = slot_wear_suit
+
+/datum/gear/flannelaqua
+	display_name = "aqua flannel"
+	path = /obj/item/clothing/suit/storage/flannel/aqua
+	cost = 2
+	slot = slot_wear_suit
+
 // Belt
 
 /datum/gear/fannypack
