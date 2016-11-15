@@ -268,6 +268,7 @@
 		new /obj/item/weapon/gun/projectile/colt/detective(src)
 		new /obj/item/clothing/accessory/holster/armpit(src)
 		new /obj/item/clothing/glasses/hud/security(src)
+		new /obj/item/weapon/storage/belt/detective(src)
 		return
 
 /obj/structure/closet/secure_closet/cabinet/forentech
@@ -293,6 +294,7 @@
 		new /obj/item/weapon/storage/briefcase/crimekit(src)
 		new /obj/item/clothing/suit/storage/toggle/labcoat/forensic(src)
 		new /obj/item/clothing/under/forensic(src)
+		new /obj/item/weapon/storage/belt/detective(src)
 		return
 
 

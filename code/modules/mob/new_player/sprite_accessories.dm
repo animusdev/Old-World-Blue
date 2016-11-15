@@ -783,6 +783,10 @@
 		icon_state = "elvis"
 		species_allowed = list("Human","Unathi")
 
+	fiveoclock
+		name = "Five o Clock Shadow"
+		icon_state = "fiveoclock"
+
 	fullbeard
 		name = "Full Beard"
 		icon_state = "fullbeard"
