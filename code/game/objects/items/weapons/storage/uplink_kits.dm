@@ -140,7 +140,6 @@
 	new /obj/item/chameleon/mask(src)
 	new /obj/item/chameleon/glasses(src)
 	new /obj/item/weapon/gun/projectile/chameleon(src)
-	new /obj/item/ammo_magazine/chameleon(src)
 
 /obj/item/weapon/storage/box/syndie_kit/clerical
 	name = "clerical kit"
