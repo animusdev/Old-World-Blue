@@ -1309,7 +1309,10 @@
 	var/integrity = health/initial(health)*100
 	var/cell_charge = get_charge()
 	var/tank_pressure = internal_tank ? round(internal_tank.return_pressure(),0.01) : "None"
-	var/tank_temperature = internal_tank ? internal_tank.return_temperature() : "Unknown"
+	var/tank_temperature = "Unknown"
+	if(internal_tank)
+		var/tmp_temp = internal_tank.return_temperature()
+		tank_temperature = "[tmp_temp]K|[tmp_temp - T0C]&deg;C"
 	var/cabin_pressure = round(return_pressure(),0.01)
 	var/output = {"
 		[report_internal_damage()]
@@ -1318,7 +1321,7 @@
 		<b>Powercell charge: </b>[isnull(cell_charge)?"No powercell installed":"[cell.percent()]%"]<br>
 		<b>Air source: </b>[use_internal_tank?"Internal Airtank":"Environment"]<br>
 		<b>Airtank pressure: </b>[tank_pressure]kPa<br>
-		<b>Airtank temperature: </b>[tank_temperature]K|[tank_temperature - T0C]&deg;C<br>
+		<b>Airtank temperature: </b>[tank_temperature]<br>
 		<b>Cabin pressure: </b>[cabin_pressure>WARNING_HIGH_PRESSURE ? "<font color='red'>[cabin_pressure]</font>": cabin_pressure]kPa<br>
 		<b>Cabin temperature: </b> [return_temperature()]K|[return_temperature() - T0C]&deg;C<br>
 		<b>Lights: </b>[lights?"on":"off"]<br>
