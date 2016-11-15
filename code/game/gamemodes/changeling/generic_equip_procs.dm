@@ -244,7 +244,9 @@
 		return 0
 
 	var/obj/item/weapon/W = new weapon_type(src)
-	src.put_in_hands(W)
+	if(!src.put_in_hands(W))
+		qdel(W)
+		return 0
 
 	src.mind.changeling.chem_charges -= cost
 	if(make_sound)
