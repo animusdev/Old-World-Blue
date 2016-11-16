@@ -331,7 +331,8 @@ This function restores all organs.
 
 
 /mob/living/carbon/human/proc/get_organ(var/zone)
-	if(!zone)	zone = BP_CHEST
+	if(!zone)
+		zone = BP_CHEST
 	if (zone in list( O_EYES, O_MOUTH ))
 		zone = BP_HEAD
 	return organs_by_name[zone]
@@ -358,17 +359,14 @@ This function restores all organs.
 	//Handle BRUTE and BURN damage
 	handle_suit_punctures(damagetype, damage, def_zone)
 
-	if(blocked >= 100)
-		return 0
+	if(blocked >= 2)	return 0
+
 
 
 	if(!organ)	return 0
 
 	if(blocked)
-		blocked = (100-blocked)/100
-		damage = (damage * blocked)
-	if(Debug2)
-		world.log << "## DEBUG: [src] was hit for [damage]."
+		damage = (damage/(blocked+1))
 
 	switch(damagetype)
 		if(BRUTE)
