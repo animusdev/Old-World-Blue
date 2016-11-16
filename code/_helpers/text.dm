@@ -306,6 +306,13 @@ proc/TextPreview(var/string,var/len=40)
 	if(C && (C.prefs.toggles & CHAT_NOICONS))
 		return tagdesc
 	return "<IMG src='\ref[text_tag_icons.icon]' class='text_tag' iconstate='[tagname]'" + (tagdesc ? " alt='[tagdesc]'" : "") + ">"
+/**
+ * Strip out the special beyond characters for \proper and \improper
+ * from text that will be sent to the browser.
+ */
+/proc/strip_improper(var/text)
+	return replacetext(replacetext(text, "\proper", ""), "\improper", "")
+
 
 /proc/l33t(T as text)
 //	T = ruppertext(T)
