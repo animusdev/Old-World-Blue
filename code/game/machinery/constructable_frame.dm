@@ -131,7 +131,7 @@
 				else
 					if(istype(P, /obj/item))
 						for(var/I in req_components)
-							if(istype(P, text2path(I)) && (req_components[I] > 0))
+							if(istype(P, I) && (req_components[I] > 0))
 								playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 								if(istype(P, /obj/item/stack/cable_coil))
 									var/obj/item/stack/cable_coil/CP = P
