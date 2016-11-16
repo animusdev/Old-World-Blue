@@ -90,6 +90,12 @@
 	current_data.item_path = /obj/item/clothing/under/phantom
 	L |= current_data
 
+	current_data = new()
+	current_data.assoc_key = "fox231"
+	current_data.character_name = "Zoy Anderson"
+	current_data.item_path = /obj/item/clothing/accessory/locket/Evans
+	L |= current_data
+
 	custom_items["fox231"] = L
 
 ///Shamah///
