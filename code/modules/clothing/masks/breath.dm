@@ -8,15 +8,18 @@
 	w_class = 2
 	gas_transfer_coefficient = 0.10
 	permeability_coefficient = 0.50
-
-/obj/item/clothing/mask/breath/vox
-	icon_state = "breath_vox"
-	species_restricted = list("Vox")
-
-/obj/item/clothing/mask/breath/toggleable
 	var/hanging = 0
 
-/obj/item/clothing/mask/breath/toggleable/proc/adjust_mask(mob/user)
+/obj/item/clothing/mask/vox_breath
+	icon_state = "breath_vox"
+	item_state = "breath"
+	species_restricted = list("Vox")
+	item_flags = AIRTIGHT|FLEXIBLEMATERIAL
+	body_parts_covered = 0
+	gas_transfer_coefficient = 0.10
+	permeability_coefficient = 0.50
+
+/obj/item/clothing/mask/breath/proc/adjust_mask(mob/user)
 	if(user.canmove && !user.stat)
 		src.hanging = !src.hanging
 		if (src.hanging)
@@ -33,10 +36,10 @@
 			user << "You pull the mask up to cover your face."
 		update_clothing_icon()
 
-/obj/item/clothing/mask/breath/toggleable/attack_self(mob/user)
+/obj/item/clothing/mask/breath/attack_self(mob/user)
 	adjust_mask(user)
 
-/obj/item/clothing/mask/breath/toggleable/verb/toggle()
+/obj/item/clothing/mask/breath/verb/toggle()
 	set category = "Object"
 	set name = "Adjust mask"
 	set src in usr
@@ -47,7 +50,7 @@
 	if(src in usr)
 		adjust_mask(usr)
 
-/obj/item/clothing/mask/breath/toggleable/medical
+/obj/item/clothing/mask/breath/medical
 	desc = "A close-fitting sterile mask that can be connected to an air supply."
 	name = "medical mask"
 	icon_state = "medical"

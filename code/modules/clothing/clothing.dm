@@ -303,7 +303,6 @@
 /obj/item/clothing/mask
 	name = "mask"
 	icon = 'icons/inv_slots/masks/icon.dmi'
-	body_parts_covered = HEAD
 	slot_flags = SLOT_MASK
 	body_parts_covered = FACE|EYES
 

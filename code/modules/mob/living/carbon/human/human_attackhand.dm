@@ -67,11 +67,17 @@
 	switch(M.a_intent)
 		if(I_HELP)
 			if(istype(H) && health < config.health_threshold_crit && health > config.health_threshold_dead)
-				if((H.head && (H.head.body_parts_covered & FACE)) || (H.wear_mask && (H.wear_mask.body_parts_covered & FACE)))
-					H << "<span class='notice'>Remove your mask!</span>"
+				if(H.head && (H.head.body_parts_covered & FACE))
+					H << "<span class='warning'>You can't perform CPR while wearing [H.head]!</span>"
 					return 0
-				if((head && (head.body_parts_covered & FACE)) || (wear_mask && (wear_mask.body_parts_covered & FACE)))
-					H << "<span class='notice'>Remove [src]'s mask!</span>"
+				if(H.wear_mask && (H.wear_mask.body_parts_covered & FACE) && !(H.wear_mask.item_flags & FLEXIBLEMATERIAL))
+					H << "<span class='warning'>Remove your mask!</span>"
+					return 0
+				if(head && (head.body_parts_covered & FACE) && !(wear_mask.item_flags & FLEXIBLEMATERIAL))
+					H << "<span class='warning'>Remove [src]'s mask!</span>"
+					return 0
+				if(wear_mask && (wear_mask.body_parts_covered & FACE))
+					H << "<span class='warning'>Remove [src]'s helmet!</span>"
 					return 0
 
 				if (!cpr_time)
