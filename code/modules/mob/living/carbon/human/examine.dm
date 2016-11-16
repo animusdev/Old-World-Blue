@@ -282,13 +282,14 @@
 
 	for(var/organ_tag in species.has_limbs)
 
+		var/datum/organ_description/organ_data = species.has_limbs[organ_tag]
 		var/obj/item/organ/external/E = organs_by_name[organ_tag]
 
 		if(!E)
-			wound_flavor_text["[organ_tag]"] = "<b>[t_He] is missing [t_his] [organ_tag].</b>\n"
+			wound_flavor_text[organ_tag] = "<b>[t_He] is missing [t_his] [organ_data.name].</b>\n"
 			continue
 
-		wound_flavor_text["[E.name]"] = ""
+		wound_flavor_text[E.name] = ""
 
 		var/obj/item/clothing/hidden
 		var/list/clothing_items = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes)
@@ -299,96 +300,26 @@
 
 		if(hidden && user != src)
 			if(E.status & ORGAN_BLEEDING && !(hidden.item_flags & THICKMATERIAL)) //not through a spacesuit
-				wound_flavor_text["[hidden.name]"] = "[t_He] has blood soaking through [hidden]!<br>"
+				wound_flavor_text[hidden.name] = "[t_He] has blood soaking through [hidden]!<br>"
 		else
 			if(E.is_stump())
-				wound_flavor_text["[E.name]"] += "<b>[t_He] has a stump where [t_his] [E.name] should be.</b>\n"
+				wound_flavor_text[E.name] += "<b>[t_He] has a stump where [t_his] [organ_data.name] should be.</b>\n"
 				if((E.wounds.len || E.open) && E.parent)
-					wound_flavor_text["[E.name]"] += "[t_He] has [E.get_wounds_desc()] on [t_his] [E.parent.name].<br>"
+					wound_flavor_text[E.name] += "[t_He] has [E.get_wounds_desc()] on [t_his] [E.parent.name].<br>"
 			else
 				if(!IS_SYNTHETIC && E.robotic >= ORGAN_ROBOT && (E.parent && E.parent.robotic < ORGAN_ROBOT))
-					wound_flavor_text["[E.name]"] = "[t_He] has a [E.name].\n"
+					wound_flavor_text[E.name] = "[t_He] has a [E.name].\n"
 				if(E.wounds.len || E.open)
-					wound_flavor_text["[E.name]"] += "[t_He] has [E.get_wounds_desc()] on [t_his] [E.name].<br>"
+					wound_flavor_text[E.name] += "[t_He] has [E.get_wounds_desc()] on [t_his] [E.name].<br>"
 
 		if(!hidden || distance <=1)
 			if(E.dislocated > 0)
-				wound_flavor_text["[E.name]"] += "[capitalize(t_his)]] [E.joint] is dislocated!<br>"
+				wound_flavor_text[E.name] += "[capitalize(t_his)]] [E.joint] is dislocated!<br>"
 			if(((E.status & ORGAN_BROKEN) && E.brute_dam > E.min_broken_damage) || (E.status & ORGAN_MUTATED))
-				wound_flavor_text["[E.name]"] += "[capitalize(t_his)] [E.name] is dented and swollen!<br>"
+				wound_flavor_text[E.name] += "[capitalize(t_his)] [E.name] is dented and swollen!<br>"
 
 	//Handles the text strings being added to the actual description.
 	//If they have something that covers the limb, and it is not missing, put flavortext.  If it is covered but bleeding, add other flavortext.
-
-	// ***********************************************************************************
-	// THIS NEEDS TO BE ENTIRELY REWRITTEN. Commenting out for now, BADLY NEEDS REWRITING.
-	// ***********************************************************************************
-
-	/*
-	var/display_chest = 0
-	var/display_shoes = 0
-	var/display_gloves = 0
-
-	if(wound_flavor_text[BP_HEAD] && (is_destroyed[BP_HEAD] || (!skipmask && !(wear_mask && istype(wear_mask, /obj/item/clothing/mask/gas)))))
-		msg += wound_flavor_text[BP_HEAD]
-	else if(is_bleeding[BP_HEAD])
-		msg += "<span class='warning'>[src] [t_has] blood running down [t_his] face!</span>\n"
-
-	if(wound_flavor_text["upper body"] && !w_uniform && !skipjumpsuit) //No need.  A missing chest gibs you.
-		msg += wound_flavor_text["upper body"]
-	else if(is_bleeding["upper body"])
-		display_chest = 1
-
-	if(wound_flavor_text["left arm"] && (is_destroyed["left arm"] || (!w_uniform && !skipjumpsuit)))
-		msg += wound_flavor_text["left arm"]
-	else if(is_bleeding["left arm"])
-		display_chest = 1
-
-	if(wound_flavor_text["left hand"] && (is_destroyed["left hand"] || (!gloves && !skipgloves)))
-		msg += wound_flavor_text["left hand"]
-	else if(is_bleeding["left hand"])
-		display_gloves = 1
-
-	if(wound_flavor_text["right arm"] && (is_destroyed["right arm"] || (!w_uniform && !skipjumpsuit)))
-		msg += wound_flavor_text["right arm"]
-	else if(is_bleeding["right arm"])
-		display_chest = 1
-
-	if(wound_flavor_text["right hand"] && (is_destroyed["right hand"] || (!gloves && !skipgloves)))
-		msg += wound_flavor_text["right hand"]
-	else if(is_bleeding["right hand"])
-		display_gloves = 1
-
-	if(wound_flavor_text["lower body"] && (is_destroyed["lower body"] || (!w_uniform && !skipjumpsuit)))
-		msg += wound_flavor_text["lower body"]
-	else if(is_bleeding["lower body"])
-		display_chest = 1
-
-	if(wound_flavor_text["left leg"] && (is_destroyed["left leg"] || (!w_uniform && !skipjumpsuit)))
-		msg += wound_flavor_text["left leg"]
-	else if(is_bleeding["left leg"])
-		display_chest = 1
-
-	if(wound_flavor_text["left foot"]&& (is_destroyed["left foot"] || (!shoes && !skipshoes)))
-		msg += wound_flavor_text["left foot"]
-	else if(is_bleeding["left foot"])
-		display_shoes = 1
-	if(wound_flavor_text["right leg"] && (is_destroyed["right leg"] || (!w_uniform && !skipjumpsuit)))
-		msg += wound_flavor_text["right leg"]
-	else if(is_bleeding["right leg"])
-		display_chest = 1
-	if(wound_flavor_text["right foot"]&& (is_destroyed["right foot"] || (!shoes  && !skipshoes)))
-		msg += wound_flavor_text["right foot"]
-	else if(is_bleeding["right foot"])
-		display_shoes = 1
-
-	if(display_chest)
-		msg += "<span class='danger'>[src] [t_has] blood soaking through from under [t_his] clothing!</span>\n"
-	if(display_shoes)
-		msg += "<span class='danger'>[src] [t_has] blood running from [t_his] shoes!</span>\n"
-	if(display_gloves)
-		msg += "<span class='danger'>[src] [t_has] blood running from under [t_his] gloves!</span>\n"
-	*/
 
 	msg += "<span class='warning'>"
 	for(var/limb in wound_flavor_text)
