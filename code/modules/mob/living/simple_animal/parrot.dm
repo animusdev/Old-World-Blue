@@ -604,8 +604,7 @@
 		if(C.r_hand && C.r_hand.w_class <= 2)
 			stolen_item = C.r_hand
 
-		if(stolen_item)
-			C.remove_from_mob(stolen_item)
+		if(stolen_item && C.unEquip(stolen_item))
 			held_item = stolen_item
 			stolen_item.loc = src
 			visible_message(\
