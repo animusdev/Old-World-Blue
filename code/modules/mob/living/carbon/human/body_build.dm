@@ -28,7 +28,7 @@
 		"[SPRITE_STORAGE]_l"  = 'icons/inv_slots/back/hand_l_default.dmi',
 		"[SPRITE_STORAGE]_r"  = 'icons/inv_slots/back/hand_r_default.dmi',
 		"[SPRITE_UNIFORMS]_l" = 'icons/inv_slots/uniforms/hand_l_default.dmi',
-		"[SPRITE_UNIFORMS]_r" = 'icons/inv_slots/uniforms/hand_l_default.dmi',
+		"[SPRITE_UNIFORMS]_r" = 'icons/inv_slots/uniforms/hand_r_default.dmi',
 /*
 		"[SPRITE_GLOVES]"   =
 		"[SPRITE_SUITS]"    =
@@ -67,6 +67,22 @@
 	hidden_icon 	= 'icons/inv_slots/hidden/mob_slim.dmi'
 	rig_back		= 'icons/inv_slots/rig/mob_slim.dmi'
 
+/datum/body_build/slim/New()
+	hand_groups = list(
+		"[SPRITE_STORAGE]_l"  = 'icons/inv_slots/back/hand_l_default.dmi',
+		"[SPRITE_STORAGE]_r"  = 'icons/inv_slots/back/hand_r_default.dmi',
+		"[SPRITE_UNIFORMS]_l" = 'icons/inv_slots/uniforms/hand_l_slim.dmi',
+		"[SPRITE_UNIFORMS]_r" = 'icons/inv_slots/uniforms/hand_r_slim.dmi',
+/*
+		"[SPRITE_GLOVES]"   =
+		"[SPRITE_SUITS]"    =
+		"[SPRITE_MASKS]"    =
+		"[SPRITE_HATS]"     =
+*/
+		"[SPRITE_GUNS]_l"     = 'icons/inv_slots/items/guns_l_default.dmi',
+		"[SPRITE_GUNS]_r"     = 'icons/inv_slots/items/guns_r_default.dmi'
+
+	)
 /datum/body_build/vox
 	name		= "Vox"
 	uniform_icon= 'icons/inv_slots/uniforms/mob_vox.dmi'
