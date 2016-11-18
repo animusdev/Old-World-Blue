@@ -6,7 +6,7 @@
 /obj/structure/closet/malf/suits/New()
 	..()
 	new /obj/item/weapon/tank/jetpack/void(src)
-	new /obj/item/clothing/mask/breath/toggleable(src)
+	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/clothing/head/helmet/space/void(src)
 	new /obj/item/clothing/suit/space/void(src)
 	new /obj/item/weapon/crowbar(src)

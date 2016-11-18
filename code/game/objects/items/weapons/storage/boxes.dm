@@ -53,19 +53,19 @@
 /obj/item/weapon/storage/box/survival
 	New()
 		..()
-		new /obj/item/clothing/mask/breath/toggleable( src )
+		new /obj/item/clothing/mask/breath( src )
 		new /obj/item/weapon/tank/emergency_oxygen( src )
 
 /obj/item/weapon/storage/box/vox
 	New()
 		..()
-		new /obj/item/clothing/mask/breath/toggleable( src )
+		new /obj/item/clothing/mask/vox_breath( src )
 		new /obj/item/weapon/tank/emergency_nitrogen( src )
 
 /obj/item/weapon/storage/box/engineer
 	New()
 		..()
-		new /obj/item/clothing/mask/breath/toggleable( src )
+		new /obj/item/clothing/mask/breath( src )
 		new /obj/item/weapon/tank/emergency_oxygen/engi( src )
 
 /obj/item/weapon/storage/box/gloves

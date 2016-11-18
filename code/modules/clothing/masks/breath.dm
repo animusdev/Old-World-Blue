@@ -46,7 +46,7 @@
 
 	adjust_mask(usr)
 
-/obj/item/clothing/mask/breath/toggleable/AltClick()
+/obj/item/clothing/mask/breath/AltClick()
 	if(src in usr)
 		adjust_mask(usr)
 

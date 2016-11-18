@@ -596,7 +596,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var /obj/item/weapon/tank/jetpack/J = new /obj/item/weapon/tank/jetpack/oxygen(M)
 			M.equip_to_slot_or_del(J, slot_back)
 			J.toggle()
-			M.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/toggleable(M), slot_wear_mask)
+			M.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(M), slot_wear_mask)
 			J.Topic(null, list("stat" = 1))
 		if ("tournament standard red","tournament standard green") //we think stunning weapon is too overpowered to use it on tournaments. --rastaf0
 			if (dresscode=="tournament standard red")

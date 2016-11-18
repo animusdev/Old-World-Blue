@@ -162,7 +162,7 @@
 
 /obj/effect/landmark/corpse/engineer/rig
 	corpsesuit = /obj/item/clothing/suit/space/void/engineering
-	corpsemask = /obj/item/clothing/mask/breath/toggleable
+	corpsemask = /obj/item/clothing/mask/breath
 	corpsehelmet = /obj/item/clothing/head/helmet/space/void/engineering
 
 /obj/effect/landmark/corpse/clown
@@ -200,7 +200,7 @@
 
 /obj/effect/landmark/corpse/miner/rig
 	corpsesuit = /obj/item/clothing/suit/space/void/mining
-	corpsemask = /obj/item/clothing/mask/breath/toggleable
+	corpsemask = /obj/item/clothing/mask/breath
 	corpsehelmet = /obj/item/clothing/head/helmet/space/void/mining
 
 
