@@ -67,7 +67,7 @@ var/datum/announcement/minor/captain_announcement = new(do_newscast = 1)
 	ideal_character_age = 50
 
 	implanted = 1
-	uniform = /obj/item/clothing/under/rank/head_of_personnel
+	uniform = /obj/item/clothing/under/rank/hop
 	shoes = /obj/item/clothing/shoes/brown
 	pda = /obj/item/device/pda/heads/hop
 	ear = /obj/item/device/radio/headset/heads/hop

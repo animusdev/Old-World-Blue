@@ -98,7 +98,7 @@
 	player_spawn = -1
 
 /obj/cryo_spawner/thunderred/equip_character(mob/living/carbon/human/H, is_admin)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/darkred(H), slot_w_uniform)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/color/darkred(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(H), slot_wear_suit)
@@ -119,7 +119,7 @@
 	player_spawn = -1
 
 /obj/cryo_spawner/thunderblue/equip_character(mob/living/carbon/human/H, is_admin)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/darkblue(H), slot_w_uniform)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/color/darkblue(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(H), slot_wear_suit)

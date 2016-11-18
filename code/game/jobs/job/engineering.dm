@@ -78,14 +78,14 @@
 		if (H.mind && H.mind.role_alt_title)
 			switch(H.mind.role_alt_title)
 				if("Maintenance Technician")
-					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/maintenance_tech(H), slot_w_uniform)
+					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/engineer/maintenance_tech(H), slot_w_uniform)
 				if("Engine Technician")
-					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/engine_tech(H), slot_w_uniform)
+					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/engineer/engine_tech(H), slot_w_uniform)
 				if("Electrician")
 					H.mind.store_memory(all_solved_wires[/obj/machinery/door/airlock])
 					H.mind.store_memory(all_solved_wires[/obj/machinery/power/apc])
 					H.mind.store_memory(all_solved_wires[/obj/machinery/alarm])
-					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/electrician(H), slot_w_uniform)
+					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/engineer/electrician(H), slot_w_uniform)
 		return ..()
 
 

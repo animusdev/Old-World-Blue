@@ -465,7 +465,7 @@ datum/objective/steal
 		"a chief engineer's jumpsuit" = /obj/item/clothing/under/rank/chief_engineer,
 		"a chief medical officer's jumpsuit" = /obj/item/clothing/under/rank/chief_medical_officer,
 		"a head of security's jumpsuit" = /obj/item/clothing/under/rank/head_of_security,
-		"a head of personnel's jumpsuit" = /obj/item/clothing/under/rank/head_of_personnel,
+		"a head of personnel's jumpsuit" = /obj/item/clothing/under/rank/hop,
 		"the hypospray" = /obj/item/weapon/reagent_containers/hypospray,
 		"the captain's pinpointer" = /obj/item/weapon/pinpointer,
 		"an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,

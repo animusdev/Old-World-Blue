@@ -27,7 +27,7 @@
 
 	if(user)
 		user << "<span class='notice'>You attach \the [src] to \the [has_suit].</span>"
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 
 /obj/item/clothing/accessory/proc/on_removed(var/mob/user)
 	if(!has_suit)
@@ -36,9 +36,9 @@
 	has_suit = null
 	if(user)
 		usr.put_in_hands(src)
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 	else
-		src.forceMove(get_turf(src))
+		forceMove(get_turf(src))
 
 //default attackby behaviour
 /obj/item/clothing/accessory/attackby(obj/item/I, mob/user)
@@ -78,6 +78,10 @@
 	name = "black tie"
 	icon_state = "blacktie"
 
+/obj/item/clothing/accessory/darkgreen
+	name = "dark green tie"
+	icon_state = "dgreentie"
+
 /obj/item/clothing/accessory/yellow
 	name = "yellow tie"
 	icon_state = "yellowtie"
@@ -86,43 +90,9 @@
 	name = "navy tie"
 	icon_state = "navytie"
 
-
-/obj/item/clothing/accessory/nikiton
-	name = "Purple Heart"
-	desc = "The Purple Heart is a NanoTrasen military decoration awarded in the name of the Director to those badly wounded or killed while serving.\n\
-	FOR MILITARY MERIT\n\
-	 Leroy Woodward"
-	icon_state = "bronze_heart"
-
-/obj/item/clothing/accessory/egorkor
-	name = "Purple Heart"
-	desc = "The Purple Heart is a NanoTrasen military decoration awarded in the name of the Director to those badly wounded or killed while serving.\n\
-	FOR MILITARY MERIT\n\
-	 Graham Maclagan"
-	icon_state = "bronze_heart"
-
-/obj/item/clothing/accessory/madman
-	name = "Purple Heart"
-	desc = "The Purple Heart is a NanoTrasen military decoration awarded in the name of the Director to those badly wounded or killed while serving.\n\
-	FOR MILITARY MERIT\n\
-	 Megan Abbott"
-	icon_state = "bronze_heart"
-
-/obj/item/clothing/accessory/solar
-	name = "Purple Heart"
-	desc = "The Purple Heart is a NanoTrasen military decoration awarded in the name of the Director to those badly wounded or killed while serving.\n\
-	FOR MILITARY MERIT\n\
-	 Aiden McMurray"
-	icon_state = "bronze_heart"
-
-
-/obj/item/clothing/accessory/shepard
-	name = "Purple Heart"
-	desc = "The Purple Heart is a NanoTrasen military decoration awarded in the name of the Director to those badly wounded or killed while serving.\n\
-	FOR MILITARY MERIT\n\
-	 Weston Ludwig"
-	icon_state = "bronze_heart"
-
+/obj/item/clothing/accessory/white
+	name = "white tie"
+	icon_state = "whitetie"
 
 /obj/item/clothing/accessory/horrible
 	name = "horrible tie"
@@ -190,7 +160,6 @@
 				user.visible_message("[user] places [src] against [M]'s [body_part] and listens attentively.", "You place [src] against [their] [body_part]. You [sound_strength] [sound].")
 				return
 	return ..(M,user)
-
 
 //Medals
 /obj/item/clothing/accessory/medal

@@ -114,13 +114,13 @@
 			dat+= "<B>Welcome to the Unit control panel.</B></FONT><HR>"
 			dat+= text("<font color='black'>Helmet storage compartment: <B>[]</B></font><BR>",(HELMET ? HELMET.name : "</font><font color ='grey'>No helmet detected."))
 			if(HELMET && isopen)
-				dat+=text("<A href='?src=\ref[];dispense_helmet=1'>Dispense helmet</A><BR>",src)
+				dat+="<A href='?src=\ref[src];dispense_helmet=1'>Dispense helmet</A><BR>"
 			dat+= text("<font color='black'>Suit storage compartment: <B>[]</B></font><BR>",(SUIT ? SUIT.name : "</font><font color ='grey'>No exosuit detected."))
 			if(SUIT && isopen)
-				dat+=text("<A href='?src=\ref[];dispense_suit=1'>Dispense suit</A><BR>",src)
+				dat+="<A href='?src=\ref[src];dispense_suit=1'>Dispense suit</A><BR>"
 			dat+= text("<font color='black'>Breathmask storage compartment: <B>[]</B></font><BR>",(MASK ? MASK.name : "</font><font color ='grey'>No breathmask detected."))
 			if(MASK && isopen)
-				dat+=text("<A href='?src=\ref[];dispense_mask=1'>Dispense mask</A><BR>",src)
+				dat+="<A href='?src=\ref[src];dispense_mask=1'>Dispense mask</A><BR>"
 			if(OCCUPANT)
 				dat+= "<HR><B><font color ='red'>WARNING: Biological entity detected inside the Unit's storage. Please remove.</B></font><BR>"
 				dat+= "<A href='?src=\ref[src];eject_guy=1'>Eject extra load</A>"
@@ -137,7 +137,7 @@
 		else //Ohhhh shit it's dirty or broken! Let's inform the guy.
 			dat+= "<HEAD><TITLE>Suit storage unit</TITLE></HEAD>"
 			dat+= "<font color='maroon'><B>Unit chamber is too contaminated to continue usage. Please call for a qualified individual to perform maintenance.</font></B><BR><BR>"
-			dat+= text("<HR><A href='?src=\ref[];mach_close=suit_storage_unit'>Close control panel</A>", user)
+			dat+= "<HR><A href='?src=\ref[user];mach_close=suit_storage_unit'>Close control panel</A>"
 			//user << browse(dat, "window=suit_storage_unit;size=400x500")
 			//onclose(user, "suit_storage_unit")
 
@@ -149,7 +149,7 @@
 /obj/machinery/suit_storage_unit/Topic(href, href_list) //I fucking HATE this proc
 	if(..())
 		return
-	if((src in usr || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || isAI(usr))
+	if(src in usr || (get_dist(src, usr)<=1 && istype(usr.loc, /turf)) || isAI(usr))
 		usr.set_machine(src)
 		if(href_list["toggleUV"])
 			toggleUV(usr)

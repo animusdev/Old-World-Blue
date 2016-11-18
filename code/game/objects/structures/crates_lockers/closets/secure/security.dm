@@ -63,7 +63,7 @@
 
 	New()
 		..()
-		new /obj/item/clothing/under/rank/head_of_personnel(src)
+		new /obj/item/clothing/under/rank/hop(src)
 		new /obj/item/clothing/under/dress/dress_hop(src)
 		new /obj/item/clothing/under/dress/dress_hr(src)
 		new /obj/item/clothing/under/lawyer/female(src)
@@ -74,9 +74,9 @@
 		new /obj/item/clothing/shoes/black(src)
 		new /obj/item/clothing/shoes/leather(src)
 		new /obj/item/clothing/shoes/white(src)
-		new /obj/item/clothing/under/rank/head_of_personnel/whimsy(src)
-		new /obj/item/clothing/under/rank/head_of_personnel/dark(src)
-		new /obj/item/clothing/under/rank/head_of_personnel/doctor(src)
+		new /obj/item/clothing/under/rank/hop/whimsy(src)
+		new /obj/item/clothing/under/rank/hop/dark(src)
+		new /obj/item/clothing/under/rank/hop/doctor(src)
 		new /obj/item/clothing/suit/storage/toggle/hop(src)
 		new /obj/item/clothing/head/hop(src)
 		return

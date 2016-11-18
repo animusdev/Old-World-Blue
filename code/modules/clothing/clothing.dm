@@ -363,6 +363,11 @@
 
 ///////////////////////////////////////////////////////////////////////
 //Under clothing
+
+#define ROLL_NONE 0
+#define ROLL_DOWN 1
+#define ROLL_SLEV 2
+
 /obj/item/clothing/under
 	icon = 'icons/inv_slots/uniforms/icon.dmi'
 	sprite_group = SPRITE_UNIFORMS
@@ -380,33 +385,49 @@
 		3 = Report location
 		*/
 	var/displays_id = 1
-	var/rolled_down = -1 //0 = unrolled, 1 = rolled, -1 = cannot be toggled
-//	var/status = 0 //0 = default, 1 = rolled dows, 2 = cannot be toggled
-
-	valid_accessory_slots = list("utility","armband","decor")
+	var/status = 0 //0 = default, 1 = rolled dows, 2 = rolled sleeves
+	valid_accessory_slots = list("utility","armband","decor","over")
 	restricted_accessory_slots = list("utility", "armband")
 
 
 /obj/item/clothing/under/attack_hand(var/mob/user)
 	if(accessories && accessories.len)
 		..()
-	if ((ishuman(usr) || issmall(usr)) && src.loc == user)
+	if (ishuman(usr) && src.loc == user)
 		return
 	..()
 
-/obj/item/clothing/under/proc/update_rolldown_status()
+/obj/item/clothing/under/equipped(mob/user, slot)
+	update_status()
 
-	if(!ishuman(src.loc)) return
-	var/mob/living/carbon/human/H = src.loc
+/obj/item/clothing/under/proc/update_status()
+	if(!ishuman(loc)) return
 
-	var/icon/under_icon = H.body_build.uniform_icon
+	var/mob/living/carbon/human/H = loc
 
-	if(("[icon_state]_d") in icon_states(under_icon))
-		if(rolled_down != 1)
-			rolled_down = 0
-	else
-		rolled_down = -1
-	if(H) update_clothing_icon()
+	body_parts_covered = initial(body_parts_covered)
+	wear_state = icon_state
+
+	if(status != ROLL_NONE)
+		var/icon/under_icon = H.body_build.uniform_icon
+		if(icon_override)
+			under_icon = icon_override
+
+		switch(status)
+			if(ROLL_DOWN)
+				if("[icon_state]_d" in icon_states(under_icon))
+					body_parts_covered &= ~(UPPER_TORSO|ARMS)
+					wear_state = "[icon_state]_d"
+				else
+					status = ROLL_NONE
+			if(ROLL_SLEV)
+				if("[icon_state]_r" in icon_states(under_icon))
+					body_parts_covered &= ~ARMS
+					wear_state = "[icon_state]_r"
+				else
+					status = ROLL_NONE
+
+	update_clothing_icon()
 
 /obj/item/clothing/under/update_clothing_icon()
 	if (ismob(src.loc))
@@ -448,13 +469,25 @@
 	if (src.loc == usr)
 		switch(sensor_mode)
 			if(0)
-				usr.visible_message("[usr] adjusts their sensors.", "You disable your suit's remote sensing equipment.")
+				usr.visible_message(
+					"[usr] adjusts their sensors.",
+					"You disable your suit's remote sensing equipment."
+				)
 			if(1)
-				usr.visible_message("[usr] adjusts their sensors.", "Your suit will now report whether you are live or dead.")
+				usr.visible_message(
+					"[usr] adjusts their sensors.",
+					"Your suit will now report whether you are live or dead."
+				)
 			if(2)
-				usr.visible_message("[usr] adjusts their sensors.", "Your suit will now report your vital lifesigns.")
+				usr.visible_message(
+					"[usr] adjusts their sensors.",
+					"Your suit will now report your vital lifesigns."
+				)
 			if(3)
-				usr.visible_message("[usr] adjusts their sensors.", "Your suit will now report your vital lifesigns as well as your coordinate position.")
+				usr.visible_message(
+					"[usr] adjusts their sensors.",
+					"Your suit will now report your vital lifesigns as well as your coordinate position."
+				)
 
 	else if (istype(src.loc, /mob))
 		usr.visible_message("[usr] adjusts [src.loc]'s sensors.", "You adjust [src.loc]'s sensors.")
@@ -471,23 +504,45 @@
 	set category = "Object"
 	set src in usr
 	if(!istype(usr, /mob/living)) return
-	if(usr.stat) return
+	if(usr.stat || usr.restrained()) return
 
-	update_rolldown_status()
-	if(rolled_down == -1)
-		usr << "<span class='notice'>You cannot roll down [src]!</span>"
-		return
-
-	rolled_down = !rolled_down
-	if(rolled_down)
-		body_parts_covered &= LOWER_TORSO|LEGS|FEET
-//		item_state_slots[slot_w_uniform_str] = "[worn_state]_d"
+	if(status != ROLL_DOWN)
+		status = ROLL_DOWN
+		update_status()
+		if(status == ROLL_DOWN)
+			usr << "<span class='notice'>You roll down your [src].</span>"
+		else
+			usr << "<span class='warning'>You can't roll down [src].</span>"
 	else
-		body_parts_covered = initial(body_parts_covered)
-//		item_state_slots[slot_w_uniform_str] = "[worn_state]"
-	update_clothing_icon()
+		usr << "<span class='notice'>You roll up your [src].</span>"
+		status = ROLL_NONE
+		update_status()
+
+
+/obj/item/clothing/under/verb/rollsleeves()
+	set name = "Roll Up Sleeves"
+	set category = "Object"
+	set src in usr
+	if(!istype(usr, /mob/living)) return
+	if(usr.stat || usr.restrained()) return
+
+	if(status != ROLL_SLEV)
+		status = ROLL_SLEV
+		update_status()
+		if(status == ROLL_SLEV)
+			usr << "<span class='notice'>You roll up your [src]'s sleeves.</span>"
+		else
+			usr << "<span class='warning'>You can't roll up your [src]'s sleeves.</span>"
+	else
+		status = ROLL_NONE
+		usr << "<span class='notice'>You roll down your [src]'s sleeves.</span>"
+		update_status()
 
 
 /obj/item/clothing/under/rank/New()
 	sensor_mode = pick(0,1,2,3)
 	..()
+
+#undef ROLL_NONE
+#undef ROLL_DOWN
+#undef ROLL_SLEV

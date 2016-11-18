@@ -161,7 +161,7 @@ var/global/list/chameleons_categories = list(
 
 /obj/item/chameleon/under
 	desc = "It's a plain jumpsuit. It seems to have a small dial on the wrist."
-	default_type = /obj/item/clothing/under/color/black
+	default_type = /obj/item/clothing/under/color
 	category = "uniform"
 
 /obj/item/chameleon/under/emp_act(severity)

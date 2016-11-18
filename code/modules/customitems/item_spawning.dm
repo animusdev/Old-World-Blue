@@ -57,7 +57,7 @@
 
 		var/obj/item/clothing/under/U = item
 		if(istype(U))
-			U.update_rolldown_status()
+			U.update_status()
 
 	// Kits are dumb so this is going to have to be hardcoded/snowflake.
 	if(istype(item, /obj/item/device/kit))

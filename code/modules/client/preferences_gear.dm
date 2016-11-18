@@ -417,7 +417,7 @@ var/global/list/gear_datums = list()
 
 /datum/gear/rainbow
 	display_name = "jumpsuit, rainbow"
-	path = /obj/item/clothing/under/rainbow
+	path = /obj/item/clothing/under/color/rainbow
 	slot = slot_w_uniform
 
 /datum/gear/SID

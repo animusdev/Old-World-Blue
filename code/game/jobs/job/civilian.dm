@@ -132,7 +132,7 @@
 	addcional_access = list(access_qm, access_mining, access_mining_station)
 	minimal_access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
 
-	uniform = /obj/item/clothing/under/rank/cargotech
+	uniform = /obj/item/clothing/under/rank/cargoshort
 	pda = /obj/item/device/pda/cargo
 	ear = /obj/item/device/radio/headset/headset_cargo
 
