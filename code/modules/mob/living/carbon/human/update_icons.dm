@@ -470,6 +470,7 @@ var/global/list/damage_icon_parts = list()
 
 		var/image/standing = image(w_uniform.icon_override ? w_uniform.icon_override : body_build.uniform_icon)
 		standing.icon_state = w_uniform.wear_state ? w_uniform.wear_state : w_uniform.icon_state
+		standing.appearance_flags = RESET_COLOR
 		standing.color = w_uniform.color
 
 		//apply blood overlay
@@ -525,6 +526,7 @@ var/global/list/damage_icon_parts = list()
 			bloodsies.color = gloves.blood_color
 			standing.overlays	+= bloodsies
 		gloves.screen_loc = ui_gloves
+		standing.appearance_flags = RESET_COLOR
 		standing.color = gloves.color
 		overlays_standing[GLOVES_LAYER]	= standing
 	else
@@ -544,6 +546,7 @@ var/global/list/damage_icon_parts = list()
 			standing = image(glasses.icon_override, glasses.icon_state)
 		else
 			standing = image(body_build.glasses_icon, glasses.icon_state)
+		standing.appearance_flags = RESET_COLOR
 		standing.color = glasses.color
 		overlays_standing[GLASSES_LAYER] = standing
 
@@ -592,6 +595,7 @@ var/global/list/damage_icon_parts = list()
 			var/image/bloodsies = image(species.blood_mask, "shoeblood[body_build.index]")
 			bloodsies.color = shoes.blood_color
 			standing.overlays += bloodsies
+		standing.appearance_flags = RESET_COLOR
 		standing.color = shoes.color
 		overlays_standing[SHOES_LAYER] = standing
 	else
@@ -643,6 +647,7 @@ var/global/list/damage_icon_parts = list()
 			if(hat.on && light_overlay_cache[hat.light_overlay])
 				standing.overlays |= light_overlay_cache[hat.light_overlay]
 
+		standing.appearance_flags = RESET_COLOR
 		standing.color = head.color
 		overlays_standing[HEAD_LAYER] = standing
 
@@ -676,8 +681,7 @@ var/global/list/damage_icon_parts = list()
 					if(!i_state) i_state = i.icon_state
 					standing.overlays	+= image(body_build.belt_icon, i_state)
 
-
-
+		standing.appearance_flags = RESET_COLOR
 		standing.color = belt.color
 
 		overlays_standing[belt_layer] = standing
@@ -701,6 +705,7 @@ var/global/list/damage_icon_parts = list()
 			standing = image(wear_suit.icon_override, t_state)
 		else
 			standing = image(body_build.suit_icon, t_state)
+		standing.appearance_flags = RESET_COLOR
 		standing.color = wear_suit.color
 
 		if( istype(wear_suit, /obj/item/clothing/suit/straight_jacket) )
@@ -753,6 +758,7 @@ var/global/list/damage_icon_parts = list()
 			standing = image(wear_mask.icon_override, wear_mask.icon_state)
 		else
 			standing = image(body_build.mask_icon, wear_mask.icon_state)
+		standing.appearance_flags = RESET_COLOR
 		standing.color = wear_mask.color
 
 		if( !istype(wear_mask, /obj/item/clothing/mask/smokable/cigarette) && wear_mask.blood_DNA )
@@ -781,6 +787,7 @@ var/global/list/damage_icon_parts = list()
 		else
 			standing = image(body_build.back_icon, t_state)
 
+		standing.appearance_flags = RESET_COLOR
 		standing.color = back.color
 
 		//create the image
@@ -800,7 +807,8 @@ var/global/list/damage_icon_parts = list()
 	for( var/obj/item/clothing/hidden/C in list(h_underwear, h_socks, h_undershirt) )
 		if(!C) continue
 		var/image/item = image(body_build.hidden_icon, C.wear_state)
-		if(C.color) item.color = C.color
+		item.appearance_flags = RESET_COLOR
+		item.color = C.color
 		standing.overlays += item
 
 	overlays_standing[UNDERWEAR_LAYER] = standing
