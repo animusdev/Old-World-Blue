@@ -858,7 +858,13 @@ var/global/list/damage_icon_parts = list()
 			t_state = r_hand.icon_state
 
 		var/icon/t_icon = body_build.get_inhand_icon(r_hand.sprite_group, RIGHT)
-		overlays_standing[R_HAND_LAYER] = image(t_icon, t_state)
+
+		//apply color
+		var/image/standing = image(t_icon, t_state)
+		standing.appearance_flags = RESET_COLOR
+		standing.color = r_hand.color
+
+		overlays_standing[R_HAND_LAYER] = standing
 
 		if (handcuffed) drop_r_hand() //this should be moved out of icon code
 	else
@@ -882,7 +888,13 @@ var/global/list/damage_icon_parts = list()
 
 		//determine icon to use
 		var/icon/t_icon = body_build.get_inhand_icon(l_hand.sprite_group, LEFT)
-		overlays_standing[L_HAND_LAYER] = image(t_icon, t_state)
+
+		//apply color
+		var/image/standing = image(t_icon, t_state)
+		standing.appearance_flags = RESET_COLOR
+		standing.color = l_hand.color
+
+		overlays_standing[L_HAND_LAYER] = standing
 
 		if (handcuffed) drop_l_hand() //This probably should not be here
 	else
