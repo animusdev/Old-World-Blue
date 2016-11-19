@@ -211,6 +211,9 @@
 	new /obj/item/clothing/under/rank/atmospheric_technician(src)
 	new /obj/item/clothing/under/rank/atmospheric_technician(src)
 	new /obj/item/clothing/under/rank/atmospheric_technician(src)
+	new /obj/item/clothing/under/rank/dress/atmospheric_technician(src)
+	new /obj/item/clothing/under/rank/dress/atmospheric_technician(src)
+	new /obj/item/clothing/under/rank/dress/atmospheric_technician(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
@@ -235,6 +238,8 @@
 	new /obj/item/clothing/under/rank/engineer/maintenance_tech(src)
 	new /obj/item/clothing/under/rank/engineer/engine_tech(src)
 	new /obj/item/clothing/under/rank/engineer/electrician(src)
+	new /obj/item/clothing/under/rank/dress/engineer
+	new /obj/item/clothing/under/rank/dress/engineer
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
@@ -320,7 +325,13 @@
 
 /obj/structure/closet/wardrobe/robotics_black/New()
 	..()
+	for(var/i in 1 to 2)
+		switch(rand(3))
+			if(1) new /obj/item/weapon/storage/backpack/toxins(src)
+			if(2) new /obj/item/weapon/storage/backpack/satchel/tox(src)
+			if(4) new /obj/item/weapon/storage/backpack/messenger/tox(src)
 	new /obj/item/clothing/under/rank/roboticist(src)
+	new /obj/item/clothing/under/rank/dress/roboticist(src)
 	new /obj/item/clothing/under/rank/biomechanical(src)
 	new /obj/item/clothing/under/rank/mechatronic(src)
 	new /obj/item/clothing/suit/storage/toggle/labcoat/science(src)
@@ -331,11 +342,6 @@
 	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/device/radio/headset/headset_rob(src)
 	new /obj/item/device/radio/headset/headset_rob(src)
-	for(var/i in 1 to 2)
-		switch(rand(3))
-			if(1) new /obj/item/weapon/storage/backpack/toxins(src)
-			if(2) new /obj/item/weapon/storage/backpack/satchel/tox(src)
-			if(4) new /obj/item/weapon/storage/backpack/messenger/tox(src)
 	return
 
 
@@ -532,7 +538,7 @@
 	return
 
 /obj/structure/closet/cabinet/captain
-	name = "colony director's wardrobe"
+	name = "captaing's wardrobe"
 
 /obj/structure/closet/wardrobe/captain/New()
 	..()
