@@ -236,7 +236,7 @@
 	// Do they get an option to set internals?
 	if(istype(wear_mask, /obj/item/clothing/mask) || istype(head, /obj/item/clothing/head/helmet/space))
 		if(istype(back, /obj/item/weapon/tank) || istype(belt, /obj/item/weapon/tank) || istype(s_store, /obj/item/weapon/tank))
-			dat += "<BR><A href='?src=\ref[src];item=internals'>Toggle internals.</A>"
+			dat += "<BR><A href='?src=\ref[src];item=internals'>[internal ? "Remove" : "Set"] internals.</A>"
 
 	// Other incidentals.
 	if(istype(suit) && suit.has_sensor == 1)
