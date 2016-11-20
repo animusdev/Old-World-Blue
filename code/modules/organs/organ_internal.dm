@@ -86,7 +86,7 @@
 			spawn owner.custom_emote(1, "coughs up blood!")
 			owner.drip(10)
 		if(prob(4))
-			spawn owner.custom_emote("gasps for air!")
+			spawn owner.emote("gasp")
 			owner.losebreath += 15
 
 /obj/item/organ/internal/kidneys
