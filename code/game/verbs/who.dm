@@ -41,9 +41,9 @@
 
 			if(C.is_afk())
 				var/seconds = C.last_activity_seconds()
-				msg += " (AFK - "
-				msg += "[round(seconds / 60)] minutes, "
-				msg += "[seconds % 60] seconds)"
+				entry += " (AFK - "
+				entry += "[round(seconds / 60)] minutes, "
+				entry += "[seconds % 60] seconds)"
 
 			if(is_special_character(C.mob))
 				entry += " - <b><font color='red'>Antagonist</font></b>"
