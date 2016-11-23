@@ -76,6 +76,27 @@
 
 /obj/structure/closet/secure_closet/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(!src.opened)
+		if(locked)
+			if(istype(W, /obj/item/device/multitool))
+				var/obj/item/device/multitool/multi = W
+				if(multi.in_use)
+					user << "<span class='warning'>This multitool is already in use!</span>"
+					return
+				multi.in_use = 1
+				for(var/i in 1 to rand(4,8))
+					user.visible_message(
+						"<span class='warning'>[user] picks in wires of the [src.name] with a multitool.</span>",
+						"<span class='warning'>I am trying to reset circuitry lock module ([i]/6)...</span>"
+					)
+					if(!do_after(user,200)||!locked)
+						multi.in_use=0
+						return
+				locked = 0
+				broken = 1
+				src.update_icon()
+				multi.in_use=0
+				user.visible_message("<span class='warning'>[user] [locked?"locks":"unlocks"] [name] with a multitool.</span>",
+				"<span class='warning'>I [locked?"enable":"disable"] the locking modules.</span>")
 		if(istype(W, /obj/item/weapon/melee/energy/blade))
 			if(emag_act(INFINITY, user, "<span class='danger'>The locker has been sliced open by [user] with \an [W]</span>!", "<span class='danger'>You hear metal being sliced and sparks flying.</span>"))
 				var/datum/effect/effect/system/spark_spread/spark_system = new()
@@ -100,25 +121,6 @@
 			togglelock(user)
 	else
 		..()
-	if(istype(W, /obj/item/device/multitool) && locked)
-		var/obj/item/device/multitool/multi = W
-		if(multi.is_hack)
-			user << "<span class='warning'>This multitool is already in use!</span>"
-			return
-		multi.is_hack = 1
-		var/i
-		for(i=0, i<6, i++)
-			user.visible_message("<span class='warning'>[user] picks in wires of the [src.name] with a multitool.</span>",
-			"<span class='warning'>I am trying to reset circuitry lock module ([i]/6)...</span>")
-			if(!do_after(user,200)||opened)
-				multi.in_use=0
-				return
-		locked = 0
-		broken = 1
-		src.update_icon()
-		multi.is_hack=0
-		user.visible_message("<span class='warning'>[user] [locked?"locks":"unlocks"] [name] with a multitool.</span>",
-		"<span class='warning'>I [locked?"enable":"disable"] the locking modules.</span>")
 
 /obj/structure/closet/secure_closet/emag_act(var/remaining_charges, var/mob/user, var/emag_source, var/visual_feedback = "", var/audible_feedback = "")
 	if(!broken)
