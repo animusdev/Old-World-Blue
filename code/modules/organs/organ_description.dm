@@ -34,6 +34,7 @@
 	default_type = /obj/item/organ/external/limb
 	parent_organ = BP_CHEST
 	can_grasp = 1
+	drop_on_remove = list(slot_gloves, slot_handcuffed)
 
 /datum/organ_description/arm/left
 	name = "left arm"
@@ -53,6 +54,7 @@
 	default_type = /obj/item/organ/external/limb
 	parent_organ = BP_GROIN
 	can_stand = 1
+	drop_on_remove = list(slot_shoes, slot_legcuffed)
 
 /datum/organ_description/leg/left
 	name = "left leg"
@@ -73,7 +75,7 @@
 /datum/organ_description/hand
 	default_type = /obj/item/organ/external/tiny
 	can_grasp = 1
-	drop_on_remove = list(slot_gloves)
+	drop_on_remove = list(slot_gloves, slot_handcuffed)
 
 /datum/organ_description/hand/left
 	organ_tag = BP_L_HAND
@@ -94,7 +96,7 @@
 /datum/organ_description/foot
 	default_type = /obj/item/organ/external/tiny
 	can_stand = 1
-	drop_on_remove = list(slot_shoes)
+	drop_on_remove = list(slot_shoes, slot_legcuffed)
 
 /datum/organ_description/foot/left
 	organ_tag = BP_L_FOOT
@@ -117,6 +119,8 @@
 ////DIONA////
 /datum/organ_description/diona
 	name = "upper body"
+	amputation_point = "branch"
+	joint = "structural ligament"
 	default_type = /obj/item/organ/external/diona/chest
 
 /datum/organ_description/groin/diona
@@ -144,17 +148,17 @@
 
 /datum/organ_description/hand/left/diona
 	name = "left grasper"
-	default_type = /obj/item/organ/external/diona/hand
+	default_type = /obj/item/organ/external/diona/tiny
 
 /datum/organ_description/hand/right/diona
 	name = "right grasper"
-	default_type = /obj/item/organ/external/diona/hand
+	default_type = /obj/item/organ/external/diona/tiny
 
 /datum/organ_description/foot/left/diona
-	default_type = /obj/item/organ/external/diona/foot
+	default_type = /obj/item/organ/external/diona/tiny
 
 /datum/organ_description/foot/right/diona
-	default_type = /obj/item/organ/external/diona/foot
+	default_type = /obj/item/organ/external/diona/tiny
 
 ////SLIME////
 /datum/organ_description/slime
@@ -191,6 +195,3 @@
 
 /datum/organ_description/foot/right/slime
 	default_type = /obj/item/organ/external/tiny/slime
-
-
-

@@ -7,8 +7,8 @@
 /datum/surgery_step/fix_vein
 	priority = 2
 	allowed_tools = list(
-	/obj/item/weapon/FixOVein = 100, \
-	/obj/item/stack/cable_coil = 75
+		/obj/item/weapon/FixOVein = 100,
+		/obj/item/stack/cable_coil = 75
 	)
 	can_infect = 1
 	blood_level = 1
@@ -27,7 +27,7 @@
 			internal_bleeding = 1
 			break
 
-		return affected.open >= 2 && internal_bleeding
+		return affected.open == (affected.encased ? 3 : 2) && internal_bleeding
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
@@ -55,9 +55,9 @@
 /datum/surgery_step/fix_dead_tissue		//Debridement
 	priority = 2
 	allowed_tools = list(
-		/obj/item/weapon/scalpel = 100,		\
-		/obj/item/weapon/material/knife = 75,	\
-		/obj/item/weapon/material/shard = 50, 		\
+		/obj/item/weapon/scalpel = 100,
+		/obj/item/weapon/material/knife = 75,
+		/obj/item/weapon/material/shard = 50,
 	)
 
 	can_infect = 1
@@ -151,6 +151,7 @@
 
 			if(container.reagents.has_reagent("peridaxon"))
 				affected.status &= ~ORGAN_DEAD
+				affected.owner.update_body(1)
 
 			user.visible_message("\blue [user] applies [trans] units of the solution to affected tissue in [target]'s [affected.name]", \
 				"\blue You apply [trans] units of the solution to affected tissue in [target]'s [affected.name] with \the [tool].")
@@ -188,7 +189,7 @@
 			return 0
 		if(istype(tool,/obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/welder = tool
-			if(!welder.isOn())
+			if(!welder.isOn() || !welder.remove_fuel(1,user))
 				return 0
 		return (target_zone == BP_CHEST) && istype(target.back, /obj/item/weapon/rig) && !(target.back.canremove)
 

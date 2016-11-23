@@ -1,6 +1,10 @@
 //CORTICAL BORER ORGANS.
 /obj/item/organ/internal/borer
 	name = "cortical borer"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "borer"
+	organ_tag = O_BRAIN
+	desc = "A disgusting space slug."
 	parent_organ = BP_HEAD
 	vital = 1
 
@@ -26,13 +30,6 @@
 			goo.basecolor = "#412464"
 			goo.update_icon()
 
-/obj/item/organ/internal/borer
-	name = "cortical borer"
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "borer"
-	organ_tag = O_BRAIN
-	desc = "A disgusting space slug."
-
 /obj/item/organ/internal/borer/removed(var/mob/living/user)
 
 	..()
@@ -44,3 +41,21 @@
 
 	spawn(0)
 		qdel(src)
+
+//VOX ORGANS.
+/obj/item/organ/internal/stack
+	name = "cortical stack"
+	parent_organ = BP_HEAD
+	icon_state = "brain-prosthetic"
+	organ_tag = "stack"
+	vital = 1
+	var/backup_time = 0
+	var/datum/mind/backup
+
+/obj/item/organ/internal/stack/process()
+	if(owner && owner.stat != DEAD && !is_broken())
+		backup_time = world.time
+		if(owner.mind) backup = owner.mind
+
+/obj/item/organ/internal/stack/vox
+	name = "vox cortical stack"

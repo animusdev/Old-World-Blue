@@ -5,34 +5,46 @@
 	desc = "It's a jumpsuit worn by those with the know-how to achieve the position of \"Research Director\". Its fabric provides minor protection from biological contaminants."
 	name = "research director's jumpsuit"
 	icon_state = "director"
-	item_state = "lb_suit"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
-
 
 /obj/item/clothing/under/rank/research_director/alt
 	desc = "A dress suit and slacks stained with hard work and dedication to science. Perhaps other things as well, but mostly hard work and dedication."
 	name = "head researcher uniform"
 	icon_state = "rdalt"
-	item_state = "lb_suit"
+	item_state = "director"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
-
 
 /obj/item/clothing/under/rank/research_director/dress
 	name = "research director dress uniform"
 	desc = "Feminine fashion for the style concious RD. Its fabric provides minor protection from biological contaminants."
 	icon_state = "dress_rd"
-	item_state = "lb_suit"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-
 
 /obj/item/clothing/under/rank/scientist
 	desc = "It's made of a special fiber that provides minor protection against biohazards. It has markings that denote the wearer as a scientist."
 	name = "scientist's jumpsuit"
 	icon_state = "science"
-	item_state = "w_suit"
+	item_state = "white"
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 10, bio = 0, rad = 0)
+
+/obj/item/clothing/under/rank/dress/scientist
+	name = "scientist's jumpskirt"
+	icon_state = "sciencef"
+	item_state = "white"
+	permeability_coefficient = 0.50
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 10, bio = 0, rad = 0)
+
+/obj/item/clothing/under/rank/scientist/jeans
+	desc = "Simple blue jeans paired with white skirt. It has purple stripes on it's shoulders. Neat."
+	name = "scientist's jeans uniform"
+	icon_state = "sciencej"
+	item_state = "w_suit"
+
+/obj/item/clothing/under/rank/scientist/jeans/female
+	icon_state = "sciencejf"
+
 
 /obj/item/clothing/under/rank/xenoarch
 	desc = "It's made of a special fiber that provides minor protection against radiation. It has markings that denote the wearer as a xenoarcheologist."

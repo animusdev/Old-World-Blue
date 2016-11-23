@@ -13,30 +13,36 @@
 		return affected && affected.open == (affected.encased ? 3 : 2) && !(affected.status & ORGAN_BLEEDING)
 
 	proc/get_max_wclass(var/obj/item/organ/external/affected)
-		switch (affected.name)
+		switch (affected.organ_tag)
 			if (BP_HEAD)
 				return 1
-			if ("upper body")
+			if (BP_CHEST)
 				return 3
-			if ("lower body")
+			if (BP_GROIN)
 				return 2
 		return 0
 
 	proc/get_cavity(var/obj/item/organ/external/affected)
-		switch (affected.name)
+		switch (affected.organ_tag)
 			if (BP_HEAD)
 				return "cranial"
-			if ("upper body")
+			if (BP_CHEST)
 				return "thoracic"
-			if ("lower body")
+			if (BP_GROIN)
 				return "abdominal"
 		return ""
 
+	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		var/obj/item/organ/external/chest/affected = target.get_organ(target_zone)
+		user.visible_message("\red [user]'s hand slips, scraping around inside [target]'s [affected.name] with \the [tool]!", \
+		"\red Your hand slips, scraping around inside [target]'s [affected.name] with \the [tool]!")
+		affected.createwound(CUT, 20)
+
 /datum/surgery_step/cavity/make_space
 	allowed_tools = list(
-	/obj/item/weapon/surgicaldrill = 100,	\
-	/obj/item/weapon/pen = 75,	\
-	/obj/item/stack/rods = 50
+		/obj/item/weapon/surgicaldrill = 100,
+		/obj/item/weapon/pen = 75,
+		/obj/item/stack/rods = 50
 	)
 
 	min_duration = 60
@@ -60,19 +66,13 @@
 		user.visible_message("\blue [user] makes some space inside [target]'s [get_cavity(affected)] cavity with \the [tool].", \
 		"\blue You make some space inside [target]'s [get_cavity(affected)] cavity with \the [tool]." )
 
-	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/obj/item/organ/external/chest/affected = target.get_organ(target_zone)
-		user.visible_message("\red [user]'s hand slips, scraping tissue inside [target]'s [affected.name] with \the [tool]!", \
-		"\red Your hand slips, scraping tissue inside [target]'s [affected.name] with \the [tool]!")
-		affected.createwound(CUT, 20)
-
 /datum/surgery_step/cavity/close_space
 	priority = 2
 	allowed_tools = list(
-	/obj/item/weapon/cautery = 100,			\
-	/obj/item/clothing/mask/smokable/cigarette = 75,	\
-	/obj/item/weapon/flame/lighter = 50,			\
-	/obj/item/weapon/weldingtool = 25
+		/obj/item/weapon/cautery = 100,
+		/obj/item/clothing/mask/smokable/cigarette = 75,
+		/obj/item/weapon/flame/lighter = 50,
+		/obj/item/weapon/weldingtool = 25
 	)
 
 	min_duration = 60
@@ -95,12 +95,6 @@
 		var/obj/item/organ/external/chest/affected = target.get_organ(target_zone)
 		user.visible_message("\blue [user] mends [target]'s [get_cavity(affected)] cavity walls with \the [tool].", \
 		"\blue You mend [target]'s [get_cavity(affected)] cavity walls with \the [tool]." )
-
-	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/obj/item/organ/external/chest/affected = target.get_organ(target_zone)
-		user.visible_message("\red [user]'s hand slips, scraping tissue inside [target]'s [affected.name] with \the [tool]!", \
-		"\red Your hand slips, scraping tissue inside [target]'s [affected.name] with \the [tool]!")
-		affected.createwound(CUT, 20)
 
 /datum/surgery_step/cavity/place_item
 	priority = 0
@@ -146,37 +140,33 @@
 			affected.implants += tool
 		affected.cavity = 0
 
-	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/obj/item/organ/external/chest/affected = target.get_organ(target_zone)
-		user.visible_message(
-			"\red [user]'s hand slips, scraping tissue inside [target]'s [affected.name] with \the [tool]!",
-			"\red Your hand slips, scraping tissue inside [target]'s [affected.name] with \the [tool]!"
-		)
-		affected.createwound(CUT, 20)
-
 //////////////////////////////////////////////////////////////////
 //					IMPLANT/ITEM REMOVAL SURGERY						//
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/cavity/implant_removal
 	allowed_tools = list(
-	/obj/item/weapon/hemostat = 100,	\
-	/obj/item/weapon/wirecutters = 75,	\
-	/obj/item/weapon/material/kitchen/utensil/fork = 20
+		/obj/item/weapon/hemostat = 100,
+		/obj/item/weapon/wirecutters = 75,
+		/obj/item/weapon/material/kitchen/utensil/fork = 20
 	)
 
 	min_duration = 80
 	max_duration = 100
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/obj/item/organ/internal/brain/sponge = target.internal_organs_by_name[O_BRAIN]
-		return ..() && (!sponge || !sponge.damage)
+		var/obj/item/organ/external/affected = target.get_organ(target_zone)
+		if(affected.organ_tag == BP_HEAD)
+			var/obj/item/organ/internal/brain/sponge = target.internal_organs_by_name[O_BRAIN]
+			return ..() && (!sponge || !sponge.damage)
+		else
+			return ..()
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
-		user.visible_message("[user] starts poking around inside the incision on [target]'s [affected.name] with \the [tool].", \
-		"You start poking around inside the incision on [target]'s [affected.name] with \the [tool]" )
-		target.custom_pain("The pain in your chest is living hell!",1)
+		user.visible_message("[user] starts poking around inside [target]'s [affected.name] with \the [tool].", \
+		"You start poking around inside [target]'s [affected.name] with \the [tool]" )
+		target.custom_pain("The pain in your [affected.name] is living hell!",1)
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -228,10 +218,8 @@
 			"\blue You could not find anything inside [target]'s [affected.name]." )
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+		..()
 		var/obj/item/organ/external/chest/affected = target.get_organ(target_zone)
-		user.visible_message("\red [user]'s hand slips, scraping tissue inside [target]'s [affected.name] with \the [tool]!", \
-		"\red Your hand slips, scraping tissue inside [target]'s [affected.name] with \the [tool]!")
-		affected.createwound(CUT, 20)
 		if (affected.implants.len)
 			var/fail_prob = 10
 			fail_prob += 100 - tool_quality(tool)

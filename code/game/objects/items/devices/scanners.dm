@@ -204,7 +204,7 @@ REAGENT SCANNER
 		if(length(damaged)>0)
 			for(var/obj/item/organ/external/org in damaged)
 				user.show_message(text("\blue \t []: [][]\blue - []",	\
-				"[capitalize(org.name)][org.status & ORGAN_ROBOT ? "(Cybernetic)" : ""]",	\
+				"[capitalize(org.name)][org.robotic >= ORGAN_ROBOT ? "(Cybernetic)" : ""]",	\
 				(org.brute_dam > 0)	?	"\red [org.brute_dam]"							:0,		\
 				(org.status & ORGAN_BLEEDING)?"\red <b>\[Bleeding\]</b>":"\t", 		\
 				(org.burn_dam > 0)	?	"<font color='#FFA500'>[org.burn_dam]</font>"	:0),1)

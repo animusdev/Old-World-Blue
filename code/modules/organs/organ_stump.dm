@@ -13,6 +13,11 @@
 	..(holder)
 	if(istype(limb))
 		max_damage = limb.max_damage
+		if((limb.robotic >= ORGAN_ROBOT) && (!parent || (parent.robotic >= ORGAN_ROBOT)))
+			robotize() //if both limb and the parent are robotic, the stump is robotic too
+
+/obj/item/organ/external/stump/get_icon_key()
+	return "0"
 
 /obj/item/organ/external/stump/get_tally()
 	return 4
@@ -20,7 +25,7 @@
 /obj/item/organ/external/stump/is_stump()
 	return 1
 
-/obj/item/organ/external/stump/removed(user, delete_children)
+/obj/item/organ/external/stump/removed()
 	..()
 	qdel(src)
 
