@@ -1540,6 +1540,8 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	character.personal_faction = faction
 	character.religion = religion
 
+	character.revive() // Just heal that mob. Rework late.
+
 	// Destroy/cyborgize organs
 	for(var/name in character.organs_by_name)
 		var/status = organ_data[name]
