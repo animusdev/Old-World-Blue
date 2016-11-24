@@ -1577,6 +1577,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 			message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
 			character.gender = MALE
 
+	character.sync_organ_dna()
 	character.force_update_limbs()
 
 /datum/preferences/proc/open_load_dialog(mob/user)

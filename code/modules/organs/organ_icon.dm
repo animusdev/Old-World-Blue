@@ -131,7 +131,7 @@
 			else if (robotic >= ORGAN_ROBOT)
 				mob_icon = new /icon('icons/mob/human_races/robotic.dmi', icon_state)
 			else
-				if(is_stump()) icon_state+="_s"
+				if(is_stump()) icon_state += "_s"
 				mob_icon = new /icon(owner.species.icobase, icon_state)
 				apply_colouration(mob_icon)
 				if(tattoo)

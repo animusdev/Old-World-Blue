@@ -30,8 +30,11 @@ var/const/BLOOD_VOLUME_SURVIVE = 40
 /mob/living/carbon/human/proc/fixblood()
 	for(var/datum/reagent/blood/B in vessel.reagent_list)
 		if(B.id == "blood")
-			B.data = list(	"donor"=src,"viruses"=null,"species"=species.name,"blood_DNA"=dna.unique_enzymes,"blood_colour"= get_blood_colour(),"blood_type"=dna.b_type,	\
-							"resistances"=null,"trace_chem"=null, "virus2" = null, "antibodies" = list())
+			B.data=list(
+				"donor"=src,"viruses"=null,"species"=species.name,"blood_DNA"=dna.unique_enzymes,
+				"blood_colour"= get_blood_colour(),"blood_type"=dna.b_type,
+				"resistances"=null,"trace_chem"=null, "virus2" = null, "antibodies" = list()
+			)
 			B.color = B.data["blood_colour"]
 
 // Takes care blood loss and regeneration

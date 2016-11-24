@@ -28,13 +28,13 @@
 #define OXYLOSS   0x8
 
 // Organ defines.
-#define ORGAN_CUT_AWAY   (1<<0)
-#define ORGAN_BLEEDING   (1<<1)
-#define ORGAN_BROKEN     (1<<2)
-#define ORGAN_DESTROYED  (1<<3)
-#define ORGAN_SPLINTED   (1<<4)
-#define ORGAN_DEAD       (1<<5)
-#define ORGAN_MUTATED    (1<<6)
+#define ORGAN_CUT_AWAY   (1<<0) //1
+#define ORGAN_BLEEDING   (1<<1) //2
+#define ORGAN_BROKEN     (1<<2) //4
+#define ORGAN_DESTROYED  (1<<3) //8
+#define ORGAN_SPLINTED   (1<<4) //16
+#define ORGAN_DEAD       (1<<5) //32
+#define ORGAN_MUTATED    (1<<6) //64
 
 #define DROPLIMB_EDGE 0
 #define DROPLIMB_BLUNT 1

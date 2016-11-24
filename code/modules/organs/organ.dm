@@ -73,6 +73,12 @@ var/list/organ_cache = list()
 		transplant_data["blood_DNA"] =  transplant_blood.data["blood_DNA"]
 	processing_objects -= src
 
+/obj/item/organ/proc/set_dna(var/datum/dna/new_dna)
+	if(new_dna)
+		dna = new_dna.Clone()
+		blood_DNA.Cut()
+		blood_DNA[dna.unique_enzymes] = dna.b_type
+
 /obj/item/organ/Destroy()
 	if(owner)           owner = null
 	if(transplant_data) transplant_data.Cut()

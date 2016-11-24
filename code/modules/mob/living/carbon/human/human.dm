@@ -40,7 +40,9 @@
 	..()
 
 	if(dna)
+		dna.ready_dna(src)
 		dna.real_name = real_name
+		sync_organ_dna()
 	make_blood()
 
 /mob/living/carbon/human/Destroy()
@@ -1091,6 +1093,7 @@
 		new_species = "Human"
 
 	if(species)
+
 		if(species.name && species.name == new_species)
 			return
 		if(species.language)
