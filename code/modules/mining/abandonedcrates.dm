@@ -172,6 +172,9 @@
 	if (locked)
 		user << "<span class='notice'>The crate unlocks!</span>"
 		locked = 0
+		return 1
+	else
+		return -1
 
 /obj/structure/closet/crate/secure/loot/proc/check_input(var/input)
 	if(length(input) != codelen)

@@ -86,7 +86,7 @@
 				for(var/i in 1 to rand(4,8))
 					user.visible_message(
 						"<span class='warning'>[user] picks in wires of the [src.name] with a multitool.</span>",
-						"<span class='warning'>I am trying to reset circuitry lock module ([i]/6)...</span>"
+						"<span class='warning'>I am trying to reset circuitry lock module ([i])...</span>"
 					)
 					if(!do_after(user,200)||!locked)
 						multi.in_use=0
@@ -123,7 +123,7 @@
 		..()
 
 /obj/structure/closet/secure_closet/emag_act(var/remaining_charges, var/mob/user, var/emag_source, var/visual_feedback = "", var/audible_feedback = "")
-	if(!broken)
+	if(!opened && !broken)
 		broken = 1
 		locked = 0
 		desc = "It appears to be broken."
@@ -137,6 +137,8 @@
 		else
 			visible_message("<span class='warning'>\The [src] sparks and breaks open!</span>", "You hear a faint electrical spark.")
 		return 1
+	else
+		return -1
 
 /obj/structure/closet/secure_closet/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
