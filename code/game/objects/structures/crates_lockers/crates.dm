@@ -125,9 +125,6 @@
 	var/broken = 0
 	var/locked = 1
 
-/obj/structure/closet/crate/secure/New()
-	..()
-
 /obj/structure/closet/crate/secure/can_open()
 	return !locked
 
@@ -205,7 +202,7 @@
 		for(var/i in 1 to rand(4,8))
 			user.visible_message(
 				"<span class='warning'>[user] picks in wires of the [src.name] with a multitool.</span>",
-				"<span class='warning'>I am trying to reset circuitry lock module ([i]/6)...</span>"
+				"<span class='warning'>I am trying to reset circuitry lock module ([i])...</span>"
 			)
 			if(!do_after(user,200)||!locked)
 				multi.in_use=0
@@ -224,7 +221,7 @@
 		src.togglelock(user)
 
 /obj/structure/closet/crate/secure/emag_act(var/remaining_charges, var/mob/user)
-	if(!broken)
+	if(!opened && !broken)
 		src.locked = 0
 		src.broken = 1
 		update_icon()
@@ -233,6 +230,8 @@
 		playsound(src.loc, "sparks", 60, 1)
 		user << "<span class='notice'>You unlock \the [src].</span>"
 		return 1
+	else
+		return -1
 
 /obj/structure/closet/crate/secure/emp_act(severity)
 	for(var/obj/O in src)

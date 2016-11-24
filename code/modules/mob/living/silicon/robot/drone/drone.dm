@@ -140,7 +140,7 @@
 	..()
 
 /mob/living/silicon/robot/drone/emag_act(var/remaining_charges, var/mob/user)
-	if(!client || stat == 2)
+	if(!client || stat == DEAD)
 		user << "<span class='danger'>There's not much point subverting this heap of junk.</span>"
 		return
 

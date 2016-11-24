@@ -80,7 +80,7 @@
 	return
 
 /obj/structure/closet/secure_closet/personal/emag_act(var/remaining_charges, var/mob/user, var/visual_feedback, var/audible_feedback)
-	if(!broken)
+	if(!opened && !broken)
 		broken = 1
 		locked = 0
 		desc = "It appears to be broken."
@@ -88,6 +88,8 @@
 		if(visual_feedback)
 			visible_message("<span class='warning'>[visual_feedback]</span>", "<span class='warning'>[audible_feedback]</span>")
 		return 1
+	else
+		return -1
 
 /obj/structure/closet/secure_closet/personal/verb/reset()
 	set src in oview(1) // One square distance
