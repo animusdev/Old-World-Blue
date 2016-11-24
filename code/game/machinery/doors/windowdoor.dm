@@ -63,9 +63,9 @@
 	..()
 
 /obj/machinery/door/window/Bumped(atom/movable/AM as mob|obj)
-	if (!( ismob(AM) ))
-		var/mob/living/bot/bot = AM
-		if(istype(bot))
+	if (!ismob(AM))
+		if(istype(AM,/mob/living/bot))
+			var/mob/living/bot/bot = AM
 			if(density && src.check_access(bot.botcard))
 				open()
 				sleep(50)
@@ -78,7 +78,7 @@
 					sleep(50)
 					close()
 		return
-	if (!( ticker ))
+	if (!ticker)
 		return
 	if (src.operating)
 		return
@@ -182,7 +182,7 @@
 	//Emags and ninja swords? You may pass.
 	if (istype(I, /obj/item/weapon/melee/energy/blade))
 		if(emag_act(10, user))
-			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+			var/datum/effect/effect/system/spark_spread/spark_system = new
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
 			playsound(src.loc, "sparks", 50, 1)
@@ -194,10 +194,10 @@
 	if (src.operating == -1 && istype(I, /obj/item/weapon/crowbar))
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 		user.visible_message("[user] removes the electronics from the windoor.", "You start to remove electronics from the windoor.")
-		if (do_after(user,40))
+		if (do_after(user,40,src))
 			user << "<span class='notice'>You removed the windoor electronics!</span>"
 
-			var/obj/structure/windoor_assembly/wa = new/obj/structure/windoor_assembly(src.loc)
+			var/obj/structure/windoor_assembly/wa = new(src.loc)
 			if (istype(src, /obj/machinery/door/window/brigdoor))
 				wa.secure = "secure_"
 				wa.name = "secure wired windoor assembly"
@@ -209,34 +209,16 @@
 			wa.state = "02"
 			wa.update_icon()
 
-			var/obj/item/weapon/airlock_electronics/ae
-			if(!electronics)
-				ae = new/obj/item/weapon/airlock_electronics( src.loc )
-				if(!src.req_access)
-					src.check_access()
-				if(src.req_access.len)
-					ae.conf_access = src.req_access
-				else if (src.req_one_access.len)
-					ae.conf_access = src.req_one_access
-					ae.one_access = 1
-			else
-				ae = electronics
-				electronics = null
-				ae.loc = src.loc
-			ae.icon_state = "door_electronics_smoked"
-
-			operating = 0
 			shatter(src)
 			return
 
 	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
 		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
-		var/aforce = I.force
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		visible_message("<span class='danger'>[src] was hit by [I].</span>")
 		if(I.damtype == BRUTE || I.damtype == BURN)
-			take_damage(aforce)
+			take_damage(I.force)
 		return
 
 
