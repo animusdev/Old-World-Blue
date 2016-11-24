@@ -3,6 +3,7 @@
 	name = "Accounts uplink terminal"
 	desc = "Access transaction logs, account data and all kinds of other financial records."
 	req_one_access = list(access_hop, access_captain, access_cent_captain)
+	icon_state = "computer_generic"
 	var/receipt_num
 	var/machine_id = ""
 	var/obj/item/weapon/card/id/held_card
