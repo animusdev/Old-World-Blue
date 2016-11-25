@@ -95,10 +95,10 @@
 
 /obj/machinery/atmospherics/trinary/filter/process()
 	..()
-
+	
 	last_power_draw = 0
 	last_flow_rate = 0
-
+	
 	if((stat & (NOPOWER|BROKEN)) || !use_power)
 		return
 
