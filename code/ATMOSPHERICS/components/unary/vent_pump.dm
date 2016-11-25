@@ -40,8 +40,6 @@
 	var/internal_pressure_bound_default = INTERNAL_PRESSURE_BOUND
 	var/pressure_checks_default = PRESSURE_CHECKS
 
-	var/welded = 0 // Added for aliens -- TLE
-
 	var/frequency = 1439
 	var/datum/radio_frequency/radio_connection
 
@@ -116,7 +114,7 @@
 	if(!istype(T))
 		return
 
-	if(T.intact && node && node.level == 1 && istype(node, /obj/machinery/atmospherics/pipe))
+	if(!T.is_plating() && node && node.level == 1 && istype(node, /obj/machinery/atmospherics/pipe))
 		vent_icon += "h"
 
 	if(welded)
@@ -134,7 +132,7 @@
 		var/turf/T = get_turf(src)
 		if(!istype(T))
 			return
-		if(T.intact && node && node.level == 1 && istype(node, /obj/machinery/atmospherics/pipe))
+		if(!T.is_plating() && node && node.level == 1 && istype(node, /obj/machinery/atmospherics/pipe))
 			return
 		else
 			if(node)
@@ -158,7 +156,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/process()
 	..()
 
-	if (hibernate > world.time)
+	if (hibernate)
 		return 1
 
 	if (!node)
@@ -188,8 +186,12 @@
 	else
 		//If we're in an area that is fucking ideal, and we don't have to do anything, chances are we won't next tick either so why redo these calculations?
 		//JESUS FUCK.  THERE ARE LITERALLY 250 OF YOU MOTHERFUCKERS ON ZLEVEL ONE AND YOU DO THIS SHIT EVERY TICK WHEN VERY OFTEN THERE IS NO REASON TO
+
 		if(pump_direction && pressure_checks == PRESSURE_CHECK_EXTERNAL && controller_iteration > 10)	//99% of all vents
-			hibernate = world.time + (rand(100,200))
+			//Fucking hibernate because you ain't doing shit.
+			hibernate = 1
+			spawn(rand(100,200))	//hibernate for 10 or 20 seconds randomly
+				hibernate = 0
 
 
 	if (power_draw >= 0)
@@ -372,9 +374,8 @@
 	else
 		..()
 
-/obj/machinery/atmospherics/unary/vent_pump/examine(mob/user, return_dist=1)
-	.=..()
-	if(.<=1)
+/obj/machinery/atmospherics/unary/vent_pump/examine(mob/user)
+	if(..(user, 1))
 		user << "A small gauge in the corner reads [round(last_flow_rate, 0.1)] L/s; [round(last_power_draw)] W"
 	else
 		user << "You are too far away to read the gauge."
@@ -394,7 +395,7 @@
 		user << "<span class='warning'>You cannot unwrench \the [src], turn it off first.</span>"
 		return 1
 	var/turf/T = src.loc
-	if (node && node.level==1 && isturf(T) && T.intact)
+	if (node && node.level==1 && isturf(T) && !T.is_plating())
 		user << "<span class='warning'>You must remove the plating first.</span>"
 		return 1
 	var/datum/gas_mixture/int_air = return_air()

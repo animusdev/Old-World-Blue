@@ -23,7 +23,6 @@
 /obj/machinery/atmospherics/unary/heater/New()
 	..()
 	initialize_directions = dir
-
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/unary_atmos/heater(src)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
@@ -111,7 +110,7 @@
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if(!ui)
 		// the ui does not exist, so we'll create a new() one
-		// for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
+        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "freezer.tmpl", "Gas Heating System", 440, 300)
 		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
@@ -170,6 +169,6 @@
 	..()
 
 /obj/machinery/atmospherics/unary/heater/examine(mob/user)
-	.=..()
+	..(user)
 	if(panel_open)
 		user << "The maintenance hatch is open."

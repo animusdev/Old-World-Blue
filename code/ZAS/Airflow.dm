@@ -60,11 +60,10 @@ obj/item/check_airflow_movable(n)
 		if(4,5)
 			if(n < vsc.airflow_medium_pressure) return 0
 
-/atom/movable
-	var/tmp/turf/airflow_dest
-	var/tmp/airflow_speed = 0
-	var/tmp/airflow_time = 0
-	var/tmp/last_airflow = 0
+/atom/movable/var/tmp/turf/airflow_dest
+/atom/movable/var/tmp/airflow_speed = 0
+/atom/movable/var/tmp/airflow_time = 0
+/atom/movable/var/tmp/last_airflow = 0
 
 /atom/movable/proc/AirflowCanMove(n)
 	return 1
@@ -130,7 +129,7 @@ obj/item/check_airflow_movable(n)
 		step_towards(src, src.airflow_dest)
 		var/mob/M = src
 		if(istype(M) && M.client)
-			M.client.move_delay = world.time + vsc.airflow_mob_slowdown
+			M.setMoveCooldown(vsc.airflow_mob_slowdown)
 	airflow_dest = null
 	airflow_speed = 0
 	airflow_time = 0
@@ -248,6 +247,6 @@ zone/proc/movables()
 	. = list()
 	for(var/turf/T in contents)
 		for(var/atom/movable/A in T)
-			if(!A.simulated || A.anchored || istype(A, /obj/effect) || isobserver(A))
+			if(!A.simulated || A.anchored || istype(A, /obj/effect) || istype(A, /mob/observer))
 				continue
 			. += A

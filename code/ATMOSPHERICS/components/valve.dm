@@ -12,8 +12,6 @@
 	var/open = 0
 	var/openDuringInit = 0
 
-	var/obj/machinery/atmospherics/node1
-	var/obj/machinery/atmospherics/node2
 
 	var/datum/pipe_network/network_node1
 	var/datum/pipe_network/network_node2
@@ -312,7 +310,6 @@
 		new /obj/item/pipe(loc, make_from=src)
 		qdel(src)
 
-/obj/machinery/atmospherics/valve/examine(mob/user, return_dist=1)
-	.=..()
-	if(.<=3)
-		user << "It is [open ? "open" : "closed"]."
+/obj/machinery/atmospherics/valve/examine(mob/user)
+	..()
+	user << "It is [open ? "open" : "closed"]."

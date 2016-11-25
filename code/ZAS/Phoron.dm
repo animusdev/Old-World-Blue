@@ -1,7 +1,7 @@
 var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 
 /pl_control
-	var/PHORON_DMG = 5
+	var/PHORON_DMG = 3
 	var/PHORON_DMG_NAME = "Phoron Damage Amount"
 	var/PHORON_DMG_DESC = "Self Descriptive"
 
@@ -9,7 +9,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 	var/CLOTH_CONTAMINATION_NAME = "Cloth Contamination"
 	var/CLOTH_CONTAMINATION_DESC = "If this is on, phoron does damage by getting into cloth."
 
-	var/PHORONGUARD_ONLY = 1
+	var/PHORONGUARD_ONLY = 0
 	var/PHORONGUARD_ONLY_NAME = "\"PhoronGuard Only\""
 	var/PHORONGUARD_ONLY_DESC = "If this is on, only biosuits and spacesuits protect against contamination and ill effects."
 
@@ -25,7 +25,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 	var/EYE_BURNS_NAME = "Eye Burns"
 	var/EYE_BURNS_DESC = "Phoron burns the eyes of anyone not wearing eye protection."
 
-	var/CONTAMINATION_LOSS = 0.075
+	var/CONTAMINATION_LOSS = 0.02
 	var/CONTAMINATION_LOSS_NAME = "Contamination Loss"
 	var/CONTAMINATION_LOSS_DESC = "How much toxin damage is dealt from contaminated clothing" //Per tick?  ASK ARYN
 
@@ -97,14 +97,14 @@ obj/var/contaminated = 0
 			if(!wear_mask)
 				burn_eyes()
 			else
-				if(!wear_mask.body_parts_covered & EYES)
+				if(!(wear_mask.body_parts_covered & EYES))
 					burn_eyes()
 		else
-			if(!head.body_parts_covered & EYES)
+			if(!(head.body_parts_covered & EYES))
 				if(!wear_mask)
 					burn_eyes()
 				else
-					if(!wear_mask.body_parts_covered & EYES)
+					if(!(wear_mask.body_parts_covered & EYES))
 						burn_eyes()
 
 	//Genetic Corruption
@@ -142,7 +142,7 @@ obj/var/contaminated = 0
 		if(!protection)
 			continue
 		if(vsc.plc.PHORONGUARD_ONLY && !(protection.flags & PHORONGUARD))
-			continue
+			return 0
 		coverage |= protection.body_parts_covered
 
 	if(vsc.plc.PHORONGUARD_ONLY)

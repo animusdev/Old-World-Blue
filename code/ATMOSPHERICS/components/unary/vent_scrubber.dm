@@ -72,7 +72,7 @@
 		var/turf/T = get_turf(src)
 		if(!istype(T))
 			return
-		if(T.intact && node && node.level == 1 && istype(node, /obj/machinery/atmospherics/pipe))
+		if(!T.is_plating() && node && node.level == 1 && istype(node, /obj/machinery/atmospherics/pipe))
 			return
 		else
 			if(node)
@@ -127,7 +127,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/process()
 	..()
 
-	if (hibernate > world.time)
+	if (hibernate)
 		return 1
 
 	if (!node)
@@ -141,20 +141,20 @@
 	var/power_draw = -1
 	if(scrubbing)
 		//limit flow rate from turfs
-		var/transfer_moles = min(environment.total_moles, environment.total_moles*MAX_SCRUBBER_FLOWRATE/environment.volume)
-		//group_multiplier gets divided out here
+		var/transfer_moles = min(environment.total_moles, environment.total_moles*MAX_SCRUBBER_FLOWRATE/environment.volume)	//group_multiplier gets divided out here
 
 		power_draw = scrub_gas(src, scrubbing_gas, environment, air_contents, transfer_moles, power_rating)
 	else //Just siphon all air
 		//limit flow rate from turfs
-		var/transfer_moles = min(environment.total_moles, environment.total_moles*MAX_SIPHON_FLOWRATE/environment.volume)
-		//group_multiplier gets divided out here
+		var/transfer_moles = min(environment.total_moles, environment.total_moles*MAX_SIPHON_FLOWRATE/environment.volume)	//group_multiplier gets divided out here
 
 		power_draw = pump_gas(src, environment, air_contents, transfer_moles, power_rating)
 
 	if(scrubbing && power_draw < 0 && controller_iteration > 10)	//99% of all scrubbers
 		//Fucking hibernate because you ain't doing shit.
-		hibernate = world.time + (rand(100,200))
+		hibernate = 1
+		spawn(rand(100,200))	//hibernate for 10 or 20 seconds randomly
+			hibernate = 0
 
 	if (power_draw >= 0)
 		last_power_draw = power_draw
@@ -242,8 +242,7 @@
 			broadcast_status()
 		return //do not update_icon
 
-//log_admin("DEBUG \[[world.timeofday]\]: \
-	vent_scrubber/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
+//			log_admin("DEBUG \[[world.timeofday]\]: vent_scrubber/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
 	spawn(2)
 		broadcast_status()
 	update_icon()
@@ -262,7 +261,7 @@
 		user << "<span class='warning'>You cannot unwrench \the [src], turn it off first.</span>"
 		return 1
 	var/turf/T = src.loc
-	if (node && node.level==1 && isturf(T) && T.intact)
+	if (node && node.level==1 && isturf(T) && !T.is_plating())
 		user << "<span class='warning'>You must remove the plating first.</span>"
 		return 1
 	var/datum/gas_mixture/int_air = return_air()
@@ -281,9 +280,8 @@
 		new /obj/item/pipe(loc, make_from=src)
 		qdel(src)
 
-/obj/machinery/atmospherics/unary/vent_scrubber/examine(mob/user, return_dist=1)
-	.=..()
-	if(.<=1)
+/obj/machinery/atmospherics/unary/vent_scrubber/examine(mob/user)
+	if(..(user, 1))
 		user << "A small gauge in the corner reads [round(last_flow_rate, 0.1)] L/s; [round(last_power_draw)] W"
 	else
 		user << "You are too far away to read the gauge."

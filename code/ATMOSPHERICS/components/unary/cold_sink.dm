@@ -10,7 +10,6 @@
 	anchored = 1
 	use_power = 0
 	idle_power_usage = 5			// 5 Watts for thermostat related circuitry
-
 	var/heatsink_temperature = T20C	// The constant temperature reservoir into which the freezer pumps heat. Probably the hull of the station or something.
 	var/internal_volume = 600		// L
 
@@ -90,7 +89,7 @@
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
 	if(!ui)
 		// the ui does not exist, so we'll create a new() one
-		// for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
+        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
 		ui = new(user, src, ui_key, "freezer.tmpl", "Gas Cooling System", 440, 300)
 		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
@@ -182,6 +181,6 @@
 	..()
 
 /obj/machinery/atmospherics/unary/freezer/examine(mob/user)
-	.=..()
+	..(user)
 	if(panel_open)
 		user << "The maintenance hatch is open."

@@ -179,7 +179,7 @@ obj/machinery/atmospherics/mains_pipe/simple
 		..() // initialize internal pipes
 
 		var/turf/T = src.loc			// hide if turf is not intact
-		hide(T.intact)
+		if(level == 1 && !T.is_plating()) hide(1)
 		update_icon()
 
 	hidden
@@ -241,7 +241,7 @@ obj/machinery/atmospherics/mains_pipe/manifold
 		..() // initialize internal pipes
 
 		var/turf/T = src.loc			// hide if turf is not intact
-		hide(T.intact)
+		if(level == 1 && !T.is_plating()) hide(1)
 		update_icon()
 
 	update_icon()
@@ -291,7 +291,7 @@ obj/machinery/atmospherics/mains_pipe/manifold4w
 		..() // initialize internal pipes
 
 		var/turf/T = src.loc			// hide if turf is not intact
-		hide(T.intact)
+		if(level == 1 && !T.is_plating()) hide(1)
 		update_icon()
 
 	update_icon()
@@ -352,7 +352,7 @@ obj/machinery/atmospherics/mains_pipe/split
 					N1.merge(N2)
 
 		var/turf/T = src.loc			// hide if turf is not intact
-		hide(T.intact)
+		if(level == 1 && !T.is_plating()) hide(1)
 		update_icon()
 
 	update_icon()
@@ -473,7 +473,7 @@ obj/machinery/atmospherics/mains_pipe/split3
 					N1.merge(N2)
 
 		var/turf/T = src.loc			// hide if turf is not intact
-		hide(T.intact)
+		if(level == 1 && !T.is_plating()) hide(1)
 		update_icon()
 
 	update_icon()
@@ -523,7 +523,7 @@ obj/machinery/atmospherics/mains_pipe/cap
 		..()
 
 		var/turf/T = src.loc	// hide if turf is not intact
-		hide(T.intact)
+		if(level == 1 && !T.is_plating()) hide(1)
 		update_icon()
 
 	hidden
