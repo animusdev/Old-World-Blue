@@ -40,9 +40,7 @@
 	..()
 
 	if(dna)
-		dna.ready_dna(src)
 		dna.real_name = real_name
-		sync_organ_dna()
 	make_blood()
 
 /mob/living/carbon/human/Destroy()
@@ -1045,7 +1043,7 @@
 					src << msg
 
 				organ.take_damage(rand(1,3), 0, 0)
-				if(organ.status < ORGAN_ROBOT && should_have_organ(O_HEART)) //There is no blood in protheses.
+				if(!(organ.status & ORGAN_ROBOT) && (should_have_organ(O_HEART))) //There is no blood in protheses.
 					organ.status |= ORGAN_BLEEDING
 					src.adjustToxLoss(rand(1,3))
 
@@ -1093,7 +1091,6 @@
 		new_species = "Human"
 
 	if(species)
-
 		if(species.name && species.name == new_species)
 			return
 		if(species.language)
@@ -1217,22 +1214,22 @@
 		else
 			target_zone = user.zone_sel.selecting
 
+	var/obj/item/organ/external/affecting = get_organ(target_zone)
 	var/fail_msg
-	switch(target_zone)
-		if(BP_HEAD)
-			if(head && head.item_flags & THICKMATERIAL)
-				. = 0
-		else
-			if(wear_suit && wear_suit.item_flags & THICKMATERIAL)
-				. = 0
-	if(.)
-		var/obj/item/organ/external/affecting = get_organ(target_zone)
-		if(!affecting)
-			. = 0
-			fail_msg = "They are missing that limb."
-		else if (affecting.robotic >= ORGAN_ROBOT)
-			. = 0
-			fail_msg = "That limb is robotic."
+	if(!affecting)
+		. = 0
+		fail_msg = "They are missing that limb."
+	else if (affecting.status & ORGAN_ROBOT)
+		. = 0
+		fail_msg = "That limb is robotic."
+	else
+		switch(target_zone)
+			if(BP_HEAD)
+				if(head && head.item_flags & THICKMATERIAL)
+					. = 0
+			else
+				if(wear_suit && wear_suit.item_flags & THICKMATERIAL)
+					. = 0
 	if(!. && error_msg && user)
 		if(!fail_msg)
 			fail_msg = "There is no exposed flesh or thin material [target_zone == BP_HEAD ? "on their head" : "on their body"] to inject into."

@@ -5,8 +5,8 @@
 
 /datum/surgery_step/glue_bone
 	allowed_tools = list(
-		/obj/item/weapon/bonegel = 100,
-		/obj/item/weapon/screwdriver = 75
+	/obj/item/weapon/bonegel = 100,	\
+	/obj/item/weapon/screwdriver = 75
 	)
 	can_infect = 1
 	blood_level = 1
@@ -18,7 +18,7 @@
 		if (!hasorgans(target))
 			return 0
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
-		return affected && (affected.robotic < ORGAN_ROBOT) && affected.open >= 2 && affected.stage == 0
+		return affected && affected.open >= 2 && affected.stage == 0
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
@@ -41,8 +41,8 @@
 
 /datum/surgery_step/set_bone
 	allowed_tools = list(
-		/obj/item/weapon/bonesetter = 100,
-		/obj/item/weapon/wrench = 75
+	/obj/item/weapon/bonesetter = 100,	\
+	/obj/item/weapon/wrench = 75		\
 	)
 
 	min_duration = 60
@@ -52,7 +52,7 @@
 		if (!hasorgans(target))
 			return 0
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
-		return affected && affected.organ_tag != BP_HEAD && affected.robotic<ORGAN_ROBOT && affected.open >= 2 && affected.stage == 1
+		return affected && affected.name != BP_HEAD && affected.open >= 2 && affected.stage == 1
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
@@ -80,8 +80,8 @@
 
 /datum/surgery_step/mend_skull
 	allowed_tools = list(
-		/obj/item/weapon/bonesetter = 100,
-		/obj/item/weapon/wrench = 75
+	/obj/item/weapon/bonesetter = 100,	\
+	/obj/item/weapon/wrench = 75		\
 	)
 
 	min_duration = 60
@@ -91,7 +91,7 @@
 		if (!hasorgans(target))
 			return 0
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
-		return affected && affected.organ_tag == BP_HEAD && (affected.robotic < ORGAN_ROBOT) && affected.open >= 2 && affected.stage == 1
+		return affected && affected.name == BP_HEAD && affected.open >= 2 && affected.stage == 1
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message("[user] is beginning to piece together [target]'s skull with \the [tool]."  , \
@@ -114,8 +114,8 @@
 
 /datum/surgery_step/finish_bone
 	allowed_tools = list(
-		/obj/item/weapon/bonegel = 100,
-		/obj/item/weapon/screwdriver = 75
+	/obj/item/weapon/bonegel = 100,	\
+	/obj/item/weapon/screwdriver = 75
 	)
 	can_infect = 1
 	blood_level = 1
@@ -127,7 +127,7 @@
 		if (!hasorgans(target))
 			return 0
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
-		return affected && affected.open >= 2 && affected.robotic<ORGAN_ROBOT && affected.stage == 2
+		return affected && affected.open >= 2 && affected.stage == 2
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
@@ -142,6 +142,7 @@
 		affected.status &= ~ORGAN_BROKEN
 		affected.status &= ~ORGAN_SPLINTED
 		affected.stage = 0
+		affected.perma_injury = 0
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)

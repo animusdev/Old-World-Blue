@@ -15,18 +15,20 @@
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		if (affected == null)
 			return 0
-		if (affected.is_stump())
+		if (affected.status & ORGAN_DESTROYED)
 			return 0
-		if (affected.robotic >= ORGAN_ROBOT)
+		if (target_zone == BP_HEAD && target.species && (target.species.flags & IS_SYNTHETIC))
+			return 1
+		if (affected.status & ORGAN_ROBOT)
 			return 0
 		return 1
 
 /datum/surgery_step/generic/cut_with_laser
 	allowed_tools = list(
-		/obj/item/weapon/scalpel/laser3 = 95,
-		/obj/item/weapon/scalpel/laser2 = 85,
-		/obj/item/weapon/scalpel/laser1 = 75,
-		/obj/item/weapon/melee/energy/sword = 5
+	/obj/item/weapon/scalpel/laser3 = 95, \
+	/obj/item/weapon/scalpel/laser2 = 85, \
+	/obj/item/weapon/scalpel/laser1 = 75, \
+	/obj/item/weapon/melee/energy/sword = 5
 	)
 	priority = 2
 	min_duration = 90
@@ -51,6 +53,9 @@
 		//Could be cleaner ...
 		affected.open = 1
 
+		if(istype(target) && !(target.species.flags & NO_BLOOD))
+			affected.status |= ORGAN_BLEEDING
+
 		affected.createwound(CUT, 1)
 		affected.clamp()
 		spread_germs_to_organ(affected, user)
@@ -66,7 +71,7 @@
 
 /datum/surgery_step/generic/incision_manager
 	allowed_tools = list(
-		/obj/item/weapon/scalpel/manager = 100
+	/obj/item/weapon/scalpel/manager = 100
 	)
 	priority = 2
 	min_duration = 80
@@ -90,8 +95,7 @@
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
 			"\blue [user] has constructed a prepared incision on and within [target]'s [affected.name] with \the [tool].",\
-			"\blue You have constructed a prepared incision on and within [target]'s [affected.name] with \the [tool]."
-		)
+			"\blue You have constructed a prepared incision on and within [target]'s [affected.name] with \the [tool].",)
 		affected.open = 1
 
 		if(istype(target) && target.should_have_organ(O_HEART))
@@ -112,9 +116,9 @@
 
 /datum/surgery_step/generic/cut_open
 	allowed_tools = list(
-		/obj/item/weapon/scalpel = 100,
-		/obj/item/weapon/material/knife = 75,
-		/obj/item/weapon/material/shard = 50,
+	/obj/item/weapon/scalpel = 100,		\
+	/obj/item/weapon/material/knife = 75,	\
+	/obj/item/weapon/material/shard = 50, 		\
 	)
 
 	min_duration = 90
@@ -152,9 +156,9 @@
 
 /datum/surgery_step/generic/clamp_bleeders
 	allowed_tools = list(
-		/obj/item/weapon/hemostat = 100,
-		/obj/item/stack/cable_coil = 75,
-		/obj/item/device/assembly/mousetrap = 20
+	/obj/item/weapon/hemostat = 100,	\
+	/obj/item/stack/cable_coil = 75, 	\
+	/obj/item/device/assembly/mousetrap = 20
 	)
 
 	min_duration = 40
@@ -163,7 +167,10 @@
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if(..())
 			var/obj/item/organ/external/affected = target.get_organ(target_zone)
-			return affected && affected.open && (affected.status & ORGAN_BLEEDING)
+			if(affected && affected.open && (affected.status & ORGAN_BLEEDING))
+				return 1
+			else
+				return 0
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
@@ -190,9 +197,9 @@
 
 /datum/surgery_step/generic/retract_skin
 	allowed_tools = list(
-		/obj/item/weapon/retractor = 100,
-		/obj/item/weapon/crowbar = 75,
-		/obj/item/weapon/material/kitchen/utensil/fork = 50
+	/obj/item/weapon/retractor = 100, 	\
+	/obj/item/weapon/crowbar = 75,	\
+	/obj/item/weapon/material/kitchen/utensil/fork = 50
 	)
 
 	min_duration = 30
@@ -245,10 +252,10 @@
 
 /datum/surgery_step/generic/cauterize
 	allowed_tools = list(
-		/obj/item/weapon/cautery = 100,
-		/obj/item/clothing/mask/smokable/cigarette = 75,
-		/obj/item/weapon/flame/lighter = 50,
-		/obj/item/weapon/weldingtool = 25
+	/obj/item/weapon/cautery = 100,			\
+	/obj/item/clothing/mask/smokable/cigarette = 75,	\
+	/obj/item/weapon/flame/lighter = 50,			\
+	/obj/item/weapon/weldingtool = 25
 	)
 
 	min_duration = 70
@@ -282,8 +289,8 @@
 
 /datum/surgery_step/generic/amputate
 	allowed_tools = list(
-		/obj/item/weapon/circular_saw = 100,
-		/obj/item/weapon/material/hatchet = 75
+	/obj/item/weapon/circular_saw = 100, \
+	/obj/item/weapon/material/hatchet = 75
 	)
 
 	min_duration = 110
@@ -296,6 +303,8 @@
 			return 0
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		if (affected == null)
+			return 0
+		if (affected.status & ORGAN_DESTROYED)
 			return 0
 		return !affected.cannot_amputate
 

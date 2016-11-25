@@ -12,15 +12,17 @@
 		icon_state = dead_icon
 
 /obj/item/organ/internal/install(mob/living/carbon/human/H)
-	. = ..()
-	if(!.) return 0
+	if(..()) return 1
 	H.internal_organs |= src
 	var/obj/item/organ/internal/outdated = H.internal_organs_by_name[organ_tag]
 	if(outdated)
 		outdated.removed()
 	H.internal_organs_by_name[organ_tag] = src
-	if(parent)
-		parent.internal_organs |= src
+	var/obj/item/organ/external/E = H.organs_by_name[src.parent_organ]
+	if(E)
+		E.internal_organs |= src
+	if(robotic)
+		status |= ORGAN_ROBOT
 
 /obj/item/organ/internal/Destroy()
 	if(owner)
@@ -31,13 +33,23 @@
 		parent = null
 	return ..()
 
-/obj/item/organ/internal/removed(var/mob/living/user)
-	if(owner)
-		owner.internal_organs -= src
-		owner.internal_organs_by_name[organ_tag] = null
-	if(parent)
-		parent.internal_organs -= src
-		parent = null
+/obj/item/organ/internal/removed(mob/living/user)
+	if(!istype(owner)) return
+
+	owner.internal_organs_by_name[organ_tag] = null
+	owner.internal_organs -= src
+
+	var/datum/reagent/blood/transplant_blood = locate(/datum/reagent/blood) in reagents.reagent_list
+	transplant_data = list()
+	if(!transplant_blood)
+		transplant_data["species"] =    owner.species.name
+		transplant_data["blood_type"] = owner.dna.b_type
+		transplant_data["blood_DNA"] =  owner.dna.unique_enzymes
+	else
+		transplant_data["species"] =    transplant_blood.data["species"]
+		transplant_data["blood_type"] = transplant_blood.data["blood_type"]
+		transplant_data["blood_DNA"] =  transplant_blood.data["blood_DNA"]
+
 	..()
 
 /****************************************************
@@ -71,7 +83,7 @@
 
 	if(is_bruised())
 		if(prob(2))
-			spawn owner.custom_emote(2, "coughs up blood!")
+			spawn owner.custom_emote(1, "coughs up blood!")
 			owner.drip(10)
 		if(prob(4))
 			spawn owner.emote("gasp")
@@ -112,8 +124,7 @@
 	var/icon/mob_icon = null
 
 /obj/item/organ/internal/eyes/install(mob/living/carbon/human/H)
-	. = ..()
-	if(!.) return 0
+	if(..()) return 1
 	// Apply our eye colour to the target.
 	if(eye_colour)
 		owner.eyes_color = eye_colour
@@ -236,7 +247,7 @@
 
 	if (germ_level > INFECTION_LEVEL_ONE)
 		if(prob(1))
-			owner << "<span class='danger'>Your skin itches.</span>"
+			owner << "\red Your skin itches."
 	if (germ_level > INFECTION_LEVEL_TWO)
 		if(prob(1))
 			spawn owner.vomit()

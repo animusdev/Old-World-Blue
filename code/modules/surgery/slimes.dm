@@ -11,9 +11,9 @@
 
 /datum/surgery_step/slime/cut_flesh
 	allowed_tools = list(
-		/obj/item/weapon/scalpel = 100,
-		/obj/item/weapon/material/knife = 75,
-		/obj/item/weapon/material/shard = 50,
+	/obj/item/weapon/scalpel = 100,		\
+	/obj/item/weapon/material/knife = 75,	\
+	/obj/item/weapon/material/shard = 50, 		\
 	)
 
 	min_duration = 30
@@ -37,9 +37,9 @@
 
 /datum/surgery_step/slime/cut_innards
 	allowed_tools = list(
-		/obj/item/weapon/scalpel = 100,
-		/obj/item/weapon/material/knife = 75,
-		/obj/item/weapon/material/shard = 50,
+	/obj/item/weapon/scalpel = 100,		\
+	/obj/item/weapon/material/knife = 75,	\
+	/obj/item/weapon/material/shard = 50, 		\
 	)
 
 	min_duration = 30
@@ -63,8 +63,8 @@
 
 /datum/surgery_step/slime/saw_core
 	allowed_tools = list(
-		/obj/item/weapon/circular_saw = 100,
-		/obj/item/weapon/material/hatchet = 75
+	/obj/item/weapon/circular_saw = 100, \
+	/obj/item/weapon/material/hatchet = 75
 	)
 
 	min_duration = 50

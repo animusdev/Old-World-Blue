@@ -4,38 +4,24 @@
 	dislocated = -1
 	cannot_break = 1
 	robotic = 2
+	status = ORGAN_ROBOT|ORGAN_ASSISTED
 	brute_mod = 0.8
 	burn_mod = 0.8
 	var/list/forced_children = null
 
 /obj/item/organ/external/robotic/get_icon()
-	var/gender = "m"
+	var/gender = "_m"
 	var/body_build = ""
 	if(owner)
 		if(owner.gender == FEMALE)
-			gender = "f"
+			gender = "_f"
 		body_build = owner.body_build.index
-	icon_state = "[organ_tag][gendered_icon ? "_[gender]" : ""][body_build]"
+	icon_state = "[organ_tag][gendered ? "[gender]" : ""][body_build]"
 
 	mob_icon = new /icon(force_icon, icon_state)
 	icon = mob_icon
 	dir = SOUTH
 	return mob_icon
-
-/obj/item/organ/external/robotic/robotize(var/company)
-	if(company)
-		model = company
-		var/datum/robolimb/R = all_robolimbs[company]
-		if(!R || (species && (species.name in R.species_cannot_use)))
-			R = basic_robolimb
-		if(R)
-			force_icon = R.icon
-			if(R.lifelike)
-				robotic = ORGAN_LIFELIKE
-			else
-				name = "robotic [name]"
-			desc = "[R.desc] It looks like it was produced by [R.company]."
-
 
 /obj/item/organ/external/robotic/Destroy()
 	deactivate(1)
@@ -59,8 +45,7 @@
 	return 1
 
 /obj/item/organ/external/robotic/install()
-	. = ..()
-	if(!.) return 0
+	..()
 	if(islist(forced_children) && forced_children[organ_tag])
 		var/list/spawn_part = forced_children[organ_tag]
 		var/child_type
@@ -222,4 +207,5 @@
 			owner.drop_from_inventory(magboots, src)
 			usr << "<span class = 'notice'>The mag-pulse traction system has been disabled.</span>"
 		return
+
 

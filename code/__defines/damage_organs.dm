@@ -1,5 +1,5 @@
 // Damage things. TODO: Merge these down to reduce on defines.
-// Way to waste perfectly good damage-type names (BRUTE) on this... If you were really worried about case sensitivity, you could have just used lowertext(damagetype) in the proc.
+// Way to waste perfectly good damage-type names (BRUTE) on this... If you were really worried about case sensitivity, you could have just used rlowertext(damagetype) in the proc.
 #define BRUTE     "brute"
 #define BURN      "fire"
 #define TOX       "tox"
@@ -28,22 +28,22 @@
 #define OXYLOSS   0x8
 
 // Organ defines.
-#define ORGAN_CUT_AWAY   (1<<0) //1
-#define ORGAN_BLEEDING   (1<<1) //2
-#define ORGAN_BROKEN     (1<<2) //4
-#define ORGAN_DESTROYED  (1<<3) //8
-#define ORGAN_SPLINTED   (1<<4) //16
-#define ORGAN_DEAD       (1<<5) //32
-#define ORGAN_MUTATED    (1<<6) //64
+#define ORGAN_CUT_AWAY   (1<<0)
+#define ORGAN_BLEEDING   (1<<1)
+#define ORGAN_BROKEN     (1<<2)
+#define ORGAN_DESTROYED  (1<<3)
+#define ORGAN_SPLINTED   (1<<4)
+#define ORGAN_DEAD       (1<<5)
+#define ORGAN_MUTATED    (1<<6)
+#define SALVED           (1<<7)
+#define ORGAN_GAUZED     (1<<8)
+#define ORGAN_ATTACHABLE (1<<9)
+#define ORGAN_ROBOT      (1<<10)
+#define ORGAN_ASSISTED   (1<<11)
 
 #define DROPLIMB_EDGE 0
 #define DROPLIMB_BLUNT 1
 #define DROPLIMB_BURN 2
-
-
-#define ORGAN_ASSISTED 1 // Like pacemakers, not robotic
-#define ORGAN_ROBOT    2 // Fully robotic, no organic parts
-#define ORGAN_LIFELIKE 3 // Robotic, made to appear organic
 
 //Germs and infections.
 #define GERM_LEVEL_AMBIENT  110 // Maximum germ level you can reach by standing still.

@@ -12,13 +12,13 @@
 			return 0
 
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
-		return affected && affected.robotic<ORGAN_ROBOT && affected.encased && affected.open >= 2
+		return affected && affected.encased && affected.open >= 2
 
 
 /datum/surgery_step/open_encased/saw
 	allowed_tools = list(
-		/obj/item/weapon/circular_saw = 100,
-		/obj/item/weapon/material/hatchet = 75
+	/obj/item/weapon/circular_saw = 100, \
+	/obj/item/weapon/material/hatchet = 75
 	)
 
 	min_duration = 50
@@ -66,8 +66,8 @@
 
 /datum/surgery_step/open_encased/retract
 	allowed_tools = list(
-		/obj/item/weapon/retractor = 100,
-		/obj/item/weapon/crowbar = 75
+	/obj/item/weapon/retractor = 100, 	\
+	/obj/item/weapon/crowbar = 75
 	)
 
 	min_duration = 30
@@ -122,8 +122,8 @@
 
 /datum/surgery_step/open_encased/close
 	allowed_tools = list(
-		/obj/item/weapon/retractor = 100,
-		/obj/item/weapon/crowbar = 75
+	/obj/item/weapon/retractor = 100, 	\
+	/obj/item/weapon/crowbar = 75
 	)
 
 	min_duration = 20
@@ -173,14 +173,16 @@
 		affected.createwound(BRUISE, 20)
 		affected.fracture()
 
-		/*if (prob(40)) //TODO: ORGAN REMOVAL UPDATE.
-			user.visible_message("\red A rib pierces the lung!")
-			target.rupture_lung()*/
+		if(affected.internal_organs && affected.internal_organs.len)
+			if(prob(40))
+				var/obj/item/organ/internal/O = pick(affected.internal_organs) //TODO weight by organ size
+				user.visible_message("<span class='danger'>A wayward piece of [target]'s [affected.encased] pierces \his [O.name]!</span>")
+				O.bruise()
 
 /datum/surgery_step/open_encased/mend
 	allowed_tools = list(
-		/obj/item/weapon/bonegel = 100,
-		/obj/item/weapon/screwdriver = 75
+	/obj/item/weapon/bonegel = 100,	\
+	/obj/item/weapon/screwdriver = 75
 	)
 
 	min_duration = 20
