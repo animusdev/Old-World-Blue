@@ -82,6 +82,10 @@
 
 /obj/mecha/attackby(var/obj/item/weapon/W, var/mob/user)
 	if(istype(W, /obj/item/device/kit/paint))
+		if(occupant)
+			user << "You can't customize a mech while someone is piloting it - that would be unsafe!"
+			return
+
 		var/obj/item/device/kit/paint/P = W
 		var/found = null
 
@@ -100,7 +104,7 @@
 		src.initial_icon = P.new_icon
 		if(P.new_icon_file)
 			src.icon = P.new_icon_file
-		update_icon()
+		src.reset_icon()
 		P.use(1, user)
 		return 1
 	else

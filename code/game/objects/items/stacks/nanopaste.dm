@@ -31,7 +31,7 @@
 			return
 
 		if(S.open == 1)
-			if(S.robotic >= ORGAN_ROBOT)
+			if (S && (S.status & ORGAN_ROBOT))
 				if(!S.get_damage())
 					user << "<span class='notice'>Nothing to fix here.</span>"
 				else if(can_use(1))

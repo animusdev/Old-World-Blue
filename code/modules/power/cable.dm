@@ -520,7 +520,7 @@ obj/structure/cable/proc/cableColor(var/colorC)
 			user << "<span class='warning'>[M] miss that body part!</span>"
 			return
 
-		if(S.robotic < ORGAN_ROBOT || user.a_intent != "help")
+		if(!(S.status & ORGAN_ROBOT) || user.a_intent != "help")
 			return ..()
 
 		if(S.burn_dam > 0 && use(1))
