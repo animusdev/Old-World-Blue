@@ -310,6 +310,7 @@
 		new /obj/item/pipe(loc, make_from=src)
 		qdel(src)
 
-/obj/machinery/atmospherics/valve/examine(mob/user)
-	..()
-	user << "It is [open ? "open" : "closed"]."
+/obj/machinery/atmospherics/valve/examine(mob/user, return_dist=1)
+	.=..()
+	if(.<=3)
+		user << "It is [open ? "open" : "closed"]."

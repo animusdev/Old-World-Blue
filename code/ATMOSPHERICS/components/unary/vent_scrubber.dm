@@ -280,8 +280,9 @@
 		new /obj/item/pipe(loc, make_from=src)
 		qdel(src)
 
-/obj/machinery/atmospherics/unary/vent_scrubber/examine(mob/user)
-	if(..(user, 1))
+/obj/machinery/atmospherics/unary/vent_scrubber/examine(mob/user, return_dist=1)
+	.=..()
+	if(.<=1)
 		user << "A small gauge in the corner reads [round(last_flow_rate, 0.1)] L/s; [round(last_power_draw)] W"
 	else
 		user << "You are too far away to read the gauge."

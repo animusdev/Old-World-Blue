@@ -142,7 +142,7 @@ obj/var/contaminated = 0
 		if(!protection)
 			continue
 		if(vsc.plc.PHORONGUARD_ONLY && !(protection.flags & PHORONGUARD))
-			return 0
+			continue
 		coverage |= protection.body_parts_covered
 
 	if(vsc.plc.PHORONGUARD_ONLY)
