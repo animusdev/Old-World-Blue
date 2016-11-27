@@ -84,3 +84,11 @@
 	name = "biomechanical engineer's jumpsuit"
 	icon_state = "biomech"
 	item_state = "nursesuit"
+
+
+
+/obj/item/clothing/under/rank/mechatronic/solar
+	desc = "It's a lilac-blue jumpsuit with a pink duffel jacket, This one belongs to Proxima Centauri Risk Control."
+	name = "PCRC operative jumpsuit"
+	icon_state = "robotics2"
+	item_state = "robotics"
