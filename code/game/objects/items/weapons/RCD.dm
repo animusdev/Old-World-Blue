@@ -48,7 +48,7 @@
 /obj/item/weapon/rcd/attackby(obj/item/weapon/W, mob/user)
 
 	if(istype(W, /obj/item/weapon/rcd_ammo))
-		if((stored_matter + 10) > 100)
+		if((stored_matter + 20) > 100)
 			user << "<span class='notice'>The RCD can't hold any more matter-units.</span>"
 			return
 		user.drop_from_inventory(W)
