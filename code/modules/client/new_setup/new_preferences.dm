@@ -91,18 +91,18 @@
 	dat += "</center><hr>"
 
 	switch(current_page)
-		if(PAGE_LOAD)		dat+=GetLoadPage()
-		if(PAGE_RECORDS)	dat+=GetRecordsPage()
-		if(PAGE_LIMBS)		dat+=GetLimbsPage()
-		if(PAGE_OCCUPATION)	dat+=GetOccupationPage()
-		if(PAGE_SILICON)	dat+=GetSiliconPage()
-		if(PAGE_PREFS)		dat+=GetPrefsPage()
-		if(PAGE_LOADOUT)	dat+=GetLoadOutPage()
-		if(PAGE_SPECIES)	dat+=GetSpeciesPage()
-		else dat+=GetRecordsPage() // Protection
+		if(PAGE_LOAD)		dat+=GetLoadPage(user)
+		if(PAGE_RECORDS)	dat+=GetRecordsPage(user)
+		if(PAGE_LIMBS)		dat+=GetLimbsPage(user)
+		if(PAGE_OCCUPATION)	dat+=GetOccupationPage(user)
+		if(PAGE_SILICON)	dat+=GetSiliconPage(user)
+		if(PAGE_PREFS)		dat+=GetPrefsPage(user)
+		if(PAGE_LOADOUT)	dat+=GetLoadOutPage(user)
+		if(PAGE_SPECIES)	dat+=GetSpeciesPage(user)
+		else dat+=GetRecordsPage(user) // Protection
 	dat += "</body></html>"
 
-	user << browse(dat, "window=new_pref;size=560x510;can_resize=0")
+	user << browse(dat, "window=new_pref;size=560x520;can_resize=0")
 
 /datum/preferences/Topic(href, href_list)
 	var/mob/user = usr
@@ -477,31 +477,29 @@
 			var/new_backbag = input(usr, "Choose your character's style of bag:", "Character Preference")  as null|anything in backbaglist
 			if(new_backbag)
 				backbag = backbaglist.Find(new_backbag)
+				req_update_icon = 1
 		if("socks")
 			var/new_socks = input(usr, "Choose your character's socks:", "Character Preference") as null|anything in all_socks
 			if (new_socks)
 				socks = new_socks
-			else
-				new_socks = "None"
+				req_update_icon = 1
 		if("underwear")
 			var/new_underwear = input(usr, "Choose your character's underwear:", "Character Preference")  as null|anything in all_underwears
 			if(new_underwear)
 				underwear = new_underwear
-			else
-				underwear = "None"
+				req_update_icon = 1
 		if("undershirt")
 			var/new_undershirt = input(usr, "Choose your character's undershirt:", "Character Preference") as null|anything in all_undershirts
 			if (new_undershirt)
 				undershirt = new_undershirt
-			else
-				new_undershirt = "None"
+				req_update_icon = 1
 
 	return
 
 
 /datum/preferences/proc/GetLimbsPage()
 	var/dat = "<style>div.block{border: 3px solid black;margin: 3px 0px;padding: 4px 0px;}</style>"
-	dat += "<table style='max-height:400px;height:400px'>"
+	dat += "<table style='max-height:400px;height:410px'>"
 	dat += "<tr style='vertical-align:top'><td><div style='max-width:230px;width:230px;height:100%;overflow-y:auto;border:solid;padding:3px'>"
 	dat += modifications_types[current_organ]
 	dat += "</div></td><td style='margin-left:10px;width-max:285px;width:285px;border:solid'>"
@@ -718,35 +716,51 @@
 /datum/preferences/proc/HandleSiliconTopic(mob/user, list/href_list)
 
 
-/datum/preferences/proc/GetPrefsPage()
+/datum/preferences/proc/GetPrefsPage(var/mob/user)
 	var/dat = {"
-		<table>
+		<table style='display:inline'>
 		<tr><td><b>UI:</b></td></tr>
-		<tr><td></td><td>UI Style:</td><td><a href='?src=\ref[src];toggle=ui'>[UI_style]</a></td></tr>
-		<tr><td></td><td>Color:</td> <td><a href='?src=\ref[src];toggle=UIcolor'><span class='box' style='background-color:[UI_style_color]'></span></a></td></tr>
-		<tr><td></td><td>Alpha(transparency):</td> <td><a href='?src=\ref[src];toggle=UIalpha'>[UI_style_alpha]</a></td></tr>
+		<tr><td>UI Style:</td><td><a href='?src=\ref[src];toggle=ui'>[UI_style]</a></td></tr>
+		<tr><td>Color:</td> <td><a href='?src=\ref[src];toggle=UIcolor'><span class='box' style='background-color:[UI_style_color]'></span></a></td></tr>
+		<tr><td>Alpha(transparency):</td> <td><a href='?src=\ref[src];toggle=UIalpha'>[UI_style_alpha]</a></td></tr>
 		<tr><td><b>SOUND:</b></td></tr>
-		<tr><td></td><td>Play admin midis:</td> <td><a href='?src=\ref[src];toggle=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a></td></tr>
-		<tr><td></td><td>Play lobby music:</td> <td><a href='?src=\ref[src];toggle=lobby_music'>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</a></td></tr>
-		<tr><td></td><td>Hear Ambience: </td> <td><a href='?src=\ref[src];toggle=ambience'>[(toggles & SOUND_AMBIENCE) ? "Yes" : "No"]</a></td></tr>
+		<tr><td>Play admin midis:</td> <td><a href='?src=\ref[src];toggle=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a></td></tr>
+		<tr><td>Play lobby music:</td> <td><a href='?src=\ref[src];toggle=lobby_music'>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</a></td></tr>
+		<tr><td>Hear Ambience: </td> <td><a href='?src=\ref[src];toggle=ambience'>[(toggles & SOUND_AMBIENCE) ? "Yes" : "No"]</a></td></tr>
 		<tr><td><b>GHOST:</b></td></tr>
-		<tr><td></td><td>Ghost ears:</td> <td><a href='?src=\ref[src];toggle=ghost_ears'>[(chat_toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</a></td></tr>
-		<tr><td></td><td>Ghost sight:</td> <td><a href=?src=\ref[src];toggle=ghost_sight'>[(chat_toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearest Creatures"]</a></td></tr>
-		<tr><td></td><td>Ghost radio:</td> <td><a href='?src=\ref[src];toggle=ghost_radio'>[(chat_toggles & CHAT_GHOSTRADIO) ? "All Chatter" : "Nearest Speakers"]</a></td></tr>
-		<tr><td></td><td>Hear dead chat:</td> <td><a href='?src=\ref[src];toggle=dead_chat'>[(chat_toggles & CHAT_DEAD) ? "Yes" : "No"]</a></td></tr>
+		<tr><td>Ghost ears:</td> <td><a href='?src=\ref[src];toggle=ghost_ears'>[(chat_toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</a></td></tr>
+		<tr><td>Ghost sight:</td> <td><a href=?src=\ref[src];toggle=ghost_sight'>[(chat_toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearest Creatures"]</a></td></tr>
+		<tr><td>Ghost radio:</td> <td><a href='?src=\ref[src];toggle=ghost_radio'>[(chat_toggles & CHAT_GHOSTRADIO) ? "All Chatter" : "Nearest Speakers"]</a></td></tr>
+		<tr><td>Hear dead chat:</td> <td><a href='?src=\ref[src];toggle=dead_chat'>[(chat_toggles & CHAT_DEAD) ? "Yes" : "No"]</a></td></tr>
 		<tr><td><b>CHAT:</b></td></tr>
-		<tr><td></td><td>Hear OOC:</td> <td><a href='?src=\ref[src];toggle=head_ooc'>[(chat_toggles & CHAT_OOC) ? "Yes" : "No"]</a></td></tr>
-		<tr><td></td><td>Hear LOOC:</td> <td><a href='?src=\ref[src];toggle=head_looc'>[(chat_toggles & CHAT_LOOC) ? "Yes" : "No"]</a></td></tr>
-		<tr><td></td><td>Hide Chat Tags:</td> <td><a href='?src=\ref[src];toggle=chat_tags'>[(toggles & CHAT_NOICONS) ? "Yes" : "No"]</a></td></tr>
-		<tr><td></td><td>Emote Localization:</td> <td><a href='?src=\ref[src];toggle=emote_localization'>[(toggles & RUS_AUTOEMOTES) ? "Enabled" : "Disabled"]</a></td></tr>
-		<tr><td></td><td>Show MOTD:</td> <td><a href='?src=\ref[src];toggle=show_motd'>[(toggles & HIDE_MOTD) ? "Disabled" : "Enabled"]</a></td></tr>
+		<tr><td>Hear OOC:</td> <td><a href='?src=\ref[src];toggle=head_ooc'>[(chat_toggles & CHAT_OOC) ? "Yes" : "No"]</a></td></tr>
+		<tr><td>Hear LOOC:</td> <td><a href='?src=\ref[src];toggle=head_looc'>[(chat_toggles & CHAT_LOOC) ? "Yes" : "No"]</a></td></tr>
+		<tr><td>Hide Chat Tags:</td> <td><a href='?src=\ref[src];toggle=chat_tags'>[(toggles & CHAT_NOICONS) ? "Yes" : "No"]</a></td></tr>
+		<tr><td>Emote Localization:</td> <td><a href='?src=\ref[src];toggle=emote_localization'>[(toggles & RUS_AUTOEMOTES) ? "Enabled" : "Disabled"]</a></td></tr>
+		<tr><td>Show MOTD:</td> <td><a href='?src=\ref[src];toggle=show_motd'>[(toggles & HIDE_MOTD) ? "Disabled" : "Enabled"]</a></td></tr>
 		</table>
+		<span style='padding-left:15px;display:inline-block; vertical-align:top'>
+		<b>ANTAGONISTS:</b><br>
 	"}
+
+	if(jobban_isbanned(user, "Syndicate"))
+		dat += "<b>You are banned from antagonist roles.</b>"
+		src.be_special = 0
+	else
+		var/n = 0
+		for (var/i in special_roles)
+			if(special_roles[i]) //if mode is available on the server
+				if(jobban_isbanned(user, i) || (i == "positronic brain" && jobban_isbanned(user, "AI") && jobban_isbanned(user, "Cyborg")) || (i == "pAI candidate" && jobban_isbanned(user, "pAI")))
+					dat += "Be [i]: <font color=red><b> \[BANNED]</b></font><br>"
+				else
+					dat += "Be [i]: <a href='?src=\ref[src];be_special=[n]'><b>[src.be_special&(1<<n) ? "Yes" : "No"]</b></a><br>"
+			n++
+	dat += "</span>"
 
 	return dat
 
 /datum/preferences/proc/HandlePrefsTopic(mob/user, list/href_list)
-	switch(href_list["toggle"])
+	if(href_list["toggle"]) switch(href_list["toggle"])
 		if("ui")
 			switch(UI_style)
 				if("Midnight")
@@ -793,6 +807,9 @@
 			toggles ^= RUS_AUTOEMOTES
 		if("show_motd")
 			toggles ^= HIDE_MOTD
+	else if(href_list["be_special"])
+		var/num = text2num(href_list["be_special"])
+		be_special ^= (1<<num)
 
 /datum/preferences/proc/GetSpeciesPage()
 /datum/preferences/proc/HandleSpeciesTopic(mob/user, list/href_list)
