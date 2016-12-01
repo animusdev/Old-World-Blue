@@ -665,3 +665,23 @@
 	for(var/i = 0; i < 7; i++)
 		new /obj/item/weapon/light/bulb(src)
 	..()
+
+/obj/item/weapon/storage/box/underwear
+	icon_state = "underwear"
+	name = "underwear box"
+	can_hold = list(/obj/item/clothing/hidden)
+	storage_slots = 9
+	max_storage_space = 9
+
+/obj/item/weapon/storage/box/underwear/New()
+	var/tmp_type
+	for(var/i in 1 to 3)
+		tmp_type = pick(subtypesof(/obj/item/clothing/hidden/underwear))
+		new tmp_type(src)
+	for(var/i in 1 to 3)
+		tmp_type = pick(subtypesof(/obj/item/clothing/hidden/undershirt))
+		new tmp_type(src)
+	for(var/i in 1 to 3)
+		tmp_type = pick(subtypesof(/obj/item/clothing/hidden/socks))
+		new tmp_type(src)
+	..()
