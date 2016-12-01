@@ -1,19 +1,25 @@
 /datum/playingcard
 	var/name = "playing card"
 	var/card_icon = "card_back"
+	var/back_icon = "card_back"
 
 /obj/item/weapon/deck
-	name = "deck of cards"
-	desc = "A simple deck of playing cards."
-	icon = 'icons/obj/playing_cards.dmi'
-	icon_state = "deck"
 	w_class = 2
-
+	icon = 'icons/obj/playing_cards.dmi'
 	var/list/cards = list()
 
-/obj/item/weapon/deck/New()
-	..()
+/obj/item/weapon/deck/holder
+	name = "card box"
+	desc = "A small leather case to show how classy you are compared to everyone else."
+	icon_state = "card_holder"
 
+/obj/item/weapon/deck/cards
+	name = "deck of cards"
+	desc = "A simple deck of playing cards."
+	icon_state = "deck"
+
+/obj/item/weapon/deck/cards/New()
+	..()
 	var/datum/playingcard/P
 	for(var/suit in list("spades","clubs","diamonds","hearts"))
 
@@ -27,14 +33,15 @@
 			P = new()
 			P.name = "[number] of [suit]"
 			P.card_icon = "[colour]num"
+			P.back_icon = "card_back"
 			cards += P
 
 		for(var/number in list("jack","queen","king"))
 			P = new()
 			P.name = "[number] of [suit]"
 			P.card_icon = "[colour]col"
+			P.back_icon = "card_back"
 			cards += P
-
 
 	for(var/i = 0,i<2,i++)
 		P = new()
@@ -48,7 +55,7 @@
 		for(var/datum/playingcard/P in H.cards)
 			cards += P
 		qdel(O)
-		user << "You place your cards on the bottom of the deck."
+		user << "You place your cards on the bottom of \the [src]."
 		return
 	..()
 
@@ -126,14 +133,26 @@
 	H.throw_at(get_step(target,target.dir),10,1,H)
 
 /obj/item/weapon/hand/attackby(obj/O as obj, mob/user as mob)
-	if(istype(O,/obj/item/weapon/hand))
-		var/obj/item/weapon/hand/H = O
-		for(var/datum/playingcard/P in H.cards)
-			cards += P
-		src.concealed = H.concealed
-		qdel(O)
-		user.put_in_hands(src)
+	if(cards.len == 1 && istype(O, /obj/item/weapon/pen))
+		var/datum/playingcard/P = cards[1]
+		if(P.name != "Blank Card")
+			user << "You cannot write on that card."
+			return
+		var/cardtext = sanitize(input(user, "What do you wish to write on the card?", "Card Editing") as text|null, MAX_PAPER_MESSAGE_LEN)
+		if(!cardtext)
+			return
+		P.name = cardtext
+		// SNOWFLAKE FOR CAG, REMOVE IF OTHER CARDS ARE ADDED THAT USE THIS.
+		P.card_icon = "cag_white_card"
 		update_icon()
+	else if(istype(O,/obj/item/weapon/hand))
+		var/obj/item/weapon/hand/H = O
+		for(var/datum/playingcard/P in cards)
+			H.cards += P
+		H.concealed = src.concealed
+		user.drop_from_inventory(src)
+		qdel(src)
+		H.update_icon()
 		return
 	..()
 
@@ -159,6 +178,28 @@
 
 	deal_at(usr, over)
 
+/obj/item/weapon/pack/
+	name = "Card Pack"
+	desc = "For those with disposible income."
+
+	icon_state = "card_pack"
+	icon = 'icons/obj/playing_cards.dmi'
+	w_class = 1
+	var/list/cards = list()
+
+
+/obj/item/weapon/pack/attack_self(var/mob/user as mob)
+	user.visible_message("[user] rips open \the [src]!")
+	var/obj/item/weapon/hand/H = new()
+
+	H.cards += cards
+	cards.Cut();
+	user.drop_from_inventory()
+	qdel(src)
+
+	H.update_icon()
+	user.put_in_active_hand(H)
+
 /obj/item/weapon/hand
 	name = "hand of cards"
 	desc = "Some playing cards."
@@ -183,7 +224,7 @@
 	if(!discarding || !to_discard[discarding] || !usr || !src) return
 
 	var/datum/playingcard/card = to_discard[discarding]
-	qdel(to_discard)
+	to_discard.Cut()
 
 	var/obj/item/weapon/hand/H = new(src.loc)
 	H.cards += card
@@ -203,11 +244,11 @@
 	user.visible_message("\The [user] [concealed ? "conceals" : "reveals"] their hand.")
 
 /obj/item/weapon/hand/examine(mob/user)
-	. = ..()
+	..(user)
 	if((!concealed || src.loc == user) && cards.len)
 		user << "It contains: "
 		for(var/datum/playingcard/P in cards)
-			user << "The [P.name]."
+			user << "\The [P.name]."
 
 /obj/item/weapon/hand/update_icon(var/direction = 0)
 
@@ -226,7 +267,7 @@
 
 	if(cards.len == 1)
 		var/datum/playingcard/P = cards[1]
-		var/image/I = new(src.icon, (concealed ? "card_back" : "[P.card_icon]") )
+		var/image/I = new(src.icon, (concealed ? "[P.back_icon]" : "[P.card_icon]") )
 		I.pixel_x += (-5+rand(10))
 		I.pixel_y += (-5+rand(10))
 		overlays += I
@@ -249,7 +290,7 @@
 				M.Translate(-2,  0)
 	var/i = 0
 	for(var/datum/playingcard/P in cards)
-		var/image/I = new(src.icon, (concealed ? "card_back" : "[P.card_icon]") )
+		var/image/I = new(src.icon, (concealed ? "[P.back_icon]" : "[P.card_icon]") )
 		//I.pixel_x = origin+(offset*i)
 		switch(direction)
 			if(SOUTH)
