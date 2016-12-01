@@ -334,10 +334,13 @@
 	src << "[A.alarm_name()]!"
 
 /mob/living/silicon/ai/raised_alarm(var/datum/alarm/A)
-	var/cameratext = ""
+	var/list/cameras = list()
 	for(var/obj/machinery/camera/C in A.cameras())
-		cameratext += "[(cameratext == "")? "" : "|"]<A HREF=?src=\ref[src];switchcamera=\ref[C]>[C.c_tag]</A>"
-	src << "[A.alarm_name()]! ([(cameratext)? cameratext : "No Camera"])"
+		cameras += "<A HREF=?src=\ref[src];switchcamera=\ref[C]>[C.c_tag]</A>"
+	var/cameratext = "No Camera"
+	if(cameras.len)
+		cameratext = jointext(cameras, "|")
+	src << "[A.alarm_name()]! ([cameratext])"
 
 
 /mob/living/silicon/proc/is_traitor()
