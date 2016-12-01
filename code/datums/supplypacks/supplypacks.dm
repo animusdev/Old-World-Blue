@@ -14,7 +14,7 @@ var/list/all_supply_groups = list(
 	"Materials",
 	"Medical",
 	"Miscellaneous",
-	"Munitions",
+//	"Munitions",
 	"Reagents",
 	"Reagent Cartridges",
 	"Recreation",
