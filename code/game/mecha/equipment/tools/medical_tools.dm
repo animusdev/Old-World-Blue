@@ -74,8 +74,8 @@
 		if(!occupant)
 			return
 		var/turf/new_loc = get_turf(src)
-		for(var/atom in src)
-			atom.forceMove(new_loc)
+		for(var/atom/movable/AM in src)
+			AM.forceMove(new_loc)
 		occupant_message("[occupant] ejected. Life support functions disabled.")
 		log_message("[occupant] ejected. Life support functions disabled.")
 		occupant.reset_view()
