@@ -780,49 +780,35 @@
 			user << "\red You can't load the [src.name] while it's opened."
 			return 1
 
-	var/material
-	switch(W.type)
-		if(/obj/item/stack/material/gold)
-			material = "gold"
-		if(/obj/item/stack/material/silver)
-			material = "silver"
-		if(/obj/item/stack/material/diamond)
-			material = "diamond"
-		if(/obj/item/stack/material/phoron)
-			material = "phoron"
-		if(/obj/item/stack/material/steel)
-			material = DEFAULT_WALL_MATERIAL
-		if(/obj/item/stack/material/glass)
-			material = "glass"
-		if(/obj/item/stack/material/uranium)
-			material = "uranium"
-		else
-			return ..()
 
-	if(src.being_built)
-		user << "The fabricator is currently processing. Please wait until completion."
-		return
+	if(istype(W, /obj/item/stack/material))
+		var/material = W.get_material_name()
+		if(!material in resources) return ..()
 
-	var/obj/item/stack/material/stack = W
-
-	var/sname = "[stack.name]"
-	var/amnt = stack.perunit
-	if(src.resources[material] < res_max_amount)
-		if(stack && stack.amount >= 1)
-			var/count = 0
-			src.overlays += "fab-load-[material]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
-			sleep(10)
-
-			while(src.resources[material] < res_max_amount && stack.amount >= 1)
-				src.resources[material] += amnt
-				stack.use(1)
-				count++
-			src.overlays -= "fab-load-[material]"
-			user << "You insert [count] [sname] into the fabricator."
-			src.updateUsrDialog()
-		else
-			user << "The fabricator can only accept full sheets of [sname]."
+		if(src.being_built)
+			user << "The fabricator is currently processing. Please wait until completion."
 			return
-	else
-		user << "The fabricator cannot hold more [sname]."
-	return
+
+		var/obj/item/stack/material/stack = W
+
+		var/sname = stack.name
+		var/amnt = stack.perunit
+		if(src.resources[material] < res_max_amount)
+			if(stack && stack.amount >= 1)
+				var/count = 0
+				src.overlays += "fab-load-[material]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
+				sleep(10)
+
+				while(src.resources[material] < res_max_amount && stack.amount >= 1)
+					src.resources[material] += amnt
+					stack.use(1)
+					count++
+				src.overlays -= "fab-load-[material]"
+				user << "You insert [count] [sname] into the fabricator."
+				src.updateUsrDialog()
+			else
+				user << "The fabricator can only accept full sheets of [sname]."
+				return
+		else
+			user << "The fabricator cannot hold more [sname]."
+		return
