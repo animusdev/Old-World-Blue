@@ -129,7 +129,7 @@
 	return verb
 
 /mob/living/carbon/human/handle_speech_problems(var/message, var/verb)
-	if(silent || (sdisabilities & MUTE))
+	if((silent && usr!=src) || (sdisabilities & MUTE))
 		message = ""
 		speech_problem_flag = 1
 	else if(istype(wear_mask, /obj/item/clothing/mask/horsehead))
