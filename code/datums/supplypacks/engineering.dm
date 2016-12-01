@@ -65,7 +65,7 @@
 	containername = "Emitter crate"
 	access = access_ce
 
-/datum/supply_packs/engine/eng/field_gen
+/datum/supply_packs/eng/engine/field_gen
 	name = "Field Generator crate"
 	contains = list(/obj/machinery/field_generator = 2)
 	containertype = /obj/structure/closet/crate/secure
