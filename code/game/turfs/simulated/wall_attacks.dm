@@ -8,17 +8,26 @@
 		can_open = WALL_OPENING
 		set_wall_state("[material.icon_base]fwall_open")
 		//flick("[material.icon_base]fwall_opening", src)
-		sleep(15)
 		density = 0
+		opacity = 0
+		blocks_air = 0
+		thermal_conductivity = 0.040
 		set_light(0)
 	else
 		can_open = WALL_OPENING
 		//flick("[material.icon_base]fwall_closing", src)
 		set_wall_state("[material.icon_base]0")
 		density = 1
-		sleep(15)
+		opacity = 1
+		blocks_air = 1
+		thermal_conductivity = initial(thermal_conductivity)
 		set_light(1)
 
+	if(air_master)
+		for(var/turf/simulated/turf in range(1))
+			air_master.mark_for_update(turf)
+
+	sleep(15)
 	can_open = WALL_CAN_OPEN
 	update_icon()
 
