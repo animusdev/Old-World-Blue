@@ -37,7 +37,6 @@
 	var/load_item_visible = 1	//set if the loaded item should be overlayed on the vehicle sprite
 	var/load_offset_x = 0		//pixel_x offset for item overlay
 	var/load_offset_y = 0		//pixel_y offset for item overlay
-	var/mob_offset_y = 0		//pixel_y offset for mob overlay
 
 //-------------------------------------------
 // Standard procs
