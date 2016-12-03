@@ -4247,7 +4247,7 @@
 "bDI" = (/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 1},/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor{icon_state = "white"},/area/rnd/docking)
 "bDJ" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 10},/turf/simulated/floor{icon_state = "white"},/area/rnd/docking)
 "bDK" = (/obj/machinery/atmospherics/pipe/simple/hidden,/turf/simulated/floor{icon_state = "white"},/area/rnd/docking)
-"bDL" = (/obj/machinery/airlock_sensor{frequency = 1380; id_tag = "research_dock_sensor"; pixel_x = 0; pixel_y = -25},/obj/machinery/atmospherics/unary/vent_pump/high_volume{dir = 1; frequency = 1380; id_tag = "admin_shuttle_dock_pump"},/turf/simulated/floor{dir = 10; icon_state = "warning"},/area/rnd/docking)
+"bDL" = (/obj/machinery/airlock_sensor{frequency = 1380; id_tag = "research_dock_sensor"; pixel_x = 0; pixel_y = -25},/obj/machinery/atmospherics/unary/vent_pump/high_volume{dir = 1; frequency = 1380; id_tag = "research_dock_pump"},/turf/simulated/floor{dir = 10; icon_state = "warning"},/area/rnd/docking)
 "bDM" = (/obj/machinery/light/small{dir = 4},/obj/machinery/embedded_controller/radio/airlock/docking_port{frequency = 1380; id_tag = "research_dock_airlock"; pixel_x = 25; pixel_y = 0; req_one_access = list(13,65); tag_airpump = "research_dock_pump"; tag_chamber_sensor = "research_dock_sensor"; tag_exterior_door = "research_dock_outer"; tag_interior_door = "research_dock_inner"},/turf/simulated/floor{dir = 6; icon_state = "warning"},/area/rnd/docking)
 "bDN" = (/turf/simulated/floor{dir = 8; icon_state = "warning"},/area/quartermaster/storage)
 "bDO" = (/obj/machinery/conveyor_switch/oneway{convdir = -1; id = "QMLoad"},/turf/simulated/floor,/area/quartermaster/storage)
