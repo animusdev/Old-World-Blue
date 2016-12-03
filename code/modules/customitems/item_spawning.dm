@@ -130,16 +130,12 @@
 	current_data.item_path = /obj/item/clothing/under/rank/mechatronic/solar
 	L |= current_data
 
-	custom_items["solareclipse84"] = L
-
 	current_data = new()
 	current_data.assoc_key = "solareclipse84"
 	current_data.req_titles = list("Paramedic")
 	current_data.character_name = "Aiden McMurray"
 	current_data.item_path = /obj/item/clothing/suit/storage/vest/pcrc
 	L |= current_data
-
-	custom_items["solareclipse84"] = L
 
 	current_data = new()
 	current_data.assoc_key = "solareclipse84"
@@ -148,6 +144,19 @@
 	L |= current_data
 
 	custom_items["solareclipse84"] = L
+
+///Venligen///
+
+	L = list()
+
+	current_data = new()
+	current_data.assoc_key = "venligen"
+	current_data.character_name = "Rawick Devine"
+	current_data.item_path = /obj/item/clothing/under/rank/security/venligen
+	L |= current_data
+
+	custom_items["venligen"] = L
+
 
 //Egorkor///
 

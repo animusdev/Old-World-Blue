@@ -3,6 +3,12 @@
 	desc = "Reminder of the wonderful past"
 	icon_state = "sad_clown"
 
+/obj/item/clothing/under/rank/security/venligen
+	name = "\improperPMC Turtleneck"
+	desc = "Standart issued uniform for Redwood mercenary operatives. Made from high quality and sturdy material."
+	icon_state = "BW_uniform"
+	item_state = "jensen"
+
 /obj/item/clothing/accessory/locket/Evans
 	desc = "This oval shaped, argentium sterling silver locket."
 	held = new /obj/item/weapon/photo/custom()
