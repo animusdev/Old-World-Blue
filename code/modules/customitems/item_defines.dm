@@ -4,7 +4,7 @@
 	icon_state = "sad_clown"
 
 /obj/item/clothing/under/rank/security/venligen
-	name = "\improperPMC Turtleneck"
+	name = "\improper PMC Turtleneck"
 	desc = "Standart issued uniform for Redwood mercenary operatives. Made from high quality and sturdy material."
 	icon_state = "BW_uniform"
 	item_state = "jensen"
