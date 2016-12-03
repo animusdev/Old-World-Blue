@@ -57,11 +57,13 @@
 */
 
 /obj/item/weapon/melee/arm_blade/attack_self(var/mob/user)
+	user.drop_from_inventory(src)
+
+/obj/item/weapon/melee/arm_blade/dropped(var/mob/user)
 	user.visible_message(
 		"<span class='warning'>With a sickening crunch, [user] reforms their arm blade into an arm!</span>",
 		"<span class='notice'>We assimilate the weapon back into our body.</span>",
 		"<span class='italics'>You hear organic matter ripping and tearing!</span>"
 	)
 	playsound(src, 'sound/effects/blobattack.ogg', 30, 1)
-	user.drop_from_inventory(src)
 	qdel(src)
