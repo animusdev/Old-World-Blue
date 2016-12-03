@@ -63,7 +63,7 @@
 	icon_state = "combathelmet"
 	item_flags = THICKMATERIAL
 	item_state = "combathelmet"
-	armor = list(melee = 60, bullet = 50, laser = 55,energy = 45, bomb = 45, bio = 0, rad = 0)
+	armor = list(melee = 60, bullet = 35, laser = 45,energy = 45, bomb = 45, bio = 0, rad = 0)
 	flags_inv = HIDEEARS
 	body_parts_covered = HEAD|EYES
 	siemens_coefficient = 0.4
