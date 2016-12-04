@@ -1303,12 +1303,12 @@ var/global/list/gear_datums = list()
 /datum/gear/cahwhite
 	display_name = "Cards Against The Galaxy (white deck)"
 	path = /obj/item/weapon/deck/cah
-	description = "The ever-popular Cards Against The Galaxy word game. Warning: may include traces of broken fourth wall. This is the white deck."
+//	description = "The ever-popular Cards Against The Galaxy word game. Warning: may include traces of broken fourth wall. This is the white deck."
 
 /datum/gear/cahblack
 	display_name = "Cards Against The Galaxy (black deck)"
 	path = /obj/item/weapon/deck/cah/black
-	description = "The ever-popular Cards Against The Galaxy word game. Warning: may include traces of broken fourth wall. This is the black deck."
+//	description = "The ever-popular Cards Against The Galaxy word game. Warning: may include traces of broken fourth wall. This is the black deck."
 
 /datum/gear/flask
 	display_name = "flask"
