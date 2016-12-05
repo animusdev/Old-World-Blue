@@ -91,14 +91,14 @@
 	dat += "</center><hr>"
 
 	switch(current_page)
-		if(PAGE_LOAD)		dat+=GetLoadPage(user)
-		if(PAGE_RECORDS)	dat+=GetRecordsPage(user)
-		if(PAGE_LIMBS)		dat+=GetLimbsPage(user)
-		if(PAGE_OCCUPATION)	dat+=GetOccupationPage(user)
-		if(PAGE_SILICON)	dat+=GetSiliconPage(user)
-		if(PAGE_PREFS)		dat+=GetPrefsPage(user)
-		if(PAGE_LOADOUT)	dat+=GetLoadOutPage(user)
-		if(PAGE_SPECIES)	dat+=GetSpeciesPage(user)
+		if(PAGE_LOAD)		dat += GetLoadPage(user)
+		if(PAGE_RECORDS)	dat += GetRecordsPage(user)
+		if(PAGE_LIMBS)		dat += GetLimbsPage(user)
+		if(PAGE_OCCUPATION)	dat += GetOccupationPage(user)
+		if(PAGE_SILICON)	dat += GetSiliconPage(user)
+		if(PAGE_PREFS)		dat += GetPrefsPage(user)
+		if(PAGE_LOADOUT)	dat += GetLoadOutPage(user)
+		if(PAGE_SPECIES)	dat += GetSpeciesPage(user)
 		else dat+=GetRecordsPage(user) // Protection
 	dat += "</body></html>"
 
@@ -590,11 +590,11 @@
 			check_childred_modifications(current_organ)
 			req_update_icon = 1
 
-
+/*
 /datum/preferences/proc/GetLoadOutPage()
 //	loadout
 /datum/preferences/proc/HandleLoadOutTopic(mob/user, list/href_list)
-
+*/
 
 /datum/preferences/proc/GetOccupationPage()
 	if(!job_master)
