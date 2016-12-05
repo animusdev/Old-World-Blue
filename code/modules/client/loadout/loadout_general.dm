@@ -8,8 +8,7 @@
 
 /datum/gear/cards
 	display_name = "deck of cards"
-	path = /obj/item/weapon/deck
-
+	path = /obj/item/weapon/deck/cards
 /datum/gear/tarot
 	display_name = "deck of tarot cards"
 	path = /obj/item/weapon/deck/tarot
