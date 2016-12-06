@@ -69,7 +69,7 @@
 			td{padding: 0px}
 		</style>
 		</head>
-		<body><center>
+		<body style='overflow:hidden'><center>
 	"}
 
 	if(path)

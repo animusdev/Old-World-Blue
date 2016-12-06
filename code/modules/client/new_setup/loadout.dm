@@ -68,11 +68,11 @@ var/list/gear_datums = list()
 			if(G)
 				total_cost += G.cost
 
-	var/fcolor =  "#3366CC"
+	var/fcolor =  "red"
 	if(total_cost < MAX_GEAR_COST)
-		fcolor = "#E67300"
+		fcolor = "blue"
 
-	. += "<div><center><b><font color = '[fcolor]'>[total_cost]/[MAX_GEAR_COST]</font> loadout points spent.</b> \[<a href='?src=\ref[src];clear_loadout=1'>Clear Loadout</a>\]</center></div>"
+	. += "<div><center><b><font color=[fcolor]>[total_cost]/[MAX_GEAR_COST]</font> loadout points spent.</b> \[<a href='?src=\ref[src];clear_loadout=1'>Clear Loadout</a>\]</center></div>"
 
 	. += "<div><center>"
 	var/list/categories = list()
@@ -91,7 +91,7 @@ var/list/gear_datums = list()
 			categories += "[disp_name]&nbsp;\[[category_cost]]"
 		else
 			if(category_cost)
-				categories += "<a href='?src=\ref[src];select_category=[category]'><font color = '#E67300'>[disp_name]&nbsp;\[[category_cost]]</font></a>"
+				categories += "<a href='?src=\ref[src];select_category=[category]'><font color=blue>[disp_name]&nbsp;\[[category_cost]]</font></a>"
 			else
 				categories += "<a href='?src=\ref[src];select_category=[category]'>[disp_name]&nbsp;\[0]</a>"
 
@@ -100,8 +100,7 @@ var/list/gear_datums = list()
 	. += "</center></div>"
 
 	var/datum/loadout_category/LC = loadout_categories[current_tab]
-	. += "<tr><td colspan=3><hr></td></tr>"
-	. += "<div style='height:290px;max-height:290px;overflow-y:auto;border:solid;padding:3px'>"
+	. += "<div style='height:340px;overflow-y:auto;border:solid;margin: 7,0,0,0;padding:3px'>"
 	for(var/gear_name in LC.gear)
 		var/datum/gear/G = LC.gear[gear_name]
 		var/ticked = (G.display_name in gear)
