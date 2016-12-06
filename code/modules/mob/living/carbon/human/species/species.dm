@@ -44,6 +44,7 @@
 	var/secondary_langs = list()             // The names of secondary languages that are available to this species.
 	var/list/speech_sounds                   // A list of sounds to potentially play when speaking.
 	var/list/speech_chance                   // The likelihood of a speech sound playing.
+	var/name_language = "Galactic Common"    // The language to use when determining names for this species, or null to use the first name/last name generator
 
 	// Combat vars.
 	var/total_health = 100					// Point at which the mob will enter crit.
@@ -196,14 +197,6 @@
 		if("heat")
 			if(covered)
 				H << "<span class='danger'>[pick(heat_discomfort_strings)]</span>"
-
-/datum/species/proc/get_random_name(var/gender)
-	var/datum/language/species_language = all_languages[language]
-	if(!species_language)
-		species_language = all_languages[default_language]
-	if(!species_language)
-		return "unknown"
-	return species_language.get_random_name(gender)
 
 /datum/species/proc/equip_survival_gear(var/mob/living/carbon/human/H, var/custom_survival_gear = /obj/item/weapon/storage/box/survival)
 	if(H.back && istype(H.back,/obj/item/weapon/storage))
