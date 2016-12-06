@@ -129,6 +129,14 @@
 		icon_state = "beehive2"
 		gender = FEMALE
 
+	birdnest
+		name = "Birdnest"
+		icon_state = "birdnest"
+
+	birdnest
+		name = "Birdnest 2"
+		icon_state = "birdnest2"
+
 	blackswordsman
 		name = "Mercenary"
 		icon_state = "blackswordsman"
@@ -581,6 +589,10 @@
 	sideponytail4
 		name = "Side Ponytail 2"
 		icon_state = "ponytailf"
+
+	sideswept
+		name = "Side Swipe"
+		icon_state = "sideswipe"
 
 	skinhead
 		name = "Skinhead"
