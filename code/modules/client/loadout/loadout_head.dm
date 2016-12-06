@@ -29,7 +29,7 @@
 	display_name = "beret, purple"
 	path = /obj/item/clothing/head/beret/jan
 
-/datum/gear/beret/black
+/datum/gear/head/beret/black
 	display_name = "beret, black"
 	path = /obj/item/clothing/head/beret/black
 
