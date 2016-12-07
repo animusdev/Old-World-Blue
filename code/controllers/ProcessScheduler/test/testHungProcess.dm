@@ -12,4 +12,4 @@
 	// scheck is also responsible for handling hung processes. If a process
 	// hangs, and later resumes, but has already been killed by the scheduler,
 	// scheck will force the process to bail out.
-	scheck()
+	SCHECK

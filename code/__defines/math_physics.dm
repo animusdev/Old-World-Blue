@@ -25,3 +25,9 @@
 #define T20C 293.15 //   20.0 degrees celcius
 #define TCMB 2.7    // -270.3 degrees celcius
 
+#define TICKS_IN_DAY 		24*60*60*10
+#define TICKS_IN_SECOND 	10
+#define TICKS_IN_SECOND 	10
+
+#define SIMPLE_SIGN(X) ((X) < 0 ? -1 : 1)
+#define SIGN(X)        ((X) ? SIMPLE_SIGN(X) : 0)

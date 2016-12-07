@@ -576,39 +576,39 @@
 /mob/Stat()
 	..()
 	. = (is_client_active(10 MINUTES))
+	if(!.)
+		return
 
-	if(.)
-		if(statpanel("Status") && ticker && ticker.current_state != GAME_STATE_PREGAME)
+	if(statpanel("Status"))
+		if(ticker && ticker.current_state != GAME_STATE_PREGAME)
 			stat("Station Time", worldtime2text())
+			stat("Station Date", worlddate2text())
 			stat("Round Duration", round_duration())
-
 		if(client.holder)
-			if(statpanel("Status"))
-				stat("Location:", "([x], [y], [z]) [loc]")
-				stat("CPU:","[world.cpu]")
-				stat("Instances:","[world.contents.len]")
+			stat("Location:", "([x], [y], [z]) [loc]")
+			stat("CPU:","[world.cpu]")
+			stat("Instances:","[world.contents.len]")
 
-			if(statpanel("Processes"))
-				if(processScheduler && processScheduler.getIsRunning())
-					for(var/datum/controller/process/P in processScheduler.processes)
-						stat(P.getStatName(), P.getTickTime())
-				else
-					stat("processScheduler is not running.")
+	if(client.holder && statpanel("Processes"))
+		if(processScheduler)
+			processScheduler.statProcesses()
+		sleep(1 SECOND)
 
-		if(listed_turf && client)
-			if(!TurfAdjacent(listed_turf))
-				listed_turf = null
-			else
-				if(statpanel("Turf"))
-					stat("\icon[listed_turf]", listed_turf.name)
-					for(var/atom/A in listed_turf)
-						if(!A.mouse_opacity)
-							continue
-						if(A.invisibility > see_invisible)
-							continue
-						if(is_type_in_list(A, shouldnt_see))
-							continue
-						stat(A)
+	if(listed_turf && client)
+		if(!TurfAdjacent(listed_turf))
+			listed_turf = null
+		else
+			if(statpanel("Turf"))
+				stat(listed_turf)
+				for(var/atom/A in listed_turf)
+					if(!A.mouse_opacity)
+						continue
+					if(A.invisibility > see_invisible)
+						continue
+					if(is_type_in_list(A, shouldnt_see))
+						continue
+					stat(A)
+
 
 
 // facing verbs
