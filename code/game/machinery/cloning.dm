@@ -42,7 +42,11 @@
 	var/mess = 0 //Need to clean out it if it's full of exploded clone.
 	var/attempting = 0 //One clone attempt at a time thanks
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
-	var/biomass = CLONE_BIOMASS * 3
+	var/biomass = 0
+
+/obj/machinery/clonepod/initialize()
+	..()
+	biomass = CLONE_BIOMASS * 3
 
 /obj/machinery/clonepod/New()
 	..()

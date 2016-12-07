@@ -211,9 +211,9 @@
 	new /obj/item/clothing/under/rank/atmospheric_technician(src)
 	new /obj/item/clothing/under/rank/atmospheric_technician(src)
 	new /obj/item/clothing/under/rank/atmospheric_technician(src)
-	new /obj/item/clothing/under/rank/dress/atmospheric_technician(src)
-	new /obj/item/clothing/under/rank/dress/atmospheric_technician(src)
-	new /obj/item/clothing/under/rank/dress/atmospheric_technician(src)
+	new /obj/item/clothing/under/rank/atmospheric_technician/skirt(src)
+	new /obj/item/clothing/under/rank/atmospheric_technician/skirt(src)
+	new /obj/item/clothing/under/rank/atmospheric_technician/skirt(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
@@ -238,8 +238,8 @@
 	new /obj/item/clothing/under/rank/engineer/maintenance_tech(src)
 	new /obj/item/clothing/under/rank/engineer/engine_tech(src)
 	new /obj/item/clothing/under/rank/engineer/electrician(src)
-	new /obj/item/clothing/under/rank/dress/engineer
-	new /obj/item/clothing/under/rank/dress/engineer
+	new /obj/item/clothing/under/rank/engineer/skirt
+	new /obj/item/clothing/under/rank/engineer/skirt
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
@@ -331,7 +331,7 @@
 			if(2) new /obj/item/weapon/storage/backpack/satchel/tox(src)
 			if(4) new /obj/item/weapon/storage/backpack/messenger/tox(src)
 	new /obj/item/clothing/under/rank/roboticist(src)
-	new /obj/item/clothing/under/rank/dress/roboticist(src)
+	new /obj/item/clothing/under/rank/roboticist/skirt(src)
 	new /obj/item/clothing/under/rank/biomechanical(src)
 	new /obj/item/clothing/under/rank/mechatronic(src)
 	new /obj/item/clothing/suit/storage/toggle/labcoat/science(src)

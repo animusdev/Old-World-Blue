@@ -16,7 +16,7 @@
 	icon_state = "qm"
 	item_state = "cargo"
 
-/obj/item/clothing/under/rank/dress/qm
+/obj/item/clothing/under/rank/qm/skirt
 	name = "quartermaster's jumpskirt"
 	desc = "It's a jumpskirt worn by the quartermaster. It's specially designed to prevent back injuries caused by pushing paper."
 	icon_state = "qmf"
@@ -39,7 +39,7 @@
 	icon_state = "cargo"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
-/obj/item/clothing/under/rank/dress/cargo
+/obj/item/clothing/under/rank/cargo/skirt
 	name = "cargo technician's jumpskirt"
 	desc = "Skirrrrrts! They're comfy and easy to wear!"
 	icon_state = "cargof"
