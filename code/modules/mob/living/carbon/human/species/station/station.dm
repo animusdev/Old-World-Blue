@@ -384,6 +384,11 @@
 
 	has_organ = list() //TODO: Positronic brain.
 
+	body_builds = list(
+		new/datum/body_build,
+		new/datum/body_build/slim
+	)
+
 	restricted_jobs = list("Captain", "Head of Personnel", "Head of Security", "Chief Engineer",\
 						"Research Director", "Chief Medical Officer", "Warden", "Detective",\
 						"Security Officer", "Medical Doctor", "Geneticist",\
