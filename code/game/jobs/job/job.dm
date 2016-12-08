@@ -118,11 +118,16 @@ For copy-pasting:
 	if(glasses)		H.equip_to_slot_or_del(new glasses (H), slot_glasses)
 
 	//Belt and PDA
-	if(belt)
-		H.equip_to_slot_or_del(new belt (H), slot_belt)
+	if(H.belt)
 		H.equip_to_slot_or_del(new pda (H), slot_l_store)
+	if(belt)
+		H.equip_to_slot_or_del(new belt (H), slot_in_backpack)
 	else
-		H.equip_to_slot_or_del(new pda (H), slot_belt)
+		if(belt)
+			H.equip_to_slot_or_del(new belt (H), slot_belt)
+			H.equip_to_slot_or_del(new pda (H), slot_l_store)
+		else
+			H.equip_to_slot_or_del(new pda (H), slot_belt)
 
 	if(!H.back || !istype(H.back, /obj/item/weapon/storage/backpack))
 		var/list/slots = list( slot_belt, slot_r_store, slot_l_store, slot_r_hand, slot_l_hand, slot_s_store )
