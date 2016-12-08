@@ -460,7 +460,8 @@
 		return 0
 
 	var/list/modes = list("Off", "Binary sensors", "Vitals tracker", "Tracking beacon")
-	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
+	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) as null|anything in modes
+	if(!switchMode) return
 	if(get_dist(usr, src) > 1)
 		usr << "You have moved too far away."
 		return
