@@ -127,7 +127,7 @@
 	for(var/i=1, i<=length(text), i++)
 		switch(text2ascii(text,i))
 			if(62,60,92,47)	return			//rejects the text if it contains these bad characters: <, >, \ or /
-			if(127 to 255)	return			//rejects weird letters like ÔøΩ
+			if(127 to 255)	return			//rejects weird letters like √Ø¬ø¬Ω
 			if(0 to 31)		return			//more weird stuff
 			if(32)			continue		//whitespace
 			else			non_whitespace = 1
@@ -307,6 +307,13 @@ proc/TextPreview(var/string,var/len=40)
 		return tagdesc
 	return "<IMG src='\ref[text_tag_icons.icon]' class='text_tag' iconstate='[tagname]'" + (tagdesc ? " alt='[tagdesc]'" : "") + ">"
 
+/**
+ * Strip out the special beyond characters for \proper and \improper
+ * from text that will be sent to the browser.
+ */
+/proc/strip_improper(var/text)
+	return replacetext(replacetext(text, "\proper", ""), "\improper", "")
+
 /proc/l33t(T as text)
 //	T = ruppertext(T)
 	var/output = ""
@@ -316,20 +323,20 @@ proc/TextPreview(var/string,var/len=40)
 			if(65,97,192,224) output += "4"//A =rus
 			if(66,98,194,226) output += "8"//B =rus
 			if(67,99,209,241) output += "("//C =rus
-			if(68,100,196,228) output += "|)"//D  = ƒ
-			if(69,101,197,229,168,184) output += "3"//E =rus = ®
+			if(68,100,196,228) output += "|)"//D  = √Ñ
+			if(69,101,197,229,168,184) output += "3"//E =rus = ¬®
 			if(70,102)        output += "|="//F
-			if(71,103,193,225) output += "6"//G = ¡
+			if(71,103,193,225) output += "6"//G = √Å
 			if(72,104,205,237) output += "|-|"//H = rus
-			if(73,105,200,232,201,233)        output += "!"//I = » = …
+			if(73,105,200,232,201,233)        output += "!"//I = √à = √â
 			if(74,106)        output += ")"//J
 			if(75,107,202,234) output += "|<"//K = rus
-			if(76,108,203, 235)        output += "1"//L = À
+			if(76,108,203, 235)        output += "1"//L = √ã
 			if(77,109,204,236) output += "|\\/|"//M = rus
 			if(78,110)        output += "|\\|"//N
 			if(79,111,206,238) output += "0"//O = rus
 			if(80,112,208,240) output += "|>"//P = rus
-			if(81,113,223,255)        output += "9"//Q = ﬂ
+			if(81,113,223,255)        output += "9"//Q = √ü
 			if(82,114)        output += "|2"//R
 			if(83,115)        output += "5"//S
 			if(84,116,210,242) output += "7"//T = rus
@@ -337,22 +344,22 @@ proc/TextPreview(var/string,var/len=40)
 			if(86,118)        output += "\\/"//V
 			if(87,119)        output += "\\X/"//W
 			if(88,120,213,245) output += "><"//X = rus
-			if(89,121,211,243) output += "'/"//Y = ”
+			if(89,121,211,243) output += "'/"//Y = √ì
 			if(90,122) output += "2"//Z
-			if(195,227) output += "r"//√
-			if(198,230) output += ">|<"//∆
-			if(199,231) output += "z"//«
-			if(207,239) output += "||"//œ
-			if(212,244) output += "<|>"//‘
-			if(214,246) output += "|_|_"//÷
-			if(215,246) output += "4"//÷
-			if(216,248) output += "LLI"//ÿ
-			if(217,249) output += "LLL"//Ÿ
-			if(218,250) output += "'b"//⁄
-			if(219,251) output += "b|"//€
-			if(220,252) output += "b"//‹
-			if(221,253) output += "-)"//›
-			if(222,254) output += "|-O"//ﬁ
+			if(195,227) output += "r"//√É
+			if(198,230) output += ">|<"//√Ü
+			if(199,231) output += "z"//√á
+			if(207,239) output += "||"//√è
+			if(212,244) output += "<|>"//√î
+			if(214,246) output += "|_|_"//√ñ
+			if(215,246) output += "4"//√ñ
+			if(216,248) output += "LLI"//√ò
+			if(217,249) output += "LLL"//√ô
+			if(218,250) output += "'b"//√ö
+			if(219,251) output += "b|"//√õ
+			if(220,252) output += "b"//√ú
+			if(221,253) output += "-)"//√ù
+			if(222,254) output += "|-O"//√û
 
 			else          output += ascii2text(a)
 	world << output

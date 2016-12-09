@@ -12,7 +12,7 @@
 /obj/item/clothing/accessory/storage/New()
 	..()
 	hold = new/obj/item/weapon/storage/internal(src)
-	hold.storage_slots = slots
+	hold.max_storage_space = slots * 2
 
 /obj/item/clothing/accessory/storage/attack_hand(mob/user as mob)
 	if (has_suit)	//if we are part of a suit
@@ -46,7 +46,7 @@
 	hold.hide_from(usr)
 	for(var/obj/item/I in hold.contents)
 		hold.remove_from_storage(I, T)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 
 /obj/item/clothing/accessory/storage/webbing
 	name = "webbing"

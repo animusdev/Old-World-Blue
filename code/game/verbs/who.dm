@@ -7,7 +7,7 @@
 
 	var/list/Lines = list()
 
-	if(holder && (R_ADMIN & holder.rights || R_MOD & holder.rights))
+	if(holder && holder.rights&(R_MOD|R_ADMIN))
 		for(var/client/C in clients)
 			var/entry = "\t[C.key]"
 			if(C.holder && C.holder.fakekey)
@@ -38,6 +38,12 @@
 				age = "<font color='#ff8c00'><b>[age]</b></font>"
 
 			entry += " - [age]"
+
+			if(C.is_afk())
+				var/seconds = C.last_activity_seconds()
+				entry += " (AFK - "
+				entry += "[round(seconds / 60)] minutes, "
+				entry += "[seconds % 60] seconds)"
 
 			if(is_special_character(C.mob))
 				entry += " - <b><font color='red'>Antagonist</font></b>"

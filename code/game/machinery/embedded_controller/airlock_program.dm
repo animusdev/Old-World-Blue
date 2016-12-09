@@ -17,8 +17,6 @@
 	var/tag_chamber_sensor
 	var/tag_exterior_sensor
 	var/tag_interior_sensor
-	var/tag_airlock_mech_sensor
-	var/tag_shuttle_mech_sensor
 
 	var/state = STATE_IDLE
 	var/target_state = TARGET_NONE
@@ -44,8 +42,6 @@
 		tag_chamber_sensor = controller.tag_chamber_sensor? controller.tag_chamber_sensor : "[id_tag]_sensor"
 		tag_exterior_sensor = controller.tag_exterior_sensor
 		tag_interior_sensor = controller.tag_interior_sensor
-		tag_airlock_mech_sensor = controller.tag_airlock_mech_sensor? controller.tag_airlock_mech_sensor : "[id_tag]_airlock_mech"
-		tag_shuttle_mech_sensor = controller.tag_shuttle_mech_sensor? controller.tag_shuttle_mech_sensor : "[id_tag]_shuttle_mech"
 		memory["secure"] = controller.tag_secure
 
 		spawn(10)
@@ -216,7 +212,7 @@
 					memory["target_pressure"] = memory["internal_sensor_pressure"]
 					state = STATE_PREPARE
 					target_state = TARGET_NONE
-				
+
 				else if(memory["pump_status"] != "off")
 					signalPump(tag_airpump, 0)
 				else
@@ -295,20 +291,6 @@
 				command = "lock"
 			signalDoor(tag_exterior_door, command)
 			signalDoor(tag_interior_door, command)
-
-datum/computer/file/embedded_program/airlock/proc/signal_mech_sensor(var/command, var/sensor)
-	var/datum/signal/signal = new
-	signal.data["tag"] = sensor
-	signal.data["command"] = command
-	post_signal(signal)
-
-/datum/computer/file/embedded_program/airlock/proc/enable_mech_regulation()
-	signal_mech_sensor("enable", tag_shuttle_mech_sensor)
-	signal_mech_sensor("enable", tag_airlock_mech_sensor)
-
-/datum/computer/file/embedded_program/airlock/proc/disable_mech_regulation()
-	signal_mech_sensor("disable", tag_shuttle_mech_sensor)
-	signal_mech_sensor("disable", tag_airlock_mech_sensor)
 
 /*----------------------------------------------------------
 toggleDoor()

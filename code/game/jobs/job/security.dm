@@ -11,15 +11,10 @@
 	gloves = /obj/item/clothing/gloves/black
 	ear = /obj/item/device/radio/headset/headset_sec
 
-	backpack = /obj/item/weapon/storage/backpack/security
-	satchel = /obj/item/weapon/storage/backpack/satchel_sec
-	duffle = /obj/item/weapon/storage/backpack/duffle/security
-
-	backpacks = list(
-		/obj/item/weapon/storage/backpack/security,
-		/obj/item/weapon/storage/backpack/satchel_sec,
-		/obj/item/weapon/storage/backpack/satchel
-	)
+	backpack  = /obj/item/weapon/storage/backpack/security
+	satchel_j = /obj/item/weapon/storage/backpack/satchel/sec
+	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
+	messenger = /obj/item/weapon/storage/backpack/messenger/sec
 
 
 /datum/job/security/hos
@@ -52,7 +47,6 @@
 	)
 
 
-
 /datum/job/security/warden
 	title = "Warden"
 	flag = WARDEN
@@ -74,7 +68,6 @@
 		/obj/item/device/flash,
 		/obj/item/weapon/handcuffs
 	)
-
 
 
 /datum/job/security/detective
@@ -100,12 +93,10 @@
 		/obj/item/weapon/storage/box/evidence,
 	)
 
-	backpacks = list(
-		/obj/item/weapon/storage/backpack,
-		/obj/item/weapon/storage/backpack/satchel_norm,
-		/obj/item/weapon/storage/backpack/satchel
-	)
-
+	backpack  = /obj/item/weapon/storage/backpack
+	satchel_j = /obj/item/weapon/storage/backpack/satchel/norm
+	dufflebag = /obj/item/weapon/storage/backpack/dufflebag
+	messenger = /obj/item/weapon/storage/backpack/messenger
 
 
 /datum/job/security/detective/forentech
@@ -114,7 +105,6 @@
 
 	uniform = /obj/item/clothing/under/forensic
 	suit = /obj/item/clothing/suit/storage/toggle/labcoat/forensic
-
 
 
 /datum/job/security/officer

@@ -5,7 +5,7 @@
  *		Wood
  *		Carpet
  */
- 
+
 /obj/item/stack/tile
 	name = "tile"
 	singular_name = "tile"
@@ -29,6 +29,9 @@
 	flags = 0
 	origin_tech = "biotech=1"
 
+/obj/item/stack/tile/grass/full
+	amount = 50
+
 /*
  * Wood
  */
@@ -42,6 +45,9 @@
 	throw_speed = 5
 	throw_range = 20
 	flags = 0
+
+/obj/item/stack/tile/wood/full
+	amount = 50
 
 /obj/item/stack/tile/wood/cyborg
 	name = "wood floor tile synthesizer"
@@ -64,3 +70,6 @@
 	throw_speed = 5
 	throw_range = 20
 	flags = 0
+
+/obj/item/stack/tile/carpet/full
+	amount = 50

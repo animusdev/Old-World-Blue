@@ -51,7 +51,7 @@
 	contains = list(
 		/obj/item/weapon/cautery,
 		/obj/item/weapon/surgicaldrill,
-		/obj/item/clothing/mask/breath/toggleable/medical,
+		/obj/item/clothing/mask/breath/medical,
 		/obj/item/weapon/tank/anesthetic,
 		/obj/item/weapon/FixOVein,
 		/obj/item/weapon/hemostat,

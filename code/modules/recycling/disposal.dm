@@ -125,12 +125,8 @@
 				msg_admin_attack("[usr] ([usr.ckey]) placed [GM] ([GM.ckey]) in a disposals unit. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
 		return
 
-	if(isrobot(user))
+	if(!I || !user.unEquip(I, src))
 		return
-	if(!I)
-		return
-
-	user.unEquip(I, src)
 
 	user << "You place \the [I] into the [src]."
 	for(var/mob/M in viewers(src))

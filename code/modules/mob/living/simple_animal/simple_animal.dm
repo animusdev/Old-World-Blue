@@ -41,7 +41,9 @@
 	var/cold_damage_per_tick = 2	//same as heat_damage_per_tick, only if the bodytemperature it's lower than minbodytemp
 	var/fire_alert = 0
 
-	//Atmos effect - Yes, you can make creatures that require phoron or co2 to survive. N2O is a trace gas and handled separately, hence why it isn't here. It'd be hard to add it. Hard and me don't mix (Yes, yes make all the dick jokes you want with that.) - Errorage
+	//Atmos effect - Yes, you can make creatures that require phoron or co2 to survive.
+	// N2O is a trace gas and handled separately, hence why it isn't here. It'd be hard to add it.
+	// Hard and me don't mix (Yes, yes make all the dick jokes you want with that.) - Errorage
 	var/min_oxy = 5
 	var/max_oxy = 0					//Leaving something at 0 means it's off - has no maximum
 	var/min_tox = 0
@@ -270,7 +272,7 @@
 
 /mob/living/simple_animal/attackby(var/obj/item/O, var/mob/user)
 	if(istype(O, /obj/item/stack/medical))
-		user.changeNext_move(4)
+		setClickCooldown(DEFAULT_QUICK_COOLDOWN)
 		if(stat != DEAD)
 			var/obj/item/stack/medical/MED = O
 			if(health < maxHealth)
@@ -292,7 +294,7 @@
 
 //TODO: refactor mob attackby(), attacked_by(), and friends.
 /mob/living/simple_animal/proc/attacked_with_item(var/obj/item/O, var/mob/user)
-	user.changeNext_move(8)
+	setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	if(!O.force)
 		visible_message("<span class='notice'>[user] gently taps [src] with \the [O].</span>")
 		return

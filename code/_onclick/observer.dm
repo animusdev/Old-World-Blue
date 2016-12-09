@@ -31,12 +31,12 @@
 	if(client.buildmode)
 		build_click(src, client.buildmode, params, A)
 		return
+	if(!canClick()) return
+	setClickCooldown(4)
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"])
 		ShiftClickOn(A)
 		return
-	if(world.time <= next_move) return
-	//next_move = world.time + 8
 	// You are responsible for checking config.ghost_interaction when you override this function
 	// Not all of them require checking, see below
 	face_atom(A)

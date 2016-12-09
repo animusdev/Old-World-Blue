@@ -100,18 +100,18 @@
 	..()
 	wires = new(src)
 	spawn(4)
-		if(src.product_slogans)
-			src.slogan_list += splittext(src.product_slogans, ";")
+		if(product_slogans)
+			slogan_list += splittext(product_slogans, ";")
 
 			// So not all machines speak at the exact same time.
 			// The first time this machine says something will be at slogantime + this random value,
 			// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
-			src.last_slogan = world.time + rand(0, slogan_delay)
+			last_slogan = world.time + rand(0, slogan_delay)
 
-		if(src.product_ads)
-			src.ads_list += splittext(src.product_ads, ";")
+		if(product_ads)
+			ads_list += splittext(product_ads, ";")
 
-		src.build_inventory()
+		build_inventory()
 		power_change()
 
 		return
@@ -119,17 +119,17 @@
 	return
 
 /**
- *  Build src.produdct_records from the products lists
+ *  Build produdct_records from the products lists
  *
- *  src.products, src.contraband, src.premium, and src.prices allow specifying
+ *  products, contraband, premium, and prices allow specifying
  *  products that the vending machine is to carry without manually populating
- *  src.product_records.
+ *  product_records.
  */
 /obj/machinery/vending/proc/build_inventory()
 	var/list/all_products = list(
-		list(src.products, CAT_NORMAL),
-		list(src.contraband, CAT_HIDDEN),
-		list(src.premium, CAT_COIN))
+		list(products, CAT_NORMAL),
+		list(contraband, CAT_HIDDEN),
+		list(premium, CAT_COIN))
 
 	for(var/current_list in all_products)
 		var/category = current_list[2]
@@ -137,18 +137,21 @@
 		for(var/entry in current_list[1])
 			var/datum/data/vending_product/product = new/datum/data/vending_product(entry)
 
-			product.price = (entry in src.prices) ? src.prices[entry] : 0
+			product.price = (entry in prices) ? prices[entry] : 0
 			product.amount = (current_list[1][entry]) ? current_list[1][entry] : 1
 			product.category = category
 
-			src.product_records.Add(product)
+			product_records.Add(product)
 
 /obj/machinery/vending/Destroy()
 	qdel(wires)
 	wires = null
 	qdel(coin)
 	coin = null
-	..()
+	for(var/datum/data/vending_product/R in product_records)
+		qdel(R)
+	product_records = null
+	return ..()
 
 /obj/machinery/vending/ex_act(severity)
 	switch(severity)
@@ -156,13 +159,13 @@
 			qdel(src)
 			return
 		if(2.0)
-			if (prob(50))
+			if(prob(50))
 				qdel(src)
 				return
 		if(3.0)
-			if (prob(25))
+			if(prob(25))
 				spawn(0)
-					src.malfunction()
+					malfunction()
 					return
 				return
 		else
@@ -177,61 +180,69 @@
 
 	return
 
+/obj/machinery/vending/emag_act(var/remaining_charges, var/mob/user)
+	if(!emagged)
+		emagged = 1
+		user << "You short out the product lock on \the [src]"
+		return 1
+
 /obj/machinery/vending/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	var/obj/item/weapon/card/id/I = W.GetID()
 
-	if (currently_vending && vendor_account && !vendor_account.suspended)
+	if(currently_vending && vendor_account && !vendor_account.suspended)
 		var/paid = 0
 		var/handled = 0
 
-		if (I) //for IDs and PDAs and wallets with IDs
+		if(I) //for IDs and PDAs and wallets with IDs
 			paid = pay_with_card(I,W)
 			handled = 1
-		else if (istype(W, /obj/item/weapon/spacecash/ewallet))
+		else if(istype(W, /obj/item/weapon/spacecash/ewallet))
 			var/obj/item/weapon/spacecash/ewallet/C = W
 			paid = pay_with_ewallet(C)
 			handled = 1
-		else if (istype(W, /obj/item/weapon/spacecash))
+		else if(istype(W, /obj/item/weapon/spacecash))
 			var/obj/item/weapon/spacecash/C = W
 			paid = pay_with_cash(C, user)
 			handled = 1
 
 		if(paid)
-			src.vend(currently_vending, usr)
+			vend(currently_vending, usr)
 			return
 		else if(handled)
 			nanomanager.update_uis(src)
 			return // don't smack that machine with your 2 thalers
 
-	if (I || istype(W, /obj/item/weapon/spacecash))
+	if(I || istype(W, /obj/item/weapon/spacecash))
 		attack_hand(user)
 		return
-	else if (istype(W, /obj/item/weapon/card/emag))
-		src.emagged = 1
-		user << "You short out the product lock on \the [src]"
-		return
 	else if(istype(W, /obj/item/weapon/screwdriver))
-		src.panel_open = !src.panel_open
-		user << "You [src.panel_open ? "open" : "close"] the maintenance panel."
-		src.overlays.Cut()
-		if(src.panel_open)
-			src.overlays += image(src.icon, "[initial(icon_state)]-panel")
+		panel_open = !panel_open
+		user << "You [panel_open ? "open" : "close"] the maintenance panel."
+		overlays.Cut()
+		if(panel_open)
+			overlays += image(icon, "[initial(icon_state)]-panel")
 
 		nanomanager.update_uis(src)  // Speaker switch is on the main UI, not wires UI
 		return
 	else if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters))
-		if(src.panel_open)
+		if(panel_open)
 			attack_hand(user)
 		return
 	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
 		user.drop_from_inventory(W, src)
 		coin = W
 		categories |= CAT_COIN
-		user << "\blue You insert \the [W] into \the [src]"
+		user << "<span class='notice'>You insert \the [W] into \the [src].</span>"
 		nanomanager.update_uis(src)
 		return
 	else if(istype(W, /obj/item/weapon/wrench))
+		playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
+		if(anchored)
+			user.visible_message("[user] begins unsecuring \the [src] from the floor.", "You start unsecuring \the [src] from the floor.")
+		else
+			user.visible_message("[user] begins securing \the [src] to the floor.", "You start securing \the [src] to the floor.")
+
 		if(do_after(user, 20))
 			if(!src) return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
@@ -665,17 +676,6 @@
 
 */
 
-/*
-/obj/machinery/vending/atmospherics //Commenting this out until someone ponies up some actual working, broken, and unpowered sprites - Quarxink
-	name = "Tank Vendor"
-	desc = "A vendor with a wide variety of masks and gas tanks."
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "dispenser"
-	product_paths = "/obj/item/weapon/tank/oxygen;/obj/item/weapon/tank/phoron;/obj/item/weapon/tank/emergency_oxygen;/obj/item/weapon/tank/emergency_oxygen/engi;/obj/item/clothing/mask/breath/toggleable"
-	product_amounts = "10;10;10;5;25"
-	vend_delay = 0
-*/
-
 /obj/machinery/vending/boozeomat
 	name = "Booze-O-Mat"
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
@@ -799,7 +799,7 @@
 					/obj/item/weapon/reagent_containers/glass/beaker/bottle/stoxin = 4,/obj/item/weapon/reagent_containers/glass/beaker/bottle/toxin = 4,
 					/obj/item/weapon/reagent_containers/syringe/antiviral = 4,/obj/item/weapon/reagent_containers/syringe = 12,
 					/obj/item/device/healthanalyzer = 5,/obj/item/weapon/reagent_containers/glass/beaker = 4, /obj/item/weapon/reagent_containers/dropper = 2,
-					/obj/item/stack/medical/advanced/bruise_pack = 3, /obj/item/stack/medical/advanced/ointment = 3, /obj/item/stack/medical/splint = 2)
+					/obj/item/stack/medical/bruise_pack/advanced = 3, /obj/item/stack/medical/ointment/advanced = 3, /obj/item/stack/medical/splint = 2)
 	contraband = list(/obj/item/weapon/reagent_containers/pill/tox = 3,/obj/item/weapon/reagent_containers/pill/stox = 4,/obj/item/weapon/reagent_containers/pill/antitox = 6)
 	idle_power_usage = 211 //refrigerator - believe it or not, this is actually the average power consumption of a refrigerated vending machine according to NRCan.
 
@@ -909,7 +909,6 @@
 	vend_reply = "Have an enchanted evening!"
 	product_ads = "FJKLFJSD;AJKFLBJAKL;1234 LOONIES LOL!;>MFW;Kill them fuckers!;GET DAT FUKKEN DISK;HONK!;EI NATH;Destroy the station!;Admin conspiracies since forever!;Space-time bending hardware!"
 	products = list(/obj/item/clothing/head/wizard = 1,/obj/item/clothing/suit/wizrobe = 1,/obj/item/clothing/head/wizard/red = 1,/obj/item/clothing/suit/wizrobe/red = 1,/obj/item/clothing/shoes/sandal = 1,/obj/item/weapon/staff = 2)
-	contraband = list(/obj/item/weapon/reagent_containers/glass/beaker/bottle/wizarditis = 1)	//No one can get to the machine to hack it anyways; for the lulz - Microwave
 
 /obj/machinery/vending/dinnerware
 	name = "Dinnerware"
@@ -975,7 +974,7 @@
 	req_access = list(access_robotics)
 	products = list(/obj/item/clothing/suit/storage/toggle/labcoat = 4,/obj/item/clothing/under/rank/roboticist = 4,/obj/item/stack/cable_coil = 4,/obj/item/device/flash = 4,
 					/obj/item/weapon/cell/high = 12, /obj/item/device/assembly/prox_sensor = 3,/obj/item/device/assembly/signaler = 3,/obj/item/device/healthanalyzer = 3,
-					/obj/item/weapon/scalpel = 2,/obj/item/weapon/circular_saw = 2,/obj/item/weapon/tank/anesthetic = 2,/obj/item/clothing/mask/breath/toggleable/medical = 5,
+					/obj/item/weapon/scalpel = 2,/obj/item/weapon/circular_saw = 2,/obj/item/weapon/tank/anesthetic = 2,/obj/item/clothing/mask/breath/medical = 5,
 					/obj/item/weapon/screwdriver = 5,/obj/item/weapon/crowbar = 5)
 	//everything after the power cell had no amounts, I improvised.  -Sayu
 

@@ -5,10 +5,9 @@
 	desc = "A rectangular steel crate."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "crate"
-	var/points_per_crate = 5
 	icon_opened = "crateopen"
 	climbable = 1
-//	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
+	var/points_per_crate = 5
 	var/rigged = 0
 
 /obj/structure/closet/crate/can_open()
@@ -36,7 +35,7 @@
 	playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
 	for(var/obj/O in src)
 		O.forceMove(get_turf(src))
-	icon_state = icon_opened
+	update_icon()
 	src.opened = 1
 
 	if(climbable)
@@ -63,15 +62,12 @@
 		O.forceMove(src)
 		itemcount++
 
+	opened = 0
 	update_icon()
-	src.opened = 0
 	return 1
 
 /obj/structure/closet/crate/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(opened)
-// TODO. Consider rig modules in unEquip()
-		if(W.loc != user) // This should stop mounted modules ending up outside the module.
-			return
 		user.unEquip(W, src.loc)
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
@@ -129,17 +125,24 @@
 	var/broken = 0
 	var/locked = 1
 
-/obj/structure/closet/crate/secure/New()
-	..()
-	if(locked)
-		overlays.Cut()
-		overlays += redlight
-	else
-		overlays.Cut()
-		overlays += greenlight
-
 /obj/structure/closet/crate/secure/can_open()
 	return !locked
+
+//Putting the welded stuff in updateicon() so it's easy to overwrite for special cases (Fridges, cabinets, and whatnot)
+/obj/structure/closet/crate/secure/update_icon()
+	overlays.Cut()
+	if(!opened)
+		icon_state = icon_closed
+	else
+		icon_state = icon_opened
+	if(broken)
+		overlays += emag
+	else
+		if(locked)
+			overlays += redlight
+		else
+			overlays += greenlight
+
 
 /obj/structure/closet/crate/secure/proc/togglelock(mob/user as mob)
 	if(src.opened)
@@ -160,8 +163,7 @@
 	if(user)
 		for(var/mob/O in viewers(user, 3))
 			O.show_message( "<span class='notice'>The crate has been [locked ? null : "un"]locked by [user].</span>", 1)
-	overlays.Cut()
-	overlays += locked ? redlight : greenlight
+	update_icon()
 
 /obj/structure/closet/crate/secure/verb/verb_togglelock()
 	set src in oview(1) // One square distance
@@ -185,38 +187,65 @@
 		src.toggle(user)
 
 /obj/structure/closet/crate/secure/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(opened || broken)
+		return ..()
+
 	if(is_type_in_list(W, list(/obj/item/weapon/packageWrap, /obj/item/stack/cable_coil, /obj/item/device/radio/electropack, /obj/item/weapon/wirecutters)))
 		return ..()
-	if(locked && (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)))
-		overlays.Cut()
-		overlays += emag
+
+	if(istype(W, /obj/item/device/multitool) && locked)
+		var/obj/item/device/multitool/multi = W
+		if(multi.in_use)
+			user << "<span class='warning'>This multitool is already in use!</span>"
+			return
+		multi.in_use = 1
+		for(var/i in 1 to rand(4,8))
+			user.visible_message(
+				"<span class='warning'>[user] picks in wires of the [src.name] with a multitool.</span>",
+				"<span class='warning'>I am trying to reset circuitry lock module ([i])...</span>"
+			)
+			if(!do_after(user,200)||!locked)
+				multi.in_use=0
+				return
+		locked = 0
+		broken = 1
+		src.update_icon()
+		multi.in_use=0
+		user.visible_message(
+			"<span class='warning'>[user] [locked?"locks":"unlocks"] [name] with a multitool.</span>",
+			"<span class='warning'>I [locked?"enable":"disable"] the locking modules.</span>"
+		)
+	else if(istype(W, /obj/item/weapon/melee/energy/blade))
+		emag_act(INFINITY, user)
+	else
+		src.togglelock(user)
+
+/obj/structure/closet/crate/secure/emag_act(var/remaining_charges, var/mob/user)
+	if(!opened && !broken)
+		src.locked = 0
+		src.broken = 1
+		update_icon()
 		overlays += sparks
 		spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
 		playsound(src.loc, "sparks", 60, 1)
-		src.locked = 0
-		src.broken = 1
 		user << "<span class='notice'>You unlock \the [src].</span>"
-		return
-	if(!opened)
-		src.togglelock(user)
-		return
-	return ..()
+		return 1
+	else
+		return -1
 
 /obj/structure/closet/crate/secure/emp_act(severity)
 	for(var/obj/O in src)
 		O.emp_act(severity)
 	if(!broken && !opened  && prob(50/severity))
 		if(!locked)
-			src.locked = 1
-			overlays.Cut()
-			overlays += redlight
+			locked = 1
+			update_icon()
 		else
-			overlays.Cut()
-			overlays += emag
+			playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
+			locked = 0
+			update_icon()
 			overlays += sparks
 			spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
-			playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
-			src.locked = 0
 	if(!opened && prob(20/severity))
 		if(!locked)
 			open()
@@ -226,11 +255,11 @@
 	..()
 
 /obj/structure/closet/crate/plastic
-	points_per_crate = 1
 	name = "plastic crate"
 	desc = "A rectangular plastic crate."
 	icon_state = "plasticcrate"
 	icon_opened = "plasticcrateopen"
+	points_per_crate = 1
 
 /obj/structure/closet/crate/internals
 	name = "internals crate"
@@ -253,7 +282,7 @@
 
 /obj/structure/closet/crate/contraband
 	name = "Poster crate"
-	desc = "A random assortment of posters manufactured by providers NOT listed under Nanotrasen's whitelist."
+	desc = "A random assortment of posters manufactured by providers NOT listed under NanoTrasen's whitelist."
 	icon_state = "crate"
 	icon_opened = "crateopen"
 */
@@ -336,14 +365,9 @@
 
 /obj/structure/closet/crate/radiation/New()
 	..()
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
+	for(var/i in 1 to 4)
+		new /obj/item/clothing/suit/radiation(src)
+		new /obj/item/clothing/head/radiation(src)
 
 /obj/structure/closet/crate/secure/weapon
 	name = "weapons crate"

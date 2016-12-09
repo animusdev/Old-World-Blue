@@ -137,11 +137,6 @@ datum/design/circuit/operating
 	id = "operating"
 	build_path = /obj/item/weapon/circuitboard/operating
 
-datum/design/circuit/pandemic
-	name = "PanD.E.M.I.C. 2200"
-	id = "pandemic"
-	build_path = /obj/item/weapon/circuitboard/pandemic
-
 datum/design/circuit/scan_console
 	name = "DNA machine"
 	id = "scan_console"
@@ -1662,9 +1657,25 @@ datum/design/item/binaryencrypt
 	build_path = /obj/item/device/encryptionkey/binary
 
 datum/design/item/chameleon
-	name = "Holographic equipment kit"
-	desc = "A kit of dangerous, high-tech equipment with changeable looks."
+	name = "Holographic module"
+	desc = "High-tech equipment with changeable looks."
 	id = "chameleon"
 	req_tech = list("syndicate" = 2)
-	materials = list("$metal" = 500)
-	build_path = /obj/item/weapon/storage/box/syndie_kit/chameleon
+	materials = list("$metal" = 300, "$glass" = 100)
+	build_path = /obj/item/chameleon
+
+datum/design/item/chameleon_backpack
+	name = "Holographic backpack"
+	desc = "High-tech equipment with changeable looks. Have internal storage."
+	id = "chameleon_backpack"
+	req_tech = list("syndicate" = 2, "materials" = 2)
+	materials = list("$metal" = 400, "$glass" = 150)
+	build_path = /obj/item/weapon/storage/backpack/chameleon
+
+datum/design/item/chameleon_gun
+	name = "Holographic gun"
+	desc = "High-tech gun with changeable looks. Can't hurm."
+	id = "chameleon_gun"
+	req_tech = list("syndicate" = 2, "materials" = 2, "combat" = 3)
+	materials = list("$metal" = 400, "$glass" = 150)
+	build_path = /obj/item/weapon/gun/projectile/chameleon

@@ -14,6 +14,7 @@
 	While the central Sol government maintains control of its far-flung people, powerful corporate \
 	interests, rampant cyber and bio-augmentation and secretive factions make life on most human \
 	worlds tumultous at best."
+	name_language = null // Use the first-name last-name generator rather than a language scrambler
 	min_age = 17
 	max_age = 110
 
@@ -75,6 +76,7 @@
 	gluttonous = 1
 	slowdown = 0.5
 	brute_mod = 0.8
+	name_language = "Sinta'unathi"
 
 	min_age = 18
 	max_age = 60
@@ -146,6 +148,7 @@
 	brute_mod = 1.15
 	burn_mod =  1.15
 	gluttonous = 1
+	name_language = "Siik"
 
 	min_age = 17
 	max_age = 80
@@ -203,6 +206,7 @@
 	of the Qerr'Katish, a caste within their society which keeps the empire of the Skrell running smoothly. Skrell are \
 	herbivores on the whole and tend to be co-operative with the other species of the galaxy, although they rarely reveal \
 	the secrets of their empire to their allies."
+	name_language = "Skrellian"
 
 	min_age = 19
 	max_age = 80
@@ -243,6 +247,7 @@
 	hud = new /datum/hud_data/diona
 	siemens_coefficient = 0.3
 	show_ssd = "completely quiescent"
+	name_language = "Rootspeak"
 
 	min_age = 1
 	max_age = 300
@@ -378,6 +383,11 @@
 	allow_slim_fem = 1
 
 	has_organ = list() //TODO: Positronic brain.
+
+	body_builds = list(
+		new/datum/body_build,
+		new/datum/body_build/slim
+	)
 
 	restricted_jobs = list("Captain", "Head of Personnel", "Head of Security", "Chief Engineer",\
 						"Research Director", "Chief Medical Officer", "Warden", "Detective",\

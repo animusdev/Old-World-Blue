@@ -3,21 +3,24 @@
 	if(status_flags & GODMODE)	return 0	//godmode
 
 	if(bodytemperature > 406)
-		for(var/datum/disease/D in viruses)
-			D.cure()
 		for (var/ID in virus2)
 			var/datum/disease2/disease/V = virus2[ID]
 			V.cure(src)
 
 	if(life_tick % 3) //don't spam checks over all objects in view every tick.
 		for(var/obj/effect/decal/cleanable/O in view(1,src))
-			if(istype(O,/obj/effect/decal/cleanable/blood) || istype(O,/obj/effect/decal/cleanable/mucus))
-				if(!islist(O:virus2)) // TODO: check this situations and fix it.
-					world.log << "##ERROR: virus2 is not list."
-					continue
-				if(O:virus2 && O:virus2.len)
-					for (var/ID in O:virus2)
-						var/datum/disease2/disease/V = O:virus2[ID]
+			if(istype(O,/obj/effect/decal/cleanable/blood))
+				var/obj/effect/decal/cleanable/blood/B = O
+				if(B.virus2.len)
+					for (var/ID in B.virus2)
+						var/datum/disease2/disease/V = B.virus2[ID]
+						infect_virus2(src,V)
+
+			else if(istype(O,/obj/effect/decal/cleanable/mucus))
+				var/obj/effect/decal/cleanable/mucus/M = O
+				if(M.virus2.len)
+					for (var/ID in M.virus2)
+						var/datum/disease2/disease/V = M.virus2[ID]
 						infect_virus2(src,V)
 
 	if(virus2.len)

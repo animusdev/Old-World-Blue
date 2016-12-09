@@ -177,7 +177,7 @@
 	playsound(loc, 'sound/effects/Glasshit.ogg', 50, 1)
 
 /obj/structure/window/attack_hand(mob/user as mob)
-	user.next_move = world.time + 8
+	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	if(HULK in user.mutations)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
 		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
@@ -185,17 +185,20 @@
 		shatter()
 
 	else if (usr.a_intent == I_HURT)
+
 		if (ishuman(usr))
-			var/mob/living/carbon/human/H = user
-			if(H.can_shred())
+			var/mob/living/carbon/human/H = usr
+			if(H.species.can_shred(H))
 				attack_generic(H,25)
 				return
 
 		playsound(src.loc, 'sound/effects/glassknock.ogg', 80, 1)
 		user.do_attack_animation(src)
-		usr.visible_message("\red [usr.name] bangs against the [src.name]!",
-							"\red You bang against the [src.name]!",
-							"You hear a banging sound.")
+		usr.visible_message(
+			"<span class='danger'>\The [usr] bangs against \the [src]!</span>",
+			"<span class='danger'>You bang against \the [src]!</span>",
+			"You hear a banging sound."
+		)
 	else
 		playsound(src.loc, 'sound/effects/glassknock.ogg', 80, 1)
 		usr.visible_message("[usr.name] knocks on the [src.name].",
@@ -204,7 +207,7 @@
 	return
 
 /obj/structure/window/attack_generic(var/mob/user, var/damage)
-	user.next_move = world.time + 8
+	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	if(!damage)
 		return
 	if(damage >= 10)
@@ -216,7 +219,6 @@
 	return 1
 
 /obj/structure/window/attackby(obj/item/W as obj, mob/user as mob)
-	user.next_move = world.time + 8
 	if(!istype(W)) return//I really wish I did not need this
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
@@ -270,6 +272,7 @@
 		if(!glasstype)
 			user << "<span class='notice'>You're not sure how to dismantle \the [src] properly.</span>"
 		else
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			visible_message("<span class='notice'>[user] dismantles \the [src].</span>")
 			if(dir == SOUTHWEST)
 				var/obj/item/stack/material/mats = new glasstype(loc)
@@ -278,6 +281,7 @@
 				new glasstype(loc)
 			qdel(src)
 	else
+		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			user.do_attack_animation(src)
 			hit(W.force)

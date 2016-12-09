@@ -12,14 +12,14 @@
 	//Species-specific stuff.
 	species_restricted = list("exclude","Unathi","Tajara","Skrell","Diona","Vox", "Xenomorph")
 	sprite_sheets_refit = list(
-		"Unathi" = 'icons/obj/clothing/hats/mob_unathi.dmi',
-		"Tajara" = 'icons/obj/clothing/hats/mob_tajaran.dmi',
-		"Skrell" = 'icons/obj/clothing/hats/mob_skrell.dmi',
+		"Unathi" = 'icons/inv_slots/hats/mob_unathi.dmi',
+		"Tajara" = 'icons/inv_slots/hats/mob_tajaran.dmi',
+		"Skrell" = 'icons/inv_slots/hats/mob_skrell.dmi',
 	)
 	sprite_sheets_obj = list(
-		"Unathi" = 'icons/obj/clothing/hats/icon_unathi.dmi',
-		"Tajara" = 'icons/obj/clothing/hats/icon_tajaran.dmi',
-		"Skrell" = 'icons/obj/clothing/hats/icon_skrell.dmi',
+		"Unathi" = 'icons/inv_slots/hats/icon_unathi.dmi',
+		"Tajara" = 'icons/inv_slots/hats/icon_tajaran.dmi',
+		"Skrell" = 'icons/inv_slots/hats/icon_skrell.dmi',
 	)
 
 	light_overlay = "helmet_light"
@@ -37,14 +37,14 @@
 
 	species_restricted = list("exclude","Unathi","Tajara","Diona","Vox", "Xenomorph")
 	sprite_sheets_refit = list(
-		"Unathi" = 'icons/obj/clothing/suits/mob_unathi.dmi',
-		"Tajara" = 'icons/obj/clothing/suits/mob_tajaran.dmi',
-		"Skrell" = 'icons/obj/clothing/suits/mob_skrell.dmi',
+		"Unathi" = 'icons/inv_slots/suits/mob_unathi.dmi',
+		"Tajara" = 'icons/inv_slots/suits/mob_tajaran.dmi',
+		"Skrell" = 'icons/inv_slots/suits/mob_skrell.dmi',
 	)
 	sprite_sheets_obj = list(
-		"Unathi" = 'icons/obj/clothing/suits/icon_unathi.dmi',
-		"Tajara" = 'icons/obj/clothing/suits/icon_tajaran.dmi',
-		"Skrell" = 'icons/obj/clothing/suits/icon_skrell.dmi',
+		"Unathi" = 'icons/inv_slots/suits/icon_unathi.dmi',
+		"Tajara" = 'icons/inv_slots/suits/icon_tajaran.dmi',
+		"Skrell" = 'icons/inv_slots/suits/icon_skrell.dmi',
 	)
 
 	//Breach thresholds, should ideally be inherited by most (if not all) voidsuits.
@@ -130,7 +130,7 @@
 /obj/item/clothing/suit/space/void/verb/toggle_helmet()
 
 	set name = "Toggle Helmet"
-	set category = "Object"
+	set category = "Voidsuit"
 	set src in usr
 
 	if(!istype(src.loc,/mob/living)) return
@@ -160,10 +160,42 @@
 			H << "<span class='info'>You deploy your suit helmet, sealing you off from the world.</span>"
 	helmet.update_light(H)
 
+
+
+
+/obj/item/clothing/suit/space/void/verb/toggle_boots()
+
+	set name = "Toggle Magboots"
+	set category = "Voidsuit"
+	set src in usr
+
+	if(!istype(src.loc,/mob/living)) return
+
+	if(!boots)
+		usr << "There is no magboots installed."
+		return
+
+	var/mob/living/carbon/human/H = usr
+
+	if(!istype(H)) return
+	if(H.stat) return
+	if(H.wear_suit != src) return
+
+	if(H.shoes == boots)
+		H << "<span class='notice'>You retract your suit helmet.</span>"
+		boots.canremove = 1
+		H.drop_from_inventory(boots)
+		boots.loc = src
+	else
+		if(H.equip_to_slot_if_possible(boots, slot_shoes))
+			boots.pickup(H)
+			boots.canremove = 0
+			H << "<span class='info'>You deploy your suit magboots</span>"
+
 /obj/item/clothing/suit/space/void/verb/eject_tank()
 
 	set name = "Eject Voidsuit Tank"
-	set category = "Object"
+	set category = "Voidsuit"
 	set src in usr
 
 	if(!istype(src.loc,/mob/living)) return

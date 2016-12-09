@@ -211,25 +211,24 @@
 	..()
 	return
 
-/obj/machinery/mecha_part_fabricator/proc/emag()
-	sleep()
+/obj/machinery/mecha_part_fabricator/emag_act(var/remaining_charges, var/mob/user)
 	switch(emagged)
 		if(0)
 			emagged = 0.5
-			src.visible_message("\icon[src] <b>[src]</b> beeps: \"DB error \[Code 0x00F1\]\"")
+			visible_message("\icon[src] <b>[src]</b> beeps: \"DB error \[Code 0x00F1\]\"")
 			sleep(10)
-			src.visible_message("\icon[src] <b>[src]</b> beeps: \"Attempting auto-repair\"")
+			visible_message("\icon[src] <b>[src]</b> beeps: \"Attempting auto-repair\"")
 			sleep(15)
-			src.visible_message("\icon[src] <b>[src]</b> beeps: \"User DB corrupted \[Code 0x00FA\]. Truncating data structure...\"")
+			visible_message("\icon[src] <b>[src]</b> beeps: \"User DB corrupted \[Code 0x00FA\]. Truncating data structure...\"")
 			sleep(30)
-			src.visible_message("\icon[src] <b>[src]</b> beeps: \"User DB truncated. Please contact your Nanotrasen system operator for future assistance.\"")
+			visible_message("\icon[src] <b>[src]</b> beeps: \"User DB truncated. Please contact your Nanotrasen system operator for future assistance.\"")
 			req_access = null
 			emagged = 1
+			return 1
 		if(0.5)
-			src.visible_message("\icon[src] <b>[src]</b> beeps: \"DB not responding \[Code 0x0003\]...\"")
+			visible_message("\icon[src] <b>[src]</b> beeps: \"DB not responding \[Code 0x0003\]...\"")
 		if(1)
-			src.visible_message("\icon[src] <b>[src]</b> beeps: \"No records in User DB\"")
-	return
+			visible_message("\icon[src] <b>[src]</b> beeps: \"No records in User DB\"")
 
 /obj/machinery/mecha_part_fabricator/proc/convert_part_set(set_name as text)
 	var/list/parts = part_sets[set_name]
@@ -781,53 +780,35 @@
 			user << "\red You can't load the [src.name] while it's opened."
 			return 1
 
-	if(istype(W, /obj/item/weapon/card/emag))
-		emag()
-		return
 
-	var/material
-	switch(W.type)
-		if(/obj/item/stack/material/gold)
-			material = "gold"
-		if(/obj/item/stack/material/silver)
-			material = "silver"
-		if(/obj/item/stack/material/diamond)
-			material = "diamond"
-		if(/obj/item/stack/material/phoron)
-			material = "phoron"
-		if(/obj/item/stack/material/steel)
-			material = DEFAULT_WALL_MATERIAL
-		if(/obj/item/stack/material/glass)
-			material = "glass"
-		if(/obj/item/stack/material/uranium)
-			material = "uranium"
-		else
-			return ..()
+	if(istype(W, /obj/item/stack/material))
+		var/material = W.get_material_name()
+		if(!material in resources) return ..()
 
-	if(src.being_built)
-		user << "The fabricator is currently processing. Please wait until completion."
-		return
-
-	var/obj/item/stack/material/stack = W
-
-	var/sname = "[stack.name]"
-	var/amnt = stack.perunit
-	if(src.resources[material] < res_max_amount)
-		if(stack && stack.amount >= 1)
-			var/count = 0
-			src.overlays += "fab-load-[material]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
-			sleep(10)
-
-			while(src.resources[material] < res_max_amount && stack.amount >= 1)
-				src.resources[material] += amnt
-				stack.use(1)
-				count++
-			src.overlays -= "fab-load-[material]"
-			user << "You insert [count] [sname] into the fabricator."
-			src.updateUsrDialog()
-		else
-			user << "The fabricator can only accept full sheets of [sname]."
+		if(src.being_built)
+			user << "The fabricator is currently processing. Please wait until completion."
 			return
-	else
-		user << "The fabricator cannot hold more [sname]."
-	return
+
+		var/obj/item/stack/material/stack = W
+
+		var/sname = stack.name
+		var/amnt = stack.perunit
+		if(src.resources[material] < res_max_amount)
+			if(stack && stack.amount >= 1)
+				var/count = 0
+				src.overlays += "fab-load-[material]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
+				sleep(10)
+
+				while(src.resources[material] < res_max_amount && stack.amount >= 1)
+					src.resources[material] += amnt
+					stack.use(1)
+					count++
+				src.overlays -= "fab-load-[material]"
+				user << "You insert [count] [sname] into the fabricator."
+				src.updateUsrDialog()
+			else
+				user << "The fabricator can only accept full sheets of [sname]."
+				return
+		else
+			user << "The fabricator cannot hold more [sname]."
+		return

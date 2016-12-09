@@ -40,7 +40,7 @@ mob/living/carbon/proc/handle_hallucinations()
 					var/list/slots_free = list(ui_lhand,ui_rhand)
 					if(l_hand) slots_free -= ui_lhand
 					if(r_hand) slots_free -= ui_rhand
-					if(istype(src,/mob/living/carbon/human))
+					if(ishuman(src))
 						var/mob/living/carbon/human/H = src
 						if(!H.belt) slots_free += ui_belt
 						if(!H.l_store) slots_free += ui_storage1
@@ -335,7 +335,7 @@ proc/check_panel(mob/M)
 var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/item/ammo_magazine/a357,\
 	/obj/item/weapon/gun/energy/crossbow, /obj/item/weapon/melee/energy/sword,\
 	/obj/item/weapon/storage/box/syndicate, /obj/item/weapon/storage/box/emps,\
-	/obj/item/weapon/cartridge/syndicate, /obj/item/clothing/under/chameleon,\
+	/obj/item/weapon/cartridge/syndicate, /obj/item/chameleon/under,\
 	/obj/item/clothing/shoes/syndigaloshes, /obj/item/weapon/card/id/syndicate,\
 	/obj/item/clothing/mask/gas/voice, /obj/item/clothing/glasses/thermal,\
 	/obj/item/device/chameleon, /obj/item/weapon/card/emag,\

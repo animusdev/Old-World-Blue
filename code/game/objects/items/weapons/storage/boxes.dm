@@ -53,19 +53,19 @@
 /obj/item/weapon/storage/box/survival
 	New()
 		..()
-		new /obj/item/clothing/mask/breath/toggleable( src )
+		new /obj/item/clothing/mask/breath( src )
 		new /obj/item/weapon/tank/emergency_oxygen( src )
 
 /obj/item/weapon/storage/box/vox
 	New()
 		..()
-		new /obj/item/clothing/mask/breath/toggleable( src )
+		new /obj/item/clothing/mask/vox_breath( src )
 		new /obj/item/weapon/tank/emergency_nitrogen( src )
 
 /obj/item/weapon/storage/box/engineer
 	New()
 		..()
-		new /obj/item/clothing/mask/breath/toggleable( src )
+		new /obj/item/clothing/mask/breath( src )
 		new /obj/item/weapon/tank/emergency_oxygen/engi( src )
 
 /obj/item/weapon/storage/box/gloves
@@ -82,6 +82,21 @@
 		new /obj/item/clothing/gloves/white/latex(src)
 		new /obj/item/clothing/gloves/white/latex(src)
 		new /obj/item/clothing/gloves/white/latex(src)
+
+/obj/item/weapon/storage/box/ems
+	name = "box of nitrile gloves"
+	desc = "Contains black gloves."
+	icon_state = "nitrile"
+
+	New()
+		..()
+		new /obj/item/clothing/gloves/white/latex/emt(src)
+		new /obj/item/clothing/gloves/white/latex/emt(src)
+		new /obj/item/clothing/gloves/white/latex/emt(src)
+		new /obj/item/clothing/gloves/white/latex/emt(src)
+		new /obj/item/clothing/gloves/white/latex/emt(src)
+		new /obj/item/clothing/gloves/white/latex/emt(src)
+		new /obj/item/clothing/gloves/white/latex/emt(src)
 
 /obj/item/weapon/storage/box/masks
 	name = "box of sterile masks"
@@ -649,4 +664,24 @@
 		new /obj/item/weapon/light/tube(src)
 	for(var/i = 0; i < 7; i++)
 		new /obj/item/weapon/light/bulb(src)
+	..()
+
+/obj/item/weapon/storage/box/underwear
+	icon_state = "underwear"
+	name = "underwear box"
+	can_hold = list(/obj/item/clothing/hidden)
+	storage_slots = 9
+	max_storage_space = 9
+
+/obj/item/weapon/storage/box/underwear/New()
+	var/tmp_type
+	for(var/i in 1 to 3)
+		tmp_type = pick(subtypesof(/obj/item/clothing/hidden/underwear))
+		new tmp_type(src)
+	for(var/i in 1 to 3)
+		tmp_type = pick(subtypesof(/obj/item/clothing/hidden/undershirt))
+		new tmp_type(src)
+	for(var/i in 1 to 3)
+		tmp_type = pick(subtypesof(/obj/item/clothing/hidden/socks))
+		new tmp_type(src)
 	..()

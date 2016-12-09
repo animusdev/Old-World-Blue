@@ -14,17 +14,12 @@
 	. = src.say_dead(message)
 
 
-/mob/observer/dead/emote(var/act, var/type, var/message)
+/mob/observer/dead/custom_emote(var/type, var/message)
 	//message = sanitize(message) - already sanitized in verb/me_verb()
 	if(!src.client.holder)
 		if(!config.dsay_allowed)
 			src << "<span class='danger'>Deadchat is globally muted.</span>"
 			return
-
-	if(act != "me")
-		return
-
-	log_emote("Ghost/[src.key] : [message]")
 
 	if(client)
 		if(client.prefs.muted & MUTE_DEADCHAT)

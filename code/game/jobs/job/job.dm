@@ -42,15 +42,11 @@
 	var/glasses = null
 	var/suit_store = null
 
-	var/backpack = /obj/item/weapon/storage/backpack
-	var/satchel = /obj/item/weapon/storage/backpack/satchel_norm
-	var/duffle = /obj/item/weapon/storage/backpack/duffle
-
-	var/list/backpacks = list(
-		/obj/item/weapon/storage/backpack,
-		/obj/item/weapon/storage/backpack/satchel_norm,
-		/obj/item/weapon/storage/backpack/satchel
-	)
+	var/backpack  = /obj/item/weapon/storage/backpack
+	var/satchel   = /obj/item/weapon/storage/backpack/satchel
+	var/satchel_j = /obj/item/weapon/storage/backpack/satchel/norm
+	var/dufflebag = /obj/item/weapon/storage/backpack/dufflebag
+	var/messenger = /obj/item/weapon/storage/backpack/messenger
 
 	//This will be put in backpack. List ordered by priority!
 	var/list/put_in_backpack = list()
@@ -72,11 +68,13 @@ For copy-pasting:
 	glasses =
 	hat =
 
-	backpack =
-	satchel =
-	duffle =
+	backpack  =
+	satchel   =
+	satchel_j =
+	dufflebag =
+	messenger =
 
-	put_in_backpack = list(\
+	put_in_backpack = list(
 	)
 */
 
@@ -86,10 +84,19 @@ For copy-pasting:
 	//Put items in hands
 	if(hand) H.equip_to_slot_or_del(new hand (H), slot_l_hand)
 
+	var/backpack_category = backbaglist[H.backbag]
+
 	//Put items in backpack
-	if( H.backbag != 1 )
-		var/backpack = backpacks[H.backbag-1]
-		var/obj/item/weapon/storage/backpack/BPK = new backpack(H)
+	if( backpack_category != "None" )
+		var/backpack_type = backpack
+		switch(backpack_category)
+			if("Backpack")		backpack_type = backpack
+			if("Satchel")		backpack_type = satchel
+			if("Satchel Job")	backpack_type = satchel_j
+			if("Dufflebag")		backpack_type = dufflebag
+			if("Messenger")		backpack_type = messenger
+
+		var/obj/item/weapon/storage/backpack/BPK = new backpack_type(H)
 		if(H.equip_to_slot_or_del(BPK, slot_back,1))
 			for( var/path in put_in_backpack )
 				new path(BPK)
@@ -111,11 +118,16 @@ For copy-pasting:
 	if(glasses)		H.equip_to_slot_or_del(new glasses (H), slot_glasses)
 
 	//Belt and PDA
-	if(belt)
-		H.equip_to_slot_or_del(new belt (H), slot_belt)
+	if(H.belt)
 		H.equip_to_slot_or_del(new pda (H), slot_l_store)
+		if(belt)
+			H.equip_to_slot_or_del(new belt (H), slot_in_backpack)
 	else
-		H.equip_to_slot_or_del(new pda (H), slot_belt)
+		if(belt)
+			H.equip_to_slot_or_del(new belt (H), slot_belt)
+			H.equip_to_slot_or_del(new pda (H), slot_l_store)
+		else
+			H.equip_to_slot_or_del(new pda (H), slot_belt)
 
 	if(!H.back || !istype(H.back, /obj/item/weapon/storage/backpack))
 		var/list/slots = list( slot_belt, slot_r_store, slot_l_store, slot_r_hand, slot_l_hand, slot_s_store )
@@ -150,7 +162,11 @@ For copy-pasting:
 			if(COMPANY_OPPOSED)		loyalty = 0.70
 
 	//give them an account in the station database
-	var/money_amount = rand(10,100) * loyalty * economic_modifier * (H.species ? economic_species_modifier[H.species.type] : 2)
+	var/species_modifier = (H.species ? economic_species_modifier[H.species.type] : 2)
+	if(!species_modifier)
+		species_modifier = economic_species_modifier[/datum/species/human]
+
+	var/money_amount = rand(10,100) * loyalty * economic_modifier * species_modifier
 	var/datum/money_account/M = create_account(H.real_name, money_amount, null)
 	if(H.mind)
 		var/remembered_info = ""

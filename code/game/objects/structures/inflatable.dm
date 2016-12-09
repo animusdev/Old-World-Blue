@@ -66,6 +66,13 @@
 		deflate(1)
 	return
 
+/obj/structure/inflatable/AltClick(mob/living/carbon/human/user)
+	if(src.Adjacent(user))
+		hand_deflate()
+	else
+		return ..()
+
+
 /obj/structure/inflatable/ex_act(severity)
 	switch(severity)
 		if(1.0)
@@ -128,7 +135,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(isobserver(usr)) //to stop ghosts from deflating
+	if(usr.stat || !usr.IsAdvancedToolUser()) //to stop ghosts from deflating
 		return
 
 	verbs -= /obj/structure/inflatable/verb/hand_deflate

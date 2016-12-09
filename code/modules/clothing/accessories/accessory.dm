@@ -1,7 +1,7 @@
 /obj/item/clothing/accessory
 	name = "tie"
 	desc = "A neosilk clip-on tie."
-	icon = 'icons/obj/clothing/acessories/icon.dmi'
+	icon = 'icons/inv_slots/acessories/icon.dmi'
 	icon_state = "bluetie"
 	item_state = ""	//no inhands
 	slot_flags = SLOT_TIE
@@ -22,12 +22,12 @@
 	has_suit = S
 	loc = has_suit
 	if(!inv_overlay)
-		inv_overlay = image('icons/obj/clothing/acessories/mob_default.dmi', icon_state)
+		inv_overlay = image('icons/inv_slots/acessories/mob_default.dmi', icon_state)
 	has_suit.overlays += inv_overlay
 
 	if(user)
 		user << "<span class='notice'>You attach \the [src] to \the [has_suit].</span>"
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 
 /obj/item/clothing/accessory/proc/on_removed(var/mob/user)
 	if(!has_suit)
@@ -36,9 +36,9 @@
 	has_suit = null
 	if(user)
 		usr.put_in_hands(src)
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 	else
-		src.forceMove(get_turf(src))
+		forceMove(get_turf(src))
 
 //default attackby behaviour
 /obj/item/clothing/accessory/attackby(obj/item/I, mob/user)
@@ -78,6 +78,10 @@
 	name = "black tie"
 	icon_state = "blacktie"
 
+/obj/item/clothing/accessory/darkgreen
+	name = "dark green tie"
+	icon_state = "dgreentie"
+
 /obj/item/clothing/accessory/yellow
 	name = "yellow tie"
 	icon_state = "yellowtie"
@@ -85,6 +89,10 @@
 /obj/item/clothing/accessory/navy
 	name = "navy tie"
 	icon_state = "navytie"
+
+/obj/item/clothing/accessory/white
+	name = "white tie"
+	icon_state = "whitetie"
 
 /obj/item/clothing/accessory/horrible
 	name = "horrible tie"
@@ -152,7 +160,6 @@
 				user.visible_message("[user] places [src] against [M]'s [body_part] and listens attentively.", "You place [src] against [their] [body_part]. You [sound_strength] [sound].")
 				return
 	return ..(M,user)
-
 
 //Medals
 /obj/item/clothing/accessory/medal

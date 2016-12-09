@@ -71,6 +71,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-m"
 
+/obj/item/device/pda/emt
+	default_cartridge = /obj/item/weapon/cartridge/medical
+	icon_state = "pda-para"
+
 /obj/item/device/pda/viro
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-v"
@@ -843,10 +847,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						if("1")		// Configure pAI device
 							pai.attack_self(U)
 						if("2")		// Eject pAI device
-							var/turf/T = get_turf_or_move(src.loc)
-							if(T)
-								pai.loc = T
-								pai = null
+							usr.put_in_hands(pai)
+							pai = null
 
 		else
 			mode = text2num(href_list["choice"])
@@ -899,14 +901,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		empulse(P.loc, 3, 6, 1)
 		message += "Your [P] emits a wave of electromagnetic energy!"
 	if(i>=25 && i<=40) //Smoke
-		var/datum/effect/effect/system/smoke_spread/chem/S = new /datum/effect/effect/system/smoke_spread/chem
+		var/datum/effect/effect/system/smoke_spread/chem/S = new
 		S.attach(P.loc)
 		S.set_up(P, 10, 0, P.loc)
 		playsound(P.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
 		S.start()
 		message += "Large clouds of smoke billow forth from your [P]!"
 	if(i>=40 && i<=45) //Bad smoke
-		var/datum/effect/effect/system/smoke_spread/bad/B = new /datum/effect/effect/system/smoke_spread/bad
+		var/datum/effect/effect/system/smoke_spread/bad/B = new
 		B.attach(P.loc)
 		B.set_up(P, 10, 0, P.loc)
 		playsound(P.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
@@ -940,8 +942,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		message = "<span class='warning'>[message]</span>"
 		M.show_message(message, 1)
 
+/obj/item/device/pda/AltClick(mob/living/carbon/human/user)
+	if(src in user)
+		remove_id()
+	else
+		return ..()
+
 /obj/item/device/pda/proc/remove_id()
-	if (id)
+	if(id)
 		if (ismob(loc))
 			var/mob/M = loc
 			M.put_in_hands(id)
@@ -1232,10 +1240,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					else
 						user.show_message("<span class='notice'>    Limbs are OK.</span>",1)
 
-				for(var/datum/disease/D in C.viruses)
-					if(!D.hidden[SCANNER])
-						user.show_message("<span class='warning'><b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span>")
-
 			if(2)
 				if (!istype(C:dna, /datum/dna))
 					user << "<span class='notice'>No fingerprints found on [C]</span>"
@@ -1319,11 +1323,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		// Anything that is left in the page. just tack it on to the end as is
 		formatted_scan=formatted_scan+raw_scan
 
-    	// If there is something in there already, pad it out.
+		// If there is something in there already, pad it out.
 		if (length(note)>0)
 			note = note + "<br><br>"
 
-    	// Store the scanned document to the notes
+		// Store the scanned document to the notes
 		note = "Scanned Document. Edit to restore previous notes/delete scan.<br>----------<br>" + formatted_scan + "<br>"
 		// notehtml ISN'T set to allow user to get their old notes back. A better implementation would add a "scanned documents"
 		// feature to the PDA, which would better convey the availability of the feature, but this will work for now.

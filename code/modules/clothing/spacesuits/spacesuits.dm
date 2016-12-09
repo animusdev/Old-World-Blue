@@ -15,7 +15,7 @@
 	body_parts_covered = HEAD|FACE|EYES
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
-	siemens_coefficient = 0.9
+	siemens_coefficient = 0.4
 	species_restricted = list("exclude","Diona", "Xenomorph")
 
 	var/obj/machinery/camera/camera
@@ -62,7 +62,7 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
-	siemens_coefficient = 0.9
+	siemens_coefficient = 0.4
 	species_restricted = list("exclude","Diona", "Xenomorph")
 
 	var/list/supporting_limbs //If not-null, automatically splints breaks. Checked when removing the suit.

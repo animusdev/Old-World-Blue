@@ -55,6 +55,12 @@ var/global/photo_count = 0
 	else
 		user << "<span class='notice'>It is too far away.</span>"
 
+/obj/item/weapon/photo/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	if(user.zone_sel.selecting == O_EYES)
+		user.visible_message("<span class='notice'> [user] holds up a paper and shows it to [M]. </span>",\
+			"<span class='notice'>You show the paper to [M]. </span>")
+		M.examinate(src)
+
 /obj/item/weapon/photo/proc/show(mob/user as mob)
 	user << browse_rsc(img, "tmp_photo_[id].png")
 	user << browse("<html><head><title>[name]</title></head>" \
@@ -78,9 +84,10 @@ var/global/photo_count = 0
 	return
 
 
-/obj/item/weapon/photo/custom/attack_self(mob/user as mob)
+/obj/item/weapon/photo/custom/show(mob/user)
 	if(!img)
-		img = input("Set image for phote") as icon
+		img = input("Set image for photo") as icon
+		if(!img) return
 		var/icon/small_img = icon(img)
 		var/icon/ic = icon('icons/obj/items.dmi',"photo")
 		small_img.Scale(8, 8)
@@ -234,6 +241,7 @@ var/global/photo_count = 0
 	for(var/mob/living/carbon/A in the_turf)
 		if(A.invisibility) continue
 		var/holding = null
+		var/posenow = null
 		if(A.l_hand || A.r_hand)
 			if(A.l_hand) holding = "They are holding \a [A.l_hand]"
 			if(A.r_hand)
@@ -241,11 +249,15 @@ var/global/photo_count = 0
 					holding += " and \a [A.r_hand]"
 				else
 					holding = "They are holding \a [A.r_hand]"
+		if(ishuman(A))
+			if(A.pose) posenow = "They're appears to [A.pose] on this photo."
+
+
 
 		if(!mob_detail)
-			mob_detail = "You can see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]. "
+			mob_detail = "You can see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]. [posenow] "
 		else
-			mob_detail += "You can also see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]."
+			mob_detail += "You can also see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."] [posenow]."
 	return mob_detail
 
 /obj/item/device/camera/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)

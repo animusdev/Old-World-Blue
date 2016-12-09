@@ -178,9 +178,15 @@
 
 	//hit messages
 	if(silenced)
-		target_mob << "<span class='danger'>You've been hit in the [parse_zone(def_zone)] by \the [src]!</span>"
+		if(ishuman(target_mob))
+			target_mob << "<span class='danger'>You've been hit in the [parse_zone(def_zone)] by \the [src]!</span>"
+		else
+			target_mob << "<span class='danger'>You've been hit by \the [src]!</span>"
 	else
-		visible_message("<span class='danger'>\The [target_mob] is hit by \the [src] in the [parse_zone(def_zone)]!</span>")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+		if(ishuman(target_mob))
+			visible_message("<span class='danger'>\The [target_mob] is hit by \the [src] in the [parse_zone(def_zone)]!</span>")
+		else
+			visible_message("<span class='danger'>\The [target_mob] is hit by \the [src]!</span>")
 
 	//admin logs
 	if(!no_attack_log)

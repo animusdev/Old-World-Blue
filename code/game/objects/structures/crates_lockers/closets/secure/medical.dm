@@ -35,9 +35,9 @@
 		new /obj/item/weapon/tank/anesthetic(src)
 		new /obj/item/weapon/tank/anesthetic(src)
 		new /obj/item/weapon/tank/anesthetic(src)
-		new /obj/item/clothing/mask/breath/toggleable/medical(src)
-		new /obj/item/clothing/mask/breath/toggleable/medical(src)
-		new /obj/item/clothing/mask/breath/toggleable/medical(src)
+		new /obj/item/clothing/mask/breath/medical(src)
+		new /obj/item/clothing/mask/breath/medical(src)
+		new /obj/item/clothing/mask/breath/medical(src)
 		return
 
 
@@ -51,13 +51,11 @@
 
 	New()
 		..()
-		switch(rand(3))
-			if(1)
-				new /obj/item/weapon/storage/backpack/medic(src)
-			if(2)
-				new /obj/item/weapon/storage/backpack/satchel_med(src)
-			if(3)
-				new /obj/item/weapon/storage/backpack/duffle/med(src)
+		switch(rand(4))
+			if(1) new /obj/item/weapon/storage/backpack/medic(src)
+			if(2) new /obj/item/weapon/storage/backpack/satchel/med(src)
+			if(3) new /obj/item/weapon/storage/backpack/dufflebag/med(src)
+			if(4) new /obj/item/weapon/storage/backpack/messenger/med(src)
 		new /obj/item/clothing/under/rank/nursesuit (src)
 		new /obj/item/clothing/head/nursehat (src)
 		switch(pick("blue", "green", "purple"))
@@ -81,36 +79,37 @@
 				new /obj/item/clothing/under/rank/medical/purple(src)
 				new /obj/item/clothing/head/surgery/purple(src)
 		new /obj/item/clothing/under/rank/medical(src)
-		new /obj/item/clothing/under/rank/medical/black(src)
 		new /obj/item/clothing/under/rank/nurse(src)
 		new /obj/item/clothing/under/rank/orderly(src)
 		new /obj/item/clothing/suit/storage/toggle/labcoat(src)
 		new /obj/item/clothing/suit/storage/toggle/fr_jacket(src)
 		new /obj/item/clothing/shoes/white(src)
 		new /obj/item/device/radio/headset/headset_med(src)
-		new /obj/item/clothing/suit/storage/paramedic(src)
-		new /obj/item/clothing/under/rank/medical/paramedic_dark(src)
 		return
 
 /obj/structure/closet/secure_closet/paramedic
 	name = "paramedic locker"
 	desc = "Supplies for a first responder."
-	icon_state = "medical"
-	icon_opened = "medicalopen"
-	icon_broken = "medicalbroken"
+	icon_state = "secureems"
+	icon_opened = "secureemsopen"
+	icon_broken = "secureemsbroken"
 	req_access = list(access_medical_equip)
 
 
 	New()
 		..()
+		switch(rand(4))
+			if(1) new /obj/item/weapon/storage/backpack/emt(src)
+			if(2) new /obj/item/weapon/storage/backpack/satchel/emt(src)
+			if(3) new /obj/item/weapon/storage/backpack/dufflebag/emt(src)
+			if(4) new /obj/item/weapon/storage/backpack/messenger/emt(src)
 		new /obj/item/weapon/storage/box/autoinjectors(src)
 		new /obj/item/weapon/storage/box/syringes(src)
 		new /obj/item/weapon/reagent_containers/glass/beaker/bottle/inaprovaline(src)
 		new /obj/item/weapon/reagent_containers/glass/beaker/bottle/antitoxin(src)
 		new /obj/item/weapon/storage/belt/medical/emt(src)
 		new /obj/item/clothing/mask/gas(src)
-		new /obj/item/clothing/suit/storage/toggle/fr_jacket(src)
-//		new /obj/item/clothing/suit/storage/toggle/labcoat/emt(src)
+		new /obj/item/clothing/suit/storage/toggle/fr_jacket/ems(src)
 		new /obj/item/device/radio/headset/headset_med/alt(src)
 		new /obj/item/weapon/cartridge/medical(src)
 		new /obj/item/device/flashlight(src)
@@ -121,8 +120,8 @@
 		new /obj/random/medical(src)
 		new /obj/item/weapon/crowbar(src)
 		new /obj/item/weapon/extinguisher/mini(src)
-//		new /obj/item/weapon/storage/box/freezer(src)
 		new /obj/item/clothing/accessory/storage/white_vest(src)
+
 		return
 
 /obj/structure/closet/secure_closet/CMO
@@ -134,13 +133,11 @@
 
 	New()
 		..()
-		switch(rand(3))
-			if(1)
-				new /obj/item/weapon/storage/backpack/medic(src)
-			if(2)
-				new /obj/item/weapon/storage/backpack/satchel_med(src)
-			if(3)
-				new /obj/item/weapon/storage/backpack/duffle/med(src)
+		switch(rand(4))
+			if(1) new /obj/item/weapon/storage/backpack/medic(src)
+			if(2) new /obj/item/weapon/storage/backpack/satchel/med(src)
+			if(3) new /obj/item/weapon/storage/backpack/dufflebag/med(src)
+			if(4) new /obj/item/weapon/storage/backpack/messenger/med(src)
 		new /obj/item/clothing/suit/bio_suit/cmo(src)
 		new /obj/item/clothing/head/bio_hood/cmo(src)
 		new /obj/item/clothing/shoes/white(src)
@@ -161,9 +158,10 @@
 		new /obj/item/clothing/gloves/white/latex(src)
 		new /obj/item/clothing/shoes/brown	(src)
 		new /obj/item/device/radio/headset/heads/cmo(src)
-		new /obj/item/weapon/melee/baton/shocker(src)
+		new /obj/item/weapon/melee/baton/shocker/loaded(src)
 		new /obj/item/device/flash(src)
 		new /obj/item/weapon/reagent_containers/hypospray(src)
+		new /obj/item/clothing/mask/gas(src)
 		return
 
 

@@ -7,7 +7,6 @@
 	matter = list(DEFAULT_WALL_MATERIAL = 75)
 	subspace_transmission = 1
 	canhear_range = 0 // can't hear headsets from very far away
-
 	slot_flags = SLOT_EARS
 	var/translate_binary = 0
 	var/translate_hive = 0
@@ -31,14 +30,14 @@
 	qdel(keyslot2)
 	keyslot1 = null
 	keyslot2 = null
-	..()
+	return ..()
 
 /obj/item/device/radio/headset/examine(mob/user, return_dist = 1)
 	. = ..()
 	if( .>1 || !radio_desc )
 		return
 
-	user << "The following channels are built-in:"
+	user << "The following channels are available:"
 	user << radio_desc
 
 /obj/item/device/radio/headset/handle_message_mode(mob/living/M as mob, message, channel)

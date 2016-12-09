@@ -40,11 +40,11 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "welder"
 	item_to_spawn()
-		return pick(/obj/item/weapon/screwdriver,\
-					/obj/item/weapon/wirecutters,\
-					/obj/item/weapon/weldingtool,\
-					/obj/item/weapon/crowbar,\
-					/obj/item/weapon/wrench,\
+		return pick(/obj/item/weapon/screwdriver,
+					/obj/item/weapon/wirecutters,
+					/obj/item/weapon/weldingtool,
+					/obj/item/weapon/crowbar,
+					/obj/item/weapon/wrench,
 					/obj/item/device/flashlight)
 
 
@@ -54,19 +54,19 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "atmos"
 	item_to_spawn()
-		return pick(prob(5);/obj/item/device/t_scanner,\
-					prob(2);/obj/item/device/radio,\
+		return pick(prob(5);/obj/item/device/t_scanner,
+					prob(2);/obj/item/device/radio,
 					prob(5);/obj/item/device/analyzer)
 
 
 /obj/random/armor
 	name = "random plate carrier"
 	desc = "This is a random plate carrier."
-	icon = 'icons/obj/clothing/suits/icon.dmi'
+	icon = 'icons/inv_slots/suits/icon.dmi'
 	icon_state = "secheavyvest_badge"
 	item_to_spawn()
-		return pick(prob(3);/obj/item/clothing/suit/storage/vest/seclight,\
-					prob(3);/obj/item/clothing/suit/storage/vest/heavy/securitymedium,\
+		return pick(prob(3);/obj/item/clothing/suit/storage/vest/seclight,
+					prob(3);/obj/item/clothing/suit/storage/vest/heavy/securitymedium,
 					prob(3);/obj/item/clothing/suit/storage/vest/heavy/security)
 
 
@@ -76,10 +76,10 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "secguncomp"
 	item_to_spawn()
-		return pick(prob(2);/obj/item/weapon/gun/projectile/sec,\
-					prob(2);/obj/item/weapon/gun/projectile/sec/wood,\
-					prob(2);/obj/item/weapon/gun/projectile/sec/longbarrel,\
-					prob(2);/obj/item/weapon/gun/projectile/sec/shortbarrel,\
+		return pick(prob(2);/obj/item/weapon/gun/projectile/sec,
+					prob(2);/obj/item/weapon/gun/projectile/sec/wood,
+					prob(2);/obj/item/weapon/gun/projectile/sec/longbarrel,
+					prob(2);/obj/item/weapon/gun/projectile/sec/shortbarrel,
 					prob(2);/obj/item/weapon/gun/projectile/sec/tactical)
 
 
@@ -89,10 +89,10 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cell"
 	item_to_spawn()
-		return pick(prob(10);/obj/item/weapon/cell/crap,\
-					prob(40);/obj/item/weapon/cell,\
-					prob(40);/obj/item/weapon/cell/high,\
-					prob(9);/obj/item/weapon/cell/super,\
+		return pick(prob(10);/obj/item/weapon/cell/crap,
+					prob(40);/obj/item/weapon/cell,
+					prob(40);/obj/item/weapon/cell/high,
+					prob(9);/obj/item/weapon/cell/super,
 					prob(1);/obj/item/weapon/cell/hyper)
 
 
@@ -102,9 +102,9 @@
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	icon_state = "signaller"
 	item_to_spawn()
-		return pick(/obj/item/device/assembly/igniter,\
-					/obj/item/device/assembly/prox_sensor,\
-					/obj/item/device/assembly/signaler,\
+		return pick(/obj/item/device/assembly/igniter,
+					/obj/item/device/assembly/prox_sensor,
+					/obj/item/device/assembly/signaler,
 					/obj/item/device/multitool)
 
 
@@ -114,8 +114,8 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "red"
 	item_to_spawn()
-		return pick(prob(3);/obj/item/weapon/storage/toolbox/mechanical,\
-					prob(2);/obj/item/weapon/storage/toolbox/electrical,\
+		return pick(prob(3);/obj/item/weapon/storage/toolbox/mechanical,
+					prob(2);/obj/item/weapon/storage/toolbox/electrical,
 					prob(1);/obj/item/weapon/storage/toolbox/emergency)
 
 
@@ -126,16 +126,16 @@
 	icon_state = "cell"
 	spawn_nothing_percentage = 50
 	item_to_spawn()
-		return pick(prob(3);/obj/random/powercell,\
-					prob(2);/obj/random/technology_scanner,\
-					prob(1);/obj/item/weapon/packageWrap,\
-					prob(2);/obj/random/bomb_supply,\
-					prob(1);/obj/item/weapon/extinguisher,\
-					prob(1);/obj/item/clothing/gloves/fyellow,\
-					prob(3);/obj/item/stack/cable_coil,\
-					prob(2);/obj/random/toolbox,\
-					prob(2);/obj/item/weapon/storage/belt/utility,\
-					prob(5);/obj/random/tool,\
+		return pick(prob(3);/obj/random/powercell,
+					prob(2);/obj/random/technology_scanner,
+					prob(1);/obj/item/weapon/packageWrap,
+					prob(2);/obj/random/bomb_supply,
+					prob(1);/obj/item/weapon/extinguisher,
+					prob(1);/obj/item/clothing/gloves/fyellow,
+					prob(3);/obj/item/stack/cable_coil,
+					prob(2);/obj/random/toolbox,
+					prob(2);/obj/item/weapon/storage/belt/utility,
+					prob(5);/obj/random/tool,
 					prob(2);/obj/item/weapon/tape_roll)
 
 /obj/random/medical
@@ -145,19 +145,19 @@
 	icon_state = "brutepack"
 	spawn_nothing_percentage = 25
 	item_to_spawn()
-		return pick(prob(4);/obj/item/stack/medical/bruise_pack,\
-					prob(4);/obj/item/stack/medical/ointment,\
-					prob(2);/obj/item/stack/medical/advanced/bruise_pack,\
-					prob(2);/obj/item/stack/medical/advanced/ointment,\
-					prob(1);/obj/item/stack/medical/splint,\
-					prob(2);/obj/item/bodybag,\
-					prob(1);/obj/item/bodybag/cryobag,\
-					prob(2);/obj/item/weapon/storage/pill_bottle/kelotane,\
-					prob(2);/obj/item/weapon/storage/pill_bottle/antitox,\
-					prob(2);/obj/item/weapon/storage/pill_bottle/tramadol,\
-					prob(2);/obj/item/weapon/reagent_containers/syringe/antitoxin,\
-					prob(1);/obj/item/weapon/reagent_containers/syringe/antiviral,\
-					prob(2);/obj/item/weapon/reagent_containers/syringe/inaprovaline,\
+		return pick(prob(4);/obj/item/stack/medical/bruise_pack,
+					prob(4);/obj/item/stack/medical/ointment,
+					prob(2);/obj/item/stack/medical/bruise_pack/advanced,
+					prob(2);/obj/item/stack/medical/ointment/advanced,
+					prob(1);/obj/item/stack/medical/splint,
+					prob(2);/obj/item/bodybag,
+					prob(1);/obj/item/bodybag/cryobag,
+					prob(2);/obj/item/weapon/storage/pill_bottle/kelotane,
+					prob(2);/obj/item/weapon/storage/pill_bottle/antitox,
+					prob(2);/obj/item/weapon/storage/pill_bottle/tramadol,
+					prob(2);/obj/item/weapon/reagent_containers/syringe/antitoxin,
+					prob(1);/obj/item/weapon/reagent_containers/syringe/antiviral,
+					prob(2);/obj/item/weapon/reagent_containers/syringe/inaprovaline,
 					prob(1);/obj/item/stack/nanopaste)
 
 
@@ -167,10 +167,10 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid"
 	item_to_spawn()
-		return pick(prob(3);/obj/item/weapon/storage/firstaid/regular,\
-					prob(2);/obj/item/weapon/storage/firstaid/toxin,\
-					prob(2);/obj/item/weapon/storage/firstaid/o2,\
-					prob(1);/obj/item/weapon/storage/firstaid/adv,\
+		return pick(prob(3);/obj/item/weapon/storage/firstaid/regular,
+					prob(2);/obj/item/weapon/storage/firstaid/toxin,
+					prob(2);/obj/item/weapon/storage/firstaid/o2,
+					prob(1);/obj/item/weapon/storage/firstaid/adv,
 					prob(2);/obj/item/weapon/storage/firstaid/fire)
 
 
@@ -181,16 +181,16 @@
 	icon_state = "purplecomb"
 	spawn_nothing_percentage = 50
 	item_to_spawn()
-		return pick(prob(3);/obj/item/weapon/storage/pill_bottle/tramadol,\
-					prob(4);/obj/item/weapon/haircomb,\
-					prob(2);/obj/item/weapon/storage/pill_bottle/happy,\
-					prob(2);/obj/item/weapon/storage/pill_bottle/zoom,\
-					prob(5);/obj/item/weapon/contraband/poster,\
-					prob(2);/obj/item/weapon/material/butterfly,\
-					prob(3);/obj/item/weapon/material/butterflyblade,\
-					prob(3);/obj/item/weapon/material/butterflyhandle,\
-					prob(3);/obj/item/weapon/material/wirerod,\
-					prob(1);/obj/item/weapon/material/butterfly/switchblade,\
+		return pick(prob(3);/obj/item/weapon/storage/pill_bottle/tramadol,
+					prob(4);/obj/item/weapon/haircomb,
+					prob(2);/obj/item/weapon/storage/pill_bottle/happy,
+					prob(2);/obj/item/weapon/storage/pill_bottle/zoom,
+					prob(5);/obj/item/weapon/contraband/poster,
+					prob(2);/obj/item/weapon/material/butterfly,
+					prob(3);/obj/item/weapon/material/butterflyblade,
+					prob(3);/obj/item/weapon/material/butterflyhandle,
+					prob(3);/obj/item/weapon/material/wirerod,
+					prob(1);/obj/item/weapon/material/butterfly/switchblade,
 					prob(1);/obj/item/weapon/reagent_containers/syringe/drugs)
 
 
@@ -200,8 +200,8 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "energykill100"
 	item_to_spawn()
-		return pick(prob(2);/obj/item/weapon/gun/energy/laser,\
-					prob(2);/obj/item/weapon/gun/energy/gun,\
+		return pick(prob(2);/obj/item/weapon/gun/energy/laser,
+					prob(2);/obj/item/weapon/gun/energy/gun,
 					prob(1);/obj/item/weapon/gun/energy/stunrevolver)
 
 /obj/random/projectile
@@ -210,8 +210,8 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "revolver"
 	item_to_spawn()
-		return pick(prob(3);/obj/item/weapon/gun/projectile/shotgun/pump,\
-					prob(2);/obj/item/weapon/gun/projectile/automatic/wt550,\
+		return pick(prob(3);/obj/item/weapon/gun/projectile/shotgun/pump,
+					prob(2);/obj/item/weapon/gun/projectile/automatic/wt550,
 					prob(1);/obj/item/weapon/gun/projectile/shotgun/pump/combat)
 
 /obj/random/armory
@@ -220,8 +220,8 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "revolver"
 	item_to_spawn()
-		return pick(prob(2);/obj/item/weapon/gun/projectile/pistol/carbine,\
-					prob(2);/obj/item/weapon/gun/projectile/automatic/nx6,\
+		return pick(prob(2);/obj/item/weapon/gun/projectile/pistol/carbine,
+					prob(2);/obj/item/weapon/gun/projectile/automatic/nx6,
 					prob(2);/obj/item/weapon/gun/projectile/shotgun/pump/combat)
 
 
@@ -231,7 +231,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "secgundark"
 	item_to_spawn()
-		return pick(prob(3);/obj/item/weapon/gun/projectile/sec,\
+		return pick(prob(3);/obj/item/weapon/gun/projectile/sec,
 					prob(1);/obj/item/weapon/gun/projectile/sec/wood)
 
 
@@ -241,14 +241,14 @@
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "45-10"
 	item_to_spawn()
-		return pick(prob(6);/obj/item/weapon/storage/box/beanbags,\
-					prob(2);/obj/item/weapon/storage/box/shotgunammo,\
-					prob(4);/obj/item/weapon/storage/box/shotgunshells,\
-					prob(1);/obj/item/weapon/storage/box/stunshells,\
-					prob(2);/obj/item/ammo_magazine/c45m,\
-					prob(4);/obj/item/ammo_magazine/c45m/rubber,\
-					prob(4);/obj/item/ammo_magazine/c45m/flash,\
-					prob(2);/obj/item/ammo_magazine/mc9mmt,\
+		return pick(prob(6);/obj/item/weapon/storage/box/beanbags,
+					prob(2);/obj/item/weapon/storage/box/shotgunammo,
+					prob(4);/obj/item/weapon/storage/box/shotgunshells,
+					prob(1);/obj/item/weapon/storage/box/stunshells,
+					prob(2);/obj/item/ammo_magazine/c45m,
+					prob(4);/obj/item/ammo_magazine/c45m/rubber,
+					prob(4);/obj/item/ammo_magazine/c45m/flash,
+					prob(2);/obj/item/ammo_magazine/mc9mmt,
 					prob(6);/obj/item/ammo_magazine/mc9mmt/rubber)
 
 
@@ -258,43 +258,43 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "assistant"
 	item_to_spawn()
-		return pick(/obj/item/toy/figure/cmo,\
-					/obj/item/toy/figure/assistant,\
-					/obj/item/toy/figure/atmos,\
-					/obj/item/toy/figure/bartender,\
-					/obj/item/toy/figure/borg,\
-					/obj/item/toy/figure/gardener,\
-					/obj/item/toy/figure/captain,\
-					/obj/item/toy/figure/cargotech,\
-					/obj/item/toy/figure/ce,\
-					/obj/item/toy/figure/chaplain,\
-					/obj/item/toy/figure/chef,\
-					/obj/item/toy/figure/chemist,\
-					/obj/item/toy/figure/clown,\
-					/obj/item/toy/figure/corgi,\
-					/obj/item/toy/figure/detective,\
-					/obj/item/toy/figure/dsquad,\
-					/obj/item/toy/figure/engineer,\
-					/obj/item/toy/figure/geneticist,\
-					/obj/item/toy/figure/hop,\
-					/obj/item/toy/figure/hos,\
-					/obj/item/toy/figure/qm,\
-					/obj/item/toy/figure/janitor,\
-					/obj/item/toy/figure/agent,\
-					/obj/item/toy/figure/librarian,\
-					/obj/item/toy/figure/md,\
-					/obj/item/toy/figure/mime,\
-					/obj/item/toy/figure/miner,\
-					/obj/item/toy/figure/ninja,\
-					/obj/item/toy/figure/wizard,\
-					/obj/item/toy/figure/rd,\
-					/obj/item/toy/figure/roboticist,\
-					/obj/item/toy/figure/scientist,\
-					/obj/item/toy/figure/syndie,\
-					/obj/item/toy/figure/secofficer,\
-					/obj/item/toy/figure/warden,\
-					/obj/item/toy/figure/psychologist,\
-					/obj/item/toy/figure/paramedic,\
+		return pick(/obj/item/toy/figure/cmo,
+					/obj/item/toy/figure/assistant,
+					/obj/item/toy/figure/atmos,
+					/obj/item/toy/figure/bartender,
+					/obj/item/toy/figure/borg,
+					/obj/item/toy/figure/gardener,
+					/obj/item/toy/figure/captain,
+					/obj/item/toy/figure/cargotech,
+					/obj/item/toy/figure/ce,
+					/obj/item/toy/figure/chaplain,
+					/obj/item/toy/figure/chef,
+					/obj/item/toy/figure/chemist,
+					/obj/item/toy/figure/clown,
+					/obj/item/toy/figure/corgi,
+					/obj/item/toy/figure/detective,
+					/obj/item/toy/figure/dsquad,
+					/obj/item/toy/figure/engineer,
+					/obj/item/toy/figure/geneticist,
+					/obj/item/toy/figure/hop,
+					/obj/item/toy/figure/hos,
+					/obj/item/toy/figure/qm,
+					/obj/item/toy/figure/janitor,
+					/obj/item/toy/figure/agent,
+					/obj/item/toy/figure/librarian,
+					/obj/item/toy/figure/md,
+					/obj/item/toy/figure/mime,
+					/obj/item/toy/figure/miner,
+					/obj/item/toy/figure/ninja,
+					/obj/item/toy/figure/wizard,
+					/obj/item/toy/figure/rd,
+					/obj/item/toy/figure/roboticist,
+					/obj/item/toy/figure/scientist,
+					/obj/item/toy/figure/syndie,
+					/obj/item/toy/figure/secofficer,
+					/obj/item/toy/figure/warden,
+					/obj/item/toy/figure/psychologist,
+					/obj/item/toy/figure/paramedic,
 					/obj/item/toy/figure/ert)
 
 
@@ -304,11 +304,11 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "nymphplushie"
 	item_to_spawn()
-		return pick(/obj/structure/plushie/ian,\
-					/obj/structure/plushie/drone,\
-					/obj/structure/plushie/carp,\
-					/obj/structure/plushie/beepsky,\
-					/obj/item/toy/plushie/nymph,\
-					/obj/item/toy/plushie/mouse,\
-					/obj/item/toy/plushie/kitten,\
+		return pick(/obj/structure/plushie/ian,
+					/obj/structure/plushie/drone,
+					/obj/structure/plushie/carp,
+					/obj/structure/plushie/beepsky,
+					/obj/item/toy/plushie/nymph,
+					/obj/item/toy/plushie/mouse,
+					/obj/item/toy/plushie/kitten,
 					/obj/item/toy/plushie/lizard)

@@ -122,9 +122,9 @@
 				if(reas)
 					reason = reas
 			if ("duration")
-				var/dur = input("Duration (in minutes) during which pass is valid (up to 30 minutes).", "Duration") as num|null
+				var/dur = input("Duration (in minutes) during which pass is valid (up to 120 minutes).", "Duration") as num|null
 				if (dur)
-					if (dur > 0 && dur <= 30)
+					if (dur > 0 && dur <= 120)
 						duration = dur
 					else
 						usr << "<span class='warning'>Invalid duration.</span>"
@@ -182,6 +182,7 @@
 					pass.expiration_time = world.time + duration*10*60
 					pass.reason = reason
 					pass.name = "guest pass #[number]"
+					usr.put_in_hands(pass)
 				else
 					usr << "\red Cannot issue pass without issuing ID."
 	updateUsrDialog()

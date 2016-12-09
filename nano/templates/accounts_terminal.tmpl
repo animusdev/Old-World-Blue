@@ -127,6 +127,39 @@
         {{/if}}
       </div>
         <div class='item'>
+				<form name='transfer_funds' action='?src={{:data.src}}' method='get'>
+  		  <input type='hidden' name='src' value='{{:data.src}}'>
+  		  <input type='hidden' name='choice' value='transfer_funds'>
+  		  <b>TIP: Use negative values if you want to withdraw funds</b>
+  		  <div class='item'>
+  			<div class='itemLabel'>
+  			  <b>Amount of funds</b>:
+  			</div>
+  			<div class='itemContent'>
+  			  <input type='text' id='amount' name='amount'>
+  			</div>
+  		  </div>
+  		  <div class='item'>
+  			<div class='itemLabel'>
+  			  <b>Reason of transaction</b>:
+  			</div>
+  			<div class='itemContent'>
+  			  <input type='text' id='purpose' name='purpose'>
+  			</div>
+  		  </div>
+  		  <div class='item'>
+  			<div class='itemLabel'>
+  			  <b>Target Account Number</b>:
+  			</div>
+  			<div class='itemContent'>
+  			  <input type='text' id='target_account' name='target_account'>
+  			</div>
+  		  </div>
+  		  <div class='item'>
+  			<input type='submit' value='Transfer'>
+  		  </div>
+  		</form>
+          {{if data.access_level >= 2}}
           <h2>CentCom Administrator</h2>
         </div>
         <div class='item'>
@@ -135,7 +168,6 @@
           </div>
           {{:helper.link('Revoke', 'transferthick-e-w', {'choice' : 'revoke_payroll'}, data.account_number == data.station_account_number ? 'disabled' : null, 'linkDanger')}}
         </div>
-        {{if data.access_level >= 2}}
         <div class='item'>
           <div class='fixedLeft'>
             Silent Fund Adjustment:

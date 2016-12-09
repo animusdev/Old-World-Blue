@@ -75,7 +75,7 @@
 	return species_language.get_random_name(gender)
 
 /datum/species/vox/equip_survival_gear(var/mob/living/carbon/human/H)
-	H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/vox(H), slot_wear_mask)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/vox_breath(H), slot_wear_mask)
 	if(H.back)
 		H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(H), slot_r_hand)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/vox(H.back), slot_in_backpack)

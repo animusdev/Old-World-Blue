@@ -16,7 +16,7 @@
 
 /obj/screen/Destroy()
 	master = null
-	..()
+	return ..()
 
 /obj/screen/text
 	icon = null
@@ -52,7 +52,7 @@
 /obj/screen/item_action/Click()
 	if(!usr || !owner)
 		return 1
-	if(usr.next_move >= world.time)
+	if(!usr.canClick())
 		return
 
 	if(usr.stat || usr.restrained() || usr.stunned || usr.lying)
@@ -88,7 +88,7 @@
 	name = "storage"
 
 /obj/screen/storage/Click()
-	if(world.time <= usr.next_move)
+	if(!usr.canClick())
 		return 1
 	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)
 		return 1
@@ -278,9 +278,9 @@
 					else
 
 						var/no_mask
-						if(!C.wear_mask && C.wear_mask.item_flags & AIRTIGHT)
+						if(!(C.wear_mask && C.wear_mask.item_flags & AIRTIGHT))
 							var/mob/living/carbon/human/H = C
-							if(!H.head && H.head.item_flags & AIRTIGHT)
+							if(!(H.head && H.head.item_flags & AIRTIGHT))
 								no_mask = 1
 
 						if(no_mask)
@@ -499,7 +499,7 @@
 /obj/screen/inventory/Click()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
-	if(world.time <= usr.next_move)
+	if(!usr.canClick())
 		return 1
 	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)
 		return 1

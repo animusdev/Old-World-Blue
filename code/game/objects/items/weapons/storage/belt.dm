@@ -1,7 +1,7 @@
 /obj/item/weapon/storage/belt
 	name = "belt"
 	desc = "Can hold various things."
-	icon = 'icons/obj/clothing/belts/icon.dmi'
+	icon = 'icons/inv_slots/belts/icon.dmi'
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	storage_slots = 7
@@ -10,6 +10,17 @@
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
 
+	var/show_above_suit = 0
+
+/obj/item/weapon/storage/belt/verb/toggle_layer()
+	set name = "Switch Belt Layer"
+	set category = "Object"
+
+	if(show_above_suit == -1)
+		usr << "<span class='notice'>\The [src] cannot be worn above your suit!</span>"
+		return
+	show_above_suit = !show_above_suit
+	update_icon()
 
 /obj/item/weapon/storage/update_icon()
 	if (ismob(src.loc))
@@ -203,7 +214,7 @@
 	item_state = "champion"
 	storage_slots = 1
 	can_hold = list(
-		"/obj/item/clothing/mask/luchador"
+		/obj/item/clothing/mask/luchador
 		)
 
 /obj/item/weapon/storage/belt/security/tactical
@@ -269,3 +280,27 @@
 	name = "white fannypack"
 	icon_state = "fannypack_white"
 	item_state = "fannypack_white"
+
+/obj/item/weapon/storage/belt/janitor
+	name = "janitorial belt"
+	desc = "A belt used to hold most janitorial supplies."
+	icon_state = "janibelt"
+	item_state = "janibelt"
+	storage_slots = 7
+	max_w_class = 3
+	can_hold = list(
+		/obj/item/clothing/glasses,
+		/obj/item/device/flashlight,
+		/obj/item/weapon/grenade,
+		/obj/item/device/pda,
+		/obj/item/device/radio/headset,
+		/obj/item/clothing/gloves,
+		/obj/item/clothing/mask/surgical, //sterile mask,
+		/obj/item/device/assembly/mousetrap,
+		/obj/item/weapon/light/bulb,
+		/obj/item/weapon/light/tube,
+		/obj/item/weapon/flame/lighter,
+		/obj/item/device/megaphone,
+		/obj/item/weapon/reagent_containers/spray,
+		/obj/item/weapon/soap
+		)

@@ -68,7 +68,7 @@
 	air1.volume = ATMOS_DEFAULT_VOLUME_MIXER
 	air2.volume = ATMOS_DEFAULT_VOLUME_MIXER
 	air3.volume = ATMOS_DEFAULT_VOLUME_MIXER * 1.5
-
+	
 	if (!mixing_inputs)
 		mixing_inputs = list(src.air1 = node1_concentration, src.air2 = node2_concentration)
 

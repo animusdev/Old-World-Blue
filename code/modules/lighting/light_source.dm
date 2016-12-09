@@ -126,24 +126,24 @@
 		lum_b = 1
 
 #if LIGHTING_FALLOFF == 1 //circular
-  #define LUM_DISTANCE(swapvar, O, T) swapvar = (O.x - T.x)**2 + (O.y - T.y)**2 + LIGHTING_HEIGHT
-  #if LIGHTING_LAMBERTIAN == 1
-    #define LUM_ATTENUATION(swapvar) swapvar = CLAMP01((1 - CLAMP01(sqrt(swapvar) / max(1,light_range))) * (1 / sqrt(swapvar + 1)))
-  #else
-    #define LUM_ATTENUATION(swapvar) swapvar = 1 - CLAMP01(sqrt(swapvar) / max(1,light_range))
-  #endif
+	#define LUM_DISTANCE(swapvar, O, T) swapvar = (O.x - T.x)**2 + (O.y - T.y)**2 + LIGHTING_HEIGHT
+	#if LIGHTING_LAMBERTIAN == 1
+		#define LUM_ATTENUATION(swapvar) swapvar = CLAMP01((1 - CLAMP01(sqrt(swapvar) / max(1,light_range))) * (1 / sqrt(swapvar + 1)))
+	#else
+		#define LUM_ATTENUATION(swapvar) swapvar = 1 - CLAMP01(sqrt(swapvar) / max(1,light_range))
+	#endif
 #elif LIGHTING_FALLOFF == 2 //square
-  #define LUM_DISTANCE(swapvar, O, T) swapvar = abs(O.x - T.x) + abs(O.y - T.y) + LIGHTING_HEIGHT
-  #if LIGHTING_LAMBERTIAN == 1
-    #define LUM_ATTENUATION(swapvar) swapvar = CLAMP01((1 - CLAMP01(swapvar / max(1,light_range))) * (1 / sqrt(swapvar**2 + 1)))
-  #else
-    #define LUM_ATTENUATION(swapvar) swapvar = CLAMP01(swapvar / max(1,light_range))
-  #endif
+	#define LUM_DISTANCE(swapvar, O, T) swapvar = abs(O.x - T.x) + abs(O.y - T.y) + LIGHTING_HEIGHT
+	#if LIGHTING_LAMBERTIAN == 1
+		#define LUM_ATTENUATION(swapvar) swapvar = CLAMP01((1 - CLAMP01(swapvar / max(1,light_range))) * (1 / sqrt(swapvar**2 + 1)))
+	#else
+		#define LUM_ATTENUATION(swapvar) swapvar = CLAMP01(swapvar / max(1,light_range))
+	#endif
 #endif
 
 #define LUM_FALLOFF(swapvar, O, T) \
-  LUM_DISTANCE(swapvar, O, T); \
-  LUM_ATTENUATION(swapvar);
+	LUM_DISTANCE(swapvar, O, T); \
+	LUM_ATTENUATION(swapvar);
 
 /datum/light_source/proc/apply_lum()
 	applied = 1
@@ -193,8 +193,8 @@
 		if(T.lighting_overlay)
 			var/str = effect_str[i]
 			T.lighting_overlay.update_lumcount(
-				-str * applied_lum_r, 
-				-str * applied_lum_g, 
+				-str * applied_lum_r,
+				-str * applied_lum_g,
 				-str * applied_lum_b
 			)
 
@@ -255,7 +255,7 @@
 		effect_str.Cut(idx, idx + 1)
 
 //Whoop yet not another copy pasta because speed ~~~~BYOND.
-//Calculates and applies lighting for a single turf. This is intended for when a turf switches to 
+//Calculates and applies lighting for a single turf. This is intended for when a turf switches to
 //using dynamic lighting when it was not doing so previously (when constructing a floor on space, for example).
 //Assumes the turf is visible and such.
 //For the love of god don't call this proc when it's not needed! Lighting artifacts WILL happen!

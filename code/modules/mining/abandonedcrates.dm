@@ -51,7 +51,7 @@
 			new/obj/item/clothing/under/shorts/red(src)
 			new/obj/item/clothing/under/shorts/blue(src)
 		if(46 to 50)
-			new/obj/item/clothing/under/chameleon(src)
+			new/obj/item/chameleon/under(src)
 			for(var/i = 0, i < 7, i++)
 				new/obj/item/clothing/accessory/horrible(src)
 		if(51 to 52) // Uncommon, 2% each
@@ -167,6 +167,14 @@
 			var/turf/T = get_turf(src.loc)
 			explosion(T, 0, 0, 1, 2)
 			qdel(src)
+
+/obj/structure/closet/crate/secure/loot/emag_act(var/remaining_charges, var/mob/user)
+	if (locked)
+		user << "<span class='notice'>The crate unlocks!</span>"
+		locked = 0
+		return 1
+	else
+		return -1
 
 /obj/structure/closet/crate/secure/loot/proc/check_input(var/input)
 	if(length(input) != codelen)

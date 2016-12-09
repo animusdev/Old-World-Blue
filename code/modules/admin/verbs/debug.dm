@@ -560,8 +560,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"emergency response team",
 		"nanotrasen representative",
 		"nanotrasen officer",
-		"nanotrasen captain",
-		"knight"
+		"nanotrasen captain"
 		)
 	var/dresscode = input("Select dress for [M]", "Robust quick dress shop") as null|anything in dresspacks
 	if (isnull(dresscode))
@@ -597,7 +596,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var /obj/item/weapon/tank/jetpack/J = new /obj/item/weapon/tank/jetpack/oxygen(M)
 			M.equip_to_slot_or_del(J, slot_back)
 			J.toggle()
-			M.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/toggleable(M), slot_wear_mask)
+			M.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(M), slot_wear_mask)
 			J.Topic(null, list("stat" = 1))
 		if ("tournament standard red","tournament standard green") //we think stunning weapon is too overpowered to use it on tournaments. --rastaf0
 			if (dresscode=="tournament standard red")
@@ -889,7 +888,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
 		if("red code agent")
-			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_sec(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(M), slot_back)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret/sec/alt(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate/PMC(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(M), slot_wear_suit)
@@ -928,7 +927,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/riot(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(M), slot_shoes)
-			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_sec(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(M), slot_back)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/security/tactical(M), slot_belt)
 			M.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen/double(M), slot_r_store)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas(M), slot_wear_mask)
@@ -961,7 +960,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
 		if("blue wizard")
-			M.equip_to_slot_or_del(new /obj/item/clothing/under/lightpurple(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_l_ear)
@@ -973,7 +972,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box(M), slot_in_backpack)
 
 		if("red wizard")
-			M.equip_to_slot_or_del(new /obj/item/clothing/under/lightpurple(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/red(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_l_ear)
@@ -985,7 +984,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box(M), slot_in_backpack)
 
 		if("marisa wizard")
-			M.equip_to_slot_or_del(new /obj/item/clothing/under/lightpurple(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/marisa(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/marisa(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_l_ear)
@@ -1014,14 +1013,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.assignment = "Admiral"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
-
-		if("knight")
-			M.equip_to_slot_or_del(new /obj/item/clothing/under/bum2(M), slot_w_uniform)
-			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/knight/templar(M), slot_wear_suit)
-			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/knight/templar(M), slot_head)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(M), slot_shoes)
-			M.equip_to_slot_or_del(new /obj/item/weapon/material/sword(M), slot_r_hand)
-			M.equip_to_slot_or_del(new /obj/item/weapon/shield/buckler(M), slot_l_hand)
 
 	var/obj/item/device/pda/P = locate(/obj/item/device/pda) in M
 	if(P) P.toff = 1

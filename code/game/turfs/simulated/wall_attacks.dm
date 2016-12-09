@@ -8,17 +8,26 @@
 		can_open = WALL_OPENING
 		set_wall_state("[material.icon_base]fwall_open")
 		//flick("[material.icon_base]fwall_opening", src)
-		sleep(15)
 		density = 0
+		opacity = 0
+		blocks_air = 0
+		thermal_conductivity = 0.040
 		set_light(0)
 	else
 		can_open = WALL_OPENING
 		//flick("[material.icon_base]fwall_closing", src)
 		set_wall_state("[material.icon_base]0")
 		density = 1
-		sleep(15)
+		opacity = 1
+		blocks_air = 1
+		thermal_conductivity = initial(thermal_conductivity)
 		set_light(1)
 
+	if(air_master)
+		for(var/turf/simulated/turf in range(1))
+			air_master.mark_for_update(turf)
+
+	sleep(15)
 	can_open = WALL_CAN_OPEN
 	update_icon()
 
@@ -54,9 +63,9 @@
 
 /turf/simulated/wall/attack_hand(var/mob/user)
 
-	user.next_move = world.time + 8
 	radiate()
 	add_fingerprint(user)
+	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	var/rotting = (locate(/obj/effect/overlay/wallrot) in src)
 	if (HULK in user.mutations)
 		if (rotting || !prob(material.hardness))
@@ -69,8 +78,8 @@
 
 /turf/simulated/wall/attack_generic(var/mob/user, var/damage, var/attack_message, var/wallbreaker)
 
-	user.next_move = world.time + 8
 	radiate()
+	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	var/rotting = (locate(/obj/effect/overlay/wallrot) in src)
 	if(!damage || !wallbreaker)
 		try_touch(user, rotting)
@@ -88,10 +97,8 @@
 
 /turf/simulated/wall/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
-	if (!user.IsAdvancedToolUser())
-		return
+	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 
-	user.next_move = world.time + 8
 	//get the user's location
 	if(!istype(user.loc, /turf))	return	//can't do this stuff whilst inside objects and such
 

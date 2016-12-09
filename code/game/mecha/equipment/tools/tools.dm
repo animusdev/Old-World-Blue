@@ -526,8 +526,7 @@
 
 	detached()
 		chassis.proc_res["dynattackby"] = null
-		..()
-		return
+		return ..()
 
 	get_equip_info()
 		if(!chassis) return
@@ -578,8 +577,7 @@
 	detached()
 		chassis.proc_res["dynbulletdamage"] = null
 		chassis.proc_res["dynhitby"] = null
-		..()
-		return
+		return ..()
 
 	get_equip_info()
 		if(!chassis) return
@@ -661,8 +659,7 @@
 	detached()
 		chassis.overlays -= droid_overlay
 		pr_repair_droid.stop()
-		..()
-		return
+		return ..()
 
 	get_equip_info()
 		if(!chassis) return
@@ -745,8 +742,7 @@
 		pr_energy_relay.stop()
 //		chassis.proc_res["dynusepower"] = null
 		chassis.proc_res["dyngetcharge"] = null
-		..()
-		return
+		return ..()
 
 	attached(obj/mecha/M)
 		..()
@@ -871,8 +867,7 @@
 
 	detached()
 		pr_mech_generator.stop()
-		..()
-		return
+		return ..()
 
 
 	Topic(href, href_list)
@@ -1147,10 +1142,10 @@
 /obj/item/mecha_parts/mecha_equipment/tool/passenger/detached()
 	if(occupant)
 		occupant_message("Unable to detach [src] - equipment occupied.")
-		return
+		return 0
 
 	var/obj/mecha/M = chassis
-	..()
+	. = ..()
 	if (M && !(locate(/obj/item/mecha_parts/mecha_equipment/tool/passenger) in M))
 		M.verbs -= /obj/mecha/proc/move_inside_passenger
 
@@ -1238,8 +1233,7 @@
 
 	detached()
 		chassis.proc_res["dyndomove"] = null
-		..()
-		return
+		return ..()
 
 	attached(obj/mecha/M as obj)
 		..()

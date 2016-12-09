@@ -32,7 +32,7 @@
 		new /obj/item/clothing/head/bio_hood/scientist(src)
 		new /obj/item/clothing/under/rank/research_director(src)
 		new /obj/item/clothing/under/rank/research_director/alt(src)
-		new /obj/item/clothing/under/rank/research_director/dress(src)
+		new /obj/item/clothing/under/rank/research_director/skirt(src)
 		new /obj/item/clothing/suit/storage/toggle/labcoat(src)
 		new /obj/item/weapon/cartridge/rd(src)
 		new /obj/item/clothing/shoes/white(src)
@@ -42,7 +42,7 @@
 		new /obj/item/device/radio/headset/heads/rd/alt(src)
 		new /obj/item/weapon/tank/air(src)
 		new /obj/item/clothing/mask/gas(src)
-		new /obj/item/weapon/melee/baton/shocker(src)
+		new /obj/item/weapon/melee/baton/shocker/loaded(src)
 		new /obj/item/device/flash(src)
 		return
 

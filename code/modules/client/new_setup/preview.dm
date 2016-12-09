@@ -137,7 +137,13 @@ datum/preferences
 				if(HT) clothes.Blend(new /icon(body_build.hat_icon, initial(HT.icon_state)), ICON_OVERLAY)
 
 				if( backbag > 1 )
-					var/obj/item/weapon/storage/backpack/BP = J.backpacks[backbag-1]
+					var/obj/item/weapon/storage/backpack/BP = J.backpack
+					switch(backbaglist[backbag])
+						if("Backpack")		BP = J.backpack
+						if("Satchel")		BP = J.satchel
+						if("Satchel Job")	BP = J.satchel_j
+						if("Dufflebag")		BP = J.dufflebag
+						if("Messenger")		BP = J.messenger
 					clothes.Blend(new /icon(body_build.back_icon, initial(BP.icon_state)), ICON_OVERLAY)
 
 		if(disabilities & NEARSIGHTED)

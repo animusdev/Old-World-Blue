@@ -50,7 +50,7 @@
 		radio_controller.remove_object(src, frequency)
 		for (var/ch_name in channels)
 			radio_controller.remove_object(src, radiochannels[ch_name])
-	..()
+	return ..()
 
 
 /obj/item/device/radio/initialize()
@@ -58,7 +58,8 @@
 	if(freerange)
 		if(frequency < 1200 || frequency > 1600)
 			frequency = sanitize_frequency(frequency, maxf)
-	// The max freq is higher than a regular headset to decrease the chance of people listening in, if you use the higher channels.
+	// The max freq is higher than a regular headset to decrease the chance of people listening in,
+	//  if you use the higher channels.
 	else if (frequency < 1441 || frequency > maxf)
 		//world.log << "[src] ([type]) has a frequency of [frequency], sanitizing."
 		frequency = sanitize_frequency(frequency, maxf)
@@ -67,7 +68,6 @@
 
 	for (var/ch_name in channels)
 		secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
-
 
 /obj/item/device/radio/attack_self(mob/user as mob)
 	user.set_machine(src)
@@ -83,17 +83,24 @@
 	var/dat = "<html><head><title>[src]</title></head><body><TT>"
 
 	if(!istype(src, /obj/item/device/radio/headset)) //Headsets dont get a mic button
-		dat += "Microphone: [broadcasting ? "<A href='byond://?src=\ref[src];talk=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];talk=1'>Disengaged</A>"]<BR>"
+		if(broadcasting)
+			dat += "Microphone: <A href='byond://?src=\ref[src];talk=0'>Engaged</A><BR>"
+		else
+			dat += "Microphone: <A href='byond://?src=\ref[src];talk=1'>Disengaged</A><BR>"
+
+	if(listening)
+		dat += "Speaker: <A href='byond://?src=\ref[src];listen=0'>Engaged</A><BR>"
+	else
+		dat += "Speaker: <A href='byond://?src=\ref[src];listen=1'>Disengaged</A><BR>"
 
 	dat += {"
-				Speaker: [listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
-				Frequency:
-				<A href='byond://?src=\ref[src];freq=-10'>-</A>
-				<A href='byond://?src=\ref[src];freq=-2'>-</A>
-				[format_frequency(frequency)]
-				<A href='byond://?src=\ref[src];freq=2'>+</A>
-				<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
-				"}
+		Frequency:
+		<A href='byond://?src=\ref[src];freq=-10'>-</A>
+		<A href='byond://?src=\ref[src];freq=-2'>-</A>
+		[format_frequency(frequency)]
+		<A href='byond://?src=\ref[src];freq=2'>+</A>
+		<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+	"}
 
 	for (var/ch_name in channels)
 		dat+=text_sec_channel(ch_name, channels[ch_name])
@@ -113,7 +120,7 @@
 	return {"
 			<B>[chan_name]</B><br>
 			Speaker: <A href='byond://?src=\ref[src];ch_name=[chan_name];listen=[!list]'>[list ? "Engaged" : "Disengaged"]</A><BR>
-			"}
+		"}
 
 /obj/item/device/radio/proc/ToggleBroadcast()
 	broadcasting = !broadcasting && !(wires.IsIndexCut(WIRE_TRANSMIT) || wires.IsIndexCut(WIRE_SIGNAL))
@@ -207,8 +214,9 @@
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!M || !message) return 0
 
-	//  Uncommenting this. To the above comment:
-	// 	The permacell radios aren't suppose to be able to transmit, this isn't a bug and this "fix" is just making radio wires useless. -Giacom
+	// Uncommenting this. To the above comment:
+	// The permacell radios aren't suppose to be able to transmit,
+	//  this isn't a bug and this "fix" is just making radio wires useless. -Giacom
 	if(wires.IsIndexCut(WIRE_TRANSMIT)) // The device has to have all its wires and shit intact
 		return 0
 
@@ -235,60 +243,57 @@
 	if (!connection)
 		return 0
 
-	var/turf/position = get_turf(src)
+	spawn()
+		var/turf/position = get_turf(src)
 
-	//#### Tagging the signal with all appropriate identity values ####//
+		//#### Tagging the signal with all appropriate identity values ####//
 
-	// ||-- The mob's name identity --||
-	var/displayname = M.name	// grab the display name (name you get when you hover over someone's icon)
-	var/real_name = M.real_name // mob's real name
-	var/mobkey = "none" // player key associated with mob
-	var/voicemask = 0 // the speaker is wearing a voice mask
-	if(M.client)
-		mobkey = M.key // assign the mob's key
-
-
-	var/jobname // the mob's "job"
-
-	// --- Human: use their actual job ---
-	if (ishuman(M))
-		var/mob/living/carbon/human/H = M
-		jobname = H.get_assignment()
-
-	// --- Carbon Nonhuman ---
-	else if (iscarbon(M)) // Nonhuman carbon mob
-		jobname = "No id"
-
-	// --- AI ---
-	else if (isAI(M))
-		jobname = "AI"
-
-	// --- Cyborg ---
-	else if (isrobot(M))
-		jobname = "Cyborg"
-
-	// --- Personal AI (pAI) ---
-	else if (istype(M, /mob/living/silicon/pai))
-		jobname = "Personal AI"
-
-	// --- Unidentifiable mob ---
-	else
-		jobname = "Unknown"
+		// ||-- The mob's name identity --||
+		var/displayname = M.name	// grab the display name (name you get when you hover over someone's icon)
+		var/real_name = M.real_name // mob's real name
+		var/mobkey = "none" // player key associated with mob
+		var/voicemask = 0 // the speaker is wearing a voice mask
+		if(M.client)
+			mobkey = M.key // assign the mob's key
 
 
-	// --- Modifications to the mob's identity ---
+		var/jobname // the mob's "job"
 
-	// The mob is disguising their identity:
-	if (ishuman(M) && M.GetVoice() != real_name)
-		displayname = M.GetVoice()
-		jobname = "Unknown"
-		voicemask = 1
+		// --- Human: use their actual job ---
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			jobname = H.get_assignment()
+
+		// --- Carbon Nonhuman ---
+		else if (iscarbon(M)) // Nonhuman carbon mob
+			jobname = "No id"
+
+		// --- AI ---
+		else if (isAI(M))
+			jobname = "AI"
+
+		// --- Cyborg ---
+		else if (isrobot(M))
+			jobname = "Cyborg"
+
+		// --- Personal AI (pAI) ---
+		else if (istype(M, /mob/living/silicon/pai))
+			jobname = "Personal AI"
+
+		// --- Unidentifiable mob ---
+		else
+			jobname = "Unknown"
 
 
+		// --- Modifications to the mob's identity ---
 
-  /* ###### Radio headsets can only broadcast through subspace ###### */
+		// The mob is disguising their identity:
+		if (ishuman(M) && M.GetVoice() != real_name)
+			displayname = M.GetVoice()
+			jobname = "Unknown"
+			voicemask = 1
 
-	if(subspace_transmission)
+
 		// First, we want to generate a new radio signal
 		var/datum/signal/signal = new
 		signal.transmission_method = 2 // 2 would be a subspace transmission.
@@ -311,7 +316,7 @@
 			// so that they can be logged even AFTER the mob is deleted or something
 
 		  // Other tags:
-			"compression" = rand(45,50), // compressed radio signal
+			"compression" = subspace_transmission ? rand(45,50) : 0,
 			"message" = message, // the actual sent message
 			"connection" = connection, // the radio connection to use
 			"radio" = src, // stores the radio used for transmission
@@ -336,71 +341,34 @@
 			R.receive_signal(signal)
 
 		// Receiving code can be located in Telecommunications.dm
-		return signal.data["done"] && position.z in signal.data["level"]
+		if(signal.data["done"] && position.z in signal.data["level"])
+			// we're done here.
+			return 1
+
+		// Radio headsets can only broadcast through subspace
+		else if(subspace_transmission)
+			return 0
 
 
-  /* ###### Intercoms and station-bounced radios ###### */
+		sleep(rand(10,25)) // wait a little...
 
-	var/filter_type = 2
+		// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet in our level.
+		// Send a mundane broadcast with limited targets:
 
-	/* --- Intercoms can only broadcast to other intercoms, but bounced radios can broadcast to bounced radios and intercoms --- */
-	if(istype(src, /obj/item/device/radio/intercom))
-		filter_type = 1
+		//THIS IS TEMPORARY. YEAH RIGHT
+		if(!connection)	return 0	//~Carn
 
+		/* --- Intercoms can only broadcast to other intercoms,
+		but bounced radios can broadcast to bounced radios and intercoms --- */
+		var/filter_type = 2
+		if(istype(src, /obj/item/device/radio/intercom))
+			filter_type = 1
 
-	var/datum/signal/signal = new
-	signal.transmission_method = 2
+		return Broadcast_Message(connection, M, voicemask, pick(M.speak_emote),
+						  src, message, displayname, jobname, real_name, M.voice_name,
+						  filter_type, signal.data["compression"], list(position.z), connection.frequency,verb,speaking)
 
-
-	/* --- Try to send a normal subspace broadcast first */
-
-	signal.data = list(
-
-		"mob" = M, // store a reference to the mob
-		"mobtype" = M.type, 	// the mob's type
-		"realname" = real_name, // the mob's real name
-		"name" = displayname,	// the mob's display name
-		"job" = jobname,		// the mob's job
-		"key" = mobkey,			// the mob's key
-		"vmessage" = pick(M.speak_emote), // the message to display if the voice wasn't understood
-		"vname" = M.voice_name, // the name to display if the voice wasn't understood
-		"vmask" = voicemask,	// 1 if the mob is using a voice gas mas
-
-		"compression" = 0, // uncompressed radio signal
-		"message" = message, // the actual sent message
-		"connection" = connection, // the radio connection to use
-		"radio" = src, // stores the radio used for transmission
-		"slow" = 0,
-		"traffic" = 0,
-		"type" = 0,
-		"server" = null,
-		"reject" = 0,
-		"level" = position.z,
-		"language" = speaking,
-		"verb" = verb
-	)
-	signal.frequency = connection.frequency // Quick frequency set
-
-	for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
-		R.receive_signal(signal)
-
-
-	sleep(rand(10,25)) // wait a little...
-
-	if(signal.data["done"] && position.z in signal.data["level"])
-		// we're done here.
-		return 1
-
-	// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet in our level.
-	// Send a mundane broadcast with limited targets:
-
-	//THIS IS TEMPORARY. YEAH RIGHT
-	if(!connection)	return 0	//~Carn
-
-	return Broadcast_Message(connection, M, voicemask, pick(M.speak_emote),
-					  src, message, displayname, jobname, real_name, M.voice_name,
-					  filter_type, signal.data["compression"], list(position.z), connection.frequency,verb,speaking)
-
+	return 1
 
 /obj/item/device/radio/hear_talk(mob/M as mob, msg, var/verb = "says", var/datum/language/speaking = null)
 
@@ -479,9 +447,9 @@
 	b_stat = !( b_stat )
 	if(!istype(src, /obj/item/device/radio/beacon))
 		if (b_stat)
-			user.show_message("\blue The radio can now be attached and modified!")
+			user.show_message("<span class='notice'>\The [src] can now be attached and modified!</span>")
 		else
-			user.show_message("\blue The radio can no longer be modified or attached!")
+			user.show_message("<span class='notice'>\The [src] can no longer be modified or attached!</span>")
 		updateDialog()
 			//Foreach goto(83)
 		add_fingerprint(user)
@@ -614,7 +582,9 @@
 		else
 			subspace_transmission = 0
 			usr << "Subspace Transmission is disabled"
-		if(subspace_transmission == 0)//Simple as fuck, clears the channel list to prevent talking/listening over them if subspace transmission is disabled
+		//Simple as fuck, clears the channel list
+		// to prevent talking/listening over them if subspace transmission is disabled
+		if(subspace_transmission == 0)
 			channels = list()
 		else
 			recalculateChannels()
@@ -633,17 +603,25 @@
 		return
 
 	var/dat = "<html><head><title>[src]</title></head><body><TT>"
+	if(listening)
+		dat += "Speaker: <A href='byond://?src=\ref[src];listen=0'>Engaged</A><BR>"
+	else
+		dat += "Speaker: <A href='byond://?src=\ref[src];listen=1'>Disengaged</A><BR>"
+
 	dat += {"
-				Speaker: [listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
-				Frequency:
-				<A href='byond://?src=\ref[src];freq=-10'>-</A>
-				<A href='byond://?src=\ref[src];freq=-2'>-</A>
-				[format_frequency(frequency)]
-				<A href='byond://?src=\ref[src];freq=2'>+</A>
-				<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
-				<A href='byond://?src=\ref[src];mode=1'>Toggle Broadcast Mode</A><BR>
-				Loudspeaker: [shut_up ? "<A href='byond://?src=\ref[src];shutup=0'>Disengaged</A>" : "<A href='byond://?src=\ref[src];shutup=1'>Engaged</A>"]<BR>
-				"}
+		Frequency:
+		<A href='byond://?src=\ref[src];freq=-10'>-</A>
+		<A href='byond://?src=\ref[src];freq=-2'>-</A>
+		[format_frequency(frequency)]
+		<A href='byond://?src=\ref[src];freq=2'>+</A>
+		<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+		<A href='byond://?src=\ref[src];mode=1'>Toggle Broadcast Mode</A><BR>
+
+	"}
+	if(shut_up)
+		dat += "Loudspeaker: <A href='byond://?src=\ref[src];shutup=0'>Disengaged</A><BR>"
+	else
+		dat += "Loudspeaker: <A href='byond://?src=\ref[src];shutup=1'>Engaged</A><BR>"
 
 	if(subspace_transmission)//Don't even bother if subspace isn't turned on
 		for (var/ch_name in channels)
@@ -700,16 +678,20 @@
 		return
 
 	var/dat = "<html><head><title>[src]</title></head><body><TT>"
+	if(listening)
+		dat += "Speaker: <A href='byond://?src=\ref[src];listen=0'>Engaged</A><BR>"
+	else
+		dat += "Speaker: <A href='byond://?src=\ref[src];listen=1'>Disengaged</A><BR>"
+
 	dat += {"
-				Speaker: [listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
-				Frequency:
-				<A href='byond://?src=\ref[src];freq=-10'>-</A>
-				<A href='byond://?src=\ref[src];freq=-2'>-</A>
-				[format_frequency(frequency)]
-				<A href='byond://?src=\ref[src];freq=2'>+</A>
-				<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
-				<A href='byond://?src=\ref[src];mode=1'>Toggle Broadcast Mode</A><BR>
-				"}
+		Frequency:
+		<A href='byond://?src=\ref[src];freq=-10'>-</A>
+		<A href='byond://?src=\ref[src];freq=-2'>-</A>
+		[format_frequency(frequency)]
+		<A href='byond://?src=\ref[src];freq=2'>+</A>
+		<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+		<A href='byond://?src=\ref[src];mode=1'>Toggle Broadcast Mode</A><BR>
+	"}
 
 	if(subspace_transmission)//Don't even bother if subspace isn't turned on
 		for (var/ch_name in channels)
@@ -729,7 +711,9 @@
 		else
 			subspace_transmission = 0
 			usr << "Subspace Transmission is disabled"
-		if(subspace_transmission == 0)//Simple as fuck, clears the channel list to prevent talking/listening over them if subspace transmission is disabled
+		//Simple as fuck, clears the channel list
+		// to prevent talking/listening over them if subspace transmission is disabled
+		if(subspace_transmission == 0)
 			channels = list()
 		else
 			recalculateChannels()

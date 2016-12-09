@@ -11,7 +11,7 @@
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	var/health = 100
 	var/breakout = 0 //if someone is currently breaking out. mutex
-	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
+	var/storage_capacity = 40 //This is so that someone can't pack hundreds of items in a locker/crate
 							  //then open it in a populated area to crash clients.
 	var/open_sound = 'sound/machines/click.ogg'
 	var/close_sound = 'sound/machines/click.ogg'
@@ -326,7 +326,8 @@
 	else
 		usr << "<span class='warning'>This mob type can't use this verb.</span>"
 
-/obj/structure/closet/update_icon()//Putting the welded stuff in updateicon() so it's easy to overwrite for special cases (Fridges, cabinets, and whatnot)
+//Putting the welded stuff in updateicon() so it's easy to overwrite for special cases (Fridges, cabinets, and whatnot)
+/obj/structure/closet/update_icon()
 	overlays.Cut()
 	if(!opened)
 		icon_state = icon_closed
@@ -363,9 +364,9 @@
 	if(breakout || !req_breakout())
 		return
 
+	escapee.setClickCooldown(100)
+
 	//okay, so the closet is either welded or locked... resist!!!
-	escapee.next_move = world.time + 100
-	escapee.last_special = world.time + 100
 	escapee << "<span class='warning'>You lean on the back of \the [src] and start pushing the door open. (this will take about [breakout_time] minutes)</span>"
 
 	visible_message("<span class='danger'>\The [src] begins to shake violently!</span>")

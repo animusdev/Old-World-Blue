@@ -236,7 +236,7 @@
 	// Do they get an option to set internals?
 	if(istype(wear_mask, /obj/item/clothing/mask) || istype(head, /obj/item/clothing/head/helmet/space))
 		if(istype(back, /obj/item/weapon/tank) || istype(belt, /obj/item/weapon/tank) || istype(s_store, /obj/item/weapon/tank))
-			dat += "<BR><A href='?src=\ref[src];item=internals'>Toggle internals.</A>"
+			dat += "<BR><A href='?src=\ref[src];item=internals'>[internal ? "Remove" : "Set"] internals.</A>"
 
 	// Other incidentals.
 	if(istype(suit) && suit.has_sensor == 1)
@@ -940,9 +940,6 @@
 						H.brainmob.mind.transfer_to(src)
 						qdel(H)
 
-	for (var/datum/disease/virus in viruses)
-		virus.cure()
-
 	for (var/ID in virus2)
 		var/datum/disease2/disease/V = virus2[ID]
 		V.cure(src)
@@ -1222,7 +1219,7 @@
 	if(!affecting)
 		. = 0
 		fail_msg = "They are missing that limb."
-	else if (affecting.robotic >= ORGAN_ROBOT)
+	else if (affecting.status & ORGAN_ROBOT)
 		. = 0
 		fail_msg = "That limb is robotic."
 	else
@@ -1320,9 +1317,10 @@
 	set desc = "Pop a joint back into place. Extremely painful."
 	set src in view(1)
 
-	if(!isliving(usr) || usr.next_move > world.time)
+	if((!ishuman(usr) && !isrobot(usr)) || !usr.canClick())
 		return
-	usr.next_move = world.time + 20
+
+	usr.setClickCooldown(20)
 
 	if(usr.stat)
 		usr << "You are unconcious and cannot do that!"

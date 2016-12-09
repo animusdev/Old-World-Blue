@@ -13,7 +13,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/glasses
 	name = "glasses"
-	icon = 'icons/obj/clothing/glasses/icon.dmi'
+	icon = 'icons/inv_slots/glasses/icon.dmi'
 	w_class = 2.0
 	slot_flags = SLOT_EYES
 	var/vision_flags = 0

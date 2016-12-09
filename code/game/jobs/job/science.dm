@@ -9,15 +9,10 @@
 	shoes = /obj/item/clothing/shoes/white
 	suit = /obj/item/clothing/suit/storage/toggle/labcoat/science
 
-	backpack = /obj/item/weapon/storage/backpack/toxins
-	satchel = /obj/item/weapon/storage/backpack/satchel_tox
-	duffle = /obj/item/weapon/storage/backpack/duffle
+	backpack  = /obj/item/weapon/storage/backpack/toxins
+	satchel_j = /obj/item/weapon/storage/backpack/satchel/tox
+	messenger = /obj/item/weapon/storage/backpack/messenger/tox
 
-	backpacks = list(
-		/obj/item/weapon/storage/backpack/toxins,
-		/obj/item/weapon/storage/backpack/satchel_tox,
-		/obj/item/weapon/storage/backpack/satchel
-	)
 
 /datum/job/science/rd
 	title = "Research Director"
@@ -45,7 +40,6 @@
 	shoes = /obj/item/clothing/shoes/brown
 	suit = /obj/item/clothing/suit/storage/toggle/labcoat
 	hand = /obj/item/weapon/clipboard
-
 
 
 /datum/job/science/scientist
@@ -79,7 +73,6 @@
 		return ..()
 
 
-
 /datum/job/science/xenobiologist
 	title = "Xenobiologist"
 	flag = XENOBIOLOGIST
@@ -95,7 +88,6 @@
 
 	uniform = /obj/item/clothing/under/rank/xenobio
 	pda = /obj/item/device/pda/science
-
 
 
 /datum/job/science/roboticist
@@ -119,15 +111,10 @@
 	hand = /obj/item/weapon/storage/toolbox/mechanical
 	shoes = /obj/item/clothing/shoes/black
 
-	backpack = /obj/item/weapon/storage/backpack
-	satchel = /obj/item/weapon/storage/backpack/satchel_norm
-	duffle = /obj/item/weapon/storage/backpack/duffle
-
-	backpacks = list(
-		/obj/item/weapon/storage/backpack,
-		/obj/item/weapon/storage/backpack/satchel_norm,
-		/obj/item/weapon/storage/backpack/satchel
-	)
+	backpack  = /obj/item/weapon/storage/backpack
+	satchel_j = /obj/item/weapon/storage/backpack/satchel/norm
+	dufflebag = /obj/item/weapon/storage/backpack/dufflebag
+	messenger = /obj/item/weapon/storage/backpack/messenger/black
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0

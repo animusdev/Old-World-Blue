@@ -129,6 +129,14 @@
 		icon_state = "beehive2"
 		gender = FEMALE
 
+	birdnest
+		name = "Birdnest"
+		icon_state = "birdnest"
+
+	birdnest
+		name = "Birdnest 2"
+		icon_state = "birdnest2"
+
 	blackswordsman
 		name = "Mercenary"
 		icon_state = "blackswordsman"
@@ -159,6 +167,22 @@
 		name = "Long Braid"
 		icon_state = "hbraid"
 		gender = FEMALE
+
+	buisness
+		name = "Buisness Hair"
+		icon_state = "business"
+
+	buisness2
+		name = "Buisness Hair 2"
+		icon_state = "business2"
+
+	buisness3
+		name = "Buisness Hair 3"
+		icon_state = "business3"
+
+	buisness4
+		name = "Buisness Hair 4"
+		icon_state = "business4"
 
 	bun
 		name = "Bun"
@@ -566,6 +590,10 @@
 		name = "Side Ponytail 2"
 		icon_state = "ponytailf"
 
+	sideswept
+		name = "Side Swipe"
+		icon_state = "sideswipe"
+
 	skinhead
 		name = "Skinhead"
 		icon_state = "skinhead"
@@ -766,6 +794,10 @@
 		name = "Elvis Sideburns"
 		icon_state = "elvis"
 		species_allowed = list("Human","Unathi")
+
+	fiveoclock
+		name = "Five o Clock Shadow"
+		icon_state = "fiveoclock"
 
 	fullbeard
 		name = "Full Beard"

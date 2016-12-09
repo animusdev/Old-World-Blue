@@ -165,3 +165,10 @@
 	icon_state = "sandals-pink"
 	item_state = "sandals-pink"
 	species_restricted = null
+
+
+
+/obj/item/clothing/shoes/jackboots/combat/nikiton
+	name = "Army boots"
+	desc = "Army boots. They look threateningly."
+	icon_state = "swat"

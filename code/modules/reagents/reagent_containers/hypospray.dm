@@ -30,6 +30,7 @@
 	if(!M.can_inject(user, 1))
 		return
 
+	user.setClickCooldown(DEFAULT_QUICK_COOLDOWN)
 	user << "<span class='notice'>You inject [M] with [src].</span>"
 	M << "<span class='notice'>You feel a tiny prick!</span>"
 

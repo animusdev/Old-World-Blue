@@ -104,7 +104,7 @@
 	name = "staff of change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself"
 	icon = 'icons/obj/gun.dmi'
-	item_icons = null
+	sprite_group = null
 	icon_state = "staffofchange"
 	item_state = "staffofchange"
 	fire_sound = 'sound/weapons/emitter.ogg'
@@ -140,14 +140,14 @@ obj/item/weapon/gun/energy/staff/focus
 	projectile_type = /obj/item/projectile/forcebolt
 	/*
 	attack_self(mob/living/user as mob)
-		if(projectile_type == "/obj/item/projectile/forcebolt")
+		if(projectile_type == /obj/item/projectile/forcebolt)
 			charge_cost = 400
 			user << "<span class='warning'>The [src.name] will now strike a small area.</span>"
-			projectile_type = "/obj/item/projectile/forcebolt/strong"
+			projectile_type = /obj/item/projectile/forcebolt/strong
 		else
 			charge_cost = 200
 			user << "<span class='warning'>The [src.name] will now strike only a single person.</span>"
-			projectile_type = "/obj/item/projectile/forcebolt"
+			projectile_type = /obj/item/projectile/forcebolt
 	*/
 
 /* Adminbus guns */
@@ -156,23 +156,13 @@ obj/item/weapon/gun/energy/staff/focus
 /obj/item/weapon/gun/energy/icarus
 	name = "rubber ducky"
 	desc = "It's a cute rubber duck.  With an evil gleam in it's eye."
-	projectile_type = /obj/item/projectile/icarus/pointdefense
+	projectile_type = /obj/item/projectile/icarus/guns
 	icon = 'icons/obj/watercloset.dmi'
-	item_icons = null
 	icon_state = "rubberducky"
 	item_state = "rubberducky"
 	charge_cost = 0
 	silenced = 1
 
-/obj/item/weapon/gun/energy/icarus/attack_self(mob/living/user as mob)
-	if(projectile_type == /obj/item/projectile/icarus/pointdefense)
-		projectile_type = /obj/item/projectile/icarus/guns
-		user << "You inform the Icarus to switch to the main guns."
-	else
-		projectile_type = /obj/item/projectile/icarus/pointdefense
-		user << "You inform the Icarus to switch to the point-defense lasers."
-
-	. = ..()
 
 /obj/item/weapon/gun/energy/icarus/update_icon()
 	return

@@ -43,6 +43,7 @@
 	name = "ERT-M suit control module"
 	desc = "A suit worn by the medical division of a NanoTrasen Emergency Response Team. Has white highlights. Armoured and space ready."
 	suit_type = "ERT medic"
+	siemens_coefficient = 0
 	icon_state = "ert_medical_rig"
 
 	initial_modules = list(
@@ -56,6 +57,7 @@
 	name = "ERT-S suit control module"
 	desc = "A suit worn by the security division of a NanoTrasen Emergency Response Team. Has red highlights. Armoured and space ready."
 	suit_type = "ERT security"
+	siemens_coefficient = 0
 	icon_state = "ert_security_rig"
 
 	initial_modules = list(
@@ -69,6 +71,7 @@
 	name = "Heavy Asset Protection suit control module"
 	desc = "A heavy suit worn by the highest level of Nanotrasen Asset Protection, don't mess with the person wearing this. Armoured and space ready."
 	suit_type = "heavy asset protection"
+	siemens_coefficient = 0
 	icon_state = "asset_protection_rig"
 	armor = list(melee = 70, bullet = 60, laser = 60, energy = 50, bomb = 50, bio = 100, rad = 100)
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE

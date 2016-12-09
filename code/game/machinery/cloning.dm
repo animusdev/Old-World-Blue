@@ -42,7 +42,11 @@
 	var/mess = 0 //Need to clean out it if it's full of exploded clone.
 	var/attempting = 0 //One clone attempt at a time thanks
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
-	var/biomass = CLONE_BIOMASS * 3
+	var/biomass = 0
+
+/obj/machinery/clonepod/initialize()
+	..()
+	biomass = CLONE_BIOMASS * 3
 
 /obj/machinery/clonepod/New()
 	..()
@@ -182,6 +186,8 @@
 			return
 
 		else if((occupant.health >= heal_level) && (!eject_wait))
+			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+			broadcast_medical_hud_message("\The [src] signals that the cloning process is complete.")
 			connected_message("Cloning Process Complete.")
 			locked = 0
 			go_out()
@@ -216,13 +222,6 @@
 		else
 			locked = 0
 			user << "System unlocked."
-	else if(istype(W, /obj/item/weapon/card/emag))
-		if(isnull(occupant))
-			return
-		user << "You force an emergency ejection."
-		locked = 0
-		go_out()
-		return
 	else if(istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
 		user << "<span class='notice'>\The [src] processes \the [W].</span>"
 		biomass += 50
@@ -251,6 +250,14 @@
 		return
 	else
 		..()
+
+/obj/machinery/clonepod/emag_act(var/remaining_charges, var/mob/user)
+	if(isnull(occupant))
+		return
+	user << "You force an emergency ejection."
+	locked = 0
+	go_out()
+	return 1
 
 //Put messages in the connected computer's temp var for display.
 /obj/machinery/clonepod/proc/connected_message(var/message)

@@ -175,6 +175,11 @@
 	desc = "A warning sign which reads 'HYDROPONICS'."
 	icon_state = "hydro1"
 
+/obj/structure/sign/emt
+	name = "\improper EMS"
+	desc = "A warning sign which reads 'EMS'."
+	icon_state = "emtroom"
+
 /obj/structure/sign/directions/science
 	name = "\improper Science department"
 	desc = "A direction sign, pointing out which way the Science department is."

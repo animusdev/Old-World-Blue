@@ -10,7 +10,6 @@
 	anchored = 1
 	use_power = 0
 	idle_power_usage = 5			// 5 Watts for thermostat related circuitry
-
 	var/heatsink_temperature = T20C	// The constant temperature reservoir into which the freezer pumps heat. Probably the hull of the station or something.
 	var/internal_volume = 600		// L
 

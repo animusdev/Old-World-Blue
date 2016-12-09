@@ -50,14 +50,14 @@
 			return
 		else
 			item.item_state_slots = null
-			item.item_icons = null
+			item.sprite_group = null
 
 			item.icon_state = item_icon
 			item.item_state = null
 
 		var/obj/item/clothing/under/U = item
 		if(istype(U))
-			U.update_rolldown_status()
+			U.update_status()
 
 	// Kits are dumb so this is going to have to be hardcoded/snowflake.
 	if(istype(item, /obj/item/device/kit))
@@ -80,28 +80,23 @@
 	var/datum/custom_item/current_data
 	var/list/L
 
-////D00k-N00kem////
+///Fox231///
+
 	L = list()
 
 	current_data = new()
-	current_data.assoc_key = "d00kn00kem"
-	current_data.character_name = "Natalia Lynn"
-	current_data.item_path = /obj/item/clothing/suit/storage/labcoat/augmented
+	current_data.assoc_key = "fox231"
+	current_data.character_name = "Zoy Anderson"
+	current_data.item_path = /obj/item/clothing/under/phantom
 	L |= current_data
 
 	current_data = new()
-	current_data.assoc_key = "d00kn00kem"
-	current_data.character_name = "Lorenzo Shere"
-	current_data.item_path = /obj/item/clothing/mask/gas/D00k_N00kem
+	current_data.assoc_key = "fox231"
+	current_data.character_name = "Zoy Anderson"
+	current_data.item_path = /obj/item/clothing/accessory/locket/Evans
 	L |= current_data
 
-	current_data = new()
-	current_data.assoc_key = "d00kn00kem"
-	current_data.character_name = "Lorenzo Shere"
-	current_data.item_path = /obj/item/clothing/suit/storage/labcoat/long
-	L |= current_data
-
-	custom_items["d00kn00kem"] = L
+	custom_items["fox231"] = L
 
 ///Shamah///
 
@@ -122,24 +117,73 @@
 	current_data = new()
 	current_data.assoc_key = "lethalghost"
 	current_data.character_name = "April Evans"
-	current_data.item_path = /obj/item/weapon/photo/custom
+	current_data.item_path = /obj/item/clothing/accessory/locket/Evans
 	L |= current_data
 
 	custom_items["lethalghost"] = L
 
 ///Eclipse///
 
-	L = list()
-
+	current_data = new()
+	current_data.assoc_key = "solareclipse84"
+	current_data.character_name = "Aiden McMurray"
+	current_data.item_path = /obj/item/clothing/under/rank/mechatronic/solar
+	L |= current_data
 
 	current_data = new()
 	current_data.assoc_key = "solareclipse84"
-	current_data.req_titles = list("Head of Security", "Security Officer")
+	current_data.req_titles = list("Paramedic")
 	current_data.character_name = "Aiden McMurray"
-	current_data.item_path = /obj/item/clothing/head/beret/army/solar
+	current_data.item_path = /obj/item/clothing/suit/storage/vest/pcrc
+	L |= current_data
+
+	current_data = new()
+	current_data.assoc_key = "solareclipse84"
+	current_data.character_name = "Aiden McMurray"
+	current_data.item_path = /obj/item/clothing/accessory/solar
 	L |= current_data
 
 	custom_items["solareclipse84"] = L
+
+///Venligen///
+
+	L = list()
+
+	current_data = new()
+	current_data.assoc_key = "venligen"
+	current_data.character_name = "Rawick Devine"
+	current_data.item_path = /obj/item/clothing/under/rank/security/venligen
+	L |= current_data
+
+	custom_items["venligen"] = L
+
+
+//Egorkor///
+
+	L = list()
+
+	current_data = new()
+	current_data.assoc_key = "egorkor"
+	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
+	current_data.character_name = "Graham Maclagan"
+	current_data.item_path = /obj/item/clothing/accessory/egorkor
+	L |= current_data
+
+	custom_items["egorkor"] = L
+
+
+///simonmoore///
+
+	L = list()
+
+	current_data = new()
+	current_data.assoc_key = "elektronika71"
+	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
+	current_data.character_name = "Weston Ludwig"
+	current_data.item_path = /obj/item/clothing/accessory/shepard
+	L |= current_data
+
+	custom_items["elektronika71"] = L
 
 ////Wajtswv////
 
@@ -199,6 +243,42 @@
 	L |= current_data
 
 	custom_items["nikiss2000"] = L
+
+
+
+///Nikiton///
+
+
+
+	L = list()
+	current_data = new()
+	current_data.assoc_key = "nikiton"
+	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
+	current_data.character_name = "Leroy Woodward"
+	current_data.item_path = /obj/item/clothing/accessory/nikiton
+	L |= current_data
+
+	current_data = new()
+	current_data.assoc_key = "nikiton"
+	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
+	current_data.character_name = "Leroy Woodward"
+	current_data.item_path = /obj/item/clothing/shoes/jackboots/combat/nikiton
+	L |= current_data
+
+	custom_items["nikiton"] = L
+
+
+///Madman///
+
+	L = list()
+	current_data = new()
+	current_data.assoc_key = "madmannobrain"
+	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
+	current_data.character_name = "Megan Abbott"
+	current_data.item_path = /obj/item/clothing/accessory/madman
+	L |= current_data
+
+	custom_items["madmannobrain"] = L
 
 ////Subber////
 

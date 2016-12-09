@@ -7,13 +7,6 @@
 /datum/supply_packs/eng
 	group = "Engineering"
 
-/datum/supply_packs/eng/lightbulbs
-	name = "Replacement lights"
-	contains = list(/obj/item/weapon/storage/box/lights/mixed = 3)
-	cost = 10
-	containertype = /obj/structure/closet/crate
-	containername = "Replacement lights"
-
 /datum/supply_packs/eng/smescoil
 	name = "Superconducting Magnetic Coil"
 	contains = list(/obj/item/weapon/smes_coil)
@@ -72,7 +65,7 @@
 	containername = "Emitter crate"
 	access = access_ce
 
-/datum/supply_packs/engine/eng/field_gen
+/datum/supply_packs/eng/engine/field_gen
 	name = "Field Generator crate"
 	contains = list(/obj/machinery/field_generator = 2)
 	containertype = /obj/structure/closet/crate/secure
@@ -198,8 +191,7 @@
 	containertype = /obj/structure/closet/crate
 	contains = list(
 		/obj/item/weapon/circuitboard/bluespacerelay,
-		/obj/item/weapon/stock_parts/manipulator,
-		/obj/item/weapon/stock_parts/manipulator,
+		/obj/item/weapon/stock_parts/manipulator = 2,
 		/obj/item/weapon/stock_parts/subspace/filter,
 		/obj/item/weapon/stock_parts/subspace/crystal,
 		/obj/item/weapon/storage/toolbox/electrical

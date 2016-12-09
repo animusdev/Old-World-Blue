@@ -151,14 +151,13 @@ obj/item/clothing/head/welding/blue
 	icon_state = "kitty"
 	body_parts_covered = 0
 	siemens_coefficient = 1.5
-	item_icons = list()
 
 	equipped(var/mob/living/carbon/human/user, var/slot)
 		if(!istype(user) || slot!=slot_head) return
-		var/icon/ears = new/icon('icons/obj/clothing/hats/icon.dmi', "kitty")
+		var/icon/ears = new/icon(user.body_build.hat_icon, "kitty")
 		ears.Blend(user.hair_color, ICON_ADD)
 
-		var/icon/earbit = new/icon('icons/obj/clothing/hats/icon.dmi', "kittyinner")
+		var/icon/earbit = new/icon(user.body_build.hat_icon, "kittyinner")
 		ears.Blend(earbit, ICON_OVERLAY)
 
 		icon_override = ears

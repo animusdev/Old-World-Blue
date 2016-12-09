@@ -16,6 +16,7 @@
 	desc = "Does card things."
 	icon = 'icons/obj/card.dmi'
 	w_class = 1.0
+	slot_flags = SLOT_EARS
 	var/associated_account_number = 0
 
 	var/list/files = list(  )
@@ -69,63 +70,36 @@
 	item_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
 	var/uses = 10
-	// List of devices that cost a use to emag.
-	var/list/devices = list(
-		/obj/item/robot_parts,
-		/obj/item/weapon/storage/lockbox,
-		/obj/item/weapon/storage/secure,
-		/obj/item/weapon/circuitboard,
-		/obj/item/weapon/rig,
-		/obj/item/device/eftpos,
-		/obj/item/device/lightreplacer,
-		/obj/item/device/taperecorder,
-		/obj/item/device/hailer,
-		/obj/item/device/megaphone,
-		/obj/item/clothing/accessory/badge/holo,
-		/obj/structure/closet/crate/secure,
-		/obj/structure/closet/secure_closet,
-		/obj/machinery/librarycomp,
-		/obj/machinery/computer,
-		/obj/machinery/power,
-		/obj/machinery/suspension_gen,
-		/obj/machinery/shield_capacitor,
-		/obj/machinery/shield_gen,
-		/obj/machinery/clonepod,
-		/obj/machinery/deployable,
-		/obj/machinery/button/remote,
-		/obj/machinery/porta_turret,
-		/obj/machinery/shieldgen,
-		/obj/machinery/turretid,
-		/obj/machinery/vending,
-		/mob/living/bot,
-		/obj/machinery/door,
-		/obj/machinery/telecomms,
-		/obj/machinery/mecha_part_fabricator,
-		/obj/machinery/gibber,
-		/obj/vehicle
-		)
 
+/obj/item/weapon/card/emag/resolve_attackby(atom/A, mob/user)
+	var/used_uses = A.emag_act(uses, user, src)
+	if(used_uses < 0)
+		return ..(A, user)
 
-/obj/item/weapon/card/emag/afterattack(var/obj/item/weapon/O as obj, mob/user as mob)
+	uses -= used_uses
+	A.add_fingerprint(user)
+	log_and_message_admins("emagged \an [A].")
 
-	if(istype(user, /mob/living/silicon/robot))
-		var/obj/item/weapon/cell/cell = user:cell
-		cell.checked_use(1300)
-	else
-		for(var/type in devices)
-			if(istype(O,type))
-				uses--
-				break
-
-		if(uses<1)
-			user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
-			user.drop_from_inventory(src)
+	if(uses<1)
+		user.visible_message("<span class='warning'>\The [src] fizzles and sparks - it seems it's been used once too often, and is now spent.</span>")
+		if(user.unEquip(src)) //Borg and so on.
 			var/obj/item/weapon/card/emag_broken/junk = new(user.loc)
 			junk.add_fingerprint(user)
 			qdel(src)
-			return
 
-		..()
+	return 1
+/*
+/obj/item/weapon/card/emag/attackby(obj/item/O as obj, mob/user as mob)
+	if(istype(O, /obj/item/stack/telecrystal))
+		var/obj/item/stack/telecrystal/T = O
+		if(T.amount < 1)
+			usr << "<span class='notice'>You are not adding enough telecrystals to fuel \the [src].</span>"
+			return
+		uses += T.amount/2 //Gives 5 uses per 10 TC
+		uses = ceil(uses) //Ensures no decimal uses nonsense, rounds up to be nice
+		usr << "<span class='notice'>You add \the [O] to \the [src]. Increasing the uses of \the [src] to [uses].</span>"
+		qdel(O)
+*/
 
 /obj/item/weapon/card/id
 	name = "identification card"
@@ -134,7 +108,7 @@
 	item_state = "card-id"
 	var/access = list()
 	var/registered_name = "Unknown" // The name registered_name on the card
-	slot_flags = SLOT_ID
+	slot_flags = SLOT_ID | SLOT_EARS
 
 	var/blood_type = "\[UNSET\]"
 	var/dna_hash = "\[UNSET\]"

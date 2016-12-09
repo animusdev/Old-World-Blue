@@ -271,6 +271,7 @@
 	//psa to whoever coded this, there are plenty of objects that need to call attack() on doors without bludgeoning them.
 	if(src.density && istype(I, /obj/item/weapon) && user.a_intent == I_HURT && !istype(I, /obj/item/weapon/card))
 		var/obj/item/weapon/W = I
+		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			user.do_attack_animation(src)
 			if(W.force < min_force)
@@ -285,13 +286,6 @@
 
 	if(src.operating) return
 
-	if(src.density && (operable() && istype(I, /obj/item/weapon/card/emag)))
-		do_animate("spark")
-		sleep(6)
-		open()
-		operating = -1
-		return 1
-
 	if(src.allowed(user) && operable())
 		if(src.density)
 			open()
@@ -302,6 +296,14 @@
 	if(src.density)
 		do_animate("deny")
 	return
+
+/obj/machinery/door/emag_act(var/remaining_charges)
+	if(density && operable())
+		do_animate("spark")
+		sleep(6)
+		open()
+		operating = -1
+		return 1
 
 /obj/machinery/door/proc/take_damage(var/damage)
 	var/initialhealth = src.health

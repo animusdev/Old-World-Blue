@@ -234,10 +234,10 @@
 
 /obj/effect/plant/attackby(var/obj/item/weapon/W, var/mob/user)
 
+	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	plant_controller.add_plant(src)
 
 	if(istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/weapon/scalpel))
-		user.next_move = world.time + 5
 		if(sampled)
 			user << "<span class='warning'>\The [src] has already been sampled recently.</span>"
 			return
@@ -258,7 +258,6 @@
 	else
 		..()
 		if(W.force)
-			user.next_move = world.time + 5
 			health -= W.force
 	check_health()
 

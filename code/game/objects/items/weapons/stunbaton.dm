@@ -167,6 +167,10 @@
 		bcell.emp_act(severity)	//let's not duplicate code everywhere if we don't have to please.
 	..()
 
+
+/obj/item/weapon/melee/baton/robot
+	hitcost = 100
+
 //secborg stun baton module
 /obj/item/weapon/melee/baton/robot/attack_self(mob/user)
 	//try to find our power cell

@@ -184,6 +184,7 @@
 			src.bugged = 1
 
 	else if(W.damtype == BRUTE || W.damtype == BURN) //bashing cameras
+		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 		if (W.force >= src.toughness)
 			user.do_attack_animation(src)
 			visible_message("<span class='warning'><b>[user] [pick(W.attack_verb)] [src] with [W]!</b></span>")

@@ -98,7 +98,7 @@
 
 
 /datum/construction/reversible/mecha/ripley
-	result = "/obj/mecha/working/ripley"
+	result = /obj/mecha/working/ripley
 	steps = list(
 		//1
 		list("key"=/obj/item/weapon/weldingtool,
@@ -385,7 +385,7 @@
 
 
 /datum/construction/reversible/mecha/gygax
-	result = "/obj/mecha/combat/gygax"
+	result = /obj/mecha/combat/gygax
 	steps = list(
 		//1
 		list("key"=/obj/item/weapon/weldingtool,
@@ -780,7 +780,7 @@
 
 
 /datum/construction/reversible/mecha/firefighter
-	result = "/obj/mecha/working/ripley/firefighter"
+	result = /obj/mecha/working/ripley/firefighter
 	steps = list(
 		//1
 		list("key"=/obj/item/weapon/weldingtool,
@@ -1088,7 +1088,7 @@
 		return
 
 /datum/construction/reversible/mecha/durand
-	result = "/obj/mecha/combat/durand"
+	result = /obj/mecha/combat/durand
 	steps = list(
 		//1
 		list("key"=/obj/item/weapon/weldingtool,
@@ -1490,7 +1490,7 @@
 
 
 /datum/construction/reversible/mecha/phazon
-	result = "/obj/mecha/combat/phazon"
+	result = /obj/mecha/combat/phazon
 	steps = list(
 		//1
 		list("key"=/obj/item/stack/cable_coil,
@@ -1951,7 +1951,7 @@
 
 
 /datum/construction/reversible/mecha/odysseus
-	result = "/obj/mecha/medical/odysseus"
+	result = /obj/mecha/medical/odysseus
 	steps = list(
 		//1
 		list("key"=/obj/item/weapon/weldingtool,

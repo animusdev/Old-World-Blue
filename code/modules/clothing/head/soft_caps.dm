@@ -85,3 +85,13 @@
 	name = "corporate security cap"
 	desc = "It's field cap in corporate colors."
 	icon_state = "corpsoft"
+
+/obj/item/clothing/head/soft/emt
+	name = "EMS cap"
+	desc = "It's a navy blue cap worn by the the fastest medical personal on the station."
+	icon_state = "emtsoft"
+
+/obj/item/clothing/head/soft/emt/emerald
+	name = "EMS cap"
+	desc = "It's a cap worn by the the fastest medical personal on the station. This emerald color is so sexy!"
+	icon_state = "emtsoftemerald"

@@ -6,12 +6,12 @@
 
 /obj/structure/closet/secure_closet/personal/New()
 	..()
-	spawn(2)
-		switch(rand(3))
-			if(1) new /obj/item/weapon/storage/backpack(src)
-			if(2) new /obj/item/weapon/storage/backpack/satchel_norm(src)
-			if(3) new /obj/item/weapon/storage/backpack/duffle(src)
-		new /obj/item/device/radio/headset( src )
+	switch(rand(4))
+		if(1) new /obj/item/weapon/storage/backpack(src)
+		if(2) new /obj/item/weapon/storage/backpack/satchel/norm(src)
+		if(3) new /obj/item/weapon/storage/backpack/dufflebag(src)
+		if(4) new /obj/item/weapon/storage/backpack/messenger(src)
+	new /obj/item/device/radio/headset( src )
 	return
 
 
@@ -48,6 +48,10 @@
 		if (istype(W, /obj/item/weapon/grab))
 			src.MouseDrop_T(W:affecting, user)      //act like they were dragged onto the closet
 		user.unEquip(W, src.loc)
+	else if(istype(W, /obj/item/device/pda))
+		var/obj/item/device/pda/P = W
+		if(P.id)
+			return src.attackby(P.id)
 	else if(istype(W, /obj/item/weapon/card/id))
 		if(src.broken)
 			user << "<span class='warning'>It appears to be broken.</span>"
@@ -64,22 +68,28 @@
 				src.desc = "Owned by [I.registered_name]."
 		else
 			user << "<span class='warning'>Access Denied</span>"
-	else if( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
-		broken = 1
-		locked = 0
-		desc = "It appears to be broken."
-		update_icon()
-		if(istype(W, /obj/item/weapon/melee/energy/blade))
+	else if(istype(W, /obj/item/weapon/melee/energy/blade))
+		if(emag_act(INFINITY, user, "The locker has been sliced open by [user] with \an [W]!", "You hear metal being sliced and sparks flying."))
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
 			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 			playsound(src.loc, "sparks", 50, 1)
-			for(var/mob/O in viewers(user, 3))
-				O.show_message("\blue The locker has been sliced open by [user] with an energy blade!", 1, "\red You hear metal being sliced and sparks flying.", 2)
 	else
 		user << "<span class='warning'>Access Denied</span>"
 	return
+
+/obj/structure/closet/secure_closet/personal/emag_act(var/remaining_charges, var/mob/user, var/visual_feedback, var/audible_feedback)
+	if(!opened && !broken)
+		broken = 1
+		locked = 0
+		desc = "It appears to be broken."
+		update_icon()
+		if(visual_feedback)
+			visible_message("<span class='warning'>[visual_feedback]</span>", "<span class='warning'>[audible_feedback]</span>")
+		return 1
+	else
+		return -1
 
 /obj/structure/closet/secure_closet/personal/verb/reset()
 	set src in oview(1) // One square distance

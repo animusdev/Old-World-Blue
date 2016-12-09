@@ -50,7 +50,7 @@ There are several things that need to be remembered:
 		update_inv_gloves()
 		update_inv_shoes()
 		update_inv_w_uniform()
-		update_inv_glasse()
+		update_inv_glasses()
 		update_inv_l_hand()
 		update_inv_r_hand()
 		update_inv_belt()
@@ -105,10 +105,6 @@ If you have any questions/constructive-comments/bugs-to-report/or have a massivl
 Please contact me on #coderbus IRC. ~Carn x
 */
 
-//Human Underlays Indexes////////
-#define BACK_UNDERLAY			1
-#define TOTAL_UNDERLAYS			1
-
 //Human Overlays Indexes/////////
 #define MUTATIONS_LAYER			1
 #define DAMAGE_LAYER			2
@@ -122,26 +118,26 @@ Please contact me on #coderbus IRC. ~Carn x
 #define SUIT_LAYER				10
 #define TAIL_LAYER				11		//bs12 specific. this hack is probably gonna come back to haunt me
 #define GLASSES_LAYER			12
-#define SUIT_STORE_LAYER		13
-#define BACK_LAYER				14
-#define HAIR_LAYER				15		//TODO: make part of head layer?
-#define EAR_L					16
-#define EAR_R					17
-#define FACEMASK_LAYER			18
-#define HEAD_LAYER				19
-#define COLLAR_LAYER			20
-#define HANDCUFF_LAYER			21
-#define LEGCUFF_LAYER			22
-#define L_HAND_LAYER			23
-#define R_HAND_LAYER			24
-#define FIRE_LAYER				25		//If you're on fire
-#define TARGETED_LAYER			26		//BS12: Layer for the target overlay from weapon targeting system
-#define TOTAL_LAYERS			26
+#define BELT_LAYER_ALT			13
+#define SUIT_STORE_LAYER		14
+#define BACK_LAYER				15
+#define HAIR_LAYER				16		//TODO: make part of head layer?
+#define EAR_L					17
+#define EAR_R					18
+#define FACEMASK_LAYER			19
+#define HEAD_LAYER				20
+#define COLLAR_LAYER			21
+#define HANDCUFF_LAYER			22
+#define LEGCUFF_LAYER			23
+#define L_HAND_LAYER			24
+#define R_HAND_LAYER			25
+#define FIRE_LAYER				26		//If you're on fire
+#define TARGETED_LAYER			27		//BS12: Layer for the target overlay from weapon targeting system
+#define TOTAL_LAYERS			27
 //////////////////////////////////
 
 /mob/living/carbon/human
 	var/list/overlays_standing[TOTAL_LAYERS]
-	var/list/underlays_standing[TOTAL_UNDERLAYS]
 	var/previous_damage_appearance // store what the body last looked like, so we only have to update it if something changed
 
 //UPDATES OVERLAYS FROM OVERLAYS_LYING/OVERLAYS_STANDING
@@ -170,8 +166,6 @@ Please contact me on #coderbus IRC. ~Carn x
 		icon = stand_icon
 		for(var/image/I in overlays_standing)
 			overlays += I
-		for(var/image/I in underlays_standing)
-			underlays += I
 
 	if(lying && !species.prone_icon) //Only rotate them if we're not drawing a specific icon for being prone.
 		var/matrix/M = matrix()
@@ -476,6 +470,7 @@ var/global/list/damage_icon_parts = list()
 
 		var/image/standing = image(w_uniform.icon_override ? w_uniform.icon_override : body_build.uniform_icon)
 		standing.icon_state = w_uniform.wear_state ? w_uniform.wear_state : w_uniform.icon_state
+		standing.appearance_flags = RESET_COLOR
 		standing.color = w_uniform.color
 
 		//apply blood overlay
@@ -531,6 +526,7 @@ var/global/list/damage_icon_parts = list()
 			bloodsies.color = gloves.blood_color
 			standing.overlays	+= bloodsies
 		gloves.screen_loc = ui_gloves
+		standing.appearance_flags = RESET_COLOR
 		standing.color = gloves.color
 		overlays_standing[GLOVES_LAYER]	= standing
 	else
@@ -550,6 +546,7 @@ var/global/list/damage_icon_parts = list()
 			standing = image(glasses.icon_override, glasses.icon_state)
 		else
 			standing = image(body_build.glasses_icon, glasses.icon_state)
+		standing.appearance_flags = RESET_COLOR
 		standing.color = glasses.color
 		overlays_standing[GLASSES_LAYER] = standing
 
@@ -598,6 +595,7 @@ var/global/list/damage_icon_parts = list()
 			var/image/bloodsies = image(species.blood_mask, "shoeblood[body_build.index]")
 			bloodsies.color = shoes.blood_color
 			standing.overlays += bloodsies
+		standing.appearance_flags = RESET_COLOR
 		standing.color = shoes.color
 		overlays_standing[SHOES_LAYER] = standing
 	else
@@ -649,6 +647,7 @@ var/global/list/damage_icon_parts = list()
 			if(hat.on && light_overlay_cache[hat.light_overlay])
 				standing.overlays |= light_overlay_cache[hat.light_overlay]
 
+		standing.appearance_flags = RESET_COLOR
 		standing.color = head.color
 		overlays_standing[HEAD_LAYER] = standing
 
@@ -668,17 +667,27 @@ var/global/list/damage_icon_parts = list()
 		else
 			standing = image(body_build.belt_icon, t_state)
 
-		if(belt.contents.len && istype(belt, /obj/item/weapon/storage/belt))
-			for(var/obj/item/i in belt.contents)
-				var/i_state = i.item_state
-				if(!i_state) i_state = i.icon_state
-				standing.overlays	+= image(body_build.belt_icon, i_state)
+		var/belt_layer = BELT_LAYER
+		if(istype(belt, /obj/item/weapon/storage/belt))
+			var/obj/item/weapon/storage/belt/ubelt = belt
+			if(ubelt.show_above_suit)
+				overlays_standing[BELT_LAYER] = null
+				belt_layer = BELT_LAYER_ALT
+			else
+				overlays_standing[BELT_LAYER_ALT] = null
+			if(belt.contents.len && istype(belt, /obj/item/weapon/storage/belt))
+				for(var/obj/item/i in belt.contents)
+					var/i_state = i.item_state
+					if(!i_state) i_state = i.icon_state
+					standing.overlays	+= image(body_build.belt_icon, i_state)
 
+		standing.appearance_flags = RESET_COLOR
 		standing.color = belt.color
 
-		overlays_standing[BELT_LAYER] = standing
+		overlays_standing[belt_layer] = standing
 	else
 		overlays_standing[BELT_LAYER] = null
+		overlays_standing[BELT_LAYER_ALT] = null
 	if(update_icons)   update_icons()
 
 
@@ -696,6 +705,7 @@ var/global/list/damage_icon_parts = list()
 			standing = image(wear_suit.icon_override, t_state)
 		else
 			standing = image(body_build.suit_icon, t_state)
+		standing.appearance_flags = RESET_COLOR
 		standing.color = wear_suit.color
 
 		if( istype(wear_suit, /obj/item/clothing/suit/straight_jacket) )
@@ -748,6 +758,7 @@ var/global/list/damage_icon_parts = list()
 			standing = image(wear_mask.icon_override, wear_mask.icon_state)
 		else
 			standing = image(body_build.mask_icon, wear_mask.icon_state)
+		standing.appearance_flags = RESET_COLOR
 		standing.color = wear_mask.color
 
 		if( !istype(wear_mask, /obj/item/clothing/mask/smokable/cigarette) && wear_mask.blood_DNA )
@@ -765,35 +776,24 @@ var/global/list/damage_icon_parts = list()
 		back.screen_loc = ui_back	//TODO
 
 		//determine state to use
-		var/t_state
-		if(back.item_state_slots && back.item_state_slots[slot_back_str])
-			t_state = back.item_state_slots[slot_back_str]
-		else if(back.item_state)
-			t_state = back.item_state
-		else
-			t_state = back.icon_state
+		var/t_state = back.wear_state ? back.wear_state : back.icon_state
 
 		//determine the icon to use
 		var/image/standing
-		var/image/underlay
 		if(back.icon_override)
-			standing = image(back.icon_override, icon_state = t_state)
-			underlay = image(back.icon_override, icon_state = "[t_state]_u")
+			standing = image(back.icon_override, t_state)
 		else if(istype(back, /obj/item/weapon/rig))
 			standing = image(body_build.rig_back, t_state)
 		else
 			standing = image(body_build.back_icon, t_state)
-			underlay = image(body_build.back_icon, "[t_state]_u")
 
+		standing.appearance_flags = RESET_COLOR
 		standing.color = back.color
-		if(underlay) underlay.color = back.color
 
 		//create the image
 		overlays_standing[BACK_LAYER] = standing
-		underlays_standing[BACK_UNDERLAY] = underlay
 	else
 		overlays_standing[BACK_LAYER] = null
-		underlays_standing[BACK_UNDERLAY] = null
 
 	if(update_icons)
 		update_icons()
@@ -807,7 +807,8 @@ var/global/list/damage_icon_parts = list()
 	for( var/obj/item/clothing/hidden/C in list(h_underwear, h_socks, h_undershirt) )
 		if(!C) continue
 		var/image/item = image(body_build.hidden_icon, C.wear_state)
-		if(C.color) item.color = C.color
+		item.appearance_flags = RESET_COLOR
+		item.color = C.color
 		standing.overlays += item
 
 	overlays_standing[UNDERWEAR_LAYER] = standing
@@ -856,17 +857,14 @@ var/global/list/damage_icon_parts = list()
 		else
 			t_state = r_hand.icon_state
 
-		//determine icon to use
-		var/icon/t_icon
-		if(r_hand.item_icons && (slot_r_hand_str in r_hand.item_icons))
-			t_icon = r_hand.item_icons[slot_r_hand_str]
-		else if(r_hand.icon_override)
-			t_state += "_r"
-			t_icon = r_hand.icon_override
-		else
-			t_icon = 'icons/mob/items/righthand.dmi'
+		var/icon/t_icon = body_build.get_inhand_icon(r_hand.sprite_group, RIGHT)
 
-		overlays_standing[R_HAND_LAYER] = image(t_icon, t_state)
+		//apply color
+		var/image/standing = image(t_icon, t_state)
+		standing.appearance_flags = RESET_COLOR
+		standing.color = r_hand.color
+
+		overlays_standing[R_HAND_LAYER] = standing
 
 		if (handcuffed) drop_r_hand() //this should be moved out of icon code
 	else
@@ -889,16 +887,14 @@ var/global/list/damage_icon_parts = list()
 			t_state = l_hand.icon_state
 
 		//determine icon to use
-		var/icon/t_icon
-		if(l_hand.item_icons && (slot_l_hand_str in l_hand.item_icons))
-			t_icon = l_hand.item_icons[slot_l_hand_str]
-		else if(l_hand.icon_override)
-			t_state += "_l"
-			t_icon = l_hand.icon_override
-		else
-			t_icon = 'icons/mob/items/lefthand.dmi'
+		var/icon/t_icon = body_build.get_inhand_icon(l_hand.sprite_group, LEFT)
 
-		overlays_standing[L_HAND_LAYER] = image(t_icon, t_state)
+		//apply color
+		var/image/standing = image(t_icon, t_state)
+		standing.appearance_flags = RESET_COLOR
+		standing.color = l_hand.color
+
+		overlays_standing[L_HAND_LAYER] = standing
 
 		if (handcuffed) drop_l_hand() //This probably should not be here
 	else

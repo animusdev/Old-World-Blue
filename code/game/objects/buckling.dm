@@ -6,6 +6,8 @@
 	var/tmp/buckle_require_restraints = 0 //require people to be handcuffed before being able to buckle. eg: pipes
 	var/tmp/mob/living/buckled_mob = null
 
+	var/mob_offset_y = 0		//pixel_y offset for mob overlay
+
 /obj/attack_hand(mob/living/user)
 	. = ..()
 	if(can_buckle && buckled_mob)
@@ -35,6 +37,8 @@
 	M.set_dir(buckle_dir ? buckle_dir : dir)
 	M.update_canmove()
 	buckled_mob = M
+	buckled_mob.pixel_y = mob_offset_y
+	buckled_mob.old_y = mob_offset_y
 	post_buckle_mob(M)
 	return 1
 
@@ -44,6 +48,8 @@
 		buckled_mob.buckled = null
 		buckled_mob.anchored = initial(buckled_mob.anchored)
 		buckled_mob.update_canmove()
+		buckled_mob.pixel_y = 0
+		buckled_mob.old_y = 0
 		buckled_mob = null
 
 		post_buckle_mob(.)

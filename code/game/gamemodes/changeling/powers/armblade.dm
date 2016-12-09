@@ -23,6 +23,11 @@
 		return 0
 */
 	if(changeling_generic_weapon(/obj/item/weapon/melee/arm_blade))
+		visible_message(
+			"<span class='warning'>A grotesque blade forms around [src]\'s arm!</span>",
+			"<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>",
+			"<span class='italics'>You hear organic matter ripping and tearing!</span>"
+		)
 		return 1
 	return 0
 
@@ -38,6 +43,7 @@
 	edge = 1
 	pry = 1
 	abstract = 1
+	canremove = 0
 	anchored = 1
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0
@@ -49,25 +55,15 @@
 	desc = "A grotesque blade made out of bone and flesh that cleaves through people and armor as a hot knife through butter."
 	armor_penetration = 30
 */
-/obj/item/weapon/melee/arm_blade/New(location)
-	..()
-	if(ismob(loc))
-		visible_message(
-			"<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>",
-			"<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>",
-			"<span class='italics'>You hear organic matter ripping and tearing!</span>"
-		)
 
-/obj/item/weapon/melee/arm_blade/dropped(mob/user)
+/obj/item/weapon/melee/arm_blade/attack_self(var/mob/user)
+	user.drop_from_inventory(src)
+
+/obj/item/weapon/melee/arm_blade/dropped(var/mob/user)
 	user.visible_message(
 		"<span class='warning'>With a sickening crunch, [user] reforms their arm blade into an arm!</span>",
 		"<span class='notice'>We assimilate the weapon back into our body.</span>",
 		"<span class='italics'>You hear organic matter ripping and tearing!</span>"
 	)
 	playsound(src, 'sound/effects/blobattack.ogg', 30, 1)
-	spawn(1)
-		if(src)
-			qdel(src)
-
-/obj/item/weapon/armblade/attack_self(var/mob/user)
-	user.drop_from_inventory(src)
+	qdel(src)

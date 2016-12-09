@@ -59,13 +59,13 @@ var/global/list/all_undershirts = list("None")
 var/global/list/all_socks = list("None")
 
 	//Backpacks
-var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Alt")
+var/global/list/backbaglist = list("None", "Backpack", "Satchel", "Satchel Job", "Dufflebag", "Messenger")
 var/global/list/exclude_jobs = list(/datum/job/ai,/datum/job/cyborg)
 
 	//Tattoo
 var/global/list/tattoo_list = list(
 	BP_CHEST  = list("Abstract" = 1),
-	"chest2" = list("Abstract" = 1, "Cross" = 2, "Skull" = 3, "Spades" = 4),
+	"chest2"  = list("Abstract" = 1, "Cross" = 2, "Skull" = 3, "Spades" = 4),
 	BP_HEAD   = list("Abstract" = 1, "Over left eye scar" = 2, "Over right eye scar" = 3),
 	BP_GROIN  = list("Abstract" = 1),
 	BP_L_ARM  = list("Abstract" = 1),

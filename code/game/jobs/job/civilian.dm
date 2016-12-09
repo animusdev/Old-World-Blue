@@ -84,11 +84,9 @@
 	gloves = /obj/item/clothing/gloves/botanic_leather
 	ear = /obj/item/device/radio/headset/headset_service
 
-	backpacks = list(
-		/obj/item/weapon/storage/backpack/hydroponics,
-		/obj/item/weapon/storage/backpack/satchel_hyd,
-		/obj/item/weapon/storage/backpack/satchel
-	)
+	backpack  = /obj/item/weapon/storage/backpack/hydroponics
+	satchel_j = /obj/item/weapon/storage/backpack/satchel/hyd
+	messenger = /obj/item/weapon/storage/backpack/messenger/hyd
 
 	put_in_backpack = list(
 		/obj/item/device/analyzer/plant_analyzer
@@ -134,7 +132,7 @@
 	addcional_access = list(access_qm, access_mining, access_mining_station)
 	minimal_access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
 
-	uniform = /obj/item/clothing/under/rank/cargotech
+	uniform = /obj/item/clothing/under/rank/cargoshort
 	pda = /obj/item/device/pda/cargo
 	ear = /obj/item/device/radio/headset/headset_cargo
 

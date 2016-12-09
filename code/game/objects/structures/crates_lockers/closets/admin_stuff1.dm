@@ -13,7 +13,7 @@
 	new/obj/item/weapon/storage/belt/security/tactical(src)
 	new/obj/item/device/flash(src)
 	new/obj/item/weapon/tank/emergency_oxygen/double(src)
-	new/obj/item/weapon/storage/backpack/satchel_sec(src)
+	new/obj/item/weapon/storage/backpack/satchel/sec(src)
 	new/obj/item/device/flashlight/seclite(src)
 	new/obj/item/weapon/handcuffs(src)
 	new/obj/item/weapon/handcuffs(src)
@@ -40,7 +40,7 @@
 
 /obj/structure/closet/code_red_equipment/New()
 	..()
-	new/obj/item/weapon/storage/backpack/satchel_sec(src)
+	new/obj/item/weapon/storage/backpack/satchel/sec(src)
 	new/obj/item/clothing/head/beret/sec/alt(src)
 	new/obj/item/device/flashlight/seclite(src)
 	new/obj/item/weapon/gun/projectile/sec(src)

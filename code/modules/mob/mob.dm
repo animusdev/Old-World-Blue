@@ -13,8 +13,6 @@
 		client.screen = list()
 	if(mind && mind.current == src)
 		spellremove(src)
-	for(var/infection in viruses)
-		qdel(infection)
 	ghostize()
 	..()
 
@@ -57,19 +55,19 @@
 	if(!client)	return
 
 	if (type)
-		if(type & 1 && (sdisabilities & BLIND || blinded || paralysis) )//Vision related
+		if((type & 1) && ((sdisabilities & BLIND) || blinded || paralysis) )//Vision related
 			if (!( alt ))
 				return
 			else
 				msg = alt
 				type = alt_type
-		if (type & 2 && (sdisabilities & DEAF || ear_deaf))//Hearing related
+		if ((type & 2) && ((sdisabilities & DEAF) || ear_deaf))//Hearing related
 			if (!( alt ))
 				return
 			else
 				msg = alt
 				type = alt_type
-				if (type & 1 && sdisabilities & BLIND)
+				if ((type & 1) && (sdisabilities & BLIND))
 					return
 	// Added voice muffling for Issue 41.
 	if(stat == UNCONSCIOUS || sleeping > 0)
@@ -830,11 +828,11 @@ mob/proc/yank_out_object()
 	set desc = "Remove an embedded item at the cost of bleeding and pain."
 	set src in view(1)
 
-	if(!isliving(usr) || usr.next_move > world.time)
+	if(!ishuman(usr) || !usr.canClick() || !Adjacent(usr))
 		return
-	usr.next_move = world.time + 20
+	usr.setClickCooldown(20)
 
-	if(usr.stat == 1)
+	if(usr.stat)
 		usr << "You are unconcious and cannot do that!"
 		return
 

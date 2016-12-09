@@ -17,7 +17,7 @@
 		/obj/item/weapon/tank/oxygen = 2,
 	)
 	cost = 40
-	containertype = "/obj/structure/closet/crate/secure"
+	containertype = /obj/structure/closet/crate/secure
 	containername = "Atmospheric voidsuit crate"
 	access = access_atmospherics
 
@@ -31,7 +31,7 @@
 		/obj/item/weapon/tank/oxygen = 2
 	)
 	cost = 40
-	containertype = "/obj/structure/closet/crate/secure"
+	containertype = /obj/structure/closet/crate/secure
 	containername = "Engineering voidsuit crate"
 	access = access_engine_equip
 
@@ -45,7 +45,7 @@
 		/obj/item/weapon/tank/oxygen = 2
 	)
 	cost = 40
-	containertype = "/obj/structure/closet/crate/secure"
+	containertype = /obj/structure/closet/crate/secure
 	containername = "Medical voidsuit crate"
 	access = access_medical_equip
 
@@ -59,7 +59,7 @@
 		/obj/item/weapon/tank/oxygen = 2
 	)
 	cost = 40
-	containertype = "/obj/structure/closet/crate/secure"
+	containertype = /obj/structure/closet/crate/secure
 	containername = "Security voidsuit crate"
 
 /datum/supply_packs/voidsuits/supply
@@ -71,6 +71,6 @@
 		/obj/item/weapon/tank/oxygen = 2
 	)
 	cost = 40
-	containertype = "/obj/structure/closet/crate/secure"
+	containertype = /obj/structure/closet/crate/secure
 	containername = "Mining voidsuit crate"
 	access = access_mining

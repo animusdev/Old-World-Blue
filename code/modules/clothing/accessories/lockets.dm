@@ -8,13 +8,18 @@
 		There is an obvious internal place for a picture or lock of some sort, \
 		but even behind that is a very thin compartment unhinged with the pinch of a thumb and forefinger."
 	icon_state = "locket"
-	item_state = "locket"
 	slot_flags = 0
 	w_class = 2
 	slot_flags = SLOT_MASK | SLOT_TIE
 	var/base_icon
 	var/open
 	var/obj/item/held //Item inside locket.
+
+/obj/item/clothing/accessory/locket/examine(mob/user, return_dist=1)
+	.=..()
+	if(.<=2)
+		if(held)
+			held.examine(user, 0)
 
 /obj/item/clothing/accessory/locket/attack_self(mob/user as mob)
 	if(!base_icon)
@@ -28,10 +33,6 @@
 	user << "You flip \the [src] [open?"open":"closed"]."
 	if(open)
 		icon_state = "[base_icon]_open"
-		if(held)
-			user << "\The [held] falls out!"
-			held.loc = get_turf(user)
-			src.held = null
 	else
 		icon_state = "[base_icon]"
 
@@ -48,4 +49,13 @@
 			user.drop_from_inventory(O, src)
 			src.held = O
 		return
+	else if(isscrewdriver(O))
+		if(!open)
+			user << "<span class='warning'>You need to open [src] first</span>"
+			return
+		if(held)
+			user << "<span class='notice'>You eject [held] out of [src]!</span>"
+			user.put_in_hands(held)
+			src.held = null
+
 	..()

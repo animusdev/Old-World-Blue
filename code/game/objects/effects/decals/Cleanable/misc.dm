@@ -100,12 +100,6 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "vomit_1"
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
-	var/list/viruses = list()
-
-	Destroy()
-		for(var/datum/disease/D in viruses)
-			D.cure(0)
-		..()
 
 /obj/effect/decal/cleanable/gangtag
 	name = "gangtag"
@@ -115,7 +109,11 @@
 	layer = 3
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "gangtag1"
-	random_icon_states = list("gangtag1", "gangtag2", "gangtag3", "gangtag4", "gangtag5", "gangtag6", "gangtag7", "gangtag8", "gangtag9", "gangtag10", "gangtag11", "gangtag12", "gangtag13", "gangtag14", "gangtag15", "gangtag16", "gangtag17", "gangtag18")
+	random_icon_states = list(
+		"gangtag1", "gangtag2", "gangtag3", "gangtag4", "gangtag5", "gangtag6", "gangtag7",
+		"gangtag8", "gangtag9", "gangtag10", "gangtag11", "gangtag12", "gangtag13", "gangtag14",
+		"gangtag15", "gangtag16", "gangtag17", "gangtag18"
+	)
 
 /obj/effect/decal/cleanable/hotline
 	name = "blood tag"

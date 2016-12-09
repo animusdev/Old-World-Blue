@@ -223,8 +223,8 @@
 	attack_hand(usr)
 	return
 
-/mob/living/bot/medbot/Emag(var/mob/user)
-	..()
+/mob/living/bot/medbot/emag_act(var/remaining_uses, var/mob/user)
+	. = ..()
 	if(!emagged)
 		if(user)
 			user << "<span class='warning'>You short out [src]'s reagent synthesis circuits.</span>"
@@ -289,10 +289,6 @@
 
 	if((H.getToxLoss() >= heal_threshold) && (!H.reagents.has_reagent(treatment_tox)))
 		return treatment_tox
-
-	for(var/datum/disease/D in H.viruses)
-		if (!H.reagents.has_reagent(treatment_virus))
-			return treatment_virus // STOP DISEASE FOREVER
 
 /* Construction */
 

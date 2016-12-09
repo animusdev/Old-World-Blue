@@ -73,7 +73,9 @@
 	proc/go_out()
 		if(!occupant)
 			return
-		occupant.forceMove(get_turf(src))
+		var/turf/new_loc = get_turf(src)
+		for(var/atom/movable/AM in src)
+			AM.forceMove(new_loc)
 		occupant_message("[occupant] ejected. Life support functions disabled.")
 		log_message("[occupant] ejected. Life support functions disabled.")
 		occupant.reset_view()
@@ -119,31 +121,21 @@
 	proc/get_occupant_stats()
 		if(!occupant)
 			return
-		return {"<html>
-					<head>
-					<title>[occupant] statistics</title>
-					<script language='javascript' type='text/javascript'>
-					[js_byjax]
-					</script>
-					<style>
+		return {"
+			<html><head>
+				<title>[occupant] statistics</title>
+				<script language='javascript' type='text/javascript'>[js_byjax]</script>
+				<style>
 					h3 {margin-bottom:2px;font-size:14px;}
 					#lossinfo, #reagents, #injectwith {padding-left:15px;}
-					</style>
-					</head>
-					<body>
-					<h3>Health statistics</h3>
-					<div id="lossinfo">
-					[get_occupant_dam()]
-					</div>
-					<h3>Reagents in bloodstream</h3>
-					<div id="reagents">
-					[get_occupant_reagents()]
-					</div>
-					<div id="injectwith">
-					[get_available_reagents()]
-					</div>
-					</body>
-					</html>"}
+				</style>
+			</head><body>
+				<h3>Health statistics</h3>
+				<div id="lossinfo">[get_occupant_dam()]</div>
+				<h3>Reagents in bloodstream</h3>
+				<div id="reagents">[get_occupant_reagents()]</div>
+				<div id="injectwith">[get_available_reagents()]</div>
+			</body></html>"}
 
 	proc/get_occupant_dam()
 		var/t1
@@ -156,13 +148,14 @@
 				t1 = "*dead*"
 			else
 				t1 = "Unknown"
-		return {"<font color="[occupant.health > 50 ? "blue" : "red"]"><b>Health:</b> [occupant.health]% ([t1])</font><br />
-					<font color="[occupant.bodytemperature > 50 ? "blue" : "red"]"><b>Core Temperature:</b> [src.occupant.bodytemperature-T0C]&deg;C ([src.occupant.bodytemperature*1.8-459.67]&deg;F)</font><br />
-					<font color="[occupant.getBruteLoss() < 60 ? "blue" : "red"]"><b>Brute Damage:</b> [occupant.getBruteLoss()]%</font><br />
-					<font color="[occupant.getOxyLoss() < 60 ? "blue" : "red"]"><b>Respiratory Damage:</b> [occupant.getOxyLoss()]%</font><br />
-					<font color="[occupant.getToxLoss() < 60 ? "blue" : "red"]"><b>Toxin Content:</b> [occupant.getToxLoss()]%</font><br />
-					<font color="[occupant.getFireLoss() < 60 ? "blue" : "red"]"><b>Burn Severity:</b> [occupant.getFireLoss()]%</font><br />
-					"}
+		return {"
+			<font color="[occupant.health > 50 ? "blue" : "red"]"><b>Health:</b> [occupant.health]% ([t1])</font><br />
+			<font color="[occupant.bodytemperature > 50 ? "blue" : "red"]"><b>Core Temperature:</b> [src.occupant.bodytemperature-T0C]&deg;C ([src.occupant.bodytemperature*1.8-459.67]&deg;F)</font><br />
+			<font color="[occupant.getBruteLoss() < 60 ? "blue" : "red"]"><b>Brute Damage:</b> [occupant.getBruteLoss()]%</font><br />
+			<font color="[occupant.getOxyLoss() < 60 ? "blue" : "red"]"><b>Respiratory Damage:</b> [occupant.getOxyLoss()]%</font><br />
+			<font color="[occupant.getToxLoss() < 60 ? "blue" : "red"]"><b>Toxin Content:</b> [occupant.getToxLoss()]%</font><br />
+			<font color="[occupant.getFireLoss() < 60 ? "blue" : "red"]"><b>Burn Severity:</b> [occupant.getFireLoss()]%</font><br />
+		"}
 
 	proc/get_occupant_reagents()
 		if(occupant.reagents)

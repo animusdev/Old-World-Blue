@@ -1295,6 +1295,11 @@ area/crew_quarters/barman
 	icon_state = "medbay4"
 	music = 'sound/ambience/signal.ogg'
 
+/area/medical/ems
+	name = "\improper EMS Room"
+	icon_state = "EMS"
+	music = 'sound/ambience/signal.ogg'
+
 /area/medical/biostorage
 	name = "\improper Secondary Storage"
 	icon_state = "medbay2"

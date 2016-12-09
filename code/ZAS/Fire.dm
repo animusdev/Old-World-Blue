@@ -171,8 +171,7 @@ turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 					continue
 
 				//Spread the fire.
-				if (prob( 50 + 50 * (firelevel/vsc.fire_firelevel_multiplier) ) && \
-					my_tile.CanPass(null, enemy_tile, 0,0) && enemy_tile.CanPass(null, my_tile, 0,0))
+				if(prob( 50 + 50 * (firelevel/vsc.fire_firelevel_multiplier) ) && my_tile.CanPass(null, enemy_tile, 0,0) && enemy_tile.CanPass(null, my_tile, 0,0))
 					enemy_tile.create_fire(firelevel)
 
 			else
@@ -270,8 +269,7 @@ turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 		var/min_burn = 0.30*volume*group_multiplier/CELL_VOLUME //in moles - so that fires with very small gas concentrations burn out fast
 		var/gas_reaction_progress = min(max(min_burn, gas_firelevel*gas_fuel)*FIRE_GAS_BURNRATE_MULT, gas_fuel)
 
-		//liquid fuels are not as volatile, and the reaction progress depends on the size of the area that is burning.
-		//Limit the burn rate to a certain amount per area.
+		//liquid fuels are not as volatile, and the reaction progress depends on the size of the area that is burning. Limit the burn rate to a certain amount per area.
 		var/liquid_firelevel = calculate_firelevel(liquid_fuel, total_oxidizers, reaction_limit, 0) / vsc.fire_firelevel_multiplier
 		var/liquid_reaction_progress = min((liquid_firelevel*0.2 + 0.05)*fuel_area*FIRE_LIQUID_BURNRATE_MULT, liquid_fuel)
 
@@ -300,8 +298,7 @@ turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 		//*** Remove fuel and oxidizer, add carbon dioxide and heat
 
 		//remove and add gasses as calculated
-		//remove in proportion to the relative reaction progress
-		var/used_gas_fuel = min(max(0.25, used_fuel*(gas_reaction_progress/total_reaction_progress)), gas_fuel)
+		var/used_gas_fuel = min(max(0.25, used_fuel*(gas_reaction_progress/total_reaction_progress)), gas_fuel) //remove in proportion to the relative reaction progress
 		var/used_liquid_fuel = min(max(0.25, used_fuel-used_gas_fuel), liquid_fuel)
 
 		//remove_by_flag() and adjust_gas() handle the group_multiplier for us.
@@ -371,7 +368,7 @@ datum/gas_mixture/proc/check_recombustability(list/fuel_objs)
 
 	if(total_combustables > 0)
 		//slows down the burning when the concentration of the reactants is low
-		var/damping_multiplier = min(1, active_combustables * group_multiplier / total_moles)
+		var/damping_multiplier = min(1, active_combustables / (total_moles/group_multiplier))
 
 		//weight the damping mult so that it only really brings down the firelevel when the ratio is closer to 0
 		damping_multiplier = 2*damping_multiplier - (damping_multiplier*damping_multiplier)

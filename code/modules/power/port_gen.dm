@@ -88,7 +88,7 @@
 
 	var/sheet_name = "Phoron Sheets"
 	var/sheet_path = /obj/item/stack/material/phoron
-	var/board_path = "/obj/item/weapon/circuitboard/pacman"
+	var/board_path = /obj/item/weapon/circuitboard/pacman
 
 	/*
 		These values were chosen so that the generator can run safely up to 80 kW
@@ -261,6 +261,14 @@
 	sheet_left = 0
 	..()
 
+/obj/machinery/power/port_gen/pacman/emag_act(var/remaining_charges, var/mob/user)
+	if (active && prob(25))
+		explode() //if they're foolish enough to emag while it's running
+
+	if (!emagged)
+		emagged = 1
+		return 1
+
 /obj/machinery/power/port_gen/pacman/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, sheet_path))
 		var/obj/item/stack/addstack = O
@@ -273,10 +281,6 @@
 		addstack.use(amount)
 		updateUsrDialog()
 		return
-	else if (istype(O, /obj/item/weapon/card/emag))
-		emagged = 1
-		if (active && prob(25))
-			explode() //if they're foolish enough to emag while it's running
 	else if(!active)
 		if(istype(O, /obj/item/weapon/wrench))
 
@@ -411,7 +415,7 @@
 	sheet_path = /obj/item/stack/material/uranium
 	sheet_name = "Uranium Sheets"
 	time_per_sheet = 576 //same power output, but a 50 sheet stack will last 2 hours at max safe power
-	board_path = "/obj/item/weapon/circuitboard/pacman/super"
+	board_path = /obj/item/weapon/circuitboard/pacman/super
 
 /obj/machinery/power/port_gen/pacman/super/UseFuel()
 	//produces a tiny amount of radiation when in use
@@ -446,7 +450,7 @@
 	time_per_sheet = 576
 	max_temperature = 800
 	temperature_gain = 90
-	board_path = "/obj/item/weapon/circuitboard/pacman/mrs"
+	board_path = /obj/item/weapon/circuitboard/pacman/mrs
 
 /obj/machinery/power/port_gen/pacman/mrs/explode()
 	//no special effects, but the explosion is pretty big (same as a supermatter shard).

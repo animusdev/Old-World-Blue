@@ -1,18 +1,17 @@
 #define TYPING_INDICATOR_LIFETIME 30 * 10	//grace period after which typing indicator disappears regardless of text in chatbar
 
-mob/var/hud_typing = 0 //set when typing in an input window instead of chatline
-mob/var/typing
-mob/var/last_typed
-mob/var/last_typed_time
-
-mob/var/obj/effect/decal/typing_indicator
+/mob
+	var/hud_typing = 0 //set when typing in an input window instead of chatline
+	var/typing
+	var/last_typed
+	var/last_typed_time
+	var/image/typing_indicator
 
 /mob/proc/set_typing_indicator(var/state)
 
 	if(!typing_indicator)
-		typing_indicator = new
-		typing_indicator.icon = 'icons/mob/talk.dmi'
-		typing_indicator.icon_state = "typing"
+		typing_indicator = image('icons/mob/talk.dmi',"typing")
+		typing_indicator.appearance_flags = RESET_COLOR
 
 	if(client && !stat)
 		typing_indicator.invisibility  = invisibility

@@ -111,8 +111,8 @@
 	access_atmos = 1
 
 /obj/item/weapon/cartridge/signal/initialize()
-    radio = new /obj/item/radio/integrated/signal(src)
-    ..()
+	radio = new /obj/item/radio/integrated/signal(src)
+	..()
 
 /obj/item/weapon/cartridge/signal/Destroy()
 	qdel(radio)

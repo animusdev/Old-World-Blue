@@ -1,4 +1,4 @@
-/client/proc/FireLaser()
+/*/client/proc/FireLaser()
 	set name = "Fire the Icarus lasers"
 	set desc = "Fires a laser bolt at your position.  You should only do this as a(n) (a)ghost"
 	set category = "Fun"
@@ -10,7 +10,7 @@
 		return
 
 	Icarus_FireLaser(target)
-
+*/
 
 /client/proc/FireCannons()
 	set name = "Fire the Icarus cannons"
@@ -40,7 +40,7 @@
 
 var/icarus_position = SOUTH
 
-proc/Icarus_FireLaser(var/turf/target)
+/*proc/Icarus_FireLaser(var/turf/target)
 	// Find the world edge to fire from.
 	var/x = icarus_position & EAST ? world.maxx : icarus_position & WEST ? 1 : target.x
 	var/y = icarus_position & NORTH ? world.maxy : icarus_position & SOUTH ? 1 : target.y
@@ -83,6 +83,7 @@ proc/Icarus_FireLaser(var/turf/target)
 	in_chamber.name = "point defense laser"
 	in_chamber.firer = "Icarus" // Never displayed, but we want this to display the hit message.
 	in_chamber.process()
+*/
 
 proc/Icarus_FireCannon(var/turf/target)
 	// Find the world edge to fire from.

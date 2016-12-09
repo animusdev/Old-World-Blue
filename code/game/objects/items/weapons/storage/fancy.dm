@@ -134,6 +134,7 @@
 	w_class = 1
 	throwforce = 2
 	slot_flags = SLOT_BELT
+	max_storage_space = 6
 	storage_slots = 6
 	can_hold = list(/obj/item/clothing/mask/smokable/cigarette, /obj/item/weapon/flame/lighter)
 	icon_type = "cigarette"
@@ -185,6 +186,7 @@
 	w_class = 1
 	throwforce = 2
 	slot_flags = SLOT_BELT
+	max_storage_space = 7
 	storage_slots = 7
 	can_hold = list(/obj/item/clothing/mask/smokable/cigarette/cigar)
 	icon_type = "cigar"

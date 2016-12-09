@@ -37,6 +37,9 @@
 
 	msg_admin_attack("[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
+	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
+	user.do_attack_animation(M)
+
 	if ((CLUMSY in user.mutations) && prob(50))
 		user << "<span class='danger'>The rod slips out of your hand and hits your head.</span>"
 		user.take_organ_damage(10)
