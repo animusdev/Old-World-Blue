@@ -470,7 +470,7 @@
 	if(!switchMode) return
 	if(get_dist(usr, src) > 1)
 		usr << "You have moved too far away."
-	return
+		return
 	sensor_mode = modes.Find(switchMode) - 1
 
 	if (src.loc == usr)
