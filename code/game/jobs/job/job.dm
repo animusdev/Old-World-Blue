@@ -120,8 +120,8 @@ For copy-pasting:
 	//Belt and PDA
 	if(H.belt)
 		H.equip_to_slot_or_del(new pda (H), slot_l_store)
-	if(belt)
-		H.equip_to_slot_or_del(new belt (H), slot_in_backpack)
+		if(belt)
+			H.equip_to_slot_or_del(new belt (H), slot_in_backpack)
 	else
 		if(belt)
 			H.equip_to_slot_or_del(new belt (H), slot_belt)
