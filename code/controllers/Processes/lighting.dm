@@ -11,7 +11,7 @@
 		if(L && L.check())
 			lighting_controller.lights.Remove(L)
 
-		scheck()
+		SCHECK
 
 	lighting_controller.changed_turfs_workload_max = \
 		max(lighting_controller.changed_turfs_workload_max, lighting_controller.changed_turfs.len)
@@ -20,7 +20,7 @@
 		if(T && T.lighting_changed)
 			T.shift_to_subarea()
 
-		scheck()
+		SCHECK
 
 	if(lighting_controller.changed_turfs && lighting_controller.changed_turfs.len)
 		lighting_controller.changed_turfs.len = 0 // reset the changed list

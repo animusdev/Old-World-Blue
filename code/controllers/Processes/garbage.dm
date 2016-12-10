@@ -1,3 +1,9 @@
+// The time a datum was destroyed by the GC, or null if it hasn't been
+/datum/var/gcDestroyed
+#define GC_COLLECTIONS_PER_RUN 300
+#define GC_COLLECTION_TIMEOUT (30 SECONDS)
+#define GC_FORCE_DEL_PER_RUN 30
+
 var/datum/controller/process/garbage_collector/garbage_collector
 var/list/delayed_garbage = list()
 
