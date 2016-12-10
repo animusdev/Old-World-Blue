@@ -84,6 +84,7 @@
 	var/tmp/last_task = ""
 
 	var/tmp/last_object
+	var/lastObjType = "null"
 
 datum/controller/process/New(var/datum/controller/processScheduler/scheduler)
 	..()
@@ -156,11 +157,11 @@ datum/controller/process/proc/hung()
 	setStatus(PROCESS_STATUS_HUNG)
 
 datum/controller/process/proc/handleHung()
+/*
 	var/datum/lastObj = last_object
-	var/lastObjType = "null"
 	if(istype(lastObj))
 		lastObjType = lastObj.type
-
+*/
 	// If world.timeofday has rolled over, then we need to adjust.
 	if (world.timeofday < run_start)
 		run_start -= 864000
