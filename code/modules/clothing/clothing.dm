@@ -459,12 +459,6 @@
 		usr << "This suit does not have any sensors."
 		return 0
 
-/obj/item/clothing/under/AltClick(mob/living/carbon/human/user)
-	if(src in user)
-		set_sensors(user)
-	else
-		return ..()
-
 	var/list/modes = list("Off", "Binary sensors", "Vitals tracker", "Tracking beacon")
 	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) as null|anything in modes
 	if(!switchMode) return
@@ -472,6 +466,12 @@
 		usr << "You have moved too far away."
 		return
 	sensor_mode = modes.Find(switchMode) - 1
+
+/obj/item/clothing/under/AltClick(mob/living/carbon/human/user)
+	if(src in user)
+		set_sensors(user)
+	else
+		return ..()
 
 	if (src.loc == usr)
 		switch(sensor_mode)
