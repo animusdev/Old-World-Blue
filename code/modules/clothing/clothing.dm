@@ -467,12 +467,6 @@
 		return
 	sensor_mode = modes.Find(switchMode) - 1
 
-/obj/item/clothing/under/AltClick(mob/living/carbon/human/user)
-	if(src in user)
-		set_sensors(user)
-	else
-		return ..()
-
 	if (src.loc == usr)
 		switch(sensor_mode)
 			if(0)
@@ -498,6 +492,12 @@
 
 	else if (istype(src.loc, /mob))
 		usr.visible_message("[usr] adjusts [src.loc]'s sensors.", "You adjust [src.loc]'s sensors.")
+
+/obj/item/clothing/under/AltClick(mob/living/carbon/human/user)
+	if(src in user)
+		set_sensors(user)
+	else
+		return ..()
 
 /obj/item/clothing/under/verb/toggle()
 	set name = "Toggle Suit Sensors"
