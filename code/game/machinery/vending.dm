@@ -214,7 +214,7 @@
 
 		if(do_after(user, 20, src))
 			if(!src) return
-			user.visible_message("\The [user] begins [anchored? "un" : ""]securing \the [src] to the floor.", "You start [anchored? "un" : ""]securing \the [src] to the floor.")
+			user << "<span class='notice'>You [anchored? "un" : ""]secured \the [src]!</span>"
 			anchored = !anchored
 		return
 
