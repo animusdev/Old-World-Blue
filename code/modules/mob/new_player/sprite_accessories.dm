@@ -133,7 +133,7 @@
 		name = "Birdnest"
 		icon_state = "birdnest"
 
-	birdnest
+	birdnest2
 		name = "Birdnest 2"
 		icon_state = "birdnest2"
 
