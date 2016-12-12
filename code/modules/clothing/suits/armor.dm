@@ -29,33 +29,6 @@
 	desc = "An armored vest that protects against some damage. This one has a NanoTrasen corporate badge."
 	icon_state = "armorsec"
 
-/obj/item/clothing/suit/armor/vest/warden
-	name = "Warden's jacket"
-	desc = "An armoured jacket with silver rank pips and livery."
-	icon_state = "warden_jacket"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-
-/obj/item/clothing/suit/armor/hos
-	name = "armored coat"
-	desc = "A greatcoat enhanced with a special alloy for some protection and style."
-	icon_state = "hos"
-	item_state = "jensencoat"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	armor = list(melee = 65, bullet = 30, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
-	flags_inv = HIDEJUMPSUIT
-	siemens_coefficient = 0.6
-
-/obj/item/clothing/suit/armor/hos/solyarkin
-	name = "Internal Security coat"
-	desc = "A lot of time ago this coat worn only internal security members. \
-			But now, nobody remember about those great men"
-	icon_state = "commi_coat"
-
-/obj/item/clothing/suit/armor/hos/jensen
-	name = "armored trenchcoat"
-	desc = "A trenchcoat augmented with a special alloy for some protection and style."
-	icon_state = "jensencoat"
-
 /obj/item/clothing/suit/armor/riot
 	name = "Riot Suit"
 	desc = "A suit of armor with heavy padding to protect against melee attacks. Looks like it might impair movement."
@@ -256,6 +229,33 @@
 					/obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/handcuffs, \
 					/obj/item/device/flashlight, /obj/item/weapon/melee/telebaton, \
 					/obj/item/clothing/head/helmet/security, /obj/item/clothing/mask/gas)
+
+/obj/item/clothing/suit/storage/vest/warden
+	name = "Warden's jacket"
+	desc = "An armoured jacket with silver rank pips and livery."
+	icon_state = "warden_jacket"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
+/obj/item/clothing/suit/storage/hos
+	name = "armored coat"
+	desc = "A greatcoat enhanced with a special alloy for some protection and style."
+	icon_state = "hos"
+	item_state = "jensencoat"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	armor = list(melee = 65, bullet = 30, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
+	flags_inv = HIDEJUMPSUIT
+	siemens_coefficient = 0.6
+
+/obj/item/clothing/suit/storage/hos/solyarkin
+	name = "Internal Security coat"
+	desc = "A lot of time ago this coat worn only internal security members. \
+			But now, nobody remember about those great men"
+	icon_state = "commi_coat"
+
+/obj/item/clothing/suit/storage/hos/jensen
+	name = "armored trenchcoat"
+	desc = "A trenchcoat augmented with a special alloy for some protection and style."
+	icon_state = "jensencoat"
 
 /obj/item/clothing/suit/storage/vest/seclight
 	name = "lightened plate carrier"
