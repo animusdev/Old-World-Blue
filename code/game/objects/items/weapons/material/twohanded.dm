@@ -224,6 +224,7 @@
 
 /obj/item/weapon/material/twohanded/bostaff
 	icon_state = "bostaff0"
+	wear_state = "bostaff"
 	base_icon = "bostaff"
 	name = "bo staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts. Can be wielded to both kill and incapacitate."
