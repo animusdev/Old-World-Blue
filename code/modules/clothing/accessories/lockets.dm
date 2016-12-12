@@ -22,7 +22,7 @@
 			if(open)
 				held.examine(user, 0)
 			else
-				user << "there's definitely something there!"
+				user << "<span class='notice'>There's definitely something there!</span>"
 
 /obj/item/clothing/accessory/locket/attack_self(mob/user as mob)
 	if(!base_icon)
