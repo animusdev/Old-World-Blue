@@ -33,7 +33,7 @@ var/datum/antagonist/highlander/highlanders
 		return
 
 	for (var/obj/item/I in player)
-		if (istype(I, /obj/item/weapon/implant))
+		if (istype(I, /obj/item/weapon/implant) || istype(I, /obj/item/organ))
 			continue
 		qdel(I)
 
@@ -60,7 +60,7 @@ var/datum/antagonist/highlander/highlanders
 		return
 
 	for(var/mob/living/carbon/human/H in player_list)
-		if(H.stat == 2 || !(H.client)) continue
+		if(H.stat == DEAD || !(H.client)) continue
 		if(is_special_character(H)) continue
 		highlanders.add_antagonist(H.mind)
 
