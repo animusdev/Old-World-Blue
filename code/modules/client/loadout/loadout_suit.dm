@@ -152,30 +152,30 @@
 
 /datum/gear/suit/varsityred
 	display_name = "Varsity jacket, red"
-	path = /obj/item/clothing/suit/storage/toggle/varsityred
+	path = /obj/item/clothing/suit/storage/toggle/varsity
 
 /datum/gear/suit/varsityblue
 	display_name = "Varsity jacket, blue"
-	path = /obj/item/clothing/suit/storage/toggle/varsityblue
+	path = /obj/item/clothing/suit/storage/toggle/varsity/blue
 
 /datum/gear/suit/varsityblack
 	display_name = "Varsity jacket, black"
-	path = /obj/item/clothing/suit/storage/toggle/varsityblack
+	path = /obj/item/clothing/suit/storage/toggle/varsity/black
 
 /datum/gear/suit/varsitybrown
 	display_name = "Varsity jacket, brown"
-	path = /obj/item/clothing/suit/storage/toggle/varsitybrown
+	path = /obj/item/clothing/suit/storage/toggle/varsity/brown
 
 /datum/gear/suit/flannel
-	display_name = "grey flannel"
+	display_name = "flannel, grey"
 	path = /obj/item/clothing/suit/storage/flannel
 
 /datum/gear/suit/flannel/red
-	display_name = "red flannel"
+	display_name = "flannel, red"
 	path = /obj/item/clothing/suit/storage/flannel/red
 
 /datum/gear/suit/flannel/aqua
-	display_name = "aqua flannel"
+	display_name = "flannel, aqua"
 	path = /obj/item/clothing/suit/storage/flannel/aqua
 
 /datum/gear/suit/zhan_furs
