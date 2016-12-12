@@ -482,7 +482,7 @@
 
 /obj/structure/closet/wardrobe/tactical/New()
 	..()
-	new /obj/item/clothing/under/tactical(src)
+	new /obj/item/clothing/under/rank/tactical(src)
 	new /obj/item/clothing/suit/armor/tactical(src)
 	new /obj/item/clothing/head/helmet/tactical(src)
 	new /obj/item/clothing/mask/balaclava/tactical(src)

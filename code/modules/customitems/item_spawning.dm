@@ -384,6 +384,8 @@
 
 	custom_items["marcusaga"] = L
 
+	return 1
+
 //gets the relevant list for the key from the listlist if it exists, check to make sure they are meant to have it and then calls the giving function
 /proc/equip_custom_items(mob/living/carbon/human/M)
 	var/list/key_list = custom_items[M.ckey]

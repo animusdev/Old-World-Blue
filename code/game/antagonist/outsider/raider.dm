@@ -26,7 +26,7 @@ var/datum/antagonist/raider/raiders
 		/obj/item/clothing/under/redcoat,
 		/obj/item/clothing/under/serviceoveralls,
 		/obj/item/clothing/under/captain_fly,
-		/obj/item/clothing/under/det,
+		/obj/item/clothing/under/rank/det,
 		/obj/item/clothing/under/color/brown,
 		)
 
