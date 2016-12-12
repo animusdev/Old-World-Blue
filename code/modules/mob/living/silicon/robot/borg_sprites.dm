@@ -252,6 +252,10 @@ var/global/list/borg_sprites = list(
 	icon_state = "droid-syndie"
 	module = MOD_SYN
 
+/datum/borg_sprite/droid/syndie/tread
+	name = "Droid tread"
+	icon_state = "droid-syndie-tread"
+
 /datum/borg_sprite/droid/syndie/med
 	icon_state = "droid-syndi-medi"
 	name = "Droid alt"
