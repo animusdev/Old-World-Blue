@@ -14,10 +14,6 @@
 
 	if(!istype(I) || I.anchored)
 		return
-
-	if(ismob(I.loc))
-		if(!I.loc:unEquip(I)) return
-
 	if(istype(I, /obj/item/weapon/evidencebag))
 		user << "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>"
 		return
@@ -29,6 +25,10 @@
 	if(contents.len)
 		user << "<span class='notice'>[src] already has something inside it.</span>"
 		return
+
+	if(ismob(I.loc))
+		var/mob/M = I.loc
+		if(!M.unEquip(I)) return
 
 	user.visible_message("[user] puts [I] into [src]", "You put [I] inside [src].",\
 	"You hear a rustle as someone puts something into a plastic bag.")
