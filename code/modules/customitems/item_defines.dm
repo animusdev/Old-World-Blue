@@ -2,13 +2,6 @@
 	name = "Clown"
 	desc = "Reminder of the wonderful past"
 	icon_state = "sad_clown"
-/*
-/obj/item/clothing/under/rank/security/venligen
-	name = "\improper PMC Turtleneck"
-	desc = "Standart issued uniform for Redwood mercenary operatives. Made from high quality and sturdy material."
-	icon_state = "BW_uniform"
-	item_state = "jensen"
-*/
 
 /obj/item/clothing/accessory/locket/Evans
 	desc = "This oval shaped, argentium sterling silver locket."
@@ -21,7 +14,7 @@
 	item_state = "jensen"
 
 /obj/item/clothing/under/rank/security/venligen_alt
-	name = "PMC Uniform"
+	name = "\improper PMC Uniform"
 	desc = "Standart issued security uniform for Blackwater operatives. Made from sturdier material to allow more protection."
 	icon_state = "constableuniform"
 	item_state = "black"
@@ -29,6 +22,7 @@
 /obj/item/clothing/suit/armor/vest/venligen
 	name = "PMC Kevlar Vest"
 	desc = "Standart issued ballistic vest for Blackwater high-risk security operatives."
+	icon_state = "constablevest"
 
 /obj/item/clothing/accessory/purple_heart
 	name = "Purple Heart"
