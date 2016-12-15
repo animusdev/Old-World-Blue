@@ -49,7 +49,7 @@
 	icon_state = "warden_corporate"
 	item_state = "black"
 
-/obj/item/clothing/under/tactical
+/obj/item/clothing/under/rank/tactical
 	name = "tactical jumpsuit"
 	desc = "It's made of a slightly sturdier material than standard jumpsuits, to allow for robust protection."
 	icon_state = "swatunder"
@@ -60,7 +60,7 @@
 /*
  * Detective
  */
-/obj/item/clothing/under/det
+/obj/item/clothing/under/rank/det
 	name = "detective's suit"
 	desc = "A rumpled white dress shirt paired with well-worn grey slacks."
 	icon_state = "detective"
@@ -68,33 +68,41 @@
 	siemens_coefficient = 0.9
 	starting_accessories = list(/obj/item/clothing/accessory/blue_clip)
 
-/obj/item/clothing/under/det/black
+/obj/item/clothing/under/rank/det/black
 	icon_state = "detective2"
 	item_state = "sl_suit"
 
-/obj/item/clothing/under/det/slob
+/obj/item/clothing/under/rank/det/slob
 	icon_state = "polsuit"
 	item_state = "sl_suit"
 
-/obj/item/clothing/under/det/seven
+/obj/item/clothing/under/rank/det/seven
 	icon_state = "detsuit_black"
 	item_state = "sl_suit"
 
-/obj/item/clothing/under/rank/forentech
+/obj/item/clothing/under/rank/det/forentech
 	name = "red forensic technician suit"
 	desc = "Someone who wears this means business."
 	icon_state = "forentech"
 	item_state = "r_suit"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	siemens_coefficient = 0.9
 
-/obj/item/clothing/under/rank/forentech2
+/obj/item/clothing/under/rank/det/forentech2
 	name = "blue forensic technician suit"
 	desc = "Someone who wears this means business."
 	icon_state = "forentech2"
 	item_state = "b_suit"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	siemens_coefficient = 0.9
+
+/obj/item/clothing/under/rank/det/formal
+	name = "formal uniform"
+	desc = "It's Foresenic technician's formal suit. Classy black pants with white shirt and foresenics badge attached to it."
+	icon_state = "formal_suit"
+	item_state = "sl_suit"
+
+/obj/item/clothing/under/rank/det/formal_dress
+	name = "formal dress"
+	desc = "It's Foresenic technician's formal skirt. Classy skirt pants with white shirt and foresenics badge attached to it."
+	icon_state = "formal_dress"
+	item_state = "sl_suit"
 
 /*
  * Head of Security

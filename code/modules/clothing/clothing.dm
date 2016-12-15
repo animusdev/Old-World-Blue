@@ -459,12 +459,6 @@
 		usr << "This suit does not have any sensors."
 		return 0
 
-/obj/item/clothing/under/AltClick(mob/living/carbon/human/user)
-	if(src in user)
-		set_sensors(user)
-	else
-		return ..()
-
 	var/list/modes = list("Off", "Binary sensors", "Vitals tracker", "Tracking beacon")
 	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) as null|anything in modes
 	if(!switchMode) return
@@ -498,6 +492,12 @@
 
 	else if (istype(src.loc, /mob))
 		usr.visible_message("[usr] adjusts [src.loc]'s sensors.", "You adjust [src.loc]'s sensors.")
+
+/obj/item/clothing/under/AltClick(mob/living/carbon/human/user)
+	if(src in user)
+		set_sensors(user)
+	else
+		return ..()
 
 /obj/item/clothing/under/verb/toggle()
 	set name = "Toggle Suit Sensors"

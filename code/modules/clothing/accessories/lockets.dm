@@ -19,7 +19,10 @@
 	.=..()
 	if(.<=2)
 		if(held)
-			held.examine(user, 0)
+			if(open)
+				held.examine(user, 0)
+			else
+				user << "<span class='notice'>There's definitely something there!</span>"
 
 /obj/item/clothing/accessory/locket/attack_self(mob/user as mob)
 	if(!base_icon)

@@ -183,7 +183,7 @@
 	cost = 50
 	access = access_armory
 	contains = list(
-		/obj/item/clothing/under/tactical = 2,
+		/obj/item/clothing/under/rank/tactical = 2,
 		/obj/item/clothing/suit/armor/tactical = 2,
 		/obj/item/clothing/head/helmet/tactical = 2,
 		/obj/item/clothing/mask/balaclava/tactical = 2,

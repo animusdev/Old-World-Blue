@@ -485,3 +485,14 @@
 	icon_state = "red_pyjamas"
 	item_state = "red"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+
+/*
+ * Venlingen is trying to kill me
+ */
+/obj/item/clothing/under/biker
+	name = "biker's suit"
+	desc = "A simple outfit. Dark jeans and an ochre flannel shirt that definitely need some more ironing."
+	icon_state = "biker_suit"
+	item_state = "biker_suit"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+
