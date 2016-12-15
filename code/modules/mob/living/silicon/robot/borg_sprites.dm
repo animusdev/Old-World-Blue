@@ -48,6 +48,11 @@ var/global/list/borg_sprites = list(
 	panel = "dawg"
 	module = MOD_SEC
 
+/datum/borg_sprite/dawg/rhino
+	name = "Rhino"
+	icon_state = "rhino"
+	module = MOD_SYN
+
 ////DALEK////
 /datum/borg_sprite/dalek
 	name = "Dalek"
