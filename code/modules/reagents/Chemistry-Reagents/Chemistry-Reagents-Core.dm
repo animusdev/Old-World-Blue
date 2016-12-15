@@ -39,10 +39,16 @@
 	var/effective_dose = dose
 	if(issmall(M)) effective_dose *= 2
 
-	if(effective_dose > 5)
-		M.adjustToxLoss(removed)
-	if(effective_dose > 15)
-		M.adjustToxLoss(removed)
+	if(alien == IS_VAMPIRE) // Approx tric effect. More or less
+		M.adjustOxyLoss(-2 * removed)
+		M.heal_organ_damage(3 * removed, 4 * removed)
+		M.adjustToxLoss(-3 * removed)
+		M.nutrition += 4 * removed
+	else
+		if(effective_dose > 5)
+			M.adjustToxLoss(removed)
+		if(effective_dose > 15)
+			M.adjustToxLoss(removed)
 	if(data && data["virus2"])
 		var/list/vlist = data["virus2"]
 		if(vlist.len)
