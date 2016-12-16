@@ -25,38 +25,6 @@
 
 	flags = CAN_JOIN | HAS_SKIN_TONE | HAS_LIPS | HAS_UNDERWEAR | HAS_EYE_COLOR
 
-
-/datum/species/human/cursed
-	name = "Cursed huamn"
-	name_plural = "Humans"
-	language = "Sol Common"
-	primitive_form = ""
-	flags = HAS_SKIN_TONE | HAS_LIPS | HAS_UNDERWEAR | HAS_EYE_COLOR | IS_RESTRICTED
-
-/datum/species/human/cursed/handle_environment_special(var/mob/living/carbon/human/H)
-	var/is_skeleton = (SKELETON in H.mutations)
-	var/light_amount = 0
-	if(isturf(H.loc))
-		var/turf/T = H.loc
-		var/atom/movable/lighting_overlay/L = locate(/atom/movable/lighting_overlay) in T
-		if(L)
-			light_amount = L.lum_r + L.lum_g + L.lum_b //hardcapped so it's not abused by having a ton of flashlights
-		else
-			light_amount =  10
-	if(light_amount > 0.9)
-		if(is_skeleton)
-			H.mutations -= SKELETON
-			H.update_hair(0)
-			H.update_body()
-	else
-		if(!is_skeleton)
-			H.mutations |= SKELETON
-			H.update_hair(0)
-			H.update_body()
-
-/datum/species/human/cursed/get_bodytype()
-	return "Human"
-
 /datum/species/unathi
 	name = "Unathi"
 	name_plural = "Unathi"

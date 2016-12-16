@@ -213,6 +213,13 @@
 	if(ishuman(M)) // Any location
 		if(M.mind && cult.is_antagonist(M.mind) && prob(10))
 			cult.remove_antagonist(M.mind)
+		if(alien == IS_VAMPIRE)
+			M.adjustToxLoss(5 * removed)
+
+/datum/reagent/water/holywater/affect_blood(var/mob/living/carbon/M, var/alien, var/removed)
+	if(alien == IS_VAMPIRE)
+		M.adjustFireLoss(3 * removed)
+	..()
 
 /datum/reagent/water/holywater/touch_turf(var/turf/T)
 	if(volume >= 5)
