@@ -3,14 +3,14 @@
 	gender = FEMALE
 	species_allowed = list("Arachna")
 
-	bald
+/*	bald
 		name = "Arachna Bald"
 		icon_state = "bald"
 		New()
 			..()
 			species_allowed = list()
 			for(var/S in all_species)
-				species_allowed += S
+				species_allowed += S*/
 
 
 	afro
