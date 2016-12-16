@@ -78,26 +78,32 @@
 		O.key = key
 
 	if(move)
-		var/obj/loc_landmark
+		var/turf/new_loc
 		for(var/obj/effect/landmark/start/sloc in landmarks_list)
 			if (sloc.name != "AI")
 				continue
-			if ((locate(/mob/living) in sloc.loc) || (locate(/obj/structure/AIcore) in sloc.loc))
+			if ((locate(/mob/living/silicon/ai) in sloc.loc))
 				continue
-			loc_landmark = sloc
-		if (!loc_landmark)
+			new_loc = get_turf(sloc)
+		if (!new_loc)
+			var/obj/structure/AIcore/deactivated/C = empty_playable_ai_cores[1]
+			empty_playable_ai_cores -= C
+			new_loc = get_turf(C)
+			qdel(C)
+		if (!new_loc)
 			for(var/obj/effect/landmark/tripai in landmarks_list)
-				if (tripai.name == "tripai")
-					if((locate(/mob/living) in tripai.loc) || (locate(/obj/structure/AIcore) in tripai.loc))
-						continue
-					loc_landmark = tripai
-		if (!loc_landmark)
+				if (tripai.name != "tripai")
+					continue
+				if((locate(/mob/living/silicon/ai) in tripai.loc))
+					continue
+				new_loc = get_turf(tripai)
+		if (!new_loc)
 			O << "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone."
 			for(var/obj/effect/landmark/start/sloc in landmarks_list)
 				if (sloc.name == "AI")
-					loc_landmark = sloc
+					new_loc = get_turf(sloc)
 
-		O.loc = loc_landmark.loc
+		O.forceMove(new_loc)
 		for (var/obj/item/device/radio/intercom/comm in O.loc)
 			comm.ai += O
 
@@ -125,12 +131,6 @@
 		qdel(t)
 
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( loc )
-
-	// cyborgs produced by Robotize get an automatic power cell
-	O.cell = new(O)
-	O.cell.maxcharge = 7500
-	O.cell.charge = 7500
-
 
 	O.gender = gender
 	O.invisibility = 0

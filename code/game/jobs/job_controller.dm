@@ -382,79 +382,77 @@ var/global/datum/controller/occupations/job_master
 	proc/EquipRank(var/mob/living/carbon/human/H, var/rank, var/joined_late = 0)
 		if(!H)	return null
 
+		H.job = rank
+
 		var/datum/job/job = GetJob(rank)
 		var/list/spawn_in_storage = list()
 
-		if(job)
+		if(!job)
+			H << "Your job is [rank] and the game just can't handle it! Please report this bug to an administrator."
+			return H
 
-			if(job.title != "Cyborg" && job.title != "AI")
+		var/hidden_type = all_socks[H.client.prefs.socks]
+		if(hidden_type)
+			H.equip_to_slot_or_del(new hidden_type, slot_socks)
+		hidden_type = all_underwears[H.client.prefs.underwear]
+		if(hidden_type)
+			H.equip_to_slot_or_del(new hidden_type, slot_underwear)
+		hidden_type = all_undershirts[H.client.prefs.undershirt]
+		if(hidden_type)
+			H.equip_to_slot_or_del(new hidden_type, slot_undershirt)
 
-				var/hidden_type = all_socks[H.client.prefs.socks]
-				if(hidden_type)
-					H.equip_to_slot_or_del(new hidden_type, slot_socks)
-				hidden_type = all_underwears[H.client.prefs.underwear]
-				if(hidden_type)
-					H.equip_to_slot_or_del(new hidden_type, slot_underwear)
-				hidden_type = all_undershirts[H.client.prefs.undershirt]
-				if(hidden_type)
-					H.equip_to_slot_or_del(new hidden_type, slot_undershirt)
-
-				//Equip custom gear loadout.
-				var/list/custom_equip_slots = list() //If more than one item takes the same slot, all after the first one spawn in storage.
-	//			var/list/custom_equip_leftovers = list()
-				if(H.client.prefs.gear && H.client.prefs.gear.len)
-					for(var/thing in H.client.prefs.gear)
-						var/datum/gear/G = gear_datums[thing]
-						if(G)
-							var/permitted
-							if(G.allowed_roles)
-								for(var/job_name in G.allowed_roles)
-									if(job.title == job_name)
-										permitted = 1
-							else
-								permitted = 1
-
-							if(G.whitelisted && !is_alien_whitelisted(H, G.whitelisted))
-								permitted = 0
-
-							if(!permitted)
-								H << "<span class='warning'>Your current job or whitelist status does not permit you to spawn with [thing]!</span>"
-								continue
-
-							if(G.slot && !(G.slot in custom_equip_slots))
-								// This is a miserable way to fix the loadout overwrite bug, but the alternative requires
-								// adding an arg to a bunch of different procs. Will look into it after this merge. ~ Z
-								if(G.slot == slot_wear_mask || G.slot == slot_wear_suit || G.slot == slot_head)
-									//custom_equip_leftovers += thing
-									spawn_in_storage.Add(thing)
-								else if(H.equip_to_slot_or_del(new G.path(H), G.slot))
-									H << "\blue Equipping you with [thing]!"
-									custom_equip_slots.Add(G.slot)
-								else
-	//								custom_equip_leftovers.Add(thing)
-									spawn_in_storage.Add(thing)
-							else
-								spawn_in_storage += thing
-			//Equip job items.
-			job.equip(H)
-			job.setup_account(H)
-			job.apply_fingerprints(H)
-
-/*			//If some custom items could not be equipped before, try again now.
-			for(var/thing in custom_equip_leftovers)
+		//Equip custom gear loadout.
+		var/list/custom_equip_slots = list() //If more than one item takes the same slot, all after the first one spawn in storage.
+//		var/list/custom_equip_leftovers = list()
+		if(H.client.prefs.gear && H.client.prefs.gear.len)
+			for(var/thing in H.client.prefs.gear)
 				var/datum/gear/G = gear_datums[thing]
-				if(G.slot in custom_equip_slots)
-					spawn_in_storage += thing
+				if(!G)
+					continue
+				var/permitted
+				if(G.allowed_roles)
+					if(job.title in G.allowed_roles)
+						permitted = 1
 				else
-					if(H.equip_to_slot_or_del(new G.path(H), G.slot))
-						H << "<span class='notice'>Equipping you with \the [thing]!</span>"
+					permitted = 1
+
+				if(G.whitelisted && !is_alien_whitelisted(H, G.whitelisted))
+					permitted = 0
+
+				if(!permitted)
+					H << "<span class='warning'>Your current job or whitelist status does not permit you to spawn with [thing]!</span>"
+					continue
+
+				if(G.slot && !(G.slot in custom_equip_slots))
+					// This is a miserable way to fix the loadout overwrite bug, but the alternative requires
+					// adding an arg to a bunch of different procs. Will look into it after this merge. ~ Z
+					if(G.slot == slot_wear_mask || G.slot == slot_wear_suit || G.slot == slot_head)
+						//custom_equip_leftovers += thing
+						spawn_in_storage.Add(thing)
+					else if(H.equip_to_slot_or_del(new G.path(H), G.slot))
+						H << "\blue Equipping you with [thing]!"
 						custom_equip_slots.Add(G.slot)
 					else
-						spawn_in_storage += thing*/
-		else
-			H << "Your job is [rank] and the game just can't handle it! Please report this bug to an administrator."
+//						custom_equip_leftovers.Add(thing)
+						spawn_in_storage.Add(thing)
+				else
+					spawn_in_storage += thing
+		//Equip job items.
+		job.equip(H)
+		job.setup_account(H)
+		job.apply_fingerprints(H)
 
-		H.job = rank
+/*		//If some custom items could not be equipped before, try again now.
+		for(var/thing in custom_equip_leftovers)
+			var/datum/gear/G = gear_datums[thing]
+			if(G.slot in custom_equip_slots)
+				spawn_in_storage += thing
+			else
+				if(H.equip_to_slot_or_del(new G.path(H), G.slot))
+					H << "<span class='notice'>Equipping you with \the [thing]!</span>"
+					custom_equip_slots.Add(G.slot)
+				else
+					spawn_in_storage += thing*/
 
 		if(!joined_late)
 			var/obj/S = null
@@ -489,21 +487,15 @@ var/global/datum/controller/occupations/job_master
 			H.mind.assigned_role = rank
 			alt_title = H.mind.role_alt_title
 
-			switch(rank)
-				if("Cyborg")
-					return H.Robotize()
-				if("AI")
-					return H
-				if("Captain")
-					var/sound/announce_sound = (ticker.current_state <= GAME_STATE_SETTING_UP)? null : sound('sound/misc/boatswain.ogg', volume=20)
-					captain_announcement.Announce("All hands, Captain [H.real_name] on deck!", new_sound=announce_sound)
-
 			//Deferred item spawning.
 			if(spawn_in_storage && spawn_in_storage.len)
 				var/obj/item/weapon/storage/B
-				for(var/obj/item/weapon/storage/S in H.contents)
-					B = S
-					break
+				if(istype(H.back, /obj/item/weapon/storage))
+					B = H.back
+				else
+					for(var/obj/item/weapon/storage/S in H.contents)
+						B = S
+						break
 
 				if(!isnull(B))
 					for(var/thing in spawn_in_storage)
@@ -513,15 +505,11 @@ var/global/datum/controller/occupations/job_master
 				else
 					H << "<span class='danger'>Failed to locate a storage object on your mob, either you spawned with no arms and no backpack or this is a bug.</span>"
 
-		if(istype(H)) //give humans wheelchairs, if they need them.
-			var/obj/item/organ/external/l_foot = H.get_organ(BP_L_FOOT)
-			var/obj/item/organ/external/r_foot = H.get_organ(BP_R_FOOT)
-			if((!l_foot || l_foot.status & ORGAN_DESTROYED) && (!r_foot || r_foot.status & ORGAN_DESTROYED))
-				var/obj/structure/bed/chair/wheelchair/W = new /obj/structure/bed/chair/wheelchair(H.loc)
-				H.buckled = W
-				H.update_canmove()
+		if(istype(H) && !H.buckled) //give humans wheelchairs, if they need them.
+			if(!H.get_organ(BP_L_FOOT) && !H.get_organ(BP_R_FOOT))
+				var/obj/structure/bed/chair/wheelchair/W = new (H.loc)
 				W.set_dir(H.dir)
-				W.buckled_mob = H
+				W.buckle_mob(H)
 				W.add_fingerprint(H)
 
 		H << "<B>You are [job.total_positions == 1 ? "the" : "a"] [alt_title ? alt_title : rank].</B>"
