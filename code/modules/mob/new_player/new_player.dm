@@ -225,20 +225,21 @@
 			src << alert("[rank] is not available. Please try another.")
 			return 0
 
-		spawning = 1
-		close_spawn_windows()
-
 		if(!job_master.AssignRole(src, rank, 1))
 			return 0
+
+		spawning = 1
+		close_spawn_windows()
 
 		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
 
 		var/mob/living/character
 		switch(mind.assigned_role)
 			if("AI")
-				AnnounceCyborg(src, rank, "has been downloaded to the empty core in \the [character.loc.loc]")
-				var/mob/living/silicon/ai/O = AIize(1) //SRC was deleted here!
+				var/mob/living/silicon/ai/O = src.AIize(1,0) //SRC was deleted here!
+				AnnounceCyborg(O, rank, "has been downloaded to the empty core in \the [character.loc.loc]")
 				ticker.mode.handle_latejoin(O)
+				qdel(src)
 				return
 			if("Cyborg")
 				var/mob/living/silicon/robot/R = new (src.loc)
@@ -250,6 +251,7 @@
 						R.mmi = new /obj/item/device/mmi/digital/robot(R)
 					else
 						R.mmi = new /obj/item/device/mmi(R)
+				R.mmi.transfer_identity(src)
 				if(mind)
 					mind.active = 0		//we wish to transfer the key manually
 					mind.original = R
