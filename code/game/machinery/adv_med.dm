@@ -78,6 +78,9 @@
 		if (src.occupant)
 			user << "\blue <B>The scanner is already occupied!</B>"
 			return
+		if(G.affecting.buckled)
+			user << "\blue <B>Unbuckle the subject before attempting to move them.</B>"
+			return
 		if (G.affecting.abiotic())
 			user << "\blue <B>Subject cannot have abiotic items on.</B>"
 			return
@@ -97,6 +100,35 @@
 		qdel(G)
 		return
 	else ..()
+
+
+/obj/machinery/bodyscanner/MouseDrop_T(var/mob/target, var/mob/user)
+	if(!ismob(target))
+		return
+	if (src.occupant)
+		user << "\blue <B>The scanner is already occupied!</B>"
+		return
+	if (target.abiotic())
+		user << "\blue <B>Subject cannot have abiotic items on.</B>"
+		return
+	if (target.buckled)
+		user << "\blue <B>Unbuckle the subject before attempting to move them.</B>"
+		return
+	user.visible_message("<span class='notice'>\The [user] begins placing \the [target] into \the [src].</span>", "<span class='notice'>You start placing \the [target] into \the [src].</span>")
+	if(!do_after(user, 30, src))
+		return
+	var/mob/M = target
+	if (M.client)
+		M.client.perspective = EYE_PERSPECTIVE
+		M.client.eye = src
+	M.loc = src
+	src.occupant = M
+	update_use_power(2)
+	src.icon_state = "body_scanner_1"
+	for(var/obj/O in src)
+		O.loc = src.loc
+	src.add_fingerprint(user)
+	return
 
 /obj/machinery/bodyscanner/ex_act(severity)
 	switch(severity)

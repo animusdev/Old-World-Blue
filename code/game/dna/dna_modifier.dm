@@ -165,6 +165,26 @@
 					break
 	return
 
+
+/obj/machinery/dna_scannernew/MouseDrop_T(var/mob/target, var/mob/user)
+	if(!ismob(target))
+		return
+	if (src.occupant)
+		user << "<span class='warning'>The scanner is already occupied!</span>"
+		return
+	if (target.abiotic())
+		user << "<span class='warning'>The subject cannot have abiotic items on.</span>"
+		return
+	if (target.buckled)
+		user << "<span class='warning'>Unbuckle the subject before attempting to move them.</span>"
+		return
+	user.visible_message("<span class='notice'>\The [user] begins placing \the [target] into \the [src].</span>", "<span class='notice'>You start placing \the [target] into \the [src].</span>")
+	if(!do_after(user, 30, src))
+		return
+	put_in(target)
+	src.add_fingerprint(user)
+	return
+
 /obj/machinery/dna_scannernew/proc/go_out()
 	if ((!( src.occupant ) || src.locked))
 		return
