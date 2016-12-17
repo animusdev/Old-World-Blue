@@ -154,7 +154,7 @@
 	sharp = 0
 
 /obj/item/projectile/bullet/rifle/a145
-	damage = 80
+	damage = 135
 	stun = 3
 	weaken = 3
 	penetrating = 5

@@ -406,7 +406,7 @@ var/list/global/slot_flags_enumeration = list(
 	attack_self(usr)
 
 
-/obj/item/proc/IsShield()
+/obj/item/proc/handle_shield(mob/user, var/damage, atom/damage_source = null, mob/attacker = null, var/attack_text = "the attack")
 	return 0
 
 /obj/item/proc/get_loc_turf()

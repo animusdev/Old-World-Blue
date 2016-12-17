@@ -429,3 +429,9 @@
 	category = "General"
 
 
+/datum/autolathe/recipe/a145
+	name = "14.5 shell"
+	path = /obj/item/ammo_casing/a145
+	hidden = 1
+	category = "Arms and Ammunition"
+

@@ -176,7 +176,7 @@
 	spent_icon = "lcasing-spent"
 	caliber = "14.5mm"
 	projectile_type = /obj/item/projectile/bullet/rifle/a145
-	matter = list(DEFAULT_WALL_MATERIAL = 1250)
+	matter = list(DEFAULT_WALL_MATERIAL = 550)
 
 /obj/item/ammo_casing/a556
 	desc = "A 5.56mm bullet casing."
