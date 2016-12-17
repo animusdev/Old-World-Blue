@@ -28,7 +28,6 @@ var/global/datum/controller/occupations/job_master
 			if(job.faction != faction)	continue
 			occupations += job
 
-
 		return 1
 
 

@@ -242,22 +242,7 @@
 				qdel(src)
 				return
 			if("Cyborg")
-				var/mob/living/silicon/robot/R = new (src.loc)
-				R.job = "Cyborg"
-				switch(mind.role_alt_title)
-					if("Android")
-						R.mmi = new /obj/item/device/mmi/digital/posibrain(R)
-					if("Robot")
-						R.mmi = new /obj/item/device/mmi/digital/robot(R)
-					else
-						R.mmi = new /obj/item/device/mmi(R)
-				R.mmi.transfer_identity(src)
-				if(mind)
-					mind.active = 0		//we wish to transfer the key manually
-					mind.original = R
-					mind.transfer_to(R)	//won't transfer key since the mind is not active
-				R.key = key				//Manually transfer the key to log them in
-				character = R
+				character = create_cyborg_character()
 			else
 				character = create_character()	//creates the human and transfers vars and mind
 				job_master.EquipRank(character, rank, 1)					//equips the human
@@ -290,7 +275,7 @@
 			character.buckled.set_dir(character.dir)
 
 		ticker.mode.handle_latejoin(character)
-		ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
+		ticker.minds += character.mind //AIs handle this in the transform proc.	//TODO!!!!! ~Carn
 
 		if(character.mind.assigned_role != "Cyborg")
 			data_core.manifest_inject(character)
@@ -403,6 +388,25 @@
 		new_character.key = key		//Manually transfer the key to log them in
 
 		return new_character
+
+	proc/create_cyborg_character()
+		var/mob/living/silicon/robot/R = new (src.loc)
+		R.job = "Cyborg"
+		switch(mind.role_alt_title)
+			if("Android")
+				R.mmi = new /obj/item/device/mmi/digital/posibrain(R)
+			if("Robot")
+				R.mmi = new /obj/item/device/mmi/digital/robot(R)
+			else
+				R.mmi = new /obj/item/device/mmi(R)
+		R.mmi.transfer_identity(src)
+		if(mind)
+			mind.active = 0		//we wish to transfer the key manually
+			mind.original = R
+			mind.transfer_to(R)	//won't transfer key since the mind is not active
+		R.key = key				//Manually transfer the key to log them in
+		return R
+
 
 	proc/ViewManifest()
 		var/dat = "<html><body>"
