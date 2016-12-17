@@ -111,7 +111,7 @@
 	has_fine_manipulation = 1 // Can use small items.
 	siemens_coefficient = 1   // The lower, the thicker the skin and better the insulation.
 	darksight = 2             // Native darksight distance.
-	flags = IS_RESTRICTED | IS_WHITELISTED | HAS_SKIN_TONE | HAS_EYE_COLOR
+	flags = HAS_SKIN_TONE | HAS_EYE_COLOR | IS_RESTRICTED | IS_WHITELISTED
 	slowdown = 0              // Passive movement speed malus (or boost, if negative)
 	primitive_form = "Monkey"
 //	greater_form              // Greater form, if any, ie. human for monkeys.
