@@ -143,6 +143,34 @@
 	current_data.item_path = /obj/item/clothing/accessory/purple_heart/solar
 	L |= current_data
 
+	current_data = new()
+	current_data.assoc_key = "solareclipse84"
+	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
+	current_data.character_name = "Aiden McMurray"
+	current_data.item_path = /obj/item/clothing/suit/storage/vest/solar
+	L |= current_data
+
+	current_data = new()
+	current_data.assoc_key = "solareclipse84"
+	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
+	current_data.character_name = "Aiden McMurray"
+	current_data.item_path = /obj/item/clothing/under/rank/security/solar
+	L |= current_data
+
+	current_data = new()
+	current_data.assoc_key = "solareclipse84"
+	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
+	current_data.character_name = "Aiden McMurray"
+	current_data.item_path = /obj/item/clothing/head/helmet/pmcsolar
+	L |= current_data
+
+	current_data = new()
+	current_data.assoc_key = "solareclipse84"
+	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
+	current_data.character_name = "Aiden McMurray"
+	current_data.item_path = /obj/item/clothing/mask/keffiehsolar
+	L |= current_data
+
 	custom_items["solareclipse84"] = L
 
 ///Venligen///
@@ -344,6 +372,34 @@
 	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
 	current_data.character_name = "Megan Abbott"
 	current_data.item_path = /obj/item/clothing/accessory/purple_heart/madman
+	L |= current_data
+
+	current_data = new()
+	current_data.assoc_key = "madmannobrain"
+	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
+	current_data.character_name = "Shirley Harris"
+	current_data.item_path = /obj/item/clothing/suit/storage/vest/madman
+	L |= current_data
+
+	current_data = new()
+	current_data.assoc_key = "madmannobrain"
+	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
+	current_data.character_name = "Shirley Harris"
+	current_data.item_path = /obj/item/clothing/under/rank/security/madman
+	L |= current_data
+
+	current_data = new()
+	current_data.assoc_key = "madmannobrain"
+	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
+	current_data.character_name = "Shirley Harris"
+	current_data.item_path = /obj/item/clothing/head/helmet/pmcmadman
+	L |= current_data
+
+	current_data = new()
+	current_data.assoc_key = "madmannobrain"
+	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
+	current_data.character_name = "Shirley Harris"
+	current_data.item_path = /obj/item/weapon/gun/projectile/sec/madman
 	L |= current_data
 
 	custom_items["madmannobrain"] = L
