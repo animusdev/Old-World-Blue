@@ -21,7 +21,7 @@
 	name = "man-machine interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
 	icon = 'icons/obj/assemblies.dmi'
-	icon_state = "mmi_empty"
+	icon_state = "mmi"
 	w_class = 3
 	origin_tech = "biotech=3"
 
@@ -38,6 +38,10 @@
 	var/obj/item/organ/internal/brain/brainobj = null	//The current brain organ.
 	var/obj/mecha = null//This does not appear to be used outside of reference in mecha.dm.
 
+	New()
+		..()
+		icon_state = "[initial(icon_state)]_empty"
+
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if(istype(O,/obj/item/organ/internal/brain) && !brainmob) //Time to stick a brain in it --NEO
 
@@ -52,19 +56,19 @@
 			for(var/mob/V in viewers(src, null))
 				V.show_message(text("\blue [user] sticks \a [O] into \the [src]."))
 
-			brainmob = O:brainmob
-			O:brainmob = null
+			brainmob = B.brainmob
+			B.brainmob = null
 			brainmob.loc = src
 			brainmob.container = src
 			brainmob.stat = 0
 			dead_mob_list -= brainmob//Update dem lists
 			living_mob_list += brainmob
 
-			user.drop_from_inventory(O, src)
-			brainobj = O
+			user.drop_from_inventory(B, src)
+			brainobj = B
 
 			name = "Man-Machine Interface: [brainmob.real_name]"
-			icon_state = "mmi_full"
+			icon_state = "[initial(icon_state)]_full"
 
 			locked = 1
 
@@ -103,20 +107,24 @@
 			brain.brainmob = brainmob//Set the brain to use the brainmob
 			brainmob = null//Set mmi brainmob var to null
 
-			icon_state = "mmi_empty"
-			name = "Man-Machine Interface"
+			icon_state = "[initial(icon_state)]_empty"
+			name = initial(name)
 
 	proc
-		transfer_identity(var/mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->robot people.
+		set_identity(var/name, var/dna)
 			brainmob = new(src)
-			brainmob.name = H.real_name
-			brainmob.real_name = H.real_name
-			brainmob.dna = H.dna
+			brainmob.name = name
+			brainmob.real_name = name
+			brainmob.dna = dna ? dna : new()
 			brainmob.container = src
 
-			name = "Man-Machine Interface: [brainmob.real_name]"
-			icon_state = "mmi_full"
+			name = "[initial(name)]: [brainmob.real_name]"
+			icon_state = "[initial(icon_state)]_full"
 			locked = 1
+			return
+
+		transfer_identity(var/mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->robot people.
+			set_identity(H.real_name, H.dna)
 			return
 
 /obj/item/device/mmi/Destroy()

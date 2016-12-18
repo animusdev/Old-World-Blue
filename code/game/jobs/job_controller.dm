@@ -378,7 +378,7 @@ var/global/datum/controller/occupations/job_master
 		return 1
 
 
-	proc/EquipRank(var/mob/living/carbon/human/H, var/rank, var/joined_late = 0)
+	proc/EquipRank(var/mob/living/carbon/human/H, var/rank)
 		if(!H)	return null
 
 		H.job = rank
@@ -453,22 +453,6 @@ var/global/datum/controller/occupations/job_master
 				else
 					spawn_in_storage += thing*/
 
-		if(!joined_late)
-			var/obj/S = null
-			for(var/obj/effect/landmark/start/sloc in landmarks_list)
-				if(sloc.name != rank)	continue
-				if(locate(/mob/living) in sloc.loc)	continue
-				S = sloc
-				break
-			if(!S)
-				S = locate("start*[rank]") // use old stype
-			if(istype(S, /obj/effect/landmark/start) && istype(S.loc, /turf))
-				H.loc = S.loc
-			// Moving wheelchair if they have one
-			if(H.buckled && istype(H.buckled, /obj/structure/bed/chair/wheelchair))
-				H.buckled.loc = H.loc
-				H.buckled.set_dir(H.dir)
-
 		// If they're head, give them the account info for their department
 		if(H.mind && job.head_position)
 			var/remembered_info = ""
@@ -536,6 +520,23 @@ var/global/datum/controller/occupations/job_master
 		BITSET(H.hud_updateflag, SPECIALROLE_HUD)
 		return H
 
+	proc/MoveAtSpawnPoint(var/mob/living/carbon/human/H, rank)
+		if(!H || rank == "AI")	return 0
+
+		var/obj/S = null
+		for(var/obj/effect/landmark/start/sloc in landmarks_list)
+			if(sloc.name != rank)	continue
+			if(locate(/mob/living) in sloc.loc)	continue
+			S = sloc
+			break
+		if(!S)
+			S = locate("start*[rank]") // use old stype
+		if(istype(S, /obj/effect/landmark/start) && istype(S.loc, /turf))
+			H.loc = S.loc
+		// Moving wheelchair if they have one
+		if(H.buckled && istype(H.buckled, /obj/structure/bed/chair/wheelchair))
+			H.buckled.loc = H.loc
+			H.buckled.set_dir(H.dir)
 
 	proc/spawnId(var/mob/living/carbon/human/H, rank, title)
 		if(!H)	return 0

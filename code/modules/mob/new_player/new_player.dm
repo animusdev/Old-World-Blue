@@ -242,7 +242,7 @@
 				qdel(src)
 				return
 			if("Cyborg")
-				character = create_cyborg_character()
+				character = create_robot_character()
 			else
 				character = create_character()	//creates the human and transfers vars and mind
 				job_master.EquipRank(character, rank, 1)					//equips the human
@@ -389,7 +389,7 @@
 
 		return new_character
 
-	proc/create_cyborg_character()
+	proc/create_robot_character()
 		var/mob/living/silicon/robot/R = new (src.loc)
 		R.job = "Cyborg"
 		switch(mind.role_alt_title)
@@ -399,7 +399,7 @@
 				R.mmi = new /obj/item/device/mmi/digital/robot(R)
 			else
 				R.mmi = new /obj/item/device/mmi(R)
-		R.mmi.transfer_identity(src)
+		R.mmi.set_identity(client.prefs.real_name)
 		if(mind)
 			mind.active = 0		//we wish to transfer the key manually
 			mind.original = R
