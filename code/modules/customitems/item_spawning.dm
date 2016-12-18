@@ -146,28 +146,28 @@
 	current_data = new()
 	current_data.assoc_key = "solareclipse84"
 	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
-	current_data.character_name = "Shirley Harris"
+	current_data.character_name = "Aiden McMurray"
 	current_data.item_path = /obj/item/clothing/suit/storage/vest/solar
 	L |= current_data
 
 	current_data = new()
 	current_data.assoc_key = "solareclipse84"
 	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
-	current_data.character_name = "Shirley Harris"
+	current_data.character_name = "Aiden McMurray"
 	current_data.item_path = /obj/item/clothing/under/rank/security/solar
 	L |= current_data
 
 	current_data = new()
 	current_data.assoc_key = "solareclipse84"
 	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
-	current_data.character_name = "Shirley Harris"
+	current_data.character_name = "Aiden McMurray"
 	current_data.item_path = /obj/item/clothing/head/helmet/pmcsolar
 	L |= current_data
 
 	current_data = new()
 	current_data.assoc_key = "solareclipse84"
 	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
-	current_data.character_name = "Shirley Harris"
+	current_data.character_name = "Aiden McMurray"
 	current_data.item_path = /obj/item/clothing/mask/keffiehsolar
 	L |= current_data
 
