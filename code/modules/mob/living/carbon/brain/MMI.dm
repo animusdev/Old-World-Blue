@@ -40,7 +40,7 @@
 
 	New()
 		..()
-		icon_state = "[initial(icon_state)]_empty"
+		update_icon()
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if(istype(O,/obj/item/organ/internal/brain) && !brainmob) //Time to stick a brain in it --NEO
@@ -67,9 +67,7 @@
 			user.drop_from_inventory(B, src)
 			brainobj = B
 
-			name = "Man-Machine Interface: [brainmob.real_name]"
-			icon_state = "[initial(icon_state)]_full"
-
+			update_icon()
 			locked = 1
 
 			return
@@ -85,6 +83,14 @@
 			O.attack(brainmob, user)//Oh noooeeeee
 			return
 		..()
+
+	update_icon()
+		if(brainmob)
+			icon_state = "[initial(icon_state)]_full"
+			src.name ="[initial(name)]: [brainmob.real_name]"
+		else
+			icon_state = "[initial(icon_state)]_empty"
+			name = initial(name)
 
 	//TODO: ORGAN REMOVAL UPDATE. Make the brain remain in the MMI so it doesn't lose organ data.
 	attack_self(mob/user as mob)
@@ -107,9 +113,6 @@
 			brain.brainmob = brainmob//Set the brain to use the brainmob
 			brainmob = null//Set mmi brainmob var to null
 
-			icon_state = "[initial(icon_state)]_empty"
-			name = initial(name)
-
 	proc
 		set_identity(var/name, var/dna)
 			brainmob = new(src)
@@ -118,8 +121,8 @@
 			brainmob.dna = dna ? dna : new()
 			brainmob.container = src
 
-			name = "[initial(name)]: [brainmob.real_name]"
-			icon_state = "[initial(icon_state)]_full"
+			update_icon()
+
 			locked = 1
 			return
 
