@@ -7,6 +7,7 @@ var/global/datum/controller/occupations/job_master
 /datum/controller/occupations
 		//List of all jobs
 	var/list/occupations = list()
+	var/list/occupations_by_name = list()
 		//Players who need jobs
 	var/list/unassigned = list()
 		//Debug info
@@ -16,7 +17,8 @@ var/global/datum/controller/occupations/job_master
 
 
 	proc/SetupOccupations(var/faction = "Station")
-		occupations = list()
+		occupations.Cut()
+		occupations_by_name.Cut()
 		var/list/all_jobs = typesof(/datum/job)
 		if(!all_jobs.len)
 			world << "<span class='warning'>Error setting up jobs, no job datums found!</span>"
@@ -27,6 +29,7 @@ var/global/datum/controller/occupations/job_master
 			if(job.title == "BASIC") continue
 			if(job.faction != faction)	continue
 			occupations += job
+			occupations_by_name[job.title] = job
 
 		return 1
 
@@ -39,10 +42,7 @@ var/global/datum/controller/occupations/job_master
 
 	proc/GetJob(var/rank)
 		if(!rank)	return null
-		for(var/datum/job/J in occupations)
-			if(!J)	continue
-			if(J.title == rank)	return J
-		return null
+		return occupations_by_name[rank]
 
 	proc/GetPlayerAltTitle(mob/new_player/player, rank)
 		return player.client.prefs.GetPlayerAltTitle(GetJob(rank))
@@ -61,11 +61,10 @@ var/global/datum/controller/occupations/job_master
 				return 0
 			if(!job.player_old_enough(player.client))
 				return 0
+			if(!latejoin && (job.current_positions >= job.spawn_positions))
+					return 0
 
-			var/position_limit = job.total_positions
-			if(!latejoin)
-				position_limit = job.spawn_positions
-			if((job.current_positions < position_limit) || position_limit == -1)
+			if(job.is_position_available())
 				Debug("Player: [player] is now Rank: [rank], JCP:[job.current_positions], JPL:[position_limit]")
 				player.mind.assigned_role = rank
 				player.mind.role_alt_title = rank
@@ -247,10 +246,8 @@ var/global/datum/controller/occupations/job_master
 
 		//Holder for Triumvirate is stored in the ticker, this just processes it
 		if(ticker && ticker.triai)
-			for(var/datum/job/A in occupations)
-				if(A.title == "AI")
-					A.spawn_positions = 3
-					break
+			var/datum/job/AI = GetJob("AI")
+			AI.spawn_positions = 3
 
 		//Get the players who are ready
 		for(var/mob/new_player/player in player_list)
@@ -539,21 +536,14 @@ var/global/datum/controller/occupations/job_master
 			H.buckled.set_dir(H.dir)
 
 	proc/spawnId(var/mob/living/carbon/human/H, rank, title)
-		if(!H)	return 0
+		if(!H || rank == "Cyborg")	return 0
 		var/obj/item/weapon/card/id/C = null
 
-		var/datum/job/job = null
-		for(var/datum/job/J in occupations)
-			if(J.title == rank)
-				job = J
-				break
+		var/datum/job/job = GetJob(rank)
 
 		if(job)
-			if(job.title == "Cyborg")
-				return
-			else
-				C = new job.idtype(H)
-				C.access = job.get_access()
+			C = new job.idtype(H)
+			C.access = job.get_access()
 		else
 			C = new /obj/item/weapon/card/id(H)
 		if(C)
