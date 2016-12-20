@@ -265,15 +265,17 @@ var/list/donator_icons
 
 	proc/create_characters()
 		for(var/mob/new_player/player in player_list)
-			if(player && player.ready && player.mind)
-				if(player.mind.assigned_role=="AI")
-					player.close_spawn_windows()
-					player.AIize()
-				else if(!player.mind.assigned_role)
-					continue
-				else
-					player.create_character()
-					qdel(player)
+			if(player && player.ready && player.mind && player.mind.assigned_role)
+				switch(player.mind.assigned_role)
+					if("AI")
+						player.close_spawn_windows()
+						player.AIize(1)
+					if("Cyborg")
+						player.close_spawn_windows()
+						player.create_robot_character()
+					else
+						player.create_character()
+						qdel(player)
 
 
 	proc/collect_minds()
@@ -283,20 +285,22 @@ var/list/donator_icons
 
 
 	proc/equip_characters()
-		var/captainless=1
-		for(var/mob/living/carbon/human/player in player_list)
+		var/captainless = 1
+		for(var/mob/living/player in player_list)
 			if(player && player.mind && player.mind.assigned_role)
-				if(player.mind.assigned_role == "Captain")
+				var/rang = player.mind.assigned_role
+				if(rang == "Captain")
 					captainless=0
 				if(!player_is_antag(player.mind, only_offstation_roles = 1))
-					job_master.EquipRank(player, player.mind.assigned_role, 0)
-					UpdateFactionList(player)
-					equip_custom_items(player)
+					if(!rang in list("AI", "Cyborg"))
+						job_master.EquipRank(player, rang)
+						UpdateFactionList(player)
+						equip_custom_items(player)
+					job_master.MoveAtSpawnPoint(player, rang)
 		if(captainless)
 			for(var/mob/M in player_list)
 				if(!istype(M,/mob/new_player))
 					M << "Captainship not forced on anyone."
-
 
 	proc/check_queue()
 		if(!queued_players.len || !config.hard_popcap)

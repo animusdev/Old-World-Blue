@@ -509,7 +509,7 @@
 			for(var/mob/O in viewers(user, null))
 				O.show_message(text("\red [user] has fixed some of the burnt wires on [src]!"), 1)
 
-	else if (istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
+	else if(istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
 		if(opened)
 			if(cell)
 				user << "You close the cover."

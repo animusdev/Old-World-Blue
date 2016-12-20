@@ -63,6 +63,7 @@ var/global/list/chameleons_categories = list(
 	icon = 'icons/obj/device.dmi'
 	icon_state = "shield0"
 	origin_tech = "syndicate=2"
+	w_class = 1
 	var/category = ""
 	var/obj/item/captured_item
 	var/default_type

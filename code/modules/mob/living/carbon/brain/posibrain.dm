@@ -19,8 +19,8 @@
 	if(brainmob && !brainmob.key && searching == 0)
 		//Start the process of searching for a new user.
 		user << "\blue You carefully locate the manual activation switch and start the positronic brain's boot process."
-		icon_state = "posibrain-searching"
 		src.searching = 1
+		update_icon()
 		src.request_player()
 		spawn(600) reset_search()
 
@@ -43,16 +43,26 @@
 		if(!C || brainmob.key || 0 == searching)	return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
 		if(response == "Yes")
 			transfer_personality(C.mob)
-		else if (response == "Never for this round")
+		else if(response == "Never for this round")
 			C.prefs.be_special ^= BE_AI
 
+/obj/item/device/mmi/digital/posibrain/update_icon()
+	if(searching)
+		icon_state = "posibrain-searching"
+		name = initial(name)
+	else
+		if(brainmob)
+			icon_state = "posibrain-occupied"
+			name = "[initial(name)] ([brainmob.real_name])"
+		else
+			icon_state = "posibrain"
+			name = initial(name)
 
 /obj/item/device/mmi/digital/posibrain/transfer_identity(var/mob/living/carbon/H)
 	..()
 	if(brainmob.mind)
 		brainmob.mind.assigned_role = "Positronic Brain"
 	brainmob << "<span class='notify'>You feel slightly disoriented. That's normal when you're just a metal cube.</span>"
-	icon_state = "posibrain-occupied"
 	return
 
 /obj/item/device/mmi/digital/posibrain/proc/transfer_personality(var/mob/candidate)
@@ -61,7 +71,6 @@
 	src.brainmob.mind = candidate.mind
 	src.brainmob.ckey = candidate.ckey
 	src.brainmob.mind.reset()
-	src.name = "positronic brain ([src.brainmob.name])"
 	src.brainmob << "<b>You are a positronic brain, brought into existence on [station_name()].</b>"
 	src.brainmob << "<b>As a synthetic intelligence, you answer to all crewmembers, as well as the AI.</b>"
 	src.brainmob << "<b>Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>"
@@ -71,14 +80,14 @@
 	var/turf/T = get_turf_or_move(src.loc)
 	for (var/mob/M in viewers(T))
 		M.show_message("\blue The positronic brain chimes quietly.")
-	icon_state = "posibrain-occupied"
+	update_icon()
 
 /obj/item/device/mmi/digital/posibrain/proc/reset_search() //We give the players sixty seconds to decide, then reset the timer.
 
 	if(src.brainmob && src.brainmob.key) return
 
 	src.searching = 0
-	icon_state = "posibrain"
+	update_icon()
 
 	var/turf/T = get_turf_or_move(src.loc)
 	for (var/mob/M in viewers(T))
