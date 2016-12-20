@@ -245,7 +245,7 @@
 				character = create_robot_character()
 			else
 				character = create_character()	//creates the human and transfers vars and mind
-				job_master.EquipRank(character, rank, 1)					//equips the human
+				job_master.EquipRank(character, rank)					//equips the human
 				UpdateFactionList(character)
 				equip_custom_items(character)
 
