@@ -31,7 +31,7 @@ var/global/ManifestJSON
 				foundrecord = t
 				break
 
-	var/list/all_jobs = get_job_datums()
+	var/list/all_jobs = job_master.occupations
 
 	for(var/datum/job/J in all_jobs)
 		var/list/alttitles = get_alternate_titles(J.title)
