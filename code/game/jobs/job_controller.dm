@@ -62,10 +62,10 @@ var/global/datum/controller/occupations/job_master
 			if(!job.player_old_enough(player.client))
 				return 0
 			if(!latejoin && (job.current_positions >= job.spawn_positions))
-					return 0
+				return 0
 
-			if(job.is_position_available())
-				Debug("Player: [player] is now Rank: [rank], JCP:[job.current_positions], JPL:[position_limit]")
+			if(job.is_position_available(latejoin))
+				Debug("Player: [player] is now Rank: [rank], JCP:[job.current_positions]")
 				player.mind.assigned_role = rank
 				player.mind.role_alt_title = rank
 				if(GetPlayerAltTitle(player, rank) in job.alt_titles)

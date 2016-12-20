@@ -212,5 +212,5 @@ For copy-pasting:
 		for(var/obj/item/sub_item in item.contents)
 			apply_fingerprints_to_item(holder, sub_item)
 
-/datum/job/proc/is_position_available()
-	return (current_positions < total_positions) || (total_positions == -1)
+/datum/job/proc/is_position_available(var/latejoin = 0)
+	return latejoin ? total_positions : spawn_positions
