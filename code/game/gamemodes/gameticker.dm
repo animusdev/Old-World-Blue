@@ -271,8 +271,8 @@ var/list/donator_icons
 						player.close_spawn_windows()
 						player.AIize(1)
 					if("Cyborg")
-						player.close_spawn_windows()
 						player.create_robot_character()
+						qdel(player)
 					else
 						player.create_character()
 						qdel(player)

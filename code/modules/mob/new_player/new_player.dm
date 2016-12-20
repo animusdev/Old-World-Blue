@@ -390,6 +390,9 @@
 		return new_character
 
 	proc/create_robot_character()
+		spawning = 1
+		close_spawn_windows()
+
 		var/mob/living/silicon/robot/R = new (src.loc)
 		R.job = "Cyborg"
 		switch(mind.role_alt_title)
