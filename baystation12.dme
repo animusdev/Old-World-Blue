@@ -794,6 +794,7 @@
 #include "code\game\objects\structures\tank_dispenser.dm"
 #include "code\game\objects\structures\target_stake.dm"
 #include "code\game\objects\structures\transit_tubes.dm"
+#include "code\game\objects\structures\tree_mech.dm"
 #include "code\game\objects\structures\trophy.dm"
 #include "code\game\objects\structures\watercloset.dm"
 #include "code\game\objects\structures\windoor_assembly.dm"
