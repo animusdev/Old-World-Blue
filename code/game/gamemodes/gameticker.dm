@@ -40,9 +40,19 @@ var/list/donator_icons
 
 /datum/controller/gameticker/proc/pregame()
 	login_music = pick(
+		//New Year-New Year!
+		'sound/music/new_year/Christmas Is All Around Us.ogg',
+		'sound/music/new_year/Driving Home For Christmas.ogg',
+		'sound/music/new_year/Jingle Bell Rock.ogg',
+		'sound/music/new_year/Last Christmas.ogg',
+		'sound/music/new_year/Last Christmas Fem.ogg',
+		'sound/music/new_year/Let It Snow.ogg',
+		'sound/music/new_year/Magic Moments.ogg',
+		'sound/music/new_year/Ring Christmas Bells.ogg',)
 		/*'sound/music/halloween/skeletons.ogg',
 		'sound/music/halloween/halloween.ogg',
 		'sound/music/halloween/ghosts.ogg',*/
+/*
 		'sound/music/space.ogg',
 		'sound/music/traitor.ogg',
 		'sound/music/title2.ogg',
@@ -54,6 +64,7 @@ var/list/donator_icons
 		'sound/music/space_oddity.ogg',
 		'sound/music/Welcome_to_Lunar_Industries.ogg',
 		'sound/music/Mind_Heist.ogg')
+*/
 
 	donator_icons = icon_states('icons/donator.dmi')
 
