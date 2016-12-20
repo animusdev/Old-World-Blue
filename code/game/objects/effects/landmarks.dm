@@ -73,14 +73,6 @@
 
 /obj/effect/landmark/triai
 	name = "triai"
-	var/obj/effect/landmark/start/AI = null
-
-/obj/effect/landmark/triai/proc/add_AI()
-	if(!AI) AI = new(src)
-	AI.name = "AI"
-
-/obj/effect/landmark/triai/proc/rem_AI()
-	if(AI) del(AI)
 
 /obj/effect/landmark/start
 	name = "start"

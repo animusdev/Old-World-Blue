@@ -209,7 +209,7 @@ var/global/datum/controller/occupations/job_master
 		var/ai_selected = 0
 		var/datum/job/job = GetJob("AI")
 		if(!job)	return 0
-		if((job.title == "AI") && (config) && (!config.allow_ai))	return 0
+		if(config && !config.allow_ai)	return 0
 
 		for(var/i = job.total_positions, i > 0, i--)
 			for(var/level = 1 to 3)
@@ -243,11 +243,6 @@ var/global/datum/controller/occupations/job_master
 		//Setup new player list and get the jobs list
 		Debug("Running DO")
 		SetupOccupations()
-
-		//Holder for Triumvirate is stored in the ticker, this just processes it
-		if(ticker && ticker.triai)
-			var/datum/job/AI = GetJob("AI")
-			AI.spawn_positions = 3
 
 		//Get the players who are ready
 		for(var/mob/new_player/player in player_list)
