@@ -18,11 +18,11 @@
 /datum/job/ai/is_position_available(latejoin)
 	if(!latejoin)
 		if(ticker && ticker.triai)
-			return 3
+			return (3 - current_positions) > 0
 		else
-			return 1
+			return (1 - current_positions) > 0
 	else
-		return (empty_playable_ai_cores.len != 0)
+		return (empty_playable_ai_cores.len > 0)
 
 
 /datum/job/cyborg

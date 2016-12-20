@@ -217,4 +217,7 @@ For copy-pasting:
 			apply_fingerprints_to_item(holder, sub_item)
 
 /datum/job/proc/is_position_available(var/latejoin = 0)
-	return latejoin ? total_positions : spawn_positions
+	if(latejoin)
+		return (total_positions - current_positions) > 0
+	else
+		return (spawn_positions - current_positions) > 0
