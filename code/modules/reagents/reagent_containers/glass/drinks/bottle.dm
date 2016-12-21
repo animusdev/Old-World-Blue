@@ -3,13 +3,15 @@
 //Bottles now weaken and break when smashed on people's heads. - Giacom
 
 /obj/item/weapon/reagent_containers/glass/drinks/bottle
+	/*Specials:
+		Rag interaction.*/
 	amount_per_transfer_from_this = 10
 	volume = 120
 	item_state = "broken_beer" //Generic held-item sprite until unique ones are made.
 	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
 	isGlass = 1
 
-/obj/item/weapon/reagent_containers/glass/drinks/bottle/proc/smash(mob/living/target as mob, mob/living/user as mob)
+/obj/item/weapon/reagent_containers/glass/drinks/bottle/smash(mob/living/target as mob, mob/living/user as mob)
 
 	//Creates a shattering noise and replaces the bottle with a broken_bottle
 	user.drop_from_inventory(src)

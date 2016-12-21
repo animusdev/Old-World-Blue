@@ -800,7 +800,7 @@
 "pt" = (/obj/machinery/vending/cigarette,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/centcom/control)
 "pu" = (/obj/machinery/embedded_controller/radio/simple_docking_controller{frequency = 1380; id_tag = "admin_shuttle"; pixel_x = -25; pixel_y = 0; req_one_access = list(101); tag_door = "admin_shuttle_hatch"},/obj/machinery/light/small{dir = 8},/turf/simulated/floor/plating,/area/centcom/control)
 "pv" = (/obj/structure/closet/walllocker/emerglocker/east,/turf/simulated/floor/plating,/area/centcom/control)
-"pw" = (/obj/structure/closet{name = "custodial"},/obj/item/weapon/reagent_containers/glass/bucket,/obj/item/weapon/mop,/obj/item/weapon/reagent_containers/spray/cleaner,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/syndicate_station/start)
+"pw" = (/obj/structure/closet{name = "custodial"},/obj/item/weapon/reagent_containers/glass/beaker/bucket,/obj/item/weapon/mop,/obj/item/weapon/reagent_containers/spray/cleaner,/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/syndicate_station/start)
 "px" = (/obj/machinery/door/window{base_state = "right"; dir = 4; icon_state = "right"; name = "Brig"; req_access = list(150)},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/syndicate_station/start)
 "py" = (/obj/machinery/door/window{base_state = "left"; dir = 8; icon_state = "left"; name = "Preparation"; req_access = list(150)},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/syndicate_station/start)
 "pz" = (/obj/structure/table/standard,/obj/item/weapon/storage/toolbox/syndicate{pixel_x = -1; pixel_y = 3},/turf/simulated/shuttle/floor{icon_state = "floor6"},/area/syndicate_station/start)

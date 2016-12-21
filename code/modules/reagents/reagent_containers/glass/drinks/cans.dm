@@ -1,6 +1,6 @@
 /obj/item/weapon/reagent_containers/glass/drinks/cans
 	amount_per_transfer_from_this = 5
-	flags = 0
+	flags = 0 //starts closed
 	isGlass = 0
 
 	attack_self(mob/user as mob)

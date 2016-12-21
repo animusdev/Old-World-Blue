@@ -37,7 +37,7 @@
 /datum/supply_packs/supply/janitor
 	name = "Janitorial supplies"
 	contains = list(
-		/obj/item/weapon/reagent_containers/glass/bucket = 3,
+		/obj/item/weapon/reagent_containers/glass/beaker/bucket = 3,
 		/obj/item/weapon/mop,
 		/obj/item/weapon/caution = 4,
 		/obj/item/weapon/storage/bag/trash,

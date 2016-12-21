@@ -646,7 +646,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(backpack, slot_back)
 
 			M.equip_to_slot_or_del(new /obj/item/weapon/mop(M), slot_r_hand)
-			var/obj/item/weapon/reagent_containers/glass/bucket/bucket = new(M)
+			var/obj/item/weapon/reagent_containers/glass/beaker/bucket/bucket = new(M)
 			bucket.reagents.add_reagent("water", 70)
 			M.equip_to_slot_or_del(bucket, slot_l_hand)
 

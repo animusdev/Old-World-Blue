@@ -460,7 +460,7 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	..()
 	src.modules += new /obj/item/device/flash(src)
 	src.modules += new /obj/item/weapon/gripper/service(src)
-	src.modules += new /obj/item/weapon/reagent_containers/glass/bucket(src)
+	src.modules += new /obj/item/weapon/reagent_containers/glass/beaker/bucket(src)
 	src.modules += new /obj/item/weapon/material/minihoe(src)
 	src.modules += new /obj/item/weapon/material/hatchet(src)
 	src.modules += new /obj/item/device/analyzer/plant_analyzer(src)

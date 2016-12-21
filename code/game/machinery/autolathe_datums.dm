@@ -29,7 +29,7 @@
 
 /datum/autolathe/recipe/bucket
 	name = "bucket"
-	path = /obj/item/weapon/reagent_containers/glass/bucket
+	path = /obj/item/weapon/reagent_containers/glass/beaker/bucket
 	category = "General"
 
 /datum/autolathe/recipe/flashlight

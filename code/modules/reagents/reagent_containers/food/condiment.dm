@@ -1,8 +1,9 @@
 
 ///////////////////////////////////////////////Condiments
-//Notes by Darem: The condiments food-subtype is for stuff you don't actually eat but you use to modify existing food. They all
-//	leave empty containers when used up and can be filled/re-filled with other items. Formatting for first section is identical
-//	to mixed-drinks code. If you want an object that starts pre-loaded, you need to make it in addition to the other code.
+//Notes by Darem: The condiments food-subtype is for stuff you don't actually eat but you use to modify existing food.
+//They all leave empty containers when used up and can be filled/re-filled with other items.
+//Formatting for first section is identical to mixed-drinks code.
+//If you want an object that starts pre-loaded, you need to make it in addition to the other code.
 
 //Food items that aren't eaten normally and leave an empty container behind.
 /obj/item/weapon/reagent_containers/food/condiment

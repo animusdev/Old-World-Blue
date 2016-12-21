@@ -6,19 +6,13 @@
 	volume = 60
 	var/reagent = ""
 
-
 /obj/item/weapon/reagent_containers/glass/beaker/bottle/robot/inaprovaline
 	name = "internal inaprovaline bottle"
 	desc = "A small bottle. Contains inaprovaline - used to stabilize patients."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle-4"
 	reagent = "inaprovaline"
-
-	New()
-		..()
-		reagents.add_reagent("inaprovaline", 60)
-		update_icon()
-
+	preloaded = list("inaprovaline" = 60)
 
 /obj/item/weapon/reagent_containers/glass/beaker/bottle/robot/antitoxin
 	name = "internal anti-toxin bottle"
@@ -26,9 +20,4 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle-4"
 	reagent = "anti_toxin"
-
-	New()
-		..()
-		reagents.add_reagent("anti_toxin", 60)
-		update_icon()
-
+	preloaded = list("anti_toxin" = 60)
