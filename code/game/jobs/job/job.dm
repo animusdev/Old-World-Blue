@@ -218,6 +218,6 @@ For copy-pasting:
 
 /datum/job/proc/is_position_available(var/latejoin = 0)
 	if(latejoin)
-		return (total_positions - current_positions) > 0
+		return (total_positions - current_positions) != 0
 	else
-		return (spawn_positions - current_positions) > 0
+		return (spawn_positions - current_positions) != 0
