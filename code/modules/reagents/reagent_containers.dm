@@ -70,6 +70,10 @@
 	if(!istype(target))
 		return 0
 
+	if(!reagents)
+		user << "<span class='notice'>[src] can't hold reagents anymore.</span>"
+		return 1
+
 	if(!target.reagents || !target.reagents.total_volume)
 		user << "<span class='notice'>[target] is empty.</span>"
 		return 1
@@ -99,7 +103,7 @@
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [name] to splash [target.name] ([target.key]). Reagents: [contained]</font>")
 	msg_admin_attack("[user.name] ([user.ckey]) splashed [target.name] ([target.key]) with [name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-	user.visible_message("<span class='danger'>[target] has been splashed with something by [user]!", "<span class = 'notice'>You splash the solution onto [target].</span>")
+	user.visible_message("<span class='danger'>[target] has been splashed with something by [user]!</span>", "<span class = 'notice'>You splash the solution onto [target].</span>")
 	reagents.splash(target, reagents.total_volume*0.5)
 	return 1
 
@@ -107,10 +111,10 @@
 	user << "<span class='notice'>You eat \the [src]</span>"
 
 /obj/item/weapon/reagent_containers/proc/other_feed_message_start(var/mob/user, var/mob/target)
-	user.visible_message("<span class='warning'>[user] is trying to feed [target] \the [src]!")
+	user.visible_message("<span class='warning'>[user] is trying to feed [target] \the [src]!</span>")
 
 /obj/item/weapon/reagent_containers/proc/other_feed_message_finish(var/mob/user, var/mob/target)
-	user.visible_message("<span class='warning'>[user] has fed [target] \the [src]!")
+	user.visible_message("<span class='warning'>[user] has fed [target] \the [src]!</span>")
 
 /obj/item/weapon/reagent_containers/proc/feed_sound(var/mob/user)
 	return
@@ -126,10 +130,9 @@
 	if(target == user)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if(H.species.flags & IS_SYNTHETIC)
-				H << "<span class='notice'>You have a monitor for a head, where do you think you're going to put that?</span>"
-				return 1
-
+			if(!H.check_has_mouth())
+				user << "Where do you intend to put \the [src]? You don't have a mouth!"
+				return
 			var/obj/item/blocked = H.check_mouth_coverage()
 			if(blocked)
 				user << "<span class='warning'>\The [blocked] is in the way!</span>"
@@ -143,10 +146,9 @@
 	else
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = target
-			if(H.species.flags & IS_SYNTHETIC)
-				H << "<span class='notice'>They have a monitor for a head, where do you think you're going to put that?</span>"
+			if(!H.check_has_mouth())
+				user << "Where do you intend to put \the [src]? \The [H] doesn't have a mouth!"
 				return
-
 			var/obj/item/blocked = H.check_mouth_coverage()
 			if(blocked)
 				user << "<span class='warning'>\The [blocked] is in the way!</span>"

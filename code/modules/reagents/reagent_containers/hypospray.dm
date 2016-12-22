@@ -16,10 +16,6 @@
 	slot_flags = SLOT_BELT
 	center_of_mass = list("x"=16, "y"=7)
 
-///obj/item/weapon/reagent_containers/hypospray/New() //comment this to make hypos start off empty
-//	..()
-//	reagents.add_reagent("tricordrazine", 30)
-//	return
 
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/living/M as mob, mob/user as mob)
 	if(!reagents.total_volume)
@@ -49,6 +45,7 @@
 	item_state = "autoinjector"
 	amount_per_transfer_from_this = 5
 	volume = 5
+	w_class = 1
 	center_of_mass = list("x"=16, "y"=16)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/New()
@@ -66,9 +63,9 @@
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/update_icon()
 	if(reagents.total_volume > 0)
-		icon_state = "[initial(icon_state)]1"
+		icon_state = initial(icon_state)
 	else
-		icon_state = "[initial(icon_state)]0"
+		icon_state = "[initial(icon_state)]_empty"
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/examine(mob/user)
 	.=..()
@@ -76,7 +73,6 @@
 		user << "<span class='notice'>It is currently loaded.</span>"
 	else
 		user << "<span class='notice'>It is spent.</span>"
-
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/combat
 	amount_per_transfer_from_this = 10
