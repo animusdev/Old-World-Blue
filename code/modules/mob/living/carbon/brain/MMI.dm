@@ -112,6 +112,7 @@
 			living_mob_list -= brainmob//Get outta here
 			brain.brainmob = brainmob//Set the brain to use the brainmob
 			brainmob = null//Set mmi brainmob var to null
+			update_icon()
 
 	proc
 		set_identity(var/name, var/dna)
