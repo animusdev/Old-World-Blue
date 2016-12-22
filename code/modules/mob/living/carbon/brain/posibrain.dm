@@ -51,7 +51,7 @@
 		icon_state = "posibrain-searching"
 		name = initial(name)
 	else
-		if(brainmob)
+		if(brainmob && brainmob.key)
 			icon_state = "posibrain-occupied"
 			name = "[initial(name)] ([brainmob.real_name])"
 		else
@@ -126,5 +126,5 @@
 
 /obj/item/device/mmi/digital/posibrain/New()
 	..()
-	src.brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI"))]-[rand(100, 999)]"
+	src.brainmob.name =
 	src.brainmob.real_name = src.brainmob.name
