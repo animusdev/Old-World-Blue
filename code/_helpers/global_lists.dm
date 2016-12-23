@@ -66,17 +66,17 @@ var/global/list/exclude_jobs = list(/datum/job/ai,/datum/job/cyborg)
 
 	//Tattoo
 var/global/list/tattoo_list = list(
-	BP_CHEST  = list("Abstract" = "abstract"),
-	"chest2"  = list("Abstract" = "abstract", "Cross" = "cross", "Skull" = "scull", "Spades" = 4),
+	BP_CHEST  = list("Abstract" = "abstract", "Venom" = "venom"),
+	"chest2"  = list("Abstract" = "abstract", "Cross" = "cross", "Skull" = "scull", "Spades" = "diamonds", "Venom" = "venom"),
 	BP_HEAD   = list("Abstract" = "abstract", "Over left eye scar" = "scar", "Over right eye scar" = "scar2"),
 	BP_GROIN  = list("Abstract" = "abstract"),
-	BP_L_ARM  = list("Abstract" = "abstract"),
+	BP_L_ARM  = list("Abstract" = "abstract", "Venom" = "venom"),
 	BP_L_HAND = list("Abstract" = "abstract"),
-	BP_R_ARM  = list("Abstract" = "abstract", "Stripes" = "stripes"),
+	BP_R_ARM  = list("Abstract" = "abstract", "Stripes" = "stripes", "Venom" = "venom"),
 	BP_R_HAND = list("Abstract" = "abstract"),
-	BP_L_LEG  = list("Abstract" = "abstract"),
+	BP_L_LEG  = list("Abstract" = "abstract", "Venom" = "venom"),
 	BP_L_FOOT = list("Abstract" = "abstract"),
-	BP_R_LEG  = list("Abstract" = "abstract"),
+	BP_R_LEG  = list("Abstract" = "abstract", "Venom" = "venom"),
 	BP_R_FOOT = list("Abstract" = "abstract")
 )
 
