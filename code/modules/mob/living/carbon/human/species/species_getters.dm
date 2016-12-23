@@ -22,3 +22,6 @@
 	if(!species_language)
 		return "unknown"
 	return species_language.get_random_name(gender)
+
+/datum/species/machine/get_random_name(var/gender)
+	return "[pick(list("PBU","HIU","SINA","ARMA","OSI"))]-[rand(100, 999)]"
