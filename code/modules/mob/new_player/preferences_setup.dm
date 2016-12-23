@@ -204,8 +204,8 @@
 			preview_icon.Blend(new /icon(icobase, "[name][b]"), ICON_OVERLAY)
 		var/tattoo = tattoo_data[name]
 		var/tattoo2 = tattoo_data["[name]2"]
-		if(tattoo)  preview_icon.Blend(new/icon('icons/mob/tattoo.dmi', "[name]_[tattoo]_[b]"), ICON_OVERLAY)
-		if(tattoo2) preview_icon.Blend(new/icon('icons/mob/tattoo.dmi', "[name]2_[tattoo2]_[b]"), ICON_OVERLAY)
+		if(tattoo)  preview_icon.Blend(new/icon('icons/mob/tattoo.dmi', "[name]_[tattoo][b]"), ICON_OVERLAY)
+		if(tattoo2) preview_icon.Blend(new/icon('icons/mob/tattoo.dmi', "[name]2_[tattoo2][b]"), ICON_OVERLAY)
 
 	//Tail
 	if(current_species.tail)
