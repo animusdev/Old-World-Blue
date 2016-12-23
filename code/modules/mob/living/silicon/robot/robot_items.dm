@@ -354,7 +354,7 @@
 			return
 
 		if(T && istype(T))
-			new /obj/structure/inflatable/wall(T)
+			new /obj/structure/inflatable(T)
 			stored_walls--
 
 	playsound(T, 'sound/items/zip.ogg', 75, 1)
@@ -362,33 +362,33 @@
 
 /obj/item/weapon/inflatable_dispenser/proc/pick_up(var/obj/A, var/mob/living/user)
 	if(istype(A, /obj/structure/inflatable))
-		if(istype(A, /obj/structure/inflatable/wall))
-			if(stored_walls >= max_walls)
-				user << "\The [src] is full."
-				return
-			stored_walls++
-			qdel(A)
-		else
+		if(istype(A, /obj/structure/inflatable/door))
 			if(stored_doors >= max_doors)
 				user << "\The [src] is full."
 				return
 			stored_doors++
+			qdel(A)
+		else
+			if(stored_walls >= max_walls)
+				user << "\The [src] is full."
+				return
+			stored_walls++
 			qdel(A)
 		playsound(loc, 'sound/machines/hiss.ogg', 75, 1)
 		visible_message("\The [user] deflates \the [A] with \the [src]!")
 		return
 	if(istype(A, /obj/item/inflatable))
-		if(istype(A, /obj/item/inflatable/wall))
-			if(stored_walls >= max_walls)
-				user << "\The [src] is full."
-				return
-			stored_walls++
-			qdel(A)
-		else
+		if(istype(A, /obj/item/inflatable/door))
 			if(stored_doors >= max_doors)
 				usr << "\The [src] is full!"
 				return
 			stored_doors++
+			qdel(A)
+		else
+			if(stored_walls >= max_walls)
+				user << "\The [src] is full."
+				return
+			stored_walls++
 			qdel(A)
 		visible_message("\The [user] picks up \the [A] with \the [src]!")
 		return

@@ -5332,7 +5332,7 @@
 "bYB" = (/obj/machinery/atmospherics/binary/passive_gate{dir = 8},/turf/simulated/floor{dir = 4; icon_state = "warnwhite"},/area/rnd/mixing)
 "bYC" = (/obj/structure/closet/secure_closet/scientist,/obj/machinery/light{dir = 4; icon_state = "tube1"},/turf/simulated/floor{icon_state = "white"},/area/rnd/mixing)
 "bYD" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor/plating,/area/maintenance/research_starboard)
-"bYE" = (/obj/structure/closet/wardrobe/grey,/obj/item/inflatable/door,/obj/item/inflatable/wall,/obj/item/inflatable/wall,/turf/simulated/floor/plating,/area/maintenance/research_starboard)
+"bYE" = (/obj/structure/closet/wardrobe/grey,/obj/item/inflatable/door,/obj/item/inflatable,/obj/item/inflatable,/turf/simulated/floor/plating,/area/maintenance/research_starboard)
 "bYF" = (/obj/structure/bed/chair{dir = 4},/obj/structure/window/basic{dir = 8},/turf/simulated/floor/wood,/area/rnd/test_area)
 "bYG" = (/obj/structure/table/woodentable,/obj/item/weapon/folder/red{pixel_y = 3},/obj/item/weapon/pen,/turf/simulated/floor/wood,/area/rnd/test_area)
 "bYH" = (/obj/structure/bed/chair/office/dark{dir = 8},/obj/item/target,/turf/simulated/floor/wood,/area/rnd/test_area)
