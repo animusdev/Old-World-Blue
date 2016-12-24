@@ -948,11 +948,13 @@
 /obj/item/weapon/reagent_containers/food/snacks/muffin/berry
 	name = "berry muffin"
 	icon_state = "berrymuffin"
+	nutriment_desc = list("sweetness" = 3, "muffin" = 3, "berry" = 3)
 	desc = "A delicious and spongy little cake, with berries."
 
 /obj/item/weapon/reagent_containers/food/snacks/muffin/booberry
 	name = "booberry muffin"
 	icon_state = "booberrymuffin"
+	nutriment_desc = list("sweetness" = 3, "muffin" = 3, "booberry" = 3)
 	desc = "My stomach is a graveyard! No living being can quench my bloodthirst!"
 
 /obj/item/weapon/reagent_containers/food/snacks/muffin/dindumuffin
