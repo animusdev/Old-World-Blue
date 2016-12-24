@@ -92,18 +92,22 @@
 /obj/machinery/gibber/attackby(var/obj/item/W, var/mob/user)
 	var/obj/item/weapon/grab/G = W
 
-	if(!istype(G))
-		return ..()
+	if(istype(G))
+		if(get_dist(src,G.affecting)>=2)
+			return
 
-	if(get_dist(src,G.affecting)>=2)
-		return
+		if(G.state < 2)
+			user << "<span class='danger'>You need a better grip to do that!</span>"
+			return
 
-	if(G.state < 2)
-		user << "<span class='danger'>You need a better grip to do that!</span>"
-		return
-
-	move_into_gibber(user,G.affecting)
-	// Grab() process should clean up the grab item, no need to del it.
+		move_into_gibber(user,G.affecting)
+		// Grab() process should clean up the grab item, no need to del it.
+	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+		if(allowed(usr))
+			emagged = !emagged
+			usr << "The safety guard is [emagged ? "<span class='danger'>disabled</span>" : "enabled"]."
+	else
+		..()
 
 /obj/machinery/gibber/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.restrained())
