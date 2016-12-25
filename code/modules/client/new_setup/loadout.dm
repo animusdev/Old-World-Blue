@@ -100,7 +100,7 @@ var/list/gear_datums = list()
 	. += "</center></div>"
 
 	var/datum/loadout_category/LC = loadout_categories[current_tab]
-	. += "<div style='height:340px;overflow-y:auto;border:solid;margin: 7,0,0,0;padding:3px'>"
+	. += "<div style='height:335px;overflow-y:auto;border:solid;margin: 7,0,0,0;padding:3px'>"
 	for(var/gear_name in LC.gear)
 		var/datum/gear/G = LC.gear[gear_name]
 		var/ticked = (G.display_name in gear)
