@@ -25,7 +25,6 @@
 	var/facial_color = "#000000"
 	var/eyes_color   = "#000000"
 	var/skin_color   = "#000000"
-	var/skin_tone    = 35			//LETHALGHOST: -s_tone + 35.
 
 	var/email = ""					//Character email adress.
 	var/email_is_public = 1			//Add or not to email-list at round join.
@@ -200,7 +199,7 @@
 	dat += "Body build: <a href='?src=\ref[src];build=switch'>[body]</a><br>"
 
 	if(current_species.flags & HAS_SKIN_TONE)
-		dat += "Skin Tone: <a href='?src=\ref[src];skin_tone=input'>[skin_tone]/220</a><br>"
+		dat += "Skin Tone: <a href='?src=\ref[src];skin_tone=input'>[-s_tone + 35]/220</a><br>"
 
 	dat += "<table style='border-collapse:collapse'>"
 	dat += "<tr><td>Hair:</td><td><a href='?src=\ref[src];hair=color'>Color "
@@ -254,7 +253,7 @@
 
 	dat += "<table style='position:relative; left:-3px'>"
 	dat += "<tr><td>Backpack:</td>\
-		<td>	<a href ='?src=\ref[src];inventory=back'>[backbaglist[backbag]]</a></td></tr>"
+		<td><a href ='?src=\ref[src];inventory=back'>[backbaglist[backbag]]</a></td></tr>"
 	dat += "<tr><td>Underwear:</td>\
 		<td><a href ='?src=\ref[src];inventory=underwear'>[underwear]</a></td></tr>"
 	dat += "<tr><td>Undershirt:</td>\
@@ -359,10 +358,10 @@
 
 	else if(href_list["skin_tone"])
 		if(current_species.flags & HAS_SKIN_TONE)
-			var/new_skin_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference", skin_tone)  as num|null
-			if(new_skin_tone && new_skin_tone!=skin_tone)
+			var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference", s_tone)  as num|null
+			if(new_s_tone && new_s_tone!=s_tone)
 				req_update_icon = 1
-				skin_tone = max(min( round(new_skin_tone), 255),1)
+				s_tone = 35 - max( min(new_s_tone, 220), 1)
 
 	else if(href_list["skin"])
 		if(current_species.flags & HAS_SKIN_COLOR)
@@ -590,12 +589,6 @@
 			check_childred_modifications(current_organ)
 			req_update_icon = 1
 
-/*
-/datum/preferences/proc/GetLoadOutPage()
-//	loadout
-/datum/preferences/proc/HandleLoadOutTopic(mob/user, list/href_list)
-*/
-
 /datum/preferences/proc/GetOccupationPage()
 	if(!job_master)
 		return
@@ -811,8 +804,116 @@
 		var/num = text2num(href_list["be_special"])
 		be_special ^= (1<<num)
 
-/datum/preferences/proc/GetSpeciesPage()
+/datum/preferences/proc/GetSpeciesPage(mob/user)
+	if(!species_preview || !(species_preview in all_species))
+		species_preview = "Human"
+	var/datum/species/show_species = all_species[species_preview]
+	var/dat = list()
+	dat += "<select onchange=\"set('preview', this.options\[this.selectedIndex\].text)\">"
+	for(var/name in playable_species)
+		dat += "<option [species_preview==name ? "selected" : null]>[name]</option>"
+
+	dat += "</select>"
+
+	var/restricted = 0
+	if(jobban_isbanned(user, show_species.name))
+		restricted = 1
+	else if(config.usealienwhitelist) //If we're using the whitelist, make sure to check it!
+		if(!(show_species.flags & CAN_JOIN))
+			restricted = 2
+		else if((show_species.flags & IS_WHITELISTED) && !is_alien_whitelisted(user,show_species))
+			restricted = 1
+
+	if(restricted)
+		if(restricted == 1)
+			dat += "<font color='red'><b>You cannot play as this species.</br><small>If you wish to be whitelisted, you can make an application post on <a href='?src=\ref[src];preference=open_whitelist_forum'>the forums</a>.</small></b></font></br>"
+		else if(restricted == 2)
+			dat += "<font color='red'><b>You cannot play as this species.</br><small>This species is not available for play as a station race..</small></b></font></br>"
+	if(!restricted || check_rights(R_ADMIN, 0))
+		dat += "\[<a href='?src=\ref[src];select_species=1'>select</a>\]<hr/>"
+
+	dat += "<table padding='8px'>"
+	dat += "<tr>"
+	dat += "<td width = 180 align='center'>"
+	if("preview" in icon_states(show_species.icobase))
+		usr << browse_rsc(icon(show_species.icobase,"preview"), "species_preview_[show_species.name].png")
+		dat += "<img src='species_preview_[show_species.name].png' width='64px' height='64px'><br/><br/>"
+	dat += "<b>Language:</b> [show_species.language]<br/>"
+	dat += "<small>"
+	if(show_species.flags & CAN_JOIN)
+		dat += "</br><b>Often present on human stations.</b>"
+	if(show_species.flags & IS_WHITELISTED)
+		dat += "</br><b>Whitelist restricted.</b>"
+	if(show_species.flags & NO_BLOOD)
+		dat += "</br><b>Does not have blood.</b>"
+	if(show_species.flags & NO_BREATHE)
+		dat += "</br><b>Does not breathe.</b>"
+	if(show_species.flags & NO_SCAN)
+		dat += "</br><b>Does not have DNA.</b>"
+	if(show_species.flags & NO_PAIN)
+		dat += "</br><b>Does not feel pain.</b>"
+	if(show_species.flags & NO_SLIP)
+		dat += "</br><b>Has excellent traction.</b>"
+	if(show_species.flags & NO_POISON)
+		dat += "</br><b>Immune to most poisons.</b>"
+	if(show_species.flags & HAS_SKIN_TONE)
+		dat += "</br><b>Has a variety of skin tones.</b>"
+	if(show_species.flags & HAS_SKIN_COLOR)
+		dat += "</br><b>Has a variety of skin colours.</b>"
+	if(show_species.flags & HAS_EYE_COLOR)
+		dat += "</br><b>Has a variety of eye colours.</b>"
+	if(show_species.flags & IS_PLANT)
+		dat += "</br><b>Has a plantlike physiology.</b>"
+	if(show_species.flags & IS_SYNTHETIC)
+		dat += "</br><b>Is machine-based.</b>"
+	if(show_species.flags & REGENERATES_LIMBS)
+		dat += "</br><b>Has a plantlike physiology.</b>"
+	dat += "</small></td>"
+	dat += "<td width = 400>[show_species.blurb]</td>"
+	dat += "</tr>"
+	dat += "</table><center>"
+
+	dat += "</center>"
+	return jointext(dat, "")
+
 /datum/preferences/proc/HandleSpeciesTopic(mob/user, list/href_list)
+	if(href_list["preview"])
+		species_preview = href_list["preview"]
+	else if(href_list["select_species"])
+		if(!species_preview in playable_species || jobban_isbanned(user, species_preview))
+			return
+		var/datum/species/new_species = all_species[species_preview]
+		if((new_species.flags&IS_WHITELISTED) && !is_alien_whitelisted(user,species_preview))
+			return
+		if(current_species.name != species_preview)
+			var/datum/sprite_accessory/HS = hair_styles_list[h_style]
+			if(HS.gender != gender || !(new_species.get_bodytype() in HS.species_allowed))
+				//grab one of the valid hair styles for the newly chosen species
+				var/list/hairstyles = get_hair_styles_list(new_species.get_bodytype(), gender)
+				h_style = pick(hairstyles)
+
+			HS = facial_hair_styles_list[f_style]
+			if(HS.gender != gender || !(new_species.get_bodytype() in HS.species_allowed))
+				//grab one of the valid facial hair styles for the newly chosen species
+				var/list/facialstyles = get_facial_styles_list(new_species.get_bodytype(), gender)
+				f_style = pick(facialstyles)
+
+			//reset hair colour and skin colour
+			if(!new_species.flags&HAS_SKIN_COLOR)
+				hair_color = initial(hair_color)
+			else
+				if(!current_species.flags&HAS_SKIN_COLOR && new_species.base_color)
+					hair_color = new_species.base_color
+
+			if(! (new_species.flags & current_species.flags & HAS_SKIN_TONE) )
+				s_tone = 0
+
+			current_species = new_species
+			sanitize_body_build()
+
+			current_page = PAGE_RECORDS
+
+			req_update_icon = 1
 
 
 #undef PAGE_RECORDS

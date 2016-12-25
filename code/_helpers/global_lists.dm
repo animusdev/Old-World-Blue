@@ -132,7 +132,7 @@ var/global/list/endgame_safespawns = list()
 		all_species[S.name] = S
 
 		if(!(S.flags & IS_RESTRICTED))
-			playable_species += S.name
+			playable_species |= S.name
 		if(S.flags & IS_WHITELISTED)
 			whitelisted_species += S.name
 
