@@ -496,14 +496,14 @@ var/global/list/damage_icon_parts = list()
 		update_icons()
 
 /mob/living/carbon/human/update_inv_wear_id(var/update_icons=1)
+	overlays_standing[ID_LAYER]	= null
 	if(wear_id)
 		wear_id.screen_loc = ui_id	//TODO
-		if(w_uniform && w_uniform:displays_id)
-			overlays_standing[ID_LAYER]	= image(body_build.misk_icon, "id")
-		else
-			overlays_standing[ID_LAYER]	= null
-	else
-		overlays_standing[ID_LAYER]	= null
+		if(istype(w_uniform, /obj/item/clothing/under))
+			var/obj/item/clothing/under/Uniform = w_uniform
+			if(Uniform && Uniform.displays_id)
+				overlays_standing[ID_LAYER] = image(body_build.misk_icon, "id")
+				return
 
 	BITSET(hud_updateflag, ID_HUD)
 	BITSET(hud_updateflag, WANTED_HUD)
@@ -524,7 +524,7 @@ var/global/list/damage_icon_parts = list()
 		if(gloves.blood_DNA)
 			var/image/bloodsies	= image(species.blood_mask, "bloodyhands[body_build.index]")
 			bloodsies.color = gloves.blood_color
-			standing.overlays	+= bloodsies
+			standing.overlays += bloodsies
 		gloves.screen_loc = ui_gloves
 		standing.appearance_flags = RESET_COLOR
 		standing.color = gloves.color
