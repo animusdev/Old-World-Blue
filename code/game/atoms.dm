@@ -288,6 +288,8 @@ its easier to just keep the beam vertical.
 			return 0		//Now, lets get to the dirty work.
 		//First, make sure their DNA makes sense.
 		var/mob/living/carbon/human/H = M
+		var/obj/item/clothing/gloves/Gloves = (H.gloves != src) ? H.gloves : null
+
 		if (!istype(H.dna, /datum/dna) || !H.dna.uni_identity || (length(H.dna.uni_identity) != 32))
 			if(!istype(H.dna, /datum/dna))
 				H.dna = new /datum/dna(null)
@@ -295,7 +297,7 @@ its easier to just keep the beam vertical.
 		H.check_dna()
 
 		//Now, deal with gloves.
-		if (H.gloves && H.gloves != src)
+		if (Gloves)
 			if(fingerprintslast != H.key)
 				fingerprintshidden += "\[[time_stamp()]\](Wearing gloves). Real name: [H.real_name], Key: [H.key]"
 				fingerprintslast = H.key
@@ -303,10 +305,11 @@ its easier to just keep the beam vertical.
 
 		//Deal with gloves the pass finger/palm prints.
 		if(!ignoregloves)
-			if(H.gloves && H.gloves != src && !H.gloves:clipped)
-				if(prob(75) && istype(H.gloves, /obj/item/clothing/gloves/white/latex))
-					return 0
-				else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/white/latex))
+			if(istype(Gloves) && !Gloves.clipped)
+				if(istype(Gloves, /obj/item/clothing/gloves/white/latex))
+					if(prob(75))
+						return 0
+				else
 					return 0
 
 		//More adminstuffz
