@@ -34,6 +34,7 @@
 	var/blood_volume = 560                               // Initial blood volume.
 	var/hunger_factor = 0.05                             // Multiplier for hunger.
 	var/taste_sensitivity = TASTE_NORMAL
+	var/list/emotes                                      // Special emotes for that species.
 
 	var/min_age = 17
 	var/max_age = 70
@@ -171,6 +172,13 @@
 			inherent_verbs = list()
 		inherent_verbs |= /mob/living/carbon/human/proc/regurgitate
 
+	if(emotes && emotes.len)
+		var/list/emote_paths = emotes.Copy()
+		emotes.Cut()
+		for(var/T in emote_paths)
+			var/datum/emote/E = new T
+			emotes[E.key] = E
+
 /datum/species/proc/get_station_variant()
 	return name
 
@@ -235,8 +243,10 @@
 		if(FEMALE)
 			t_him = "her"
 
-	H.visible_message("<span class='notice'>[H] hugs [target] to make [t_him] feel better!</span>", \
-					"<span class='notice'>You hug [target] to make [t_him] feel better!</span>")
+	H.visible_message(
+		"<span class='notice'>[H] hugs [target] to make [t_him] feel better!</span>",
+		"<span class='notice'>You hug [target] to make [t_him] feel better!</span>"
+	)
 
 /datum/species/proc/remove_inherent_verbs(var/mob/living/carbon/human/H)
 	if(inherent_verbs)

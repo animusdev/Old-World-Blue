@@ -10,12 +10,12 @@ var/global/list/robot_emotes_list = list()
 	. = length(paths)
 	for(var/T in paths)
 		var/datum/emote/E = new T
-		if(!E.key || !E.restriction)
+		if(!E.key || !E.autolist)
 			del(E)
 			continue
-		if(E.restriction & EMOTE_HUMAN)
+		if(E.autolist & EMOTE_HUMAN)
 			human_emotes_list[E.key] = E
-		if(E.restriction & EMOTE_ROBOT)
+		if(E.autolist & EMOTE_ROBOT)
 			robot_emotes_list[E.key] = E
 
 
@@ -24,7 +24,10 @@ var/global/list/robot_emotes_list = list()
 	var/message = ""
 	var/r_message =  ""
 	var/m_type = MESSAGE_VISIBLE
-	var/restriction = EMOTE_HUMAN
+	var/autolist = EMOTE_HUMAN
+
+/datum/emote/special
+	autolist = null
 
 /datum/emote/proc/act(var/mob/living/H)
 	var/russified = H.client && (H.client.prefs.toggles & RUS_AUTOEMOTES)
@@ -124,7 +127,7 @@ var/global/list/robot_emotes_list = list()
 	message = "claps."
 	r_message = "хлопает в ладоши."
 	m_type = MESSAGE_HEARABLE
-	restriction = EMOTE_HUMAN | EMOTE_ROBOT
+	autolist = EMOTE_HUMAN | EMOTE_ROBOT
 	act(var/mob/living/carbon/human/H)
 		if (!H.restrained())
 			return ..()
@@ -187,7 +190,7 @@ var/global/list/robot_emotes_list = list()
 	message = "flaps wings."
 	r_message = "хлопает крыль&#255;ми."
 	m_type = MESSAGE_HEARABLE
-	restriction = EMOTE_HUMAN | EMOTE_ROBOT
+	autolist = EMOTE_HUMAN | EMOTE_ROBOT
 	act(var/mob/living/H)
 		if (!H.restrained())
 			return ..()
@@ -197,7 +200,7 @@ var/global/list/robot_emotes_list = list()
 	message = "flaps wings ANGRILY!"
 	r_message = "”√–ќ∆јёў≈ хлопает крыль&#255;ми!"
 	m_type = MESSAGE_HEARABLE
-	restriction = EMOTE_HUMAN | EMOTE_ROBOT
+	autolist = EMOTE_HUMAN | EMOTE_ROBOT
 	act(var/mob/living/H)
 		if (!H.restrained())
 			return ..()
@@ -270,7 +273,7 @@ var/global/list/robot_emotes_list = list()
 	key = "nod"
 	message = "nods."
 	r_message = "кивает."
-	restriction = EMOTE_HUMAN | EMOTE_ROBOT
+	autolist = EMOTE_HUMAN | EMOTE_ROBOT
 
 /datum/emote/pale
 	key = "pale"
@@ -344,13 +347,13 @@ var/global/list/robot_emotes_list = list()
 	key = "twitch"
 	message = "twitches violently."
 	r_message = "резко дергаетс&#255;."
-	restriction = EMOTE_HUMAN | EMOTE_ROBOT
+	autolist = EMOTE_HUMAN | EMOTE_ROBOT
 
 /datum/emote/twitch_s
 	key = "twitch_s"
 	message = "twitches."
 	r_message = "дергаетс&#255;."
-	restriction = EMOTE_HUMAN | EMOTE_ROBOT
+	autolist = EMOTE_HUMAN | EMOTE_ROBOT
 
 /datum/emote/wave
 	key = "wave"
@@ -401,7 +404,7 @@ var/global/list/robot_emotes_list = list()
 	r_message = "клан&#255;етс&#255;."
 	target_message = "bows to @target."
 	r_target_message = "клан&#255;етс&#255; @target."
-	restriction = EMOTE_HUMAN | EMOTE_ROBOT
+	autolist = EMOTE_HUMAN | EMOTE_ROBOT
 	act(var/mob/living/H)
 		if(!H.buckled)
 			return ..()
@@ -412,7 +415,7 @@ var/global/list/robot_emotes_list = list()
 	r_message = "злобно смотрит."
 	target_message = "glares at @target."
 	r_target_message = "смотрит на @target со злобой."
-	restriction = EMOTE_HUMAN | EMOTE_ROBOT
+	autolist = EMOTE_HUMAN | EMOTE_ROBOT
 
 /datum/emote/select/look
 	key = "look"
@@ -420,7 +423,7 @@ var/global/list/robot_emotes_list = list()
 	r_message = "осматриваетс&#255;."
 	target_message = "looks at @target."
 	r_target_message = "смотрит на†@target."
-	restriction = EMOTE_HUMAN | EMOTE_ROBOT
+	autolist = EMOTE_HUMAN | EMOTE_ROBOT
 
 /datum/emote/select/salute
 	key = "salute"
@@ -428,7 +431,7 @@ var/global/list/robot_emotes_list = list()
 	r_message = "отдает честь."
 	target_message = "salutes to @target."
 	r_target_message = "отдает честь @target."
-	restriction = EMOTE_HUMAN | EMOTE_ROBOT
+	autolist = EMOTE_HUMAN | EMOTE_ROBOT
 	act(var/mob/living/carbon/human/H)
 		if(!H.handcuffed)
 			return ..()
@@ -439,7 +442,7 @@ var/global/list/robot_emotes_list = list()
 	r_message = "внимательно смотрит на происход&#255;щее."
 	target_message = "stares at @target."
 	r_target_message = "п&#255;литс&#255; на @target."
-	restriction = EMOTE_HUMAN | EMOTE_ROBOT
+	autolist = EMOTE_HUMAN | EMOTE_ROBOT
 
 ////SELECT LOCAL////
 
@@ -532,7 +535,7 @@ var/global/list/robot_emotes_list = list()
 	message = "shudders violently for a moment, then becomes motionless, its eyes slowly darkening."
 	r_message = "резко вздрагивает, после чего застывает без движени&#255;, его глаза плавно гаснут."
 	m_type = MESSAGE_HEARABLE
-	restriction = EMOTE_ROBOT
+	autolist = EMOTE_ROBOT
 
 /datum/emote/select/beep
 	key = "beep"
@@ -540,7 +543,7 @@ var/global/list/robot_emotes_list = list()
 	r_message = "гудит."
 	target_message = "beeps at @target."
 	r_target_message = "гудит на @target."
-	restriction = EMOTE_ROBOT
+	autolist = EMOTE_ROBOT
 	act(var/mob/living/H)
 		if(..())
 			playsound(H.loc, 'sound/machines/twobeep.ogg', 50, 0)
@@ -551,7 +554,7 @@ var/global/list/robot_emotes_list = list()
 	r_message = "жужжит."
 	target_message = "buzzes at @target."
 	r_target_message = "жужжит на @target."
-	restriction = EMOTE_ROBOT
+	autolist = EMOTE_ROBOT
 	act(var/mob/living/H)
 		if(..())
 			playsound(H.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
@@ -562,11 +565,48 @@ var/global/list/robot_emotes_list = list()
 	r_message = "жужжит."
 	target_message = "pings at @target."
 	r_target_message = "жужжит на @target."
-	restriction = EMOTE_ROBOT
+	autolist = EMOTE_ROBOT
 	act(var/mob/living/H)
 		if(..())
 			playsound(H.loc, 'sound/machines/ping.ogg', 50, 0)
 
+
+/// Species tail emote ///
+
+/datum/emote/tail
+	autolist = null
+
+/datum/emote/tail/swish
+	key = "swish"
+	m_type = MESSAGE_VISIBLE
+	act(var/mob/living/carbon/human/H)
+		H.animate_tail_once()
+
+/datum/emote/tail/wag
+	key = "wag"
+	act(var/mob/living/carbon/human/H)
+		H.animate_tail_start()
+
+/datum/emote/tail/wag/sway
+	key = "sway"
+
+
+/datum/emote/tail/qwag
+	key = "qwag"
+	act(var/mob/living/carbon/human/H)
+		H.animate_tail_fast()
+
+/datum/emote/tail/qwag/fastsway
+	key = "fastsway"
+
+
+/datum/emote/tail/swag
+	key = "swag"
+	act(var/mob/living/carbon/human/H)
+		H.animate_tail_stop()
+
+/datum/emote/tail/swag/stopsway
+	key = "stopsway"
 
 
 #undef EMOTE_HUMAN

@@ -55,12 +55,12 @@
 	else, frequently even their own lives. They prefer warmer temperatures than most species and \
 	their native tongue is a heavy hissing laungage called Sinta'Unathi."
 
-	cold_level_1 = 280 //Default 260 - Lower is better
-	cold_level_2 = 220 //Default 200
-	cold_level_3 = 130 //Default 120
+	cold_level_1 = 280  //Default 260 - Lower is better
+	cold_level_2 = 220  //Default 200
+	cold_level_3 = 130  //Default 120
 
-	heat_level_1 = 420 //Default 360 - Higher is better
-	heat_level_2 = 480 //Default 400
+	heat_level_1 = 420  //Default 360 - Higher is better
+	heat_level_2 = 480  //Default 400
 	heat_level_3 = 1100 //Default 1000
 
 	flags = CAN_JOIN | IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_SKIN_COLOR | HAS_EYE_COLOR
@@ -69,6 +69,16 @@
 
 	reagent_tag = IS_UNATHI
 	base_color = "#066000"
+
+	emotes = list(
+		/datum/emote/tail/swish,
+		/datum/emote/tail/wag,
+		/datum/emote/tail/wag/sway,
+		/datum/emote/tail/qwag,
+		/datum/emote/tail/qwag/fastsway,
+		/datum/emote/tail/swag,
+		/datum/emote/tail/swag/stopsway,
+	)
 
 	heat_discomfort_level = 295
 	heat_discomfort_strings = list(
@@ -88,10 +98,12 @@
 				  "Ñ"="Ññ", "Ø"="Øø", "Ù"="Ùù")
 	accentFL = list("ã" = "õ", "Ã" = "Õ")
 
-	restricted_jobs = list("Captain", "Head of Personnel", "Head of Security", "Chief Engineer",\
-						"Research Director", "Chief Medical Officer", "Detective",\
-						"Medical Doctor", "Geneticist", "Chemist", "Scientist", "Roboticist",\
-						"Xenobiologist", "Quartermaster", "Internal Affairs Agent")
+	restricted_jobs = list(
+		"Captain", "Head of Personnel", "Head of Security", "Chief Engineer",
+		"Research Director", "Chief Medical Officer", "Detective",
+		"Medical Doctor", "Geneticist", "Chemist", "Scientist", "Roboticist",
+		"Xenobiologist", "Quartermaster", "Internal Affairs Agent"
+	)
 
 /datum/species/unathi/equip_survival_gear(var/mob/living/carbon/human/H)
 	..()
@@ -144,6 +156,16 @@
 
 	reagent_tag = IS_TAJARA
 
+	emotes = list(
+		/datum/emote/tail/swish,
+		/datum/emote/tail/wag,
+		/datum/emote/tail/wag/sway,
+		/datum/emote/tail/qwag,
+		/datum/emote/tail/qwag/fastsway,
+		/datum/emote/tail/swag,
+		/datum/emote/tail/swag/stopsway,
+	)
+
 	heat_discomfort_level = 292
 	heat_discomfort_strings = list(
 		"Your fur prickles in the heat.",
@@ -151,10 +173,12 @@
 		"Your overheated skin itches."
 		)
 	cold_discomfort_level = 275
-	restricted_jobs = list("Captain", "Head of Personnel", "Head of Security", "Chief Engineer",\
-						"Research Director", "Chief Medical Officer", "Warden", "Detective", "Security Officer",\
-						"Medical Doctor", "Geneticist", "Scientist", "Roboticist", "Xenobiologist",\
-						"Quartermaster", "Internal Affairs Agent")
+	restricted_jobs = list(
+		"Captain", "Head of Personnel", "Head of Security", "Chief Engineer",
+		"Research Director", "Chief Medical Officer", "Warden", "Detective", "Security Officer",
+		"Medical Doctor", "Geneticist", "Scientist", "Roboticist", "Xenobiologist",
+		"Quartermaster", "Internal Affairs Agent"
+	)
 	accent = list("ð" = "ðð", "Ð" = "Ðð")
 
 /datum/species/tajaran/equip_survival_gear(var/mob/living/carbon/human/H)
@@ -274,10 +298,12 @@
 	flesh_color = "#907E4A"
 
 	reagent_tag = IS_DIONA
-	restricted_jobs = list("Captain", "Head of Personnel", "Head of Security", "Chief Engineer",\
-						"Research Director", "Chief Medical Officer", "Warden", "Detective", "Security Officer",\
-						"Station Engineer", "Atmospheric Technician", "Medical Doctor", "Geneticist", "Paramedic",\
-						"Scientist", "Roboticist", "Bartender", "Quartermaster", "Internal Affairs Agent")
+	restricted_jobs = list(
+		"Captain", "Head of Personnel", "Head of Security", "Chief Engineer",
+		"Research Director", "Chief Medical Officer", "Warden", "Detective", "Security Officer",
+		"Station Engineer", "Atmospheric Technician", "Medical Doctor", "Geneticist", "Paramedic",
+		"Scientist", "Roboticist", "Bartender", "Quartermaster", "Internal Affairs Agent"
+	)
 
 /datum/species/diona/can_understand(var/mob/other)
 	var/mob/living/carbon/alien/diona/D = other
@@ -357,10 +383,12 @@
 		new/datum/body_build/slim
 	)
 
-	restricted_jobs = list("Captain", "Head of Personnel", "Head of Security", "Chief Engineer",\
-						"Research Director", "Chief Medical Officer", "Warden", "Detective",\
-						"Security Officer", "Medical Doctor", "Geneticist",\
-						"Psychiatrist", "Paramedic", "Quartermaster", "Shaft Miner", "Internal Affairs Agent")
+	restricted_jobs = list(
+		"Captain", "Head of Personnel", "Head of Security", "Chief Engineer",
+		"Research Director", "Chief Medical Officer", "Warden", "Detective",
+		"Security Officer", "Medical Doctor", "Geneticist",
+		"Psychiatrist", "Paramedic", "Quartermaster", "Shaft Miner", "Internal Affairs Agent"
+	)
 
 /datum/species/machine/equip_survival_gear(var/mob/living/carbon/human/H)
 	return
