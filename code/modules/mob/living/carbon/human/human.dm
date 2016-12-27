@@ -164,7 +164,7 @@
 
 /mob/living/carbon/human/meteorhit(O as obj)
 	for(var/mob/M in viewers(src, null))
-		if ((M.client && !( M.blinded )))
+		if ((M.client && !(M.blinded)))
 			M.show_message("\red [src] has been hit by [O]", 1)
 	if (health > 0)
 		var/obj/item/organ/external/affecting = get_organ(pick(BP_CHEST, BP_CHEST, BP_CHEST, BP_HEAD))
@@ -1128,15 +1128,10 @@
 
 	maxHealth = species.total_health
 
+	fixblood()
+
 	spawn(0)
 		regenerate_icons()
-		if(vessel.total_volume < species.blood_volume)
-			vessel.maximum_volume = species.blood_volume
-			vessel.add_reagent("blood", species.blood_volume - vessel.total_volume)
-		else if(vessel.total_volume > species.blood_volume)
-			vessel.remove_reagent("blood", vessel.total_volume - species.blood_volume)
-			vessel.maximum_volume = species.blood_volume
-		fixblood()
 
 	// Rebuild the HUD. If they aren't logged in then login() should reinstantiate it for them.
 	if(client && client.screen)
