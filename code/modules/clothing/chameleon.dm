@@ -7,6 +7,7 @@ var/global/list/chameleons_categories = list(
 	"gloves" = list(),
 	"mask" = list(),
 	"glasses" = list(),
+	"belt" = list(),
 	"backpack" = list(),
 	"gun" = list()
 )
@@ -27,6 +28,7 @@ var/global/list/chameleons_categories = list(
 	initialize_chameleon_list("mask", /obj/item/clothing/mask, list(/obj/item/clothing/mask/scarf))
 	initialize_chameleon_list("glasses", /obj/item/clothing/glasses)
 	initialize_chameleon_list("backpack", /obj/item/weapon/storage/backpack)
+	initialize_chameleon_list("belt", /obj/item/weapon/storage/belt)
 	initialize_chameleon_list("gun", /obj/item/weapon/gun/projectile)
 	return 1
 

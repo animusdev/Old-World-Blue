@@ -66,6 +66,7 @@ var/global/list/changeling_fabricated_clothing = list(
 	icon_state = "lingchameleon"
 	desc = "Our head is swelled with a large quanity of rapidly shifting skin cells.  We can reform our head to resemble various hats and \
 	helmets that biologicals are so fond of wearing."
+	category = "hat"
 	slot_flags = SLOT_HEAD
 
 /obj/item/chameleon/changeling/suit
@@ -74,6 +75,7 @@ var/global/list/changeling_fabricated_clothing = list(
 	icon_state = "lingchameleon"
 	item_state = "armor"
 	desc = "The cells in our chest are rapidly shifting, ready to reform into material that can resemble most pieces of clothing."
+	category = "suit"
 	slot_flags = SLOT_OCLOTHING
 
 /obj/item/chameleon/changeling/shoes
@@ -82,6 +84,7 @@ var/global/list/changeling_fabricated_clothing = list(
 	icon_state = "lingchameleon"
 	item_state = "black"
 	desc = "Our feet are overlayed with another layer of flesh and bone on top.  We can reform our feet to resemble various boots and shoes."
+	category = "shoes"
 	slot_flags = SLOT_FEET
 
 /obj/item/chameleon/changeling/gloves
@@ -91,6 +94,7 @@ var/global/list/changeling_fabricated_clothing = list(
 	item_state = "lingchameleon"
 	desc = "Our hands have a second layer of flesh on top.  We can reform our hands to resemble a large variety of fabrics and materials that biologicals \
 	tend to wear on their hands.  Remember that these won't protect your hands from harm."
+	category = "gloves"
 	slot_flags = SLOT_GLOVES
 
 /obj/item/chameleon/changeling/mask
@@ -100,6 +104,7 @@ var/global/list/changeling_fabricated_clothing = list(
 	item_state = "gas_alt"
 	desc = "A transparent visor of brittle chitin covers our face.  We can reform it to resemble various masks that biologicals use.  It can also utilize internal \
 	tanks.."
+	category = "mask"
 	slot_flags = SLOT_MASK
 
 /obj/item/chameleon/changeling/glasses
@@ -107,6 +112,7 @@ var/global/list/changeling_fabricated_clothing = list(
 	icon_state = "lingchameleon"
 	item_state = "glasses"
 	desc = "A transparent piece of eyewear made out of brittle chitin.  We can reform it to resemble various glasses and goggles."
+	category = "glasses"
 	slot_flags = SLOT_EYES
 
 /obj/item/chameleon/changeling/belt
@@ -115,6 +121,7 @@ var/global/list/changeling_fabricated_clothing = list(
 	desc = "We can store objects in this, as well as shift it's appearance, so that it resembles various common belts."
 	icon_state = "lingchameleon"
 	item_state = "utility"
+	category = "belt"
 	slot_flags = SLOT_BELT
 
 /obj/item/chameleon/changeling/backpack
@@ -123,6 +130,7 @@ var/global/list/changeling_fabricated_clothing = list(
 	icon_state = "backpack"
 	item_state = "backpack"
 	desc = "A large pouch imbedded in our back, it can shift form to resemble many common backpacks that other biologicals are fond of using."
+	category = "backpack"
 	slot_flags = SLOT_BACK
 
 /*
