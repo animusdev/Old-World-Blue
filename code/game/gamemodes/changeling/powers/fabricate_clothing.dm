@@ -1,14 +1,14 @@
 var/global/list/changeling_fabricated_clothing = list(
-	"w_uniform" = /obj/item/clothing/under/chameleon/changeling,
-	"head" = /obj/item/clothing/head/chameleon/changeling,
-	"wear_suit" = /obj/item/clothing/suit/chameleon/changeling,
-	"shoes" = /obj/item/clothing/shoes/chameleon/changeling,
-	"gloves" = /obj/item/clothing/gloves/chameleon/changeling,
-	"wear_mask" = /obj/item/clothing/mask/chameleon/changeling,
-	"glasses" = /obj/item/clothing/glasses/chameleon/changeling,
-	"back" = /obj/item/weapon/storage/backpack/chameleon/changeling,
-	"belt" = /obj/item/weapon/storage/belt/chameleon/changeling,
-	"wear_id" = /obj/item/weapon/card/id/syndicate/changeling
+	"w_uniform" = /obj/item/chameleon/changeling/under,
+	"head" = /obj/item/chameleon/changeling/head,
+	"wear_suit" = /obj/item/chameleon/changeling/suit,
+	"shoes" = /obj/item/chameleon/changeling/shoes,
+	"gloves" = /obj/item/chameleon/changeling/gloves,
+	"wear_mask" = /obj/item/chameleon/changeling/mask,
+	"glasses" = /obj/item/chameleon/changeling/glasses,
+	"back" = /obj/item/chameleon/changeling/backpack,
+	"belt" = /obj/item/chameleon/changeling/belt,
+//	"wear_id" = /obj/item/weapon/card/id/syndicate/changeling
 	)
 
 /datum/power/changeling/fabricate_clothing
@@ -29,210 +29,103 @@ var/global/list/changeling_fabricated_clothing = list(
 		return 1
 	return 0
 
-/obj/item/clothing/under/chameleon/changeling
+/obj/item/chameleon/changeling
+	origin_tech = list() //The base chameleon items have origin technology, which we will inherit if we don't null out this variable.
+	canremove = 0 //Since this is essentially flesh impersonating clothes, tearing someone's skin off as if it were clothing isn't possible.
+
+/obj/item/chameleon/changeling/emp_act(severity)
+	return
+
+/obj/item/chameleon/changeling/dropped()
+	qdel(src)
+
+/obj/item/chameleon/changeling/attack_hand(mob/living/carbon/human/user)
+	if(src in user)
+		playsound(src, 'sound/effects/splat.ogg', 30, 1)
+		user.visible_message(
+			"<span class='warning'>[user] tears off [src]!</span>",
+			"<span class='notice'>We remove [src].</span>"
+		)
+		user.drop_from_inventory(src)
+		user.update_icons()
+		return
+
+/obj/item/chameleon/changeling/under
 	name = "malformed flesh"
+	icon = 'icons/inv_slots/uniforms/icon.dmi'
 	icon_state = "lingchameleon"
 	item_state = "lingchameleon"
 	desc = "The flesh all around us has grown a new layer of cells that can shift appearance and create a biological fabric that cannot be distinguished from \
 	ordinary cloth, allowing us to make ourselves appear to wear almost anything."
-	origin_tech = list() //The base chameleon items have origin technology, which we will inherit if we don't null out this variable.
-	canremove = 0 //Since this is essentially flesh impersonating clothes, tearing someone's skin off as if it were clothing isn't possible.
+	category = "uniform"
+	slot_flags = SLOT_ICLOTHING
 
-/obj/item/clothing/under/chameleon/changeling/emp_act(severity) //As these are purely organic, EMP does nothing to them.
-	return
-
-/obj/item/clothing/under/chameleon/changeling/verb/shred() //Remove individual pieces if needed.
-	set name = "Shred Jumpsuit"
-	set category = "Chameleon Items"
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		playsound(src, 'sound/effects/splat.ogg', 30, 1)
-		visible_message("<span class='warning'>[H] tears off [src]!</span>",
-		"<span class='notice'>We remove [src].</span>")
-		qdel(src)
-		H.update_icons()
-
-/obj/item/clothing/head/chameleon/changeling
+/obj/item/chameleon/changeling/head
 	name = "malformed head"
+	icon = 'icons/inv_slots/hats/icon.dmi'
 	icon_state = "lingchameleon"
 	desc = "Our head is swelled with a large quanity of rapidly shifting skin cells.  We can reform our head to resemble various hats and \
 	helmets that biologicals are so fond of wearing."
-	origin_tech = list()
-	canremove = 0
+	slot_flags = SLOT_HEAD
 
-/obj/item/clothing/head/chameleon/changeling/emp_act(severity)
-	return
-
-/obj/item/clothing/head/chameleon/changeling/verb/shred() //The copypasta is real.
-	set name = "Shred Helmet"
-	set category = "Chameleon Items"
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		playsound(src, 'sound/effects/splat.ogg', 30, 1)
-		visible_message("<span class='warning'>[H] tears off [src]!</span>",
-		"<span class='notice'>We remove [src].</span>")
-		qdel(src)
-		H.update_icons()
-
-/obj/item/clothing/suit/chameleon/changeling
+/obj/item/chameleon/changeling/suit
 	name = "chitinous chest"
+	icon = 'icons/inv_slots/suits/icon.dmi'
 	icon_state = "lingchameleon"
 	item_state = "armor"
 	desc = "The cells in our chest are rapidly shifting, ready to reform into material that can resemble most pieces of clothing."
-	origin_tech = list()
-	canremove = 0
+	slot_flags = SLOT_OCLOTHING
 
-/obj/item/clothing/suit/chameleon/changeling/emp_act(severity)
-	return
-
-/obj/item/clothing/suit/chameleon/changeling/verb/shred()
-	set name = "Shred Suit"
-	set category = "Chameleon Items"
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		playsound(src, 'sound/effects/splat.ogg', 30, 1)
-		visible_message("<span class='warning'>[H] tears off [src]!</span>",
-		"<span class='notice'>We remove [src].</span>")
-		qdel(src)
-		H.update_icons()
-
-/obj/item/clothing/shoes/chameleon/changeling
+/obj/item/chameleon/changeling/shoes
 	name = "malformed feet"
+	icon = 'icons/inv_slots/shoes/icon.dmi'
 	icon_state = "lingchameleon"
 	item_state = "black"
 	desc = "Our feet are overlayed with another layer of flesh and bone on top.  We can reform our feet to resemble various boots and shoes."
-	origin_tech = list()
-	canremove = 0
+	slot_flags = SLOT_FEET
 
-/obj/item/clothing/shoes/chameleon/changeling/emp_act()
-	return
-
-/obj/item/clothing/shoes/chameleon/changeling/verb/shred()
-	set name = "Shred Shoes"
-	set category = "Chameleon Items"
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		playsound(src, 'sound/effects/splat.ogg', 30, 1)
-		visible_message("<span class='warning'>[H] tears off [src]!</span>",
-		"<span class='notice'>We remove [src].</span>")
-		qdel(src)
-		H.update_icons()
-
-/obj/item/weapon/storage/backpack/chameleon/changeling
-	name = "backpack"
-	icon_state = "backpack"
-	item_state = "backpack"
-	desc = "A large pouch imbedded in our back, it can shift form to resemble many common backpacks that other biologicals are fond of using."
-	origin_tech = list()
-	canremove = 0
-
-/obj/item/weapon/storage/backpack/chameleon/changeling/emp_act()
-	return
-
-/obj/item/weapon/storage/backpack/chameleon/changeling/verb/shred()
-	set name = "Shred Backpack"
-	set category = "Chameleon Items"
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		playsound(src, 'sound/effects/splat.ogg', 30, 1)
-		visible_message("<span class='warning'>[H] tears off [src]!</span>",
-		"<span class='notice'>We remove [src].</span>")
-		for(var/atom/movable/AM in src.contents) //Dump whatever's in the bag before deleting.
-			AM.forceMove(get_turf(loc))
-		qdel(src)
-		H.update_icons()
-
-/obj/item/clothing/gloves/chameleon/changeling
+/obj/item/chameleon/changeling/gloves
 	name = "malformed hands"
+	icon = 'icons/inv_slots/gloves/icon.dmi'
 	icon_state = "lingchameleon"
 	item_state = "lingchameleon"
 	desc = "Our hands have a second layer of flesh on top.  We can reform our hands to resemble a large variety of fabrics and materials that biologicals \
 	tend to wear on their hands.  Remember that these won't protect your hands from harm."
-	origin_tech = list()
-	canremove = 0
+	slot_flags = SLOT_GLOVES
 
-/obj/item/clothing/gloves/chameleon/changeling/emp_act()
-	return
-
-/obj/item/clothing/gloves/chameleon/changeling/verb/shred()
-	set name = "Shred Gloves"
-	set category = "Chameleon Items"
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		playsound(src, 'sound/effects/splat.ogg', 30, 1)
-		visible_message("<span class='warning'>[H] tears off [src]!</span>",
-		"<span class='notice'>We remove [src].</span>")
-		qdel(src)
-		H.update_icons()
-
-
-/obj/item/clothing/mask/chameleon/changeling
+/obj/item/chameleon/changeling/mask
 	name = "chitin visor"
+	icon = 'icons/inv_slots/masks/icon.dmi'
 	icon_state = "lingchameleon"
 	item_state = "gas_alt"
 	desc = "A transparent visor of brittle chitin covers our face.  We can reform it to resemble various masks that biologicals use.  It can also utilize internal \
 	tanks.."
-	origin_tech = list()
-	canremove = 0
+	slot_flags = SLOT_MASK
 
-/obj/item/clothing/mask/chameleon/changeling/emp_act()
-	return
-
-/obj/item/clothing/mask/chameleon/changeling/verb/shred()
-	set name = "Shred Mask"
-	set category = "Chameleon Items"
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		playsound(src, 'sound/effects/splat.ogg', 30, 1)
-		visible_message("<span class='warning'>[H] tears off [src]!</span>",
-		"<span class='notice'>We remove [src].</span>")
-		qdel(src)
-		H.update_icons()
-
-/obj/item/clothing/glasses/chameleon/changeling
+/obj/item/chameleon/changeling/glasses
 	name = "chitin goggles"
 	icon_state = "lingchameleon"
 	item_state = "glasses"
 	desc = "A transparent piece of eyewear made out of brittle chitin.  We can reform it to resemble various glasses and goggles."
-	origin_tech = list()
-	canremove = 0
+	slot_flags = SLOT_EYES
 
-/obj/item/clothing/glasses/chameleon/changeling/emp_act()
-	return
-
-/obj/item/clothing/glasses/chameleon/changeling/verb/shred()
-	set name = "Shred Glasses"
-	set category = "Chameleon Items"
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		playsound(src, 'sound/effects/splat.ogg', 30, 1)
-		visible_message("<span class='warning'>[H] tears off [src]!</span>",
-		"<span class='notice'>We remove [src].</span>")
-		qdel(src)
-		H.update_icons()
-
-/obj/item/weapon/storage/belt/chameleon/changeling
+/obj/item/chameleon/changeling/belt
 	name = "waist pouch"
+	icon = 'icons/inv_slots/belts/icon.dmi'
 	desc = "We can store objects in this, as well as shift it's appearance, so that it resembles various common belts."
 	icon_state = "lingchameleon"
 	item_state = "utility"
-	origin_tech = list()
-	canremove = 0
+	slot_flags = SLOT_BELT
 
-/obj/item/weapon/storage/belt/chameleon/changeling/emp_act()
-	return
+/obj/item/chameleon/changeling/backpack
+	name = "backpack"
+	icon = 'icons/inv_slots/back/icon.dmi'
+	icon_state = "backpack"
+	item_state = "backpack"
+	desc = "A large pouch imbedded in our back, it can shift form to resemble many common backpacks that other biologicals are fond of using."
+	slot_flags = SLOT_BACK
 
-/obj/item/weapon/storage/belt/chameleon/changeling/verb/shred()
-	set name = "Shred Belt"
-	set category = "Chameleon Items"
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		playsound(src, 'sound/effects/splat.ogg', 30, 1)
-		visible_message("<span class='warning'>[H] tears off [src]!</span>",
-		"<span class='notice'>We remove [src].</span>")
-		qdel(src)
-		H.update_icons()
-
+/*
 /obj/item/weapon/card/id/syndicate/changeling
 	name = "chitinous card"
 	desc = "A card that we can reform to resemble identification cards.  Due to the nature of the material this is made of, it cannot store any access codes."
@@ -260,10 +153,10 @@ var/global/list/changeling_fabricated_clothing = list(
 		qdel(src)
 		H.update_icons()
 
-
 /obj/item/weapon/card/id/syndicate/changeling/Click() //Since we can't hold it in our hands, and attack_hand() doesn't work if it in inventory...
 	if(!registered_user)
 		registered_user = usr
 		usr.set_id_info(src)
 	ui_interact(registered_user)
 	..()
+*/
