@@ -29,12 +29,6 @@
 		"[SPRITE_STORAGE]_r"  = 'icons/inv_slots/back/hand_r_default.dmi',
 		"[SPRITE_UNIFORMS]_l" = 'icons/inv_slots/uniforms/hand_l_default.dmi',
 		"[SPRITE_UNIFORMS]_r" = 'icons/inv_slots/uniforms/hand_r_default.dmi',
-/*
-		"[SPRITE_GLOVES]"   =
-		"[SPRITE_SUITS]"    =
-		"[SPRITE_MASKS]"    =
-		"[SPRITE_HATS]"     =
-*/
 		"[SPRITE_GUNS]_l"     = 'icons/inv_slots/items/guns_l_default.dmi',
 		"[SPRITE_GUNS]_r"     = 'icons/inv_slots/items/guns_r_default.dmi'
 
@@ -73,12 +67,6 @@
 		"[SPRITE_STORAGE]_r"  = 'icons/inv_slots/back/hand_r_default.dmi',
 		"[SPRITE_UNIFORMS]_l" = 'icons/inv_slots/uniforms/hand_l_slim.dmi',
 		"[SPRITE_UNIFORMS]_r" = 'icons/inv_slots/uniforms/hand_r_slim.dmi',
-/*
-		"[SPRITE_GLOVES]"   =
-		"[SPRITE_SUITS]"    =
-		"[SPRITE_MASKS]"    =
-		"[SPRITE_HATS]"     =
-*/
 		"[SPRITE_GUNS]_l"     = 'icons/inv_slots/items/guns_l_default.dmi',
 		"[SPRITE_GUNS]_r"     = 'icons/inv_slots/items/guns_r_default.dmi'
 

@@ -69,6 +69,7 @@
 	name = "trophy rack"
 	desc = "It's useful for both carrying extra gear and proudly declaring your insanity."
 	icon_state = "cultpack"
+	item_state = "backpack"
 
 /obj/item/weapon/storage/backpack/clown
 	name = "Giggles von Honkerton"
@@ -84,6 +85,7 @@
 	name = "medical backpack"
 	desc = "It's a backpack made for the ones who know no rest."
 	icon_state = "emtpack"
+	item_state = "captainpack"
 
 /obj/item/weapon/storage/backpack/security
 	name = "security backpack"
@@ -113,6 +115,7 @@
 	name = "herbalist's backpack"
 	desc = "It's a green backpack with many pockets to store plants and tools in."
 	icon_state = "hydpack"
+	item_state = "engiepack"
 
 /obj/item/weapon/storage/backpack/genetics
 	name = "geneticist backpack"
@@ -201,6 +204,7 @@
 	name = "satchel"
 	desc = "A trendy looking satchel."
 	icon_state = "satchel-norm"
+	item_state = "backpack"
 
 /obj/item/weapon/storage/backpack/satchel/eng
 	name = "industrial satchel"
@@ -254,6 +258,7 @@
 	name = "hydroponics satchel"
 	desc = "A green satchel for plant related work."
 	icon_state = "satchel_hyd"
+	item_state = "engiepack"
 
 /obj/item/weapon/storage/backpack/satchel/cap
 	name = "captain's satchel"
@@ -344,6 +349,7 @@
 	name = "hydroponics messenger bag"
 	desc = "A backpack worn over one shoulder.  This one is designed for plant-related work."
 	icon_state = "courierbaghyd"
+	item_state = "engiepack"
 
 /obj/item/weapon/storage/backpack/messenger/sec
 	name = "security messenger bag"
