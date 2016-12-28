@@ -55,7 +55,7 @@
 "bc" = (/obj/structure/table/rack,/obj/item/weapon/material/hatchet/tacknife,/turf/simulated/floor/airless,/area/derelict/bridge/access)
 "bd" = (/obj/structure/table/rack,/obj/item/weapon/melee/classic_baton,/turf/simulated/floor/airless,/area/derelict/bridge/access)
 "be" = (/obj/structure/table/rack,/turf/simulated/floor/airless,/area/derelict/bridge/access)
-"bf" = (/obj/structure/closet/crate/secure/weapon,/turf/simulated/floor/airless,/area/derelict/bridge/access)
+"bf" = (/obj/structure/closet/crate/secure/weapon,/obj/item/weapon/hand_tele,/turf/simulated/floor/airless,/area/derelict/bridge/access)
 "bg" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/airless,/area/derelict/bridge/access)
 "bh" = (/turf/simulated/floor/airless,/area/derelict/bridge/access)
 "bi" = (/obj/structure/closet,/turf/simulated/floor/airless,/area/derelict/bridge/access)
@@ -113,7 +113,7 @@
 "ci" = (/obj/structure/window/reinforced,/turf/simulated/floor/airless{tag = "icon-damaged5"; icon_state = "damaged5"},/area/derelict/singularity_engine)
 "cj" = (/obj/structure/window/reinforced,/turf/simulated/floor/airless{tag = "icon-damaged4"; icon_state = "damaged4"},/area/derelict/singularity_engine)
 "ck" = (/obj/machinery/light/small{dir = 8},/turf/simulated/floor/airless{tag = "icon-damaged2"; icon_state = "damaged2"},/area/derelict/singularity_engine)
-"cl" = (/obj/structure/safe/floor,/obj/item/weapon/gun/projectile/pistol/flash,/obj/item/device/modkit/tajaran,/obj/item/weapon/moneybag/vault,/turf/simulated/floor/plating/airless,/area/derelict/secret)
+"cl" = (/obj/structure/safe/floor,/obj/item/weapon/moneybag/vault,/obj/item/clothing/mask/gas/voice,/obj/item/weapon/gun/energy/grumbler,/turf/simulated/floor/plating/airless,/area/derelict/secret)
 "cm" = (/turf/simulated/floor/plating/airless,/area/derelict/secret)
 "cn" = (/obj/structure/window/reinforced{tag = "icon-rwindow (NORTHEAST)"; icon_state = "rwindow"; dir = 5},/turf/simulated/floor/airless,/area/derelict/bridge/access)
 "co" = (/obj/structure/window/reinforced{tag = "icon-rwindow (WEST)"; icon_state = "rwindow"; dir = 8},/obj/item/stack/rods{amount = 2},/turf/simulated/floor/plating/airless,/area/space)
@@ -738,3 +738,4 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
+
