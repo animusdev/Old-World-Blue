@@ -366,7 +366,6 @@
 /mob/living/carbon/human/Topic(href, href_list)
 
 	if (href_list["refresh"])
-
 		if(machine &&in_range(src, machine))
 			var/mob/living/L = machine
 			L.show_inv(src)
@@ -377,6 +376,7 @@
 		src << browse(null, t1)
 
 	if(href_list["item"])
+		usr.face_atom(src)
 		handle_strip(href_list["item"],usr)
 
 	if (href_list["criminal"])

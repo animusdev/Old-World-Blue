@@ -80,10 +80,12 @@
 
 	if(stripping)
 		admin_attack_log(user, src, "Attempted to remove \a [target_slot]", "Target of an attempt to remove \a [target_slot].", "attempted to remove \a [target_slot] from")
-		unEquip(target_slot)
+		if(unEquip(target_slot))
+			src.show_inv(user)
 	else if(user.unEquip(held))
-		equip_to_slot_if_possible(held, text2num(slot_to_strip), 0, 1, 1)
-		if(held.loc != src)
+		if(equip_to_slot_if_possible(held, text2num(slot_to_strip), 0, 1, 1))
+			src.show_inv(user)
+		else
 			user.put_in_hands(held)
 
 // Empty out everything in the target's pockets.
