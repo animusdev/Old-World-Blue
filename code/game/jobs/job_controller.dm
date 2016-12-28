@@ -39,7 +39,6 @@ var/global/datum/controller/occupations/job_master
 		job_debug.Add(text)
 		return 1
 
-
 	proc/GetJob(var/rank)
 		if(!rank)	return null
 		return occupations_by_name[rank]
@@ -52,16 +51,19 @@ var/global/datum/controller/occupations/job_master
 		if(player && player.mind && rank)
 			var/datum/job/job = GetJob(rank)
 			if(!job)
+				Debug("AR has failed. Job can't be found. Player: [player], Rank: [rank]")
 				return 0
 			if(job.minimum_character_age && (player.client.prefs.age < job.minimum_character_age))
+				Debug("AR has failed, Player too young")
 				return 0
 			if(jobban_isbanned(player, rank))
+				Debug("AR has failed, Player is jobbaned")
 				return 0
 			if(player.IsJobRestricted(rank))
+				Debug("AR has failed, Job restricted.")
 				return 0
 			if(!job.player_old_enough(player.client))
-				return 0
-			if(!latejoin && (job.current_positions >= job.spawn_positions))
+				Debug("AR has failed, Player account is not old enough.")
 				return 0
 
 			if(job.is_position_available(latejoin))
@@ -263,7 +265,7 @@ var/global/datum/controller/occupations/job_master
 
 		//People who wants to be assistants, sure, go on.
 		Debug("DO, Running Assistant Check 1")
-		var/datum/job/assist = new DEFAULT_JOB_TYPE ()
+		var/datum/job/assist = GetJob("Assistant")
 		var/list/assistant_candidates = FindOccupationCandidates(assist, 3)
 		Debug("AC1, Candidates: [assistant_candidates.len]")
 		for(var/mob/new_player/player in assistant_candidates)
@@ -333,23 +335,6 @@ var/global/datum/controller/occupations/job_master
 		for(var/mob/new_player/player in unassigned)
 			if(player.client.prefs.alternate_option == GET_RANDOM_JOB)
 				GiveRandomJob(player)
-		/*
-		Old job system
-		for(var/level = 1 to 3)
-			for(var/datum/job/job in occupations)
-				Debug("Checking job: [job]")
-				if(!job)
-					continue
-				if(!unassigned.len)
-					break
-				if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
-					continue
-				var/list/candidates = FindOccupationCandidates(job, level)
-				while(candidates.len && ((job.current_positions < job.spawn_positions) || job.spawn_positions == -1))
-					var/mob/new_player/candidate = pick(candidates)
-					Debug("Selcted: [candidate], for: [job.title]")
-					AssignRole(candidate, job.title)
-					candidates -= candidate*/
 
 		Debug("DO, Standard Check end")
 
