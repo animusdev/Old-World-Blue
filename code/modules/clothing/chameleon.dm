@@ -110,6 +110,7 @@ var/global/list/chameleons_categories = list(
 			user << "<span class='notice'>You cut [src] from [captured_item].</span>"
 			category = null
 			captured_item.forceMove(src.loc)
+			src.transfer_fingerprints_to(captured_item)
 			captured_item = null
 			armor = initial(armor)
 			return 1
@@ -146,6 +147,7 @@ var/global/list/chameleons_categories = list(
 			new /obj/item/chameleon/proc/change(src,"Change [capitalize(category)] Appearance")
 			user.drop_from_inventory(src, A.loc)
 			captured_item = A
+			captured_item.transfer_fingerprints_to(src)
 			src.armor = captured_item.armor
 			src.w_class = captured_item.w_class
 			A.forceMove(src)
