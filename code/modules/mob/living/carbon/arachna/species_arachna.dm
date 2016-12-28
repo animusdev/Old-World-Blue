@@ -15,13 +15,13 @@
 	flesh_color = "#FFC896"
 	base_color
 
-
+	ability_datum = /datum/species_abilities/arachna //For power needs
 //	tail                                             // Name of tail state in species effects icon file.
 //	tail_animation                                   // If set, the icon to obtain tail animation states from.
 
 	race_key = 0       	                             // Used for mob icon cache string.
 	icon/icon_template                               // Used for mob icon generation for non-32x32 species.
-	is_small
+//	is_small
 	show_ssd = "fast asleep"
 	hunger_factor = 0.05                             // Multiplier for hunger.
 	taste_sensitivity = TASTE_NORMAL
@@ -106,7 +106,8 @@
 		/mob/living/carbon/human/arachna/verb/add_venom,
 		/mob/living/carbon/human/arachna/verb/remove_venom,
 		/mob/living/carbon/human/arachna/proc/prepare_bite,
-		/mob/living/carbon/human/arachna/proc/use_silk_gland
+		/mob/living/carbon/human/arachna/proc/use_silk_gland,
+//		/datum/species_abilities/arachna/proc/EvolutionMenu
 	)
 	has_fine_manipulation = 1 // Can use small items.
 	siemens_coefficient = 1   // The lower, the thicker the skin and better the insulation.

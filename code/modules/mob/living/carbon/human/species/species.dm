@@ -162,6 +162,8 @@
 	//Species Abilities
 	var/tmp/evolution_points = 0 //How many points race have for abilities
 
+	var/ability_datum = null
+
 /datum/species/New()
 	//If the species has eyes, they are the default vision organ
 	if(!vision_organ && has_organ[O_EYES])

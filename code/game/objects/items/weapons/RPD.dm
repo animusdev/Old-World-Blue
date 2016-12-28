@@ -1,9 +1,39 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /*
 CONTAINS:
 RPD
 */
+
+/*var/global/list/RPD_data = list(
+	"simple",
+	"he",
+	"connector",
+	"manifold",
+	"junction",
+	"uvent",
+	"mvalve",
+	"pump",
+	"scrubber",
+	"insulated",
+	"meter",
+	"filter_control",
+	"filter",
+	"mixer",
+	"passivegate",
+	"volumepump",
+	"heunary",
+	"mtvalve",
+	"mtvalvem",
+	"manifold4w",
+	"cap",
+	"cap-f",
+	"m_filter",
+	"t_mixer",
+	"m_mixer",
+	"omni_filter",
+	"omni_mixer",
+	"universal"
+	)*/
+
 /obj/item/weapon/rpd
 	name = "rapid pipeping device"
 	desc = "A device used to rapidly build pipes."
@@ -29,6 +59,7 @@ RPD
 	var/disabled = 0
 	var/p_type = 0
 	var/p_dir = 1
+	var/what_icon_state = "simple"
 	var/wait = 0
 	var/get_dir = NORTH
 
@@ -44,60 +75,72 @@ RPD
 		if(WEST)
 			dirname = "WEST"
 
+	var/icon/dir_icon = new('icons/obj/pipe-item.dmi',what_icon_state)
+	if(p_dir == 1)
+		user << browse_rsc(new /icon(dir_icon, dir=NORTH), "n.png")
+		user << browse_rsc(new /icon(dir_icon, dir=EAST),  "e.png")
+		user << browse_rsc(new /icon(dir_icon, dir=SOUTH), "s.png")
+		user << browse_rsc(new /icon(dir_icon, dir=WEST),  "w.png")
+	else
+		user << browse_rsc(new /icon(dir_icon, dir=NORTH + turn(NORTH, 90)), "n.png")
+		user << browse_rsc(new /icon(dir_icon, dir=EAST + turn(EAST, 90)),  "e.png")
+		user << browse_rsc(new /icon(dir_icon, dir=SOUTH + turn(SOUTH, 90)), "s.png")
+		user << browse_rsc(new /icon(dir_icon, dir=WEST + turn(WEST, 90)),  "w.png")
+
 	var/dat = {"
 <b>Direction: [dirname]</b><BR>
-<A href='?src=\ref[src];get_dir=[NORTH]'>NORTH</A> <A href='?src=\ref[src];get_dir=[SOUTH]'>SOUTH</A> <A href='?src=\ref[src];get_dir=[EAST]'>EAST</A> <A href='?src=\ref[src];get_dir=[WEST]'>WEST</A><BR>
+<A href='?src=\ref[src];get_dir=[NORTH]'>N<img src="n.png"></A> <A href='?src=\ref[src];get_dir=[SOUTH]'>S<img src="s.png"></A> <A href='?src=\ref[src];get_dir=[EAST]'>E<img src="e.png"></A> <A href='?src=\ref[src];get_dir=[WEST]'>W<img src="w.png"></A><BR>
 <b>Regular pipes:</b><BR>
-<A href='?src=\ref[src];make=0;dir=1'>Pipe</A><BR>
-<A href='?src=\ref[src];make=1;dir=5'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];make=5;dir=1'>Manifold</A><BR>
-<A href='?src=\ref[src];make=8;dir=1'>Manual Valve</A><BR>
-<A href='?src=\ref[src];make=20;dir=1'>Pipe Cap</A><BR>
-<A href='?src=\ref[src];make=19;dir=1'>4-Way Manifold</A><BR>
-<A href='?src=\ref[src];make=18;dir=1'>Manual T-Valve</A><BR>
-<A href='?src=\ref[src];make=43;dir=1'>Manual T-Valve - Mirrored</A><BR>
+<A href='?src=\ref[src];make=0;pipe_type=simple;dir=1'>Pipe</A><BR>
+<A href='?src=\ref[src];make=1;pipe_type=simple;dir=5'>Bent Pipe</A><BR>
+<A href='?src=\ref[src];make=5;pipe_type=manifold;dir=1'>Manifold</A><BR>
+<A href='?src=\ref[src];make=8;pipe_type=mvalve;dir=1'>Manual Valve</A><BR>
+<A href='?src=\ref[src];make=20;pipe_type=cap;dir=1'>Pipe Cap</A><BR>
+<A href='?src=\ref[src];make=19;pipe_type=manifold4w;dir=1'>4-Way Manifold</A><BR>
+<A href='?src=\ref[src];make=18;pipe_type=mtvalve;dir=1'>Manual T-Valve</A><BR>
+<A href='?src=\ref[src];make=43;pipe_type=mtvalvem;dir=1'>Manual T-Valve - Mirrored</A><BR>
 <A href='?src=\ref[src];make=21;dir=1'>Upward Pipe</A><BR>
 <A href='?src=\ref[src];make=22;dir=1'>Downward Pipe</A><BR>
 <b>Supply pipes:</b><BR>
-<A href='?src=\ref[src];make=29;dir=1'>Pipe</A><BR>
-<A href='?src=\ref[src];make=30;dir=5'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];make=33;dir=1'>Manifold</A><BR>
-<A href='?src=\ref[src];make=41;dir=1'>Pipe Cap</A><BR>
-<A href='?src=\ref[src];make=35;dir=1'>4-Way Manifold</A><BR>
+<A href='?src=\ref[src];make=29;pipe_type=simple;dir=1'>Pipe</A><BR>
+<A href='?src=\ref[src];make=30;pipe_type=simple;dir=5'>Bent Pipe</A><BR>
+<A href='?src=\ref[src];make=33;pipe_type=manifold;dir=1'>Manifold</A><BR>
+<A href='?src=\ref[src];make=41;pipe_type=cap;dir=1'>Pipe Cap</A><BR>
+<A href='?src=\ref[src];make=35;pipe_type=manifold4w;dir=1'>4-Way Manifold</A><BR>
 <A href='?src=\ref[src];make=37;dir=1'>Upward Pipe</A><BR>
 <A href='?src=\ref[src];make=39;dir=1'>Downward Pipe</A><BR>
 <b>Scrubbers pipes:</b><BR>
-<A href='?src=\ref[src];make=31;dir=1'>Pipe</A><BR>
-<A href='?src=\ref[src];make=32;dir=5'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];make=34;dir=1'>Manifold</A><BR>
-<A href='?src=\ref[src];make=42;dir=1'>Pipe Cap</A><BR>
-<A href='?src=\ref[src];make=36;dir=1'>4-Way Manifold</A><BR>
+<A href='?src=\ref[src];make=31;pipe_type=simple;dir=1'>Pipe</A><BR>
+<A href='?src=\ref[src];make=32;pipe_type=simple;dir=5'>Bent Pipe</A><BR>
+<A href='?src=\ref[src];make=34;pipe_type=manifold;dir=1'>Manifold</A><BR>
+<A href='?src=\ref[src];make=42;pipe_type=cap;dir=1'>Pipe Cap</A><BR>
+<A href='?src=\ref[src];make=36;pipe_type=manifold4w;dir=1'>4-Way Manifold</A><BR>
 <A href='?src=\ref[src];make=38;dir=1'>Upward Pipe</A><BR>
 <A href='?src=\ref[src];make=40;dir=1'>Downward Pipe</A><BR>
 <b>Devices:</b><BR>
-<A href='?src=\ref[src];make=28;dir=1'>Universal pipe adapter</A><BR>
-<A href='?src=\ref[src];make=4;dir=1'>Connector</A><BR>
-<A href='?src=\ref[src];make=7;dir=1'>Unary Vent</A><BR>
-<A href='?src=\ref[src];make=9;dir=1'>Gas Pump</A><BR>
-<A href='?src=\ref[src];make=15;dir=1'>Pressure Regulator</A><BR>
-<A href='?src=\ref[src];make=16;dir=1'>High Power Gas Pump</A><BR>
-<A href='?src=\ref[src];make=10;dir=1'>Scrubber</A><BR>
-<A href='?src=\ref[src];make=-1;dir=1'>Meter</A><BR>
-<A href='?src=\ref[src];make=13;dir=1'>Gas Filter</A><BR>
-<A href='?src=\ref[src];make=23;dir=1'>Gas Filter - Mirrored</A><BR>
-<A href='?src=\ref[src];make=14;dir=1'>Gas Mixer</A><BR>
-<A href='?src=\ref[src];make=25;dir=1'>Gas Mixer - Mirrored</A><BR>
-<A href='?src=\ref[src];make=24;dir=1'>Gas Mixer - T</A><BR>
-<A href='?src=\ref[src];make=26;dir=1'>Omni Gas Mixer</A><BR>
-<A href='?src=\ref[src];make=27;dir=1'>Omni Gas Filter</A><BR>
+<A href='?src=\ref[src];make=28;pipe_type=universal;dir=1'>Universal pipe adapter</A><BR>
+<A href='?src=\ref[src];make=4;pipe_type=connector;dir=1'>Connector</A><BR>
+<A href='?src=\ref[src];make=7;pipe_type=uvent;dir=1'>Unary Vent</A><BR>
+<A href='?src=\ref[src];make=9;pipe_type=pump;dir=1'>Gas Pump</A><BR>
+<A href='?src=\ref[src];make=15;pipe_type=passivegate;dir=1'>Pressure Regulator</A><BR>
+<A href='?src=\ref[src];make=16;pipe_type=volumepump;dir=1'>High Power Gas Pump</A><BR>
+<A href='?src=\ref[src];make=10;pipe_type=scrubber;dir=1'>Scrubber</A><BR>
+<A href='?src=\ref[src];make=-1;pipe_type=meter;dir=1'>Meter</A><BR>
+<A href='?src=\ref[src];make=13;pipe_type=filter;dir=1'>Gas Filter</A><BR>
+<A href='?src=\ref[src];make=23;pipe_type=m_filter;dir=1'>Gas Filter - Mirrored</A><BR>
+<A href='?src=\ref[src];make=14;pipe_type=mixer;dir=1'>Gas Mixer</A><BR>
+<A href='?src=\ref[src];make=25;pipe_type=m_mixer;dir=1'>Gas Mixer - Mirrored</A><BR>
+<A href='?src=\ref[src];make=24;pipe_type=t_mixer;dir=1'>Gas Mixer - T</A><BR>
+<A href='?src=\ref[src];make=26;pipe_type=omni_mixer;dir=1'>Omni Gas Mixer</A><BR>
+<A href='?src=\ref[src];make=27;pipe_type=omni_filter;dir=1'>Omni Gas Filter</A><BR>
 <b>Heat exchange:</b><BR>
-<A href='?src=\ref[src];make=2;dir=1'>Pipe</A><BR>
-<A href='?src=\ref[src];make=3;dir=5'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];make=6;dir=1'>Junction</A><BR>
-<A href='?src=\ref[src];make=17;dir=1'>Heat Exchanger</A><BR>
+<A href='?src=\ref[src];make=2;pipe_type=he;dir=1'>Pipe</A><BR>
+<A href='?src=\ref[src];make=3;pipe_type=he;dir=5'>Bent Pipe</A><BR>
+<A href='?src=\ref[src];make=6;pipe_type=junction;dir=1'>Junction</A><BR>
+<A href='?src=\ref[src];make=17;pipe_type=heunary;dir=1'>Heat Exchanger</A><BR>
 <b>Insulated pipes:</b><BR>
-<A href='?src=\ref[src];make=11;dir=1'>Pipe</A><BR>
-<A href='?src=\ref[src];make=12;dir=5'>Bent Pipe</A><BR>
+<A href='?src=\ref[src];make=11;pipe_type=insulated;dir=1'>Pipe</A><BR>
+<A href='?src=\ref[src];make=12;pipe_type=insulated;;dir=5'>Bent Pipe</A><BR>
 
 "}
 ///// Z-Level stuff
@@ -119,6 +162,8 @@ RPD
 		if(!wait)
 			p_type = text2num(href_list["make"])
 			p_dir = text2num(href_list["dir"])
+	if(href_list["pipe_type"])
+		what_icon_state = href_list["pipe_type"]
 			//var/obj/item/pipe/P = new (/*usr.loc*/ src.loc, pipe_type=p_type, dir=p_dir)
 			//P.update()
 			//P.add_fingerprint(usr)
@@ -131,18 +176,25 @@ RPD
 			wait = 1
 			spawn(15)
 				wait = 0*/
+	attack_self(usr)
 	return
+
+
+
+
+
 
 /obj/item/weapon/rpd/attack_self(mob/user) // change mode
 	//Change the mode
-	if(++mode > 3)
+/*	if(++mode > 3)
 		mode = 1
 	user << "<span class='notice'>Changed mode to '[modes[mode]]'</span>"
 	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
-	if(prob(20)) src.spark_system.start()
+	if(prob(20)) src.spark_system.start()*/
+	return build_pipe(user)
 
 
-/obj/item/weapon/rpd/attack(mob/M as mob, mob/user as mob)
+/*/obj/item/weapon/rpd/attack(mob/M as mob, mob/user as mob)
 	if (M == user)
 		switch (mode)
 			if (1)
@@ -154,7 +206,7 @@ RPD
 	/*else //if (istype(M,/turf/simulated/floor))
 		user << "<span class='notice'>alter turf go!</span>"
 		return alter_turf (M,user,(mode == 3))*/
-	return 0
+	return 0*/
 
 /obj/item/weapon/rpd/afterattack(atom/A, mob/user as mob, proximity)
 	var/build_cost = 5
