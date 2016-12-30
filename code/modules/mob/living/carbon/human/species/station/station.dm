@@ -94,9 +94,9 @@
 		"Your scales bristle against the cold."
 		)
 
-	accent = list("Ã±"="Ã±Ã±", "Ã¸"="Ã¸Ã¸", "Ã¹"="Ã¹Ã¹",\
-				  "Ã‘"="Ã‘Ã±", "Ã˜"="Ã˜Ã¸", "Ã™"="Ã™Ã¹")
-	accentFL = list("Ã£" = "Ãµ", "Ãƒ" = "Ã•")
+	accent = list("ñ"="ññ", "ø"="øø", "ù"="ùù",\
+				  "Ñ"="Ññ", "Ø"="Øø", "Ù"="Ùù")
+	accentFL = list("ã" = "õ", "Ã" = "Õ")
 
 	restricted_jobs = list(
 		"Captain", "Head of Personnel", "Head of Security", "Chief Engineer",
@@ -179,7 +179,7 @@
 		"Medical Doctor", "Geneticist", "Scientist", "Roboticist", "Xenobiologist",
 		"Quartermaster", "Internal Affairs Agent"
 	)
-	accent = list("Ã°" = "Ã°Ã°", "Ã" = "ÃÃ°")
+	accent = list("ğ" = "ğğ", "Ğ" = "Ğğ")
 
 /datum/species/tajaran/equip_survival_gear(var/mob/living/carbon/human/H)
 	..()
