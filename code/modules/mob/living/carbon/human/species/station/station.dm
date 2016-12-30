@@ -94,9 +94,9 @@
 		"Your scales bristle against the cold."
 		)
 
-	accent = list("ñ"="ññ", "ø"="øø", "ù"="ùù",\
-				  "Ñ"="Ññ", "Ø"="Øø", "Ù"="Ùù")
-	accentFL = list("ã" = "õ", "Ã" = "Õ")
+	accent = list("Ã±"="Ã±Ã±", "Ã¸"="Ã¸Ã¸", "Ã¹"="Ã¹Ã¹",\
+				  "Ã‘"="Ã‘Ã±", "Ã˜"="Ã˜Ã¸", "Ã™"="Ã™Ã¹")
+	accentFL = list("Ã£" = "Ãµ", "Ãƒ" = "Ã•")
 
 	restricted_jobs = list(
 		"Captain", "Head of Personnel", "Head of Security", "Chief Engineer",
@@ -179,7 +179,7 @@
 		"Medical Doctor", "Geneticist", "Scientist", "Roboticist", "Xenobiologist",
 		"Quartermaster", "Internal Affairs Agent"
 	)
-	accent = list("ğ" = "ğğ", "Ğ" = "Ğğ")
+	accent = list("Ã°" = "Ã°Ã°", "Ã" = "ÃÃ°")
 
 /datum/species/tajaran/equip_survival_gear(var/mob/living/carbon/human/H)
 	..()
@@ -346,7 +346,7 @@
 
 	icobase = 'icons/mob/human_races/machine.dmi'
 	deform = 'icons/mob/human_races/machine.dmi'
-	language = "EAL"
+	language = "Encoded Audio Language"
 	unarmed_attacks = list(
 		new /datum/unarmed_attack/punch
 		)
