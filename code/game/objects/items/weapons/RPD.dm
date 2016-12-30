@@ -54,9 +54,10 @@ RPD
 	var/stored_matter = 0
 	var/working = 0
 	var/mode = 1
-	var/list/modes = list("Pipes","Disporal Pipes","Deconstruct pipe")
+	var/list/modes = list("Pipes","Disposal Pipes","Deconstruct pipe")
 	var/canRwall = 0
 	var/disabled = 0
+	var/d_p_type = 0
 	var/p_type = 0
 	var/p_dir = 1
 	var/what_icon_state = "simple"
@@ -141,7 +142,22 @@ RPD
 <b>Insulated pipes:</b><BR>
 <A href='?src=\ref[src];make=11;pipe_type=insulated;dir=1'>Pipe</A><BR>
 <A href='?src=\ref[src];make=12;pipe_type=insulated;;dir=5'>Bent Pipe</A><BR>
-
+<br><b>Disposal Pipes</b><br>
+<A href='?src=\ref[src];dmake=0'>Pipe</A><BR>
+<A href='?src=\ref[src];dmake=1'>Bent Pipe</A><BR>
+<A href='?src=\ref[src];dmake=2'>Junction</A><BR>
+<A href='?src=\ref[src];dmake=3'>Y-Junction</A><BR>
+<A href='?src=\ref[src];dmake=4'>Trunk</A><BR>
+<A href='?src=\ref[src];dmake=5'>Bin</A><BR>
+<A href='?src=\ref[src];dmake=6'>Outlet</A><BR>
+<A href='?src=\ref[src];dmake=7'>Chute</A><BR>
+<A href='?src=\ref[src];dmake=21'>Upwards</A><BR>
+<A href='?src=\ref[src];dmake=22'>Downwards</A><BR>
+<A href='?src=\ref[src];dmake=8'>Sorting</A><BR>
+<A href='?src=\ref[src];dmake=9'>Sorting (Wildcard)</A><BR>
+<A href='?src=\ref[src];dmake=10'>Sorting (Untagged)</A><BR>
+<A href='?src=\ref[src];dmake=11'>Tagger</A><BR>
+<A href='?src=\ref[src];dmake=12'>Tagger (Partial)</A><BR>
 "}
 ///// Z-Level stuff
 //What number the make points to is in the define # at the top of construction.dm in same folder
@@ -176,6 +192,11 @@ RPD
 			wait = 1
 			spawn(15)
 				wait = 0*/
+	if(href_list["dmake"])
+		if(!wait)
+			if(p_type != -1)
+				p_type = -1
+			d_p_type = text2num(href_list["dmake"])
 	attack_self(usr)
 	return
 
@@ -238,6 +259,49 @@ RPD
 		var/obj/item/pipe/P = new (/*usr.loc*/ get_turf(A), pipe_type=p_type, dir=spawn_dir)
 		P.update()
 		P.add_fingerprint(usr)
+	else if(d_p_type>=0)
+		var/obj/structure/disposalconstruct/C = new (/*src.loc*/ get_turf(A))
+		switch(d_p_type)
+			if(0)
+				C.ptype = 0
+			if(1)
+				C.ptype = 1
+			if(2)
+				C.ptype = 2
+			if(3)
+				C.ptype = 4
+			if(4)
+				C.ptype = 5
+			if(5)
+				C.ptype = 6
+				C.density = 1
+			if(6)
+				C.ptype = 7
+				C.density = 1
+			if(7)
+				C.ptype = 8
+				C.density = 1
+			if(8)
+				C.ptype = 9
+				C.subtype = 0
+			if(9)
+				C.ptype = 9
+				C.subtype = 1
+			if(10)
+				C.ptype = 9
+				C.subtype = 2
+			if(11)
+				C.ptype = 13
+			if(12)
+				C.ptype = 14
+///// Z-Level stuff
+			if(21)
+				C.ptype = 11
+			if(22)
+				C.ptype = 12
+///// Z-Level stuff
+		C.add_fingerprint(usr)
+		C.update()
 	else
 		new /obj/item/pipe_meter(/*usr.loc*/ get_turf(A))
 
