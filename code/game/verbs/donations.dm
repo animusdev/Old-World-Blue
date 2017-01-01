@@ -534,7 +534,7 @@ var/list/donators = list()
 
 /datum/donat_stuff/gloves/latex
 	name = "Latex"
-	path = /obj/item/clothing/gloves/white/latex
+	path = /obj/item/clothing/gloves/latex
 	cost = 150
 
 /datum/donat_stuff/bedsheet

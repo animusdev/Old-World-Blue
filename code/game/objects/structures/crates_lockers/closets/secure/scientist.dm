@@ -37,7 +37,7 @@
 		new /obj/item/weapon/cartridge/rd(src)
 		new /obj/item/clothing/shoes/white(src)
 		new /obj/item/clothing/shoes/leather(src)
-		new /obj/item/clothing/gloves/white/latex(src)
+		new /obj/item/clothing/gloves/latex(src)
 		new /obj/item/device/radio/headset/heads/rd(src)
 		new /obj/item/device/radio/headset/heads/rd/alt(src)
 		new /obj/item/weapon/tank/air(src)

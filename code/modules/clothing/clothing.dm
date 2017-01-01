@@ -191,6 +191,7 @@
 	name = "gloves"
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	w_class = 2.0
+	item_state = null
 	icon = 'icons/inv_slots/gloves/icon.dmi'
 	siemens_coefficient = 0.75
 	var/wired = 0

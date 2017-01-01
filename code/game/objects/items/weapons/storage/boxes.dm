@@ -75,13 +75,8 @@
 
 	New()
 		..()
-		new /obj/item/clothing/gloves/white/latex(src)
-		new /obj/item/clothing/gloves/white/latex(src)
-		new /obj/item/clothing/gloves/white/latex(src)
-		new /obj/item/clothing/gloves/white/latex(src)
-		new /obj/item/clothing/gloves/white/latex(src)
-		new /obj/item/clothing/gloves/white/latex(src)
-		new /obj/item/clothing/gloves/white/latex(src)
+		for(var/i in 1 to 7)
+			new /obj/item/clothing/gloves/latex(src)
 
 /obj/item/weapon/storage/box/ems
 	name = "box of nitrile gloves"
@@ -90,13 +85,8 @@
 
 	New()
 		..()
-		new /obj/item/clothing/gloves/white/latex/emt(src)
-		new /obj/item/clothing/gloves/white/latex/emt(src)
-		new /obj/item/clothing/gloves/white/latex/emt(src)
-		new /obj/item/clothing/gloves/white/latex/emt(src)
-		new /obj/item/clothing/gloves/white/latex/emt(src)
-		new /obj/item/clothing/gloves/white/latex/emt(src)
-		new /obj/item/clothing/gloves/white/latex/emt(src)
+		for(var/i in 1 to 7)
+			new /obj/item/clothing/gloves/latex/emt(src)
 
 /obj/item/weapon/storage/box/masks
 	name = "box of sterile masks"
@@ -105,14 +95,8 @@
 
 	New()
 		..()
-		new /obj/item/clothing/mask/surgical(src)
-		new /obj/item/clothing/mask/surgical(src)
-		new /obj/item/clothing/mask/surgical(src)
-		new /obj/item/clothing/mask/surgical(src)
-		new /obj/item/clothing/mask/surgical(src)
-		new /obj/item/clothing/mask/surgical(src)
-		new /obj/item/clothing/mask/surgical(src)
-
+		for(var/i in 1 to 7)
+			new /obj/item/clothing/mask/surgical(src)
 
 /obj/item/weapon/storage/box/syringes
 	name = "box of syringes"
@@ -121,14 +105,8 @@
 
 	New()
 		..()
-		new /obj/item/weapon/reagent_containers/syringe( src )
-		new /obj/item/weapon/reagent_containers/syringe( src )
-		new /obj/item/weapon/reagent_containers/syringe( src )
-		new /obj/item/weapon/reagent_containers/syringe( src )
-		new /obj/item/weapon/reagent_containers/syringe( src )
-		new /obj/item/weapon/reagent_containers/syringe( src )
-		new /obj/item/weapon/reagent_containers/syringe( src )
-
+		for(var/i in 1 to 7)
+			new /obj/item/weapon/reagent_containers/syringe(src)
 
 /obj/item/weapon/storage/box/beakers
 	name = "box of beakers"
@@ -136,13 +114,8 @@
 
 	New()
 		..()
-		new /obj/item/weapon/reagent_containers/glass/beaker( src )
-		new /obj/item/weapon/reagent_containers/glass/beaker( src )
-		new /obj/item/weapon/reagent_containers/glass/beaker( src )
-		new /obj/item/weapon/reagent_containers/glass/beaker( src )
-		new /obj/item/weapon/reagent_containers/glass/beaker( src )
-		new /obj/item/weapon/reagent_containers/glass/beaker( src )
-		new /obj/item/weapon/reagent_containers/glass/beaker( src )
+		for(var/i in 1 to 7)
+			new /obj/item/weapon/reagent_containers/glass/beaker(src)
 
 /obj/item/weapon/storage/box/injectors
 	name = "box of DNA injectors"
@@ -150,12 +123,8 @@
 
 	New()
 		..()
-		new /obj/item/weapon/dnainjector/h2m(src)
-		new /obj/item/weapon/dnainjector/h2m(src)
-		new /obj/item/weapon/dnainjector/h2m(src)
-		new /obj/item/weapon/dnainjector/m2h(src)
-		new /obj/item/weapon/dnainjector/m2h(src)
-		new /obj/item/weapon/dnainjector/m2h(src)
+		for(var/i in 1 to 6)
+			new /obj/item/weapon/dnainjector/h2m(src)
 
 
 /obj/item/weapon/storage/box/blanks
@@ -165,13 +134,8 @@
 
 	New()
 		..()
-		new /obj/item/ammo_casing/shotgun/blank(src)
-		new /obj/item/ammo_casing/shotgun/blank(src)
-		new /obj/item/ammo_casing/shotgun/blank(src)
-		new /obj/item/ammo_casing/shotgun/blank(src)
-		new /obj/item/ammo_casing/shotgun/blank(src)
-		new /obj/item/ammo_casing/shotgun/blank(src)
-		new /obj/item/ammo_casing/shotgun/blank(src)
+		for(var/i in 1 to 7)
+			new /obj/item/ammo_casing/shotgun/blank(src)
 
 /obj/item/weapon/storage/box/beanbags
 	name = "box of beanbag shells"
@@ -180,13 +144,8 @@
 
 	New()
 		..()
-		new /obj/item/ammo_casing/shotgun/beanbag(src)
-		new /obj/item/ammo_casing/shotgun/beanbag(src)
-		new /obj/item/ammo_casing/shotgun/beanbag(src)
-		new /obj/item/ammo_casing/shotgun/beanbag(src)
-		new /obj/item/ammo_casing/shotgun/beanbag(src)
-		new /obj/item/ammo_casing/shotgun/beanbag(src)
-		new /obj/item/ammo_casing/shotgun/beanbag(src)
+		for(var/i in 1 to 7)
+			new /obj/item/ammo_casing/shotgun/beanbag(src)
 
 /obj/item/weapon/storage/box/shotgunammo
 	name = "box of shotgun slugs"
@@ -195,13 +154,8 @@
 
 	New()
 		..()
-		new /obj/item/ammo_casing/shotgun(src)
-		new /obj/item/ammo_casing/shotgun(src)
-		new /obj/item/ammo_casing/shotgun(src)
-		new /obj/item/ammo_casing/shotgun(src)
-		new /obj/item/ammo_casing/shotgun(src)
-		new /obj/item/ammo_casing/shotgun(src)
-		new /obj/item/ammo_casing/shotgun(src)
+		for(var/i in 1 to 7)
+			new /obj/item/ammo_casing/shotgun(src)
 
 /obj/item/weapon/storage/box/shotgunshells
 	name = "box of shotgun shells"
@@ -210,13 +164,8 @@
 
 	New()
 		..()
-		new /obj/item/ammo_casing/shotgun/pellet(src)
-		new /obj/item/ammo_casing/shotgun/pellet(src)
-		new /obj/item/ammo_casing/shotgun/pellet(src)
-		new /obj/item/ammo_casing/shotgun/pellet(src)
-		new /obj/item/ammo_casing/shotgun/pellet(src)
-		new /obj/item/ammo_casing/shotgun/pellet(src)
-		new /obj/item/ammo_casing/shotgun/pellet(src)
+		for(var/i in 1 to 7)
+			new /obj/item/ammo_casing/shotgun/pellet(src)
 
 /obj/item/weapon/storage/box/flashshells
 	name = "box of illumination shells"
@@ -225,13 +174,8 @@
 
 	New()
 		..()
-		new /obj/item/ammo_casing/shotgun/flash(src)
-		new /obj/item/ammo_casing/shotgun/flash(src)
-		new /obj/item/ammo_casing/shotgun/flash(src)
-		new /obj/item/ammo_casing/shotgun/flash(src)
-		new /obj/item/ammo_casing/shotgun/flash(src)
-		new /obj/item/ammo_casing/shotgun/flash(src)
-		new /obj/item/ammo_casing/shotgun/flash(src)
+		for(var/i in 1 to 7)
+			new /obj/item/ammo_casing/shotgun/flash(src)
 
 /obj/item/weapon/storage/box/stunshells
 	name = "box of stun shells"
@@ -240,13 +184,8 @@
 
 	New()
 		..()
-		new /obj/item/ammo_casing/shotgun/stunshell(src)
-		new /obj/item/ammo_casing/shotgun/stunshell(src)
-		new /obj/item/ammo_casing/shotgun/stunshell(src)
-		new /obj/item/ammo_casing/shotgun/stunshell(src)
-		new /obj/item/ammo_casing/shotgun/stunshell(src)
-		new /obj/item/ammo_casing/shotgun/stunshell(src)
-		new /obj/item/ammo_casing/shotgun/stunshell(src)
+		for(var/i in 1 to 7)
+			new /obj/item/ammo_casing/shotgun/stunshell(src)
 
 
 /obj/item/weapon/storage/box/practiceshells
@@ -256,13 +195,8 @@
 
 	New()
 		..()
-		new /obj/item/ammo_casing/shotgun/practice(src)
-		new /obj/item/ammo_casing/shotgun/practice(src)
-		new /obj/item/ammo_casing/shotgun/practice(src)
-		new /obj/item/ammo_casing/shotgun/practice(src)
-		new /obj/item/ammo_casing/shotgun/practice(src)
-		new /obj/item/ammo_casing/shotgun/practice(src)
-		new /obj/item/ammo_casing/shotgun/practice(src)
+		for(var/i in 1 to 7)
+			new /obj/item/ammo_casing/shotgun/practice(src)
 
 /obj/item/weapon/storage/box/sniperammo
 	name = "box of 14.5mm shells"
@@ -270,13 +204,8 @@
 
 	New()
 		..()
-		new /obj/item/ammo_casing/a145(src)
-		new /obj/item/ammo_casing/a145(src)
-		new /obj/item/ammo_casing/a145(src)
-		new /obj/item/ammo_casing/a145(src)
-		new /obj/item/ammo_casing/a145(src)
-		new /obj/item/ammo_casing/a145(src)
-		new /obj/item/ammo_casing/a145(src)
+		for(var/i in 1 to 7)
+			new /obj/item/ammo_casing/a145(src)
 
 /obj/item/weapon/storage/box/flashbangs
 	name = "box of flashbangs (WARNING)"
@@ -285,13 +214,8 @@
 
 	New()
 		..()
-		new /obj/item/weapon/grenade/flashbang(src)
-		new /obj/item/weapon/grenade/flashbang(src)
-		new /obj/item/weapon/grenade/flashbang(src)
-		new /obj/item/weapon/grenade/flashbang(src)
-		new /obj/item/weapon/grenade/flashbang(src)
-		new /obj/item/weapon/grenade/flashbang(src)
-		new /obj/item/weapon/grenade/flashbang(src)
+		for(var/i in 1 to 7)
+			new /obj/item/weapon/grenade/flashbang(src)
 
 /obj/item/weapon/storage/box/teargas
 	name = "box of teargas grenades (WARNING)"
@@ -300,13 +224,8 @@
 
 	New()
 		..()
-		new /obj/item/weapon/grenade/chem_grenade/teargas(src)
-		new /obj/item/weapon/grenade/chem_grenade/teargas(src)
-		new /obj/item/weapon/grenade/chem_grenade/teargas(src)
-		new /obj/item/weapon/grenade/chem_grenade/teargas(src)
-		new /obj/item/weapon/grenade/chem_grenade/teargas(src)
-		new /obj/item/weapon/grenade/chem_grenade/teargas(src)
-		new /obj/item/weapon/grenade/chem_grenade/teargas(src)
+		for(var/i in 1 to 7)
+			new /obj/item/weapon/grenade/chem_grenade/teargas(src)
 
 /obj/item/weapon/storage/box/smoke
 	name = "box of smoke grenades (WARNING)"
@@ -315,13 +234,8 @@
 
 	New()
 		..()
-		new /obj/item/weapon/grenade/smokebomb(src)
-		new /obj/item/weapon/grenade/smokebomb(src)
-		new /obj/item/weapon/grenade/smokebomb(src)
-		new /obj/item/weapon/grenade/smokebomb(src)
-		new /obj/item/weapon/grenade/smokebomb(src)
-		new /obj/item/weapon/grenade/smokebomb(src)
-		new /obj/item/weapon/grenade/smokebomb(src)
+		for(var/i in 1 to 7)
+			new /obj/item/weapon/grenade/smokebomb(src)
 
 /obj/item/weapon/storage/box/emps
 	name = "box of emp grenades"
@@ -330,11 +244,8 @@
 
 	New()
 		..()
-		new /obj/item/weapon/grenade/empgrenade(src)
-		new /obj/item/weapon/grenade/empgrenade(src)
-		new /obj/item/weapon/grenade/empgrenade(src)
-		new /obj/item/weapon/grenade/empgrenade(src)
-		new /obj/item/weapon/grenade/empgrenade(src)
+		for(var/i in 1 to 5)
+			new /obj/item/weapon/grenade/empgrenade(src)
 
 
 /obj/item/weapon/storage/box/trackimp
@@ -344,10 +255,8 @@
 
 	New()
 		..()
-		new /obj/item/weapon/implantcase/tracking(src)
-		new /obj/item/weapon/implantcase/tracking(src)
-		new /obj/item/weapon/implantcase/tracking(src)
-		new /obj/item/weapon/implantcase/tracking(src)
+		for(var/i in 1 to 4)
+			new /obj/item/weapon/implantcase/tracking(src)
 		new /obj/item/weapon/implanter(src)
 		new /obj/item/weapon/implantpad(src)
 		new /obj/item/weapon/locator(src)
@@ -359,11 +268,8 @@
 
 	New()
 		..()
-		new /obj/item/weapon/implantcase/chem(src)
-		new /obj/item/weapon/implantcase/chem(src)
-		new /obj/item/weapon/implantcase/chem(src)
-		new /obj/item/weapon/implantcase/chem(src)
-		new /obj/item/weapon/implantcase/chem(src)
+		for(var/i in 1 to 5)
+			new /obj/item/weapon/implantcase/chem(src)
 		new /obj/item/weapon/implanter(src)
 		new /obj/item/weapon/implantpad(src)
 
@@ -376,13 +282,8 @@
 
 	New()
 		..()
-		new /obj/item/clothing/glasses/regular(src)
-		new /obj/item/clothing/glasses/regular(src)
-		new /obj/item/clothing/glasses/regular(src)
-		new /obj/item/clothing/glasses/regular(src)
-		new /obj/item/clothing/glasses/regular(src)
-		new /obj/item/clothing/glasses/regular(src)
-		new /obj/item/clothing/glasses/regular(src)
+		for(var/i in 1 to 7)
+			new /obj/item/clothing/glasses/regular(src)
 
 /obj/item/weapon/storage/box/drinkingglasses
 	name = "box of drinking glasses"
@@ -390,12 +291,8 @@
 
 	New()
 		..()
-		new /obj/item/weapon/reagent_containers/glass/drinks/drinkingglass(src)
-		new /obj/item/weapon/reagent_containers/glass/drinks/drinkingglass(src)
-		new /obj/item/weapon/reagent_containers/glass/drinks/drinkingglass(src)
-		new /obj/item/weapon/reagent_containers/glass/drinks/drinkingglass(src)
-		new /obj/item/weapon/reagent_containers/glass/drinks/drinkingglass(src)
-		new /obj/item/weapon/reagent_containers/glass/drinks/drinkingglass(src)
+		for(var/i in 1 to 6)
+			new /obj/item/weapon/reagent_containers/glass/drinks/drinkingglass(src)
 
 /obj/item/weapon/storage/box/cdeathalarm_kit
 	name = "death alarm kit"
@@ -406,12 +303,8 @@
 	New()
 		..()
 		new /obj/item/weapon/implanter(src)
-		new /obj/item/weapon/implantcase/death_alarm(src)
-		new /obj/item/weapon/implantcase/death_alarm(src)
-		new /obj/item/weapon/implantcase/death_alarm(src)
-		new /obj/item/weapon/implantcase/death_alarm(src)
-		new /obj/item/weapon/implantcase/death_alarm(src)
-		new /obj/item/weapon/implantcase/death_alarm(src)
+		for(var/i in 1 to 6)
+			new /obj/item/weapon/implantcase/death_alarm(src)
 
 /obj/item/weapon/storage/box/condimentbottles
 	name = "box of condiment bottles"
@@ -419,12 +312,8 @@
 
 	New()
 		..()
-		new /obj/item/weapon/reagent_containers/food/condiment(src)
-		new /obj/item/weapon/reagent_containers/food/condiment(src)
-		new /obj/item/weapon/reagent_containers/food/condiment(src)
-		new /obj/item/weapon/reagent_containers/food/condiment(src)
-		new /obj/item/weapon/reagent_containers/food/condiment(src)
-		new /obj/item/weapon/reagent_containers/food/condiment(src)
+		for(var/i in 1 to 6)
+			new /obj/item/weapon/reagent_containers/food/condiment(src)
 
 
 
@@ -433,13 +322,8 @@
 	desc = "It has pictures of paper cups on the front."
 	New()
 		..()
-		new /obj/item/weapon/reagent_containers/glass/drinks/sillycup( src )
-		new /obj/item/weapon/reagent_containers/glass/drinks/sillycup( src )
-		new /obj/item/weapon/reagent_containers/glass/drinks/sillycup( src )
-		new /obj/item/weapon/reagent_containers/glass/drinks/sillycup( src )
-		new /obj/item/weapon/reagent_containers/glass/drinks/sillycup( src )
-		new /obj/item/weapon/reagent_containers/glass/drinks/sillycup( src )
-		new /obj/item/weapon/reagent_containers/glass/drinks/sillycup( src )
+		for(var/i in 1 to 6)
+			new /obj/item/weapon/reagent_containers/glass/drinks/sillycup( src )
 
 
 /obj/item/weapon/storage/box/donkpockets
@@ -449,12 +333,8 @@
 
 	New()
 		..()
-		new /obj/item/weapon/reagent_containers/food/snacks/donkpocket(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/donkpocket(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/donkpocket(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/donkpocket(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/donkpocket(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/donkpocket(src)
+		for(var/i in 1 to 5)
+			new /obj/item/weapon/reagent_containers/food/snacks/donkpocket(src)
 
 /obj/item/weapon/storage/box/sinpockets
 	name = "box of sin-pockets"
@@ -463,12 +343,8 @@
 
 	New()
 		..()
-		new /obj/item/weapon/reagent_containers/food/snacks/donkpocket/sinpocket(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/donkpocket/sinpocket(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/donkpocket/sinpocket(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/donkpocket/sinpocket(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/donkpocket/sinpocket(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/donkpocket/sinpocket(src)
+		for(var/i in 1 to 6)
+			new /obj/item/weapon/reagent_containers/food/snacks/donkpocket/sinpocket(src)
 
 /obj/item/weapon/storage/box/monkeycubes
 	name = "monkey cube box"
@@ -480,7 +356,7 @@
 	New()
 		..()
 		if(src.type == /obj/item/weapon/storage/box/monkeycubes)
-			for(var/i = 1; i <= 5; i++)
+			for(var/i = 1 to 5)
 				new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src)
 
 /obj/item/weapon/storage/box/monkeycubes/farwacubes
@@ -488,7 +364,7 @@
 	desc = "Drymate brand farwa cubes, shipped from Ahdomai. Just add water!"
 	New()
 		..()
-		for(var/i = 1; i <= 5; i++)
+		for(var/i = 1 to 5)
 			new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/farwacube(src)
 
 /obj/item/weapon/storage/box/monkeycubes/stokcubes
@@ -496,7 +372,7 @@
 	desc = "Drymate brand stok cubes, shipped from Moghes. Just add water!"
 	New()
 		..()
-		for(var/i = 1; i <= 5; i++)
+		for(var/i = 1 to 5)
 			new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/stokcube(src)
 
 /obj/item/weapon/storage/box/monkeycubes/neaeracubes
@@ -504,7 +380,7 @@
 	desc = "Drymate brand neaera cubes, shipped from Jargon 4. Just add water!"
 	New()
 		..()
-		for(var/i = 1; i <= 5; i++)
+		for(var/i = 1 to 5)
 			new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/neaeracube(src)
 
 /obj/item/weapon/storage/box/ids
@@ -514,13 +390,8 @@
 
 	New()
 		..()
-		new /obj/item/weapon/card/id(src)
-		new /obj/item/weapon/card/id(src)
-		new /obj/item/weapon/card/id(src)
-		new /obj/item/weapon/card/id(src)
-		new /obj/item/weapon/card/id(src)
-		new /obj/item/weapon/card/id(src)
-		new /obj/item/weapon/card/id(src)
+		for(var/i in 1 to 7)
+			new /obj/item/weapon/card/id(src)
 
 
 /obj/item/weapon/storage/box/seccarts
@@ -530,13 +401,8 @@
 
 	New()
 		..()
-		new /obj/item/weapon/cartridge/security(src)
-		new /obj/item/weapon/cartridge/security(src)
-		new /obj/item/weapon/cartridge/security(src)
-		new /obj/item/weapon/cartridge/security(src)
-		new /obj/item/weapon/cartridge/security(src)
-		new /obj/item/weapon/cartridge/security(src)
-		new /obj/item/weapon/cartridge/security(src)
+		for(var/i in 1 to 7)
+			new /obj/item/weapon/cartridge/security(src)
 
 
 /obj/item/weapon/storage/box/handcuffs
@@ -546,13 +412,8 @@
 
 	New()
 		..()
-		new /obj/item/weapon/handcuffs(src)
-		new /obj/item/weapon/handcuffs(src)
-		new /obj/item/weapon/handcuffs(src)
-		new /obj/item/weapon/handcuffs(src)
-		new /obj/item/weapon/handcuffs(src)
-		new /obj/item/weapon/handcuffs(src)
-		new /obj/item/weapon/handcuffs(src)
+		for(var/i in 1 to 7)
+			new /obj/item/weapon/handcuffs(src)
 
 /obj/item/weapon/storage/box/mousetraps
 	name = "box of Pest-B-Gon mousetraps"
@@ -561,12 +422,8 @@
 
 	New()
 		..()
-		new /obj/item/device/assembly/mousetrap( src )
-		new /obj/item/device/assembly/mousetrap( src )
-		new /obj/item/device/assembly/mousetrap( src )
-		new /obj/item/device/assembly/mousetrap( src )
-		new /obj/item/device/assembly/mousetrap( src )
-		new /obj/item/device/assembly/mousetrap( src )
+		for(var/i in 1 to 6)
+			new /obj/item/device/assembly/mousetrap( src )
 
 /obj/item/weapon/storage/box/pillbottles
 	name = "box of pill bottles"
@@ -574,13 +431,8 @@
 
 	New()
 		..()
-		new /obj/item/weapon/storage/pill_bottle( src )
-		new /obj/item/weapon/storage/pill_bottle( src )
-		new /obj/item/weapon/storage/pill_bottle( src )
-		new /obj/item/weapon/storage/pill_bottle( src )
-		new /obj/item/weapon/storage/pill_bottle( src )
-		new /obj/item/weapon/storage/pill_bottle( src )
-		new /obj/item/weapon/storage/pill_bottle( src )
+		for(var/i in 1 to 7)
+			new /obj/item/weapon/storage/pill_bottle( src )
 
 
 /obj/item/weapon/storage/box/snappops
@@ -642,7 +494,7 @@
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/lights/bulbs/New()
-	for(var/i = 0; i < 21; i++)
+	for(var/i = 1 to 21)
 		new /obj/item/weapon/light/bulb(src)
 	..()
 
@@ -651,7 +503,7 @@
 	icon_state = "lighttube"
 
 /obj/item/weapon/storage/box/lights/tubes/New()
-	for(var/i = 0; i < 21; i++)
+	for(var/i = 1 to 21)
 		new /obj/item/weapon/light/tube(src)
 	..()
 
@@ -660,9 +512,9 @@
 	icon_state = "lightmixed"
 
 /obj/item/weapon/storage/box/lights/mixed/New()
-	for(var/i = 0; i < 14; i++)
+	for(var/i = 1 to 14)
 		new /obj/item/weapon/light/tube(src)
-	for(var/i = 0; i < 7; i++)
+	for(var/i = 1 to 7)
 		new /obj/item/weapon/light/bulb(src)
 	..()
 

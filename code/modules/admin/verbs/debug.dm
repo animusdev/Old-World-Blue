@@ -705,7 +705,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if("masked killer")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/overalls(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(M), slot_shoes)
-			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/white/latex(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/latex(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/surgical(M), slot_wear_mask)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/welding(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_l_ear)

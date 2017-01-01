@@ -306,7 +306,7 @@ its easier to just keep the beam vertical.
 		//Deal with gloves the pass finger/palm prints.
 		if(!ignoregloves)
 			if(istype(Gloves) && !Gloves.clipped)
-				if(istype(Gloves, /obj/item/clothing/gloves/white/latex))
+				if(istype(Gloves, /obj/item/clothing/gloves/latex))
 					if(prob(75))
 						return 0
 				else

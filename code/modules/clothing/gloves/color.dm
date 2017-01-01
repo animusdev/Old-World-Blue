@@ -35,58 +35,48 @@
 	name = "white gloves"
 	desc = "These look pretty fancy."
 	icon_state = "white"
-	item_state = "white"
 
 /obj/item/clothing/gloves/orange
 	name = "orange gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "orange"
-	item_state = "orange"
 
 /obj/item/clothing/gloves/red
 	name = "red gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "red"
-	item_state = "red"
 
 /obj/item/clothing/gloves/rainbow
 	name = "rainbow gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "rainbow"
-	item_state = "rainbow"
 
 /obj/item/clothing/gloves/blue
 	name = "blue gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "blue"
-	item_state = "blue"
 
 /obj/item/clothing/gloves/purple
 	name = "purple gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "purple"
-	item_state = "purple"
 
 /obj/item/clothing/gloves/green
 	name = "green gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "green"
-	item_state = "green"
 
 /obj/item/clothing/gloves/grey
 	name = "grey gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "gray"
-	item_state = "gray"
 
 /obj/item/clothing/gloves/light_brown
 	name = "light brown gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "lightbrown"
-	item_state = "lightbrown"
 
 /obj/item/clothing/gloves/brown
 	name = "brown gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "brown"
-	item_state = "brown"
