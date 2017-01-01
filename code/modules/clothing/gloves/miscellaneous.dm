@@ -44,6 +44,13 @@
 	permeability_coefficient = 0.01
 	germ_level = 0
 
+/obj/item/clothing/gloves/latex/clipped(user)
+	..()
+	var/obj/item/clothing/gloves/Origin = null
+	siemens_coefficient = initial(Origin.siemens_coefficient)
+	permeability_coefficient = initial(Origin.permeability_coefficient)
+
+
 /obj/item/clothing/gloves/latex/emt
 	name = "nitrile gloves"
 	desc = "Sterile nitrile gloves."
@@ -53,7 +60,6 @@
 	desc = "These leather work gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin."
 	name = "botanist's leather gloves"
 	icon_state = "leather"
-	item_state = "leather"
 	permeability_coefficient = 0.05
 	siemens_coefficient = 0.50 //thick work gloves
 
