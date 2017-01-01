@@ -2,7 +2,7 @@
 	desc = "Regal blue gloves, with a nice gold trim. Swanky."
 	name = "captain's gloves"
 	icon_state = "captain"
-	item_state = "captain"
+	item_state = "rainbow"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 
@@ -60,13 +60,11 @@
 	desc = "These leather work gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin."
 	name = "botanist's leather gloves"
 	icon_state = "leather"
+	icon_state = "brown"
 	permeability_coefficient = 0.05
 	siemens_coefficient = 0.50 //thick work gloves
 
 /obj/item/clothing/gloves/black/batman
 	name = "batman gloves"
 	icon_state = "batman"
-
-/obj/item/clothing/gloves/black/half
-	name = "half cut gloves"
-	icon_state = "half_cut_gloves"
+	item_state = "black"
