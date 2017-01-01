@@ -204,14 +204,18 @@ var/global/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","E
 	force = 40
 	attack_verb = list("attacked", "slashed", "sliced", "torn", "ripped", "diced", "cut")
 
-	dropped(var/mob/user)
-		return attack_self(user)
+/obj/item/weapon/melee/armblade/attack_self(var/mob/user)
+	user.drop_from_inventory(src)
 
-/obj/item/weapon/armblade/attack_self(var/mob/user)
-	user.visible_message("With a sickening crunch, [user] reforms their arm blade into an arm!",\
-						"We assimilate the weapon back into our body.",\
-						"You hear organic matter ripping and tearing!")
+/obj/item/weapon/melee/armblade/dropped(var/mob/user)
+	user.visible_message(
+		"<span class='warning'>With a sickening crunch, [user] reforms their arm blade into an arm!</span>",
+		"<span class='notice'>We assimilate the weapon back into our body.</span>",
+		"<span class='italics'>You hear organic matter ripping and tearing!</span>"
+	)
+	playsound(src, 'sound/effects/blobattack.ogg', 30, 1)
 	qdel(src)
+
 
 //Absorbs the victim's DNA making them uncloneable. Requires a strong grip on the victim.
 //Doesn't cost anything as it's the most basic ability.
@@ -793,15 +797,15 @@ var/list/datum/dna/hivemind_bank = list()
 	if(!T)	return 0
 	T << "<span class='danger'>Your eyes burn horrificly!</span>"
 	T.disabilities |= NEARSIGHTED
-	spawn(300)	T.disabilities &= ~NEARSIGHTED
-	T.eye_blind = 10
-	T.eye_blurry = 20
+	spawn(600)	T.disabilities &= ~NEARSIGHTED
+	T.eye_blind = 20
+	T.eye_blurry = 40
 	return 1
 
 /mob/proc/changeling_deaf_sting()
 	set category = "Changeling"
 	set name = "Deaf sting (5)"
-	set desc="Sting target:"
+	set desc="Sting target"
 
 	var/mob/living/carbon/T = changeling_sting(5,/mob/proc/changeling_deaf_sting)
 	if(!T)	return 0
