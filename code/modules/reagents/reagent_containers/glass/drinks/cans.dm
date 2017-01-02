@@ -20,21 +20,6 @@
 	center_of_mass = list("x"=15, "y"=8)
 	preloaded = list("water" = 30)
 
-/obj/item/weapon/reagent_containers/glass/drinks/cans/beer
-	name = "Space Beer"
-	desc = "Contains only water, malt and hops."
-	icon_state = "beer"
-	center_of_mass = list("x"=16, "y"=12)
-	preloaded = list("beer" = 30)
-
-/obj/item/weapon/reagent_containers/glass/drinks/cans/ale
-	name = "Magm-Ale"
-	desc = "A true dorf's drink of choice."
-	icon_state = "alebottle"
-	item_state = "beer"
-	center_of_mass = list("x"=16, "y"=10)
-	preloaded = list("ale" = 30)
-
 /obj/item/weapon/reagent_containers/glass/drinks/cans/space_mountain_wind
 	name = "\improper Space Mountain Wind"
 	desc = "Blows right through you like a space wind."

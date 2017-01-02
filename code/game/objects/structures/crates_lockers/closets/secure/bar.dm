@@ -4,15 +4,7 @@
 
 	New()
 		..()
-		new /obj/item/weapon/reagent_containers/glass/drinks/cans/beer( src )
-		new /obj/item/weapon/reagent_containers/glass/drinks/cans/beer( src )
-		new /obj/item/weapon/reagent_containers/glass/drinks/cans/beer( src )
-		new /obj/item/weapon/reagent_containers/glass/drinks/cans/beer( src )
-		new /obj/item/weapon/reagent_containers/glass/drinks/cans/beer( src )
-		new /obj/item/weapon/reagent_containers/glass/drinks/cans/beer( src )
-		new /obj/item/weapon/reagent_containers/glass/drinks/cans/beer( src )
-		new /obj/item/weapon/reagent_containers/glass/drinks/cans/beer( src )
-		new /obj/item/weapon/reagent_containers/glass/drinks/cans/beer( src )
-		new /obj/item/weapon/reagent_containers/glass/drinks/cans/beer( src )
+		for(var/i = 1 to 10)
+			new /obj/item/weapon/reagent_containers/glass/drinks/bottle/small/beer( src )
 		return
 

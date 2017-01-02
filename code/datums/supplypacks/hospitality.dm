@@ -17,8 +17,8 @@
 		/obj/item/weapon/reagent_containers/glass/drinks/bottle/goldschlager,
 		/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
 		/obj/item/weapon/lipstick/random,
-		/obj/item/weapon/reagent_containers/glass/drinks/cans/ale = 2,
-		/obj/item/weapon/reagent_containers/glass/drinks/cans/beer = 4
+		/obj/item/weapon/reagent_containers/glass/drinks/bottle/small/ale = 2,
+		/obj/item/weapon/reagent_containers/glass/drinks/bottle/small/beer = 4
 	)
 	cost = 10
 	containertype = /obj/structure/closet/crate

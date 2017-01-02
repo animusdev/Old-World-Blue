@@ -306,7 +306,7 @@ var/list/donators = list()
 
 /datum/donat_stuff/personal/beer
 	name = "Beer Bottle"
-	path = /obj/item/weapon/reagent_containers/glass/drinks/cans/beer
+	path = /obj/item/weapon/reagent_containers/glass/drinks/bottle/small/beer
 	cost = 80
 
 /datum/donat_stuff/personal/cap_flask

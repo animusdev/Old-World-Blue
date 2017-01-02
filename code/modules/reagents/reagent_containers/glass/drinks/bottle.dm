@@ -109,6 +109,8 @@
 	return ..()
 
 
+//// Precreated bottles ////
+
 /obj/item/weapon/reagent_containers/glass/drinks/bottle/gin
 	name = "Griffeater Gin"
 	desc = "A bottle of high quality gin, produced in the New London Space Station."
@@ -233,6 +235,27 @@
 	center_of_mass = list("x"=16, "y"=6)
 	preloaded = list("grenadine" = 100)
 
+/obj/item/weapon/reagent_containers/glass/drinks/bottle/cola
+	name = "\improper Space Cola"
+	desc = "Cola. in space"
+	icon_state = "colabottle"
+	center_of_mass = list("x"=16, "y"=6)
+	preloaded = list("cola" = 100)
+
+/obj/item/weapon/reagent_containers/glass/drinks/bottle/space_up
+	name = "\improper Space-Up"
+	desc = "Tastes like a hull breach in your mouth."
+	icon_state = "space-up_bottle"
+	center_of_mass = list("x"=16, "y"=6)
+	preloaded = list("space_up" = 100)
+
+/obj/item/weapon/reagent_containers/glass/drinks/bottle/space_mountain_wind
+	name = "\improper Space Mountain Wind"
+	desc = "Blows right through you like a space wind."
+	icon_state = "space_mountain_wind_bottle"
+	center_of_mass = list("x"=16, "y"=6)
+	preloaded = list("spacemountainwind" = 100)
+
 /obj/item/weapon/reagent_containers/glass/drinks/bottle/pwine
 	name = "Warlock's Velvet"
 	desc = "What a delightful packaging for a surely high quality wine! The vintage must be amazing!"
@@ -240,4 +263,23 @@
 	center_of_mass = list("x"=16, "y"=4)
 	preloaded = list("pwine" = 100)
 
+//Small bottles
+/obj/item/weapon/reagent_containers/glass/drinks/bottle/small
+	volume = 50
+	smash_duration = 1
+	flags = 0 //starts closed
 
+/obj/item/weapon/reagent_containers/glass/drinks/bottle/small/beer
+	name = "space beer"
+	desc = "Contains only water, malt and hops."
+	icon_state = "beer"
+	center_of_mass = list("x"=16, "y"=12)
+	preloaded = list("beer" = 30)
+
+/obj/item/weapon/reagent_containers/glass/drinks/bottle/small/ale
+	name = "\improper Magm-Ale"
+	desc = "A true dorf's drink of choice."
+	icon_state = "alebottle"
+	item_state = "beer"
+	center_of_mass = list("x"=16, "y"=10)
+	preloaded = list("ale" = 30)
