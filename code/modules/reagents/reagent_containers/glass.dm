@@ -170,6 +170,13 @@
 		return 1
 	return ..()
 
+/obj/item/weapon/reagent_containers/glass/do_surgery(mob/living/carbon/M, mob/living/user)
+	if(user.a_intent != I_HELP) //in case it is ever used as a surgery tool
+		return ..()
+	afterattack(M, user, 1)
+	return 1
+
+
 // Smashing //
 
 var/global/list/broken_bottle_icon_cache = list()

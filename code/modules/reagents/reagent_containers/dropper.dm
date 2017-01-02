@@ -12,6 +12,12 @@
 	volume = 5
 	center_of_mass = list("x"=17, "y"=17)
 
+/obj/item/weapon/reagent_containers/dropper/do_surgery(mob/living/carbon/M, mob/living/user)
+	if(user.a_intent != I_HELP) //in case it is ever used as a surgery tool
+		return ..()
+	afterattack(M, user, 1)
+	return 1
+
 /obj/item/weapon/reagent_containers/dropper/afterattack(var/obj/target, var/mob/user, var/proximity)
 	if(!target.reagents || !proximity) return
 
