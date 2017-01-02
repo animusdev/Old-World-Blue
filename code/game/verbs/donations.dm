@@ -261,6 +261,24 @@ var/list/donators = list()
 	path = /obj/item/clothing/head/collectable/secelitetop
 	cost = 110
 
+/datum/donat_stuff/masks
+	category = "Masks"
+
+/datum/donat_stuff/masks/mime
+	name = "Mime mask"
+	path = /obj/item/clothing/mask/gas/mime
+	cost = 80
+
+/datum/donat_stuff/masks/sexymime
+	name = "Mime mask (sexy)"
+	path = /obj/item/clothing/mask/gas/sexymime
+	cost = 80
+
+/datum/donat_stuff/masks/fakemoustache
+	name = "Fake moustache"
+	path = /obj/item/clothing/mask/fakemoustache
+	cost = 80
+
 /datum/donat_stuff/personal
 	category = "Personal Stuff"
 
