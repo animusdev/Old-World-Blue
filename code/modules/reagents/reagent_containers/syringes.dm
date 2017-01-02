@@ -12,6 +12,7 @@
 	item_state = "syringe_0"
 	icon_state = "0"
 	matter = list("glass" = 150)
+	center_of_mass = list("x"=15, "y"=15)
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = null
 	volume = 15
