@@ -10,9 +10,9 @@
 	New()
 		..()
 		for(var/i = 1 to 7)
-			new /obj/item/weapon/reagent_containers/food/condiment/flour(src)
+			new /obj/item/weapon/reagent_containers/condiment/flour(src)
 		for(var/i = 1 to 2)
-			new /obj/item/weapon/reagent_containers/food/condiment/sugar(src)
+			new /obj/item/weapon/reagent_containers/condiment/sugar(src)
 		for(var/i = 1 to 3)
 			new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src)
 		return

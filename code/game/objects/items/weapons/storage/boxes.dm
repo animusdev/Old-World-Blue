@@ -313,7 +313,7 @@
 	New()
 		..()
 		for(var/i in 1 to 6)
-			new /obj/item/weapon/reagent_containers/food/condiment(src)
+			new /obj/item/weapon/reagent_containers/condiment(src)
 
 
 

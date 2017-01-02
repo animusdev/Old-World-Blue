@@ -507,7 +507,7 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 
 /obj/item/weapon/robot_module/general/butler/respawn_consumable(var/mob/living/silicon/robot/R, var/amount)
 	..()
-	var/obj/item/weapon/reagent_containers/food/condiment/enzyme/E = locate() in src.modules
+	var/obj/item/weapon/reagent_containers/condiment/enzyme/E = locate() in src.modules
 	E.reagents.add_reagent("enzyme", 2 * amount)
 	if(src.emag)
 		var/obj/item/weapon/reagent_containers/glass/drinks/cans/beer/B = src.emag
