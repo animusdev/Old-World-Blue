@@ -125,6 +125,13 @@
 	center_of_mass = list("x"=16, "y"=3)
 	preloaded = list("whiskey" = 100)
 
+/obj/item/weapon/reagent_containers/glass/drinks/bottle/specialwhiskey
+	name = "Special Blend Whiskey"
+	desc = "Just when you thought regular station whiskey was good... This silky, amber goodness has to come along and ruin everything."
+	icon_state = "whiskeybottle2"
+	center_of_mass = list("x"=16, "y"=3)
+	preloaded = list("specialwhiskey" = 100)
+
 /obj/item/weapon/reagent_containers/glass/drinks/bottle/vodka
 	name = "Tunguska Triple Distilled"
 	desc = "Aah, vodka. Prime choice of drink AND fuel by Russians worldwide."
