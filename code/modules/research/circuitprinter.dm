@@ -67,9 +67,9 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	for(var/obj/I in component_parts)
 		if(istype(I, /obj/item/weapon/reagent_containers/glass/beaker))
 			reagents.trans_to_obj(I, reagents.total_volume)
-	if(g_amount >= 3750)
+	if(g_amount >= 2000)
 		var/obj/item/stack/material/glass/G = new /obj/item/stack/material/glass(loc)
-		G.amount = round(g_amount / 3750)
+		G.amount = round(g_amount / 2000)
 	if(gold_amount >= 2000)
 		var/obj/item/stack/material/gold/G = new /obj/item/stack/material/gold(loc)
 		G.amount = round(gold_amount / 2000)
@@ -132,7 +132,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 			use_power(max(1000, (3750 * amount / 10)))
 			switch(stacktype)
 				if(/obj/item/stack/material/glass)
-					g_amount += amount * 3750
+					g_amount += amount * 2000
 				if(/obj/item/stack/material/gold)
 					gold_amount += amount * 2000
 				if(/obj/item/stack/material/diamond)
