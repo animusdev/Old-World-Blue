@@ -953,7 +953,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				switch(M)
 					if("glass")
 						amount = linked_imprinter.g_amount
-						sheetsize = 3750
+						sheetsize = 2000
 					if("gold")
 						amount = linked_imprinter.gold_amount
 					if("diamond")
