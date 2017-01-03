@@ -188,7 +188,7 @@
 
 		if (ishuman(usr))
 			var/mob/living/carbon/human/H = usr
-			if(H.species.can_shred(H))
+			if(H.can_shred())
 				attack_generic(H,25)
 				return
 
