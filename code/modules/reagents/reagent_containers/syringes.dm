@@ -12,6 +12,7 @@
 	item_state = "syringe_0"
 	icon_state = "0"
 	matter = list("glass" = 150)
+	center_of_mass = list("x"=15, "y"=15)
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = null
 	volume = 15
@@ -51,6 +52,14 @@
 
 /obj/item/weapon/reagent_containers/syringe/attackby(obj/item/I as obj, mob/user as mob)
 	return
+
+/obj/item/weapon/reagent_containers/syringe/do_surgery(mob/living/carbon/M, mob/living/user)
+	if(user.a_intent == I_HURT)
+		return 0
+	if(user.a_intent != I_HELP) //in case it is ever used as a surgery tool
+		return ..()
+	afterattack(M, user, 1)
+	return 1
 
 /obj/item/weapon/reagent_containers/syringe/afterattack(obj/target, mob/user, proximity)
 	if(!proximity || !target.reagents)

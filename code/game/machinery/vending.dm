@@ -618,8 +618,10 @@
 		/obj/item/weapon/reagent_containers/glass/drinks/bottle/melonliquor = 2,
 		/obj/item/weapon/reagent_containers/glass/drinks/bottle/tomatojuice = 4,
 		/obj/item/weapon/reagent_containers/glass/drinks/flask/vacuumflask = 2,
+		/obj/item/weapon/reagent_containers/glass/drinks/bottle/small/beer = 6,
 		/obj/item/weapon/reagent_containers/glass/drinks/bottle/grenadine = 5,
 		/obj/item/weapon/reagent_containers/glass/drinks/bottle/limejuice = 4,
+		/obj/item/weapon/reagent_containers/glass/drinks/bottle/small/ale = 6,
 		/obj/item/weapon/reagent_containers/glass/drinks/bottle/absinthe = 2,
 		/obj/item/weapon/reagent_containers/glass/drinks/bottle/tequilla = 5,
 		/obj/item/weapon/reagent_containers/glass/drinks/bottle/vermouth = 5,
@@ -636,9 +638,7 @@
 		/obj/item/weapon/reagent_containers/glass/drinks/bottle/gin = 5,
 		/obj/item/weapon/reagent_containers/glass/drinks/bottle/rum = 5,
 		/obj/item/weapon/reagent_containers/glass/drinks/cans/tonic = 8,
-		/obj/item/weapon/reagent_containers/glass/drinks/cans/beer = 6,
 		/obj/item/weapon/reagent_containers/glass/drinks/cans/cola = 8,
-		/obj/item/weapon/reagent_containers/glass/drinks/cans/ale = 6,
 		/obj/item/weapon/reagent_containers/glass/drinks/ice = 9
 	)
 	contraband = list(

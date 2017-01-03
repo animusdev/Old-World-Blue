@@ -69,6 +69,7 @@
 	damage = 5
 	damage_type = TOX
 	weaken = 5
+	check_armour = "energy"
 
 
 /obj/item/projectile/energy/bolt

@@ -346,7 +346,7 @@
 
 	icobase = 'icons/mob/human_races/machine.dmi'
 	deform = 'icons/mob/human_races/machine.dmi'
-	language = "EAL"
+	language = "Encoded Audio Language"
 	unarmed_attacks = list(
 		new /datum/unarmed_attack/punch
 		)

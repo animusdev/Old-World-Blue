@@ -115,3 +115,69 @@
 				A.y = rand(teleport_y, teleport_y_offset)
 				A.z = rand(teleport_z, teleport_z_offset)
 
+
+/obj/effect/step_trigger/edge_teleporter
+	affect_ghosts = 1
+
+/obj/effect/step_trigger/edge_teleporter/Trigger(var/atom/movable/A)
+	if(ticker && ticker.mode)
+
+		if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
+			qdel(A)
+			return
+
+		if(istype(A, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks travel Z levels  ... And moving this shit down here so it only fires when they're actually trying to change z-level.
+			qdel(A) //The disk's Destroy() proc ensures a new one is created
+			return
+		if(config.use_overmap)
+			overmap_spacetravel(src,A)
+			return
+		var/list/disk_search = A.search_contents_for(/obj/item/weapon/disk/nuclear)
+		if(!isemptylist(disk_search))
+			if(istype(A, /mob/living))
+				var/mob/living/MM = A
+				if(MM.client && !MM.stat)
+					MM << "\red Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is."
+					if(MM.x <= TRANSITIONEDGE)
+						MM.inertia_dir = 4
+					else if(MM.x >= world.maxx -TRANSITIONEDGE)
+						MM.inertia_dir = 8
+					else if(MM.y <= TRANSITIONEDGE)
+						MM.inertia_dir = 1
+					else if(MM.y >= world.maxy -TRANSITIONEDGE)
+						MM.inertia_dir = 2
+				else
+					for(var/obj/item/weapon/disk/nuclear/N in disk_search)
+						qdel(N)//Make the disk respawn it is on a clientless mob or corpse
+			else
+				for(var/obj/item/weapon/disk/nuclear/N in disk_search)
+					qdel(N)//Make the disk respawn if it is floating on its own
+			return
+
+		var/move_to_z = text2num(pickweight(accessible_z_levels - "[src.z]"))
+
+		if(!move_to_z)
+			return
+
+		A.z = move_to_z
+
+		if(src.x <= TRANSITIONEDGE)
+			A.x = world.maxx - TRANSITIONEDGE - 2
+			A.y = rand(TRANSITIONEDGE + 2, world.maxy - TRANSITIONEDGE - 2)
+
+		else if (src.x >= (world.maxx - TRANSITIONEDGE + 1))
+			A.x = TRANSITIONEDGE + 1
+			A.y = rand(TRANSITIONEDGE + 2, world.maxy - TRANSITIONEDGE - 2)
+
+		else if (src.y <= TRANSITIONEDGE)
+			A.y = world.maxy - TRANSITIONEDGE -2
+			A.x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
+
+		else if (src.y >= (world.maxy - TRANSITIONEDGE + 1))
+			A.y = TRANSITIONEDGE + 1
+			A.x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
+
+
+		spawn (0)
+			if(A && A.loc)
+				A.loc.Entered(A)

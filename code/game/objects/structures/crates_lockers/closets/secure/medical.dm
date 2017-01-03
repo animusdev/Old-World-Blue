@@ -155,7 +155,7 @@
 		new /obj/item/clothing/suit/storage/toggle/labcoat/cmo(src)
 		new /obj/item/clothing/suit/storage/toggle/labcoat/cmoalt(src)
 		new /obj/item/weapon/cartridge/cmo(src)
-		new /obj/item/clothing/gloves/white/latex(src)
+		new /obj/item/clothing/gloves/latex(src)
 		new /obj/item/clothing/shoes/brown	(src)
 		new /obj/item/device/radio/headset/heads/cmo(src)
 		new /obj/item/weapon/melee/baton/shocker/loaded(src)

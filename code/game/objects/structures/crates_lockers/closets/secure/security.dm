@@ -288,7 +288,7 @@
 		new /obj/item/clothing/under/rank/det/formal_dress(src)
 		new /obj/item/clothing/shoes/brown(src)
 		new /obj/item/clothing/accessory/badge/sec/detective(src)
-		new /obj/item/clothing/gloves/white/latex(src)
+		new /obj/item/clothing/gloves/latex(src)
 		new /obj/item/weapon/storage/box/evidence(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
 		new /obj/item/device/radio/headset/headset_sec/alt(src)
