@@ -866,8 +866,6 @@
 		dat += "</br><b>Has a plantlike physiology.</b>"
 	if(show_species.flags & IS_SYNTHETIC)
 		dat += "</br><b>Is machine-based.</b>"
-	if(show_species.flags & REGENERATES_LIMBS)
-		dat += "</br><b>Has a plantlike physiology.</b>"
 	dat += "</small></td>"
 	dat += "<td width = 400>[show_species.blurb]</td>"
 	dat += "</tr>"

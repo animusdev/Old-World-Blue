@@ -840,10 +840,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				switch(M)
 					if(DEFAULT_WALL_MATERIAL)
 						amount = linked_lathe.m_amount
-						sheetsize = 3750
+						sheetsize = 2000
 					if("glass")
 						amount = linked_lathe.g_amount
-						sheetsize = 3750
+						sheetsize = 2000
 					if("gold")
 						amount = linked_lathe.gold_amount
 					if("silver")
@@ -953,7 +953,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				switch(M)
 					if("glass")
 						amount = linked_imprinter.g_amount
-						sheetsize = 3750
+						sheetsize = 2000
 					if("gold")
 						amount = linked_imprinter.gold_amount
 					if("diamond")

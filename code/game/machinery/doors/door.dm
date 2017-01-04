@@ -65,6 +65,7 @@
 			bound_height = width * world.icon_size
 
 	health = maxhealth
+	update_icon()
 
 	update_nearby_tiles(need_rebuild=1)
 	return
@@ -411,12 +412,12 @@
 	set_opacity(0)
 	sleep(3)
 	src.density = 0
+	update_nearby_tiles()
 	sleep(7)
 	src.layer = open_layer
 	explosion_resistance = 0
 	update_icon()
 	set_opacity(0)
-	update_nearby_tiles()
 	operating = 0
 
 	if(autoclose)
@@ -438,12 +439,12 @@
 	src.density = 1
 	explosion_resistance = initial(explosion_resistance)
 	src.layer = closed_layer
+	update_nearby_tiles()
 	sleep(7)
 	update_icon()
 	if(visible && !glass)
 		set_opacity(1)	//caaaaarn!
 	operating = 0
-	update_nearby_tiles()
 
 	//I shall not add a check every x ticks if a door has closed over some fire.
 	var/obj/fire/fire = locate() in loc

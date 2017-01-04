@@ -25,3 +25,5 @@
 #define T20C 293.15 //   20.0 degrees celcius
 #define TCMB 2.7    // -270.3 degrees celcius
 
+#define QUANTIZE(variable) (round(variable,0.0001))
+
