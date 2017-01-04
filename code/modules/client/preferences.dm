@@ -538,8 +538,6 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		dat += "</br><b>Has a plantlike physiology.</b>"
 	if(current_species.flags & IS_SYNTHETIC)
 		dat += "</br><b>Is machine-based.</b>"
-	if(current_species.flags & REGENERATES_LIMBS)
-		dat += "</br><b>Has a plantlike physiology.</b>"
 	dat += "</small></td>"
 	dat += "</tr>"
 	dat += "</table><center><hr/>"
