@@ -103,8 +103,8 @@
 
 	// Body/form vars.
 	inherent_verbs = list(
-		/mob/living/carbon/human/arachna/verb/add_venom,
-		/mob/living/carbon/human/arachna/verb/remove_venom,
+//		/mob/living/carbon/human/arachna/verb/add_venom,
+//		/mob/living/carbon/human/arachna/verb/remove_venom,
 		/mob/living/carbon/human/arachna/proc/prepare_bite,
 		/mob/living/carbon/human/arachna/proc/use_silk_gland,
 //		/datum/species_abilities/arachna/proc/EvolutionMenu

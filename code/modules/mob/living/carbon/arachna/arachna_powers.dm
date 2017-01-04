@@ -1,10 +1,12 @@
 /datum/species_abilities/arachna
 	var/purchased_powers = list()
 	var/EvolvPoint = 10
+	var/mob/living/carbon/human/MyMob
 
-/datum/species_abilities/arachna/New(var/gender=FEMALE)
+/datum/species_abilities/arachna/New()
 	..()
 	usr.verbs += /datum/species_abilities/arachna/proc/EvolutionMenu
+	MyMob = usr
 
 /datum/species_abilities/arachna/proc/EvolutionMenu()//The new one
 	set name = "-Evolution Menu-"
@@ -17,10 +19,10 @@
 
 	if(!arachna_powerinstances.len)
 		for(var/P in arachna_powers)
-			world << P
+//			world << P
 			arachna_powerinstances += new P()
 
-	var/dat = "<html><head><title>Arachna Evolution Menu</title></head>"
+	var/dat = "<html><head><title>Changling Evolution Menu</title></head>"
 
 	//javascript, the part that does most of the work~
 	dat += {"
@@ -79,7 +81,7 @@
 
 				}
 
-				function expand(id,name,desc,helptext,enhancedtext,power,ownsthis){
+				function expand(id,name,desc,helptext,power,ownsthis){
 
 					clearAll();
 
@@ -91,10 +93,7 @@
 
 					body += "<font size='2'><b>"+desc+"</b></font> <BR>"
 
-					body += "<font size='2' color = 'red'><b>"+helptext+"</b></font><BR>"
-
-					if(enhancedtext)
-						body += "<font size='2' color = 'blue'>Recursive Enhancement Effect: <b>"+enhancedtext+"</b></font><BR>"
+					body += "<font size='2'><font color = 'red'><b>"+helptext+"</b></font> <BR>"
 
 					if(!ownsthis)
 					{
@@ -214,7 +213,7 @@
 					<font size='5'><b>Changling Evolution Menu</b></font><br>
 					Hover over a power to see more information<br>
 					Current evolution points left to evolve with: [EvolvPoint]<br>
-					Absorb other changelings to acquire more evolution points
+					Absorb genomes to acquire more evolution points
 					<p>
 				</td>
 			</tr>
@@ -253,7 +252,7 @@
 					<a id='link[i]'
 					onmouseover='expand("item[i]","[P.name]","[P.desc]","[P.helptext]","[P]",[ownsthis])'
 					>
-					<span id='search[i]'><b>Evolve [P] - Cost: [ownsthis ? "Purchased" : P.cost]</b></span>
+					<b id='search[i]'>Evolve [P] - Cost: [ownsthis ? "Purchased" : P.cost]</b>
 					</a>
 					<br><span id='item[i]'></span>
 				</td>
@@ -327,9 +326,13 @@
 //		purchased_powers_history.Add("[Pname] ([Thepower.genomecost] points)")
 
 	if(!Thepower.isVerb && Thepower.verbpath)
-		call(M, Thepower.verbpath)()
-//	else if(remake_verbs)
-//		M.current.make_changeling()
+/*		if (!Thepower.extra_data)
+			call(M, Thepower.verbpath)()
+		else
+			call(M, Thepower.verbpath)(Thepower.extra_data)*/
+		Thepower.extra_data ? call(M, Thepower.verbpath)(Thepower.extra_data) : call(M, Thepower.verbpath)()
+	else
+		M.verbs += Thepower.verbpath
 
 
 
@@ -348,7 +351,7 @@
 	return 1
 
 /mob/proc/silk_net()
-	set category = "Abilities"
+	set category = "Arachna"
 	set name = "Net"
 
 	if(!arachna_power(25))
@@ -365,5 +368,7 @@
 	M.put_in_hands(net)
 
 /mob/proc/jump()
+	set category = "Arachna"
+
 	src << "Not work right now!"
 	return 0
