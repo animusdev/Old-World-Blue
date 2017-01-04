@@ -10,6 +10,7 @@
 	var/drone_only
 
 /datum/language/binary/broadcast(var/mob/living/speaker,var/message,var/speaker_mask)
+	log_say("[key_name(speaker)] : ([name]) [message]")
 
 	if(!speaker.binarycheck())
 		return
