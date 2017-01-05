@@ -1031,6 +1031,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/proc/embed(var/obj/item/weapon/W, var/silent = 0, var/supplied_message)
 	if(!owner || loc != owner)
 		return
+	if(ismob(W.loc))
+		var/mob/living/H = W.loc
+		if(!H.unEquip(W))
+			return
 	if(!silent)
 		if(supplied_message)
 			owner.visible_message("<span class='danger'>[supplied_message]</span>")
@@ -1038,11 +1042,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 			owner.visible_message("<span class='danger'>\The [W] sticks in the wound!</span>")
 	implants += W
 	owner.embedded_flag = 1
-	owner.verbs += /mob/proc/yank_out_object
 	W.add_blood(owner)
-	if(ismob(W.loc))
-		var/mob/living/H = W.loc
-		H.drop_from_inventory(W)
+	owner.verbs += /mob/proc/yank_out_object
 	W.loc = owner
 
 /obj/item/organ/external/proc/disfigure(var/type = "brute")
