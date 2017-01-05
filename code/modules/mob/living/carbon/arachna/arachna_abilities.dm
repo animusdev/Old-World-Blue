@@ -48,7 +48,7 @@ mob/living/carbon/human/arachna/proc/prepare_bite(mob/living/carbon/human/M as m
 	else
 		..()*/
 
-
+/*
 var/list/venom_list = list(
 	"inaprovaline",
 	"stoxin",
@@ -63,12 +63,18 @@ var/list/venom_list = list(
 	"impedrezene"
 )
 
-var/list/added_venoms = list ()
+var/list/added_venoms = list ()*/
 
+mob/living/carbon/human/arachna/proc/add_venom_datum(var/chem_id)
+	var/obj/item/organ/internal/arachna/poison_gland/I = internal_organs_by_name["poison_gland"]
+	I.poisons.Add(chem_id)
+	I.init(I.poisons)
+//	world << "I.poisons"
+/*
 mob/living/carbon/human/arachna/verb/add_venom()
 	set name = "Add Venom"
 	set desc = "Add Venom"
-	set category = "Abilities"
+	set category = "Arachna"
 
 	var/choice = input("Add Venom","Add Venom") in venom_list
 	if(!choice)
@@ -81,7 +87,7 @@ mob/living/carbon/human/arachna/verb/add_venom()
 mob/living/carbon/human/arachna/verb/remove_venom()
 	set name = "Remove Venom"
 	set desc = "Remove Venom"
-	set category = "Abilities"
+	set category = "Arachna"
 	var/choice = input("Remove current Venom","Remove Venom") in added_venoms
 	if(!choice)
 		return
@@ -89,11 +95,11 @@ mob/living/carbon/human/arachna/verb/remove_venom()
 	venom_list.Add(choice)
 	var/obj/item/organ/internal/arachna/poison_gland/I = internal_organs_by_name["poison_gland"]
 	I.init(added_venoms)
-
-/mob/living/carbon/human/arachna/proc/use_silk_gland() // -- TLE
+*/
+/mob/living/carbon/human/arachna/proc/use_silk_gland()
 	set name = "Use silk gland"
 	set desc = "Use you spider power to make you home!."
-	set category = "Abilities"
+	set category = "Arachna"
 	var/obj/item/organ/internal/arachna/silk_gland/I = internal_organs_by_name["silk_gland"]
 	if(stat || paralysis || stunned || weakened || lying || restrained() || buckled)
 		src << "You cannot use web in your current state."
