@@ -605,7 +605,10 @@ proc/admin_notice(var/message, var/rights)
 	dat += "<HR>"
 
 	// If a category is selected, print its description and then options
-	if(istype(active_category) && active_category.can_view(usr))
+	if(!istype(active_category))
+		active_category = admin_secrets.categories[1]
+
+	if(active_category.can_view(usr))
 		dat += "<B>[active_category.name]</B><BR>"
 		if(active_category.desc)
 			dat += "<I>[active_category.desc]</I><BR>"
