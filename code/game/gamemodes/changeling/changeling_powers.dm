@@ -178,36 +178,50 @@ var/global/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","E
 	var/datum/changeling/changeling = changeling_power(35,1,0)
 	if(!changeling)	return
 
-	var/obj/item/weapon/armblade/AB = new(H)
+	var/obj/item/weapon/melee/arm_blade/AB = new(H)
 
 	if(!H.put_in_hands(AB))
 		qdel(AB)
 		return 0
 
-	H.visible_message("A grotesque blade forms around [H]\'s arm!",\
-						"Our arm twists and mutates, transforming it into a deadly blade.",\
-						"You hear organic matter ripping and tearing!")
+	H.visible_message(
+		"A grotesque blade forms around [H]\'s arm!",
+		"Our arm twists and mutates, transforming it into a deadly blade.",
+		"You hear organic matter ripping and tearing!"
+	)
 
 	changeling.chem_charges -= 35
 	return 1
 
-/obj/item/weapon/armblade
+/obj/item/weapon/melee/arm_blade
 	name = "arm blade"
-	icon_state = "arm_blade"
 	desc = "A grotesque blade made out of bone and flesh that cleaves through people as a hot knife through butter."
-	abstract = 1
-	canremove = 0
-	flags = CONDUCT
-	force = 10.0
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "arm_blade"
+	item_state = "arm_blade"
+	w_class = 5.0
+	force = 40
 	sharp = 1
 	edge = 1
-	force = 40
-	attack_verb = list("attacked", "slashed", "sliced", "torn", "ripped", "diced", "cut")
+	pry = 1
+	abstract = 1
+	canremove = 0
+	anchored = 1
+	throwforce = 0 //Just to be on the safe side
+	throw_range = 0
+	throw_speed = 0
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+/*
+/obj/item/weapon/melee/arm_blade/greater
+	name = "arm greatblade"
+	desc = "A grotesque blade made out of bone and flesh that cleaves through people and armor as a hot knife through butter."
+	armor_penetration = 30
+*/
 
-/obj/item/weapon/melee/armblade/attack_self(var/mob/user)
+/obj/item/weapon/melee/arm_blade/attack_self(var/mob/user)
 	user.drop_from_inventory(src)
 
-/obj/item/weapon/melee/armblade/dropped(var/mob/user)
+/obj/item/weapon/melee/arm_blade/dropped(var/mob/user)
 	user.visible_message(
 		"<span class='warning'>With a sickening crunch, [user] reforms their arm blade into an arm!</span>",
 		"<span class='notice'>We assimilate the weapon back into our body.</span>",
