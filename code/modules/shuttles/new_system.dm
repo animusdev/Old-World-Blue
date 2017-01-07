@@ -48,7 +48,7 @@ var/global/list/sh_beakons = list()
 
 		invisibility = 101
 		src.verbs -= /obj/shuttle_marker/verb/setup
-
+/*
 /client/verb/beacon_move()
 	set name = "Beacon move"
 	set category = "Debug"
@@ -64,7 +64,7 @@ var/global/list/sh_beakons = list()
 	else
 		result = "<span class='warning'>[result]</span>"
 	usr << result
-
+*/
 /proc/get_most_distant_object(var/list/L, var/dir = NORTH)
 	if(!L || !L.len || !(dir in cardinal)) return null
 
