@@ -7,6 +7,7 @@ var/global/list/sh_beakons = list()
 	name = "Shuttle Beacon"
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "beacon"
+	var/beacon_system = "Station"
 	var/global/num = 1
 	var/turf/target = null
 
@@ -19,10 +20,14 @@ var/global/list/sh_beakons = list()
 /obj/shuttle_beacon/proc/get_target()
 	return target
 
+/obj/shuttle_beacon/proc/get_docking_dir()
+	return get_dir(target, src)
+
 /obj/shuttle_marker
 	name = "Shuttle Marker"
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "marker"
+	var/list/beacon_systems = list("Station")
 
 /obj/shuttle_marker/New()
 	..()
@@ -48,38 +53,101 @@ var/global/list/sh_beakons = list()
 	set name = "Beacon move"
 	set category = "Debug"
 
-	var/where = input("Beakon", "Pick!") as null|anything in sh_beakons
-	if(!where) return
 	var/shuttle_tag = input("Shuttle","pick!") as null|anything in shuttle_controller.new_shuttles
 	if(!shuttle_tag) return
 	var/datum/shuttle/untethered/shuttle = shuttle_controller.new_shuttles[shuttle_tag]
-	shuttle.beacon_move(sh_beakons[where])
+	var/where = input("Beakon", "Pick!") as null|anything in sh_beakons
+	if(!where) return
+	var/result = shuttle.beacon_move(sh_beakons[where])
+	if(!result)
+		result = "<span class='notice'>Success!</span>"
+	else
+		result = "<span class='warning'>[result]</span>"
+	usr << result
 
+/proc/get_most_distant_object(var/list/L, var/dir = NORTH)
+	if(!L || !L.len || !(dir in cardinal)) return null
+
+	. = L[1]
+	var/quality = 0
+	var/tmp_quality
+	for(var/obj/item in L)
+		switch(dir)
+			if(NORTH) tmp_quality = item.y
+			if(SOUTH) tmp_quality =-item.y
+			if(EAST)  tmp_quality = item.x
+			if(WEST)  tmp_quality =-item.x
+		if(tmp_quality > quality)
+			quality = tmp_quality
+			. = item
 
 /datum/shuttle/untethered
 	var/name = ""
 	var/obj/shuttle_marker/marker = null
 	var/area/my_area
-	var/list/docking_points
+	var/obj/north_port
+	var/obj/south_port
+	var/obj/west_port
+	var/obj/east_port
+	var/list/beacon_systems
 
 /datum/shuttle/untethered/New(var/obj/shuttle_marker/Marker)
 	..()
 	src.my_area = get_area(Marker)
 	src.marker  = Marker
 	src.name    = Marker.name
-	shuttle_controller.new_shuttles[name] = shuttle
-	docking_points = list()
+	src.beacon_systems = Marker.beacon_systems
+	shuttle_controller.new_shuttles[name] = src
+
+	var/list/north = list()
+	var/list/south = list()
+	var/list/east  = list()
+	var/list/west  = list()
+
+	for(var/obj/machinery/door/airlock/external/E in my_area)
+		for(var/dir in cardinal)
+			if(get_area(get_step(E, dir)) != my_area)
+				switch(dir)
+					if(NORTH) north += E
+					if(SOUTH) south += E
+					if(WEST)  west  += E
+					if(EAST)  east  += E
+				break
+
+	north_port = get_most_distant_object(north, NORTH)
+	south_port = get_most_distant_object(south, SOUTH)
+	west_port  = get_most_distant_object(west,  WEST)
+	east_port  = get_most_distant_object(east,  EAST)
+
+/datum/shuttle/untethered/proc/get_dock_list()
+	. = list()
+	for(var/obj/shuttle_beacon/SB in sh_beakons)
+		if(SB.beacon_system in beacon_systems)
+			. += SB
 
 /datum/shuttle/untethered/proc/beacon_move(var/obj/shuttle_beacon/destination, var/direction=null)
 
 	var/turf/target = destination.get_target()
+
+	if(!istype(get_area(target), /area/space))
+		return "Dock already occupied!"
+
+	var/obj/marker
+	switch(destination.get_docking_dir())
+		if(NORTH) marker = north_port
+		if(SOUTH) marker = south_port
+		if(WEST)  marker = west_port
+		if(EAST)  marker = east_port
+
+	if(!marker)
+		return "Can't find applyable port!"
 
 	var/list/shift = list(
 		marker.x - target.x,
 		marker.y - target.y,
 		marker.z - target.z
 	)
-
+/*
 	var/list/dstturfs = list()
 	var/throwy = world.maxy
 
@@ -95,7 +163,6 @@ var/global/list/sh_beakons = list()
 		if(istype(T, /turf/simulated))
 			qdel(T)
 
-/*
 	for(var/mob/living/carbon/bug in destination)
 		bug.gib()
 
