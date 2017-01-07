@@ -33,6 +33,19 @@
 	item_to_spawn()
 		return ispath(spawn_object) ? spawn_object : text2path(spawn_object)
 
+/obj/random/single/cards
+	name = "deck of cards"
+	icon = 'icons/obj/playing_cards.dmi'
+	icon_state = "deck"
+	spawn_object = /obj/item/weapon/deck/cards
+
+/obj/random/single/oil
+	name = "oil"
+	spawn_nothing_percentage = 30
+	icon = 'icons/mob/robots.dmi'
+	icon_state = "floor2"
+	spawn_object = /obj/effect/decal/cleanable/blood/oil/streak
+
 
 /obj/random/tool
 	name = "random tool"

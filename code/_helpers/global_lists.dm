@@ -32,19 +32,6 @@ var/global/list/playable_species = list("Human")    // A list of ALL playable sp
 // Posters
 var/global/list/poster_designs = list()
 
-// AI icons
-var/global/list/AI_icons = list(
-	"Rainbow" = "ai-clown", "Monochrome" = "ai-mono", "Inverted" = "ai-u",
-	"Firewall" = "ai-magma", "Green" = "ai-wierd", "Red" = "ai-red", "Static" = "ai-static",
-	"Text" = "ai-text", "Smiley" = "ai-smiley", "Matrix" = "ai-matrix", "Angry" = "ai-angryface",
-	"Dorf"  = "ai-dorf", "Bliss" = "ai-bliss", "Triumvirate" = "ai-triumvirate",
-	"Triumvirate Static" = "ai-triumvirate-malf", "Soviet" = "ai-redoctober", "Trapped" = "ai-hades",
-	"Heartline" = "ai-heartline", "Chatterbox" = "ai-president", "Helios" = "ai-helios", "Goon" = "ai-goon",
-	"Dug Too Deep" = "ai-toodeep", "Database" = "ai-database", "Glitchman" = "ai-glitchman",
-	"Lonestar" = "ai-lonestar", "Nanotrasen" = "ai-nanotrasen", "Whale" = "ai-whale", "Zone AI" = "ai-zone",
-	"House" = "ai-rhouse", "Yuki" = "ai-yuki", "Xeno" = "ai-xeno", "Sparkles" = "ai-sparkles"
-)
-
 // Uplinks
 var/list/obj/item/device/uplink/world_uplinks = list()
 

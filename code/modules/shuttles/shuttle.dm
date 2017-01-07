@@ -45,9 +45,7 @@
 		moving_status = SHUTTLE_INTRANSIT
 		move(departing, interim, direction)
 
-
-		while (world.time < arrive_time)
-			sleep(5)
+		sleep(arrive_time - world.time)
 
 		move(interim, destination, direction)
 		moving_status = SHUTTLE_IDLE

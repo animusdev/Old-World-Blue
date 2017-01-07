@@ -79,6 +79,20 @@ var/list/ai_verbs_default = list(
 	var/bombing_station = 0						// Set to 1 if station nuke auto-destruct is activated
 	var/override_CPUStorage = 0					// Bonus/Penalty CPU Storage. For use by admins/testers.
 	var/override_CPURate = 0					// Bonus/Penalty CPU generation rate. For use by admins/testers.
+// AI icons
+	var/global/list/AI_icons = list(
+		"Rainbow" = "ai-clown", "Monochrome" = "ai-mono", "Inverted" = "ai-u",
+		"Firewall" = "ai-magma", "Green" = "ai-wierd", "Red" = "ai-red", "Static" = "ai-static",
+		"Text" = "ai-text", "Smiley" = "ai-smiley", "Matrix" = "ai-matrix", "Angry" = "ai-angryface",
+		"Dorf"  = "ai-dorf", "Bliss" = "ai-bliss", "Triumvirate" = "ai-triumvirate",
+		"Triumvirate Static" = "ai-triumvirate-malf", "Soviet" = "ai-redoctober", "Trapped" = "ai-hades",
+		"Heartline" = "ai-heartline", "Chatterbox" = "ai-president", "Helios" = "ai-helios", "Goon" = "ai-goon",
+		"Dug Too Deep" = "ai-toodeep", "Database" = "ai-database", "Glitchman" = "ai-glitchman",
+		"Lonestar" = "ai-lonestar", "Nanotrasen" = "ai-nanotrasen", "Whale" = "ai-whale", "Zone AI" = "ai-zone",
+		"House" = "ai-rhouse", "Yuki" = "ai-yuki", "Xeno" = "ai-xeno", "Sparkles" = "ai-sparkles",
+		"Xerxes" = "ai-xerxes", "Godfrey" = "ai-godfrey"
+	)
+
 
 
 /mob/living/silicon/ai/proc/add_ai_verbs()

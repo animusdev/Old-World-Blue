@@ -237,7 +237,7 @@
 		switch(mind.assigned_role)
 			if("AI")
 				var/mob/living/silicon/ai/O = src.AIize(1,0) //SRC was deleted here!
-				AnnounceCyborg(O, rank, "has been downloaded to the empty core in \the [character.loc.loc]")
+				AnnounceCyborg(O, rank, "has been downloaded to the empty core in \the [O.loc.loc]")
 				ticker.mode.handle_latejoin(O)
 				qdel(src)
 				return

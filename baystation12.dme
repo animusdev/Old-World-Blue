@@ -1641,6 +1641,8 @@
 #include "code\modules\shuttles\antagonist.dm"
 #include "code\modules\shuttles\departmental.dm"
 #include "code\modules\shuttles\escape_pods.dm"
+#include "code\modules\shuttles\move_contents.dm"
+#include "code\modules\shuttles\new_system.dm"
 #include "code\modules\shuttles\shuttle.dm"
 #include "code\modules\shuttles\shuttle_console.dm"
 #include "code\modules\shuttles\shuttle_emergency.dm"
