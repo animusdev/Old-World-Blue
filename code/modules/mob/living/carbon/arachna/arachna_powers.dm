@@ -369,6 +369,61 @@
 
 /mob/proc/jump()
 	set category = "Arachna"
+	set name = "Leap"
+	set desc = "Leap at a target and grab them aggressively."
 
-	src << "Not work right now!"
-	return 0
+//	if(last_special > world.time)
+//		return
+
+	if(stat || paralysis || stunned || weakened || lying || restrained() || buckled)
+		src << "You cannot leap in your current state."
+		return
+
+	var/list/choices = list()
+	for(var/mob/living/M in view(6,src))
+		if(!istype(M,/mob/living/silicon))
+			choices += M
+	choices -= src
+
+	var/mob/living/T = input(src,"Who do you wish to leap at?") as null|anything in choices
+
+	if(!T || !src || src.stat) return
+
+	if(get_dist(get_turf(T), get_turf(src)) > 4) return
+
+//	last_special = world.time + 75
+	status_flags |= LEAPING
+
+	src.visible_message("<span class='danger'>\The [src] leaps at [T]!</span>")
+	src.throw_at(get_step(get_turf(T),get_turf(src)), 4, 1, src)
+	playsound(src.loc, 'sound/voice/shriek1.ogg', 50, 1)
+
+	sleep(5)
+
+	if(status_flags & LEAPING) status_flags &= ~LEAPING
+
+	if(!src.Adjacent(T))
+		src << "<span class='warning'>You miss!</span>"
+		return
+
+	T.Weaken(3)
+
+	var/use_hand = "left"
+	if(l_hand)
+		if(r_hand)
+			src << "<span class='danger'>You need to have one hand free to grab someone.</span>"
+			return
+		else
+			use_hand = "right"
+
+	src.visible_message("<span class='warning'><b>\The [src]</b> seizes [T] aggressively!</span>")
+
+	var/obj/item/weapon/grab/G = new(src,T)
+	if(use_hand == "left")
+		l_hand = G
+	else
+		r_hand = G
+
+	G.state = GRAB_PASSIVE
+	G.icon_state = "grabbed1"
+	G.synch()

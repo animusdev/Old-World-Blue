@@ -52,7 +52,7 @@ var/list/datum/power/arachna/arachna_powerinstances = list()
 	desc = "Make you poison better?"
 	helptext = "This error too"
 	isVerb = 0
-	verbpath = /mob/living/carbon/human/arachna/proc/add_venom_datum
+	verbpath = /mob/living/carbon/human/proc/add_venom_datum
 
 /datum/power/arachna/venom/inaprovaline
 	name = "Inaprovaline"
