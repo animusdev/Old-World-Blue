@@ -11,7 +11,6 @@
 		return
 	else	//at centcom
 		supply_controller.buy()
-		//wait ETA here.
 	. = ..()
 
 /datum/shuttle/ferry/supply/move()
