@@ -163,6 +163,7 @@
 			state = 1
 			for(var/atom/movable/O in contents)
 				O.loc = src.loc
+			crayon = null
 		if(3)
 			state = 4
 		if(4)
