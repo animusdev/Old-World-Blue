@@ -149,7 +149,7 @@
 /obj/machinery/suit_storage_unit/Topic(href, href_list) //I fucking HATE this proc
 	if(..())
 		return
-	if(src in usr || (get_dist(src, usr)<=1 && istype(usr.loc, /turf)) || isAI(usr))
+	if((get_dist(src, usr)<=1) || isAI(usr))
 		usr.set_machine(src)
 		if(href_list["toggleUV"])
 			toggleUV(usr)
