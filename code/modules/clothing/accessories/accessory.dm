@@ -22,7 +22,7 @@
 	has_suit = S
 	loc = has_suit
 	if(!inv_overlay)
-		inv_overlay = image('icons/inv_slots/acessories/mob_default.dmi', icon_state)
+		inv_overlay = image('icons/inv_slots/acessories/mob.dmi', icon_state)
 	has_suit.overlays += inv_overlay
 
 	if(user)
