@@ -1096,33 +1096,23 @@ proc/is_hot(obj/item/W as obj)
 /proc/can_puncture(obj/item/W as obj)		// For the record, WHAT THE HELL IS THIS METHOD OF DOING IT?
 	if(!W) return 0
 	if(W.sharp) return 1
-	return (
-		istype(W, /obj/item/weapon/screwdriver)                   || \
-		istype(W, /obj/item/weapon/pen)                           || \
-		istype(W, /obj/item/weapon/weldingtool)					  || \
-		istype(W, /obj/item/weapon/flame/lighter/zippo)			  || \
-		istype(W, /obj/item/weapon/flame/match)            		  || \
-		istype(W, /obj/item/clothing/mask/smokable/cigarette) 		      || \
-		istype(W, /obj/item/weapon/shovel) \
-	)
-
-/proc/is_surgery_tool(obj/item/W as obj)
-	return (	\
-	istype(W, /obj/item/weapon/scalpel)			||	\
-	istype(W, /obj/item/weapon/hemostat)		||	\
-	istype(W, /obj/item/weapon/retractor)		||	\
-	istype(W, /obj/item/weapon/cautery)			||	\
-	istype(W, /obj/item/weapon/bonegel)			||	\
-	istype(W, /obj/item/weapon/bonesetter)
-	)
+	return is_type_in_list(W, list(\
+		/obj/item/weapon/screwdriver,
+		/obj/item/weapon/pen,
+		/obj/item/weapon/weldingtool,
+		/obj/item/weapon/flame/lighter/zippo,
+		/obj/item/weapon/flame/match,
+		/obj/item/clothing/mask/smokable/cigarette,
+		/obj/item/weapon/shovel \
+	) )
 
 //check if mob is lying down on something we can operate him on.
 /proc/can_operate(mob/living/carbon/M)
-	return (M.lying && (\
+	return M.lying && (\
 		locate(/obj/machinery/optable, M.loc) || \
 		(locate(/obj/structure/bed/roller, M.loc) && prob(75)) || \
 		(locate(/obj/structure/table/, M.loc) && prob(66))\
-	))
+	)
 
 /proc/reverse_direction(var/dir)
 	switch(dir)
