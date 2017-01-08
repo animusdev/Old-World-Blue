@@ -142,7 +142,7 @@ var/global/list/image/fluidtrack_cache=list()
 
 			if(track.overlay)
 				track.overlay=null
-			var/image/I = image(icon, icon_state=state, dir=num2dir(truedir))
+			var/image/I = image(icon, icon_state=state, dir=truedir)
 			I.color = track.basecolor
 
 			track.fresh=0
