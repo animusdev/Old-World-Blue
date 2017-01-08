@@ -75,12 +75,8 @@
 	var/obj/item/organ/external/affecting = H.get_organ(user.zone_sel.selecting)
 
 	if(affecting.open)
-		if(can_operate(H)) //Checks if mob is lying down on table for surgery
-			if(do_surgery(H,user,src))
-				return 1
-		else
-			user << "<span class='notice'>The [affecting.name] is cut open, you'll need more than a bandage!</span>"
-			return 1
+		user << "<span class='notice'>The [affecting.name] is cut open, you'll need more than a bandage!</span>"
+		return 1
 
 	if(affecting.is_bandaged() && (!clean || affecting.is_disinfected()))
 		user << "<span class='warning'>The wounds on [H]'s [affecting.name] have already been treated.</span>"
@@ -157,12 +153,8 @@
 	var/obj/item/organ/external/affecting = H.get_organ(user.zone_sel.selecting)
 
 	if(affecting.open)
-		if(can_operate(H)) //Checks if mob is lying down on table for surgery
-			if(do_surgery(H,user,src))
-				return 1
-		else
-			user << "<span class='notice'>The [affecting.name] is cut open, you'll need more than a bandage!</span>"
-			return 1
+		user << "<span class='notice'>The [affecting.name] is cut open, you'll need more than a bandage!</span>"
+		return 1
 
 	if(affecting.is_salved())
 		user << "<span class='warning'>The wounds on [H]'s [affecting.name] have already been salved.</span>"
