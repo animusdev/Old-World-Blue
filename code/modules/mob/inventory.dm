@@ -135,7 +135,6 @@ var/list/slot_equipment_priority = list(
 		return 1
 	return 0
 
-//Drops the item in our active hand. TODO: rename this to drop_active_hand or something
 /mob/proc/drop_active_hand(var/atom/Target)
 	return 0
 
