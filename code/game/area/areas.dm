@@ -6,6 +6,7 @@
 /area
 	var/global/global_uid = 0
 	var/uid
+	var/is_escape_location = 0
 
 /area/New()
 	icon_state = ""

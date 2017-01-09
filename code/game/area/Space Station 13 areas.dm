@@ -175,6 +175,7 @@ area/space/atmosalert()
 /area/shuttle/escape/centcom
 	name = "\improper Emergency Shuttle Centcom"
 	icon_state = "shuttle"
+	is_escape_location = 1
 
 /area/shuttle/escape/transit // the area to pass through for 3 minute transit
 	name = "\improper Emergency Shuttle Transit"
@@ -193,11 +194,6 @@ area/space/atmosalert()
 	name = "\improper Escort Shuttle Station"
 	icon_state = "shuttle"
 
-/area/shuttle/escort/transit
-	name = "\improper Escort Shuttle Transit"
-	icon_state = "shuttle"
-
-
 /area/shuttle/escape_pod1
 	name = "\improper Escape Pod One"
 	music = "music/escape.ogg"
@@ -207,9 +203,11 @@ area/space/atmosalert()
 
 /area/shuttle/escape_pod1/centcom
 	icon_state = "shuttle"
+	is_escape_location = 1
 
 /area/shuttle/escape_pod1/transit
 	icon_state = "shuttle"
+	is_escape_location = 1
 
 /area/shuttle/escape_pod2
 	name = "\improper Escape Pod Two"
@@ -220,9 +218,11 @@ area/space/atmosalert()
 
 /area/shuttle/escape_pod2/centcom
 	icon_state = "shuttle"
+	is_escape_location = 1
 
 /area/shuttle/escape_pod2/transit
 	icon_state = "shuttle"
+	is_escape_location = 1
 
 /area/shuttle/escape_pod3
 	name = "\improper Escape Pod Three"
@@ -233,9 +233,11 @@ area/space/atmosalert()
 
 /area/shuttle/escape_pod3/centcom
 	icon_state = "shuttle"
+	is_escape_location = 1
 
 /area/shuttle/escape_pod3/transit
 	icon_state = "shuttle"
+	is_escape_location = 1
 
 /area/shuttle/escape_pod5 //Pod 4 was lost to meteors
 	name = "\improper Escape Pod Five"
@@ -246,9 +248,11 @@ area/space/atmosalert()
 
 /area/shuttle/escape_pod5/centcom
 	icon_state = "shuttle"
+	is_escape_location = 1
 
 /area/shuttle/escape_pod5/transit
 	icon_state = "shuttle"
+	is_escape_location = 1
 
 /area/shuttle/mining
 	name = "\improper Mining Shuttle"
@@ -263,6 +267,7 @@ area/space/atmosalert()
 /area/shuttle/transport1/centcom
 	icon_state = "shuttle"
 	name = "\improper Transport Shuttle Centcom"
+	is_escape_location = 1
 
 /area/shuttle/transport1/station
 	icon_state = "shuttle"
@@ -278,7 +283,7 @@ area/space/atmosalert()
 	name = "\improper Alien Shuttle Mine"
 	requires_power = 1
 
-/area/shuttle/prison/
+/area/shuttle/prison
 	name = "\improper Prison Shuttle"
 
 /area/shuttle/prison/station
@@ -306,6 +311,7 @@ area/space/atmosalert()
 /area/shuttle/administration/centcom
 	name = "\improper Administration Shuttle Centcom"
 	icon_state = "shuttlered"
+	is_escape_location = 1
 
 /area/shuttle/administration/station
 	name = "\improper Administration Shuttle"
@@ -361,6 +367,7 @@ area/space/atmosalert()
 	icon_state = "centcom"
 	requires_power = 0
 	lighting_use_dynamic = 0
+	is_escape_location = 1
 
 /area/centcom/control
 	name = "\improper Centcom Control"

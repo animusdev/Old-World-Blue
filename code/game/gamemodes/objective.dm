@@ -288,13 +288,12 @@ datum/objective/silence
 		if(!emergency_shuttle.returned())
 			return 0
 
+		var/area/checking = null
 		for(var/mob/living/player in player_list)
 			if(player == owner.current || !player.mind || player.stat == DEAD)
 				continue
-			if(get_area(player) in list(/area/shuttle/escape/centcom, \
-				/area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, \
-				/area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod5/centcom) \
-			)
+			checking = get_area(player)
+			if(checking.is_escape_location)
 				return 0
 		return 1
 
@@ -324,20 +323,8 @@ datum/objective/escape
 					return 1
 			return 0
 
-		var/area/check_area = location.loc
-		if(istype(check_area, /area/shuttle/escape/centcom))
-			return 1
-		if(istype(check_area, /area/shuttle/escape_pod1/centcom))
-			return 1
-		if(istype(check_area, /area/shuttle/escape_pod2/centcom))
-			return 1
-		if(istype(check_area, /area/shuttle/escape_pod3/centcom))
-			return 1
-		if(istype(check_area, /area/shuttle/escape_pod5/centcom))
-			return 1
-		else
-			return 0
-
+		var/area/check_area = get_area(owner.current)
+		return check_area.is_escape_location
 
 
 datum/objective/survive
@@ -557,19 +544,9 @@ datum/objective/steal
 							return 1
 
 				for(var/mob/living/silicon/ai/ai in world)
-					var/turf/T = get_turf(ai)
-					if(istype(T))
-						var/area/check_area = get_area(ai)
-						if(istype(check_area, /area/shuttle/escape/centcom))
-							return 1
-						if(istype(check_area, /area/shuttle/escape_pod1/centcom))
-							return 1
-						if(istype(check_area, /area/shuttle/escape_pod2/centcom))
-							return 1
-						if(istype(check_area, /area/shuttle/escape_pod3/centcom))
-							return 1
-						if(istype(check_area, /area/shuttle/escape_pod5/centcom))
-							return 1
+					var/area/check_area = get_area(ai)
+					if(check_area.is_escape_location)
+						return 1
 			else
 				for(var/obj/I in all_items) //Check for items
 					if(istype(I, steal_target))
