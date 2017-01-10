@@ -195,6 +195,10 @@
 				user << "<span class='notice'>You wire the airlock.</span>"
 
 	else if(istype(W, /obj/item/weapon/wirecutters) && state == 1 )
+		if(W.in_use)
+			return
+
+		W.in_use = 1
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		user.visible_message("[user] cuts the wires from the airlock assembly.", "You start to cut the wires from airlock assembly.")
 
@@ -203,6 +207,7 @@
 			user << "\blue You cut the airlock wires.!"
 			new/obj/item/stack/cable_coil(src.loc, 1)
 			src.state = 0
+		W.in_use = 0
 
 	else if(istype(W, /obj/item/weapon/airlock_electronics) && state == 1)
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
