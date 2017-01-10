@@ -376,7 +376,8 @@ client/verb/new_character_setup()
 client/Click(target)
 	if(CH)
 		if(CH.mob_check(mob))
-			CH.use_ability(mob,target)
+			if (CH.use_ability(mob,target) && CH.one_use_flag)
+				CH = null
 			return
 		else
 			src << "For some reason you can't use [CH.handler_name] ability"

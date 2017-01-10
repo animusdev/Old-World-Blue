@@ -7,7 +7,7 @@ mob/living/carbon/human/proc/prepare_bite()
 	set category = "Arachna"
 
 	if(!src.client.CH || src.client.CH.handler_name != "Poison Bite")
-		src.client.CH = PoolOrNew(/datum/click_handler/human/arachna_leap)
+		src.client.CH = PoolOrNew(/datum/click_handler/human/arachna_bite)
 		src << "<span class='warning'>You prepare for bite.</span>"
 	else
 		src.client.CH = null
@@ -17,22 +17,22 @@ mob/living/carbon/human/proc/prepare_bite()
 mob/living/carbon/human/proc/try_bite(atom/A)
 	if (!ishuman(A))
 		A.Click()
-		return
+		return 0
 	var/obj/item/organ/internal/arachna/poison_gland/I = internal_organs_by_name["poison_gland"]
 	if(stat || paralysis || stunned || weakened || lying || restrained() || buckled || !I.reagents)
 		src << "You cannot bite in your current state."
 		src.client.CH = null
-		return
+		return 0
 
 	if(get_dist(src,A) > 1)
 		src << "<span class='alium'>You need to be closer.</span>"
-		return
+		return 0
 
 	msg_admin_attack("[key_name_admin(src)] bite and poison [key_name_admin(A)] with [I.reagents.get_reagents()] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
 	I.reagents.trans_to_mob(A, I.reagents.total_volume, CHEM_BLOOD)
 	visible_message("<span class='warning'>[src] bite [A]!</span>", "<span class='alium'>You bite a [A].</span>")
-	src.client.CH = null
-	return
+//	src.client.CH = null
+	return 1
 
 
 /*mob/living/carbon/human/arachna/proc/prepare_bite()

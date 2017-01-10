@@ -67,14 +67,14 @@ var/list/datum/power/changeling/powerinstances = list()
 	desc = "We silently sting a human, completely deafening them for a short time."
 	genomecost = 1
 	allowduringlesserform = 1
-	verbpath = /mob/proc/changeling_deaf_sting
+	verbpath = /mob/proc/changeling_prepare_deaf_sting
 
 /datum/power/changeling/blind_sting
 	name = "Blind Sting"
 	desc = "We silently sting a human, completely blinding them for a short time."
 	genomecost = 2
 	allowduringlesserform = 1
-	verbpath = /mob/proc/changeling_blind_sting
+	verbpath = /mob/proc/changeling_prepare_blind_sting
 
 /datum/power/changeling/silence_sting
 	name = "Silence Sting"
@@ -82,7 +82,7 @@ var/list/datum/power/changeling/powerinstances = list()
 	helptext = "Does not provide a warning to a victim that they have been stung, until they try to speak and cannot."
 	genomecost = 3
 	allowduringlesserform = 1
-	verbpath = /mob/proc/changeling_silence_sting
+	verbpath = /mob/proc/changeling_prepare_silence_sting
 
 /datum/power/changeling/mimicvoice
 	name = "Mimic Voice"
@@ -97,7 +97,7 @@ var/list/datum/power/changeling/powerinstances = list()
 	helptext = "Will give you the DNA of your target, allowing you to transform into them. Does not count towards absorb objectives."
 	genomecost = 2
 	allowduringlesserform = 1
-	verbpath = /mob/proc/changeling_extract_dna_sting
+	verbpath = /mob/proc/changeling_prepare_extract_dna_sting
 
 /datum/power/changeling/transformation_sting
 	name = "Transformation Sting"
@@ -110,14 +110,14 @@ var/list/datum/power/changeling/powerinstances = list()
 	name = "Paralysis Sting"
 	desc = "We silently sting a human, paralyzing them for a short time."
 	genomecost = 8
-	verbpath = /mob/proc/changeling_paralysis_sting
+	verbpath = /mob/proc/changeling_prepare_paralysis_sting
 
 /datum/power/changeling/LSDSting
 	name = "Hallucination Sting"
 	desc = "We evolve the ability to sting a target with a powerful hallunicationary chemical."
 	helptext = "The target does not notice they have been stung.  The effect occurs after 30 to 60 seconds."
 	genomecost = 3
-	verbpath = /mob/proc/changeling_lsdsting
+	verbpath = /mob/proc/changeling_prepare_lsdsting
 
 /datum/power/changeling/armblade
 	name = "Armblade"
@@ -130,13 +130,13 @@ var/list/datum/power/changeling/powerinstances = list()
 	name = "Death Sting"
 	desc = "We silently sting a human, filling them with potent chemicals. Their rapid death is all but assured."
 	genomecost = 10
-	verbpath = /mob/proc/changeling_DEATHsting
+	verbpath = /mob/proc/changeling_prepare_DEATHsting
 
 ///datum/power/changeling/unfat_sting
 //	name = "Unfat Sting"
 //	desc = "We silently sting a human, forcing them to rapidly metabolize their fat."
 //	genomecost = 1
-//	verbpath = /mob/proc/changeling_unfat_sting
+//	verbpath = /mob/proc/changeling_prepare_unfat_sting()
 
 /datum/power/changeling/boost_range
 	name = "Boost Range"
