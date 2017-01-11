@@ -9,11 +9,10 @@
 	w_class = 2
 	var/obj/item/stored_item = null
 
-/obj/item/weapon/evidencebag/afterattack(obj/item/I, mob/user, proximity)
-	if(!proximity) return
-
+/obj/item/weapon/evidencebag/resolve_attackby(obj/item/I, mob/user)
 	if(!istype(I) || I.anchored)
-		return
+		return ..()
+
 	if(istype(I, /obj/item/weapon/evidencebag))
 		user << "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>"
 		return
@@ -29,6 +28,13 @@
 	if(ismob(I.loc))
 		var/mob/M = I.loc
 		if(!M.unEquip(I)) return
+	else if(isobj(I.loc))
+		if(!istype(I.loc, /obj/item/weapon/storage))
+			return
+		else
+			var/obj/item/weapon/storage/S = I.loc
+			if(!S.remove_from_storage(I))
+				return
 
 	user.visible_message("[user] puts [I] into [src]", "You put [I] inside [src].",\
 	"You hear a rustle as someone puts something into a plastic bag.")
