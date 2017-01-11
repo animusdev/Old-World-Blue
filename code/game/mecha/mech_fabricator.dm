@@ -23,6 +23,7 @@
 		"diamond"=0,
 		"phoron"=0,
 		"uranium"=0,
+		"plasteel"=0
 	)
 
 	var/res_max_amount = 200000
@@ -100,18 +101,6 @@
 			/obj/item/mecha_parts/part/phazon_armor
 		),
 
-		/* No need for HONK stuff,
-		"H.O.N.K"=list(
-			/obj/item/mecha_parts/chassis/honker,
-			/obj/item/mecha_parts/part/honker_torso,
-			/obj/item/mecha_parts/part/honker_head,
-			/obj/item/mecha_parts/part/honker_left_arm,
-			/obj/item/mecha_parts/part/honker_right_arm,
-			/obj/item/mecha_parts/part/honker_left_leg,
-			/obj/item/mecha_parts/part/honker_right_leg
-		),
-		*/
-
 		"Exosuit Equipment"=list(
 			/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,
 			/obj/item/mecha_parts/mecha_equipment/tool/drill,
@@ -126,9 +115,6 @@
 			/obj/item/mecha_parts/mecha_equipment/jetpack,
 			/obj/item/mecha_parts/mecha_equipment/weapon/energy/taser,
 			/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg,
-			///obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar/mousetrap_mortar, HONK-related mech part
-			///obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar, Also HONK-related
-			///obj/item/mecha_parts/mecha_equipment/weapon/honker Thirdly HONK-related
 		),
 
 		"Robotic Modules" = list(
@@ -697,23 +683,11 @@
 
 /obj/machinery/mecha_part_fabricator/proc/remove_material(var/mat_string, var/amount)
 	var/type
-	switch(mat_string)
-		if(DEFAULT_WALL_MATERIAL)
-			type = /obj/item/stack/material/steel
-		if("glass")
-			type = /obj/item/stack/material/glass
-		if("gold")
-			type = /obj/item/stack/material/gold
-		if("silver")
-			type = /obj/item/stack/material/silver
-		if("diamond")
-			type = /obj/item/stack/material/diamond
-		if("phoron")
-			type = /obj/item/stack/material/phoron
-		if("uranium")
-			type = /obj/item/stack/material/uranium
-		else
-			return 0
+	var/material/M = get_material_by_name(mat_string)
+	if(!M) return
+
+	type = M.stack_type
+
 	var/result = 0
 	var/obj/item/stack/material/res = new type(src)
 
@@ -743,37 +717,22 @@
 			icon_state = "fab-idle"
 			user << "You close the maintenance hatch of [src]."
 		return
+
 	if (opened)
 		if(istype(W, /obj/item/weapon/crowbar))
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+			var/obj/machinery/constructable_frame/machine_frame/M = new (src.loc)
 			M.state = 2
 			M.icon_state = "box_1"
 			for(var/obj/I in component_parts)
 				if(I.reliability != 100 && crit_fail)
 					I.crit_fail = 1
 				I.loc = src.loc
-			if(src.resources[DEFAULT_WALL_MATERIAL] >= 3750)
-				var/obj/item/stack/material/steel/G = new /obj/item/stack/material/steel(src.loc)
-				G.amount = round(src.resources[DEFAULT_WALL_MATERIAL] / G.perunit)
-			if(src.resources["glass"] >= 3750)
-				var/obj/item/stack/material/glass/G = new /obj/item/stack/material/glass(src.loc)
-				G.amount = round(src.resources["glass"] / G.perunit)
-			if(src.resources["phoron"] >= 2000)
-				var/obj/item/stack/material/phoron/G = new /obj/item/stack/material/phoron(src.loc)
-				G.amount = round(src.resources["phoron"] / G.perunit)
-			if(src.resources["silver"] >= 2000)
-				var/obj/item/stack/material/silver/G = new /obj/item/stack/material/silver(src.loc)
-				G.amount = round(src.resources["silver"] / G.perunit)
-			if(src.resources["gold"] >= 2000)
-				var/obj/item/stack/material/gold/G = new /obj/item/stack/material/gold(src.loc)
-				G.amount = round(src.resources["gold"] / G.perunit)
-			if(src.resources["uranium"] >= 2000)
-				var/obj/item/stack/material/uranium/G = new /obj/item/stack/material/uranium(src.loc)
-				G.amount = round(src.resources["uranium"] / G.perunit)
-			if(src.resources["diamond"] >= 2000)
-				var/obj/item/stack/material/diamond/G = new /obj/item/stack/material/diamond(src.loc)
-				G.amount = round(src.resources["diamond"] / G.perunit)
+			for(var/material in resources)
+				if(resources[material] >= 2000)
+					var/obj/item/stack/material/S = new(src.loc)
+					S.set_material(material)
+					S.amount = round(resources[material]/S.perunit)
 			qdel(src)
 			return 1
 		else
