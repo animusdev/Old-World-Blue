@@ -174,6 +174,8 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/bucket/update_icon()
 	overlays.Cut()
-	if (!is_open_container())
-		overlays += image(icon, src, "lid_[initial(icon_state)]")
+	if(sensor)
+		overlays += "sensor"
+	if(!is_open_container())
+		overlays += "lid_[initial(icon_state)]"
 
