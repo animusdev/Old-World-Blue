@@ -79,30 +79,31 @@
 
 	if(move)
 		var/turf/new_loc
-		for(var/obj/effect/landmark/start/sloc in landmarks_list)
-			if (sloc.name != "AI")
-				continue
-			if ((locate(/mob/living/silicon/ai) in sloc.loc))
-				continue
-			new_loc = get_turf(sloc)
-		if (!new_loc)
-			if(empty_playable_ai_cores.len)
-				var/obj/structure/AIcore/deactivated/C = empty_playable_ai_cores[1]
-				empty_playable_ai_cores -= C
-				new_loc = get_turf(C)
-				qdel(C)
-		if (!new_loc)
-			for(var/obj/effect/landmark/tripai in landmarks_list)
-				if (tripai.name != "tripai")
-					continue
-				if((locate(/mob/living/silicon/ai) in tripai.loc))
-					continue
-				new_loc = get_turf(tripai)
-		if (!new_loc)
-			O << "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone."
-			for(var/obj/effect/landmark/start/sloc in landmarks_list)
-				if (sloc.name == "AI")
+		if(empty_playable_ai_cores.len)
+			var/obj/structure/AIcore/deactivated/C = empty_playable_ai_cores[1]
+			empty_playable_ai_cores -= C
+			new_loc = get_turf(C)
+			qdel(C)
+		else
+			if(!new_loc)
+				for(var/obj/effect/landmark/start/sloc in landmarks_list)
+					if (sloc.name != "AI")
+						continue
+					if ((locate(/mob/living/silicon/ai) in sloc.loc))
+						continue
 					new_loc = get_turf(sloc)
+			if (!new_loc)
+				for(var/obj/effect/landmark/tripai in landmarks_list)
+					if (tripai.name != "tripai")
+						continue
+					if((locate(/mob/living/silicon/ai) in tripai.loc))
+						continue
+					new_loc = get_turf(tripai)
+			if (!new_loc)
+				O << "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone."
+				for(var/obj/effect/landmark/start/sloc in landmarks_list)
+					if (sloc.name == "AI")
+						new_loc = get_turf(sloc)
 
 		O.forceMove(new_loc)
 		for (var/obj/item/device/radio/intercom/comm in O.loc)
