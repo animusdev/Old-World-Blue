@@ -138,8 +138,8 @@
 
 	nano_host()
 		if(holder)
-			return holder
-		return src
+			return holder.nano_host()
+		return ..()
 
 /*
 	var/small_icon_state = null//If this obj will go inside the assembly use this for icons
