@@ -67,6 +67,7 @@ var/list/name_to_material
 	var/display_name                      // Prettier name for display.
 	var/use_name
 	var/flags = 0                         // Various status modifiers.
+	var/icon_state = "sheet-metal"
 	var/sheet_singular_name = "sheet"
 	var/sheet_plural_name = "sheets"
 
@@ -222,6 +223,7 @@ var/list/name_to_material
 /material/uranium
 	name = "uranium"
 	stack_type = /obj/item/stack/material/uranium
+	icon_state = "sheet-uranium"
 	radioactivity = 12
 	icon_base = "stone"
 	icon_reinf = "reinf_stone"
@@ -233,6 +235,7 @@ var/list/name_to_material
 /material/diamond
 	name = "diamond"
 	stack_type = /obj/item/stack/material/diamond
+	icon_state = "sheet-diamond"
 	flags = MATERIAL_UNMELTABLE
 	cut_delay = 60
 	icon_colour = "#00FFE1"
@@ -246,6 +249,7 @@ var/list/name_to_material
 /material/gold
 	name = "gold"
 	stack_type = /obj/item/stack/material/gold
+	icon_state = "sheet-gold"
 	icon_colour = "#EDD12F"
 	weight = 24
 	hardness = 40
@@ -260,6 +264,7 @@ var/list/name_to_material
 /material/silver
 	name = "silver"
 	stack_type = /obj/item/stack/material/silver
+	icon_state = "sheet-silver"
 	icon_colour = "#D1E6E3"
 	weight = 22
 	hardness = 50
@@ -270,6 +275,7 @@ var/list/name_to_material
 /material/phoron
 	name = "phoron"
 	stack_type = /obj/item/stack/material/phoron
+	icon_state = "sheet-phoron"
 	ignition_point = PHORON_MINIMUM_BURN_TEMPERATURE
 	icon_base = "stone"
 	icon_colour = "#FC2BC5"
@@ -300,6 +306,7 @@ var/list/name_to_material
 /material/stone
 	name = "sandstone"
 	stack_type = /obj/item/stack/material/sandstone
+	icon_state = "sheet-sandstone"
 	icon_base = "stone"
 	icon_reinf = "reinf_stone"
 	icon_colour = "#D9C179"
@@ -317,10 +324,12 @@ var/list/name_to_material
 	hardness = 100
 	integrity = 201 //hack to stop kitchen benches being flippable, todo: refactor into weight system
 	stack_type = /obj/item/stack/material/marble
+	icon_state = "sheet-marble"
 
 /material/steel
 	name = DEFAULT_WALL_MATERIAL
 	stack_type = /obj/item/stack/material/steel
+	icon_state = "sheet-metal"
 	integrity = 150
 	icon_base = "solid"
 	icon_reinf = "reinf_over"
@@ -337,6 +346,7 @@ var/list/name_to_material
 /material/plasteel
 	name = "plasteel"
 	stack_type = /obj/item/stack/material/plasteel
+	icon_state = "sheet-plasteel"
 	integrity = 400
 	melting_point = 6000
 	icon_base = "solid"
@@ -352,6 +362,7 @@ var/list/name_to_material
 /material/glass
 	name = "glass"
 	stack_type = /obj/item/stack/material/glass
+	icon_state = "sheet-glass"
 	flags = MATERIAL_BRITTLE
 	icon_colour = "#00E1FF"
 	opacity = 0.3
@@ -442,6 +453,7 @@ var/list/name_to_material
 	name = "rglass"
 	display_name = "reinforced glass"
 	stack_type = /obj/item/stack/material/glass/reinforced
+	icon_state = "sheet-rglass"
 	flags = MATERIAL_BRITTLE
 	icon_colour = "#00E1FF"
 	opacity = 0.3
@@ -461,6 +473,7 @@ var/list/name_to_material
 	name = "phglass"
 	display_name = "phoron glass"
 	stack_type = /obj/item/stack/material/glass/phoronglass
+	icon_state = "sheet-phoronglass"
 	flags = MATERIAL_BRITTLE
 	ignition_point = PHORON_MINIMUM_BURN_TEMPERATURE+300
 	integrity = 200 // idk why but phoron windows are strong, so.
@@ -474,6 +487,7 @@ var/list/name_to_material
 	name = "rphglass"
 	display_name = "reinforced phoron glass"
 	stack_type = /obj/item/stack/material/glass/phoronrglass
+	icon_state = "sheet-phoronrglass"
 	stack_origin_tech = "materials=4;phorontech=2"
 	composite_material = list() //todo
 	created_window = /obj/structure/window/phoronreinforced
@@ -483,6 +497,7 @@ var/list/name_to_material
 /material/plastic
 	name = "plastic"
 	stack_type = /obj/item/stack/material/plastic
+	icon_state = "sheet-plastic"
 	flags = MATERIAL_BRITTLE
 	icon_base = "solid"
 	icon_reinf = "reinf_over"
@@ -501,6 +516,7 @@ var/list/name_to_material
 /material/osmium
 	name = "osmium"
 	stack_type = /obj/item/stack/material/osmium
+	icon_state = "sheet-silver"
 	icon_colour = "#9999FF"
 	stack_origin_tech = "materials=5"
 	sheet_singular_name = "ingot"
@@ -509,6 +525,7 @@ var/list/name_to_material
 /material/tritium
 	name = "tritium"
 	stack_type = /obj/item/stack/material/tritium
+	icon_state = "sheet-silver"
 	icon_colour = "#777777"
 	stack_origin_tech = "materials=5"
 	sheet_singular_name = "ingot"
@@ -517,12 +534,14 @@ var/list/name_to_material
 /material/mhydrogen
 	name = "mhydrogen"
 	stack_type = /obj/item/stack/material/mhydrogen
+	icon_state = "sheet-mythril"
 	icon_colour = "#E6C5DE"
 	stack_origin_tech = "materials=6;powerstorage=5;magnets=5"
 
 /material/platinum
 	name = "platinum"
 	stack_type = /obj/item/stack/material/platinum
+	icon_state = "sheet-adamantine"
 	icon_colour = "#9999FF"
 	weight = 27
 	stack_origin_tech = "materials=2"
@@ -532,6 +551,7 @@ var/list/name_to_material
 /material/iron
 	name = "iron"
 	stack_type = /obj/item/stack/material/iron
+	icon_state = "sheet-silver"
 	icon_colour = "#5C5454"
 	weight = 22
 	stack_per_sheet = 3750
@@ -553,6 +573,7 @@ var/list/name_to_material
 /material/wood
 	name = "wood"
 	stack_type = /obj/item/stack/material/wood
+	icon_state = "sheet-wood"
 	icon_colour = "#8B471D"
 	integrity = 25
 	icon_base = "solid"
@@ -580,6 +601,7 @@ var/list/name_to_material
 /material/cardboard
 	name = "cardboard"
 	stack_type = /obj/item/stack/material/cardboard
+	icon_state = "sheet-card"
 	flags = MATERIAL_BRITTLE
 	integrity = 10
 	icon_base = "solid"
@@ -595,6 +617,7 @@ var/list/name_to_material
 
 /material/cloth //todo
 	name = "cloth"
+	icon_state = "sheet-cloth"
 	stack_origin_tech = "materials=2"
 	door_icon_base = "wood"
 	ignition_point = T0C+232
@@ -642,6 +665,7 @@ var/list/name_to_material
 //TODO PLACEHOLDERS:
 /material/leather
 	name = "leather"
+	icon_state = "sheet-leather"
 	icon_colour = "#5C4831"
 	stack_origin_tech = "materials=2"
 	flags = MATERIAL_PADDING

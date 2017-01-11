@@ -32,6 +32,7 @@
 		qdel(src)
 		return 0
 
+	icon_state = material.icon_state
 	recipes = material.get_recipes()
 	stacktype = material.stack_type
 	origin_tech = material.stack_origin_tech
@@ -88,7 +89,6 @@
 
 /obj/item/stack/material/iron
 	name = "iron"
-	icon_state = "sheet-silver"
 	default_type = "iron"
 	apply_colour = 1
 
@@ -97,7 +97,6 @@
 
 /obj/item/stack/material/sandstone
 	name = "sandstone brick"
-	icon_state = "sheet-sandstone"
 	default_type = "sandstone"
 
 /obj/item/stack/material/sandstone/full
@@ -105,7 +104,6 @@
 
 /obj/item/stack/material/marble
 	name = "marble brick"
-	icon_state = "sheet-marble"
 	default_type = "marble"
 
 /obj/item/stack/material/marble/full
@@ -113,7 +111,6 @@
 
 /obj/item/stack/material/diamond
 	name = "diamond"
-	icon_state = "sheet-diamond"
 	default_type = "diamond"
 
 /obj/item/stack/material/diamond/full
@@ -121,7 +118,6 @@
 
 /obj/item/stack/material/uranium
 	name = "uranium"
-	icon_state = "sheet-uranium"
 	default_type = "uranium"
 
 /obj/item/stack/material/uranium/full
@@ -129,7 +125,6 @@
 
 /obj/item/stack/material/phoron
 	name = "solid phoron"
-	icon_state = "sheet-phoron"
 	default_type = "phoron"
 
 /obj/item/stack/material/phoron/full
@@ -137,7 +132,6 @@
 
 /obj/item/stack/material/plastic
 	name = "plastic"
-	icon_state = "sheet-plastic"
 	default_type = "plastic"
 
 /obj/item/stack/material/plastic/full
@@ -145,7 +139,6 @@
 
 /obj/item/stack/material/gold
 	name = "gold"
-	icon_state = "sheet-gold"
 	default_type = "gold"
 
 /obj/item/stack/material/gold/full
@@ -153,7 +146,6 @@
 
 /obj/item/stack/material/silver
 	name = "silver"
-	icon_state = "sheet-silver"
 	default_type = "silver"
 
 /obj/item/stack/material/silver/full
@@ -162,7 +154,6 @@
 //Valuable resource, cargo can sell it.
 /obj/item/stack/material/platinum
 	name = "platinum"
-	icon_state = "sheet-adamantine"
 	default_type = "platinum"
 
 /obj/item/stack/material/platinum/full
@@ -171,7 +162,6 @@
 //Extremely valuable to Research.
 /obj/item/stack/material/mhydrogen
 	name = "metallic hydrogen"
-	icon_state = "sheet-mythril"
 	default_type = "mhydrogen"
 
 /obj/item/stack/material/mhydrogen/full
@@ -180,7 +170,6 @@
 //Fuel for MRSPACMAN generator.
 /obj/item/stack/material/tritium
 	name = "tritium"
-	icon_state = "sheet-silver"
 	default_type = "tritium"
 	apply_colour = 1
 
@@ -189,7 +178,6 @@
 
 /obj/item/stack/material/osmium
 	name = "osmium"
-	icon_state = "sheet-silver"
 	default_type = "osmium"
 	apply_colour = 1
 
@@ -198,7 +186,6 @@
 
 /obj/item/stack/material/steel
 	name = DEFAULT_WALL_MATERIAL
-	icon_state = "sheet-metal"
 	default_type = DEFAULT_WALL_MATERIAL
 
 /obj/item/stack/material/steel/full
@@ -206,8 +193,6 @@
 
 /obj/item/stack/material/plasteel
 	name = "plasteel"
-	icon_state = "sheet-plasteel"
-	item_state = "sheet-metal"
 	default_type = "plasteel"
 
 /obj/item/stack/material/plasteel/full
@@ -215,7 +200,6 @@
 
 /obj/item/stack/material/wood
 	name = "wooden plank"
-	icon_state = "sheet-wood"
 	default_type = "wood"
 
 /obj/item/stack/material/wood/full
@@ -223,7 +207,6 @@
 
 /obj/item/stack/material/cloth
 	name = "cloth"
-	icon_state = "sheet-cloth"
 	default_type = "cloth"
 
 /obj/item/stack/material/cloth/full
@@ -231,7 +214,6 @@
 
 /obj/item/stack/material/cardboard
 	name = "cardboard"
-	icon_state = "sheet-card"
 	default_type = "cardboard"
 
 /obj/item/stack/material/cardboard/full
@@ -240,7 +222,6 @@
 /obj/item/stack/material/leather
 	name = "leather"
 	desc = "The by-product of mob grinding."
-	icon_state = "sheet-leather"
 	default_type = "leather"
 
 /obj/item/stack/material/leather/full
@@ -248,7 +229,6 @@
 
 /obj/item/stack/material/glass
 	name = "glass"
-	icon_state = "sheet-glass"
 	default_type = "glass"
 
 /obj/item/stack/material/glass/full
@@ -256,7 +236,6 @@
 
 /obj/item/stack/material/glass/reinforced
 	name = "reinforced glass"
-	icon_state = "sheet-rglass"
 	default_type = "rglass"
 
 /obj/item/stack/material/glass/reinforced/full
@@ -266,7 +245,6 @@
 	name = "borosilicate glass"
 	desc = "This sheet is special platinum-glass alloy designed to withstand large temperatures"
 	singular_name = "borosilicate glass sheet"
-	icon_state = "sheet-phoronglass"
 	default_type = "phglass"
 
 /obj/item/stack/material/glass/phoronglass/full
@@ -276,7 +254,6 @@
 	name = "reinforced borosilicate glass"
 	desc = "This sheet is special platinum-glass alloy designed to withstand large temperatures. It is reinforced with few rods."
 	singular_name = "reinforced borosilicate glass sheet"
-	icon_state = "sheet-phoronrglass"
 	default_type = "rphglass"
 
 /obj/item/stack/material/glass/phoronrglass/full
