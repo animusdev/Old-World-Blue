@@ -19,7 +19,15 @@
 
 	if(!default_type)
 		default_type = DEFAULT_WALL_MATERIAL
-	material = get_material_by_name("[default_type]")
+	set_material(default_type)
+	return 1
+
+/obj/item/stack/material/get_material()
+	return material
+
+/obj/item/stack/material/proc/set_material(var/material_name)
+	material = get_material_by_name(material_name)
+
 	if(!material)
 		qdel(src)
 		return 0
@@ -37,10 +45,6 @@
 
 	matter = material.get_matter()
 	update_strings()
-	return 1
-
-/obj/item/stack/material/get_material()
-	return material
 
 /obj/item/stack/material/proc/update_strings()
 	// Update from material datum.
