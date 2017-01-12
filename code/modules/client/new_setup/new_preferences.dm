@@ -3,18 +3,18 @@
 #define PAGE_LIMBS		3
 #define PAGE_OCCUPATION	4
 #define PAGE_LOADOUT	5
-#define PAGE_SILICON	6
+#define PAGE_FLAVOR		6
 #define PAGE_PREFS		7
 #define PAGE_SPECIES	8
 
 /datum/preferences
 	var/global/list/setup_pages = list(
-		"General"     = PAGE_RECORDS,\
-		"Augmentation"= PAGE_LIMBS,\
-		"Occupations" = PAGE_OCCUPATION,\
-		"Loadout"     = PAGE_LOADOUT,\
-		"Silicon"     = PAGE_SILICON,\
-		"Preferences" = PAGE_PREFS,\
+		"General"     = PAGE_RECORDS,
+		"Augmentation"= PAGE_LIMBS,
+		"Occupations" = PAGE_OCCUPATION,
+		"Loadout"     = PAGE_LOADOUT,
+		"Flavor"      = PAGE_FLAVOR,
+		"Preferences" = PAGE_PREFS,
 	)
 
 	var/current_page = PAGE_RECORDS
@@ -94,7 +94,7 @@
 		if(PAGE_RECORDS)	dat += GetRecordsPage(user)
 		if(PAGE_LIMBS)		dat += GetLimbsPage(user)
 		if(PAGE_OCCUPATION)	dat += GetOccupationPage(user)
-		if(PAGE_SILICON)	dat += GetSiliconPage(user)
+		if(PAGE_FLAVOR)	dat += GetFlavorPage(user)
 		if(PAGE_PREFS)		dat += GetPrefsPage(user)
 		if(PAGE_LOADOUT)	dat += GetLoadOutPage(user)
 		if(PAGE_SPECIES)	dat += GetSpeciesPage(user)
@@ -134,7 +134,7 @@
 		if(PAGE_LIMBS)		HandleLimbsTopic(user, href_list)
 		if(PAGE_LOADOUT)	HandleLoadOutTopic(user, href_list)
 		if(PAGE_OCCUPATION)	HandleOccupationTopic(user, href_list)
-		if(PAGE_SILICON)	HandleSiliconTopic(user, href_list)
+		if(PAGE_FLAVOR)		HandleFlavorTopic(user, href_list)
 		if(PAGE_PREFS)		HandlePrefsTopic(user, href_list)
 		if(PAGE_SPECIES)	HandleSpeciesTopic(user, href_list)
 
@@ -299,7 +299,6 @@
 		species_preview = choice
 		spawn()
 			SetSpecies(user)
-			req_update_icon = 1 // LETHALGHOST: Move to species select!
 
 	else if(href_list["gender"])
 		req_update_icon = 1
@@ -705,8 +704,8 @@
 
 
 
-/datum/preferences/proc/GetSiliconPage()
-/datum/preferences/proc/HandleSiliconTopic(mob/user, list/href_list)
+/datum/preferences/proc/GetFlavorPage()
+/datum/preferences/proc/HandleFlavorTopic(mob/user, list/href_list)
 
 
 /datum/preferences/proc/GetPrefsPage(var/mob/user)
@@ -918,5 +917,5 @@
 #undef PAGE_LIMBS
 #undef PAGE_OCCUPATION
 #undef PAGE_LOADOUT
-#undef PAGE_SILICON
+#undef PAGE_FLAVOR
 #undef PAGE_PREFS
