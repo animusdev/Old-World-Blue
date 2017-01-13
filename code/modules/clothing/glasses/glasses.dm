@@ -53,7 +53,7 @@ BLIND     // can't see anything
 	icon_state = "meson"
 	item_state = "glasses"
 	icon_action_button = "action_meson" //This doesn't actually matter, the action button is generated from the current icon_state. But, this is the only way to get it to show up.
-	origin_tech = "magnets=2;engineering=2"
+	origin_tech = list(TECH_MAGNET = 2, TECH_ENGINEERING = 2)
 	toggleable = 1
 	vision_flags = SEE_TURFS
 
@@ -83,7 +83,7 @@ BLIND     // can't see anything
 	desc = "You can totally see in the dark now!"
 	icon_state = "night"
 	item_state = "glasses"
-	origin_tech = "magnets=2"
+	origin_tech = list(TECH_MAGNET = 2)
 	darkness_view = 7
 	toggleable = 1
 	see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
@@ -114,7 +114,7 @@ BLIND     // can't see anything
 	icon_state = "material"
 	item_state = "glasses"
 	icon_action_button = "action_material"
-	origin_tech = "magnets=3;engineering=3"
+	origin_tech = list(TECH_MAGNET = 3, TECH_ENGINEERING = 3)
 	toggleable = 1
 	vision_flags = SEE_OBJS
 
@@ -188,11 +188,11 @@ BLIND     // can't see anything
 	icon_state = "welding-g"
 	item_state = "welding-g"
 	icon_action_button = "action_welding_g"
+	matter = list(DEFAULT_WALL_MATERIAL = 1500, "glass" = 1000)
 	var/up = 0
 
 /obj/item/clothing/glasses/welding/attack_self()
 	toggle()
-
 
 /obj/item/clothing/glasses/welding/verb/toggle()
 	set category = "Object"
@@ -212,7 +212,6 @@ BLIND     // can't see anything
 			body_parts_covered &= ~EYES
 			icon_state = "[initial(icon_state)]up"
 			usr << "You push \the [src] up out of your face."
-
 		update_clothing_icon()
 
 /obj/item/clothing/glasses/welding/superior
@@ -259,7 +258,7 @@ BLIND     // can't see anything
 	desc = "Thermals in the shape of glasses."
 	icon_state = "thermal"
 	item_state = "glasses"
-	origin_tech = "magnets=3"
+	origin_tech = list(TECH_MAGNET = 3)
 	toggleable = 1
 	icon_action_button = "action_thermal"
 	vision_flags = SEE_MOBS
@@ -286,7 +285,7 @@ BLIND     // can't see anything
 	name = "Optical Meson Scanner"
 	desc = "Used for seeing walls, floors, and stuff through anything."
 	icon_state = "meson"
-	origin_tech = "magnets=3;syndicate=4"
+	origin_tech = list(TECH_MAGNET = 3, TECH_ILLEGAL = 4)
 
 /obj/item/clothing/glasses/thermal/plain
 	toggleable = 0

@@ -11,7 +11,7 @@
 
 /obj/item/stack
 	gender = PLURAL
-	origin_tech = "materials=1"
+	origin_tech = list(TECH_MATERIAL = 1)
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
 	var/amount = 1
@@ -108,21 +108,21 @@
 
 	if (!can_use(required))
 		if (produced>1)
-			user << "\red You haven't got enough [src] to build \the [produced] [recipe.title]\s!"
+			user << "<span class='warning'>You haven't got enough [src] to build \the [produced] [recipe.title]\s!</span>"
 		else
-			user << "\red You haven't got enough [src] to build \the [recipe.title]!"
+			user << "<span class='warning'>You haven't got enough [src] to build \the [recipe.title]!</span>"
 		return
 
 	if (recipe.one_per_turf && (locate(recipe.result_type) in user.loc))
-		user << "\red There is another [recipe.title] here!"
+		user << "<span class='warning'>There is another [recipe.title] here!</span>"
 		return
 
 	if (recipe.on_floor && !isfloor(user.loc))
-		user << "\red \The [recipe.title] must be constructed on the floor!"
+		user << "<span class='warning'>\The [recipe.title] must be constructed on the floor!</span>"
 		return
 
 	if (recipe.time)
-		user << "\blue Building [recipe.title] ..."
+		user << "<span class='notice'>Building [recipe.title] ...</span>"
 		if (!do_after(user, recipe.time))
 			return
 
@@ -242,7 +242,7 @@
 
 //creates a new stack with the specified amount
 /obj/item/stack/proc/split(var/tamount)
-	if (!amount)
+	if (amount <= 0)
 		return null
 	if(uses_charge)
 		return null
@@ -298,14 +298,16 @@
 
 /obj/item/stack/attack_hand(mob/user as mob)
 	if (user.get_inactive_hand() == src)
-		var/obj/item/stack/F = src.split(1)
-		if (F)
-			user.put_in_hands(F)
-			src.add_fingerprint(user)
-			F.add_fingerprint(user)
-			spawn(0)
-				if (src && usr.machine==src)
-					src.interact(usr)
+		var/N = input("How many stacks of [src] would you like to split off?", "Split stacks", 1) as num|null
+		if(N>0)
+			var/obj/item/stack/F = src.split(N)
+			if (F)
+				user.put_in_hands(F)
+				src.add_fingerprint(user)
+				F.add_fingerprint(user)
+				spawn(0)
+					if (src && usr.machine==src)
+						src.interact(usr)
 	else
 		..()
 	return

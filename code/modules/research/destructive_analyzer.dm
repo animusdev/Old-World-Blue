@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 /*
 Destructive Analyzer
 
@@ -7,6 +5,7 @@ It is used to destroy hand-held objects and advance technological research. Cont
 
 Note: Must be placed within 3 tiles of the R&D Console
 */
+
 /obj/machinery/r_n_d/destructive_analyzer
 	name = "destructive analyzer"
 	icon_state = "d_analyzer"
@@ -49,6 +48,9 @@ Note: Must be placed within 3 tiles of the R&D Console
 /obj/machinery/r_n_d/destructive_analyzer/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(shocked)
 		shock(user, 50)
+	if(busy)
+		user << "<span class='notice'>\The [src] is busy right now.</span>"
+		return
 	if(default_deconstruction_screwdriver(user, O))
 		if(linked_console)
 			linked_console.linked_destroy = null
@@ -66,17 +68,13 @@ Note: Must be placed within 3 tiles of the R&D Console
 	if(!linked_console)
 		user << "<span class='notice'>\The [src] must be linked to an R&D console first!</span>"
 		return
-	if(busy)
-		user << "<span class='notice'>\The [src] is busy right now.</span>"
-		return
 	if(istype(O, /obj/item) && !loaded_item)
 		if(isrobot(user)) //Don't put your module items in there!
 			return
 		if(!O.origin_tech)
 			user << "<span class='notice'>This doesn't seem to have a tech origin!</span>"
 			return
-		var/list/temp_tech = ConvertReqString2List(O.origin_tech)
-		if(temp_tech.len == 0)
+		if(O.origin_tech.len == 0)
 			user << "<span class='notice'>You cannot deconstruct this item!</span>"
 			return
 		if(O.reliability < min_reliability && O.crit_fail == 0)

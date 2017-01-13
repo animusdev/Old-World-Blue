@@ -9,27 +9,30 @@
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefacts power."
 	w_class = 2
 	slot_flags = SLOT_BELT
-	origin_tech = "bluespace=4;materials=4"
+	origin_tech = list(TECH_BLUESPACE = 4, TECH_MATERIAL = 4)
 	var/imprinted = "empty"
 
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 
-	attack(mob/living/carbon/human/M as mob, mob/user as mob)
-		if(!istype(M))//If target is not a human.
-			return ..()
-		if(istype(M, /mob/living/carbon/human/dummy))
-			return..()
+/obj/item/device/soulstone/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+	if(!istype(M))//If target is not a human.
+		return ..()
+	if(istype(M, /mob/living/carbon/human/dummy))
+		return..()
+	if(jobban_isbanned(M, "cultist"))
+		user << "<span class='warning'>This person's soul is too corrupt and cannot be captured!</span>"
+		return..()
 
-		if(M.has_brain_worms()) //Borer stuff - RR
-			user << "<span class='warning'>This being is corrupted by an alien intelligence and cannot be soul trapped.</span>"
-			return..()
+	if(M.has_brain_worms()) //Borer stuff - RR
+		user << "<span class='warning'>This being is corrupted by an alien intelligence and cannot be soul trapped.</span>"
+		return..()
 
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their soul captured with [src.name] by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to capture the soul of [M.name] ([M.ckey])</font>")
-		msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to capture the soul of [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their soul captured with [src.name] by [user.name] ([user.ckey])</font>")
+	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to capture the soul of [M.name] ([M.ckey])</font>")
+	msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to capture the soul of [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-		transfer_soul("VICTIM", M, user)
-		return
+	transfer_soul("VICTIM", M, user)
+	return
 
 	/*attack(mob/living/simple_animal/shade/M as mob, mob/user as mob)//APPARENTLY THEY NEED THEIR OWN SPECIAL SNOWFLAKE CODE IN THE LIVING ANIMAL DEFINES
 		if(!istype(M, /mob/living/simple_animal/shade))//If target is not a shade
@@ -40,48 +43,48 @@
 		return*/
 ///////////////////Options for using captured souls///////////////////////////////////////
 
-	attack_self(mob/user)
-		if (!in_range(src, user))
-			return
-		user.set_machine(src)
-		var/dat = "<TT><B>Soul Stone</B><BR>"
-		for(var/mob/living/simple_animal/shade/A in src)
-			dat += "Captured Soul: [A.name]<br>"
-			dat += {"<A href='byond://?src=\ref[src];choice=Summon'>Summon Shade</A>"}
-			dat += "<br>"
-			dat += {"<a href='byond://?src=\ref[src];choice=Close'> Close</a>"}
-		user << browse(dat, "window=aicard")
-		onclose(user, "aicard")
+/obj/item/device/soulstone/attack_self(mob/user)
+	if (!in_range(src, user))
+		return
+	user.set_machine(src)
+	var/dat = "<TT><B>Soul Stone</B><BR>"
+	for(var/mob/living/simple_animal/shade/A in src)
+		dat += "Captured Soul: [A.name]<br>"
+		dat += {"<A href='byond://?src=\ref[src];choice=Summon'>Summon Shade</A>"}
+		dat += "<br>"
+		dat += {"<a href='byond://?src=\ref[src];choice=Close'> Close</a>"}
+	user << browse(dat, "window=aicard")
+	onclose(user, "aicard")
+	return
+
+
+
+
+/obj/item/device/soulstone/Topic(href, href_list)
+	var/mob/U = usr
+	if (!in_range(src, U)||U.machine!=src)
+		U << browse(null, "window=aicard")
+		U.unset_machine()
 		return
 
+	add_fingerprint(U)
+	U.set_machine(src)
 
-
-
-	Topic(href, href_list)
-		var/mob/U = usr
-		if (!in_range(src, U)||U.machine!=src)
+	switch(href_list["choice"])//Now we switch based on choice.
+		if ("Close")
 			U << browse(null, "window=aicard")
 			U.unset_machine()
 			return
 
-		add_fingerprint(U)
-		U.set_machine(src)
-
-		switch(href_list["choice"])//Now we switch based on choice.
-			if ("Close")
-				U << browse(null, "window=aicard")
-				U.unset_machine()
-				return
-
-			if ("Summon")
-				for(var/mob/living/simple_animal/shade/A in src)
-					A.status_flags &= ~GODMODE
-					A.canmove = 1
-					A << "<b>You have been released from your prison, but you are still bound to [U.name]'s will. Help them suceed in their goals at all costs.</b>"
-					A.loc = U.loc
-					A.cancel_camera()
-					src.icon_state = "soulstone"
-		attack_self(U)
+		if ("Summon")
+			for(var/mob/living/simple_animal/shade/A in src)
+				A.status_flags &= ~GODMODE
+				A.canmove = 1
+				A << "<b>You have been released from your prison, but you are still bound to [U.name]'s will. Help them suceed in their goals at all costs.</b>"
+				A.forceMove(U.loc)
+				A.cancel_camera()
+				src.icon_state = "soulstone"
+	attack_self(U)
 
 ///////////////////////////Transferring to constructs/////////////////////////////////////////////////////
 /obj/structure/constructshell
@@ -99,12 +102,11 @@
 
 /obj/structure/constructshell/attackby(obj/item/O as obj, mob/user as mob)
 	if(istype(O, /obj/item/device/soulstone))
-		O.transfer_soul("CONSTRUCT",src,user)
+		var/obj/item/device/soulstone/S = O;
+		S.transfer_soul("CONSTRUCT",src,user)
 
 
 ////////////////////////////Proc for moving soul in and out off stone//////////////////////////////////////
-
-
 /obj/item/proc/transfer_soul(var/choice as text, var/target, var/mob/U as mob).
 	switch(choice)
 		if("VICTIM")

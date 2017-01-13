@@ -61,14 +61,14 @@
 	name = "broken cryptographic sequencer"
 	icon_state = "emag"
 	item_state = "card-id"
-	origin_tech = "magnets=2;syndicate=2"
+	origin_tech = list(TECH_MAGNET = 2, TECH_ILLEGAL = 2)
 
 /obj/item/weapon/card/emag
 	desc = "It's a card with a magnetic strip attached to some circuitry."
 	name = "cryptographic sequencer"
 	icon_state = "emag"
 	item_state = "card-id"
-	origin_tech = "magnets=2;syndicate=2"
+	origin_tech = list(TECH_MAGNET = 2, TECH_ILLEGAL = 2)
 	var/uses = 10
 
 /obj/item/weapon/card/emag/resolve_attackby(atom/A, mob/user)
@@ -129,8 +129,8 @@
 		fingerprint_hash = md5(H.dna.uni_identity)
 
 /obj/item/weapon/card/id/attack_self(mob/user as mob)
-	for(var/mob/O in viewers(user, null))
-		O.show_message(text("[] shows you: \icon[] []: assignment: []", user, src, src.name, src.assignment), 1)
+	user.visible_message("\The [user] shows you: \icon[src] [src.name]. The assignment on the card: [src.assignment]",\
+		"You flash your ID card: \icon[src] [src.name]. The assignment on the card: [src.assignment]")
 
 	src.add_fingerprint(user)
 	return
@@ -152,7 +152,6 @@
 	usr << "The fingerprint hash on the card is [fingerprint_hash]."
 	return
 
-
 /obj/item/weapon/card/id/silver
 	name = "identification card"
 	desc = "A silver card which shows honour and dedication."
@@ -168,7 +167,7 @@
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
 	access = list(access_maint_tunnels, access_syndicate, access_external_airlocks)
-	origin_tech = "syndicate=3"
+	origin_tech = list(TECH_ILLEGAL = 2)
 	var/registered_user=null
 
 /obj/item/weapon/card/id/syndicate/New(mob/user as mob)
@@ -248,9 +247,10 @@
 	item_state = "gold_id"
 	registered_name = "Captain"
 	assignment = "Captain"
-	New()
-		access = get_all_accesses()
-		..()
+
+/obj/item/weapon/card/id/captains_spare/New()
+	access = get_all_accesses()
+	..()
 
 /obj/item/weapon/card/id/centcom
 	name = "\improper CentCom. ID"

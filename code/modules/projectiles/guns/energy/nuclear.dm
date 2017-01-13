@@ -7,7 +7,7 @@
 	max_shots = 10
 
 	projectile_type = /obj/item/projectile/beam/stun
-	origin_tech = "combat=3;magnets=2"
+	origin_tech = list(TECH_COMBAT = 3, TECH_MAGNET = 2)
 	modifystate = "energystun"
 
 	firemodes = list(
@@ -24,7 +24,7 @@
 	name = "advanced energy gun"
 	desc = "An energy gun with an experimental miniaturized reactor."
 	icon_state = "nucgun"
-	origin_tech = "combat=3;materials=5;powerstorage=3"
+	origin_tech = list(TECH_COMBAT = 3, TECH_MATERIAL = 5, TECH_POWER = 3)
 	slot_flags = SLOT_BELT
 	force = 8 //looks heavier than a pistol
 	self_recharge = 1

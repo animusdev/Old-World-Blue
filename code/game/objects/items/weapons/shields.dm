@@ -25,10 +25,9 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 4
-
 	w_class = 4.0
+	origin_tech = list(TECH_MATERIAL = 2)
 	matter = list("glass" = 7500, DEFAULT_WALL_MATERIAL = 1000)
-	origin_tech = "materials=2"
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
@@ -105,13 +104,13 @@
 	throw_speed = 1
 	throw_range = 4
 	w_class = 2
-	origin_tech = "materials=4;magnets=3;syndicate=4"
+	origin_tech = list(TECH_MATERIAL = 4, TECH_MAGNET = 3, TECH_ILLEGAL = 4)
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
 
 /obj/item/weapon/shield/energy/handle_shield(mob/user)
 	if(!active)
-		return 0 //сейчас бы выключенным щитом блокировать
+		return 0 //turn it on first!
 	. = ..()
 
 	if(.)
@@ -129,22 +128,23 @@
 
 /obj/item/weapon/shield/energy/attack_self(mob/living/user as mob)
 	if ((CLUMSY in user.mutations) && prob(50))
-		user << "\red You beat yourself in the head with [src]."
+		user << "<span class='warning'>You beat yourself in the head with [src].</span>"
 		user.take_organ_damage(5)
 	active = !active
 	if (active)
 		force = 10
 		icon_state = "eshield[active]"
-		w_class = 4
+		slot_flags = null
 		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
-		user << "\blue [src] is now active."
+		user << "<span class='notice'>\The [src] is now active.</span>"
 
 	else
 		force = 3
 		icon_state = "eshield[active]"
 		w_class = 1
+		slot_flags = SLOT_EARS
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
-		user << "\blue [src] can now be concealed."
+		user << "<span class='notice'>\The [src] can now be concealed.</span>"
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user

@@ -2,8 +2,8 @@
 	name = "mousetrap"
 	desc = "A handy little spring-loaded trap for catching pesty rodents."
 	icon_state = "mousetrap"
+	origin_tech = list(TECH_COMBAT = 1)
 	matter = list(DEFAULT_WALL_MATERIAL = 100, "waste" = 10)
-	origin_tech = "combat=1"
 	var/armed = 0
 
 
@@ -88,7 +88,7 @@
 		..()
 
 
-	on_found(mob/finder as mob)
+	on_found(mob/living/finder as mob)
 		if(armed)
 			finder.visible_message("<span class='warning'>[finder] accidentally sets off [src], breaking their fingers.</span>", \
 								   "<span class='warning'>You accidentally trigger [src]!</span>")

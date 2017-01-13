@@ -23,7 +23,7 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "mmi"
 	w_class = 3
-	origin_tech = "biotech=3"
+	origin_tech = list(TECH_BIO = 3)
 
 	var/list/construction_cost = list(DEFAULT_WALL_MATERIAL=1000,"glass"=500)
 	var/construction_time = 75
@@ -143,7 +143,7 @@
 /obj/item/device/mmi/radio_enabled
 	name = "radio-enabled man-machine interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity. This one comes with a built-in radio."
-	origin_tech = "biotech=4"
+	origin_tech = list(TECH_BIO = 4)
 
 	var/obj/item/device/radio/radio = null//Let's give it a radio.
 
@@ -164,7 +164,7 @@
 				brainmob << "Can't do that while incapacitated or dead."
 
 			radio.broadcasting = radio.broadcasting==1 ? 0 : 1
-			brainmob << "\blue Radio is [radio.broadcasting==1 ? "now" : "no longer"] broadcasting."
+			brainmob << "<span class='notice'>Radio is [radio.broadcasting==1 ? "now" : "no longer"] broadcasting.</span>"
 
 		Toggle_Listening()
 			set name = "Toggle Listening"
@@ -177,7 +177,7 @@
 				brainmob << "Can't do that while incapacitated or dead."
 
 			radio.listening = radio.listening==1 ? 0 : 1
-			brainmob << "\blue Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast."
+			brainmob << "<span class='notice'>Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.</span>"
 
 /obj/item/device/mmi/emp_act(severity)
 	if(!brainmob)

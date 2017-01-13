@@ -1,14 +1,12 @@
 /obj/item/clothing/glasses/hud
 	name = "HUD"
 	desc = "A heads-up display that provides important info in (almost) real time."
-	flags = null //doesn't protect eyes because it's a monocle, duh
-	origin_tech = "magnets=3;biotech=2"
+	flags = 0 //doesn't protect eyes because it's a monocle, duh
+	origin_tech = list(TECH_MAGNET = 3, TECH_BIO = 2)
 	var/list/icon/current = list() //the current hud icons
 
 	proc
 		process_hud(var/mob/M)	return
-
-
 
 /obj/item/clothing/glasses/hud/health
 	name = "Health Scanner HUD"
@@ -17,8 +15,8 @@
 	body_parts_covered = 0
 
 /obj/item/clothing/glasses/hud/health/prescription
-	name = "Prescription Medical HUD Glasses"
-	desc = "Medical HUD glasses with prescription lenses."
+	name = "Prescription Health Scanner HUD"
+	desc = "A medical HUD integrated with a set of prescription glasses"
 	icon_state = "glasseshealth"
 	prescription = 1
 

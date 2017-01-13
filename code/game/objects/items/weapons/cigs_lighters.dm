@@ -38,8 +38,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/burnt = 0
 	var/smoketime = 5
 	w_class = 1.0
+	origin_tech = list(TECH_MATERIAL = 1)
 	slot_flags = SLOT_EARS
-	origin_tech = "materials=1"
 	attack_verb = list("burnt", "singed")
 
 /obj/item/weapon/flame/match/process()
@@ -94,6 +94,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/zippomes = "USER lights NAME with FLAME"
 	var/weldermes = "USER lights NAME with FLAME"
 	var/ignitermes = "USER lights NAME with FLAME"
+	var/brand
 
 /obj/item/clothing/mask/smokable/New()
 	..()
@@ -109,17 +110,29 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(location)
 		location.hotspot_expose(700, 5)
 	if(reagents && reagents.total_volume) // check if it has any reagents at all
-		if(iscarbon(loc))
-			var/mob/living/carbon/C = loc
-			if (src == C.wear_mask) // if it's in the human/monkey mouth, transfer reagents to the mob
-				if(ishuman(C))
-					var/mob/living/carbon/human/H = C
-					if(H.species.flags & IS_SYNTHETIC)
-						return
-
+		if(ishuman(loc))
+			var/mob/living/carbon/human/C = loc
+			if (src == C.wear_mask && C.check_has_mouth()) // if it's in the human/monkey mouth, transfer reagents to the mob
 				reagents.trans_to_mob(C, REM, CHEM_INGEST, 0.2) // Most of it is not inhaled... balance reasons.
 		else // else just remove some of the reagents
 			reagents.remove_any(REM)
+
+/obj/item/clothing/mask/smokable/examine(mob/user, return_dist)
+	. = ..()
+	if(lit == 1)
+		var/smoke_percent = round((smoketime / initial(smoketime)) * 100)
+		switch(smoke_percent)
+			if(90 to INFINITY)
+				user << "[src] has just begun to burn."
+			if(60 to 90)
+				user << "[src] has a good amount of burn time remaining."
+			if(30 to 60)
+				user << "[src] is about half finished."
+			if(10 to 30)
+				user << "[src] is starting to burn low."
+			else
+				user << "[src] is nearly burnt out!"
+
 
 /obj/item/clothing/mask/smokable/proc/light(var/flavor_text = "[usr] lights the [name].")
 	if(!src.lit)
@@ -157,6 +170,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if (type_butt)
 		var/obj/item/butt = new type_butt(T)
 		transfer_fingerprints_to(butt)
+		if(brand)
+			butt.desc += " This one is \a [brand]."
 		if(ismob(loc))
 			var/mob/living/M = loc
 			if (!nomessage)
@@ -199,6 +214,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		text = replacetext(text, "NAME", "[name]")
 		text = replacetext(text, "FLAME", "[W.name]")
 		light(text)
+
+/obj/item/clothing/mask/smokable/attack(var/mob/living/M, var/mob/living/user, def_zone)
+	if(istype(M) && M.on_fire)
+		user.do_attack_animation(M)
+		light("<span class='notice'>[user] coldly lights the [name] with the burning body of [M].</span>")
+		return 1
+	else
+		return ..()
 
 /obj/item/clothing/mask/smokable/cigarette
 	name = "cigarette"
@@ -318,7 +341,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /////////////////
 /obj/item/clothing/mask/smokable/pipe
 	name = "smoking pipe"
-	desc = "A pipe, for smoking. Probably made of meershaum or something."
+	desc = "A pipe, for smoking. Made of fine, stained cherry wood."
 	icon_state = "pipeoff"
 	item_state = "pipeoff"
 	icon_on = "pipeon"  //Note - these are in masks.dmi
@@ -442,46 +465,46 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/weapon/flame/lighter/attack_self(mob/living/user)
 	if(!base_state)
 		base_state = icon_state
-	if(user.r_hand == src || user.l_hand == src)
-		if(!lit)
-			lit = 1
-			icon_state = "[base_state]on"
-			item_state = "[base_state]on"
-			if(istype(src, /obj/item/weapon/flame/lighter/zippo) )
-				user.visible_message("<span class='rose'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
-			else
-				if(prob(95))
-					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src].</span>")
-				else
-					user << "<span class='warning'>You burn yourself while lighting the lighter.</span>"
-					if (user.l_hand == src)
-						user.apply_damage(2,BURN,BP_L_HAND)
-					else
-						user.apply_damage(2,BURN,BP_R_HAND)
-					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src], they however burn their finger in the process.</span>")
-
-			set_light(2)
-			processing_objects.Add(src)
+	if(!lit)
+		lit = 1
+		icon_state = "[base_state]on"
+		item_state = "[base_state]on"
+		if(istype(src, /obj/item/weapon/flame/lighter/zippo) )
+			user.visible_message("<span class='rose'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
 		else
-			lit = 0
-			icon_state = "[base_state]"
-			item_state = "[base_state]"
-			if(istype(src, /obj/item/weapon/flame/lighter/zippo) )
-				user.visible_message("<span class='rose'>You hear a quiet click, as [user] shuts off [src] without even looking at what they're doing.</span>")
+			if(prob(95))
+				user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src].</span>")
 			else
-				user.visible_message("<span class='notice'>[user] quietly shuts off the [src].</span>")
+				user << "<span class='warning'>You burn yourself while lighting the lighter.</span>"
+				if (user.l_hand == src)
+					user.apply_damage(2,BURN,BP_L_HAND)
+				else
+					user.apply_damage(2,BURN,BP_R_HAND)
+				user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src], they however burn their finger in the process.</span>")
 
-			set_light(0)
-			processing_objects.Remove(src)
+		set_light(2)
+		processing_objects.Add(src)
 	else
-		return ..()
+		lit = 0
+		icon_state = "[base_state]"
+		item_state = "[base_state]"
+		if(istype(src, /obj/item/weapon/flame/lighter/zippo) )
+			user.visible_message("<span class='rose'>You hear a quiet click, as [user] shuts off [src] without even looking at what they're doing.</span>")
+		else
+			user.visible_message("<span class='notice'>[user] quietly shuts off the [src].</span>")
+
+		set_light(0)
+		processing_objects.Remove(src)
 	return
 
 
 /obj/item/weapon/flame/lighter/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M, /mob))
 		return
-	M.IgniteMob()
+
+	if(lit == 1)
+		M.IgniteMob()
+		msg_admin_attack("[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] and lit them on fire (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 	if(istype(M.wear_mask, /obj/item/clothing/mask/smokable/cigarette) && user.zone_sel.selecting == O_MOUTH && lit)
 		var/obj/item/clothing/mask/smokable/cigarette/cig = M.wear_mask

@@ -4,7 +4,7 @@
 	icon_state = "revolver"
 	item_state = "revolver"
 	caliber = "357"
-	origin_tech = "combat=2;materials=2"
+	origin_tech = list(TECH_COMBAT = 2, TECH_MATERIAL = 2)
 	handle_casings = CYCLE_CASINGS
 	max_shells = 7
 	ammo_type = /obj/item/ammo_casing/a357
@@ -14,7 +14,7 @@
 	name = "mateba"
 	desc = "When you absolutely, positively need a 10mm hole in the other guy. Uses .357 ammo."	//>10mm hole >.357
 	icon_state = "mateba"
-	origin_tech = "combat=2;materials=2"
+	origin_tech = list(TECH_COMBAT = 2, TECH_MATERIAL = 2)
 
 /obj/item/weapon/gun/projectile/revolver/detective
 	name = "revolver"
@@ -22,7 +22,7 @@
 	icon_state = "detective"
 	max_shells = 6
 	caliber = "38"
-	origin_tech = "combat=2;materials=2"
+	origin_tech = list(TECH_COMBAT = 2, TECH_MATERIAL = 2)
 	fire_sound = 'sound/weapons/Gunshot_light.ogg'
 	ammo_type = /obj/item/ammo_casing/c38
 
@@ -49,6 +49,7 @@
 	name = "Deckard .44"
 	desc = "A custom-built revolver, based off the semi-popular Detective Special model."
 	icon_state = "deckard-empty"
+	origin_tech = list(TECH_COMBAT = 2, TECH_MATERIAL = 2)
 	ammo_type = /obj/item/ammo_magazine/c38/rubber
 
 /obj/item/weapon/gun/projectile/revolver/deckard/update_icon()
