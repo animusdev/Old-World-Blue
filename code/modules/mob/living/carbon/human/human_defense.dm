@@ -14,7 +14,7 @@ emp_act
 	if(!has_organ(def_zone))
 		return PROJECTILE_FORCE_MISS //if they don't have the organ in question then the projectile just passes by.
 
-	var/obj/item/organ/external/organ = get_organ()
+	var/obj/item/organ/external/organ = get_organ(def_zone)
 
 	//Shields
 	if(check_shields(P.damage, P, null, "the [P.name]"))
