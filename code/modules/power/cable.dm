@@ -869,6 +869,9 @@ obj/structure/cable/proc/cableColor(var/colorC)
 	update_icon()
 	update_wclass()
 
+/obj/item/stack/cable_coil/red
+	color = COLOR_RED
+
 /obj/item/stack/cable_coil/yellow
 	color = COLOR_YELLOW
 
