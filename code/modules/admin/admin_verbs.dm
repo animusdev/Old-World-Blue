@@ -15,7 +15,7 @@ var/list/admin_verbs_default = list(
 	)
 var/list/admin_verbs_admin = list(
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
-/datum/admins/proc/paralyze_mob,
+	/datum/admins/proc/paralyze_mob,
 	/client/proc/invisimin,				/*allows our mob to go invisible/visible*/
 //	/datum/admins/proc/show_traitor_panel,	/*interface which shows a mob's mind*/ -Removed due to rare practical use. Moved to debug verbs ~Errorage
 	/datum/admins/proc/show_game_mode,  /*Configuration window for the current game mode.*/
@@ -189,7 +189,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/Jump,
 	/client/proc/jumptomob,
 	/client/proc/jumptocoord,
-	/client/proc/dsay
+	/client/proc/dsay,
+	/client/proc/beacon_move
 	)
 
 var/list/admin_verbs_paranoid_debug = list(
