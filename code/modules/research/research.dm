@@ -157,15 +157,12 @@ research holder datum.
 			if(KT.level <= level) KT.level = max((KT.level + 1), (level - 1))
 	return
 
-/datum/research/proc/UpdateDesign(var/path)
-	for(var/datum/design/KD in known_designs)
-		if(KD.build_path == path)
-			KD.reliability_mod += rand(1,2)
-			break
-	return
-
-
-
+// A simple helper proc to find the name of a tech with a given ID.
+/proc/CallTechName(var/ID)
+	for(var/T in subtypesof(/datum/tech))
+		var/datum/tech/check_tech = T
+		if(initial(check_tech.id) == ID)
+			return  initial(check_tech.name)
 
 /***************************************************************
 **						Technology Datums					  **
