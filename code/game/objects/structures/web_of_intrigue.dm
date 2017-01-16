@@ -10,8 +10,8 @@
 
 /obj/structure/web_of_intrigue/attackby(obj/item/W as obj, mob/user as mob)
 	if(iswirecutter(W))
-		for(var/i in 1 to TOTAL_PAGES)
-			new /obj/item/weapon/paper (loc)
+		for(var/obj/item/i in contents)
+			i.forceMove(loc)
 		for(var/i in 1 to round(TOTAL_PAGES/3))
 			new /obj/item/stack/cable_coil/red(loc)
 		qdel(src)
