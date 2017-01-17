@@ -12,7 +12,14 @@
 	var/global/num = 1
 	var/turf/target = null
 
-/obj/shuttle_beacon/New()
+/obj/shuttle_beacon/initialize()
+	setup()
+
+/obj/shuttle_beacon/verb/setup()
+	set name = "Init Dock"
+	set category = "Object"
+	set src in view(1)
+
 	if(name == initial(name))
 		name = "[initial(name)] #[num++]"
 	shuttle_controller.sh_beakons[name] = src

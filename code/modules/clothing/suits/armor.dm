@@ -182,7 +182,7 @@
 	slowdown = 1
 	armor = list(melee = 60, bullet = 60, laser = 60, energy = 40, bomb = 20, bio = 0, rad = 0)
 	siemens_coefficient = 0.7
-	var/obj/item/clothing/accessory/holster/holster = new
+	var/obj/item/clothing/accessory/holster/gun/holster = new
 
 /obj/item/clothing/suit/armor/tactical/attackby(obj/item/W as obj, mob/user as mob)
 	..()
