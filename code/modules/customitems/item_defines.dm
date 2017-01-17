@@ -9,7 +9,7 @@
 
 /obj/item/clothing/under/rank/security/venligen
 	name = "\improper Black Turtleneck"
-	desc = "Standard–issue uniform for Nemesis mercenary operatives. Perfectly fits the rightful owner. Made from high quality and sturdy material."
+	desc = "Standard-issue uniform for Nemesis operatives. Perfectly fits the rightful wearer. Made from high quality and sturdy material."
 	icon_state = "BW_uniform"
 	item_state = "jensen"
 
