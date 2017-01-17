@@ -183,51 +183,6 @@
 	current_data.item_path = /obj/item/clothing/under/rank/security/venligen
 	L |= current_data
 
-	current_data = new()
-	current_data.assoc_key = "venligen"
-	current_data.character_name = "Rawick Devine"
-	current_data.req_access = access_brig
-	current_data.item_path = /obj/item/clothing/suit/armor/vest/venligen
-	L |= current_data
-
-	current_data = new()
-	current_data.assoc_key = "venligen"
-	current_data.character_name = "William Dearborn"
-	current_data.item_path = /obj/item/clothing/under/rank/security/venligen_alt
-	L |= current_data
-
-	current_data = new()
-	current_data.assoc_key = "venligen"
-	current_data.character_name = "William Dearborn"
-	current_data.req_access = access_brig
-	current_data.item_path = /obj/item/clothing/suit/armor/vest/venligen
-	L |= current_data
-
-	current_data = new()
-	current_data.assoc_key = "venligen"
-	current_data.character_name = "John Dearborn"
-	current_data.item_path = /obj/item/clothing/under/rank/security/venligen_alt
-	L |= current_data
-
-	current_data = new()
-	current_data.assoc_key = "venligen"
-	current_data.character_name = "Roy Mercer"
-	current_data.item_path = /obj/item/clothing/under/biker
-	L |= current_data
-
-	current_data = new()
-	current_data.assoc_key = "venligen"
-	current_data.character_name = "Nathan Floridor"
-	current_data.item_path = /obj/item/clothing/under/biker
-	L |= current_data
-
-	current_data = new()
-	current_data.assoc_key = "venligen"
-	current_data.character_name = "John Dearborn"
-	current_data.req_access = access_brig
-	current_data.item_path = /obj/item/clothing/suit/armor/vest/venligen
-	L |= current_data
-
 	custom_items["venligen"] = L
 
 ///AllahBoom///
