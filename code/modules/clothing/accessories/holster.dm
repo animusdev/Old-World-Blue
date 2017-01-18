@@ -145,7 +145,7 @@
 	desc = "A knife holster."
 	icon_state = "sheath"
 
-/obj/item/clothing/accessory/holster/knife
+/obj/item/clothing/accessory/holster/knife/hip
 	name = "hip knife sheath"
 	icon_state = "hip_sheath"
 

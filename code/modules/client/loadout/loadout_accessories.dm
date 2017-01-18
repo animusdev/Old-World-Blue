@@ -50,6 +50,14 @@
 	display_name = "holster, waist"
 	path = /obj/item/clothing/accessory/holster/gun/waist
 
+/datum/gear/accessory/holster/knife
+	display_name = "holster (knifeholder)"
+	path = /obj/item/clothing/accessory/holster/knife
+
+/datum/gear/accessory/holster/knife/hip
+	display_name = "holster (knifeholder), hip"
+	path = /obj/item/clothing/accessory/holster/knife/hip
+
 /datum/gear/accessory/tie/blue
 	display_name = "tie, blue"
 	path = /obj/item/clothing/accessory/blue
