@@ -50,10 +50,10 @@
 	new /obj/item/clothing/accessory/armband(src)
 	new /obj/item/clothing/accessory/armband(src)
 	new /obj/item/clothing/accessory/armband(src)
-	new /obj/item/clothing/accessory/holster/armpit(src)
-	new /obj/item/clothing/accessory/holster/waist(src)
-	new /obj/item/clothing/accessory/holster/waist(src)
-	new /obj/item/clothing/accessory/holster/hip(src)
+	new /obj/item/clothing/accessory/holster/gun/armpit(src)
+	new /obj/item/clothing/accessory/holster/gun/waist(src)
+	new /obj/item/clothing/accessory/holster/gun/waist(src)
+	new /obj/item/clothing/accessory/holster/gun/hip(src)
 	return
 
 /obj/structure/closet/wardrobe/redalt

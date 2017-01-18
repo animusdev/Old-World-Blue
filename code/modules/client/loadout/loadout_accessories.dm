@@ -39,16 +39,16 @@
 
 /datum/gear/accessory/holster
 	display_name = "holster, armpit"
-	path = /obj/item/clothing/accessory/holster/armpit
+	path = /obj/item/clothing/accessory/holster/gun/armpit
 	allowed_roles = list("Captain", "Head of Personnel", "Security Officer", "Warden", "Head of Security","Detective","Forensic Technician")
 
 /datum/gear/accessory/holster/hip
 	display_name = "holster, hip"
-	path = /obj/item/clothing/accessory/holster/hip
+	path = /obj/item/clothing/accessory/holster/gun/hip
 
 /datum/gear/accessory/holster/waist
 	display_name = "holster, waist"
-	path = /obj/item/clothing/accessory/holster/waist
+	path = /obj/item/clothing/accessory/holster/gun/waist
 
 /datum/gear/accessory/tie/blue
 	display_name = "tie, blue"
