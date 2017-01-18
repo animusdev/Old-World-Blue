@@ -74,6 +74,10 @@
 		"[SPRITE_GUNS]_r"     = 'icons/inv_slots/items/guns_r_default.dmi'
 	)
 
+/datum/body_build/tajaran
+	name		= "Tajaran"
+	mask_icon	= 'icons/inv_slots/masks/mob_tajaran.dmi'
+
 /datum/body_build/vox
 	name		= "Vox"
 	uniform_icon= 'icons/inv_slots/uniforms/mob_vox.dmi'
