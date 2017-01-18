@@ -10,8 +10,8 @@
 
 /obj/structure/web_of_intrigue/attackby(obj/item/W as obj, mob/user as mob)
 	if(iswirecutter(W))
-		for(var/i in 1 to TOTAL_PAGES)
-			new /obj/item/weapon/paper (loc)
+		for(var/obj/item/i in contents)
+			i.forceMove(loc)
 		for(var/i in 1 to round(TOTAL_PAGES/3))
 			new /obj/item/stack/cable_coil/red(loc)
 		qdel(src)
@@ -23,16 +23,16 @@
 
 
 /obj/structure/web_of_intrigue/attack_hand(mob/user as mob)
-	var/dat = "<html><style>td{width:33px;height:33px;border:1px solid;}\
-		table{table-layout:fixed;width:100%;height:100%;}\
-		body{overflow:hidden;}img{height:100%+16px}</style><body><table>"
+	var/dat = "<html><style>td{width:33%;height:33%;border:1px solid;vertical-align:top;}\
+		body{overflow:hidden;}img{height:100%}div.field{overflow:auto;height:100%;}\
+		table{table-layout:fixed;width:100%;height:100%;}</style><body><table>"
 	for(var/i in 1 to TOTAL_PAGES)
 		if(i%3 == 1)
 			dat += "<tr>"
 		dat += "<td>"
 		if(pages[i])
 			var/obj/item/elem = pages[i]
-			dat += "<a href='?src=\ref[src];remove=[i]'>[elem.name]</a><hr>"
+			dat += "<a href='?src=\ref[src];remove=[i]'>[elem.name]</a><hr><div class='field'>"
 			if(istype(elem, /obj/item/weapon/paper))
 				var/obj/item/weapon/paper/P = elem
 				dat += P.info
@@ -40,6 +40,7 @@
 				var/obj/item/weapon/photo/P = elem
 				user << browse_rsc(P.img, "tmp_photo_[P.id].png")
 				dat += "<img src='tmp_photo_[P.id].png'>"
+			dat += "</div>"
 		else
 			var/obj/item/I = user.get_active_hand()
 			if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/photo))
@@ -51,7 +52,7 @@
 			dat += "</tr>"
 
 	dat += "</table></body></html>"
-	user << browse(dat, "window=web;size=600x600")
+	user << browse(dat, "window=web;size=900x900")
 
 /obj/structure/web_of_intrigue/Topic(href, href_list)
 	if(href_list["attach"])

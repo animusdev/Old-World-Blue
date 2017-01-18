@@ -1,12 +1,13 @@
-var/global/list/sh_beakons = list()
 
 /datum/shuttle_controller
 	var/list/new_shuttles = list()
+	var/list/sh_beakons = list()
 
 /obj/shuttle_beacon
 	name = "Shuttle Beacon"
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "beacon"
+	invisibility = 101
 	var/beacon_system = "Station"
 	var/global/num = 1
 	var/turf/target = null
@@ -14,7 +15,7 @@ var/global/list/sh_beakons = list()
 /obj/shuttle_beacon/New()
 	if(name == initial(name))
 		name = "[initial(name)] #[num++]"
-	sh_beakons[name] = src
+	shuttle_controller.sh_beakons[name] = src
 	target = get_step(src, dir)
 
 /obj/shuttle_beacon/proc/get_target()
@@ -58,9 +59,9 @@ var/global/list/sh_beakons = list()
 	var/shuttle_tag = input("Shuttle","pick!") as null|anything in shuttle_controller.new_shuttles
 	if(!shuttle_tag) return
 	var/datum/shuttle/untethered/shuttle = shuttle_controller.new_shuttles[shuttle_tag]
-	var/where = input("Beakon", "Pick!") as null|anything in sh_beakons
+	var/where = input("Beakon", "Pick!") as null|anything in shuttle_controller.sh_beakons
 	if(!where) return
-	var/result = shuttle.beacon_move(sh_beakons[where])
+	var/result = shuttle.beacon_move(shuttle_controller.sh_beakons[where])
 	if(!result)
 		result = "<span class='notice'>Success!</span>"
 	else
@@ -123,7 +124,7 @@ var/global/list/sh_beakons = list()
 
 /datum/shuttle/untethered/proc/get_dock_list()
 	. = list()
-	for(var/obj/shuttle_beacon/SB in sh_beakons)
+	for(var/obj/shuttle_beacon/SB in shuttle_controller.sh_beakons)
 		if(SB.beacon_system in beacon_systems)
 			. += SB
 
