@@ -173,6 +173,11 @@
 		"Your overheated skin itches."
 		)
 	cold_discomfort_level = 275
+
+	body_builds = list(
+		new/datum/body_build/tajaran
+	)
+
 	restricted_jobs = list(
 		"Captain", "Head of Personnel", "Head of Security", "Chief Engineer",
 		"Research Director", "Chief Medical Officer", "Warden", "Detective", "Security Officer",
