@@ -540,6 +540,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	New()
 		create_reagents(10)
+		..()
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/weapon/reagent_containers/food/snacks/grown))
