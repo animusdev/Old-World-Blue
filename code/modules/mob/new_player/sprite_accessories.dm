@@ -77,11 +77,7 @@
 		name = "Bald"
 		icon_state = "bald"
 		gender = MALE
-		New()
-			..()
-			species_allowed = list()
-			for(var/S in all_species)
-				species_allowed += S
+		species_allowed = list("Human","Unathi")
 
 
 	afro
