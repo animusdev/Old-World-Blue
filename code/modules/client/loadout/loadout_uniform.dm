@@ -7,7 +7,7 @@
 
 /datum/gear/uniform/skirt
 	display_name = "job, skirt"
-	description = "Totally as your default uniform, but with skirt."
+	description = "Totally as your default uniform, but with skirt!"
 	path = /obj/item/clothing/under
 	allowed_roles = list("QM", "Cargo Technician","Chief Engineer","Station Engineer","Atmospheric Technician","Roboticist",\
 	"Research Director","Scientist","Chief Medical Officer","Chemist","Medical Doctor","Geneticist",\
@@ -38,6 +38,37 @@
 		if("Head of Security") tmp_path = /obj/item/clothing/under/rank/head_of_security/skirt
 		if("Warden") tmp_path = /obj/item/clothing/under/rank/warden/skirt
 		if("Security Officer") tmp_path = /obj/item/clothing/under/rank/security/skirt
+		else return null
+
+	return new tmp_path(H)
+
+
+/datum/gear/uniform/jeans
+	display_name = "job, jeans"
+	description = "Totally as your default uniform, but with jeans!"
+	path = /obj/item/clothing/under
+	allowed_roles = list("QM", "Cargo Technician","Station Engineer","Atmospheric Technician",\
+	"Research Director","Scientist","Chief Medical Officer","Chemist","Medical Doctor","Geneticist")
+
+/datum/gear/uniform/jeans/spawn_for(var/mob/living/carbon/human/H)
+	if(allowed_roles && !(H.job in allowed_roles))
+		H << "<span class='warning'>Your current job does not permit you to spawn with [display_name]!</span>"
+		return null
+
+	var/tmp_path = path
+	switch(H.job)
+		if("QM") tmp_path = /obj/item/clothing/under/rank/qm/jeans
+		if("Cargo Technician") tmp_path = /obj/item/clothing/under/rank/cargo/jeans
+		if("Station Engineer") tmp_path = /obj/item/clothing/under/rank/engineer/jeans
+		if("Atmospheric Technician") tmp_path = /obj/item/clothing/under/rank/atmospheric_technician/jeans
+		if("Scientist") tmp_path = /obj/item/clothing/under/rank/scientist/jeans
+		if("Chief Medical Officer") tmp_path = /obj/item/clothing/under/rank/chief_medical_officer/jeans
+		if("Chemist") tmp_path = /obj/item/clothing/under/rank/chemist/jeans
+		if("Medical Doctor")
+			tmp_path = /obj/item/clothing/under/rank/medical/jeans
+			if(H.mind && H.mind.role_alt_title == "Virologist")
+				tmp_path = /obj/item/clothing/under/rank/virologist/jeans
+		if("Geneticist") tmp_path = /obj/item/clothing/under/rank/geneticist/jeans
 		else return null
 
 	return new tmp_path(H)
