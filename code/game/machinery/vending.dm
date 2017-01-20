@@ -41,12 +41,8 @@
 	// List of vending_product items available.
 	var/list/product_records = list()
 
-
-	// Variables used to initialize advertising
-	var/product_ads = "" //String of small ad messages in the vending screen
-
+	//Strings of small ad messages in the vending screen
 	var/list/ads_list = list()
-
 	// Stuff relating vocalizations
 	var/list/slogan_list = list()
 	var/shut_up = 1 //Stop spouting those godawful pitches!
@@ -72,9 +68,6 @@
 		// The first time this machine says something will be at slogantime + this random value,
 		// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
 		src.last_slogan = world.time + rand(0, slogan_delay)
-
-		if(src.product_ads)
-			src.ads_list += splittext(src.product_ads, ";")
 
 		src.build_inventory()
 		power_change()
@@ -652,7 +645,21 @@
 		"Is nobody thirsty on this station?",
 		"Quite delighted to serve you!",
 	)
-	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
+	ads_list = list(
+		"Drink up!", "Booze is good for you!",
+		"Alcohol is humanity's best friend.",
+		"Quite delighted to serve you!",
+		"Care for a nice, cold beer?",
+		"Nothing cures you like booze!",
+		"Have a sip!", "Have a drink!", "Have a beer!",
+		"Beer is good for you!",
+		"Only the finest alcohol!",
+		"Best quality booze since 2053!",
+		"Award-winning wine!",
+		"Maximum alcohol!",
+		"Man loves beer.",
+		"A toast for progress!"
+	)
 	req_access = list(access_bar)
 
 /obj/machinery/vending/assist
@@ -664,7 +671,12 @@
 		/obj/item/weapon/wirecutters = 1,
 	)
 	contraband = list(/obj/item/device/flashlight = 5,/obj/item/device/assembly/timer = 2)
-	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
+	ads_list = list(
+		"Only the finest!",
+		"Have some tools.",
+		"The most robust equipment.",
+		"The finest gear in space!"
+	)
 
 /obj/machinery/vending/assist/antag
 	name = "AntagCorpVend"
@@ -683,7 +695,22 @@
 /obj/machinery/vending/coffee
 	name = "Hot Drinks machine"
 	desc = "A vending machine which dispenses hot drinks."
-	product_ads = "Have a drink!;Drink up!;It's good for you!;Would you like a hot joe?;I'd kill for some coffee!;The best beans in the galaxy.;Only the finest brew for you.;Mmmm. Nothing like a coffee.;I like coffee, don't you?;Coffee helps you work!;Try some tea.;We hope you like the best!;Try our new chocolate!;Admin conspiracies"
+	ads_list = list(
+		"Have a drink!",
+		"Drink up!",
+		"It's good for you!",
+		"Would you like a hot joe?",
+		"I'd kill for some coffee!",
+		"The best beans in the galaxy.",
+		"Only the finest brew for you.",
+		"Mmmm. Nothing like a coffee.",
+		"I like coffee, don't you?",
+		"Coffee helps you work!",
+		"Try some tea.",
+		"We hope you like the best!",
+		"Try our new chocolate!",
+		"Admin conspiracies"
+	)
 	icon_state = "coffee"
 	icon_vend = "coffee-vend"
 	vend_delay = 34
@@ -711,7 +738,18 @@
 		"Try our new nougat bar!",
 		"Twice the calories for half the price!"
 	)
-	product_ads = "The healthiest!;Award-winning chocolate bars!;Mmm! So good!;Oh my god it's so juicy!;Have a snack.;Snacks are good for you!;Have some more Getmore!;Best quality snacks straight from mars.;We love chocolate!;Try our new jerky!"
+	ads_list = list(
+		"The healthiest!",
+		"Award-winning chocolate bars!",
+		"Mmm! So good!",
+		"Oh my god it's so juicy!",
+		"Have a snack.",
+		"Snacks are good for you!",
+		"Have some more Getmore!",
+		"Best quality snacks straight from mars.",
+		"We love chocolate!",
+		"Try our new jerky!"
+	)
 	icon_state = "snack"
 	products = list(
 		/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6,
@@ -749,7 +787,14 @@
 	slogan_list = list(
 		"Robust Softdrinks: More robust than a toolbox to the head!"
 	)
-	product_ads = "Refreshing!;Hope you're thirsty!;Over 1 million drinks sold!;Thirsty? Why not cola?;Please, have a drink!;Drink up!;The best drinks in space."
+	ads_list = list(
+		"Refreshing!",
+		"Hope you're thirsty!",
+		"Over 1 million drinks sold!;Thirsty? Why not cola?",
+		"Please, have a drink!",
+		"Drink up!",
+		"The best drinks in space."
+	)
 	products = list(
 		/obj/item/weapon/reagent_containers/glass/drinks/cans/space_mountain_wind = 10,
 		/obj/item/weapon/reagent_containers/glass/drinks/cans/waterbottle = 10,
@@ -807,19 +852,21 @@
 		"If you're not smoking, you must be joking.",
 		"There's no better time to start smokin'.",
 	)
-	product_ads = "Probably not bad for you!;\
-		Don't believe the scientists!;\
-		It's good for you!;\
-		Don't quit, buy more!;\
-		Smoke!;\
-		Nicotine heaven.;\
-		Best cigarettes since 2150.;\
-		Award-winning cigarettes, all the best brands.;\
-		Feeling temperamental? Try a Temperamento!;\
-		Carcinoma Angels - go fuck yerself!;\
-		Don't be so hard on yourself, kid. Smoke a Lucky Star!;\
-		We understand the depressed, alcoholic cowboy in you. That's why we also smoke Jericho.;\
-		Professionals. Better cigarettes for better people. Yes, better people."
+	ads_list = list(
+		"Probably not bad for you!",
+		"Don't believe the scientists!",
+		"It's good for you!",
+		"Don't quit, buy more!",
+		"Smoke!",
+		"Nicotine heaven.",
+		"Best cigarettes since 2150.",
+		"Award-winning cigarettes, all the best brands.",
+		"Feeling temperamental? Try a Temperamento!",
+		"Carcinoma Angels - go fuck yerself!",
+		"Don't be so hard on yourself, kid. Smoke a Lucky Star!",
+		"We understand the depressed, alcoholic cowboy in you. That's why we also smoke Jericho.",
+		"Professionals. Better cigarettes for better people. Yes, better people."
+	)
 	vend_delay = 34
 	icon_state = "cigs"
 	products = list(
@@ -843,7 +890,15 @@
 	desc = "Medical drug dispenser."
 	icon_state = "med"
 	icon_deny = "med-deny"
-	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
+	ads_list = list(
+		"Go save some lives!",
+		"The best stuff for your medbay.",
+		"Only the finest tools.",
+		"Natural chemicals!",
+		"This stuff saves lives.",
+		"Don't you want some?",
+		"Ping!"
+	)
 	req_access = list(access_medical_equip)
 	products = list(
 		/obj/item/weapon/reagent_containers/glass/beaker/bottle/inaprovaline = 4,
@@ -885,7 +940,14 @@
 /obj/machinery/vending/wallmed1
 	name = "NanoMed"
 	desc = "Wall-mounted Medical Equipment dispenser."
-	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?"
+	ads_list = list(
+		"Go save some lives!",
+		"The best stuff for your medbay.",
+		"Only the finest tools.",
+		"Natural chemicals!",
+		"This stuff saves lives.",
+		"Don't you want some?"
+	)
 	icon_state = "wallmed"
 	icon_deny = "wallmed-deny"
 	req_access = list(access_medical)
@@ -921,7 +983,17 @@
 /obj/machinery/vending/security
 	name = "SecTech"
 	desc = "A security equipment vendor."
-	product_ads = "Crack capitalist skulls!;Beat some heads in!;Don't forget - harm is good!;Your weapons are right here.;Handcuffs!;Freeze, scumbag!;Don't tase me bro!;Tase them, bro.;Why not have a donut?"
+	ads_list = list(
+		"Crack capitalist skulls!",
+		"Beat some heads in!",
+		"Don't forget - harm is good!",
+		"Your weapons are right here.",
+		"Handcuffs!",
+		"Freeze, scumbag!",
+		"Don't tase me bro!",
+		"Tase them, bro.",
+		"Why not have a donut?"
+	)
 	icon_state = "sec"
 	icon_deny = "sec-deny"
 	req_access = list(access_security)
@@ -946,7 +1018,13 @@
 		"Now with 50% less stink!",
 		"Plants are people too!"
 	)
-	product_ads = "We like plants!;Don't you want some?;The greenest thumbs ever.;We like big plants.;Soft soil..."
+	ads_list = list(
+		"We like plants!",
+		"Don't you want some?",
+		"The greenest thumbs ever.",
+		"We like big plants.",
+		"Soft soil..."
+	)
 	icon_state = "nutri"
 	icon_deny = "nutri-deny"
 	products = list(
@@ -971,7 +1049,12 @@
 		"Hands down the best seed selection on the station!",
 		"THIS'S WHERE TH' SEEDS LIVE! GIT YOU SOME!",
 	)
-	product_ads = "We like plants!;Grow some crops!;Grow, baby, growww!;Aw h'yeah son!"
+	ads_list = list(
+		"We like plants!",
+		"Grow some crops!",
+		"Grow, baby, growww!",
+		"Aw h'yeah son!"
+	)
 	icon_state = "seeds"
 
 	products = list(
@@ -1058,7 +1141,19 @@
 	)
 	vend_delay = 15
 	vend_reply = "Have an enchanted evening!"
-	product_ads = "FJKLFJSD;AJKFLBJAKL;1234 LOONIES LOL!;>MFW;Kill them fuckers!;GET DAT FUKKEN DISK;HONK!;EI NATH;Destroy the station!;Admin conspiracies since forever!;Space-time bending hardware!"
+	ads_list = list(
+		"FJKLFJSD",
+		"AJKFLBJAKL",
+		"1234 LOONIES LOL!",
+		">MFW",
+		"Kill them fuckers!",
+		"GET DAT FUKKEN DISK",
+		"HONK!",
+		"EI NATH",
+		"Destroy the station!",
+		"Admin conspiracies since forever!",
+		"Space-time bending hardware!"
+	)
 	products = list(
 		/obj/item/clothing/suit/wizrobe/red = 1,
 		/obj/item/clothing/head/wizard/red = 1,
@@ -1071,7 +1166,15 @@
 /obj/machinery/vending/dinnerware
 	name = "Dinnerware"
 	desc = "A kitchen and restaurant equipment vendor."
-	product_ads = "Mm, food stuffs!;Food and food accessories.;Get your plates!;You like forks?;I like forks.;Woo, utensils.;You don't really need these..."
+	ads_list = list(
+		"Mm, food stuffs!",
+		"Food and food accessories.",
+		"Get your plates!",
+		"You like forks?",
+		"I like forks.",
+		"Woo, utensils.",
+		"You don't really need these..."
+	)
 	icon_state = "dinnerware"
 	products = list(
 		/obj/item/weapon/reagent_containers/glass/drinks/drinkingglass = 8,
@@ -1080,13 +1183,24 @@
 		/obj/item/weapon/material/knife = 3,
 		/obj/item/weapon/tray = 8,
 	)
-	contraband = list(/obj/item/weapon/material/kitchen/utensil/spoon = 2,/obj/item/weapon/material/kitchen/utensil/knife = 2,/obj/item/weapon/material/kitchen/rollingpin = 2, /obj/item/weapon/material/knife/butch = 2)
+	contraband = list(
+		/obj/item/weapon/material/kitchen/utensil/spoon = 2,
+		/obj/item/weapon/material/kitchen/utensil/knife = 2,
+		/obj/item/weapon/material/kitchen/rollingpin = 2,
+		/obj/item/weapon/material/knife/butch = 2
+	)
 
 /obj/machinery/vending/sovietsoda
 	name = "BODA"
 	desc = "An old sweet water vending machine,how did this end up here?"
 	icon_state = "sovietsoda"
-	product_ads = "For Tsar and Country.;Have you fulfilled your nutrition quota today?;Very nice!;We are simple people, for this is all we eat.;If there is a person, there is a problem. If there is no person, then there is no problem."
+	ads_list = list(
+		"For Tsar and Country.",
+		"Have you fulfilled your nutrition quota today?",
+		"Very nice!",
+		"We are simple people, for this is all we eat.",
+		"If there is a person, there is a problem. If there is no person, then there is no problem."
+	)
 	products = list(
 		/obj/item/weapon/reagent_containers/glass/drinks/drinkingglass/soda = 30
 	)
@@ -1196,7 +1310,13 @@
 /obj/machinery/vending/thundervend
 	name = "Violence-o-Mate"
 	desc = "That's a guns and ammo vendor."
-	product_ads = "ULTRAVIOLENCE!;Do you like to hurt other people, mate?;You're not a nice person!;Get a goddamn gun and take them out!;Why did you come back here?"
+	ads_list = list(
+		"ULTRAVIOLENCE!",
+		"Do you like to hurt other people, mate?",
+		"You're not a nice person!",
+		"Get a goddamn gun and take them out!",
+		"Why did you come back here?"
+	)
 	icon_state = "thundervendor"
 	products = list(
 		/obj/item/weapon/reagent_containers/hypospray/autoinjector/combat=60,
