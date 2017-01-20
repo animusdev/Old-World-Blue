@@ -396,7 +396,7 @@ var/global/datum/controller/occupations/job_master
 						//custom_equip_leftovers += thing
 						put_in_storage.Add(I)
 					else if(H.equip_to_slot_or_del(I, G.slot))
-						H << "\blue Equipping you with [I]!"
+						H << "<span class='notice'>Equipping you with [I]!</span>"
 						custom_equip_slots.Add(G.slot)
 					else
 //						custom_equip_leftovers.Add(I)
@@ -444,17 +444,15 @@ var/global/datum/controller/occupations/job_master
 				if(istype(H.back, /obj/item/weapon/storage))
 					B = H.back
 				else
-					for(var/obj/item/weapon/storage/S in H.contents)
-						B = S
-						break
+					B = locate(/obj/item/weapon/storage) in H.contents
 
 				if(isnull(B))
 					H << "<span class='danger'>Failed to locate a storage object on your mob, either you spawned with no arms and no backpack or this is a bug.</span>"
-
-				for(var/obj/item/I in put_in_storage)
-					for(var/thing in put_in_storage)
-						H << "<span class='notice'>Placing \the [I] in your [B.name]!</span>"
-						I.forceMove(B)
+				else
+					for(var/obj/item/I in put_in_storage)
+						for(var/thing in put_in_storage)
+							H << "<span class='notice'>Placing \the [I] in your [B.name]!</span>"
+							I.forceMove(B)
 
 		if(istype(H) && !H.buckled) //give humans wheelchairs, if they need them.
 			if(!H.get_organ(BP_L_FOOT) && !H.get_organ(BP_R_FOOT))
