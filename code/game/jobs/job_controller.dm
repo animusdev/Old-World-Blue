@@ -361,7 +361,7 @@ var/global/datum/controller/occupations/job_master
 		H.job = rank
 
 		var/datum/job/job = GetJob(rank)
-		var/list/spawn_in_storage = list()
+		var/list/put_in_storage = list()
 
 		if(!job)
 			H << "Your job is [rank] and the game just can't handle it! Please report this bug to an administrator."
@@ -385,34 +385,25 @@ var/global/datum/controller/occupations/job_master
 				var/datum/gear/G = gear_datums[thing]
 				if(!G)
 					continue
-				var/permitted
-				if(G.allowed_roles)
-					if(job.title in G.allowed_roles)
-						permitted = 1
-				else
-					permitted = 1
-
-				if(G.whitelisted && !is_alien_whitelisted(H, G.whitelisted))
-					permitted = 0
-
-				if(!permitted)
-					H << "<span class='warning'>Your current job or whitelist status does not permit you to spawn with [thing]!</span>"
+				var/obj/item/I = G.spawn_for(H)
+				if(!I)
 					continue
 
 				if(G.slot && !(G.slot in custom_equip_slots))
 					// This is a miserable way to fix the loadout overwrite bug, but the alternative requires
 					// adding an arg to a bunch of different procs. Will look into it after this merge. ~ Z
-					if(G.slot == slot_wear_mask || G.slot == slot_wear_suit || G.slot == slot_head)
+					if(G.slot in list(slot_wear_mask,  slot_wear_suit, slot_head))
 						//custom_equip_leftovers += thing
-						spawn_in_storage.Add(thing)
-					else if(H.equip_to_slot_or_del(new G.path(H), G.slot))
-						H << "\blue Equipping you with [thing]!"
+						put_in_storage.Add(I)
+					else if(H.equip_to_slot_or_del(I, G.slot))
+						H << "<span class='notice'>Equipping you with [I]!</span>"
 						custom_equip_slots.Add(G.slot)
 					else
-//						custom_equip_leftovers.Add(thing)
-						spawn_in_storage.Add(thing)
+//						custom_equip_leftovers.Add(I)
+						put_in_storage.Add(I)
 				else
-					spawn_in_storage += thing
+					put_in_storage.Add(I)
+
 		//Equip job items.
 		job.equip(H)
 		job.setup_account(H)
@@ -448,22 +439,20 @@ var/global/datum/controller/occupations/job_master
 			alt_title = H.mind.role_alt_title
 
 			//Deferred item spawning.
-			if(spawn_in_storage && spawn_in_storage.len)
+			if(put_in_storage.len)
 				var/obj/item/weapon/storage/B
 				if(istype(H.back, /obj/item/weapon/storage))
 					B = H.back
 				else
-					for(var/obj/item/weapon/storage/S in H.contents)
-						B = S
-						break
+					B = locate(/obj/item/weapon/storage) in H.contents
 
-				if(!isnull(B))
-					for(var/thing in spawn_in_storage)
-						H << "<span class='notice'>Placing \the [thing] in your [B.name]!</span>"
-						var/datum/gear/G = gear_datums[thing]
-						new G.path(B)
-				else
+				if(isnull(B))
 					H << "<span class='danger'>Failed to locate a storage object on your mob, either you spawned with no arms and no backpack or this is a bug.</span>"
+				else
+					for(var/obj/item/I in put_in_storage)
+						for(var/thing in put_in_storage)
+							H << "<span class='notice'>Placing \the [I] in your [B.name]!</span>"
+							I.forceMove(B)
 
 		if(istype(H) && !H.buckled) //give humans wheelchairs, if they need them.
 			if(!H.get_organ(BP_L_FOOT) && !H.get_organ(BP_R_FOOT))

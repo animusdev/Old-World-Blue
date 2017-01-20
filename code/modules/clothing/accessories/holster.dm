@@ -144,6 +144,12 @@
 	name = "shoulder scabbard"
 	desc = "A knife holster."
 	icon_state = "sheath"
+	allowed = list(
+		/obj/item/weapon/material/hatchet,
+		/obj/item/weapon/material/hatchet/unathiknife,
+		/obj/item/weapon/material/knife
+	)
+
 
 /obj/item/clothing/accessory/holster/knife/hip
 	name = "hip knife sheath"
@@ -171,7 +177,7 @@
 		return ..()
 
 /obj/item/clothing/accessory/holster/knife/can_holster(var/obj/item/I, var/mob/living/user)
-	if(!istype(I, /obj/item/weapon/material/knife))
+	if(!is_type_in_list(I, allowed))
 		user << "<span class='warning'>You can't put [I] here!</span>"
 		return 0
 	return ..()
