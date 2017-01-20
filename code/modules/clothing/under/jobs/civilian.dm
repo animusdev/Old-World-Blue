@@ -21,6 +21,7 @@
 	desc = "It's a jumpskirt worn by the quartermaster. It's specially designed to prevent back injuries caused by pushing paper."
 	icon_state = "qmf"
 	item_state = "cargo"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
 /obj/item/clothing/under/rank/qm/jeans
 	name = "quartermaster's jumpjeans"
@@ -44,6 +45,7 @@
 	desc = "Skirrrrrts! They're comfy and easy to wear!"
 	icon_state = "cargof"
 	item_state = "cargo"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
 /obj/item/clothing/under/rank/cargo/jeans
 	name = "cargo technician's jumpjeans"

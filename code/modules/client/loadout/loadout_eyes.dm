@@ -39,10 +39,14 @@
 	cost = 2
 	allowed_roles = list("Security Officer","Head of Security","Warden","Detective")
 
-/datum/gear/eyes/medical_hud
-	display_name = "Medical HUD (prescription)"
+/datum/gear/eyes/medical
+	display_name = "Medical HUD (Medical)"
+	path = /obj/item/clothing/glasses/hud/health
+	allowed_roles = list("Medical Doctor","Chief Medical Officer","Paramedic")
+
+/datum/gear/eyes/medical/prescription
+	display_name = "Medical HUD, prescription (Medical)"
 	path = /obj/item/clothing/glasses/hud/health/prescription
-	allowed_roles = list("Chief Medical Officer","Medical Doctor","Paramedic")
 
 /datum/gear/eyes/crimson
 	display_name = "sunglasses, crimson"

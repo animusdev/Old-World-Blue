@@ -5,6 +5,44 @@
 	slot = slot_w_uniform
 	sort_category = "Uniforms and Dress"
 
+/datum/gear/uniform/skirt
+	display_name = "job, skirt"
+	description = "Totally as your default uniform, but with skirt."
+	path = /obj/item/clothing/under
+	allowed_roles = list("QM", "Cargo Technician","Chief Engineer","Station Engineer","Atmospheric Technician","Roboticist",\
+	"Research Director","Scientist","Chief Medical Officer","Chemist","Medical Doctor","Geneticist",\
+	"Head of Security","Warden","Security Officer")
+
+/datum/gear/uniform/skirt/spawn_for(var/mob/living/carbon/human/H)
+	if(allowed_roles && !(H.job in allowed_roles))
+		H << "<span class='warning'>Your current job does not permit you to spawn with [display_name]!</span>"
+		return null
+
+	var/tmp_path = path
+	switch(H.job)
+		if("QM") tmp_path = /obj/item/clothing/under/rank/qm/skirt
+		if("Cargo Technician") tmp_path = /obj/item/clothing/under/rank/cargo/skirt
+		if("Chief Engineer") tmp_path = /obj/item/clothing/under/rank/chief_engineer/skirt
+		if("Station Engineer") tmp_path = /obj/item/clothing/under/rank/engineer/skirt
+		if("Atmospheric Technician") tmp_path = /obj/item/clothing/under/rank/atmospheric_technician/skirt
+		if("Roboticist") tmp_path = /obj/item/clothing/under/rank/roboticist/skirt
+		if("Research Director") tmp_path = /obj/item/clothing/under/rank/research_director/skirt
+		if("Scientist") tmp_path = /obj/item/clothing/under/rank/scientist/skirt
+		if("Chief Medical Officer") tmp_path = /obj/item/clothing/under/rank/chief_medical_officer/skirt
+		if("Chemist") tmp_path = /obj/item/clothing/under/rank/chemist/skirt
+		if("Medical Doctor")
+			tmp_path = /obj/item/clothing/under/rank/medical/skirt
+			if(H.mind && H.mind.role_alt_title == "Virologist")
+				tmp_path = /obj/item/clothing/under/rank/virologist/skirt
+		if("Geneticist") tmp_path = /obj/item/clothing/under/rank/geneticist/skirt
+		if("Head of Security") tmp_path = /obj/item/clothing/under/rank/head_of_security/skirt
+		if("Warden") tmp_path = /obj/item/clothing/under/rank/warden/skirt
+		if("Security Officer") tmp_path = /obj/item/clothing/under/rank/security/skirt
+		else return null
+
+	return new tmp_path(H)
+
+
 /datum/gear/uniform/cheongsam
 	display_name = "cheongsam, white"
 	path = /obj/item/clothing/under/cheongsam
@@ -48,6 +86,7 @@
 /datum/gear/uniform/skirt_black
 	display_name = "skirt, black"
 	path = /obj/item/clothing/under/blackskirt
+
 /datum/gear/uniform/pants
 	display_name = "Pants, classic jeans"
 	path = /obj/item/clothing/under/pants/classicjeans

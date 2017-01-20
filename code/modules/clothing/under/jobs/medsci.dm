@@ -208,6 +208,7 @@
 /obj/item/clothing/under/rank/medical/skirt
 	name = "medical doctor's jumpskirt"
 	icon_state = "medicalf"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
 /obj/item/clothing/under/rank/medical/jeans
 	desc = "Simple blue jeans paired with white skirt. It has green cross, drawn on it's chest. Neat."
@@ -218,45 +219,47 @@
 /obj/item/clothing/under/rank/medical/jeans/female
 	icon_state = "medicaljf"
 
-/obj/item/clothing/under/rank/medical/paramedic
+/obj/item/clothing/under/rank/medical/sleeveless
 	name = "short sleeve medical jumpsuit"
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one has a cross on the chest denoting that the wearer is trained medical personnel."
 	icon_state = "medical_short"
 	item_state = "white"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
 
-/obj/item/clothing/under/rank/medical/paramedic_dark
+/obj/item/clothing/under/rank/medical/sleeveless/New()
+	..()
+	verbs -= /obj/item/clothing/under/verb/rollsleeves
+
+/obj/item/clothing/under/rank/medical/sleeveless/paramedic
 	name = "EMS medical jumpsuit"
-	desc = "It's made of a special fiber that provides minor protection against biohazards. This one has a cross on the chest denoting that the wearer is trained medical personnel."
 	icon_state = "paramedic_dark"
 	item_state = "bl_suit"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
 
-/obj/item/clothing/under/rank/medical/blue
+/obj/item/clothing/under/rank/medical/sleeveless/blue
 	name = "medical scrubs"
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in baby blue."
 	icon_state = "scrubsblue"
 	item_state = "blue"
 
-/obj/item/clothing/under/rank/medical/green
+/obj/item/clothing/under/rank/medical/sleeveless/green
 	name = "medical scrubs"
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in dark green."
 	icon_state = "scrubsgreen"
 	item_state = "green"
 
-/obj/item/clothing/under/rank/medical/purple
+/obj/item/clothing/under/rank/medical/sleeveless/purple
 	name = "medical scrubs"
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in deep purple."
 	icon_state = "scrubspurple"
 	item_state = "purple"
 
-/obj/item/clothing/under/rank/medical/black
+/obj/item/clothing/under/rank/medical/sleeveless/black
 	name = "medical scrubs"
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in black."
 	icon_state = "scrubsblack"
 	item_state = "black"
 
-/obj/item/clothing/under/rank/medical/navyblue
+/obj/item/clothing/under/rank/medical/sleeveless/navyblue
 	name = "medical scrubs"
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in navy blue."
 	icon_state = "scrubsnavyblue"
