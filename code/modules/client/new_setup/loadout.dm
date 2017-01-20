@@ -54,6 +54,17 @@ var/list/gear_datums = list()
 	if (!sort_category)
 		sort_category = "[slot]"
 
+/datum/gear/proc/spawn_for(var/mob/living/carbon/human/H)
+	if(allowed_roles && !(H.job in allowed_roles))
+		H << "<span class='warning'>Your current job does not permit you to spawn with [display_name]!</span>"
+		return null
+
+	if(whitelisted && !is_alien_whitelisted(H, whitelisted))
+		H << "<span class='warning'>Your current whitelist status does not permit you to spawn with [display_name]!</span>"
+		return null
+
+	return new path(H)
+
 //PAGE GENERATION AND HANDLING
 
 /datum/preferences
