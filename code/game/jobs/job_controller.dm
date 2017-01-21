@@ -394,7 +394,7 @@ var/global/datum/controller/occupations/job_master
 					if(G.slot in list(slot_wear_mask,  slot_wear_suit, slot_head))
 						//custom_equip_leftovers += thing
 						put_in_storage.Add(I)
-					else if(H.equip_to_slot_or_del(I, G.slot))
+					else if(H.equip_to_slot_if_possible(I, G.slot))
 						H << "<span class='notice'>Equipping you with [I]!</span>"
 						custom_equip_slots.Add(G.slot)
 					else
@@ -408,17 +408,11 @@ var/global/datum/controller/occupations/job_master
 		job.setup_account(H)
 		job.apply_fingerprints(H)
 
-/*		//If some custom items could not be equipped before, try again now.
-		for(var/thing in custom_equip_leftovers)
-			var/datum/gear/G = gear_datums[thing]
-			if(G.slot in custom_equip_slots)
-				spawn_in_storage += thing
-			else
-				if(H.equip_to_slot_or_del(new G.path(H), G.slot))
-					H << "<span class='notice'>Equipping you with \the [thing]!</span>"
-					custom_equip_slots.Add(G.slot)
-				else
-					spawn_in_storage += thing*/
+		//If some custom items could not be equipped before, try again now.
+		for(var/obj/item/I in put_in_storage)
+			if(H.equip_to_appropriate_slot(I))
+				put_in_storage -= I
+				H << "<span class='notice'>Equipping you with \the [I]!</span>"
 
 		// If they're head, give them the account info for their department
 		if(H.mind && job.head_position)
