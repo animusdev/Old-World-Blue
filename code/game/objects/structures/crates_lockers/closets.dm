@@ -236,10 +236,6 @@
 				M.show_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>", 3, "You hear welding.", 2)
 			qdel(src)
 			return
-		if(isrobot(user))
-			return
-		if(W.loc != user) // This should stop mounted modules ending up outside the module.
-			return
 		user.unEquip(W, src.loc)
 
 	else if(istype(W, /obj/item/weapon/packageWrap))
