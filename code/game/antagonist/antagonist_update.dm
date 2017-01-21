@@ -15,7 +15,7 @@
 		spawn(3)
 			var/mob/living/carbon/human/H = player.current
 			if(istype(H))
-				H.change_appearance(APPEARANCE_ALL, check_species_whitelist = 1, species_whitelist = valid_species, state = z_state)
+				H.change_appearance(APPEARANCE_ALL, species_whitelist = valid_species)
 	return player.current
 
 /datum/antagonist/proc/update_access(var/mob/living/player)
