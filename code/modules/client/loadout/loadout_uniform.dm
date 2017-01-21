@@ -253,6 +253,19 @@
 	path = /obj/item/clothing/under/rank/security/corp
 	allowed_roles = list("Security Officer","Head of Security","Warden")
 
+/datum/gear/uniform/corpsecsuit/spawn_for(var/mob/living/carbon/human/H)
+	if(allowed_roles && !(H.job in allowed_roles))
+		H << "<span class='warning'>Your current job does not permit you to spawn with [display_name]!</span>"
+		return null
+
+	var/tmp_path = path
+	switch(H.job)
+		if("Head of Security")
+			tmp_path = /obj/item/clothing/under/rank/head_of_security/corp
+		if("Warden")
+			tmp_path = /obj/item/clothing/under/rank/warden/corp
+	return new tmp_path ()
+
 /datum/gear/uniform/uniform_hop
 	display_name = "uniform, HoP's dress"
 	path = /obj/item/clothing/under/dress/dress_hop

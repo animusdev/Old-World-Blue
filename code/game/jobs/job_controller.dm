@@ -30,7 +30,6 @@ var/global/datum/controller/occupations/job_master
 			if(job.faction != faction)	continue
 			occupations += job
 			occupations_by_name[job.title] = job
-
 		return 1
 
 
@@ -450,9 +449,8 @@ var/global/datum/controller/occupations/job_master
 					H << "<span class='danger'>Failed to locate a storage object on your mob, either you spawned with no arms and no backpack or this is a bug.</span>"
 				else
 					for(var/obj/item/I in put_in_storage)
-						for(var/thing in put_in_storage)
-							H << "<span class='notice'>Placing \the [I] in your [B.name]!</span>"
-							I.forceMove(B)
+						H << "<span class='notice'>Placing \the [I] in your [B.name]!</span>"
+						I.forceMove(B)
 
 		if(istype(H) && !H.buckled) //give humans wheelchairs, if they need them.
 			if(!H.get_organ(BP_L_FOOT) && !H.get_organ(BP_R_FOOT))
