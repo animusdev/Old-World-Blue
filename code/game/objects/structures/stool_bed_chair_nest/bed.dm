@@ -35,6 +35,10 @@
 		padding_material = get_material_by_name(new_padding_material)
 	update_icon()
 
+/obj/structure/bed/attack_robot(mob/user)
+	if(Adjacent(user))
+		attack_hand(user)
+
 /obj/structure/bed/get_material()
 	return material
 
