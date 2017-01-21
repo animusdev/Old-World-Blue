@@ -254,8 +254,10 @@
 	allowed_roles = list("Security Officer","Head of Security","Warden")
 
 /datum/gear/uniform/corpsecsuit/spawn_for(var/mob/living/carbon/human/H)
-	if(!..())
+	if(allowed_roles && !(H.job in allowed_roles))
+		H << "<span class='warning'>Your current job does not permit you to spawn with [display_name]!</span>"
 		return null
+
 	var/tmp_path = path
 	switch(H.job)
 		if("Head of Security")
