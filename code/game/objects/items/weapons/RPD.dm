@@ -141,7 +141,7 @@ RPD
 <A href='?src=\ref[src];make=17;pipe_type=heunary;dir=1'>Heat Exchanger</A><BR>
 <b>Insulated pipes:</b><BR>
 <A href='?src=\ref[src];make=11;pipe_type=insulated;dir=1'>Pipe</A><BR>
-<A href='?src=\ref[src];make=12;pipe_type=insulated;;dir=5'>Bent Pipe</A><BR>
+<A href='?src=\ref[src];make=12;pipe_type=insulated;dir=5'>Bent Pipe</A><BR>
 <br><b>Disposal Pipes</b><br>
 <A href='?src=\ref[src];dmake=0'>Pipe</A><BR>
 <A href='?src=\ref[src];dmake=1'>Bent Pipe</A><BR>
@@ -194,8 +194,8 @@ RPD
 				wait = 0*/
 	if(href_list["dmake"])
 		if(!wait)
-			if(p_type != -1)
-				p_type = -1
+			if(p_type != -2)
+				p_type = -2
 			d_p_type = text2num(href_list["dmake"])
 	attack_self(usr)
 	return
@@ -259,7 +259,7 @@ RPD
 		var/obj/item/pipe/P = new (/*usr.loc*/ get_turf(A), pipe_type=p_type, dir=spawn_dir)
 		P.update()
 		P.add_fingerprint(usr)
-	else if(d_p_type>=0)
+	else if((p_type == -2) && (d_p_type>=0))
 		var/obj/structure/disposalconstruct/C = new (/*src.loc*/ get_turf(A))
 		switch(d_p_type)
 			if(0)
