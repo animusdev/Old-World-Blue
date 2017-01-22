@@ -13,6 +13,7 @@
 
 /datum/antagonist/changeling/can_become_antag(var/datum/mind/player, var/ignore_role)
 	if(player.current && ishuman(player.current))
+		if(player.current.isSynthetic) return 0
 		var/datum/species/S = player.current:species
 		if(S.flags & (NO_SCAN|IS_SYNTHETIC)) return 0
 	return ..()
