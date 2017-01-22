@@ -314,7 +314,7 @@
 
 		if(!hidden || distance <=1)
 			if(E.dislocated > 0)
-				wound_flavor_text[E.name] += "[capitalize(t_his)]] [E.joint] is dislocated!<br>"
+				wound_flavor_text[E.name] += "[capitalize(t_his)] [E.joint] is dislocated!<br>"
 			if(((E.status & ORGAN_BROKEN) && E.brute_dam > E.min_broken_damage) || (E.status & ORGAN_MUTATED))
 				wound_flavor_text[E.name] += "[capitalize(t_his)] [E.name] is dented and swollen!<br>"
 

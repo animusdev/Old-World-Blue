@@ -13,6 +13,7 @@
 	..()
 	hold = new/obj/item/weapon/storage/internal(src)
 	hold.max_storage_space = slots * 2
+	hold.storage_slots = slots
 
 /obj/item/clothing/accessory/storage/attack_hand(mob/user as mob)
 	if (has_suit)	//if we are part of a suit

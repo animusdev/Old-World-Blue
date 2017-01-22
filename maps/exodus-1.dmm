@@ -1499,7 +1499,7 @@
 "aCQ" = (/obj/machinery/alarm{pixel_y = 23},/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/ai_monitored/storage/eva)
 "aCR" = (/turf/simulated/floor{dir = 5; icon_state = "warning"},/area/ai_monitored/storage/eva)
 "aCS" = (/obj/machinery/door/firedoor/border_only,/obj/machinery/door/airlock/glass_security{name = "Security Hardsuits"; req_access = list(2)},/turf/simulated/floor{icon_state = "dark"},/area/ai_monitored/storage/eva)
-"aCT" = (/obj/structure/table/rack,/obj/item/clothing/mask/breath,/obj/item/clothing/head/helmet/space/void/security,/obj/item/clothing/shoes/magboots,/obj/item/clothing/suit/space/void/security,/turf/simulated/floor{icon_state = "vault"; dir = 8},/area/ai_monitored/storage/eva)
+"aCT" = (/obj/structure/table/rack,/obj/item/clothing/mask/breath,/obj/item/clothing/head/helmet/space/void/security,/obj/item/clothing/shoes/magboots/toggleable,/obj/item/clothing/suit/space/void/security,/turf/simulated/floor{icon_state = "vault"; dir = 8},/area/ai_monitored/storage/eva)
 "aCU" = (/turf/simulated/floor{dir = 8; icon_state = "bluecorner"},/area/hallway/primary/fore)
 "aCV" = (/obj/machinery/atmospherics/unary/vent_pump/on{dir = 4},/obj/structure/bed/chair/comfy/brown{dir = 1},/obj/machinery/firealarm{dir = 1; pixel_x = 0; pixel_y = -24},/obj/machinery/alarm{dir = 4; icon_state = "alarm0"; pixel_x = -22},/turf/simulated/floor/wood,/area/crew_quarters/sleep/bedrooms)
 "aCW" = (/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,/turf/simulated/floor/wood,/area/crew_quarters/sleep/bedrooms)

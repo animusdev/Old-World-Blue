@@ -372,14 +372,3 @@ client/verb/new_character_setup()
 	set hidden = 1
 	if(prefs)
 		prefs.NewShowChoices(usr)
-
-client/Click(target)
-	if(CH)
-		if(CH.mob_check(mob))
-			if (CH.use_ability(mob,target) && CH.one_use_flag)
-				CH = null
-			return
-		else
-			src << "For some reason you can't use [CH.handler_name] ability"
-			CH = null
-	..()
