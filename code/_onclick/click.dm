@@ -16,6 +16,22 @@
 	Note that this proc can be overridden, and is in the case of screen objects.
 */
 
+
+/client/Click(target, location, control, params)
+	if(buildmode && !istype(target, /obj/screen))
+		buildmode.build_click(src.mob, params, target)
+		return
+
+	if(CH)
+		if(CH.mob_check(mob))
+			if (CH.use_ability(mob,target) && CH.one_use_flag)
+				CH = null
+			return
+		else
+			src << "For some reason you can't use [CH.handler_name] ability"
+			CH = null
+	..()
+
 /atom/Click(var/location, var/control, var/params) // This is their reaction to being clicked on (standard proc)
 	if(src)
 		usr.ClickOn(src, params)
@@ -43,10 +59,6 @@
 		return
 
 	next_click = world.time + 1
-
-	if(client.buildmode)
-		build_click(src, client.buildmode, params, A)
-		return
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["ctrl"])
