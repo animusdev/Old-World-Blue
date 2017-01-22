@@ -4,14 +4,14 @@
 	endWhen			= 33
 
 /datum/event/meteor_wave/setup()
-	endWhen = rand(15,30) * 3
+	endWhen = rand(15,30) * 4
 
 /datum/event/meteor_wave/announce()
 	command_announcement.Announce("Meteors have been detected on collision course with the station.", "Meteor Alert", new_sound = 'sound/AI/meteors.ogg')
 
 /datum/event/meteor_wave/tick()
 	if(IsMultiple(activeFor, 3))
-		meteor_wave(rand(2,5))
+		meteor_wave(rand(3,9))
 
 /datum/event/meteor_wave/end()
 	command_announcement.Announce("The station has cleared the meteor storm.", "Meteor Alert")
