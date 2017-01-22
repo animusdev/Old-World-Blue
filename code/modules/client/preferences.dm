@@ -1498,13 +1498,6 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	if(random_name || jobban_isbanned(usr, "Name"))
 		real_name = random_name(gender,species)
 
-	var/firstspace = findtext(real_name, " ")
-	var/name_length = length(real_name)
-	if(!firstspace)	//we need a surname
-		real_name += " [pick(last_names)]"
-	else if(firstspace == name_length)
-		real_name += "[pick(last_names)]"
-
 	character.real_name = real_name
 	character.name = character.real_name
 	if(character.dna)
