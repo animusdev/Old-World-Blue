@@ -757,7 +757,7 @@ var/list/datum/dna/hivemind_bank = list()
 
 //Handles the general sting code to reduce on copypasta (seeming as somebody decided to make SO MANY dumb abilities)
 /mob/proc/changeling_sting(var/required_chems=0,var/mob/living/carbon/T)//(var/required_chems=0, var/verb_path,var/mob/living/carbon/T)
-	if (!ishuman(T))
+	if (!ishuman(T) || (T==src))
 		T.Click()
 		return
 
@@ -783,8 +783,8 @@ var/list/datum/dna/hivemind_bank = list()
 //	spawn(10)	src.verbs += verb_path
 
 	src << "<span class='notice'>We stealthily sting [T].</span>"
+	T << "<span class='warning'>You feel a tiny prick.</span>"
 	if(!T.mind || !T.mind.changeling)
-		T << "<span class='warning'>You feel a tiny prick.</span>"
 		return T //T will be affected by the sting
 	return
 
