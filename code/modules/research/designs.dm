@@ -1167,7 +1167,7 @@ datum/design/item/powercell/super
 	name = "device cell"
 	id = "weapon"
 	req_tech = list("powerstorage" = 1)
-	materials = list("$metal" = 600, "$glass" = 50)
+	materials = list("$metal" = 350, "$glass" = 30)
 	build_path = /obj/item/weapon/cell/device
 	category = "Misc"
 
