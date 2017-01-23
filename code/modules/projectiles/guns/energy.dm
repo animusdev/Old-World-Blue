@@ -13,8 +13,7 @@
 	firemode_type = /datum/firemode/energy
 
 	var/obj/item/weapon/cell/power_supply //What type of power cell this uses
-	var/charge_cost = 200 //How much energy is needed to fire.
-	var/max_shots = 10 //Determines the capacity of the weapon's power cell. Specifying a cell_type overrides this value.
+	var/charge_cost = 240 //How much energy is needed to fire.
 	var/cell_type = null
 	var/projectile_type = /obj/item/projectile/beam/practice
 	var/modifystate
@@ -25,6 +24,8 @@
 	var/use_external_power = 0 //if set, the weapon will look for an external power source to draw from, otherwise it recharges magically
 	var/recharge_time = 4
 	var/charge_tick = 0
+
+	var/battery_lock = 0	//If set, weapon cannot switch batteries
 
 /obj/item/weapon/gun/energy/switch_firemodes(mob/user=null)
 	..()
@@ -47,7 +48,7 @@
 	if(cell_type)
 		power_supply = new cell_type(src)
 	else
-		power_supply = new /obj/item/weapon/cell/device/variable(src, max_shots*charge_cost)
+		power_supply = new /obj/item/weapon/cell/device/weapon(src)
 	if(self_recharge)
 		processing_objects.Add(src)
 	update_icon()
@@ -81,6 +82,54 @@
 	if(!power_supply.checked_use(charge_cost)) return null
 	return new projectile_type(src)
 
+/obj/item/weapon/gun/energy/proc/load_ammo(var/obj/item/C, mob/user)
+	if(istype(C, /obj/item/weapon/cell))
+		if(self_recharge || battery_lock)
+			user << "<span class='notice'>[src] does not have a battery port.</span>"
+			return
+		if(istype(C, /obj/item/weapon/cell/device))
+			var/obj/item/weapon/cell/device/P = C
+			if(power_supply)
+				user << "<span class='notice'>[src] already has a power cell.</span>"
+			else
+				user.visible_message("[user] is reloading [src].", "<span class='notice'>You start to insert [P] into [src].</span>")
+				if(do_after(user, 10))
+					user.remove_from_mob(P)
+					power_supply = P
+					P.loc = src
+					user.visible_message("[user] inserts [P] into [src].", "<span class='notice'>You insert [P] into [src].</span>")
+					playsound(src.loc, 'sound/weapons/flipblade.ogg', 50, 1)
+					update_icon()
+					update_held_icon()
+		else
+			user << "<span class='notice'>This cell is not fitted for [src].</span>"
+	return
+
+/obj/item/weapon/gun/energy/proc/unload_ammo(mob/user)
+	if(self_recharge || battery_lock)
+		user << "<span class='notice'>[src] does not have a battery port.</span>"
+		return
+	if(power_supply)
+		user.put_in_hands(power_supply)
+		power_supply.update_icon()
+		user.visible_message("[user] removes [power_supply] from [src].", "<span class='notice'>You remove [power_supply] from [src].</span>")
+		power_supply = null
+		playsound(src.loc, 'sound/weapons/empty.ogg', 50, 1)
+		update_icon()
+		update_held_icon()
+	else
+		user << "<span class='notice'>[src] does not have a power cell.</span>"
+
+/obj/item/weapon/gun/energy/attackby(var/obj/item/A as obj, mob/user as mob)
+	..()
+	load_ammo(A, user)
+
+/obj/item/weapon/gun/energy/attack_hand(mob/user as mob)
+	if(user.get_inactive_hand() == src)
+		unload_ammo(user)
+	else
+		return ..()
+
 /obj/item/weapon/gun/energy/proc/get_external_power_supply()
 	if(isrobot(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
@@ -101,7 +150,14 @@
 		var/shots_remaining = round(power_supply.charge / charge_cost)
 		user << "Has [shots_remaining] shot\s remaining."
 
-/obj/item/weapon/gun/energy/update_icon()
+/obj/item/weapon/gun/energy/update_icon(var/ignore_inhands)
+	if(power_supply == null)
+		if(modifystate)
+			icon_state = "[modifystate]_open"
+		else
+			icon_state = "[initial(icon_state)]_open"
+		return
+
 	if(charge_meter)
 		var/ratio = power_supply.charge / power_supply.maxcharge
 
@@ -115,4 +171,5 @@
 			icon_state = "[modifystate][ratio]"
 		else
 			icon_state = "[initial(icon_state)][ratio]"
+	if(!ignore_inhands) update_held_icon()
 

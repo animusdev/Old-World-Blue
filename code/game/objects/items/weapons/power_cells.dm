@@ -26,18 +26,25 @@
 /obj/item/weapon/cell/device
 	name = "device power cell"
 	desc = "A small power cell designed to power handheld devices."
-	icon_state = "cell" //placeholder
+	icon_state = "dcell" //placeholder
 	w_class = 2
 	force = 0
 	throw_speed = 5
 	throw_range = 7
-	maxcharge = 1000
+	maxcharge = 480
 	matter = list("metal" = 350, "glass" = 50)
 
 /obj/item/weapon/cell/device/variable/New(newloc, charge_amount)
 	..(newloc)
 	maxcharge = charge_amount
 	charge = maxcharge
+
+/obj/item/weapon/cell/device/weapon
+	name = "weapon power cell"
+	desc = "A small power cell designed to power handheld weaponry."
+	icon_state = "wcell"
+	maxcharge = 2400
+
 
 /obj/item/weapon/cell/crap
 	name = "\improper Nanotrasen brand rechargable AA battery"

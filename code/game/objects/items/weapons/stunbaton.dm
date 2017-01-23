@@ -16,7 +16,7 @@
 	var/agonyforce = 80
 	var/status = 0		//whether the thing is on or not
 	var/obj/item/weapon/cell/bcell = null
-	var/hitcost = 1000	//oh god why do power cells carry so much charge? We probably need to make a distinction between "industrial" sized power cells for APCs and power cells for everything else.
+	var/hitcost = 240	//oh god why do power cells carry so much charge? We probably need to make a distinction between "industrial" sized power cells for APCs and power cells for everything else.
 
 /obj/item/weapon/melee/baton/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is putting the live [name] in \his mouth! It looks like \he's trying to commit suicide.</span>")
@@ -29,7 +29,7 @@
 
 /obj/item/weapon/melee/baton/loaded/New() //this one starts with a cell pre-installed.
 	..()
-	bcell = new/obj/item/weapon/cell/high(src)
+	bcell = new/obj/item/weapon/cell/device/weapon(src)
 	update_icon()
 	return
 
@@ -61,27 +61,35 @@
 	else
 		user <<"<span class='warning'>The baton does not have a power source installed.</span>"
 
+
 /obj/item/weapon/melee/baton/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/cell))
-		if(!bcell)
-			user.drop_from_inventory(W, src)
-			bcell = W
-			user << "<span class='notice'>You install a cell in [src].</span>"
-			update_icon()
+		if(istype(W, /obj/item/weapon/cell/device))
+			if(!bcell)
+				user.drop_from_inventory(W, src)
+				W.loc = src
+				bcell = W
+				user << "<span class='notice'>You install a cell in [src].</span>"
+				update_icon()
+			else
+				user << "<span class='notice'>[src] already has a cell.</span>"
 		else
-			user << "<span class='notice'>[src] already has a cell.</span>"
+			user << "<span class='notice'>This cell is not fitted for [src].</span>"
 
-	else if(istype(W, /obj/item/weapon/screwdriver))
+
+/obj/item/weapon/melee/baton/attack_hand(mob/user as mob)
+	if(user.get_inactive_hand() == src)
 		if(bcell)
 			bcell.update_icon()
-			bcell.loc = get_turf(src.loc)
+			user.put_in_hands(bcell)
 			bcell = null
 			user << "<span class='notice'>You remove the cell from the [src].</span>"
 			status = 0
 			update_icon()
 			return
 		..()
-	return
+	else
+		return ..()
 
 /obj/item/weapon/melee/baton/attack_self(mob/user)
 	if(bcell && bcell.charge > hitcost)
@@ -196,6 +204,21 @@
 	attack_verb = list("poked")
 	slot_flags = null
 
+
+/obj/item/weapon/melee/baton/cattleprod/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/cell))
+		if(!istype(W, /obj/item/weapon/cell)) //Industrial battery to craft, but it is wrong
+			if(!bcell)
+				user.drop_from_inventory()
+				W.loc = src
+				bcell = W
+				user << "<span class='notice'>You install a cell in [src].</span>"
+				update_icon()
+			else
+				user << "<span class='notice'>[src] already has a cell.</span>"
+		else
+			user << "<span class='notice'>This cell is not fitted for [src].</span>"
+
 /obj/item/weapon/melee/baton/shocker
 	name = "shocker"
 	desc = "Electrifying!"
@@ -205,7 +228,7 @@
 	throwforce = 0
 	stunforce = 0
 	agonyforce = 60
-	hitcost = 1000
+	hitcost = 480
 	w_class = 2
 	attack_verb = list("shocked")
 	slot_flags = SLOT_BELT
@@ -217,6 +240,6 @@
 
 /obj/item/weapon/melee/baton/shocker/loaded/New()
 	..()
-	bcell = new/obj/item/weapon/cell/high(src)
+	bcell = new/obj/item/weapon/cell/device/weapon(src)
 	update_icon()
 	return

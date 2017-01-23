@@ -20,6 +20,7 @@
 	name = "practice laser gun"
 	desc = "A modified version of the HI G40E, this one fires less concentrated energy bolts designed for target practice."
 	projectile_type = /obj/item/projectile/beam/practice
+	cell_type = /obj/item/weapon/cell/device
 
 obj/item/weapon/gun/energy/retro
 	name = "retro laser"
@@ -43,7 +44,7 @@ obj/item/weapon/gun/energy/retro
 	w_class = 3
 	projectile_type = /obj/item/projectile/beam
 	origin_tech = null
-	max_shots = 5 //to compensate a bit for self-recharging
+	charge_cost = 480
 	self_recharge = 1
 
 /obj/item/weapon/gun/energy/lasercannon
@@ -55,14 +56,15 @@ obj/item/weapon/gun/energy/retro
 	origin_tech = list(TECH_COMBAT = 4, TECH_MATERIAL = 3, TECH_POWER = 3)
 	slot_flags = SLOT_BELT|SLOT_BACK
 	projectile_type = /obj/item/projectile/beam/heavylaser
-	charge_cost = 400
-	max_shots = 5
+	battery_lock = 1
+	charge_cost = 600
 	fire_delay = 20
 
 /obj/item/weapon/gun/energy/lasercannon/mounted
 	name = "mounted laser cannon"
 	self_recharge = 1
 	use_external_power = 1
+	charge_cost = 400
 	recharge_time = 10
 
 /obj/item/weapon/gun/energy/xray
@@ -73,8 +75,7 @@ obj/item/weapon/gun/energy/retro
 	fire_sound = 'sound/weapons/laser3.ogg'
 	origin_tech = list(TECH_COMBAT = 5, TECH_MATERIAL = 3, TECH_MAGNET = 2)
 	projectile_type = /obj/item/projectile/beam/xray
-	charge_cost = 100
-	max_shots = 20
+	charge_cost = 200
 	fire_delay = 1
 
 /obj/item/weapon/gun/energy/sniperrifle
@@ -86,8 +87,8 @@ obj/item/weapon/gun/energy/retro
 	origin_tech = list(TECH_COMBAT = 6, TECH_MATERIAL = 5, TECH_POWER = 4)
 	projectile_type = /obj/item/projectile/beam/sniper
 	slot_flags = SLOT_BACK
-	charge_cost = 400
-	max_shots = 4
+	battery_lock = 1
+	charge_cost = 600
 	fire_delay = 35
 	force = 10
 	w_class = 4
@@ -141,8 +142,7 @@ obj/item/weapon/gun/energy/retro
 	item_state = "lasercannon"
 	fire_sound = 'sound/weapons/laser3.ogg'
 	projectile_type = /obj/item/projectile/beam/laserlight
-	charge_cost = 50
-	max_shots = 20
+	charge_cost = 120
 	fire_delay = 2
 	self_recharge = 1
 	slot_flags = null
@@ -154,8 +154,8 @@ obj/item/weapon/gun/energy/retro
 	item_state = "pulse"
 	fire_sound = 'sound/weapons/pulse.ogg'
 	projectile_type = /obj/item/projectile/instagib
-	charge_cost = 500
-	max_shots = 3
+	charge_cost = 480
+
 	fire_delay = 30
 	self_recharge = 1
 	slot_flags = null
