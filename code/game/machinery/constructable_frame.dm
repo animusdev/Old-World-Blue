@@ -9,7 +9,6 @@
 	density = 1
 	anchored = 1
 	use_power = 0
-	var/obj/item/weapon/circuitboard/circuit = null
 	var/list/components = null
 	var/list/req_components = null
 	var/list/req_component_names = null
@@ -46,7 +45,7 @@
 			else
 				if(istype(P, /obj/item/weapon/wrench))
 					playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-					user << "\blue You dismantle the frame"
+					user << "<span class='notice'>You dismantle the frame</span>"
 					new /obj/item/stack/material/steel(src.loc, 5)
 					qdel(src)
 		if(2)
@@ -54,7 +53,7 @@
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "machine")
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					user << "\blue You add the circuit board to the frame."
+					user << "<span class='notice'>You add the circuit board to the frame.</span>"
 					circuit = P
 					user.drop_from_inventory(P, src)
 					icon_state = "box_2"
@@ -70,11 +69,11 @@
 					update_desc()
 					user << desc
 				else
-					user << "\red This frame does not accept circuit boards of this type!"
+					user << "<span class='warning'>This frame does not accept circuit boards of this type!</span>"
 			else
 				if(istype(P, /obj/item/weapon/wirecutters))
 					playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-					user << "\blue You remove the cables."
+					user << "<span class='notice'>You remove the cables.</span>"
 					state = 1
 					icon_state = "box_0"
 					var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( src.loc )
@@ -87,9 +86,9 @@
 				circuit.loc = src.loc
 				circuit = null
 				if(components.len == 0)
-					user << "\blue You remove the circuit board."
+					user << "<span class='notice'>You remove the circuit board.</span>"
 				else
-					user << "\blue You remove the circuit board and other components."
+					user << "<span class='notice'>You remove the circuit board and other components.</span>"
 					for(var/obj/item/weapon/W in components)
 						W.loc = src.loc
 				desc = initial(desc)
@@ -152,4 +151,4 @@
 								break
 						user << desc
 						if(P && P.loc != src && !istype(P, /obj/item/stack/cable_coil))
-							user << "\red You cannot add that component to the machine!"
+							user << "<span class='warning'>You cannot add that component to the machine!</span>"

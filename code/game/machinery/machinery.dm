@@ -110,6 +110,7 @@ Class Procs:
 	var/panel_open = 0
 	var/global/gl_uid = 1
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
+	var/obj/item/weapon/circuitboard/circuit = null
 
 /obj/machinery/New(l, d=0)
 	..(l)
@@ -132,7 +133,7 @@ Class Procs:
 	if(contents) // The same for contents.
 		for(var/atom/A in contents)
 			qdel(A)
-	..()
+	return ..()
 
 /obj/machinery/process()//If you dont use process or power why are you here
 	if(!(use_power || idle_power_usage || active_power_usage))
@@ -227,15 +228,16 @@ Class Procs:
 	if(user.lying || user.stat)
 		return 1
 	if (!user.IsAdvancedToolUser())
+		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
 
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.getBrainLoss() >= 60)
-			visible_message("\red [H] stares cluelessly at [src] and drools.")
+		if(H.getBrainLoss() >= 55)
+			visible_message("<span class='warning'>[H] stares cluelessly at [src].</span>")
 			return 1
 		else if(prob(H.getBrainLoss()))
-			user << "\red You momentarily forget how to use [src]."
+			user << "<span class='warning'>You momentarily forget how to use [src].</span>"
 			return 1
 
 	src.add_fingerprint(user)
@@ -279,29 +281,13 @@ Class Procs:
 			return 1
 	return 0
 
-/obj/machinery/proc/default_deconstruction_crowbar(var/mob/user, var/obj/item/weapon/crowbar/C)
-	if(!istype(C))
-		return 0
-	if(!panel_open)
-		return 0
-	. = dismantle()
-
-/obj/machinery/proc/default_deconstruction_screwdriver(var/mob/user, var/obj/item/weapon/screwdriver/S)
-	if(!istype(S))
-		return 0
-	playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-	panel_open = !panel_open
-	user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>"
-	update_icon()
-	return 1
-
 /obj/machinery/proc/default_part_replacement(var/mob/user, var/obj/item/weapon/storage/part_replacer/R)
 	if(!istype(R))
 		return 0
 	if(!component_parts)
 		return 0
 	if(panel_open)
-		var/obj/item/weapon/circuitboard/CB = locate(/obj/item/weapon/circuitboard) in component_parts
+		var/obj/item/weapon/circuitboard/CB = circuit
 		var/P
 		for(var/obj/item/weapon/stock_parts/A in component_parts)
 			for(var/D in CB.req_components)
@@ -324,6 +310,22 @@ Class Procs:
 		user << "<span class='notice'>Following parts detected in the machine:</span>"
 		for(var/var/obj/item/C in component_parts)
 			user << "<span class='notice'>    [C.name]</span>"
+	return 1
+
+/obj/machinery/proc/default_deconstruction_crowbar(var/mob/user, var/obj/item/weapon/crowbar/C)
+	if(!istype(C))
+		return 0
+	if(!panel_open)
+		return 0
+	. = dismantle()
+
+/obj/machinery/proc/default_deconstruction_screwdriver(var/mob/user, var/obj/item/weapon/screwdriver/S)
+	if(!istype(S))
+		return 0
+	playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+	panel_open = !panel_open
+	user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>"
+	update_icon()
 	return 1
 
 /obj/machinery/proc/dismantle()
