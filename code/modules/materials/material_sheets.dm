@@ -90,6 +90,7 @@
 /obj/item/stack/material/iron
 	name = "iron"
 	default_type = "iron"
+	icon_state = "sheet-silver"
 	apply_colour = 1
 
 /obj/item/stack/material/iron/full
@@ -98,6 +99,7 @@
 /obj/item/stack/material/sandstone
 	name = "sandstone brick"
 	default_type = "sandstone"
+	icon_state = "sheet-sandstone"
 
 /obj/item/stack/material/sandstone/full
 	amount = 50
@@ -105,6 +107,7 @@
 /obj/item/stack/material/marble
 	name = "marble brick"
 	default_type = "marble"
+	icon_state = "sheet-marble"
 
 /obj/item/stack/material/marble/full
 	amount = 50
@@ -112,6 +115,7 @@
 /obj/item/stack/material/diamond
 	name = "diamond"
 	default_type = "diamond"
+	icon_state = "sheet-diamond"
 
 /obj/item/stack/material/diamond/full
 	amount = 50
@@ -119,6 +123,7 @@
 /obj/item/stack/material/uranium
 	name = "uranium"
 	default_type = "uranium"
+	icon_state = "sheet-uranium"
 
 /obj/item/stack/material/uranium/full
 	amount = 50
@@ -126,6 +131,7 @@
 /obj/item/stack/material/phoron
 	name = "solid phoron"
 	default_type = "phoron"
+	icon_state = "sheet-phoron"
 
 /obj/item/stack/material/phoron/full
 	amount = 50
@@ -133,6 +139,7 @@
 /obj/item/stack/material/plastic
 	name = "plastic"
 	default_type = "plastic"
+	icon_state = "sheet-plastic"
 
 /obj/item/stack/material/plastic/full
 	amount = 50
@@ -140,6 +147,7 @@
 /obj/item/stack/material/gold
 	name = "gold"
 	default_type = "gold"
+	icon_state = "sheet-gold"
 
 /obj/item/stack/material/gold/full
 	amount = 50
@@ -147,6 +155,7 @@
 /obj/item/stack/material/silver
 	name = "silver"
 	default_type = "silver"
+	icon_state = "sheet-silver"
 
 /obj/item/stack/material/silver/full
 	amount = 50
@@ -155,6 +164,7 @@
 /obj/item/stack/material/platinum
 	name = "platinum"
 	default_type = "platinum"
+	icon_state = "sheet-adamantine"
 
 /obj/item/stack/material/platinum/full
 	amount = 50
@@ -163,6 +173,7 @@
 /obj/item/stack/material/mhydrogen
 	name = "metallic hydrogen"
 	default_type = "mhydrogen"
+	icon_state = "sheet-mythril"
 
 /obj/item/stack/material/mhydrogen/full
 	amount = 50
@@ -171,6 +182,7 @@
 /obj/item/stack/material/tritium
 	name = "tritium"
 	default_type = "tritium"
+	icon_state = "sheet-silver"
 	apply_colour = 1
 
 /obj/item/stack/material/tritium/full
@@ -179,6 +191,7 @@
 /obj/item/stack/material/osmium
 	name = "osmium"
 	default_type = "osmium"
+	icon_state = "sheet-silver"
 	apply_colour = 1
 
 /obj/item/stack/material/osmium/full
@@ -187,6 +200,7 @@
 /obj/item/stack/material/steel
 	name = DEFAULT_WALL_MATERIAL
 	default_type = DEFAULT_WALL_MATERIAL
+	icon_state = "sheet-metal"
 
 /obj/item/stack/material/steel/full
 	amount = 50
@@ -194,6 +208,7 @@
 /obj/item/stack/material/plasteel
 	name = "plasteel"
 	default_type = "plasteel"
+	icon_state = "sheet-plasteel"
 
 /obj/item/stack/material/plasteel/full
 	amount = 50
@@ -201,6 +216,7 @@
 /obj/item/stack/material/wood
 	name = "wooden plank"
 	default_type = "wood"
+	icon_state = "sheet-wood"
 
 /obj/item/stack/material/wood/full
 	amount = 50
@@ -215,6 +231,7 @@
 /obj/item/stack/material/cardboard
 	name = "cardboard"
 	default_type = "cardboard"
+	icon_state = "sheet-card"
 
 /obj/item/stack/material/cardboard/full
 	amount = 50
@@ -230,6 +247,7 @@
 /obj/item/stack/material/glass
 	name = "glass"
 	default_type = "glass"
+	icon_state = "sheet-glass"
 
 /obj/item/stack/material/glass/full
 	amount = 50
@@ -237,6 +255,7 @@
 /obj/item/stack/material/glass/reinforced
 	name = "reinforced glass"
 	default_type = "rglass"
+	icon_state = "sheet-rglass"
 
 /obj/item/stack/material/glass/reinforced/full
 	amount = 50
@@ -246,6 +265,7 @@
 	desc = "This sheet is special platinum-glass alloy designed to withstand large temperatures"
 	singular_name = "borosilicate glass sheet"
 	default_type = "phglass"
+	icon_state = "sheet-phoronglass"
 
 /obj/item/stack/material/glass/phoronglass/full
 	amount = 50
@@ -255,6 +275,7 @@
 	desc = "This sheet is special platinum-glass alloy designed to withstand large temperatures. It is reinforced with few rods."
 	singular_name = "reinforced borosilicate glass sheet"
 	default_type = "rphglass"
+	icon_state = "sheet-phoronrglass"
 
 /obj/item/stack/material/glass/phoronrglass/full
 	amount = 50
