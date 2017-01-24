@@ -76,6 +76,9 @@ Class Procs:
       Called by the area that contains the object when ever that area under goes a
       power state change (area runs out of power, or area channel is turned off).
 
+   InitCircuit()
+      Called in New. Create
+
    RefreshParts()               'game/machinery/machine.dm'
       Called to refresh the variables in the machine that are contributed to by parts
       contained in the component_parts list. (example: glass and material amounts for
@@ -287,10 +290,9 @@ Class Procs:
 	if(!component_parts)
 		return 0
 	if(panel_open)
-		var/obj/item/weapon/circuitboard/CB = circuit
 		var/P
 		for(var/obj/item/weapon/stock_parts/A in component_parts)
-			for(var/D in CB.req_components)
+			for(var/D in circuit.req_components)
 				if(istype(A, D))
 					P = D
 					break
