@@ -67,7 +67,6 @@
 		if(istype(W, /obj/item/weapon/cell/device))
 			if(!bcell)
 				user.drop_from_inventory(W, src)
-				W.loc = src
 				bcell = W
 				user << "<span class='notice'>You install a cell in [src].</span>"
 				update_icon()
@@ -206,17 +205,14 @@
 
 
 /obj/item/weapon/melee/baton/cattleprod/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/cell))
-		if(!istype(W, /obj/item/weapon/cell)) //Industrial battery to craft, but it is wrong
-			if(!bcell)
-				W.loc = src
-				bcell = W
-				user << "<span class='notice'>You install a cell in [src].</span>"
-				update_icon()
-			else
-				user << "<span class='notice'>[src] already has a cell.</span>"
+	if(istype(W, /obj/item/weapon/cell)) //Industrial battery to craft, but it is wrong
+		if(!bcell)
+			user.drop_from_inventory(W, src)
+			bcell = W
+			user << "<span class='notice'>You install a cell in [src].</span>"
+			update_icon()
 		else
-			user << "<span class='notice'>This cell is not fitted for [src].</span>"
+			user << "<span class='notice'>[src] already has a cell.</span>"
 
 /obj/item/weapon/melee/baton/shocker
 	name = "shocker"
