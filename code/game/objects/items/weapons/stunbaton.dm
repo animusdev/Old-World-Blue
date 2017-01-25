@@ -209,7 +209,6 @@
 	if(istype(W, /obj/item/weapon/cell))
 		if(!istype(W, /obj/item/weapon/cell)) //Industrial battery to craft, but it is wrong
 			if(!bcell)
-				user.drop_from_inventory()
 				W.loc = src
 				bcell = W
 				user << "<span class='notice'>You install a cell in [src].</span>"

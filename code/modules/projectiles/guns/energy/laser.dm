@@ -20,7 +20,7 @@
 	name = "practice laser gun"
 	desc = "A modified version of the HI G40E, this one fires less concentrated energy bolts designed for target practice."
 	projectile_type = /obj/item/projectile/beam/practice
-	cell_type = /obj/item/weapon/cell/device
+	cell_type = /obj/item/weapon/cell/device/weapon
 
 obj/item/weapon/gun/energy/retro
 	name = "retro laser"
