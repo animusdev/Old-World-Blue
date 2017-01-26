@@ -144,7 +144,8 @@ For copy-pasting:
 				new path(H.l_hand)
 
 	//Loyalty implant
-	if(implanted) H.implant_loyalty(H)
+	if(implanted && H.client && H.client.prefs.nanotrasen_relation in list(COMPANY_SUPPORTATIVE, COMPANY_LOYAL))
+		H.implant_loyalty(H)
 
 	return 1
 
