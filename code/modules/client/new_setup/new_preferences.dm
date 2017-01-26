@@ -223,10 +223,11 @@
 	dat += "Age: <a href='?src=\ref[src];age=input'>[age]</a><br>"
 	dat += "Spawn Point: <a href='?src=\ref[src];spawnpoint=input'>[spawnpoint]</a><br>"
 	dat += "Second language: <a href='?src=\ref[src];language=input'>[language]</a><br>"
+	dat += "Need Glasses: <a href='?src=\ref[src];disabilities=glasses'>[disabilities & NEARSIGHTED ? "Yes" : "No"]</a><br>"
 //	dat += "Corporate mail: <a href='?src=\ref[src];mail=input'>[email ? email : "\[RANDOM MAIL\]"]</a>@mail.nt<br>"
-//	dat += "Add your mail to public catalogs: <a href='?src=\ref[src];mail=public'>[email_is_public?"Yes":"No"]</a>"
+//	dat += "Add your mail to public catalogs: <a href='?src=\ref[src];mail=public'>[email_is_public?"Yes":"No"]</a><br>"
 
-	dat += "<br><br><b>Background Information</b><br>"
+	dat += "<br><b>Background Information</b><br>"
 	dat += "Nanotrasen Relation: <a href ='?src=\ref[src];nt_relation=input'>[nanotrasen_relation]</a><br>"
 	dat += "Home system: <a href='?src=\ref[src];home_system=input'>[home_system]</a><br>"
 	dat += "Citizenship: <a href='?src=\ref[src];citizenship=input'>[citizenship]</a><br>"
@@ -393,6 +394,8 @@
 			return
 		spawnpoint = choice
 
+	else if(href_list["disabilities"])
+		disabilities = disabilities ^= NEARSIGHTED
 
 	else if(href_list["mail"]) switch(href_list["mail"])
 		if("input")
