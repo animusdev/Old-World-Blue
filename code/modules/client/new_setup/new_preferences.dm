@@ -395,7 +395,7 @@
 		spawnpoint = choice
 
 	else if(href_list["disabilities"])
-		disabilities = disabilities ^= NEARSIGHTED
+		disabilities ^= NEARSIGHTED
 
 	else if(href_list["mail"]) switch(href_list["mail"])
 		if("input")
