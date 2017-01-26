@@ -65,6 +65,27 @@
 /proc/post_edit_utf8(msg)
 	return replacetext(msg, "\\ß", "&#1103;")
 
+//input
+
+/proc/input_cp1251(var/mob/user = usr, var/message, var/title, var/default, var/type = "message")
+	var/msg = ""
+	switch(type)
+		if("message")
+			msg = input(user, message, title, edit_cp1251(default)) as message
+		if("text")
+			msg = input(user, message, title, default) as text
+	return post_edit_cp1251(msg)
+
+/proc/input_utf8(var/mob/user = usr, var/message, var/title, var/default, var/type = "message")
+	var/msg = ""
+	switch(type)
+		if("message")
+			msg = input(user, message, title, edit_utf8(default)) as message
+		if("text")
+			msg = input(user, message, title, default) as text
+	return post_edit_utf8(msg)
+
+
 var/global/list/rkeys = list(
 	"à" = "f", "â" = "d", "ã" = "u", "ä" = "l",
 	"å" = "t", "ç" = "p", "è" = "b", "é" = "q",
