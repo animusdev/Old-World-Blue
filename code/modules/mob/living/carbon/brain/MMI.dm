@@ -38,23 +38,18 @@
 	var/obj/item/organ/internal/brain/brainobj = null	//The current brain organ.
 	var/obj/mecha = null//This does not appear to be used outside of reference in mecha.dm.
 
-	New()
-		..()
-		update_icon()
-
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if(istype(O,/obj/item/organ/internal/brain) && !brainmob) //Time to stick a brain in it --NEO
 
 			var/obj/item/organ/internal/brain/B = O
 			if(B.health <= 0)
-				user << "\red That brain is well and truly dead."
+				user << "<span class='warning'>That brain is well and truly dead.</span>"
 				return
 			else if(!B.brainmob)
-				user << "\red You aren't sure where this brain came from, but you're pretty sure it's a useless brain."
+				user << "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's useless.</span>"
 				return
 
-			for(var/mob/V in viewers(src, null))
-				V.show_message(text("\blue [user] sticks \a [O] into \the [src]."))
+			user.visible_message("<span class='notice'>\The [user] sticks \a [O] into \the [src].</span>")
 
 			brainmob = B.brainmob
 			B.brainmob = null
@@ -75,9 +70,9 @@
 		if((istype(O,/obj/item/weapon/card/id)||istype(O,/obj/item/device/pda)) && brainmob)
 			if(allowed(user))
 				locked = !locked
-				user << "\blue You [locked ? "lock" : "unlock"] the brain holder."
+				user << "<span class='notice'>You [locked ? "lock" : "unlock"] the brain holder.</span>"
 			else
-				user << "\red Access denied."
+				user << "<span class='warning'>Access denied.</span>"
 			return
 		if(brainmob)
 			O.attack(brainmob, user)//Oh noooeeeee
@@ -95,11 +90,11 @@
 	//TODO: ORGAN REMOVAL UPDATE. Make the brain remain in the MMI so it doesn't lose organ data.
 	attack_self(mob/user as mob)
 		if(!brainmob)
-			user << "\red You upend the MMI, but there's nothing in it."
+			user << "<span class='warning'>You upend the MMI, but there's nothing in it.</span>"
 		else if(locked)
-			user << "\red You upend the MMI, but the brain is clamped into place."
+			user << "<span class='warning'>You upend the MMI, but the brain is clamped into place.</span>"
 		else
-			user << "\blue You upend the MMI, spilling the brain onto the floor."
+			user << "<span class='notice'>You upend the MMI, spilling the brain onto the floor.</span>"
 			var/obj/item/organ/internal/brain/brain
 			if (brainobj)	//Pull brain organ out of MMI.
 				brainobj.loc = user.loc
@@ -116,7 +111,8 @@
 
 	proc
 		set_identity(var/name, var/dna)
-			brainmob = new(src)
+			if(!brainmob)
+				brainmob = new(src)
 			brainmob.name = name
 			brainmob.real_name = name
 			brainmob.dna = dna ? dna : new()

@@ -235,6 +235,7 @@
 			You have been ghosted. Please make a bug report so we can fix this bug.</span>"
 			ghostize()
 			//ERROR("A borg has been destroyed, but its MMI lacked a brainmob, so the mind could not be transferred. Player: [ckey].")
+		mmi.update_icon()
 		mmi = null
 	if(connected_ai)
 		connected_ai.connected_robots -= src

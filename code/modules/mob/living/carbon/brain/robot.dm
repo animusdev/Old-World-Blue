@@ -11,6 +11,9 @@
 	src.brainmob.name = "[pick(list("ADA","DOS","GNU","MAC","WIN"))]-[rand(1000, 9999)]"
 	src.brainmob.real_name = src.brainmob.name
 
+/obj/item/device/mmi/digital/robot/update_icon()
+	return
+
 /obj/item/device/mmi/digital/robot/transfer_identity(var/mob/living/carbon/H)
 	..()
 	if(brainmob.mind)
