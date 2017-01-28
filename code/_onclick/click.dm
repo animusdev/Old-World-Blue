@@ -42,6 +42,10 @@
 /atom/Click(var/location, var/control, var/params) // This is their reaction to being clicked on (standard proc)
 	return 0
 
+/client/DblClick(target, location, control, params)
+	mob.DblClickOn(target, params)
+	..()
+
 /atom/DblClick(var/location, var/control, var/params)
 	return 0
 
