@@ -19,10 +19,6 @@
 
 
 /mob/living/silicon/ai/ClickOn(var/atom/A, params)
-	if(world.time <= next_click)
-		return
-	next_click = world.time + 1
-
 	if(stat)
 		return
 

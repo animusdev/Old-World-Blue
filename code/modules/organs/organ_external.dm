@@ -15,16 +15,16 @@
 	organ_tag = "limb"
 
 	// Strings
-	var/broken_description	// fracture string if any.
-	var/damage_state = "00"	// Modifier used for generating the on-mob damage overlay for this limb.
+	var/broken_description             // fracture string if any.
+	var/damage_state = "00"            // Modifier used for generating the on-mob damage overlay for this limb.
 	var/damage_msg = "\red You feel an intense pain"
 
 	// Damage vars.
-	var/brute_mod = 1		// Multiplier for incoming brute damage.
-	var/burn_mod = 1		// As above for burn.
-	var/brute_dam = 0		// Actual current brute damage.
-	var/burn_dam = 0		// Actual current burn damage.
-	var/last_dam = -1		// used in healing/processing calculations.
+	var/brute_mod = 1                  // Multiplier for incoming brute damage.
+	var/burn_mod = 1                   // As above for burn.
+	var/brute_dam = 0                  // Actual current brute damage.
+	var/burn_dam = 0                   // Actual current burn damage.
+	var/last_dam = -1                  // used in healing/processing calculations.
 	var/perma_injury = 0
 
 	// Appearance vars.
@@ -943,9 +943,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	if(owner)
 		owner.visible_message(\
-			"\red You hear a loud cracking sound coming from \the [owner].",\
-			"\red <b>Something feels like it shattered in your [name]!</b>",\
-			"You hear a sickening crack.")
+			"<span class='danger'>You hear a loud cracking sound coming from \the [owner].</span>",\
+			"<span class='danger'>Something feels like it shattered in your [name]!</span>",\
+			"<span class='danger'>You hear a sickening crack.</span>")
 		if(owner.species && !(owner.species.flags & NO_PAIN))
 			owner.emote("scream")
 
@@ -1000,6 +1000,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	cannot_break = 1
 	get_icon()
 	unmutate()
+
 	for(var/obj/item/organ/external/T in children)
 		T.robotize()
 
@@ -1051,13 +1052,17 @@ Note that amputating the affected organ does in fact remove the infection from t
 		return
 	if(owner)
 		if(type == "brute")
-			owner.visible_message("\red You hear a sickening cracking sound coming from \the [owner]'s [name].",	\
-			"\red <b>Your [name] becomes a mangled mess!</b>",	\
-			"\red You hear a sickening crack.")
+			owner.visible_message(
+				"<span class='danger'>You hear a sickening cracking sound coming from \the [owner]'s [name].</span>",
+				"<span class='danger'>Your [name] becomes a mangled mess!</span>",
+				"<span class='danger'>You hear a sickening crack.</span>"
+			)
 		else
-			owner.visible_message("\red \The [owner]'s [name] melts away, turning into mangled mess!",	\
-			"\red <b>Your [name] melts away!</b>",	\
-			"\red You hear a sickening sizzle.")
+			owner.visible_message(
+				"<span class='danger'>\The [owner]'s [name] melts away, turning into mangled mess!</span>",
+				"<span class='danger'>Your [name] melts away!</span>",
+				"<span class='danger'>You hear a sickening sizzle.</span>"
+			)
 	disfigured = 1
 
 /obj/item/organ/external/proc/get_wounds_desc()
@@ -1065,6 +1070,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(status & ORGAN_DESTROYED && !is_stump())
 		. += "tear at [amputation_point] so severe that it hangs by a scrap of flesh"
 
+	//Handle robotic and synthetic organ damage
 	if(status & ORGAN_ROBOT)
 		if(brute_dam)
 			switch(brute_dam)
@@ -1073,15 +1079,17 @@ Note that amputating the affected organ does in fact remove the infection from t
 				if(21 to INFINITY)
 					. += pick(" a lot of dents"," severe denting")
 		if(brute_dam && burn_dam)
-			. += " and"
+			. += " and "
+
 		if(burn_dam)
 			switch(burn_dam)
 				if(0 to 20)
-					. += " some burns"
+					. += "some burns"
 				if(21 to INFINITY)
 					. += pick(" a lot of burns"," severe melting")
 		return
 
+	//Normal organic organ damage
 	var/list/wound_descriptors = list()
 	if(open > 1)
 		wound_descriptors["an open incision"] = 1
@@ -1090,11 +1098,20 @@ Note that amputating the affected organ does in fact remove the infection from t
 	for(var/datum/wound/W in wounds)
 		if(W.internal && !open) continue // can't see internal wounds
 		var/this_wound_desc = W.desc
-		if(W.damage_type == BURN && W.salved) this_wound_desc = "salved [this_wound_desc]"
-		if(W.bleeding()) this_wound_desc = "bleeding [this_wound_desc]"
-		else if(W.bandaged) this_wound_desc = "bandaged [this_wound_desc]"
-		if(W.germ_level > 600) this_wound_desc = "badly infected [this_wound_desc]"
-		else if(W.germ_level > 330) this_wound_desc = "lightly infected [this_wound_desc]"
+
+		if(W.damage_type == BURN && W.salved)
+			this_wound_desc = "salved [this_wound_desc]"
+
+		if(W.bleeding())
+			this_wound_desc = "bleeding [this_wound_desc]"
+		else if(W.bandaged)
+			this_wound_desc = "bandaged [this_wound_desc]"
+
+		if(W.germ_level > 600)
+			this_wound_desc = "badly infected [this_wound_desc]"
+		else if(W.germ_level > 330)
+			this_wound_desc = "lightly infected [this_wound_desc]"
+
 		if(wound_descriptors[this_wound_desc])
 			wound_descriptors[this_wound_desc] += W.amount
 		else

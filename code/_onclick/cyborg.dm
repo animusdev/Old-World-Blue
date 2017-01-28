@@ -7,9 +7,6 @@
 */
 
 /mob/living/silicon/robot/ClickOn(var/atom/A, var/params)
-	if(world.time <= next_click)
-		return
-	next_click = world.time + 1
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["ctrl"])
