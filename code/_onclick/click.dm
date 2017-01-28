@@ -30,6 +30,7 @@
 		else
 			src << "For some reason you can't use [CH.handler_name] ability"
 			CH = null
+			return
 	..()
 
 /atom/Click(var/location, var/control, var/params) // This is their reaction to being clicked on (standard proc)

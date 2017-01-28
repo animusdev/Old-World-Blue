@@ -13,6 +13,7 @@
 
 	min_duration = 50
 	max_duration = 60
+	disallowed_species = list("Arachna")
 
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if (!hasorgans(target))
@@ -44,6 +45,7 @@
 	/obj/item/weapon/bonesetter = 100,	\
 	/obj/item/weapon/wrench = 75		\
 	)
+	disallowed_species = list("Arachna")
 
 	min_duration = 60
 	max_duration = 70
@@ -83,7 +85,7 @@
 	/obj/item/weapon/bonesetter = 100,	\
 	/obj/item/weapon/wrench = 75		\
 	)
-
+	disallowed_species = list("Arachna")
 	min_duration = 60
 	max_duration = 70
 
@@ -119,7 +121,7 @@
 	)
 	can_infect = 1
 	blood_level = 1
-
+	disallowed_species = list("Arachna")
 	min_duration = 50
 	max_duration = 60
 
