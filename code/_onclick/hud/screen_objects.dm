@@ -53,7 +53,7 @@
 	if(!usr || !owner)
 		return 1
 	if(!usr.canClick())
-		return
+		return 1
 
 	if(usr.stat || usr.restrained() || usr.stunned || usr.lying)
 		return 1

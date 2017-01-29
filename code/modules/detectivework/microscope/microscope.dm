@@ -85,11 +85,12 @@
 			user << report.info
 	return
 
-/obj/machinery/microscope/verb/remove_sample(var/mob/living/remover = usr)
+/obj/machinery/microscope/verb/remove_sample()
 	set name = "Remove sample"
 	set category = "Object"
 	set src in view(1)
 
+	var/mob/living/remover = usr
 	if(!istype(remover) || remover.stat > 0 || !Adjacent(remover))
 		return ..()
 	if(!sample)
@@ -101,7 +102,7 @@
 	update_icon()
 
 /obj/machinery/microscope/AltClick()
-	remove_sample(usr)
+	remove_sample()
 
 /obj/machinery/microscope/MouseDrop(var/atom/other)
 	if(usr == other)

@@ -137,8 +137,13 @@ datum/objective/anti_revolution/brig
 		if(target && target.current)
 			if(target.current.stat == DEAD)
 				return 0
-			if(target.is_brigged(10 * 60 * 10))
-				already_completed = 1
+			var/area/check_area = get_area(target.current)
+			if( istype(check_area,/area/security/prison) || istype(check_area, /area/security/brig) )
+				for(var/obj/item/weapon/card/id/card in target.current)
+					return 0
+				for(var/obj/item/device/pda/P in target.current)
+					if(P.id)
+						return 0
 				return 1
 			return 0
 		return 0
@@ -240,6 +245,40 @@ datum/objective/protect//The opposite of killing a dude.
 		return 0
 
 
+datum/objective/explosion
+	explanation_text = "Arrange a terrorist act. Expode at least two of command rooms (Head office, EVA, bridge, etc)"
+	target_amount = 2
+	var/list/command_rooms = list(
+		/area/ai_monitored/storage/eva,
+		/area/turret_protected/ai,
+		/area/turret_protected/ai_upload,
+		/area/crew_quarters/heads/hop,
+		/area/crew_quarters/heads/hor,
+		/area/crew_quarters/heads/chief,
+		/area/crew_quarters/heads/hos,
+		/area/crew_quarters/heads/cmo,
+		/area/crew_quarters/captain,
+		/area/security/armoury,
+		/area/tcommsat/chamber,
+		/area/engineering/engine_room,
+		/area/engineering/atmos,
+		/area/bridge,
+		/area/server
+	)
+
+	check_completion()
+		var/ammount = 0
+		for(var/item in explosions_log)
+			var/datum/log/explosion/E = item
+			world << "Loc: [E.location]. Range [E.devastation_range]."
+			if(!(E.location in command_rooms))
+				continue
+			if(E.devastation_range<1)
+				continue
+			ammount += 1
+		return ammount >= target_amount
+
+
 datum/objective/hijack
 	explanation_text = "Hijack the emergency shuttle by escaping alone."
 
@@ -336,43 +375,6 @@ datum/objective/survive
 		if(issilicon(owner.current) && owner.current != owner.original)
 			return 0
 		return 1
-
-// Similar to the anti-rev objective, but for traitors
-datum/objective/brig
-	var/already_completed = 0
-
-	find_target()
-		..()
-		if(target && target.current)
-			explanation_text = "Have [target.current.real_name], the [target.assigned_role] brigged for 10 minutes."
-		else
-			explanation_text = "Free Objective"
-		return target
-
-
-	find_target_by_role(role, role_type=0)
-		..(role, role_type)
-		if(target && target.current)
-			explanation_text = "Have [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role] brigged for 10 minutes."
-		else
-			explanation_text = "Free Objective"
-		return target
-
-	check_completion()
-		if(!target)//If it's a free objective.
-			return 1
-		if(already_completed)
-			return 1
-
-		if(target && target.current)
-			if(target.current.stat == DEAD)
-				return 0
-			// Make the actual required time a bit shorter than the official time
-			if(target.is_brigged(10 * 60 * 5))
-				already_completed = 1
-				return 1
-			return 0
-		return 0
 
 // Harm a crew member, making an example of them
 datum/objective/harm

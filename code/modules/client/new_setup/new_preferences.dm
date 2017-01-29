@@ -10,10 +10,10 @@
 /datum/preferences
 	var/global/list/setup_pages = list(
 		"General"     = PAGE_RECORDS,
-		"Augmentation"= PAGE_LIMBS,
-		"Occupations" = PAGE_OCCUPATION,
-		"Loadout"     = PAGE_LOADOUT,
 		"Flavor"      = PAGE_FLAVOR,
+		"Occupations" = PAGE_OCCUPATION,
+		"Augmentation"= PAGE_LIMBS,
+		"Loadout"     = PAGE_LOADOUT,
 		"Preferences" = PAGE_PREFS,
 	)
 
@@ -94,7 +94,7 @@
 		if(PAGE_RECORDS)	dat += GetRecordsPage(user)
 		if(PAGE_LIMBS)		dat += GetLimbsPage(user)
 		if(PAGE_OCCUPATION)	dat += GetOccupationPage(user)
-		if(PAGE_FLAVOR)	dat += GetFlavorPage(user)
+		if(PAGE_FLAVOR)		dat += GetFlavorPage(user)
 		if(PAGE_PREFS)		dat += GetPrefsPage(user)
 		if(PAGE_LOADOUT)	dat += GetLoadOutPage(user)
 		if(PAGE_SPECIES)	dat += GetSpeciesPage(user)
@@ -222,10 +222,12 @@
 
 	dat += "Age: <a href='?src=\ref[src];age=input'>[age]</a><br>"
 	dat += "Spawn Point: <a href='?src=\ref[src];spawnpoint=input'>[spawnpoint]</a><br>"
-	dat += "Corporate mail: <a href='?src=\ref[src];mail=input'>[email ? email : "\[RANDOM MAIL\]"]</a>@mail.nt<br>"
-	dat += "Add your mail to public catalogs: <a href='?src=\ref[src];mail=public'>[email_is_public?"Yes":"No"]</a>"
+	dat += "Second language: <a href='?src=\ref[src];language=input'>[language]</a><br>"
+	dat += "Need Glasses: <a href='?src=\ref[src];disabilities=glasses'>[disabilities & NEARSIGHTED ? "Yes" : "No"]</a><br>"
+//	dat += "Corporate mail: <a href='?src=\ref[src];mail=input'>[email ? email : "\[RANDOM MAIL\]"]</a>@mail.nt<br>"
+//	dat += "Add your mail to public catalogs: <a href='?src=\ref[src];mail=public'>[email_is_public?"Yes":"No"]</a><br>"
 
-	dat += "<br><br><b>Background Information</b><br>"
+	dat += "<br><b>Background Information</b><br>"
 	dat += "Nanotrasen Relation: <a href ='?src=\ref[src];nt_relation=input'>[nanotrasen_relation]</a><br>"
 	dat += "Home system: <a href='?src=\ref[src];home_system=input'>[home_system]</a><br>"
 	dat += "Citizenship: <a href='?src=\ref[src];citizenship=input'>[citizenship]</a><br>"
@@ -299,6 +301,19 @@
 		species_preview = choice
 		spawn()
 			SetSpecies(user)
+
+	else if(href_list["language"])
+		var/list/new_languages = list("None")
+
+		for(var/L in all_languages)
+			var/datum/language/lang = all_languages[L]
+			if(lang.flags & PUBLIC)
+				new_languages += lang.name
+
+		for(var/L in current_species.secondary_langs)
+			new_languages += L
+
+		language = input("Please select a secondary language", "Character Generation", null) in new_languages
 
 	else if(href_list["gender"])
 		req_update_icon = 1
@@ -379,6 +394,8 @@
 			return
 		spawnpoint = choice
 
+	else if(href_list["disabilities"])
+		disabilities ^= NEARSIGHTED
 
 	else if(href_list["mail"]) switch(href_list["mail"])
 		if("input")
@@ -705,7 +722,41 @@
 
 
 /datum/preferences/proc/GetFlavorPage()
+	var/list/dat = new
+	dat += "<tt><center>"
+	dat += "<b>Set Flavour Text</b> <hr />"
+	dat += "<br></center>"
+	for(var/flavor in flavs_list)
+		dat += "<a href='?src=\ref[src];flavor=[flavor]'>[flavs_list[flavor]]:</a> "
+		dat += TextPreview(cp1251_to_utf8(flavor_texts[flavor]),70)
+		dat += "<br>"
+	dat += "<hr />"
+
+	dat += "<b>Set Robot Flavour Text</b> <hr />"
+	dat += "<br></center>"
+	dat += "<a href ='?src=\ref[src];preference=flavour_text_robot;task=Default'>Default:</a> "
+	dat += TextPreview(cp1251_to_utf8(flavour_texts_robot["Default"]))
+	dat += "<br>"
+	for(var/module in robot_modules)
+		dat += "<a href='?src=\ref[src];flavor=[module]'>[module]:</a> "
+		dat += TextPreview(cp1251_to_utf8(flavour_texts_robot[module]),70)
+		dat += "<br>"
+	dat += "<tt>"
+	return dat.Join(null)
+
+
 /datum/preferences/proc/HandleFlavorTopic(mob/user, list/href_list)
+	if(href_list["flavor"])
+		var/flav = flavor_texts[href_list["flavor"]]
+		var/msg = ""
+
+		switch(href_list["flavor"])
+			if("general")
+				msg = input_cp1251(usr,"Give a general description of your character. This will be shown regardless of clothing, and may include OOC notes and preferences.","Flavor Text", flav)
+			else
+				msg = input_cp1251(usr,"Set the flavor text for your [href_list["task"]].","Flavor Text",flav)
+
+		flavor_texts[href_list["flavor"]] = rhtml_encode(msg)
 
 
 /datum/preferences/proc/GetPrefsPage(var/mob/user)

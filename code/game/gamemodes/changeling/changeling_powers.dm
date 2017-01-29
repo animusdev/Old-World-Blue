@@ -516,7 +516,6 @@ var/global/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","E
 	if(!C.stat && alert("Are we sure we wish to fake our death?",,"Yes","No") == "No")//Confirmation for living changelings if they want to fake their death
 		return
 	C << "<span class='notice'>We will attempt to regenerate our form.</span>"
-
 	C.status_flags |= FAKEDEATH		//play dead
 	C.update_canmove()
 	C.remove_changeling_powers()
@@ -529,23 +528,26 @@ var/global/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","E
 			// charge the changeling chemical cost for stasis
 			changeling.chem_charges -= 20
 
-			// restore us to health
-			C.revive()
-
-			// remove our fake death flag
-			C.status_flags &= ~(FAKEDEATH)
-
-			// let us move again
-			C.update_canmove()
-
-			// re-add out changeling powers
-			C.make_changeling()
-
-			// sending display messages
-			C << "<span class='notice'>We have regenerated.</span>"
-
-
+			C << "<span class='notice'><font size='5'>We are ready to rise.  Use the <b>Revive</b> verb when you are ready.</font></span>"
+			C.verbs += /mob/proc/changeling_revive
 	return 1
+
+/mob/proc/changeling_revive()
+	set category = "Changeling"
+	set name = "Revive"
+
+	var/mob/living/carbon/C = src
+	// restore us to health
+	C.revive()
+	// remove our fake death flag
+	C.status_flags &= ~(FAKEDEATH)
+	// let us move again
+	C.update_canmove()
+	// re-add out changeling powers
+	C.make_changeling()
+	// sending display messages
+	C << "<span class='notice'>We have regenerated.</span>"
+	C.verbs -= /mob/proc/changeling_revive
 
 
 //Boosts the range of your next sting attack by 1
@@ -757,7 +759,7 @@ var/list/datum/dna/hivemind_bank = list()
 
 //Handles the general sting code to reduce on copypasta (seeming as somebody decided to make SO MANY dumb abilities)
 /mob/proc/changeling_sting(var/required_chems=0,var/mob/living/carbon/T)//(var/required_chems=0, var/verb_path,var/mob/living/carbon/T)
-	if (!ishuman(T))
+	if (!ishuman(T) || (T==src))
 		T.Click()
 		return
 
@@ -783,8 +785,8 @@ var/list/datum/dna/hivemind_bank = list()
 //	spawn(10)	src.verbs += verb_path
 
 	src << "<span class='notice'>We stealthily sting [T].</span>"
+	T << "<span class='warning'>You feel a tiny prick.</span>"
 	if(!T.mind || !T.mind.changeling)
-		T << "<span class='warning'>You feel a tiny prick.</span>"
 		return T //T will be affected by the sting
 	return
 
