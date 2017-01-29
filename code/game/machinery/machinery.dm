@@ -77,7 +77,7 @@ Class Procs:
       power state change (area runs out of power, or area channel is turned off).
 
    InitCircuit()
-      Called in New. Create
+      Called in New. If circuit is not null, create Parts.
 
    RefreshParts()               'game/machinery/machine.dm'
       Called to refresh the variables in the machine that are contributed to by parts
@@ -119,6 +119,7 @@ Class Procs:
 	..(l)
 	if(d)
 		set_dir(d)
+	InitCircuit()
 	if(!machinery_sort_required && ticker)
 		dd_insertObjectList(machines, src)
 	else
@@ -141,7 +142,6 @@ Class Procs:
 /obj/machinery/process()//If you dont use process or power why are you here
 	if(!(use_power || idle_power_usage || active_power_usage))
 		return PROCESS_KILL
-
 	return
 
 /obj/machinery/emp_act(severity)
@@ -246,6 +246,19 @@ Class Procs:
 	src.add_fingerprint(user)
 
 	return ..()
+
+/obj/machinery/proc/InitCircuit()
+	if(!circuit)
+		return
+
+	if(ispath(circuit))
+		circuit = new circuit(src)
+
+	for(var/item in circuit.req_components)
+		for(var/j = 1 to circuit.req_components[item])
+			component_parts += new item(src)
+
+	RefreshParts()
 
 /obj/machinery/proc/RefreshParts() //Placeholder proc for machines that are built using frames.
 	return
