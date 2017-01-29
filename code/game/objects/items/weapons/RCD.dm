@@ -32,7 +32,7 @@
 /obj/item/weapon/rcd/examine()
 	. = ..()
 	if(src.type == /obj/item/weapon/rcd && loc == usr)
-		usr << "It currently holds [stored_matter]/30 matter-units."
+		usr << "It currently holds [stored_matter]/100 matter-units."
 
 /obj/item/weapon/rcd/New()
 	..()
