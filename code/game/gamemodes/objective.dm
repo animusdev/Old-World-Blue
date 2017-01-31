@@ -270,7 +270,6 @@ datum/objective/explosion
 		var/ammount = 0
 		for(var/item in explosions_log)
 			var/datum/log/explosion/E = item
-			world << "Loc: [E.location]. Range [E.devastation_range]."
 			if(!(E.location in command_rooms))
 				continue
 			if(E.devastation_range<1)
