@@ -7,6 +7,7 @@
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 2000
+	circuit = /obj/item/weapon/circuitboard/autolathe
 
 	var/tmp/list/machine_recipes
 	var/list/stored_material =  list(DEFAULT_WALL_MATERIAL = 0, "glass" = 0)
@@ -26,18 +27,8 @@
 
 
 /obj/machinery/autolathe/New()
-
 	..()
 	wires = new(src)
-	//Create parts for lathe.
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/autolathe(src)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
-	RefreshParts()
 
 /obj/machinery/autolathe/proc/update_recipe_list()
 	if(!machine_recipes)

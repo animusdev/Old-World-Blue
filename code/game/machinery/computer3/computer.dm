@@ -29,7 +29,7 @@
 	// when you had to search the list to find what you had.
 
 	// Mostly decorative, holds the OS rom
-	var/obj/item/part/computer/circuitboard/circuit
+	var/obj/item/part/computer/circuitboard/c_circuit
 
 	// Storage
 	var/obj/item/part/computer/storage/hdd/hdd				= null
@@ -75,15 +75,15 @@
 		set name = "Reset Computer"
 		set category = "Object"
 		set src in view(1)
-		
+
 		if(usr.stat || usr.restrained() || usr.lying || !istype(usr, /mob/living))
 			usr << "\red You can't do that."
 			return
-		
+
 		if(!Adjacent(usr))
 			usr << "You can't reach it."
 			return
-		
+
 		Reset()
 
 	New(var/L, var/built = 0)
@@ -99,9 +99,9 @@
 		if(!built)
 			if(!circuit || !istype(circuit))
 				circuit = new(src)
-			if(circuit.OS)
-				os = circuit.OS
-				circuit.OS.computer = src
+			if(c_circuit.OS)
+				os = c_circuit.OS
+				c_circuit.OS.computer = src
 			else
 				os = null
 
@@ -121,10 +121,10 @@
 					floppy.addfile(P)
 					program = P
 				else
-					circuit.OS = P
-					circuit.OS.computer = src
-					os = circuit.OS
-					circuit.name = "Circuitboard ([P])"
+					c_circuit.OS = P
+					c_circuit.OS.computer = src
+					os = c_circuit.OS
+					c_circuit.name = "Circuitboard ([P])"
 
 
 			if(hdd)		// Spawn files
