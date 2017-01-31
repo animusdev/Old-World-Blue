@@ -76,6 +76,9 @@ Class Procs:
       Called by the area that contains the object when ever that area under goes a
       power state change (area runs out of power, or area channel is turned off).
 
+   InitCircuit()
+      Called in New. If circuit is not null, create Parts.
+
    RefreshParts()               'game/machinery/machine.dm'
       Called to refresh the variables in the machine that are contributed to by parts
       contained in the component_parts list. (example: glass and material amounts for
@@ -110,11 +113,13 @@ Class Procs:
 	var/panel_open = 0
 	var/global/gl_uid = 1
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
+	var/obj/item/weapon/circuitboard/circuit = null
 
 /obj/machinery/New(l, d=0)
 	..(l)
 	if(d)
 		set_dir(d)
+	InitCircuit()
 	if(!machinery_sort_required && ticker)
 		dd_insertObjectList(machines, src)
 	else
@@ -132,12 +137,11 @@ Class Procs:
 	if(contents) // The same for contents.
 		for(var/atom/A in contents)
 			qdel(A)
-	..()
+	return ..()
 
 /obj/machinery/process()//If you dont use process or power why are you here
 	if(!(use_power || idle_power_usage || active_power_usage))
 		return PROCESS_KILL
-
 	return
 
 /obj/machinery/emp_act(severity)
@@ -227,20 +231,37 @@ Class Procs:
 	if(user.lying || user.stat)
 		return 1
 	if (!user.IsAdvancedToolUser())
+		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
 
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.getBrainLoss() >= 60)
-			visible_message("\red [H] stares cluelessly at [src] and drools.")
+		if(H.getBrainLoss() >= 55)
+			visible_message("<span class='warning'>[H] stares cluelessly at [src].</span>")
 			return 1
 		else if(prob(H.getBrainLoss()))
-			user << "\red You momentarily forget how to use [src]."
+			user << "<span class='warning'>You momentarily forget how to use [src].</span>"
 			return 1
 
 	src.add_fingerprint(user)
 
 	return ..()
+
+/obj/machinery/proc/InitCircuit()
+	if(!circuit)
+		return
+
+	if(ispath(circuit))
+		circuit = new circuit(src)
+
+	for(var/item in circuit.req_components)
+		if(item == /obj/item/stack/cable_coil)
+			component_parts += new item(src, circuit.req_components[item])
+		else
+			for(var/j = 1 to circuit.req_components[item])
+				component_parts += new item(src)
+
+	RefreshParts()
 
 /obj/machinery/proc/RefreshParts() //Placeholder proc for machines that are built using frames.
 	return
@@ -279,32 +300,15 @@ Class Procs:
 			return 1
 	return 0
 
-/obj/machinery/proc/default_deconstruction_crowbar(var/mob/user, var/obj/item/weapon/crowbar/C)
-	if(!istype(C))
-		return 0
-	if(!panel_open)
-		return 0
-	. = dismantle()
-
-/obj/machinery/proc/default_deconstruction_screwdriver(var/mob/user, var/obj/item/weapon/screwdriver/S)
-	if(!istype(S))
-		return 0
-	playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-	panel_open = !panel_open
-	user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>"
-	update_icon()
-	return 1
-
 /obj/machinery/proc/default_part_replacement(var/mob/user, var/obj/item/weapon/storage/part_replacer/R)
 	if(!istype(R))
 		return 0
 	if(!component_parts)
 		return 0
 	if(panel_open)
-		var/obj/item/weapon/circuitboard/CB = locate(/obj/item/weapon/circuitboard) in component_parts
 		var/P
 		for(var/obj/item/weapon/stock_parts/A in component_parts)
-			for(var/D in CB.req_components)
+			for(var/D in circuit.req_components)
 				if(istype(A, D))
 					P = D
 					break
@@ -326,15 +330,30 @@ Class Procs:
 			user << "<span class='notice'>    [C.name]</span>"
 	return 1
 
+/obj/machinery/proc/default_deconstruction_crowbar(var/mob/user, var/obj/item/weapon/crowbar/C)
+	if(!istype(C))
+		return 0
+	if(!panel_open)
+		return 0
+	. = dismantle()
+
+/obj/machinery/proc/default_deconstruction_screwdriver(var/mob/user, var/obj/item/weapon/screwdriver/S)
+	if(!istype(S))
+		return 0
+	playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+	panel_open = !panel_open
+	user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>"
+	update_icon()
+	return 1
+
 /obj/machinery/proc/dismantle()
 	playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-	var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(loc)
+	var/obj/machinery/constructable_frame/machine_frame/M = new (loc)
 	M.set_dir(src.dir)
 	M.state = 2
 	M.icon_state = "box_1"
 	for(var/obj/I in component_parts)
-		if(I.reliability != 100 && crit_fail)
-			I.crit_fail = 1
-		I.loc = loc
+		I.forceMove(loc)
+	circuit.forceMove(loc)
 	qdel(src)
 	return 1

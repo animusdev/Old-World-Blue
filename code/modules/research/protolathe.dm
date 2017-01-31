@@ -11,6 +11,7 @@ Note: Must be placed west/left of and R&D console to function.
 	name = "Protolathe"
 	icon_state = "protolathe"
 	flags = OPENCONTAINER
+	circuit = /obj/item/weapon/circuitboard/protolathe
 
 	use_power = 1
 	idle_power_usage = 30
@@ -26,18 +27,6 @@ Note: Must be placed west/left of and R&D console to function.
 	var/diamond_amount = 0.0
 
 	var/mat_efficiency = 1
-
-/obj/machinery/r_n_d/protolathe/New()
-	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/protolathe(src)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
-	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
-	RefreshParts()
 
 /obj/machinery/r_n_d/protolathe/proc/TotalMaterials() //returns the total of all the stored materials. Makes code neater.
 	return m_amount + g_amount + gold_amount + silver_amount + phoron_amount + uranium_amount + diamond_amount
@@ -148,7 +137,7 @@ Note: Must be placed west/left of and R&D console to function.
 		if(istype(material) && do_after(user, 16) && stack.use(amount))
 			user << "<span class='notice'>You add [amount] sheets to \the [src].</span>"
 			icon_state = "protolathe"
-			
+
 			var/amount_to_add = amount * material.stack_per_sheet
 			switch(material.name)
 				if(DEFAULT_WALL_MATERIAL)
