@@ -519,7 +519,7 @@
 	can_hold = list(/obj/item/organ, /obj/item/weapon/reagent_containers/food, /obj/item/weapon/reagent_containers/glass)
 	max_storage_space = 21
 	use_to_pickup = 1 // for picking up broken bulbs, not that most people will try
-/*
+
 /obj/item/weapon/storage/box/freezer/Entered(var/atom/movable/AM)
 	if(istype(AM, /obj/item/organ))
 		var/obj/item/organ/O = AM
@@ -535,7 +535,7 @@
 		for(var/obj/item/organ/organ in O)
 			organ.preserved = 0
 	..()
-*/
+
 /obj/item/weapon/storage/box/underwear
 	icon_state = "underwear"
 	name = "underwear box"
