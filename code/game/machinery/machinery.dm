@@ -255,8 +255,11 @@ Class Procs:
 		circuit = new circuit(src)
 
 	for(var/item in circuit.req_components)
-		for(var/j = 1 to circuit.req_components[item])
-			component_parts += new item(src)
+		if(item == /obj/item/stack/cable_coil)
+			component_parts += new item(src, circuit.req_components[item])
+		else
+			for(var/j = 1 to circuit.req_components[item])
+				component_parts += new item(src)
 
 	RefreshParts()
 
