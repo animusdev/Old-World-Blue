@@ -110,7 +110,6 @@
 		if(beaker)
 			user << "<span class='warning'>A beaker is already loaded into the machine.</span>"
 			return
-
 		beaker = item
 		user.drop_from_inventory(item, src)
 		user.visible_message("\The [user] adds \a [item] to \the [src]!", "You add \a [item] to \the [src]!")
@@ -128,6 +127,10 @@
 		put_in(G.affecting)
 		src.add_fingerprint(user)
 		qdel(G)
+		return 1
+	else if(default_deconstruction_screwdriver(user, item))
+		return 1
+	else if(default_deconstruction_crowbar(user, item))
 		return 1
 	else
 		return ..()
