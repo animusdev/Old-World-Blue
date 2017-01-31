@@ -53,7 +53,7 @@
 
 /obj/item/weapon/storage/fancy/egg_box/New()
 	..()
-	for(var/i=1; i <= storage_slots; i++)
+	for(var/i=1 to storage_slots)
 		new /obj/item/weapon/reagent_containers/food/snacks/egg(src)
 	return
 
@@ -75,7 +75,7 @@
 
 /obj/item/weapon/storage/fancy/candle_box/New()
 	..()
-	for(var/i=1; i <= storage_slots; i++)
+	for(var/i=1 to storage_slots)
 		new /obj/item/weapon/flame/candle(src)
 	return
 
@@ -213,7 +213,7 @@
 		return
 
 	if(M == user && user.zone_sel.selecting == O_MOUTH && contents.len > 0 && !user.wear_mask)
-		var/obj/item/clothing/mask/smokable/cigarette/cigar/W = new /obj/item/clothing/mask/smokable/cigarette/cigar(user)
+		var/obj/item/clothing/mask/smokable/cigarette/cigar/W = new (user)
 		reagents.trans_to_obj(W, (reagents.total_volume/contents.len))
 		user.equip_to_slot_if_possible(W, slot_wear_mask)
 		reagents.maximum_volume = 15 * contents.len
@@ -238,7 +238,7 @@
 
 /obj/item/weapon/storage/fancy/vials/New()
 	..()
-	for(var/i=1; i <= storage_slots; i++)
+	for(var/i=1 to storage_slots)
 		new /obj/item/weapon/reagent_containers/glass/beaker/vial(src)
 	return
 
