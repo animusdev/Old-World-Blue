@@ -1048,7 +1048,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/proc/is_malfunctioning()
 	return ((status & ORGAN_ROBOT) && (brute_dam + burn_dam) >= 10 && prob(brute_dam + burn_dam))
 
-/obj/item/organ/external/proc/embed(var/obj/item/weapon/W, var/silent = 0, var/supplied_message)
+/obj/item/organ/external/proc/embed(var/obj/item/weapon/W, var/silent = 0)
 	if(!owner || loc != owner)
 		return
 	if(ismob(W.loc))
@@ -1056,10 +1056,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if(!H.unEquip(W))
 			return
 	if(!silent)
-		if(supplied_message)
-			owner.visible_message("<span class='danger'>[supplied_message]</span>")
-		else
-			owner.visible_message("<span class='danger'>\The [W] sticks in the wound!</span>")
+		owner.visible_message("<span class='danger'>\The [W] sticks in the wound!</span>")
 	implants += W
 	owner.embedded_flag = 1
 	W.add_blood(owner)

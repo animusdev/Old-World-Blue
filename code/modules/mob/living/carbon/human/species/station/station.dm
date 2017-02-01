@@ -258,12 +258,12 @@
 	water and other radiation."
 
 	has_organ = list(
-		"nutrient channel" =   /obj/item/organ/internal/nutrients,
-		O_STRATA =      /obj/item/organ/internal/diona/strata,
-		O_RESPONSE =      /obj/item/organ/internal/node,
-		O_GBLADDER =        /obj/item/organ/internal/diona/bladder,
-		O_POLYP =      /obj/item/organ/internal/diona/polyp,
-		O_ANCHOR = /obj/item/organ/internal/diona/ligament
+		O_NUTRIENT =/obj/item/organ/internal/nutrients,
+		O_STRATA =  /obj/item/organ/internal/diona/strata,
+		O_RESPONSE =/obj/item/organ/internal/node,
+		O_GBLADDER =/obj/item/organ/internal/diona/bladder,
+		O_POLYP =   /obj/item/organ/internal/diona/polyp,
+		O_ANCHOR =  /obj/item/organ/internal/diona/ligament
 	)
 
 	has_limbs = list(
