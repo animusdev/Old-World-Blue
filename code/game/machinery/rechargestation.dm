@@ -7,6 +7,7 @@
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 50
+	circuit = /obj/item/weapon/circuitboard/recharge_station
 	var/mob/occupant = null
 	var/obj/item/weapon/cell/cell = null
 	var/icon_update_tick = 0	// Used to rebuild the overlay only once every 10 ticks
@@ -20,22 +21,6 @@
 
 	var/weld_power_use = 2300	// power used per point of brute damage repaired. 2.3 kW ~ about the same power usage of a handheld arc welder
 	var/wire_power_use = 500	// power used per point of burn damage repaired.
-
-/obj/machinery/recharge_station/New()
-	..()
-
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/recharge_station(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-	component_parts += new /obj/item/weapon/cell/high(src)
-	component_parts += new /obj/item/stack/cable_coil(src, 5)
-
-	RefreshParts()
-
-	update_icon()
 
 /obj/machinery/recharge_station/proc/has_cell_power()
 	return cell && cell.percent() > 0

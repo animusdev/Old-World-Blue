@@ -72,6 +72,7 @@
 	var/grounding = 1			// Cut to quickly discharge, at cost of "minor" electrical issues in output powernet.
 	var/RCon = 1				// Cut to disable AI and remote control.
 	var/RCon_tag = "NO_TAG"		// RCON tag, change to show it on SMES Remote control console.
+	circuit = /obj/item/weapon/circuitboard/smes
 	charge = 0
 	should_be_mapped = 1
 
@@ -114,9 +115,7 @@
 // Parameters: None
 // Description: Adds standard components for this SMES, and forces recalculation of properties.
 /obj/machinery/power/smes/buildable/New(var/install_coils = 1)
-	component_parts = list()
-	component_parts += new /obj/item/stack/cable_coil(src,30)
-	component_parts += new /obj/item/weapon/circuitboard/smes(src)
+	..()
 	src.wires = new /datum/wires/smes(src)
 
 	// Allows for mapped-in SMESs with larger capacity/IO
