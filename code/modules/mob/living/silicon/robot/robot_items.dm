@@ -182,9 +182,9 @@
 
 		var droppedSomething = 0
 
-		for(var/obj/item/I in carrying)
+		for(var/obj/item/I in src)
 			I.loc = dropspot
-			carrying.Remove(I)
+			contents.Remove(I)
 			droppedSomething = 1
 			if(!foundtable && isturf(dropspot))
 				// if no table, presume that the person just shittily dropped the tray on the ground and made a mess everywhere!
