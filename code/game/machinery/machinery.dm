@@ -254,6 +254,9 @@ Class Procs:
 	if(ispath(circuit))
 		circuit = new circuit(src)
 
+	if(circuit)
+		component_parts += circuit
+
 	for(var/item in circuit.req_components)
 		if(item == /obj/item/stack/cable_coil)
 			component_parts += new item(src, circuit.req_components[item])

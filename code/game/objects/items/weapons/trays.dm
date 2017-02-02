@@ -13,16 +13,14 @@
 	w_class = 3.0
 	flags = CONDUCT
 	matter = list(DEFAULT_WALL_MATERIAL = 3000)
-	var/list/carrying = list() // List of things on the tray. - Doohl
 	var/max_carry = 8
 
 /obj/item/weapon/tray/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 
 	// Drop all the things. All of them.
 	overlays.Cut()
-	for(var/obj/item/I in carrying)
+	for(var/obj/item/I in src)
 		I.loc = M.loc
-		carrying.Remove(I)
 		if(isturf(I.loc))
 			spawn()
 				for(var/i = 1, i <= rand(1,2), i++)
@@ -138,12 +136,36 @@
 
 /obj/item/weapon/tray/var/cooldown = 0	//shield bash cooldown. based on world.time
 
+/obj/item/weapon/tray/attack_hand(mob/user)
+	if(user.get_inactive_hand() == src && contents.len)
+		var/obj/item/I = input("Select item for picking up") as null|anything in src.contents
+		if(!I || !I in src)
+			return
+		src.contents -= I
+		src.overlays -= I
+		src.update_icon()
+		user.put_in_hands(I)
+		user.visible_message(
+			"<span class='notice'>[user] pick [I] from [src].</span>",
+			"<span class='notice'>You pick [I] from [src].</span>"
+		)
+		return
+
+	return ..()
+
 /obj/item/weapon/tray/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/material/kitchen/rollingpin))
 		if(cooldown < world.time - 25)
 			user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
 			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
 			cooldown = world.time
+	else if(istype(W, /obj/item))
+		if(ismob(src.loc))
+			if((carry + W.w_class) <= max_carry)
+				if(add_to_carry(W))
+					return 1
+		else
+			user.unEquip(W, src.loc)
 	else
 		..()
 
@@ -157,9 +179,38 @@
 
 /obj/item/weapon/tray
 	var/carry = 0
+	var/static/list/reject_types = list(
+		/obj/item/clothing/under,
+		/obj/item/clothing/suit,
+		/obj/item/weapon/stool,
+		/obj/item/projectile
+	)
+
+/obj/item/weapon/tray/update_icon()
+	overlays.Cut()
+	for(var/item in src)
+		var/obj/item/I = item
+		var/image/Img = image(I, layer=FLOAT_LAYER)
+		Img.pixel_x = I.pixel_x
+		Img.pixel_y = I.pixel_y
+		overlays += Img
 
 /obj/item/weapon/tray/pickup(mob/user)
 	grab_objects()
+
+/obj/item/weapon/tray/proc/add_to_carry(var/obj/item/I, var/mob/user)
+	if(carry > max_carry)
+		if(user)
+			user << "<span class='warning'>There is not enough free space for [I].</span>"
+		return 0
+	if(ismob(I.loc))
+		var/mob/M = I.loc
+		if(!M.unEquip(I))
+			return 0
+	carry += I.w_class
+	I.forceMove(src)
+	update_icon()
+	return 1
 
 /obj/item/weapon/tray/proc/grab_objects(var/turf/T)
 	if(!T)
@@ -169,28 +220,25 @@
 		return
 
 	for(var/obj/item/I in loc)
-		if( I != src && !I.anchored && !istype(I, /obj/item/clothing/under) && !istype(I, /obj/item/clothing/suit) && !istype(I, /obj/item/projectile) )
-			carry += I.w_class
-			if(carry > max_carry)
-				break
-			I.loc = src
-			carrying.Add(I)
-			var/image/Img = new(I.icon, I.icon_state, 30 + I.layer)
-			Img.color = I.color
-			overlays += Img
+		if( I != src && !I.anchored && !is_type_in_list(I, reject_types))
+			if(!add_to_carry(I))
+				return
 
 /obj/item/weapon/tray/dropped(mob/user)
 	spawn() //Allows the tray to udpate location, rather than just checking against mob's location
 		if(!isturf(src.loc))
 			return
-		var/noTable = locate(/obj/structure/table) in src.loc
+		var/Table = locate(/obj/structure/table) in src.loc
+		if(!Table) //Put on the floor
+			Table = user && (user.loc==src.loc)
+
 		overlays.Cut()
 		carry = 0
-		for(var/obj/item/I in carrying)
+		for(var/obj/item/I in src)
 			I.forceMove(src.loc)
-			carrying.Remove(I)
-			if(noTable)
-				for(var/i = 1, i <= rand(1,2), i++)
+			src.contents.Remove(I)
+			if(!Table)
+				for(var/i = 1 to rand(1,2))
 					if(I)
 						step(I, pick(NORTH,SOUTH,EAST,WEST))
 						sleep(rand(2,4))
