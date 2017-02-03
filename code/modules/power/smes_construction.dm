@@ -111,8 +111,8 @@
 
 // Proc: New()
 // Parameters: None
-// Description: Adds standard components for this SMES, and forces recalculation of properties.
-/obj/machinery/power/smes/buildable/New(var/install_coils = 1)
+// Description: Set wires with requed type
+/obj/machinery/power/smes/buildable/New()
 	..()
 	src.wires = new /datum/wires/smes(src)
 
