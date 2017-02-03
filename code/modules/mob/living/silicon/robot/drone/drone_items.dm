@@ -117,7 +117,7 @@
 		else if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/grown))
 			if(wood)
 				wood.add_charge(4000)
-		else if(istype(W,/obj/item/pipe) || istype(W,/obj/structure/disposalconstruct))
+		else if(istype(W,/obj/item/pipe))
 			// This allows drones and engiborgs to clear pipe assemblies from floors.
 		else
 			continue

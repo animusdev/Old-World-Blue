@@ -22,7 +22,7 @@
 
 /obj/item/weapon/storage/box/donut/New()
 	..()
-	for(var/i=1 to startswith)
+	for(var/i=1; i <= startswith; i++)
 		new /obj/item/weapon/reagent_containers/food/snacks/donut/normal(src)
 	update_icon()
 	return

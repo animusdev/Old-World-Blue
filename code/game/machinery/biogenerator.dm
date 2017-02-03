@@ -7,7 +7,6 @@
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 40
-	circuit = /obj/item/weapon/circuitboard/biogenerator
 	var/processing = 0
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/points = 0
@@ -18,8 +17,17 @@
 
 /obj/machinery/biogenerator/New()
 	..()
-	create_reagents(1000)
+	var/datum/reagents/R = new/datum/reagents(1000)
+	reagents = R
+	R.my_atom = src
 	beaker = new(src)
+
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/biogenerator(src)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
+
+	RefreshParts()
 
 /obj/machinery/biogenerator/on_reagent_change()			//When the reagents change, change the icon as well.
 	update_icon()

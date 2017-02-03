@@ -46,10 +46,10 @@
 	vision_flags = SEE_SELF|SEE_MOBS
 
 	has_organ = list(
-		O_HEART =    /obj/item/organ/internal/heart,
-		O_BRAIN =    /obj/item/organ/internal/brain/xeno,
+		O_HEART =           /obj/item/organ/internal/heart,
+		O_BRAIN =           /obj/item/organ/internal/brain/xeno,
 		O_PLASMA =   /obj/item/organ/internal/xenos/plasmavessel,
-		O_HIVE =     /obj/item/organ/internal/xenos/hivenode,
+		O_HIVE =       /obj/item/organ/internal/xenos/hivenode,
 		O_NUTRIENT = /obj/item/organ/internal/nutrients
 		)
 
@@ -167,13 +167,13 @@
 	deform =  'icons/mob/human_races/xenos/drone.dmi'
 
 	has_organ = list(
-		O_HEART =   /obj/item/organ/internal/heart,
-		O_BRAIN =   /obj/item/organ/internal/brain/xeno,
-		O_PLASMA =  /obj/item/organ/internal/xenos/plasmavessel/queen,
-		O_ACID =    /obj/item/organ/internal/xenos/acidgland,
-		O_HIVE =    /obj/item/organ/internal/xenos/hivenode,
+		O_HEART =           /obj/item/organ/internal/heart,
+		O_BRAIN =           /obj/item/organ/internal/brain/xeno,
+		O_PLASMA =   /obj/item/organ/internal/xenos/plasmavessel/queen,
+		O_ACID =      /obj/item/organ/internal/xenos/acidgland,
+		O_HIVE =       /obj/item/organ/internal/xenos/hivenode,
 		O_RESIN =   /obj/item/organ/internal/xenos/resinspinner,
-		O_NUTRIENT =/obj/item/organ/internal/nutrients
+		O_NUTRIENT = /obj/item/organ/internal/nutrients
 		)
 
 	inherent_verbs = list(
@@ -206,11 +206,11 @@
 	deform =  'icons/mob/human_races/xenos/hunter.dmi'
 
 	has_organ = list(
-		O_HEART =   /obj/item/organ/internal/heart,
-		O_BRAIN =   /obj/item/organ/internal/brain/xeno,
-		O_PLASMA =  /obj/item/organ/internal/xenos/plasmavessel/hunter,
-		O_HIVE =    /obj/item/organ/internal/xenos/hivenode,
-		O_NUTRIENT =/obj/item/organ/internal/nutrients
+		O_HEART =           /obj/item/organ/internal/heart,
+		O_BRAIN =           /obj/item/organ/internal/brain/xeno,
+		O_PLASMA =   /obj/item/organ/internal/xenos/plasmavessel/hunter,
+		O_HIVE =       /obj/item/organ/internal/xenos/hivenode,
+		O_NUTRIENT = /obj/item/organ/internal/nutrients
 		)
 
 	inherent_verbs = list(
@@ -234,11 +234,11 @@
 	deform =  'icons/mob/human_races/xenos/sentinel.dmi'
 
 	has_organ = list(
-		O_HEART =    /obj/item/organ/internal/heart,
-		O_BRAIN =    /obj/item/organ/internal/brain/xeno,
+		O_HEART =           /obj/item/organ/internal/heart,
+		O_BRAIN =           /obj/item/organ/internal/brain/xeno,
 		O_PLASMA =   /obj/item/organ/internal/xenos/plasmavessel/sentinel,
-		O_ACID =     /obj/item/organ/internal/xenos/acidgland,
-		O_HIVE =     /obj/item/organ/internal/xenos/hivenode,
+		O_ACID =      /obj/item/organ/internal/xenos/acidgland,
+		O_HIVE =       /obj/item/organ/internal/xenos/hivenode,
 		O_NUTRIENT = /obj/item/organ/internal/nutrients
 		)
 
@@ -266,14 +266,14 @@
 	deform =  'icons/mob/human_races/xenos/queen.dmi'
 
 	has_organ = list(
-		O_HEART =   /obj/item/organ/internal/heart,
-		O_BRAIN =   /obj/item/organ/internal/brain/xeno,
-		O_EGG =     /obj/item/organ/internal/xenos/eggsac,
-		O_PLASMA =  /obj/item/organ/internal/xenos/plasmavessel/queen,
-		O_ACID =    /obj/item/organ/internal/xenos/acidgland,
-		O_HIVE =    /obj/item/organ/internal/xenos/hivenode,
+		O_HEART =           /obj/item/organ/internal/heart,
+		O_BRAIN =           /obj/item/organ/internal/brain/xeno,
+		O_EGG =         /obj/item/organ/internal/xenos/eggsac,
+		O_PLASMA =   /obj/item/organ/internal/xenos/plasmavessel/queen,
+		O_ACID =      /obj/item/organ/internal/xenos/acidgland,
+		O_HIVE =       /obj/item/organ/internal/xenos/hivenode,
 		O_RESIN =   /obj/item/organ/internal/xenos/resinspinner,
-		O_NUTRIENT =/obj/item/organ/internal/nutrients
+		O_NUTRIENT = /obj/item/organ/internal/nutrients
 		)
 
 	inherent_verbs = list(

@@ -14,7 +14,6 @@
 	throw_speed = 2
 	throw_range = 8
 	var/empty = 0
-	max_storage_space = 14
 
 
 /obj/item/weapon/storage/firstaid/fire
@@ -131,9 +130,7 @@
 
 /obj/item/weapon/storage/firstaid/surgery
 	name = "surgery kit"
-	desc = "Contains tools for surgery."
-	max_storage_space = 21
-	max_w_class = 3
+	desc = "Contains tools for surgery. Has precise foam fitting for safe transport."
 
 /obj/item/weapon/storage/firstaid/surgery/New()
 	..()
@@ -148,7 +145,8 @@
 	new /obj/item/weapon/bonegel(src)
 	new /obj/item/weapon/FixOVein(src)
 	new /obj/item/stack/medical/bruise_pack/advanced(src)
-	return
+
+	make_exact_fit()
 
 /*
  * Pill Bottles
@@ -163,18 +161,22 @@
 	can_hold = list(/obj/item/weapon/reagent_containers/pill,/obj/item/weapon/dice,/obj/item/weapon/paper)
 	allow_quick_gather = 1
 	use_to_pickup = 1
+	storage_slots = 14
 	use_sound = null
-	max_storage_space = 14
-	max_w_class = 1
 
 /obj/item/weapon/storage/pill_bottle/antitox
 	name = "bottle of Dylovene pills"
 	desc = "Contains pills used to counter toxins."
 
-/obj/item/weapon/storage/pill_bottle/antitox/New()
-	..()
-	for(var/i = 1 to 7)
-		new /obj/item/weapon/reagent_containers/pill/antitox(src)
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/pill/antitox( src )
+		new /obj/item/weapon/reagent_containers/pill/antitox( src )
+		new /obj/item/weapon/reagent_containers/pill/antitox( src )
+		new /obj/item/weapon/reagent_containers/pill/antitox( src )
+		new /obj/item/weapon/reagent_containers/pill/antitox( src )
+		new /obj/item/weapon/reagent_containers/pill/antitox( src )
+		new /obj/item/weapon/reagent_containers/pill/antitox( src )
 
 /obj/item/weapon/storage/pill_bottle/bicaridine
 	name = "bottle of Bicaridine pills"
@@ -182,8 +184,13 @@
 
 /obj/item/weapon/storage/pill_bottle/bicaridine/New()
 	..()
-	for(var/i = 1 to 7)
-		new /obj/item/weapon/reagent_containers/pill/bicaridine(src)
+	new /obj/item/weapon/reagent_containers/pill/bicaridine(src)
+	new /obj/item/weapon/reagent_containers/pill/bicaridine(src)
+	new /obj/item/weapon/reagent_containers/pill/bicaridine(src)
+	new /obj/item/weapon/reagent_containers/pill/bicaridine(src)
+	new /obj/item/weapon/reagent_containers/pill/bicaridine(src)
+	new /obj/item/weapon/reagent_containers/pill/bicaridine(src)
+	new /obj/item/weapon/reagent_containers/pill/bicaridine(src)
 
 /obj/item/weapon/storage/pill_bottle/dexalin_plus
 	name = "bottle of Dexalin Plus pills"
@@ -191,8 +198,13 @@
 
 /obj/item/weapon/storage/pill_bottle/dexalin_plus/New()
 	..()
-	for(var/i = 1 to 7)
-		new /obj/item/weapon/reagent_containers/pill/dexalin_plus(src)
+	new /obj/item/weapon/reagent_containers/pill/dexalin_plus(src)
+	new /obj/item/weapon/reagent_containers/pill/dexalin_plus(src)
+	new /obj/item/weapon/reagent_containers/pill/dexalin_plus(src)
+	new /obj/item/weapon/reagent_containers/pill/dexalin_plus(src)
+	new /obj/item/weapon/reagent_containers/pill/dexalin_plus(src)
+	new /obj/item/weapon/reagent_containers/pill/dexalin_plus(src)
+	new /obj/item/weapon/reagent_containers/pill/dexalin_plus(src)
 
 /obj/item/weapon/storage/pill_bottle/dermaline
 	name = "bottle of Dermaline pills"
@@ -200,8 +212,13 @@
 
 /obj/item/weapon/storage/pill_bottle/dermaline/New()
 	..()
-	for(var/i = 1 to 7)
-		new /obj/item/weapon/reagent_containers/pill/dermaline(src)
+	new /obj/item/weapon/reagent_containers/pill/dermaline(src)
+	new /obj/item/weapon/reagent_containers/pill/dermaline(src)
+	new /obj/item/weapon/reagent_containers/pill/dermaline(src)
+	new /obj/item/weapon/reagent_containers/pill/dermaline(src)
+	new /obj/item/weapon/reagent_containers/pill/dermaline(src)
+	new /obj/item/weapon/reagent_containers/pill/dermaline(src)
+	new /obj/item/weapon/reagent_containers/pill/dermaline(src)
 
 /obj/item/weapon/storage/pill_bottle/dylovene
 	name = "bottle of Dylovene pills"
@@ -209,26 +226,41 @@
 
 /obj/item/weapon/storage/pill_bottle/dylovene/New()
 	..()
-	for(var/i = 1 to 7)
-		new /obj/item/weapon/reagent_containers/pill/dylovene(src)
+	new /obj/item/weapon/reagent_containers/pill/dylovene(src)
+	new /obj/item/weapon/reagent_containers/pill/dylovene(src)
+	new /obj/item/weapon/reagent_containers/pill/dylovene(src)
+	new /obj/item/weapon/reagent_containers/pill/dylovene(src)
+	new /obj/item/weapon/reagent_containers/pill/dylovene(src)
+	new /obj/item/weapon/reagent_containers/pill/dylovene(src)
+	new /obj/item/weapon/reagent_containers/pill/dylovene(src)
 
 /obj/item/weapon/storage/pill_bottle/inaprovaline
 	name = "bottle of Inaprovaline pills"
 	desc = "Contains pills used to stabilize patients."
 
-/obj/item/weapon/storage/pill_bottle/inaprovaline/New()
-	..()
-	for(var/i = 1 to 7)
-		new /obj/item/weapon/reagent_containers/pill/inaprovaline(src)
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/pill/inaprovaline( src )
+		new /obj/item/weapon/reagent_containers/pill/inaprovaline( src )
+		new /obj/item/weapon/reagent_containers/pill/inaprovaline( src )
+		new /obj/item/weapon/reagent_containers/pill/inaprovaline( src )
+		new /obj/item/weapon/reagent_containers/pill/inaprovaline( src )
+		new /obj/item/weapon/reagent_containers/pill/inaprovaline( src )
+		new /obj/item/weapon/reagent_containers/pill/inaprovaline( src )
 
 /obj/item/weapon/storage/pill_bottle/kelotane
 	name = "bottle of kelotane pills"
 	desc = "Contains pills used to treat burns."
 
-/obj/item/weapon/storage/pill_bottle/kelotane/New()
-	..()
-	for(var/i = 1 to 7)
-		new /obj/item/weapon/reagent_containers/pill/kelotane(src)
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/pill/kelotane( src )
+		new /obj/item/weapon/reagent_containers/pill/kelotane( src )
+		new /obj/item/weapon/reagent_containers/pill/kelotane( src )
+		new /obj/item/weapon/reagent_containers/pill/kelotane( src )
+		new /obj/item/weapon/reagent_containers/pill/kelotane( src )
+		new /obj/item/weapon/reagent_containers/pill/kelotane( src )
+		new /obj/item/weapon/reagent_containers/pill/kelotane( src )
 
 /obj/item/weapon/storage/pill_bottle/spaceacillin
 	name = "bottle of Spaceacillin pills"
@@ -236,23 +268,38 @@
 
 /obj/item/weapon/storage/pill_bottle/spaceacillin/New()
 	..()
-	for(var/i = 1 to 7)
-		new /obj/item/weapon/reagent_containers/pill/spaceacillin(src)
+	new /obj/item/weapon/reagent_containers/pill/spaceacillin(src)
+	new /obj/item/weapon/reagent_containers/pill/spaceacillin(src)
+	new /obj/item/weapon/reagent_containers/pill/spaceacillin(src)
+	new /obj/item/weapon/reagent_containers/pill/spaceacillin(src)
+	new /obj/item/weapon/reagent_containers/pill/spaceacillin(src)
+	new /obj/item/weapon/reagent_containers/pill/spaceacillin(src)
+	new /obj/item/weapon/reagent_containers/pill/spaceacillin(src)
 
 /obj/item/weapon/storage/pill_bottle/tramadol
 	name = "bottle of Tramadol pills"
 	desc = "Contains pills used to relieve pain."
 
-/obj/item/weapon/storage/pill_bottle/tramadol/New()
-	..()
-	for(var/i = 1 to 7)
-		new /obj/item/weapon/reagent_containers/pill/tramadol(src)
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/pill/tramadol( src )
+		new /obj/item/weapon/reagent_containers/pill/tramadol( src )
+		new /obj/item/weapon/reagent_containers/pill/tramadol( src )
+		new /obj/item/weapon/reagent_containers/pill/tramadol( src )
+		new /obj/item/weapon/reagent_containers/pill/tramadol( src )
+		new /obj/item/weapon/reagent_containers/pill/tramadol( src )
+		new /obj/item/weapon/reagent_containers/pill/tramadol( src )
 
 /obj/item/weapon/storage/pill_bottle/citalopram
 	name = "bottle of Citalopram pills"
 	desc = "Contains pills used to stabilize a patient's mood."
 
-/obj/item/weapon/storage/pill_bottle/citalopram/New()
-	..()
-	for(var/i = 1 to 7)
-		new /obj/item/weapon/reagent_containers/pill/citalopram(src)
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/pill/citalopram( src )
+		new /obj/item/weapon/reagent_containers/pill/citalopram( src )
+		new /obj/item/weapon/reagent_containers/pill/citalopram( src )
+		new /obj/item/weapon/reagent_containers/pill/citalopram( src )
+		new /obj/item/weapon/reagent_containers/pill/citalopram( src )
+		new /obj/item/weapon/reagent_containers/pill/citalopram( src )
+		new /obj/item/weapon/reagent_containers/pill/citalopram( src )

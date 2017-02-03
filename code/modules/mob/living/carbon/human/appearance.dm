@@ -125,10 +125,10 @@
 
 /mob/living/carbon/human/proc/generate_valid_species(var/check_whitelist = 1, var/list/whitelist = list(), var/list/blacklist = list())
 	var/list/valid_species = new()
-	var/possible_species = (whitelist && whitelist.len) ? whitelist : all_species - blacklist
-
+	var/possible_species = (all_species - blacklist)&whitelist
 	for(var/current_species_name in possible_species)
 		var/datum/species/current_species = all_species[current_species_name]
+
 		if(!check_rights(R_ADMIN, 0, src)) //If we're using the whitelist, make sure to check it!
 			if(!(current_species.flags & CAN_JOIN))
 				continue

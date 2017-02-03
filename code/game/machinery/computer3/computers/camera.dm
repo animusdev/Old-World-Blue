@@ -26,7 +26,7 @@
 	New()
 		..(built=0)
 		os = program
-		c_circuit.OS = os
+		circuit.OS = os
 
 
 /obj/machinery/computer3/security/mining
