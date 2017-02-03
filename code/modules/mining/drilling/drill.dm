@@ -9,7 +9,6 @@
 	name = "mining drill head"
 	desc = "An enormous drill."
 	icon_state = "mining_drill"
-	circuit = /obj/item/weapon/circuitboard/miningdrill
 	var/braces_needed = 2
 	var/list/supports = list()
 	var/supported = 0
@@ -38,6 +37,19 @@
 	//Flags
 	var/need_update_field = 0
 	var/need_player_check = 0
+
+/obj/machinery/mining/drill/New()
+
+	..()
+
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/miningdrill(src)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
+	component_parts += new /obj/item/weapon/cell/high(src)
+
+	RefreshParts()
 
 /obj/machinery/mining/drill/process()
 

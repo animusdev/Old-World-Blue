@@ -47,11 +47,22 @@
 	idle_power_usage = 50
 	active_power_usage = 300
 	interact_offline = 1
-	circuit = /obj/item/weapon/circuitboard/clonescanner
 	var/locked = 0
 	var/mob/living/carbon/occupant = null
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/opened = 0
+
+/obj/machinery/dna_scannernew/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/clonescanner(src)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
+	component_parts += new /obj/item/stack/cable_coil(src)
+	component_parts += new /obj/item/stack/cable_coil(src)
+	RefreshParts()
 
 /obj/machinery/dna_scannernew/relaymove(mob/user as mob)
 	if (user.stat)
@@ -110,6 +121,7 @@
 		if(beaker)
 			user << "<span class='warning'>A beaker is already loaded into the machine.</span>"
 			return
+
 		beaker = item
 		user.drop_from_inventory(item, src)
 		user.visible_message("\The [user] adds \a [item] to \the [src]!", "You add \a [item] to \the [src]!")
@@ -128,12 +140,7 @@
 		src.add_fingerprint(user)
 		qdel(G)
 		return 1
-	else if(default_deconstruction_screwdriver(user, item))
-		return 1
-	else if(default_deconstruction_crowbar(user, item))
-		return 1
-	else
-		return ..()
+	return ..()
 
 /obj/machinery/dna_scannernew/proc/put_in(var/mob/M)
 	if(M.client)

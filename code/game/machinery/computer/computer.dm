@@ -6,6 +6,7 @@
 	use_power = 1
 	idle_power_usage = 300
 	active_power_usage = 300
+	var/circuit = null //The path to the circuit board type. If circuit==null, the computer can't be disassembled.
 	var/processing = 0
 
 	var/light_range_on = 3
@@ -116,8 +117,8 @@
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20))
 			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-			circuit.forceMove(A)
-			A.circuit = circuit
+			var/obj/item/weapon/circuitboard/M = new circuit(A)
+			A.circuit = M
 			A.anchored = 1
 			for (var/obj/C in src)
 				C.loc = src.loc
@@ -130,7 +131,7 @@
 				user << "<span class='notice'>You disconnect the monitor.</span>"
 				A.state = 4
 				A.icon_state = "4"
-			circuit.deconstruct(src)
+			M.deconstruct(src)
 			qdel(src)
 	else
 		..()

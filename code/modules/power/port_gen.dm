@@ -85,10 +85,10 @@
 /obj/machinery/power/port_gen/pacman
 	name = "\improper P.A.C.M.A.N.-type Portable Generator"
 	desc = "A power generator that runs on solid phoron sheets. Rated for 80 kW max safe output."
-	circuit = /obj/item/weapon/circuitboard/pacman
 
 	var/sheet_name = "Phoron Sheets"
 	var/sheet_path = /obj/item/stack/material/phoron
+	var/board_path = /obj/item/weapon/circuitboard/pacman
 
 	/*
 		These values were chosen so that the generator can run safely up to 80 kW
@@ -113,6 +113,17 @@
 	..()
 	if(anchored)
 		connect_to_network()
+
+/obj/machinery/power/port_gen/pacman/New()
+	..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
+	component_parts += new /obj/item/stack/cable_coil(src)
+	component_parts += new /obj/item/stack/cable_coil(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new board_path(src)
+	RefreshParts()
 
 /obj/machinery/power/port_gen/pacman/Destroy()
 	DropFuel()
@@ -271,13 +282,8 @@
 		updateUsrDialog()
 		return
 	else if(!active)
-		if(default_deconstruction_screwdriver(user, O))
-			return 1
+		if(istype(O, /obj/item/weapon/wrench))
 
-		else if(default_deconstruction_crowbar(user, O))
-			return 1
-
-		else if(istype(O, /obj/item/weapon/wrench))
 			if(!anchored)
 				connect_to_network()
 				user << "\blue You secure the generator to the floor."
@@ -288,6 +294,23 @@
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			anchored = !anchored
 
+		else if(istype(O, /obj/item/weapon/screwdriver))
+			open = !open
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			if(open)
+				user << "\blue You open the access panel."
+			else
+				user << "\blue You close the access panel."
+		else if(istype(O, /obj/item/weapon/crowbar) && open)
+			var/obj/machinery/constructable_frame/machine_frame/new_frame = new /obj/machinery/constructable_frame/machine_frame(src.loc)
+			for(var/obj/item/I in component_parts)
+				I.loc = src.loc
+			while ( sheets > 0 )
+				DropFuel()
+
+			new_frame.state = 2
+			new_frame.icon_state = "box_1"
+			qdel(src)
 
 /obj/machinery/power/port_gen/pacman/attack_hand(mob/user as mob)
 	..()
@@ -392,7 +415,7 @@
 	sheet_path = /obj/item/stack/material/uranium
 	sheet_name = "Uranium Sheets"
 	time_per_sheet = 576 //same power output, but a 50 sheet stack will last 2 hours at max safe power
-	circuit = /obj/item/weapon/circuitboard/pacman/super
+	board_path = /obj/item/weapon/circuitboard/pacman/super
 
 /obj/machinery/power/port_gen/pacman/super/UseFuel()
 	//produces a tiny amount of radiation when in use
@@ -427,7 +450,7 @@
 	time_per_sheet = 576
 	max_temperature = 800
 	temperature_gain = 90
-	circuit = /obj/item/weapon/circuitboard/pacman/mrs
+	board_path = /obj/item/weapon/circuitboard/pacman/mrs
 
 /obj/machinery/power/port_gen/pacman/mrs/explode()
 	//no special effects, but the explosion is pretty big (same as a supermatter shard).

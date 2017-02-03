@@ -180,10 +180,10 @@
 				out += " have been detected "
 
 				//how the artifact does it's effect
-				switch(A.my_effect.effect)
-					if(EFFECT_AURA)
+				switch(A.my_effect.effect_type)
+					if(1)
 						out += " emitting in an ambient energy field."
-					if(EFFECT_PULSE)
+					if(2)
 						out += " emitting in periodic bursts."
 					else
 						out += " interspersed throughout substructure and shell."
@@ -223,10 +223,10 @@
 						out += "low level radiation"
 
 				//how the artifact does it's effect
-				switch(A.secondary_effect.effect)
-					if(EFFECT_AURA)
+				switch(A.secondary_effect.effect_type)
+					if(1)
 						out += " emitting in an ambient energy field."
-					if(EFFECT_PULSE)
+					if(2)
 						out += " emitting in periodic bursts."
 					else
 						out += " interspersed throughout substructure and shell."

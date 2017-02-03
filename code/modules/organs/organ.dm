@@ -27,33 +27,22 @@ var/list/organ_cache = list()
 	var/min_broken_damage = 30        // Damage before becoming broken
 	var/max_damage                    // Damage cap
 	var/rejecting                     // Is this organ already being rejected?
-	var/preserved = 0                 // If this is 1, prevents organ decay.
+
 
 /obj/item/organ/New(var/mob/living/carbon/human/holder)
 	..(holder)
 	create_reagents(5)
 	if(!max_damage)
 		max_damage = min_broken_damage * 2
-	install(holder)
-
-/obj/item/organ/Destroy()
-	if(owner)           owner = null
-	if(transplant_data) transplant_data.Cut()
-	if(autopsy_data)    autopsy_data.Cut()
-	if(trace_chemicals) trace_chemicals.Cut()
-	processing_objects -= src
-
-	return ..()
+	if(istype(holder))
+		install(holder)
 
 // Move organ inside new owner and attach it.
-/obj/item/organ/proc/install(mob/living/carbon/human/H)
-	if(!istype(H))
-		return 1
+/obj/item/organ/proc/install(var/mob/living/carbon/human/H)
+	if(!istype(H)) return 1
 
 	owner = H
 	forceMove(owner)
-	if(parent_organ)
-		parent = H.get_organ(parent_organ)
 
 	if(H.dna)
 		if(!blood_DNA)
@@ -62,10 +51,8 @@ var/list/organ_cache = list()
 	processing_objects -= src
 
 /obj/item/organ/proc/removed(var/mob/living/user)
-	if(!istype(owner))
-		return
+	if(!owner) return
 
-	loc = get_turf(owner)
 	processing_objects |= src
 	rejecting = null
 
@@ -73,13 +60,14 @@ var/list/organ_cache = list()
 	if(!organ_blood || !organ_blood.data["blood_DNA"])
 		owner.vessel.trans_to(src, 5, 1, 1)
 
-	if(owner && vital)
+	if(vital)
 		if(user)
 			user.attack_log += "\[[time_stamp()]\]<font color='red'> removed a vital organ ([src]) from [owner.name] ([owner.ckey]) (INTENT: [uppertext(user.a_intent)])</font>"
 			owner.attack_log += "\[[time_stamp()]\]<font color='orange'> had a vital organ ([src]) removed by [user.name] ([user.ckey]) (INTENT: [uppertext(user.a_intent)])</font>"
 			msg_admin_attack("[user.name] ([user.ckey]) removed a vital organ ([src]) from [owner.name] ([owner.ckey]) (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 		owner.death()
 
+	loc = owner.loc
 	owner = null
 
 /obj/item/organ/proc/update_health()
@@ -89,42 +77,31 @@ var/list/organ_cache = list()
 	if(status & ORGAN_ROBOT)
 		return
 	damage = max_damage
-	status |= ORGAN_DEAD
 	processing_objects -= src
 	if(owner && vital)
 		owner.death()
 
 /obj/item/organ/process()
 
-	if(loc != owner)
-		owner = null
+	// Don't process if we're in a freezer, an MMI or a stasis bag. //TODO: ambient temperature?
+	if(istype(loc,/obj/item/device/mmi) || istype(loc,/obj/item/bodybag/cryobag) || istype(loc,/obj/structure/closet/crate/freezer))
+		return
 
-	//dead already, no need for more processing
-	if(status & ORGAN_DEAD)
-		return
-	// Don't process if we're in a freezer, an MMI or a stasis bag.or a freezer or something I dunno
-	if(istype(loc,/obj/item/device/mmi))
-		return
-	if(preserved)
-		return
 	//Process infections
 	if (robotic >= 2 || (owner && owner.species && (owner.species.flags & IS_PLANT)))
 		germ_level = 0
 		return
 
+	if(loc != owner)
+		owner = null
+
 	if(!owner)
-		if(isturf(loc))
-			var/datum/reagent/blood/B = locate(/datum/reagent/blood) in reagents.reagent_list
-			if(B && prob(40))
-				reagents.remove_reagent("blood",0.1)
-				blood_splatter(src,B,1)
+		var/datum/reagent/blood/B = locate(/datum/reagent/blood) in reagents.reagent_list
+		if(B && prob(40))
+			reagents.remove_reagent("blood",0.1)
+			blood_splatter(src,B,1)
 		if(config.organs_decay) damage += rand(1,3)
 		if(damage >= max_damage)
-			damage = max_damage
-		germ_level += rand(2,6)
-		if(germ_level >= INFECTION_LEVEL_TWO)
-			germ_level += rand(2,6)
-		if(germ_level >= INFECTION_LEVEL_THREE)
 			die()
 
 	else if(owner.bodytemperature >= 170)	//cryo stops germs from moving and doing their bad stuffs
@@ -284,3 +261,35 @@ var/list/organ_cache = list()
 				if(3.0)
 					take_damage(10,0)
 					return
+
+/obj/item/organ/proc/bitten(mob/user)
+
+	if(robotic)
+		return
+
+	user << "\blue You take an experimental bite out of \the [src]."
+	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in reagents.reagent_list
+	blood_splatter(src,B,1)
+
+	user.drop_from_inventory(src)
+	var/obj/item/weapon/reagent_containers/food/snacks/organ/O = new(get_turf(src))
+	O.name = name
+	O.icon = icon
+	O.icon_state = icon_state
+
+	// Pass over the blood.
+	reagents.trans_to(O, reagents.total_volume)
+
+	if(fingerprints) O.fingerprints = fingerprints.Copy()
+	if(fingerprintshidden) O.fingerprintshidden = fingerprintshidden.Copy()
+	if(fingerprintslast) O.fingerprintslast = fingerprintslast
+
+	user.put_in_active_hand(O)
+	qdel(src)
+
+/obj/item/organ/attack_self(mob/user as mob)
+
+	// Convert it to an edible form, yum yum.
+	if(!robotic && user.a_intent == "help" && user.zone_sel.selecting == O_MOUTH)
+		bitten(user)
+		return

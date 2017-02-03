@@ -337,7 +337,7 @@
 
 	if(istype(W, /obj/item/weapon/tray))
 		var/obj/item/weapon/tray/T = W
-		if(T.contents.len)
+		if(T.carrying.len)
 			if(prob(85))
 				user << "<span class='warning'>The tray won't fit in [src].</span>"
 				return
