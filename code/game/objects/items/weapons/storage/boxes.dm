@@ -240,7 +240,7 @@
 	desc = "<B>WARNING: These devices are extremely dangerous and can cause blindness in repeated use.</B>"
 	icon_state = "flashbang"
 
-/obj/item/weapon/storage/box/smokes/New()
+/obj/item/weapon/storage/box/smoke/New()
 	..()
 	for(var/i = 1 to 7)
 		new /obj/item/weapon/grenade/smokebomb(src)
