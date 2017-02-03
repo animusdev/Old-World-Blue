@@ -18,9 +18,8 @@
 	if(outdated)
 		outdated.removed()
 	H.internal_organs_by_name[organ_tag] = src
-	var/obj/item/organ/external/E = H.organs_by_name[src.parent_organ]
-	if(E)
-		E.internal_organs |= src
+	if(parent)
+		parent.internal_organs |= src
 	if(robotic)
 		status |= ORGAN_ROBOT
 
@@ -247,7 +246,7 @@
 
 	if (germ_level > INFECTION_LEVEL_ONE)
 		if(prob(1))
-			owner << "\red Your skin itches."
+			owner << "<span class='danger'>Your skin itches.</span>"
 	if (germ_level > INFECTION_LEVEL_TWO)
 		if(prob(1))
 			spawn owner.vomit()
@@ -333,7 +332,7 @@
 			var/datum/wound/W = new /datum/wound/internal_bleeding(20)
 			owner.adjustToxLoss(25)
 			groin.wounds += W
-			inflamed = 1
+			inflamed = 0
 
 /obj/item/organ/internal/appendix/removed()
 	if(inflamed)

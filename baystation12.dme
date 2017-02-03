@@ -1460,6 +1460,7 @@
 #include "code\modules\organs\prothesis\organ_external_robotic.dm"
 #include "code\modules\organs\prothesis\prosthesis_obj.dm"
 #include "code\modules\organs\subtypes\diona.dm"
+#include "code\modules\organs\subtypes\standard.dm"
 #include "code\modules\organs\subtypes\unbreakable.dm"
 #include "code\modules\organs\subtypes\xenomorph.dm"
 #include "code\modules\overmap\_defines.dm"
