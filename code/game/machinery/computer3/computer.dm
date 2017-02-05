@@ -97,8 +97,8 @@
 			overlays += kb
 
 		if(!built)
-			if(!circuit || !istype(circuit))
-				circuit = new(src)
+			if(!c_circuit || !istype(c_circuit))
+				c_circuit = new(src)
 			if(c_circuit.OS)
 				os = c_circuit.OS
 				c_circuit.OS.computer = src
