@@ -845,6 +845,10 @@
 					M << "\red No ban appeals URL has been set."
 				log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 				message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
+				switch(alert(usr,"Announce about this ban to everyone?",,"Yes","No"))
+					if("Yes")
+						world << "\blue <b>BAN: Администратор [usr.client.ckey] забанил(а) [M.ckey] на [mins] минут по причине: [reason].</b>"
+					if("No")	return
 
 				qdel(M.client)
 				//qdel(M)	// See no reason why to delete mob. Important stuff can be lost. And ban can be lifted before round ends.
@@ -859,6 +863,10 @@
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0, M.lastKnownIP)
 					if("No")
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
+				switch(alert(usr,"Announce about this ban to everyone?",,"Yes","No"))
+					if("Yes")
+						world << "\blue <b>BAN: Администратор [usr.client.ckey] ПЕРМАНЕНТНО забанил(а) [M.ckey] по причине: [reason].</b>"
+					if("No")	return
 				M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>"
 				M << "\red This is a permanent ban."
 				if(config.banappeals)
