@@ -150,8 +150,12 @@
 			usr << "You pull the keffieh down."
 
 
-/obj/item/weapon/flame/lighter/zippo
+/obj/item/weapon/flame/lighter/zippo/black
 	name = "\improper The Last Flame"
-	desc = "The zippo."
+	desc = "A black zippo lighter, which holds some form of sentimental value."
 	icon_state = "blackzippo"
 	item_state = "zippo"
+
+/obj/item/clothing/suit/storage/deverezzer
+	name = "Ambassador"
+	icon_state = "ambassador"
