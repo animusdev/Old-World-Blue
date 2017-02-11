@@ -31,10 +31,10 @@
 		if(CH.mob_check(mob))
 			if (CH.use_ability(mob,target) && CH.one_use_flag)
 				CH = null
-			return
 		else
 			src << "For some reason you can't use [CH.handler_name] ability"
 			CH = null
+		return
 
 	if(!target.Click(location, control, params))
 		usr.ClickOn(target, params)

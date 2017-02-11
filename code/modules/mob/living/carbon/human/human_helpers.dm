@@ -12,7 +12,7 @@
 	if(T && T.status & ORGAN_ROBOT)
 //		src.verbs += /mob/living/carbon/human/proc/self_diagnostics
 		var/datum/robolimb/R = all_robolimbs[T.model]
-		return R ? R : 1
+		return R ? R : basic_robolimb
 
 	return 0
 

@@ -134,7 +134,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/reactive/handle_shield(mob/user, var/damage, atom/damage_source = null, mob/attacker = null, var/attack_text = "the attack")
-	if(prob(50)) //áðîíÿ øðåäèãåðà
+	if(prob(50)) //Ã¡Ã°Ã®Ã­Ã¿ Ã¸Ã°Ã¥Ã¤Ã¨Ã£Ã¥Ã°Ã 
 		user.visible_message("<span class='danger'>The reactive teleport system flings [user] clear of the attack!</span>")
 		var/list/turfs = new/list()
 		for(var/turf/T in orange(6, user))
@@ -263,6 +263,12 @@
 	armor = list(melee = 65, bullet = 30, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0.6
+	allowed = list(
+		/obj/item/weapon/gun/energy, /obj/item/weapon/reagent_containers/spray/pepper,
+		/obj/item/weapon/gun/projectile, /obj/item/ammo_magazine,/obj/item/ammo_casing,
+		/obj/item/weapon/melee/baton, /obj/item/weapon/handcuffs,/obj/item/device/flashlight,
+		/obj/item/weapon/melee/telebaton, /obj/item/clothing/head/helmet/security,
+		/obj/item/clothing/mask/gas)
 
 /obj/item/clothing/suit/storage/hos/solyarkin
 	name = "Internal Security coat"

@@ -105,7 +105,7 @@
 	recipes += new/datum/stack_recipe("crossbow frame", /obj/item/weapon/crossbowframe, 5, time = 25, one_per_turf = 0, on_floor = 0)
 	recipes += new/datum/stack_recipe("coffin", /obj/structure/closet/coffin, 5, time = 15, one_per_turf = 1, on_floor = 1)
 	recipes += new/datum/stack_recipe("buckler", /obj/item/weapon/shield/buckler, 15, time = 25, one_per_turf = 0, on_floor = 0)
-	recipes += new/datum/stack_recipe("bo staff", /obj/item/weapon/material/twohanded/bostaff, 15, time = 25, one_per_turf = 0, on_floor = 0)
+	recipes += new/datum/stack_recipe("bo staff", /obj/item/weapon/material/twohanded/bostaff, 15, time = 25, one_per_turf = 0, on_floor = 0, supplied_material = "[name]")
 	recipes += new/datum/stack_recipe("barricade", /obj/structure/barricade, 5, time = 50, one_per_turf = 1, on_floor = 1)
 
 /material/cardboard/generate_recipes()
