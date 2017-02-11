@@ -148,3 +148,10 @@
 			icon_state = initial(icon_state)
 			item_state = initial(item_state)
 			usr << "You pull the keffieh down."
+
+
+/obj/item/weapon/flame/lighter/zippo
+	name = "\improper The Last Flame"
+	desc = "The zippo."
+	icon_state = "blackzippo"
+	item_state = "zippo"
