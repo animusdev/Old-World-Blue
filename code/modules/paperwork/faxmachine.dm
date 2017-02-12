@@ -1,15 +1,76 @@
-var/list/obj/machinery/photocopier/faxmachine/allfaxes = list()
 var/list/admin_departments = list("Central Command", "Sol Government")
 var/list/alldepartments = list()
 
 var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
+
+
+/obj/item/weapon/circuitboard/fax
+	name = T_BOARD("fax macine")
+	origin_tech = list(TECH_DATA = 2)
+	build_path = /obj/machinery/photocopier/faxmachine
+	board_type = "machine"
+	var/department = ""
+	req_components = list(
+		/obj/item/stack/cable_coil = 4,
+		/obj/item/weapon/stock_parts/manipulator = 1)
+
+/obj/item/weapon/circuitboard/fax/command
+	name = T_BOARD("command fax macine")
+	build_path = /obj/machinery/photocopier/faxmachine/command
+	origin_tech = list(TECH_DATA = 3)
+	req_components = list(
+		/obj/item/stack/cable_coil = 4,
+		/obj/item/weapon/stock_parts/manipulator = 1,
+		/obj/item/weapon/stock_parts/subspace/filter = 1
+		)
+
+
+/obj/item/weapon/circuitboard/fax/construct(var/obj/machinery/photocopier/faxmachine/M)
+	if(..())
+		M.department = department
+		registrate_fax_department(department, M)
+		return 1
+	return 0
+
+/obj/item/weapon/circuitboard/fax/deconstruct(var/obj/machinery/photocopier/faxmachine/M)
+	if(..())
+		department = M.department
+		drop_fax_department(department)
+		return 1
+	return 0
+
+
+/proc/registrate_fax_department(var/department, var/obj/machinery/photocopier/faxmachine/FM)
+	if(!department)
+		return null
+
+	FM.department = null
+
+	if(!alldepartments[department])
+		alldepartments[department] = FM
+		FM.department = department
+		return 1
+	else
+		for(var/i = 1 to 10)
+			var/tmp_dep = "[department] #[i]"
+			if(!alldepartments[tmp_dep])
+				alldepartments[tmp_dep] = FM
+				FM.department = tmp_dep
+				return 1
+
+	return null
+
+/proc/drop_fax_department(var/department)
+	alldepartments -= department
+	return 1
+
 
 /obj/machinery/photocopier/faxmachine
 	name = "fax machine"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "fax"
 	insert_anim = "faxsend"
-	req_one_access = list(access_lawyer, access_heads, access_armory) //Warden needs to be able to Fax solgov too.
+	circuit = /obj/item/weapon/circuitboard/fax
 
 	use_power = 1
 	idle_power_usage = 30
@@ -20,19 +81,28 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 	var/authenticated = 0
 	var/sendcooldown = 0 // to avoid spamming fax messages
 
-	var/department = "Unknown" // our department
+	var/department = "" // our department
 
-	var/destination = "Central Command" // the department we're sending to
+	var/destination = "Vacant office" // the department we're sending to
+	var/command = 0
 
 	pass_flags = PASSTABLE
 
-/obj/machinery/photocopier/faxmachine/New(new_loc, new_department)
-	if(new_department && istext(new_department)) department = new_department
-	..(new_loc)
-	allfaxes += src
 
-	if( !(("[department]" in alldepartments) || ("[department]" in admin_departments)) )
-		alldepartments |= department
+/obj/machinery/photocopier/faxmachine/command
+	name = "command fax machine"
+	destination = "Central Command"
+	command = 1
+	circuit = /obj/item/weapon/circuitboard/fax/command
+	req_one_access = list(access_lawyer, access_heads, access_armory) //Warden needs to be able to Fax solgov too.
+
+
+/obj/machinery/photocopier/faxmachine/New(new_loc, new_department)
+	..(new_loc)
+	if(new_department && istext(new_department))
+		department = new_department
+	if(department)
+		department = registrate_fax_department(department, src)
 
 /obj/machinery/photocopier/faxmachine/attack_hand(mob/user as mob)
 	user.set_machine(src)
@@ -64,7 +134,6 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 				dat += "<b>Transmitter arrays realigning. Please stand by.</b><br>"
 
 			else
-
 				dat += "<a href='byond://?src=\ref[src];send=1'>Send</a><br>"
 				dat += "<b>Currently sending:</b> [copyitem.name]<br>"
 				dat += "<b>Sending to:</b> <a href='byond://?src=\ref[src];dept=1'>[destination]</a><br>"
@@ -89,11 +158,7 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 /obj/machinery/photocopier/faxmachine/Topic(href, href_list)
 	if(href_list["send"])
 		if(copyitem)
-			if (destination in admin_departments)
-				send_admin_fax(usr, destination)
-			else
-				sendfax(destination)
-
+			sendfax(destination, usr)
 			if (sendcooldown)
 				spawn(sendcooldown) // cooldown time
 					sendcooldown = 0
@@ -109,13 +174,10 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 	if(href_list["scan"])
 		if (scan)
 			if(ishuman(usr))
-				scan.loc = usr.loc
-				if(!usr.get_active_hand())
-					usr.put_in_hands(scan)
-				scan = null
+				usr.put_in_hands(scan)
 			else
-				scan.loc = src.loc
-				scan = null
+				scan.forceMove(loc)
+			scan = null
 		else
 			var/obj/item/I = usr.get_active_hand()
 			if (istype(I, /obj/item/weapon/card/id))
@@ -125,11 +187,11 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 
 	if(href_list["dept"])
 		var/lastdestination = destination
-		destination = input(usr, "Which department?", "Choose a department", "") as null|anything in (alldepartments + admin_departments)
+		destination = input(usr, "Which department?", "Choose a department", "") as null|anything in command ? alldepartments : (alldepartments - admin_departments)
 		if(!destination) destination = lastdestination
 
 	if(href_list["auth"])
-		if ( (!( authenticated ) && (scan)) )
+		if (!authenticated && scan)
 			if (check_access(scan))
 				authenticated = 1
 
@@ -138,29 +200,31 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 
 	updateUsrDialog()
 
-/obj/machinery/photocopier/faxmachine/proc/sendfax(var/destination)
+
+/obj/machinery/photocopier/faxmachine/proc/sendfax(var/destination, var/mob/living/user)
 	if(stat & (BROKEN|NOPOWER))
 		return
 
 	use_power(200)
 
 	var/success = 0
-	for(var/obj/machinery/photocopier/faxmachine/F in allfaxes)
-		if( F.department == destination )
-			success = F.recievefax(copyitem)
+	if(destination in admin_departments)
+		success = adminfax(copyitem, department, user)
+
+	var/obj/machinery/photocopier/faxmachine/F = alldepartments[destination]
+	success |= F && F.recievefax(copyitem)
 
 	if (success)
 		visible_message("[src] beeps, \"Message transmitted successfully.\"")
-		//sendcooldown = 600
+		if(success > 1)
+			sendcooldown = 1800
 	else
 		visible_message("[src] beeps, \"Error transmitting message.\"")
+
 
 /obj/machinery/photocopier/faxmachine/proc/recievefax(var/obj/item/incoming)
 	if(stat & (BROKEN|NOPOWER))
 		return 0
-
-	if(department == "Unknown")
-		return 0	//You can't send faxes to "Unknown"
 
 	flick("faxreceive", src)
 	playsound(loc, "sound/items/polaroid1.ogg", 50, 1)
@@ -180,37 +244,26 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 	use_power(active_power_usage)
 	return 1
 
-/obj/machinery/photocopier/faxmachine/proc/send_admin_fax(var/mob/sender, var/destination)
-	if(stat & (BROKEN|NOPOWER))
-		return
 
-	use_power(200)
-
-	var/obj/item/rcvdcopy
-	if (istype(copyitem, /obj/item/weapon/paper))
-		rcvdcopy = copy(copyitem)
-	else if (istype(copyitem, /obj/item/weapon/photo))
-		rcvdcopy = photocopy(copyitem)
-	else if (istype(copyitem, /obj/item/weapon/paper_bundle))
-		rcvdcopy = bundlecopy(copyitem, 0)
+/obj/machinery/photocopier/faxmachine/proc/adminfax(var/obj/item/incoming, var/from, var/mob/sender)
+	var/obj/item/weapon/rcvdcopy = null
+	if (istype(incoming, /obj/item/weapon/paper))
+		rcvdcopy = copy(incoming)
+	else if (istype(incoming, /obj/item/weapon/photo))
+		rcvdcopy = photocopy(incoming)
+	else if (istype(incoming, /obj/item/weapon/paper_bundle))
+		rcvdcopy = bundlecopy(incoming, 0)
 	else
-		visible_message("[src] beeps, \"Error transmitting message.\"")
-		return
+		return 0
 
-	rcvdcopy.loc = null //hopefully this shouldn't cause trouble
 	adminfaxes += rcvdcopy
-
 	//message badmins that a fax has arrived
 	switch(destination)
 		if ("Central Command")
 			message_admins(sender, "CENTCOMM FAX", rcvdcopy, "CentcommFaxReply", "#006100")
 		if ("Sol Government")
 			message_admins(sender, "SOL GOVERNMENT FAX", rcvdcopy, "CentcommFaxReply", "#1F66A0")
-			//message_admins(sender, "SOL GOVERNMENT FAX", rcvdcopy, "SolGovFaxReply", "#1F66A0")
-
-	sendcooldown = 1800
-	sleep(50)
-	visible_message("[src] beeps, \"Message transmitted successfully.\"")
+	return 2
 
 
 /obj/machinery/photocopier/faxmachine/proc/message_admins(var/mob/sender, var/faxname, var/obj/item/sent, var/reply_type, font_colour="#006100")
