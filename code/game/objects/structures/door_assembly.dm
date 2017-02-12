@@ -145,9 +145,9 @@
 		return
 
 	if(istype(W, /obj/item/weapon/weldingtool) && (istext(glass) || (glass == 1) || !anchored))
-		src.in_use = 1
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(1, user))
+			src.in_use = 1
 			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 			if(istext(glass))
 				user.visible_message("[user] welds the [glass] plating off the airlock assembly.", "You start to weld the [glass] plating off the airlock assembly.")
@@ -177,6 +177,7 @@
 					user << "\blue You dissasembled the airlock assembly!"
 					new /obj/item/stack/material/steel(src.loc, 4)
 					qdel (src)
+			src.in_use = 0
 		else
 			user << "<span class='warning'>You need more welding fuel.</span>"
 			return
