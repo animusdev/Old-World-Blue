@@ -24,7 +24,6 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 		/obj/item/weapon/stock_parts/subspace/filter = 1
 		)
 
-
 /obj/item/weapon/circuitboard/fax/construct(var/obj/machinery/photocopier/faxmachine/M)
 	if(..())
 		M.department = department
@@ -39,6 +38,10 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 		return 1
 	return 0
 
+/obj/item/weapon/circuitboard/fax/attack_self(mob/living/user)
+	var/new_dep = input("Choose a new department", "New Department", department) as null|text
+	if(user.get_active_hand() == src || user.get_inactive_hand() == src)
+		department = new_dep
 
 /proc/registrate_fax_department(var/department, var/obj/machinery/photocopier/faxmachine/FM)
 	if(!department)
@@ -104,6 +107,28 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 	if(department)
 		department = registrate_fax_department(department, src)
 
+/obj/machinery/photocopier/faxmachine/Destroy()
+	drop_fax_department(department)
+	return ..()
+
+/obj/machinery/photocopier/faxmachine/attackby(obj/item/O as obj, mob/user as mob)
+	if(default_deconstruction_screwdriver(user, O))
+		return 1
+	else if(default_deconstruction_crowbar(user, O))
+		return 1
+	else
+		return ..()
+
+/obj/machinery/photocopier/faxmachine/dismantle()
+	if(scan)
+		scan.forceMove(src.loc)
+		scan = null
+	if(copyitem)
+		copyitem.forceMove(src.loc)
+		copyitem = null
+	..()
+
+
 /obj/machinery/photocopier/faxmachine/attack_hand(mob/user as mob)
 	user.set_machine(src)
 
@@ -117,86 +142,103 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 
 	dat += "Confirm Identity: <a href='byond://?src=\ref[src];scan=1'>[scan_name]</a><br>"
 
-	if(authenticated)
-		dat += "<a href='byond://?src=\ref[src];logout=1'>{Log Out}</a>"
-	else
-		dat += "<a href='byond://?src=\ref[src];auth=1'>{Log In}</a>"
-
-	dat += "<hr>"
-
-	if(authenticated)
-		dat += "<b>Logged in to:</b> Central Command Quantum Entanglement Network<br><br>"
-
+	if(!department)
 		if(copyitem)
 			dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Item</a><br><br>"
-
-			if(sendcooldown)
-				dat += "<b>Transmitter arrays realigning. Please stand by.</b><br>"
-
-			else
-				dat += "<a href='byond://?src=\ref[src];send=1'>Send</a><br>"
-				dat += "<b>Currently sending:</b> [copyitem.name]<br>"
-				dat += "<b>Sending to:</b> <a href='byond://?src=\ref[src];dept=1'>[destination]</a><br>"
-
-		else
-			if(sendcooldown)
-				dat += "Please insert paper to send via secure connection.<br><br>"
-				dat += "<b>Transmitter arrays realigning. Please stand by.</b><br>"
-			else
-				dat += "Please insert paper to send via secure connection.<br><br>"
+		dat += "Department is not setted yet! <a href='byond://?src=\ref[src];department=set'>Set</a><br>"
 
 	else
-		dat += "Proper authentication is required to use this device.<br><br>"
+		if(authenticated)
+			dat += "<a href='byond://?src=\ref[src];logout=1'>{Log Out}</a>"
+		else
+			dat += "<a href='byond://?src=\ref[src];auth=1'>{Log In}</a>"
 
-		if(copyitem)
-			dat += "<a href ='byond://?src=\ref[src];remove=1'>Remove Item</a><br>"
+		dat += "<hr>"
+
+		if(authenticated)
+			dat += "<b>Logged in to:</b> Central Command Quantum Entanglement Network<br><br>"
+
+			if(copyitem)
+				dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Item</a><br><br>"
+
+				if(sendcooldown)
+					dat += "<b>Transmitter arrays realigning. Please stand by.</b><br>"
+
+				else
+					dat += "<a href='byond://?src=\ref[src];send=1'>Send</a><br>"
+					dat += "<b>Currently sending:</b> [copyitem.name]<br>"
+					dat += "<b>Sending to:</b> <a href='byond://?src=\ref[src];dept=1'>[destination]</a><br>"
+
+			else
+				if(sendcooldown)
+					dat += "Please insert paper to send via secure connection.<br><br>"
+					dat += "<b>Transmitter arrays realigning. Please stand by.</b><br>"
+				else
+					dat += "Please insert paper to send via secure connection.<br><br>"
+
+		else
+			dat += "Proper authentication is required to use this device.<br><br>"
+
+			if(copyitem)
+				dat += "<a href ='byond://?src=\ref[src];remove=1'>Remove Item</a><br>"
 
 	user << browse(dat, "window=copier")
 	onclose(user, "copier")
 	return
 
 /obj/machinery/photocopier/faxmachine/Topic(href, href_list)
-	if(href_list["send"])
-		if(copyitem)
-			sendfax(destination, usr)
-			if (sendcooldown)
-				spawn(sendcooldown) // cooldown time
-					sendcooldown = 0
+	if(href_list["department"])
+		if(department)
+			return 0
+		var/new_dep = input("Choose a new department", "New Department", department) as null|text
+		if(Adjacent(usr))
+			department = new_dep
+			registrate_fax_department(department, src)
+	else
+		if(!department)
+			usr << "<span class='warning'>Department setting is incorrect! Need rebuild.</span>"
+			return 0
+		if(href_list["send"])
+			if(copyitem)
+				sendfax(destination, usr)
+				if (sendcooldown)
+					spawn(sendcooldown) // cooldown time
+						sendcooldown = 0
 
-	else if(href_list["remove"])
-		if(copyitem)
-			copyitem.loc = usr.loc
-			usr.put_in_hands(copyitem)
-			usr << "<span class='notice'>You take \the [copyitem] out of \the [src].</span>"
-			copyitem = null
-			updateUsrDialog()
+		else if(href_list["remove"])
+			if(copyitem)
+				copyitem.loc = usr.loc
+				usr.put_in_hands(copyitem)
+				usr << "<span class='notice'>You take \the [copyitem] out of \the [src].</span>"
+				copyitem = null
+				updateUsrDialog()
 
-	if(href_list["scan"])
-		if (scan)
-			if(ishuman(usr))
-				usr.put_in_hands(scan)
+		if(href_list["scan"])
+			if (scan)
+				if(ishuman(usr))
+					usr.put_in_hands(scan)
+				else
+					scan.forceMove(loc)
+				scan = null
 			else
-				scan.forceMove(loc)
-			scan = null
-		else
-			var/obj/item/I = usr.get_active_hand()
-			if (istype(I, /obj/item/weapon/card/id))
-				usr.drop_from_inventory(I, src)
-				scan = I
-		authenticated = 0
+				var/obj/item/I = usr.get_active_hand()
+				if (istype(I, /obj/item/weapon/card/id))
+					usr.drop_from_inventory(I, src)
+					scan = I
+			authenticated = 0
 
-	if(href_list["dept"])
-		var/lastdestination = destination
-		destination = input(usr, "Which department?", "Choose a department", "") as null|anything in command ? alldepartments : (alldepartments - admin_departments)
-		if(!destination) destination = lastdestination
+		if(href_list["dept"])
+			var/lastdestination = destination
+			destination = input(usr, "Which department?", "Choose a department", "") as null|anything in command ? alldepartments : (alldepartments - admin_departments)
+			if(!destination) destination = lastdestination
 
-	if(href_list["auth"])
-		if (!authenticated && scan)
-			if (check_access(scan))
-				authenticated = 1
+		if(href_list["auth"])
+			if (!authenticated && scan)
+				if (check_access(scan))
+					authenticated = 1
 
-	if(href_list["logout"])
-		authenticated = 0
+		if(href_list["logout"])
+			authenticated = 0
 
 	updateUsrDialog()
 

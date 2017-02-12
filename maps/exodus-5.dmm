@@ -236,7 +236,7 @@
 "eB" = (/obj/structure/cable/blue{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor{icon_state = "white"},/area/outpost/research/hallway)
 "eC" = (/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/wood,/area/outpost/research/hallway)
 "eD" = (/obj/structure/bed/chair{dir = 4},/turf/simulated/floor/wood,/area/outpost/research/hallway)
-"eE" = (/obj/structure/table/standard,/turf/simulated/floor/wood,/area/outpost/research/hallway)
+"eE" = (/obj/structure/table/standard,/obj/machinery/photocopier/faxmachine{department = "Research Outpost"},/turf/simulated/floor/wood,/area/outpost/research/hallway)
 "eF" = (/obj/structure/table/standard,/obj/item/weapon/storage/box/drinkingglasses{pixel_x = 1; pixel_y = 4},/turf/simulated/floor/wood,/area/outpost/research/hallway)
 "eG" = (/obj/structure/bed/chair{dir = 8},/turf/simulated/floor/wood,/area/outpost/research/hallway)
 "eH" = (/turf/simulated/floor/wood,/area/outpost/research/hallway)
