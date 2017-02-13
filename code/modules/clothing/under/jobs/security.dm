@@ -122,10 +122,6 @@ Corporate
 /*
  * Head of Security
  */
-/obj/item/clothing/under/rank/head_of_security/solyarkin
-	desc = "Better you do not meet the person who wears it."
-	icon_state = "commi"
-
 //Jensen cosplay gear
 /obj/item/clothing/under/rank/head_of_security/jensen
 	desc = "You never asked for anything that stylish."

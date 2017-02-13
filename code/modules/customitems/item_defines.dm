@@ -13,6 +13,10 @@
 	icon_state = "BW_uniform"
 	item_state = "jensen"
 
+/obj/item/clothing/under/rank/head_of_security/solyarkin
+	desc = "Better you do not meet the person who wears it."
+	icon_state = "commi"
+
 /obj/item/clothing/accessory/purple_heart
 	name = "Purple Heart"
 	desc = "The Purple Heart is a NanoTrasen military decoration awarded in the name of the Director to those badly wounded or killed while serving.\n\
@@ -43,8 +47,8 @@
 	name = "leather jacket"
 	wear_state = "mil_jacket"
 
-//private military contractors 4life <3
 
+//private military contractors 4life <3
 /obj/item/clothing/suit/storage/vest/madman
 	name = "\improper MOLLE plate carrier"
 	desc = "That's the high quality generic plate carrier."
