@@ -132,7 +132,7 @@
 		admins += src
 		holder.owner = src
 
-	else if(config.panic_bunker && get_player_age(ckey)<1) //first connection
+	else if(config.panic_bunker && get_player_age(ckey)<0) //first connection
 		message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
 		src << "Sorry but the server is currently not accepting connections from never before seen players."
 		del(src)

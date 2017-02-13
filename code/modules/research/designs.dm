@@ -238,6 +238,18 @@ datum/design/circuit/arcademachine
 	req_tech = list("programming" = 1)
 	build_path = /obj/item/weapon/circuitboard/arcade
 
+datum/design/circuit/faxmachine
+	name = "fax machine"
+	id = "faxmachine"
+	req_tech = list("programming" = 2)
+	build_path = /obj/item/weapon/circuitboard/fax
+
+datum/design/circuit/commandfaxmachine
+	name = "fax machine (command)"
+	id = "commandfaxmachine"
+	req_tech = list("programming" = 3)
+	build_path = /obj/item/weapon/circuitboard/fax/command
+
 datum/design/circuit/powermonitor
 	name = "power monitoring console"
 	id = "powermonitor"
