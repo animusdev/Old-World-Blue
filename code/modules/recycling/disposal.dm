@@ -1178,23 +1178,17 @@
 	var/sortdir = 0
 
 	proc/updatedesc()
-		switch(sortTypes.len)
-			if(0) desc = initial(desc)
-			if(1) desc += "\nIt's filtering objects with the '[sortTypes[1]]' tag."
-			else
-				desc += "\nIt's filtering objects with the '[sortTypes[1]]' tag."
-				var/tmp_desc = ""
-				for(var/location in sortTypes)
-					tmp_desc += ", '[location]'"
-				desc = "\nIt's filtering objects with the [copytext(tmp_desc,2)] tags."
-
+		desc = initial(desc)
+		if(!sortTypes.len)
+			desc += "\nFiltering tags isn't set yet."
+		else
+			desc += "\nIt's filtering objects with next tags: \n- [sortTypes.Join("\n- ")]"
 
 	proc/updatename()
-		switch(sortTypes.len)
-			if(0)
-				name = initial(name)
-			if(1)
-				name = "[initial(name)] ([sortTypes][1])"
+		if(!sortTypes.len)
+			name = initial(name)
+		else
+			name = "[initial(name)] ([sortTypes][1])"
 
 	proc/updatedir()
 		posdir = dir
@@ -1222,19 +1216,45 @@
 			return
 
 		if(istype(I, /obj/item/device/destTagger))
-			var/obj/item/device/destTagger/O = I
+			openwindow(user)
 
-			if(O.currTag)// Tag set
-				if(O.currTag in sortTypes)
-					sortTypes -= O.currTag
-					playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
-					user << "\blue Remove '[O.currTag]', from sort types."
-				else
-					sortTypes += O.currTag
-					playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
-					user << "\blue Add '[O.currTag]', to sort types."
-				updatename()
-				updatedesc()
+
+	proc/openwindow(mob/user)
+		var/dat = "<tt><center><h1><b>TagMaster 2.3</b></h1></center>"
+
+		dat += "<table style='width:100%; padding:4px;'><tr>"
+		var/i = 0
+		for(var/location in tagger_locations)
+			if(location in sortTypes)
+				dat += "<td><b><a href='?src=\ref[src];toggleTag=[location]'>[location]</a></b></td>"
+			else
+				dat += "<td><a href='?src=\ref[src];toggleTag=[location]'>[location]</a></td>"
+
+			if (++i%4==0)
+				dat += "</tr><tr>"
+
+		dat += "</tr></table></tt>"
+
+		user << browse(dat, "window=PipeTaggs;size=450x350")
+		onclose(user, "PipeTaggs")
+
+	Topic(href, href_list)
+		src.add_fingerprint(usr)
+		if(!Adjacent(usr))
+			return 1
+		if(href_list["toggleTag"])
+			var/currTag = href_list["toggleTag"]
+			if(!istype(usr.get_active_hand(), /obj/item/device/destTagger) || !currTag in tagger_locations)
+				return
+			if(currTag in sortTypes)
+				sortTypes -= currTag
+			else
+				sortTypes |= currTag
+
+			playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
+			updatename()
+			updatedesc()
+		openwindow(usr)
 
 	proc/divert_check(var/checkTag)
 		return checkTag in sortTypes
