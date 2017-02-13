@@ -50,8 +50,8 @@
 	icon_state = "officer_redf"
 
 /*
-Corporate
-*/
+ * Corporate
+ */
 /obj/item/clothing/under/rank/head_of_security/corp
 	icon_state = "hos_corporate"
 	item_state = "black"
@@ -64,13 +64,51 @@ Corporate
 	icon_state = "sec_corporate"
 	item_state = "black"
 
-/obj/item/clothing/under/rank/tactical
-	name = "tactical jumpsuit"
-	desc = "It's made of a slightly sturdier material than standard jumpsuits, to allow for robust protection."
-	icon_state = "swatunder"
-	item_state = "green"
-	armor = list(melee = 10, bullet = 5, laser = 5,energy = 0, bomb = 0, bio = 0, rad = 0)
-	siemens_coefficient = 0.9
+/obj/item/clothing/under/rank/det/corp
+	icon_state = "det_corporate"
+	item_state = "black"
+
+/*
+ * Navy uniforms
+ */
+/obj/item/clothing/under/rank/security/dnavy
+	name = "security officer's uniform"
+	desc = "Dark, navy and stylish. Enough to be the perfect piece of clothing."
+	icon_state = "officerdnavyclothes"
+	item_state = "ba_suit"
+
+/obj/item/clothing/under/rank/head_of_security/dnavy
+	desc = "The insignia on this uniform tells you that this uniform belongs to the Head of Security."
+	name = "head of security's uniform"
+	icon_state = "hosdnavyclothes"
+	item_state = "ba_suit"
+
+/obj/item/clothing/under/rank/warden/dnavy
+	desc = "Dark. Navy. Sexy."
+	name = "warden's uniform"
+	icon_state = "wardendnavyclothes"
+	item_state = "ba_suit"
+
+/*
+ * Blue uniforms
+ */
+/obj/item/clothing/under/rank/security/navyblue
+	name = "security officer's uniform"
+	desc = "The latest in fashionable security outfits."
+	icon_state = "officerblueclothes"
+	item_state = "ba_suit"
+
+/obj/item/clothing/under/rank/head_of_security/navyblue
+	desc = "The insignia on this uniform tells you that this uniform belongs to the Head of Security."
+	name = "head of security's uniform"
+	icon_state = "hosblueclothes"
+	item_state = "ba_suit"
+
+/obj/item/clothing/under/rank/warden/navyblue
+	desc = "The insignia on this uniform tells you that this uniform belongs to the Warden."
+	name = "warden's uniform"
+	icon_state = "wardenblueclothes"
+	item_state = "ba_suit"
 
 /*
  * Detective
@@ -115,7 +153,7 @@ Corporate
 
 /obj/item/clothing/under/rank/det/formal_dress
 	name = "formal dress"
-	desc = "It's Foresenic technician's formal skirt. Classy skirt pants with white shirt and foresenics badge attached to it."
+	desc = "It's Foresenic technician's formal skirt. Classy black skirt with white shirt and foresenics badge attached to it."
 	icon_state = "formal_dress"
 	item_state = "sl_suit"
 
@@ -128,48 +166,14 @@ Corporate
 	name = "head of security's jumpsuit"
 	icon_state = "jensen"
 
-/*
- * Blue uniforms
- */
-/obj/item/clothing/under/rank/security/navyblue
-	name = "security officer's uniform"
-	desc = "The latest in fashionable security outfits."
-	icon_state = "officerblueclothes"
-	item_state = "ba_suit"
+/obj/item/clothing/under/rank/tactical
+	name = "tactical jumpsuit"
+	desc = "It's made of a slightly sturdier material than standard jumpsuits, to allow for robust protection."
+	icon_state = "swatunder"
+	item_state = "green"
+	armor = list(melee = 10, bullet = 5, laser = 5,energy = 0, bomb = 0, bio = 0, rad = 0)
+	siemens_coefficient = 0.9
 
-/obj/item/clothing/under/rank/head_of_security/navyblue
-	desc = "The insignia on this uniform tells you that this uniform belongs to the Head of Security."
-	name = "head of security's uniform"
-	icon_state = "hosblueclothes"
-	item_state = "ba_suit"
-
-/obj/item/clothing/under/rank/warden/navyblue
-	desc = "The insignia on this uniform tells you that this uniform belongs to the Warden."
-	name = "warden's uniform"
-	icon_state = "wardenblueclothes"
-	item_state = "ba_suit"
-
-/*
- * Navy uniforms
- */
-
-/obj/item/clothing/under/rank/security/dnavy
-	name = "security officer's uniform"
-	desc = "Dark, navy and stylish. Enough to be the perfect piece of clothing."
-	icon_state = "officerdnavyclothes"
-	item_state = "ba_suit"
-
-/obj/item/clothing/under/rank/head_of_security/dnavy
-	desc = "The insignia on this uniform tells you that this uniform belongs to the Head of Security."
-	name = "head of security's uniform"
-	icon_state = "hosdnavyclothes"
-	item_state = "ba_suit"
-
-/obj/item/clothing/under/rank/warden/dnavy
-	desc = "Dark. Navy. Sexy."
-	name = "warden's uniform"
-	icon_state = "wardendnavyclothes"
-	item_state = "ba_suit"
 
 //Investigator
 /obj/item/clothing/under/investigator
