@@ -357,9 +357,8 @@ datum/objective/escape
 		if(istype(location, /turf/simulated/shuttle/floor4))
 			if(istype(owner.current, /mob/living/carbon))
 				var/mob/living/carbon/C = owner.current
-				if (!C.handcuffed)
-					return 1
-			return 0
+				if(C.handcuffed)
+					return 0
 
 		var/area/check_area = get_area(owner.current)
 		return check_area.is_escape_location
@@ -421,6 +420,8 @@ datum/objective/harm
 datum/objective/nuclear
 	explanation_text = "Destroy the station with a nuclear device."
 
+	check_completion()
+		return ticker.mode.station_was_nuked
 
 
 datum/objective/steal
