@@ -1188,7 +1188,7 @@
 		if(!sortTypes.len)
 			name = initial(name)
 		else
-			name = "[initial(name)] ([sortTypes][1])"
+			name = "[initial(name)] ([sortTypes[1]])"
 
 	proc/updatedir()
 		posdir = dir
