@@ -407,18 +407,9 @@ datum/objective/harm
 				return 0
 
 			var/mob/living/carbon/human/H = target.current
-			for(var/obj/item/organ/external/E in H.organs)
-				if(E.status & ORGAN_BROKEN)
-					return 1
-			for(var/limb_tag in H.species.has_limbs) //todo check prefs for robotic limbs and amputations.
-				var/list/organ_data = H.species.has_limbs[limb_tag]
-				var/limb_type = organ_data["path"]
-				var/found
-				for(var/obj/item/organ/external/E in H.organs)
-					if(limb_type == E.type)
-						found = 1
-						break
-				if(!found)
+			for(var/limb_tag in H.species.has_limbs)
+				var/obj/item/organ/external/E = H.get_organ(limb_tag)
+				if(!E || (E.status & ORGAN_BROKEN))
 					return 1
 
 			var/obj/item/organ/external/head/head = H.get_organ(BP_HEAD)
