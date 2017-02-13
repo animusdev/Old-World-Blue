@@ -191,7 +191,7 @@
 	.=..()
 	if(.<=3)
 		user << "The power light is [on ? "on" : "off"].\nThere are[key ? "" : " no"] keys in the ignition."
-		user << "The charge meter reads [cell? round(cell.percent(), 0.01) : 0]%"
+		user << "The charge meter reads [cell? cell.percent() : 0]%"
 
 /obj/vehicle/train/cargo/engine/verb/start_engine()
 	set name = "Start engine"

@@ -12,7 +12,7 @@
 		var/static/list/S = list(" Off","AOff","  On", " AOn")
 		var/static/list/chg = list("N","C","F")
 		return "[copytext(add_tspace("\The [A.area]", 30), 1, 30)] [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] \
-		[add_lspace(A.lastused_total, 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "  N/C"]<BR>"
+		[add_lspace(A.lastused_total, 6)]  [A.cell ? "[add_lspace(A.cell.percent(), 3)]% [chg[A.charging+1]]" : "  N/C"]<BR>"
 
 	interact()
 		if(!interactable())
