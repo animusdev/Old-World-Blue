@@ -63,9 +63,9 @@
 
 /obj/structure/closet/wardrobe/redalt/New()
 	..()
-	new /obj/item/clothing/under/rank/security2(src)
-	new /obj/item/clothing/under/rank/security2(src)
-	new /obj/item/clothing/under/rank/security2(src)
+	new /obj/item/clothing/under/rank/cadet(src)
+	new /obj/item/clothing/under/rank/cadet(src)
+	new /obj/item/clothing/under/rank/cadet(src)
 	new /obj/item/clothing/under/rank/dispatch(src)
 	new /obj/item/clothing/under/rank/dispatch(src)
 	new /obj/item/clothing/head/beret/sec/alt(src)

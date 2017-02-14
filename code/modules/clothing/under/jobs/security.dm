@@ -2,6 +2,8 @@
  * Contains:
  *		Security
  *		Detective
+ *		Warden
+ *		Forensic Technican
  *		Head of Security
  */
 
@@ -46,8 +48,16 @@
 
 /obj/item/clothing/under/rank/security/skirt
 	name = "security officer's jumpskirt"
-	desc = "Standard feminine fashion for Security Officers.  It's made of sturdier material than the standard jumpskirts."
+	desc = "Standard feminine fashion for Security Officers. It's made of sturdier material than the standard jumpskirts."
 	icon_state = "officer_redf"
+
+/obj/item/clothing/under/rank/forentech
+	name = "red forensic technician suit"
+	desc = "Someone who wears this means business."
+	icon_state = "forentech"
+	item_state = "red"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	siemens_coefficient = 0.9
 
 /*
  * Corporate
@@ -92,12 +102,6 @@
 /*
  * Blue uniforms
  */
-/obj/item/clothing/under/rank/security/navyblue
-	name = "security officer's uniform"
-	desc = "The latest in fashionable security outfits."
-	icon_state = "officerblueclothes"
-	item_state = "ba_suit"
-
 /obj/item/clothing/under/rank/head_of_security/navyblue
 	desc = "The insignia on this uniform tells you that this uniform belongs to the Head of Security."
 	name = "head of security's uniform"
@@ -110,6 +114,21 @@
 	icon_state = "wardenblueclothes"
 	item_state = "ba_suit"
 
+/obj/item/clothing/under/rank/security/navyblue
+	name = "security officer's uniform"
+	desc = "The latest in fashionable security outfits."
+	icon_state = "officerblueclothes"
+	item_state = "ba_suit"
+
+/*
+ * Head of Security
+ */
+//Jensen cosplay gear
+/obj/item/clothing/under/rank/head_of_security/jensen
+	desc = "You never asked for anything that stylish."
+	name = "head of security's jumpsuit"
+	icon_state = "jensen"
+
 /*
  * Detective
  */
@@ -121,81 +140,33 @@
 	siemens_coefficient = 0.9
 	starting_accessories = list(/obj/item/clothing/accessory/blue_clip)
 
+/obj/item/clothing/under/rank/det/grey
+	icon_state = "det_grey"
+	item_state = "gray"
+	desc = "A serious-looking tan dress shirt paired with freshly-pressed black slacks."
+	starting_accessories = list(/obj/item/clothing/accessory/red_long)
+
 /obj/item/clothing/under/rank/det/black
-	icon_state = "detective2"
-	item_state = "sl_suit"
-
-/obj/item/clothing/under/rank/det/slob
-	icon_state = "polsuit"
-	item_state = "sl_suit"
-
-/obj/item/clothing/under/rank/det/seven
-	icon_state = "detsuit_black"
-	item_state = "sl_suit"
-
-/obj/item/clothing/under/rank/det/forentech
-	name = "red forensic technician suit"
-	desc = "Someone who wears this means business."
-	icon_state = "forentech"
-	item_state = "r_suit"
-
-/obj/item/clothing/under/rank/det/forentech2
-	name = "blue forensic technician suit"
-	desc = "Someone who wears this means business."
-	icon_state = "forentech2"
-	item_state = "b_suit"
-
-/obj/item/clothing/under/rank/det/formal
-	name = "formal uniform"
-	desc = "It's Foresenic technician's formal suit. Classy black pants with white shirt and foresenics badge attached to it."
-	icon_state = "formal_suit"
-	item_state = "sl_suit"
-
-/obj/item/clothing/under/rank/det/formal_dress
-	name = "formal dress"
-	desc = "It's Foresenic technician's formal skirt. Classy black skirt with white shirt and foresenics badge attached to it."
-	icon_state = "formal_dress"
-	item_state = "sl_suit"
-
-/*
- * Head of Security
- */
-//Jensen cosplay gear
-/obj/item/clothing/under/rank/head_of_security/jensen
-	desc = "You never asked for anything that stylish."
-	name = "head of security's jumpsuit"
-	icon_state = "jensen"
-
-/obj/item/clothing/under/rank/tactical
-	name = "tactical jumpsuit"
-	desc = "It's made of a slightly sturdier material than standard jumpsuits, to allow for robust protection."
-	icon_state = "swatunder"
-	item_state = "green"
-	armor = list(melee = 10, bullet = 5, laser = 5,energy = 0, bomb = 0, bio = 0, rad = 0)
-	siemens_coefficient = 0.9
-
-
-//Investigator
-/obj/item/clothing/under/investigator
 	name = "worn suit"
 	desc = "That's a simple white dress shirt with the pants."
-	icon_state = "investigator"
-	item_state = "det"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	siemens_coefficient = 0.9
+	icon_state = "det_black"
+	item_state = "ba_suit"
+	desc = "An immaculate white dress shirt, paired with a pair of dark grey dress pants."
+	starting_accessories = list(/obj/item/clothing/accessory/red_long, /obj/item/clothing/accessory/vest)
 
-/obj/item/clothing/under/investigator/alt
+/obj/item/clothing/under/rank/det/jeans
 	desc = "That's a simple blue dress shirt with the jeans."
-	icon_state = "investigatoralt"
-	item_state = "det"
+	icon_state = "detectivej"
+	item_state = "blue"
 
-//Forensic Technician
-
-/obj/item/clothing/under/forensic
+/*
+ *Forensic Technician
+ */
+/obj/item/clothing/under/rank/forensic
 	name = "black turtleneck"
 	desc = "That's the black turtleneck with pants."
-	icon_state = "forensictech"
-	item_state = "bl_suit"
+	icon_state = "forensic"
+	item_state = "black"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.9
 
@@ -208,11 +179,16 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
 	siemens_coefficient = 0.9
 
-/obj/item/clothing/under/rank/security2
-	name = "security officer's uniform"
+/obj/item/clothing/under/rank/cadet
+	name = "security junior's uniform"
 	desc = "It's made of a slightly sturdier material, to allow for robust protection."
-	icon_state = "redshirt2"
+	icon_state = "cadet"
 	item_state = "red"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	siemens_coefficient = 0.9
 
+/obj/item/clothing/under/rank/tactical
+	name = "tactical jumpsuit"
+	desc = "It's made of a slightly sturdier material than standard jumpsuits, to allow for robust protection."
+	icon_state = "swatunder"
+	item_state = "green"
+	armor = list(melee = 10, bullet = 5, laser = 5,energy = 0, bomb = 0, bio = 0, rad = 0)
+	siemens_coefficient = 0.9
