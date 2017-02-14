@@ -54,7 +54,7 @@
 /obj/item/clothing/under/rank/forentech
 	name = "red forensic technician suit"
 	desc = "Someone who wears this means business."
-	icon_state = "forentech"
+	icon_state = "forensic_red"
 	item_state = "red"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.9
