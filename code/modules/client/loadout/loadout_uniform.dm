@@ -47,7 +47,7 @@
 	display_name = "job, jeans"
 	description = "Totally as your default uniform, but with jeans!"
 	path = /obj/item/clothing/under
-	allowed_roles = list("QM", "Cargo Technician","Station Engineer","Atmospheric Technician",\
+	allowed_roles = list("QM", "Cargo Technician","Station Engineer","Atmospheric Technician","Detective",\
 	"Research Director","Scientist","Chief Medical Officer","Chemist","Medical Doctor","Geneticist")
 
 /datum/gear/uniform/jeans/spawn_for(var/mob/living/carbon/human/H)
@@ -69,6 +69,7 @@
 			if(H.mind && H.mind.role_alt_title == "Virologist")
 				tmp_path = /obj/item/clothing/under/rank/virologist/jeans
 		if("Geneticist") tmp_path = /obj/item/clothing/under/rank/geneticist/jeans
+		if("Detective")  tmp_path = /obj/item/clothing/under/rank/det/jeans
 		else return null
 
 	return new tmp_path(H)
