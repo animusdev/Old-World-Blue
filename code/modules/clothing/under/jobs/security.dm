@@ -152,7 +152,7 @@
 	icon_state = "det_black"
 	item_state = "ba_suit"
 	desc = "An immaculate white dress shirt, paired with a pair of dark grey dress pants."
-	starting_accessories = list(/obj/item/clothing/accessory/red_long, /obj/item/clothing/accessory/vest)
+	starting_accessories = null
 
 /obj/item/clothing/under/rank/det/jeans
 	desc = "That's a simple blue dress shirt with the jeans."
