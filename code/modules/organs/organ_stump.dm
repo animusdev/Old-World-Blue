@@ -1,6 +1,7 @@
 /obj/item/organ/external/stump
 	name = "limb stump"
 	dislocated = -1
+	damage_state = "d"
 
 /obj/item/organ/external/stump/New(var/mob/living/carbon/holder, var/obj/item/organ/external/limb)
 	if(istype(limb))
