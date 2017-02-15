@@ -6,6 +6,7 @@
 
 /datum/gear/utility/wallet
 	display_name = "wallet"
+	slot = null
 	path = /obj/item/weapon/storage/wallet
 
 /datum/gear/utility/clipboard
