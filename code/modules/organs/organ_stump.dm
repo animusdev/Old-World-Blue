@@ -9,6 +9,7 @@
 		body_part = limb.body_part
 		amputation_point = limb.amputation_point
 		joint = limb.joint
+		gendered = limb.gendered
 		parent_organ = limb.parent_organ
 		wounds = limb.wounds
 	..(holder)
