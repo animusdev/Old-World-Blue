@@ -120,6 +120,7 @@
 		new /obj/item/weapon/gun/energy/gun(src)
 		new /obj/item/clothing/accessory/holster/gun/waist(src)
 		new /obj/item/weapon/melee/telebaton(src)
+		new /obj/item/weapon/cell/device/weapon(src)
 		new /obj/item/clothing/head/beret/sec/hos(src)
 		new /obj/item/clothing/under/rank/head_of_security/dnavy(src)
 		new/obj/item/clothing/suit/storage/security/dnavyhos(src)
@@ -158,6 +159,7 @@
 		new /obj/item/weapon/reagent_containers/spray/pepper(src)
 		new /obj/item/weapon/melee/baton/loaded(src)
 		new /obj/item/weapon/gun/energy/gun(src)
+		new /obj/item/weapon/cell/device/weapon(src)
 		new /obj/item/weapon/storage/box/holobadge(src)
 		new /obj/item/clothing/head/beret/sec/warden(src)
 		new /obj/item/clothing/head/helmet/warden/drill(src)
@@ -199,6 +201,7 @@
 		new /obj/item/ammo_magazine/c45m/rubber(src)
 		new /obj/item/weapon/gun/energy/taser(src)
 		new /obj/item/clothing/gloves/black(src)
+		new /obj/item/weapon/cell/device/weapon(src)
 		new /obj/item/clothing/under/rank/security/dnavy(src)
 		new /obj/item/clothing/suit/storage/security/dnavyofficer(src)
 		return

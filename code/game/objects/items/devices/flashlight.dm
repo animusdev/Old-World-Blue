@@ -13,18 +13,96 @@
 	icon_action_button = "action_flashlight"
 	var/on = 0
 	var/brightness_on = 4 //luminosity when on
+	var/obj/item/weapon/cell/cell
+	var/cell_type = /obj/item/weapon/cell/device
+	var/power_usage
+	var/power_use = 1
+	var/list/brightness_levels
+	var/brightness_level = "medium"
 
 /obj/item/device/flashlight/initialize()
 	..()
 	update_icon()
 
+/obj/item/device/flashlight/New()
+	if(power_use)
+		processing_objects |= src
+
+		if(cell_type)
+			cell = new cell_type(src)
+			brightness_levels = list("low" = 0.25, "medium" = 0.5, "high" = 1)
+			power_usage = brightness_levels[brightness_level]
+
+	else
+		verbs -= /obj/item/device/flashlight/verb/toggle
+	..()
+
+/obj/item/device/flashlight/verb/toggle()
+	set name = "Toggle Flashlight Brightness"
+	set category = "Object"
+	set src in usr
+	set_brightness(usr)
+
+/obj/item/device/flashlight/Destroy()
+	if(power_use)
+		processing_objects -= src
+	..()
+
+/obj/item/device/flashlight/proc/set_brightness(mob/user as mob)
+	var/choice = input("Choose a brightness level.") as null|anything in brightness_levels
+	if(choice)
+		brightness_level = choice
+		power_usage = brightness_levels[choice]
+		user << "<span class='notice'>You set the brightness level on \the [src] to [brightness_level].</span>"
+		update_icon()
+
+/obj/item/device/flashlight/process()
+	if(on)
+		if(cell)
+			if(brightness_level && power_usage)
+				if(power_usage < cell.charge)
+					cell.charge -= power_usage
+				else
+					cell.charge = 0
+					visible_message("<span class='warning'>\The [src] flickers before going dull.</span>")
+					set_light(0)
+					on = 0
+					update_icon()
+
+
 /obj/item/device/flashlight/update_icon()
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
-		set_light(brightness_on)
+
+		if(brightness_level == "low")
+			set_light(brightness_on/2)
+		else if(brightness_level == "high")
+			set_light(brightness_on*4)
+		else
+			set_light(brightness_on)
+
 	else
 		icon_state = "[initial(icon_state)]"
 		set_light(0)
+
+/obj/item/device/flashlight/examine(mob/user)
+	..()
+	if(power_use && brightness_level)
+		var/tempdesc
+		tempdesc += "\The [src] is set to [brightness_level]. "
+		if(cell)
+			tempdesc += "\The [src] has a \the [cell] attached. "
+
+			if(cell.charge <= cell.maxcharge*0.25)
+				tempdesc += "It appears to have a low amount of power remaining."
+			else if(cell.charge > cell.maxcharge*0.25 && cell.charge <= cell.maxcharge*0.5)
+				tempdesc += "It appears to have an average amount of power remaining."
+			else if(cell.charge > cell.maxcharge*0.5 && cell.charge <= cell.maxcharge*0.75)
+				tempdesc += "It appears to have an above average amount of power remaining."
+			else if(cell.charge > cell.maxcharge*0.75 && cell.charge <= cell.maxcharge)
+				tempdesc += "It appears to have a high amount of power remaining."
+
+		user << "[tempdesc]"
 
 /obj/item/device/flashlight/attack_self(mob/user)
 	if(!isturf(user.loc))
@@ -84,6 +162,38 @@
 			//M.flash_eyes()
 	else
 		return ..()
+
+/obj/item/device/flashlight/attack_hand(mob/user as mob)
+	if(user.get_inactive_hand() == src)
+		if(cell)
+			cell.update_icon()
+			user.put_in_hands(cell)
+			cell = null
+			user << "<span class='notice'>You remove the cell from the [src].</span>"
+			on = 0
+			update_icon()
+			return
+		..()
+	else
+		return ..()
+
+/obj/item/device/flashlight/attackby(obj/item/weapon/W, mob/user as mob)
+	if(power_use)
+		if(istype(W, /obj/item/weapon/cell))
+			if(istype(W, /obj/item/weapon/cell/device))
+				if(!cell)
+					user.drop_from_inventory(W)
+					W.loc = src
+					cell = W
+					user << "<span class='notice'>You install a cell in \the [src].</span>"
+					update_icon()
+				else
+					user << "<span class='notice'>\The [src] already has a cell.</span>"
+			else
+				user << "<span class='notice'>\The [src] cannot use that type of cell.</span>"
+
+	else
+		..()
 
 /obj/item/device/flashlight/pen
 	name = "penlight"

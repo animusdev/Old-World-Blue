@@ -1175,6 +1175,22 @@ datum/design/item/powercell/super
 	build_path = /obj/item/weapon/cell/super
 	category = "Misc"
 
+/datum/design/item/powercell/device
+	name = "device cell"
+	id = "weapon"
+	req_tech = list("powerstorage" = 1)
+	materials = list("$metal" = 350, "$glass" = 30)
+	build_path = /obj/item/weapon/cell/device
+	category = "Misc"
+
+/datum/design/item/powercell/weapon
+	name = "weapon cell"
+	id = "weapon"
+	req_tech = list("powerstorage" = 2)
+	materials = list("$metal" = 700, "$glass" = 60)
+	build_path = /obj/item/weapon/cell/device/weapon
+	category = "Misc"
+
 datum/design/item/powercell/hyper
 	name = "hyper-capacity"
 	id = "hyper_cell"
