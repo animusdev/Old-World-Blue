@@ -16,7 +16,7 @@
 
 	if(charging && !(stat & (BROKEN|NOPOWER)) )
 
-		var/newlevel = 	round(charging.percent() * 4.0 / 99)
+		var/newlevel = round(charging.percent() * 4.0 / 99)
 		//world << "nl: [newlevel]"
 
 		if(chargelevel != newlevel)

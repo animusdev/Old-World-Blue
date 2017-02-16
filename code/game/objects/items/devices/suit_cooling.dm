@@ -179,6 +179,6 @@
 			user << "The panel is open."
 
 	if (cell)
-		user << "The charge meter reads [round(cell.percent())]%."
+		user << "The charge meter reads [cell.percent()]%."
 	else
 		user << "It doesn't have a power cell installed."

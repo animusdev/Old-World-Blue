@@ -156,6 +156,8 @@
 			user << "<span class='warning'>[src] is not ready to fire again!</span>"
 		return
 
+	self_attack_log(user, "shot [target] ([target.x],[target.y],[target.z]) with [src]", 1)
+
 	//unpack firemode data
 	var/datum/firemode/firemode = firemodes[sel_mode]
 	var/_burst = firemode.burst

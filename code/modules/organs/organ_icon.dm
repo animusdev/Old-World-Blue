@@ -79,6 +79,15 @@ var/global/list/limb_icon_cache = list()
 	icon = mob_icon
 	return mob_icon
 
+/obj/item/organ/external/proc/get_icon_key()
+	if(status & ORGAN_ROBOT)
+		. = "2[model ? "-[model]": ""]"
+	else if(status & ORGAN_MUTATED)
+		. = "3"
+	else if(status & ORGAN_DEAD)
+		. = "4"
+	else
+		. = "1[tattoo][tattoo2]"
 /obj/item/organ/external/proc/get_icon(var/skeletal)
 
 	var/gender = "_f"

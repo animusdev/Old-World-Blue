@@ -83,7 +83,7 @@
 	economic_modifier = 5
 	minimal_player_age = 14
 	minimum_character_age = 23
-	uniform = /obj/item/clothing/under/investigator
+	uniform = /obj/item/clothing/under/rank/det/black
 	pda = /obj/item/device/pda/detective
 	shoes = /obj/item/clothing/shoes/laceup
 	suit = /obj/item/clothing/suit/storage/toggle/investigator
@@ -103,7 +103,7 @@
 	title = "Forensic Technician"
 	flag = FORENTEC
 
-	uniform = /obj/item/clothing/under/forensic
+	uniform = /obj/item/clothing/under/rank/forensic
 	suit = /obj/item/clothing/suit/storage/toggle/labcoat/forensic
 
 

@@ -29,7 +29,7 @@
 	if(panel_open)
 		user << "The power cell is [cell ? "installed" : "missing"]."
 	else
-		user << "The charge meter reads [cell ? round(cell.percent(),1) : 0]%"
+		user << "The charge meter reads [cell ? cell.percent() : 0]%"
 	return
 
 /obj/machinery/space_heater/powered()
@@ -90,7 +90,7 @@
 		else
 			dat += "<A href='byond://?src=\ref[src];op=cellinstall'>Removed</A><BR>"
 
-		dat += "Power Level: [cell ? round(cell.percent(),1) : 0]%<BR><BR>"
+		dat += "Power Level: [cell ? cell.percent() : 0]%<BR><BR>"
 
 		dat += "Set Temperature: "
 
