@@ -60,9 +60,10 @@
 	..()
 	if(sabotaged)
 		last_owner.visible_message(
-			"<span class='danger'>\The [last_owner]'s [src.name] explodes violently!</span>",\
-			"<span class='danger'>Your [src.name] explodes!</span>",\
-			"<span class='danger'>You hear an explosion!</span>")
+			"<span class='danger'>\The [last_owner]'s [src.name] explodes violently!</span>",
+			"<span class='danger'>Your [src.name] explodes!</span>",
+			"<span class='danger'>You hear an explosion!</span>"
+		)
 		explosion(get_turf(src),-1,-1,2,3)
 		var/datum/effect/effect/system/spark_spread/spark_system = new
 		spark_system.set_up(5, 0, last_owner)
@@ -207,5 +208,4 @@
 			owner.drop_from_inventory(magboots, src)
 			usr << "<span class = 'notice'>The mag-pulse traction system has been disabled.</span>"
 		return
-
 

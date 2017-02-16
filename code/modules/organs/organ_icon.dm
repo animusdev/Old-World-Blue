@@ -88,6 +88,7 @@ var/global/list/limb_icon_cache = list()
 		. = "4"
 	else
 		. = "1[tattoo][tattoo2]"
+
 /obj/item/organ/external/proc/get_icon(var/skeletal)
 
 	var/gender = "_f"

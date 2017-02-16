@@ -159,6 +159,8 @@
 
 /obj/item/eye_camera
 	name = "eye camera"
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "eye-cam"
 	var/colour = "#ffffff"
 
 /obj/item/eye_camera/attack_self(user)
@@ -178,7 +180,6 @@
 	if(eyes && istype(eyes))
 		eyes.attackby(src, user)
 
-
 /obj/item/organ/internal/eyes/mechanic/cam
 	name = "mechanic eyes"
 	var/obj/item/eye_camera/camera
@@ -190,12 +191,39 @@
 	linked_camera = camera
 	camera.colour = color
 
-/obj/item/organ/internal/eyes/mechanic/cam/verb/eject_cam()
-	if(!owner || usr!=owner) return
+/obj/item/organ/internal/eyes/mechanic/cam/install()
+	..()
+	if(camera && camera in src)
+		verbs |= /obj/item/organ/internal/eyes/mechanic/cam/proc/eject_cam
+		verbs |= /obj/item/organ/internal/eyes/mechanic/cam/proc/switch_view
+
+/obj/item/organ/internal/eyes/mechanic/cam/proc/switch_view()
+	set name = "Toggle eye-cam view"
+	set category = "IC"
+
+	if(usr != owner)
+		verbs -= /obj/item/organ/internal/eyes/mechanic/cam/proc/switch_view
+		return
+
+	if(camera in src)
+		usr.reset_view()
+		usr.visible_message(
+			"<span class='notice'>You can hear something beeps in [owner] head.</span>",
+			"<span class='notice'>You successfuly enable eye-cam remote view</span>",
+			"<span class='warning'>You can hear long BEEP.</span>"
+		)
+	else
+		usr.reset_view(camera)
+
+
+/obj/item/organ/internal/eyes/mechanic/cam/proc/eject_cam()
+	set name = "Eject eye-cam"
+	set category = "IC"
+
+	verbs -= /obj/item/organ/internal/eyes/mechanic/cam/proc/eject_cam
 	if(!camera || !camera in src) return
 	owner.put_in_hands(camera)
 	camera = null
-	verbs -= /obj/item/organ/internal/eyes/mechanic/cam/verb/eject_cam
 
 /obj/item/organ/internal/eyes/mechanic/cam/attackby(var/obj/item/eye_camera/C, mob/user)
 	if(!istype(C))
@@ -208,8 +236,10 @@
 	if(!owner)
 		user << "<span class='notece'>You insert [C] into eye-socket.</span>"
 	else if(user == owner)
-		user.visible_message("<span class='warning'>[user] start inserting [C] into eye-socket!</span>",\
-					"<span class='notice'>You start inserting [C] into your eye-socket</span>")
+		user.visible_message(
+			"<span class='warning'>[user] start inserting [C] into eye-socket!</span>",
+			"<span class='notice'>You start inserting [C] into your eye-socket</span>"
+		)
 		sleep(5)
 		if(usr.get_active_hand() != C)
 			user << "<span class='warning'>You need to keep [C] in active hand!</span>"
@@ -217,17 +247,21 @@
 		if(camera)
 			user << "<span class='warning'>Your eye socket is not empty!</span>"
 			return
-		verbs |= /obj/item/organ/internal/eyes/mechanic/cam/verb/eject_cam
+		verbs |= /obj/item/organ/internal/eyes/mechanic/cam/proc/eject_cam
 	else
-		user.visible_message("<span class='warning'>[user] try to insert [C] into [owner]'s eye-socket</span>",\
-						"<span class='notice'>You try to insert [C] into [owner]'s eye-socket</span>")
+		user.visible_message(
+			"<span class='warning'>[user] try to insert [C] into [owner]'s eye-socket</span>",
+			"<span class='notice'>You try to insert [C] into [owner]'s eye-socket</span>"
+		)
 		if(do_mob(user, owner, 15))
 			if(camera)
 				user << "<span class='warning'>Eye-socket is not empty.</span>"
 				return
-			user.visible_message("<span class='warning'>[user] insert [C] into [owner]'s eye-socket</span>",\
-							"<span class='warning'>You insert [src] into [owner]'s eye-socket</span>")
-			verbs |= /obj/item/organ/internal/eyes/mechanic/cam/verb/eject_cam
+			user.visible_message(
+				"<span class='warning'>[user] insert [C] into [owner]'s eye-socket</span>",
+				"<span class='warning'>You insert [src] into [owner]'s eye-socket</span>"
+			)
+			verbs |= /obj/item/organ/internal/eyes/mechanic/cam/proc/eject_cam
 	user.drop_from_inventory(C, src)
 	camera = C
 
