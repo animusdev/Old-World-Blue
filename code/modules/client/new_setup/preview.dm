@@ -47,7 +47,7 @@ datum/preferences
 					else
 						organ_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
 				preview_icon.Blend(organ_icon, ICON_OVERLAY)
-			preview_icon.Blend(mod.get_mob_icon(organ, body_build, modifications_colors[organ], gender),ICON_OVERLAY)
+			preview_icon.Blend(mod.get_mob_icon(organ, body_build.index, modifications_colors[organ], gender),ICON_OVERLAY)
 
 		//Tail
 		if(current_species.tail)

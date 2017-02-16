@@ -37,7 +37,7 @@ var/global/list/modifications_types = list(
 	var/icon/icon = 'icons/mob/human_races/body_modification.dmi'
 	var/nature = MODIFICATION_ORGANIC
 
-	proc/get_mob_icon(organ, body_build = 0, color="#ffffff", gender = MALE)	//Use in setup character only
+	proc/get_mob_icon(organ, body_build = "", color="#ffffff", gender = MALE)	//Use in setup character only
 		return new/icon('icons/mob/human.dmi', "blank")
 
 	proc/is_allowed(var/organ = "", datum/preferences/P)
@@ -87,15 +87,15 @@ var/global/list/modifications_types = list(
 	body_parts = list(BP_HEAD, BP_CHEST, "chest2", BP_GROIN, BP_L_ARM, BP_R_ARM,\
 		BP_L_HAND, BP_R_HAND, BP_L_LEG, BP_R_LEG, BP_L_FOOT, BP_R_FOOT)
 	icon = 'icons/mob/tattoo.dmi'
-	mob_icon = "1"
+	mob_icon = "abstract"
 
 
 	New()
 		if(!short_name) short_name = "T: [name]"
 		name = "Tattoo: [name]"
 
-	get_mob_icon(organ, body_build = 0, color = "#ffffff")
-		var/icon/I = new/icon(icon, "[organ]_[mob_icon]_[body_build]")
+	get_mob_icon(organ, body_build = "", color = "#ffffff")
+		var/icon/I = new/icon(icon, "[organ]_[mob_icon][body_build]")
 		I.Blend(color, ICON_ADD)
 		return I
 
@@ -114,7 +114,7 @@ var/global/list/modifications_types = list(
 	id = "stripes"
 	body_parts = list(BP_HEAD, BP_CHEST)
 	icon = 'icons/mob/tattoo.dmi'
-	mob_icon = "2"
+	mob_icon = "tajara"
 	allowed_species = list("Tajara")
 
 /datum/body_modification/tattoo/tribal_markings
@@ -124,7 +124,7 @@ var/global/list/modifications_types = list(
 	id = "tribal"
 	body_parts = list(BP_HEAD, BP_CHEST)
 	icon = 'icons/mob/tattoo.dmi'
-	mob_icon = "2"
+	mob_icon = "unathi"
 	allowed_species = list("Unathi")
 
 /datum/body_modification/prosthesis
@@ -141,8 +141,8 @@ var/global/list/modifications_types = list(
 		short_name = "P: [name]"
 		name = "Prosthesis: [name]"
 
-	get_mob_icon(organ, body_build = 0)
-		return new/icon(icon, "[organ]_[mob_icon]_[body_build]")
+	get_mob_icon(organ, body_build = "")
+		return new/icon(icon, "[organ]_[mob_icon][body_build]")
 
 /datum/body_modification/prosthesis/bishop
 	name = "Bishop"
@@ -155,8 +155,8 @@ var/global/list/modifications_types = list(
 	id = "prosthesis_hesphaistos"
 	desc = "Prosthesis with militaristic black and green casing with gold stripes."
 
-	get_mob_icon(organ, body_build = 0)
-		return new/icon('icons/mob/human_races/cyberlimbs/hesphaistos.dmi', "[organ]_[body_build]")
+	get_mob_icon(organ, body_build = "")
+		return new/icon('icons/mob/human_races/cyberlimbs/hesphaistos.dmi', "[organ][body_build]")
 
 /datum/body_modification/prosthesis/zenghu
 	name = "Zeng-Hu"
@@ -164,16 +164,16 @@ var/global/list/modifications_types = list(
 	desc = "Prosthesis with rubbery fleshtone covering with visible seams."
 	allow_body_builds = list("Default")
 
-	get_mob_icon(organ, body_build = 0)
-		return new/icon('icons/mob/human_races/cyberlimbs/zenghu.dmi', "[organ]_[body_build]")
+	get_mob_icon(organ, body_build = "")
+		return new/icon('icons/mob/human_races/cyberlimbs/zenghu.dmi', "[organ][body_build]")
 
 /datum/body_modification/prosthesis/xion
 	name = "Xion"
 	id = "prosthesis_xion"
 	desc = "Prosthesis with minimalist black and red casing."
 
-	get_mob_icon(organ, body_build = 0)
-		return new/icon('icons/mob/human_races/cyberlimbs/xion.dmi', "[organ]_[body_build]")
+	get_mob_icon(organ, body_build = "")
+		return new/icon('icons/mob/human_races/cyberlimbs/xion.dmi', "[organ][body_build]")
 
 /datum/body_modification/prosthesis/enforcer_charge
 	name = "Enforcer Charge"
@@ -188,7 +188,7 @@ var/global/list/modifications_types = list(
 	mob_icon = ""
 	body_parts = list(O_EYES)
 
-	get_mob_icon(organ, body_build = 0, color = "#ffffff")
+	get_mob_icon(organ, body_build = "", color = "#ffffff")
 		var/icon/I = new/icon(icon, "one_eye_[body_build]")
 		I.Blend(color, ICON_ADD)
 		return I
@@ -207,17 +207,20 @@ var/global/list/modifications_types = list(
 	replace_limb = 1
 	mob_icon = "exo"
 
-	get_mob_icon(organ, body_build = 0, color="#ffffff", gender = MALE)
+	get_mob_icon(organ, body_build = "", color="#ffffff", gender = MALE)
 		if(organ in list(BP_HEAD, BP_CHEST, BP_GROIN))
 			return new/icon(icon, "[organ]_[mob_icon]_[gender==FEMALE?"f":"m"][body_build]")
 		else
-			return new/icon(icon, "[organ]_[mob_icon]_[body_build]")
+			return new/icon(icon, "[organ]_[mob_icon][body_build]")
 
 /datum/body_modification/mutation/wings
 	name = "Wings"
 	id = "mutation_wings"
 	desc = "Bird wings. Block backpack slot."
 	body_parts = list("chest2")
+
+	is_allowed()
+		return 0
 
 	get_mob_icon()
 		return null
@@ -228,8 +231,8 @@ var/global/list/modifications_types = list(
 	desc = "Special color for left eye."
 	body_parts = list(O_EYES)
 
-	get_mob_icon(organ, body_build = 0, color = "#ffffff")
-		var/icon/I = new/icon(icon, "one_eye_[body_build]")
+	get_mob_icon(organ, body_build = "", color = "#ffffff")
+		var/icon/I = new/icon(icon, "one_eye[body_build]")
 		I.Blend(color, ICON_ADD)
 		return I
 
