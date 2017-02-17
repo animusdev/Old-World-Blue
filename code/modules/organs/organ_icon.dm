@@ -15,7 +15,7 @@ var/global/list/limb_icon_cache = list()
 /obj/item/organ/external/proc/sync_colour_to_human(var/mob/living/carbon/human/human)
 	s_tone = null
 	s_col = null
-	if(status & ORGAN_ROBOT)
+	if(robotic >= ORGAN_ROBOT)
 		return
 	if(!isnull(human.s_tone) && (human.species.flags & HAS_SKIN_TONE))
 		s_tone = human.s_tone
@@ -80,7 +80,7 @@ var/global/list/limb_icon_cache = list()
 	return mob_icon
 
 /obj/item/organ/external/proc/get_icon_key()
-	if(status & ORGAN_ROBOT)
+	if(robotic >= ORGAN_ROBOT)
 		. = "2[model ? "-[model]": ""]"
 	else if(status & ORGAN_MUTATED)
 		. = "3"
@@ -103,7 +103,7 @@ var/global/list/limb_icon_cache = list()
 	if(force_icon)
 		mob_icon = new /icon(force_icon, icon_state)
 	else
-		if((status & ORGAN_ROBOT) && !(owner.species && owner.species.flags & IS_SYNTHETIC))
+		if((robotic >= ORGAN_ROBOT) && !(owner.species && owner.species.flags & IS_SYNTHETIC))
 			mob_icon = new /icon('icons/mob/human_races/robotic.dmi', icon_state)
 		else if(skeletal)
 			mob_icon = new /icon('icons/mob/human_races/skeleton.dmi', icon_state)

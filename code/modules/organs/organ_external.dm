@@ -302,12 +302,12 @@
 			brute -= brute / 2
 
 	if(status & ORGAN_BROKEN && prob(40) && brute)
-		if (!(owner.species && (owner.species.flags & NO_PAIN)))
+		if(!(owner.species.flags & NO_PAIN) && can_feel_pain())
 			owner.emote("scream")	//getting hit on broken hand hurts
 	if(used_weapon)
 		add_autopsy_data("[used_weapon]", brute + burn)
 
-	var/can_cut = (prob(brute*2) || sharp) && !(status & ORGAN_ROBOT)
+	var/can_cut = (prob(brute*2) || sharp) && (robotic < ORGAN_ROBOT)
 
 	// If the limbs can break, make sure we don't exceed the maximum damage a limb can take before breaking
 	// Non-vital organs are limited to max_damage. You can't kill someone by bludeonging their arm all the way to 200 -- you can
@@ -389,7 +389,7 @@
 	return update_icon()
 
 /obj/item/organ/external/proc/heal_damage(brute, burn, internal = 0, robo_repair = 0)
-	if(status & ORGAN_ROBOT && !robo_repair)
+	if(robotic >= ORGAN_ROBOT && !robo_repair)
 		return
 
 	//Heal damage on the individual wounds
@@ -421,7 +421,7 @@ This function completely restores a damaged organ to perfect condition.
 /obj/item/organ/external/rejuvenate()
 	damage_state = "00"
 	//Robotic organs stay robotic.  Fix because right click rejuvinate makes IPC's organs organic.
-	status = status & (ORGAN_ROBOT|ORGAN_ASSISTED)
+	status = 0
 	perma_injury = 0
 	brute_dam = 0
 	burn_dam = 0
@@ -450,7 +450,7 @@ This function completely restores a damaged organ to perfect condition.
 	// (because of the return)
 	//Possibly trigger an internal wound, too.
 	var/local_damage = brute_dam + burn_dam + damage
-	if(damage > 15 && type != BURN && local_damage > 30 && prob(damage) && !(status & ORGAN_ROBOT))
+	if(damage > 15 && type != BURN && local_damage > 30 && prob(damage) && (robotic<ORGAN_ROBOT))
 		var/datum/wound/internal_bleeding/I = new (min(damage - 15, 15))
 		wounds += I
 		owner.custom_pain("You feel something rip in your [name]!", 1)
@@ -468,7 +468,7 @@ This function completely restores a damaged organ to perfect condition.
 				var/datum/wound/W = pick(compatible_wounds)
 				W.open_wound(damage)
 				if(prob(25))
-					if(status & ORGAN_ROBOT)
+					if(robotic >= ORGAN_ROBOT)
 						owner.visible_message(
 							"<span class='danger'>The damage to [owner.name]'s [name] worsens.</span>",
 							"<span class='danger'>The damage to your [name] worsens.</span>",
@@ -565,7 +565,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/proc/update_germs()
 
 	//Robotic limbs shouldn't be infected, nor should nonexistant limbs.
-	if(status & (ORGAN_ROBOT) || (owner.species && owner.species.flags & IS_PLANT))
+	if(robotic >= ORGAN_ROBOT || (owner.species && owner.species.flags & IS_PLANT))
 		germ_level = 0
 		return
 
@@ -626,12 +626,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 		//spread the infection to child and parent organs
 		if (children)
 			for (var/obj/item/organ/external/child in children)
-				if (child.germ_level < germ_level && !(child.status & ORGAN_ROBOT))
+				if (child.germ_level < germ_level && child.robotic<ORGAN_ROBOT)
 					if (child.germ_level < INFECTION_LEVEL_ONE*2 || prob(30))
 						child.germ_level++
 
 		if (parent)
-			if (parent.germ_level < germ_level && !(parent.status & ORGAN_ROBOT))
+			if (parent.germ_level < germ_level && parent.robotic < ORGAN_ROBOT)
 				if (parent.germ_level < INFECTION_LEVEL_ONE*2 || prob(30))
 					parent.germ_level++
 
@@ -647,7 +647,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 //Updating wounds. Handles wound natural I had some free spachealing, internal bleedings and infections
 /obj/item/organ/external/proc/update_wounds()
 
-	if(status & ORGAN_ROBOT) //Robotic limbs don't heal or get worse.
+	if(robotic >= ORGAN_ROBOT) //Robotic limbs don't heal or get worse.
 		for(var/datum/wound/W in wounds)	//Repaired wounds disappear though
 			if(W.damage <= 0)
 				wounds -= W					//TODO: robot wounds for robot limbs
@@ -719,7 +719,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			else
 				brute_dam += W.damage
 
-		if(!(status & ORGAN_ROBOT) && W.bleeding() && (owner && owner.should_have_organ(O_HEART)))
+		if(robotic < ORGAN_ROBOT && W.bleeding() && (owner && owner.should_have_organ(O_HEART)))
 			W.bleed_timer--
 			status |= ORGAN_BLEEDING
 
@@ -732,7 +732,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		status |= ORGAN_BLEEDING
 
 	//Bone fractures
-	if(config.bones_can_break && brute_dam > min_broken_damage * config.organ_health_multiplier && !(status & ORGAN_ROBOT))
+	if(config.bones_can_break && brute_dam > min_broken_damage * config.organ_health_multiplier && robotic<ORGAN_ROBOT)
 		src.fracture()
 
 // new damage icon system
@@ -783,20 +783,20 @@ Note that amputating the affected organ does in fact remove the infection from t
 	switch(disintegrate)
 		if(DROPLIMB_EDGE)
 			if(!clean)
-				var/gore_sound = "[(status & ORGAN_ROBOT) ? "tortured metal" : "ripping tendons and flesh"]"
+				var/gore_sound = "[(robotic >= ORGAN_ROBOT) ? "tortured metal" : "ripping tendons and flesh"]"
 				owner.visible_message(
 					"<span class='danger'>\The [owner]'s [src.name] flies off in an arc!</span>",\
 					"<span class='moderate'><b>Your [src.name] goes flying off!</b></span>",\
 					"<span class='danger'>You hear a terrible sound of [gore_sound].</span>")
 		if(DROPLIMB_BURN)
-			var/gore = "[(status & ORGAN_ROBOT) ? "": " of burning flesh"]"
+			var/gore = "[(robotic >= ORGAN_ROBOT) ? "": " of burning flesh"]"
 			owner.visible_message(
 				"<span class='danger'>\The [owner]'s [src.name] flashes away into ashes!</span>",\
 				"<span class='moderate'><b>Your [src.name] flashes away into ashes!</b></span>",\
 				"<span class='danger'>You hear a crackling sound[gore].</span>")
 		if(DROPLIMB_BLUNT)
-			var/gore = "[(status & ORGAN_ROBOT) ? "": " in shower of gore"]"
-			var/gore_sound = "[(status & ORGAN_ROBOT) ? "rending sound of tortured metal" : "sickening splatter of gore"]"
+			var/gore = "[(robotic >= ORGAN_ROBOT) ? "": " in shower of gore"]"
+			var/gore_sound = "[(robotic >= ORGAN_ROBOT) ? "rending sound of tortured metal" : "sickening splatter of gore"]"
 			owner.visible_message(
 				"<span class='danger'>\The [owner]'s [src.name] explodes[gore]!</span>",\
 				"<span class='moderate'><b>Your [src.name] explodes[gore]!</b></span>",\
@@ -818,8 +818,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 			parent_organ.update_damages()
 		else
 			var/obj/item/organ/external/stump/stump = new (victim, src)
-			if(status & ORGAN_ROBOT)
-				stump.robotize()
 			stump.wounds |= W
 			stump.update_damages()
 
@@ -955,7 +953,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return rval
 
 /obj/item/organ/external/proc/fracture()
-	if(status & ORGAN_ROBOT)
+	if(robotic >= ORGAN_ROBOT)
 		return	//ORGAN_BROKEN doesn't have the same meaning for robot limbs
 	if((status & ORGAN_BROKEN) || cannot_break)
 		return
@@ -996,7 +994,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return
 
 /obj/item/organ/external/proc/mend_fracture()
-	if(status & ORGAN_ROBOT)
+	if(robotic >= ORGAN_ROBOT)
 		return 0	//ORGAN_BROKEN doesn't have the same meaning for robot limbs
 	if(brute_dam > min_broken_damage * config.organ_health_multiplier)
 		return 0	//will just immediately fracture again
@@ -1024,9 +1022,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 		T.robotize()
 
 /obj/item/organ/external/proc/mutate()
-	if(src.status & ORGAN_ROBOT)
+	if(robotic >= ORGAN_ROBOT)
 		return
-	src.status |= ORGAN_MUTATED
+	status |= ORGAN_MUTATED
 	if(owner) owner.update_body()
 
 /obj/item/organ/external/proc/unmutate()
@@ -1046,7 +1044,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return !is_dislocated() && !(status & (ORGAN_MUTATED|ORGAN_DEAD))
 
 /obj/item/organ/external/proc/is_malfunctioning()
-	return ((status & ORGAN_ROBOT) && (brute_dam + burn_dam) >= 10 && prob(brute_dam + burn_dam))
+	return ((robotic >= ORGAN_ROBOT) && (brute_dam + burn_dam) >= 10 && prob(brute_dam + burn_dam))
 
 /obj/item/organ/external/proc/embed(var/obj/item/weapon/W, var/silent = 0)
 	if(!owner || loc != owner)
@@ -1087,7 +1085,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		. += "tear at [amputation_point] so severe that it hangs by a scrap of flesh"
 
 	//Handle robotic and synthetic organ damage
-	if(status & ORGAN_ROBOT)
+	if(robotic >= ORGAN_ROBOT)
 		if(brute_dam)
 			switch(brute_dam)
 				if(0 to 20)

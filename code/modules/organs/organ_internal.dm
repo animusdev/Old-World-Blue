@@ -21,8 +21,6 @@
 	var/obj/item/organ/external/E = H.organs_by_name[src.parent_organ]
 	if(E)
 		E.internal_organs |= src
-	if(robotic)
-		status |= ORGAN_ROBOT
 
 /obj/item/organ/internal/Destroy()
 	if(owner)

@@ -319,7 +319,7 @@
 		if(temp.status & ORGAN_DESTROYED)
 			wound_flavor_text[temp.name] = "<span class='danger'>[T.He] [T.is] missing [T.his] [temp.name].</span>\n"
 			continue
-		if(!looks_synth && (temp.status&ORGAN_ROBOT))
+		if(!looks_synth && (temp.robotic >= ORGAN_ROBOT))
 			if(!(temp.brute_dam + temp.burn_dam))
 				wound_flavor_text[temp.name] = "[T.He] [T.has] a [temp.name].\n"
 			else
