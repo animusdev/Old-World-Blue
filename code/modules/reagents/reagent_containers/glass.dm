@@ -141,10 +141,12 @@
 	if(standard_pour_into(user, target))
 		return
 
-	if(reagents && reagents.total_volume)
-		user << "<span class='notice'>You splash the solution onto [target].</span>"
-		reagents.splash(target, reagents.total_volume)
-		return
+	if(user.a_intent == I_HURT)
+		if(reagents && reagents.total_volume)
+			user.visible_message("<span class='warning'>[user.name] splashed the solution of [src] onto [target]</span>", \
+							"<span class='notice'>You splash the solution onto [target].</span>")
+			reagents.splash(target, reagents.total_volume)
+			return
 
 /obj/item/weapon/reagent_containers/glass/self_feed_message(var/mob/user)
 	user << "<span class='notice'>You swallow a gulp from \the [src].</span>"
