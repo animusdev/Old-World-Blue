@@ -882,17 +882,11 @@ var/list/datum/dna/hivemind_bank = list()
 
 
 
-/*/mob/proc/changeling_prepare_transformation_sting()
-	set category = "Changeling"
-	set name = "Transformation Sting (40)"
-	set desc="Sting target"
-
-	check_CH("Transformation Sting",/datum/click_handler/changeling/changeling_paralysis_sting)
-
-	return*/
-
-
 /mob/proc/changeling_transformation_sting()
+	set category = "Changeling"
+	set name = "Transform Target (40)"
+	set desc="Transform grabbed mob"
+
 	var/datum/changeling/changeling = changeling_power(40)
 	if(!changeling)	return 0
 
@@ -903,7 +897,6 @@ var/list/datum/dna/hivemind_bank = list()
 	if(G.state < GRAB_NECK)
 		src << "<span class='warning'>We must have a tighter grip to transform this creature.</span>"
 		return 0
-
 
 
 	var/list/names = list()
