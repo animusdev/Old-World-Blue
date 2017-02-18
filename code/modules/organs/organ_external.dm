@@ -13,6 +13,7 @@
 	max_damage = 0
 	dir = SOUTH
 	organ_tag = "limb"
+	var/tally = 0
 
 	// Strings
 	var/broken_description             // fracture string if any.
@@ -36,6 +37,9 @@
 	var/gendered = 0
 	var/s_tone				// Skin tone.
 	var/s_col				// skin colour
+	var/tattoo = 0
+	var/tattoo2 = 0
+
 
 	// Wound and structural data.
 	var/wound_update_accuracy = 1		// how often wounds should be updated, a higher number means less often
@@ -65,9 +69,6 @@
 	var/open = 0
 	var/stage = 0
 	var/cavity = 0
-
-	var/tattoo = 0
-	var/tattoo2 = 0
 
 /obj/item/organ/external/New(mob/living/carbon/human/holder, var/datum/organ_description/desc = null)
 	if(desc)
@@ -236,6 +237,8 @@
 		return 0.5
 	else if(status & ORGAN_BROKEN)
 		return 1.5
+	else
+		return tally
 
 /obj/item/organ/external/proc/is_dislocated()
 	if(dislocated > 0)
@@ -272,12 +275,6 @@
 /obj/item/organ/external/update_health()
 	damage = min(max_damage, (brute_dam + burn_dam))
 	return
-
-/obj/item/organ/external/robotize()
-	..()
-	//robit limbs take reduced damage
-	brute_mod = 0.8
-	burn_mod = 0.8
 
 /****************************************************
 			   DAMAGE PROCS
@@ -1004,6 +1001,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/robotize(var/company)
 	..()
+
+	brute_mod = 0.8
+	burn_mod = 0.8
 
 	if(company)
 		model = company

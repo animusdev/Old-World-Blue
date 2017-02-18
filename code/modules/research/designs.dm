@@ -508,10 +508,12 @@ datum/design/circuit/tcom/bluespacerelay
 /////////////////////////////////////
 ////////////PROSTHESIS////////////////
 /////////////////////////////////////
-datum/design/prosthesis/enforcer
+datum/design/prosthesis
 	build_type = MECHFAB
-	req_tech = list("materials" = 3, "engineering" = 2, "combat" = 2, "biotech" = 3)
 	category = "Prosthesis"
+
+datum/design/prosthesis/enforcer
+	req_tech = list("materials" = 3, "engineering" = 2, "combat" = 2, "biotech" = 3)
 	desc = "Fulllimb combat prosthesis with magboots and powerfists modules."
 
 datum/design/prosthesis/enforcer/AssembleDesignName()
@@ -538,6 +540,33 @@ datum/design/prosthesis/enforcer/l_leg
 	build_path = /obj/item/prosthesis/enforcer/l_leg
 
 
+
+datum/design/prosthesis/runner
+	req_tech = list("materials" = 3, "engineering" = 2, "biotech" = 3)
+	desc = "Fulllimb runner prosthesis. Light and quick."
+
+datum/design/prosthesis/runner/AssembleDesignName()
+	name = "Prosthesis design of \"R.U.N.N.E.R.\" ([name])"
+
+datum/design/prosthesis/runner/r_arm
+	name = "right arm"
+	id = "runner_r_arm"
+	build_path = /obj/item/prosthesis/runner/r_arm
+
+datum/design/prosthesis/runner/l_arm
+	name = "left arm"
+	id = "runner_l_arm"
+	build_path = /obj/item/prosthesis/runner/l_arm
+
+datum/design/prosthesis/runner/r_leg
+	name = "right leg"
+	id = "runner_r_leg"
+	build_path = /obj/item/prosthesis/runner/r_leg
+
+datum/design/prosthesis/runner/l_leg
+	name = "left leg"
+	id = "runner_l_leg"
+	build_path = /obj/item/prosthesis/runner/l_leg
 
 ///////////////////////////////////
 ////////////Mecha Modules//////////

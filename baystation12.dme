@@ -1462,6 +1462,7 @@
 #include "code\modules\organs\subtypes\diona.dm"
 #include "code\modules\organs\subtypes\unbreakable.dm"
 #include "code\modules\organs\subtypes\xenomorph.dm"
+#include "code\modules\organs\subtypes\robotic\runner.dm"
 #include "code\modules\overmap\_defines.dm"
 #include "code\modules\overmap\sectors.dm"
 #include "code\modules\overmap\ships\ship.dm"
