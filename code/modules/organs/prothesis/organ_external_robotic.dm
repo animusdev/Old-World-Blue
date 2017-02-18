@@ -17,7 +17,7 @@
 		body_build = owner.body_build.index
 	icon_state = "[organ_tag][gendered ? "[gender]" : ""][body_build]"
 
-	mob_icon = new /icon(force_icon, icon_state)
+	mob_icon = new /icon(icon, icon_state)
 	icon = mob_icon
 	dir = SOUTH
 	return mob_icon
@@ -83,7 +83,7 @@
 	w_class = 2
 
 /obj/item/organ/external/robotic/enforcer
-	force_icon = 'icons/mob/human_races/cyberlimbs/enforcer.dmi'
+	icon = 'icons/mob/human_races/cyberlimbs/enforcer.dmi'
 	brute_mod = 0.7
 	burn_mod = 0.7
 

@@ -15,12 +15,11 @@
 	if(..()) return 1
 	H.internal_organs |= src
 	var/obj/item/organ/internal/outdated = H.internal_organs_by_name[organ_tag]
-	if(outdated)
+	if(outdated && (outdated != src))
 		outdated.removed()
 	H.internal_organs_by_name[organ_tag] = src
-	var/obj/item/organ/external/E = H.organs_by_name[src.parent_organ]
-	if(E)
-		E.internal_organs |= src
+	if(parent)
+		parent.internal_organs |= src
 
 /obj/item/organ/internal/Destroy()
 	if(owner)
@@ -191,34 +190,43 @@
 
 /obj/item/organ/internal/eyes/mechanic/cam/install()
 	..()
-	if(camera && camera in src)
-		verbs |= /obj/item/organ/internal/eyes/mechanic/cam/proc/eject_cam
-		verbs |= /obj/item/organ/internal/eyes/mechanic/cam/proc/switch_view
+	verbs += /obj/item/organ/internal/eyes/mechanic/cam/proc/switch_view
 
 /obj/item/organ/internal/eyes/mechanic/cam/proc/switch_view()
 	set name = "Toggle eye-cam view"
 	set category = "IC"
 
-	if(usr != owner)
+	if(!owner)
 		verbs -= /obj/item/organ/internal/eyes/mechanic/cam/proc/switch_view
 		return
 
-	if(camera in src)
-		usr.reset_view()
-		usr.visible_message(
+	if(owner.client.eye == linked_camera || (linked_camera in src))
+		owner.reset_view()
+		owner.visible_message(
 			"<span class='notice'>You can hear something beeps in [owner] head.</span>",
 			"<span class='notice'>You successfuly enable eye-cam remote view</span>",
 			"<span class='warning'>You can hear long BEEP.</span>"
 		)
 	else
-		usr.reset_view(camera)
+		owner.visible_message(
+			"<span class='notice'>You can hear something beeps in [owner] head.</span>",
+			"<span class='notice'>You successfuly disable eye-cam remote view</span>",
+			"<span class='warning'>You can hear long BEEP.</span>"
+		)
+		owner.machine = src
+		owner.reset_view(linked_camera)
+
+/obj/item/organ/internal/eyes/mechanic/cam/check_eye(mob/living/carbon/human/H)
+	if(H == owner)
+		return 0
+	else
+		return ..()
 
 
-/obj/item/organ/internal/eyes/mechanic/cam/proc/eject_cam()
+/obj/item/organ/internal/eyes/mechanic/cam/verb/eject_cam()
 	set name = "Eject eye-cam"
 	set category = "IC"
 
-	verbs -= /obj/item/organ/internal/eyes/mechanic/cam/proc/eject_cam
 	if(!camera || !camera in src) return
 	owner.put_in_hands(camera)
 	camera = null
@@ -245,7 +253,6 @@
 		if(camera)
 			user << "<span class='warning'>Your eye socket is not empty!</span>"
 			return
-		verbs |= /obj/item/organ/internal/eyes/mechanic/cam/proc/eject_cam
 	else
 		user.visible_message(
 			"<span class='warning'>[user] try to insert [C] into [owner]'s eye-socket</span>",
@@ -259,9 +266,10 @@
 				"<span class='warning'>[user] insert [C] into [owner]'s eye-socket</span>",
 				"<span class='warning'>You insert [src] into [owner]'s eye-socket</span>"
 			)
-			verbs |= /obj/item/organ/internal/eyes/mechanic/cam/proc/eject_cam
 	user.drop_from_inventory(C, src)
 	camera = C
+	if(owner && camera == linked_camera)
+		owner.reset_view()
 
 
 /obj/item/organ/internal/liver

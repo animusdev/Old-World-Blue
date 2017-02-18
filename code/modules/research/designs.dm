@@ -548,16 +548,6 @@ datum/design/prosthesis/runner
 datum/design/prosthesis/runner/AssembleDesignName()
 	name = "Prosthesis design of \"R.U.N.N.E.R.\" ([name])"
 
-datum/design/prosthesis/runner/r_arm
-	name = "right arm"
-	id = "runner_r_arm"
-	build_path = /obj/item/prosthesis/runner/r_arm
-
-datum/design/prosthesis/runner/l_arm
-	name = "left arm"
-	id = "runner_l_arm"
-	build_path = /obj/item/prosthesis/runner/l_arm
-
 datum/design/prosthesis/runner/r_leg
 	name = "right leg"
 	id = "runner_r_leg"
