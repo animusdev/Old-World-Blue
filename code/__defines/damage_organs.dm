@@ -47,6 +47,8 @@
 #define ORGAN_ROBOT    2 // Fully robotic, no organic parts
 #define ORGAN_LIFELIKE 3 // Robotic, made to appear organic
 
+#define PROCESS_ACCURACY 10
+
 //Germs and infections.
 #define GERM_LEVEL_AMBIENT  110 // Maximum germ level you can reach by standing still.
 #define GERM_LEVEL_MOVE_CAP 200 // Maximum germ level you can reach by running around.
