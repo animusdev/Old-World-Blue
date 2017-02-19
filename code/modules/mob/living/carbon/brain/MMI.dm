@@ -84,7 +84,7 @@
 			icon_state = "[initial(icon_state)]_full"
 			src.name ="[initial(name)]: [brainmob.real_name]"
 		else
-			icon_state = initial(icon_state)"
+			icon_state = initial(icon_state)
 			name = initial(name)
 
 	//TODO: ORGAN REMOVAL UPDATE. Make the brain remain in the MMI so it doesn't lose organ data.
