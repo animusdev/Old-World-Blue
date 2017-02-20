@@ -26,7 +26,8 @@
 	if(skeletal)
 		return null
 	icon_state = "[organ_tag][owner.body_build.index]_s"
-	mob_icon = icon(icon, icon_state)
+	mob_icon = icon(owner.species.icobase, icon_state)
+	return mob_icon
 
 /obj/item/organ/external/stump/is_stump()
 	return 1
