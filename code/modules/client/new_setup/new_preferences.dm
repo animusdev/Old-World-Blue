@@ -73,7 +73,6 @@
 	"}
 
 	if(path)
-		dat += "Slot - "
 		dat += "<span onclick=\"set('switch_page', [PAGE_LOAD])\">Load slot</span> - "
 		dat += "<span onclick=\"set('reload', 'reload')\">Reload slot</span> - "
 		dat += "<span onclick=\"set('switch_page', [PAGE_SAVE])\">Save slot</span><hr>"
@@ -212,11 +211,11 @@
 
 
 /datum/preferences/proc/GetRecordsPage()
-	var/dat = "<table><tr><td width='320px'>"
+	var/dat = "<table><tr><td width='260px'>"
 	dat += "<b>General Information</b><br>"
 	dat += "Name: <a id='name' href='?src=\ref[src];name=input'>[real_name]</a><br>"
 	dat += "(<a href='?src=\ref[src];name=random'>Random Name</a>) "
-	dat += "(<a href='?src=\ref[src];name=random_always'>Always Random Name: [random_name ? "Yes" : "No"]</a>)"
+	dat += "(Always? <a href='?src=\ref[src];name=random_always'>[random_name ? "Yes" : "No"]</a>)"
 	dat += "<br>"
 
 	dat += "Species: <a href='?src=\ref[src];switch_page=[PAGE_SPECIES]'>[species]</a><br>"
@@ -246,10 +245,10 @@
 		dat += "<span class='box' style='background-color:[skin_color]'></span></a></td></tr>"
 	dat += "</table>"
 
+	dat += "Blood Type: <a href='?src=\ref[src];blood_type=input'>[b_type]</a><br>"
 	dat += "Age: <a href='?src=\ref[src];age=input'>[age]</a><br>"
 	dat += "Spawn Point: <a href='?src=\ref[src];spawnpoint=input'>[spawnpoint]</a><br>"
 	dat += "Second language: <a href='?src=\ref[src];language=input'>[language]</a><br>"
-	dat += "Need Glasses: <a href='?src=\ref[src];disabilities=glasses'>[disabilities & NEARSIGHTED ? "Yes" : "No"]</a><br>"
 //	dat += "Corporate mail: <a href='?src=\ref[src];mail=input'>[email ? email : "\[RANDOM MAIL\]"]</a>@mail.nt<br>"
 //	dat += "Add your mail to public catalogs: <a href='?src=\ref[src];mail=public'>[email_is_public?"Yes":"No"]</a><br>"
 
@@ -279,6 +278,7 @@
 
 	dat += "<br><br>"
 
+	dat += "Need Glasses: <a href='?src=\ref[src];disabilities=glasses'>[disabilities & NEARSIGHTED ? "Yes" : "No"]</a><br>"
 	dat += "<table style='position:relative; left:-3px'>"
 	dat += "<tr><td>Backpack:</td>\
 		<td><a href ='?src=\ref[src];inventory=back'>[backbaglist[backbag]]</a></td></tr>"
@@ -388,6 +388,11 @@
 		var/new_age = input(user, "Choose your character's age:\n([current_species.min_age]-[current_species.max_age])", "Character Preference") as num|null
 		if(new_age)
 			age = max(min( round(text2num(new_age)), current_species.max_age),current_species.min_age)
+
+	else if(href_list["blood_type"])
+		var/new_b_type = input(usr, "Choose your character's blood-type:", "Character Preference") as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
+		if(new_b_type)
+			b_type = new_b_type
 
 	else if(href_list["skin_tone"])
 		if(current_species.flags & HAS_SKIN_TONE)
