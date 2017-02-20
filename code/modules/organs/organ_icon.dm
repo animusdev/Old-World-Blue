@@ -17,7 +17,7 @@ var/list/limb_icon_cache = list()
 	s_col = null
 	if(robotic >= ORGAN_ROBOT)
 		return
-	if(!isnull(human.s_tone) && (human.species.flags & HAS_SKIN_TONE))
+	if(human.species.flags & HAS_SKIN_TONE)
 		s_tone = human.s_tone
 	if(human.species.flags & HAS_SKIN_COLOR)
 		s_col = human.skin_color
@@ -130,6 +130,12 @@ var/list/limb_icon_cache = list()
 		. = "dead"
 	else
 		. = "[model][tattoo][tattoo2]"
+
+	if(owner.species.flags & HAS_SKIN_TONE)
+		. = num2text(s_tone)
+	if(owner.species.flags & HAS_SKIN_COLOR)
+		. += s_col
+
 
 // new damage icon system
 // adjusted to set damage_state to brute/burn code only (without r_name0 as before)

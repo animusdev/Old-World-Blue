@@ -1196,7 +1196,7 @@
 			organ_type = species.has_organ[organ_tag]
 			new organ_type(src)
 
-	regenerate_icons()
+	update_body()
 
 
 /mob/living/carbon/human/proc/bloody_doodle()

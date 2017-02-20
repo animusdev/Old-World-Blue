@@ -238,8 +238,6 @@ var/global/list/damage_icon_parts = list()
 
 
 	//CACHING: Generate an index key from visible bodyparts.
-	//0 = destroyed, 1 = normal, 2 = robotic, 3 = mutated, 4 = necrotic.
-
 	//Create a new, blank icon for our mob to use.
 	if(stand_icon)
 		qdel(stand_icon)
@@ -249,8 +247,7 @@ var/global/list/damage_icon_parts = list()
 	if(gender == FEMALE)
 		g = "female"
 
-	var/icon_key = "[species.race_key][g][body_build.index]\
-		[species.flags & HAS_SKIN_TONE ? s_tone : ""][species.flags & HAS_SKIN_COLOR ? skin_color : ""]"
+	var/icon_key = "[species.race_key][g][body_build.index]"
 	if(lip_color)
 		icon_key += lip_color
 	else
