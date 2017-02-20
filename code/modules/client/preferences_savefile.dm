@@ -205,7 +205,7 @@
 	age				= sanitize_integer(age, current_species.min_age, current_species.max_age, initial(age))
 	hair_color		= sanitize_hexcolor(hair_color, initial(hair_color))
 	facial_color	= sanitize_hexcolor(facial_color, initial(facial_color))
-	s_tone			= sanitize_integer(s_tone, -185, 34, initial(s_tone))
+	s_tone			= sanitize_integer(s_tone, 1, 220, initial(s_tone))
 	skin_color		= sanitize_hexcolor(skin_color, initial(skin_color))
 	h_style			= sanitize_inlist(h_style, hair_styles_list, initial(h_style))
 	f_style			= sanitize_inlist(f_style, facial_hair_styles_list, initial(f_style))

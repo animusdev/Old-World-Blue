@@ -66,6 +66,8 @@
 		</script>
 		<style>
 			span.box{display: inline-block; width: 20px; height: 10px; border:1px solid #000;}
+			div.limited{display:none}
+			div.limited.[species]{display: inline-block}
 			td{padding: 0px}
 		</style>
 		</head>
@@ -224,7 +226,7 @@
 	dat += "Body build: <a href='?src=\ref[src];build=switch'>[body]</a><br>"
 
 	if(current_species.flags & HAS_SKIN_TONE)
-		dat += "Skin Tone: <a href='?src=\ref[src];skin_tone=input'>[-s_tone + 35]/220</a><br>"
+		dat += "Skin Tone: <a href='?src=\ref[src];skin_tone=input'>[s_tone]/220</a><br>"
 
 	dat += "<table style='border-collapse:collapse'>"
 	dat += "<tr><td>Hair:</td><td><a href='?src=\ref[src];hair=color'>Color "
@@ -399,7 +401,7 @@
 			var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference", s_tone)  as num|null
 			if(new_s_tone && new_s_tone!=s_tone)
 				req_update_icon = 1
-				s_tone = 35 - max( min(new_s_tone, 220), 1)
+				s_tone = max( min(new_s_tone, 220), 1)
 
 	else if(href_list["skin"])
 		if(current_species.flags & HAS_SKIN_COLOR)

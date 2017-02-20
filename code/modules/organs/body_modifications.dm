@@ -15,8 +15,11 @@ var/global/list/modifications_types = list(
 		var/datum/body_modification/BM = new mod_type()
 		if(!BM.id) continue
 		body_modifications[BM.id] = BM
+		var/class = ""
+		if(BM.allowed_species && BM.allowed_species.len)
+			class = " limited [BM.allowed_species.Join(" ")]"
 		for(var/part in BM.body_parts)
-			modifications_types[part] += "<div onclick=\"set('body_modification', '[BM.id]');\" class='block'><b>[BM.name]</b><br>[BM.desc]</div>"
+			modifications_types[part] += "<div onclick=\"set('body_modification', '[BM.id]');\" class='block[class]'><b>[BM.name]</b><br>[BM.desc]</div>"
 
 /proc/get_default_modificaton(var/nature = MODIFICATION_ORGANIC)
 	switch(nature)
@@ -145,6 +148,7 @@ var/global/list/modifications_types = list(
 		BP_L_LEG, BP_R_LEG, BP_L_FOOT, BP_R_FOOT)
 	replace_limb = /obj/item/organ/external/robotic
 	icon = 'icons/mob/human_races/cyberlimbs/robotic.dmi'
+	allowed_species = list("Human","Tajaran","Unathi","Skrell")
 	mob_icon = ""
 	var/model = "basic"
 	nature = MODIFICATION_SILICON
