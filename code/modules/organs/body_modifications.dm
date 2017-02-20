@@ -219,12 +219,13 @@ var/global/list/modifications_types = list(
 		E.force_icon = icon
 		E.model = "exo"
 		E.brute_mod = 0.8
+		return E
 
 	get_mob_icon(organ, body_build = "", color="#ffffff", gender = MALE)
 		if(organ in list(BP_HEAD, BP_CHEST, BP_GROIN))
-			return new/icon(icon, "[organ]_[mob_icon]_[gender==FEMALE?"f":"m"][body_build]")
+			return new/icon(icon, "[organ]_[gender==FEMALE?"f":"m"][body_build]")
 		else
-			return new/icon(icon, "[organ]_[mob_icon][body_build]")
+			return new/icon(icon, "[organ]_[body_build]")
 
 ////Internals////
 
