@@ -38,6 +38,7 @@
 	var/s_tone				// Skin tone.
 	var/s_col				// skin colour
 	var/tattoo = 0
+	var/tattoo_color = ""
 	var/tattoo2 = 0
 
 
@@ -47,7 +48,6 @@
 	var/number_wounds = 0				// number of wounds, which is NOT wounds.len!
 	var/list/children = list()			// Sub-limbs.
 	var/list/internal_organs = list()	// Internal organs of this body part
-	var/sabotaged = 0					// If a prosthetic limb is emagged, it will detonate when it fails.
 	var/list/implants = list()			// Currently implanted objects.
 	var/max_size = 0
 
@@ -87,8 +87,11 @@
 	..(holder)
 	if(owner)
 		sync_colour_to_human(owner)
+/*
 	spawn(1)
-		get_icon()
+		if(owner)
+			get_icon()
+*/
 
 /obj/item/organ/external/proc/set_description(var/datum/organ_description/desc)
 	src.name = desc.name
@@ -97,6 +100,7 @@
 
 /obj/item/organ/external/install(mob/living/carbon/human/H)
 	if(..(H)) return 1
+
 	owner.organs |= src
 	var/obj/item/organ/external/outdated = H.organs_by_name[organ_tag]
 	if(outdated)
@@ -1146,78 +1150,3 @@ Note that amputating the affected organ does in fact remove the infection from t
 				if(6 to INFINITY)
 					flavor_text += "a ton of [wound]\s"
 		return english_list(flavor_text)
-
-/****************************************************
-			   ORGAN DEFINES
-****************************************************/
-
-/obj/item/organ/external/chest
-	name = "upper body"
-	organ_tag = BP_CHEST
-	max_damage = 100
-	min_broken_damage = 35
-	w_class = 5
-	body_part = UPPER_TORSO
-	vital = 1
-	gendered = 1
-	amputation_point = "spine"
-	joint = "neck"
-	dislocated = -1
-	cannot_amputate = 1
-	parent_organ = null
-	encased = "ribcage"
-
-/obj/item/organ/external/groin
-	name = "lower body"
-	organ_tag = BP_GROIN
-	max_damage = 100
-	min_broken_damage = 35
-	w_class = 5
-	body_part = LOWER_TORSO
-	vital = 1
-	gendered = 1
-	parent_organ = BP_CHEST
-	amputation_point = "lumbar"
-	joint = "hip"
-	dislocated = -1
-
-/obj/item/organ/external/limb
-	max_damage = 50
-	min_broken_damage = 30
-	w_class = 3
-
-/obj/item/organ/external/tiny
-	min_broken_damage = 15
-	w_class = 2
-
-/obj/item/organ/external/head
-	organ_tag = BP_HEAD
-	name = "head"
-	max_damage = 75
-	min_broken_damage = 35
-	w_class = 3
-	body_part = HEAD
-	vital = 1
-	gendered = 1
-	parent_organ = BP_CHEST
-	joint = "jaw"
-	amputation_point = "neck"
-	encased = "skull"
-
-/obj/item/organ/external/head/removed(user, delete_children)
-	if(owner)
-		var/mob/living/carbon/human/last_owner = owner
-		name = "[owner.real_name]'s head"
-		spawn(1)
-			if(last_owner)
-				last_owner.update_hair()
-	return ..()
-
-/obj/item/organ/external/head/take_damage(brute, burn, sharp, edge, used_weapon = null, list/forbidden_limbs = list())
-	..(brute, burn, sharp, edge, used_weapon, forbidden_limbs)
-	if (!disfigured)
-		if (brute_dam > 40)
-			if (prob(50))
-				disfigure("brute")
-		if (burn_dam > 40)
-			disfigure("burn")

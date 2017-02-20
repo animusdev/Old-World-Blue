@@ -19,6 +19,15 @@
 /obj/item/organ/external/stump/get_tally()
 	return 4
 
+/obj/item/organ/external/stump/get_icon_key()
+	return "5"
+
+/obj/item/organ/external/stump/get_icon(var/skeletal)
+	if(skeletal)
+		return null
+	icon_state = "[organ_tag][owner.body_build.index]_s"
+	mob_icon = icon(icon, icon_state)
+
 /obj/item/organ/external/stump/is_stump()
 	return 1
 

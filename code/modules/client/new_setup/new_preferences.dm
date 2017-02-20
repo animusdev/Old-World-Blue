@@ -1,11 +1,12 @@
 #define PAGE_LOAD		1
-#define PAGE_RECORDS	2
-#define PAGE_LIMBS		3
-#define PAGE_OCCUPATION	4
-#define PAGE_LOADOUT	5
-#define PAGE_FLAVOR		6
-#define PAGE_PREFS		7
-#define PAGE_SPECIES	8
+#define PAGE_SAVE		2
+#define PAGE_RECORDS	3
+#define PAGE_LIMBS		4
+#define PAGE_OCCUPATION	5
+#define PAGE_LOADOUT	6
+#define PAGE_FLAVOR		7
+#define PAGE_PREFS		8
+#define PAGE_SPECIES	9
 
 /datum/preferences
 	var/global/list/setup_pages = list(
@@ -51,7 +52,7 @@
 /datum/preferences/proc/NewShowChoices(mob/user)
 	if(!user || !user.client)	return
 	if(req_update_icon)
-		new_update_preview_icon()
+		update_preview_icon()
 		user << browse_rsc(preview_south, "new_previewicon[SOUTH].png") // TODO: return to list of dirs?
 		user << browse_rsc(preview_north, "new_previewicon[NORTH].png")
 		user << browse_rsc(preview_east,  "new_previewicon[EAST].png" )
@@ -75,7 +76,7 @@
 		dat += "Slot - "
 		dat += "<span onclick=\"set('switch_page', [PAGE_LOAD])\">Load slot</span> - "
 		dat += "<span onclick=\"set('reload', 'reload')\">Reload slot</span> - "
-		dat += "<span onclick=\"set('save', 'save')\">Save slot</span><hr>"
+		dat += "<span onclick=\"set('switch_page', [PAGE_SAVE])\">Save slot</span><hr>"
 	else
 		dat += "Please create an account to save your preferences.<hr>"
 
@@ -91,6 +92,7 @@
 
 	switch(current_page)
 		if(PAGE_LOAD)		dat += GetLoadPage(user)
+		if(PAGE_SAVE)		dat += GetSavePage(user)
 		if(PAGE_RECORDS)	dat += GetRecordsPage(user)
 		if(PAGE_LIMBS)		dat += GetLimbsPage(user)
 		if(PAGE_OCCUPATION)	dat += GetOccupationPage(user)
@@ -107,9 +109,6 @@
 	var/mob/user = usr
 	if(!user || !user.client)
 		return
-
-	if(href_list["preference"] || href_list["task"]) // OLD Setup Character
-		return ..()
 
 	if(href_list["switch_page"])
 		current_page = text2num(href_list["switch_page"])
@@ -130,6 +129,7 @@
 
 	switch(current_page)
 		if(PAGE_LOAD)		HandleLoadTopic(user, href_list)
+		if(PAGE_SAVE)		HandleSaveTopic(user, href_list)
 		if(PAGE_RECORDS)	HandleRecordsTopic(user, href_list)
 		if(PAGE_LIMBS)		HandleLimbsTopic(user, href_list)
 		if(PAGE_LOADOUT)	HandleLoadOutTopic(user, href_list)
@@ -137,11 +137,6 @@
 		if(PAGE_FLAVOR)		HandleFlavorTopic(user, href_list)
 		if(PAGE_PREFS)		HandlePrefsTopic(user, href_list)
 		if(PAGE_SPECIES)	HandleSpeciesTopic(user, href_list)
-
-/*
-	if(user.ready)
-		return
-*/
 
 	spawn()
 		NewShowChoices(user)
@@ -180,6 +175,37 @@
 			load_preferences()
 			load_character(text2num(href_list["num"]))
 			req_update_icon = 1
+			current_page = PAGE_RECORDS
+		if("delete")
+			delete_character(href_list["num"])
+
+/datum/preferences/proc/GetSavePage()
+	var/dat = "<tt><center>"
+	var/savefile/S = new /savefile(path)
+	if(S)
+		dat += "<b>Select a character slot to load:</b><hr>"
+		var/name
+		for(var/i=1, i<= config.character_slots, i++)
+			S.cd = "/character[i]"
+			S["real_name"] >> name
+			var/removable = 1
+			if(!name)
+				name = "Character[i]"
+				removable = 0
+			if(i==default_slot)
+				name = "<b>[name]</b>"
+			dat += "<a href='?src=\ref[src];character=save;num=[i]'>[name]</a>"
+			if(removable)
+				dat += " <a href='?src=\ref[src];character=delete;num=[i]'>\[X]</a>"
+			dat += "<br>"
+	dat += "</center></tt>"
+	return dat
+
+/datum/preferences/proc/HandleSaveTopic(mob/user, list/href_list)
+	switch(href_list["character"])
+		if("save")
+			save_preferences()
+			save_character(text2num(href_list["num"]))
 			current_page = PAGE_RECORDS
 		if("delete")
 			delete_character(href_list["num"])
@@ -294,13 +320,6 @@
 			real_name = random_name(gender,species)
 		if("random_always")
 			random_name = !random_name
-
-	else if(href_list["species"])
-		var/choice = input("Which species would you like to look at?") as null|anything in playable_species
-		if(!choice) return
-		species_preview = choice
-		spawn()
-			SetSpecies(user)
 
 	else if(href_list["language"])
 		var/list/new_languages = list("None")
@@ -569,13 +588,14 @@
 	return dat
 
 /datum/preferences/proc/get_modification(var/organ)
-	if(!organ) return body_modifications["nothing"]
+	if(!organ || !modifications_data[organ])
+		return body_modifications["nothing"]
 	return modifications_data[organ]
 
-/datum/preferences/proc/check_childred_modifications(var/organ = BP_CHEST)
+/datum/preferences/proc/check_child_modifications(var/organ = BP_CHEST)
 	var/list/organ_data = organ_structure[organ]
 	if(!organ_data) return
-	var/datum/body_modification/mod = modifications_data[organ]
+	var/datum/body_modification/mod = get_modification(organ)
 	for(var/child_organ in organ_data["children"])
 		var/datum/body_modification/child_mod = get_modification(child_organ)
 		if(child_mod.nature < mod.nature)
@@ -583,7 +603,7 @@
 				modifications_data[child_organ] = mod
 			else
 				modifications_data[child_organ] = get_default_modificaton(mod.nature)
-			check_childred_modifications(child_organ)
+			check_child_modifications(child_organ)
 	return
 
 /datum/preferences/proc/HandleLimbsTopic(mob/user, list/href_list)
@@ -602,161 +622,8 @@
 		var/datum/body_modification/mod = body_modifications[href_list["body_modification"]]
 		if(mod && mod.is_allowed(current_organ, src))
 			modifications_data[current_organ] = mod
-			check_childred_modifications(current_organ)
+			check_child_modifications(current_organ)
 			req_update_icon = 1
-
-/datum/preferences/proc/GetOccupationPage()
-	if(!job_master)
-		return
-
-	//limit     - The amount of jobs allowed per column. Defaults to 17 to make it look nice.
-	//splitJobs - Allows you split the table by job. You can make different tables for each department by including their heads. Defaults to CE to make it look nice.
-	var/limit = 17
-	var/list/splitJobs = list("Chief Medical Officer")
-	var/datum/job/lastJob
-
-
-	var/dat = "<style>td.job{text-align:right; width:60%}</style><tt><center>"
-	dat += "<b>Choose occupation chances</b><br>Unavailable occupations are crossed out.<br>"
-	dat += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
-	dat += "<table width='100%' cellpadding='1' cellspacing='0'>"
-	var/index = -1
-
-	//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
-	if (!job_master)		return
-	var/mob/user = usr
-	for(var/datum/job/job in job_master.occupations)
-		index += 1
-		if((index >= limit) || (job.title in splitJobs))
-			if((index < limit) && (lastJob != null))
-				//If the cells were broken up by a job in the splitJob list then it will fill in the rest of the cells with
-				//the last job's selection color. Creating a rather nice effect.
-				for(var/i = 0, i < (limit - index), i += 1)
-					dat += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'><a>&nbsp</a></td><td><a>&nbsp</a></td></tr>"
-
-			dat += "</table></td><td width='20%'><table width='100%' cellpadding='1' cellspacing='0'>"
-			index = 0
-
-		dat += "<tr bgcolor='[job.selection_color]'><td class='job'>"
-		var/rank = job.title
-		lastJob = job
-		var/job_name = rank
-		if(job.alt_titles)
-			job_name = "<a href=\"?src=\ref[src];act=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a>"
-		if(jobban_isbanned(user, rank))
-			dat += "<del>[job_name]</del></td><td><b> \[BANNED]</b></td></tr>"
-			continue
-		if(!job.player_old_enough(user.client))
-			var/available_in_days = job.available_in_days(user.client)
-			dat += "<del>[job_name]</del></td><td> \[IN [(available_in_days)] DAYS]</td></tr>"
-			continue
-		if((job_civilian_low & ASSISTANT) && (rank != "Assistant"))
-			dat += "<font color=orange>[job_name]</font></td><td>\[NEVER]</td></tr>"
-			continue
-		if((rank in command_positions) || (rank == "AI"))//Bold head jobs
-			dat += "<b>[job_name]</b>"
-		else
-			dat += "[job_name]"
-
-		dat += "</td><td width='40%'>"
-
-		dat += "<a href='?src=\ref[src];act=input;text=[rank]'>"
-
-		if(rank == "Assistant")//Assistant is special
-			if(job_civilian_low & ASSISTANT)
-				dat += " <font color=green>\[Yes]</font>"
-			else
-				dat += " <font color=red>\[No]</font>"
-			dat += "</a></td></tr>"
-			continue
-
-		if(GetJobDepartment(job, 1) & job.flag)
-			dat += " <font color=blue>\[High]</font>"
-		else if(GetJobDepartment(job, 2) & job.flag)
-			dat += " <font color=green>\[Medium]</font>"
-		else if(GetJobDepartment(job, 3) & job.flag)
-			dat += " <font color=orange>\[Low]</font>"
-		else
-			dat += " <font color=red>\[NEVER]</font>"
-		dat += "</a></td></tr>"
-
-	dat += "</table></td></tr>"
-
-	dat += "</table>"
-
-	switch(alternate_option)
-		if(GET_RANDOM_JOB)
-			dat += "<br><u><a href='?src=\ref[src];act=random'>\
-				<font color=green>Get random job if preferences unavailable</font></a></u><br>"
-		if(BE_ASSISTANT)
-			dat += "<br><u><a href='?src=\ref[src];act=random'>\
-				<font color=red>Be assistant if preference unavailable</font></a></u><br>"
-		if(RETURN_TO_LOBBY)
-			dat += "<br><u><a href='?src=\ref[src];act=random'>\
-				<font color=purple>Return to lobby if preference unavailable</font></a></u><br>"
-
-	dat += "<a href='?src=\ref[src];act=reset'>\[Reset\]</a>"
-	dat += "</center></tt>"
-
-	return dat
-
-/datum/preferences/proc/HandleOccupationTopic(mob/user, list/href_list)
-	switch(href_list["act"])
-		if("random")
-			if(alternate_option == GET_RANDOM_JOB || alternate_option == BE_ASSISTANT)
-				alternate_option += 1
-			else if(alternate_option == RETURN_TO_LOBBY)
-				alternate_option = 0
-		if ("alt_title")
-			var/datum/job/job = locate(href_list["job"])
-			if (job)
-				var/choices = list(job.title) + job.alt_titles
-				var/choice = input("Pick a title for [job.title].", "Character Generation", GetPlayerAltTitle(job)) as anything in choices | null
-				if(choice)
-					SetPlayerAltTitle(job, choice)
-		if("input")
-			SetJob(user, href_list["text"])
-		if("reset")
-			ResetJobs()
-
-
-
-/datum/preferences/proc/GetFlavorPage()
-	var/list/dat = new
-	dat += "<tt><center>"
-	dat += "<b>Set Flavour Text</b> <hr />"
-	dat += "<br></center>"
-	for(var/flavor in flavs_list)
-		dat += "<a href='?src=\ref[src];flavor=[flavor]'>[flavs_list[flavor]]:</a> "
-		dat += TextPreview(cp1251_to_utf8(flavor_texts[flavor]),70)
-		dat += "<br>"
-	dat += "<hr />"
-
-	dat += "<b>Set Robot Flavour Text</b> <hr />"
-	dat += "<br></center>"
-	dat += "<a href ='?src=\ref[src];preference=flavour_text_robot;task=Default'>Default:</a> "
-	dat += TextPreview(cp1251_to_utf8(flavour_texts_robot["Default"]))
-	dat += "<br>"
-	for(var/module in robot_modules)
-		dat += "<a href='?src=\ref[src];flavor=[module]'>[module]:</a> "
-		dat += TextPreview(cp1251_to_utf8(flavour_texts_robot[module]),70)
-		dat += "<br>"
-	dat += "<tt>"
-	return dat.Join(null)
-
-
-/datum/preferences/proc/HandleFlavorTopic(mob/user, list/href_list)
-	if(href_list["flavor"])
-		var/flav = flavor_texts[href_list["flavor"]]
-		var/msg = ""
-
-		switch(href_list["flavor"])
-			if("general")
-				msg = input_cp1251(usr,"Give a general description of your character. This will be shown regardless of clothing, and may include OOC notes and preferences.","Flavor Text", flav)
-			else
-				msg = input_cp1251(usr,"Set the flavor text for your [href_list["task"]].","Flavor Text",flav)
-
-		flavor_texts[href_list["flavor"]] = rhtml_encode(msg)
 
 
 /datum/preferences/proc/GetPrefsPage(var/mob/user)
@@ -957,6 +824,7 @@
 				s_tone = 0
 
 			current_species = new_species
+			species = new_species.name
 			sanitize_body_build()
 
 			current_page = PAGE_RECORDS

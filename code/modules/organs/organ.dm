@@ -34,6 +34,7 @@ var/list/organ_cache = list()
 	create_reagents(5)
 	if(!max_damage)
 		max_damage = min_broken_damage * 2
+
 	install(holder)
 
 /obj/item/organ/Destroy()
@@ -247,10 +248,10 @@ var/list/organ_cache = list()
 
 /obj/item/organ/proc/robotize() //Being used to make robutt hearts, etc
 	robotic = ORGAN_ROBOT
-	src.status = 0
+	status = 0
 
 /obj/item/organ/proc/mechassist() //Used to add things like pacemakers, etc
-	robotize()
+	status = 0
 	robotic = ORGAN_ASSISTED
 	min_bruised_damage = 15
 	min_broken_damage = 35

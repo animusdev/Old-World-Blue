@@ -302,11 +302,11 @@
 
 	//Flavour text.
 	if(client)
-		var/module_flavour = client.prefs.flavour_texts_robot[modtype]
+		var/module_flavour = client.prefs.flavor_texts_robot[modtype]
 		if(module_flavour)
 			flavor_text = module_flavour
 		else
-			flavor_text = client.prefs.flavour_texts_robot["Default"]
+			flavor_text = client.prefs.flavor_texts_robot["Default"]
 
 /mob/living/silicon/robot/verb/Namepick()
 	set category = "Robot Commands"

@@ -45,9 +45,7 @@
 				if(!organ_data)
 					continue
 				var/new_limb_type = L.part[part_name]
-				var/obj/item/organ/external/new_limb = new new_limb_type(target, organ_data)
-				if(L.sabotaged)
-					new_limb.sabotaged = 1
+				new new_limb_type(target, organ_data)
 
 		target.update_body()
 		target.updatehealth()

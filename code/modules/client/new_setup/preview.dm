@@ -1,11 +1,12 @@
 datum/preferences
+	var/icon/preview_icon  = null
 	var/icon/preview_south = null
 	var/icon/preview_north = null
 	var/icon/preview_east  = null
 	var/icon/preview_west  = null
 	var/preview_dir = SOUTH
 
-	proc/new_update_preview_icon()
+	proc/update_preview_icon()
 		req_update_icon = 0			//No check. Can be forced.
 		qdel(preview_south)
 		qdel(preview_north)
@@ -47,7 +48,7 @@ datum/preferences
 					else
 						organ_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
 				preview_icon.Blend(organ_icon, ICON_OVERLAY)
-			preview_icon.Blend(mod.get_mob_icon(organ, body_build.index, modifications_colors[organ], gender),ICON_OVERLAY)
+			preview_icon.Blend(mod.get_mob_icon(organ, body_build.index, modifications_colors[organ], gender, species),ICON_OVERLAY)
 
 		//Tail
 		if(current_species.tail)
@@ -90,7 +91,7 @@ datum/preferences
 			eyes.Blend(new/icon(icobase, "eyes[b]"), ICON_OVERLAY)
 			if((current_species && (current_species.flags & HAS_EYE_COLOR)))
 				eyes.Blend(eyes_color, ICON_ADD)
-		eyes.Blend(mod.get_mob_icon(O_EYES, body_build, modifications_colors[O_EYES]), ICON_OVERLAY)
+		eyes.Blend(mod.get_mob_icon(O_EYES, body_build.index, modifications_colors[O_EYES], null, species), ICON_OVERLAY)
 
 		// Hair Style'n'Color
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]

@@ -1,4 +1,4 @@
-var/global/list/limb_icon_cache = list()
+var/list/limb_icon_cache = list()
 
 /obj/item/organ/external/set_dir()
 	return
@@ -25,7 +25,51 @@ var/global/list/limb_icon_cache = list()
 /obj/item/organ/external/head/sync_colour_to_human(var/mob/living/carbon/human/human)
 	..()
 	var/obj/item/organ/internal/eyes/eyes = owner.internal_organs_by_name[O_EYES]
-	if(eyes) eyes.update_colour()
+	if(eyes) eyes.update_color()
+
+/obj/item/organ/external/proc/get_icon(var/skeletal)
+
+	var/gender = "_f"
+	var/body_build = ""
+	if(owner)
+		if(owner.gender == MALE)
+			gender = "_m"
+		body_build = owner.body_build.index
+
+	icon_state = "[organ_tag][gendered ? gender : ""][body_build]"
+
+	if(force_icon)
+		mob_icon = new /icon(force_icon, icon_state)
+	else if(skeletal)
+		mob_icon = new /icon('icons/mob/human_races/skeleton.dmi', icon_state)
+	else if (status & ORGAN_MUTATED)
+		mob_icon = new /icon(owner.species.deform, icon_state)
+	else
+		mob_icon = new /icon(owner.species.icobase, icon_state)
+
+	if(status & ORGAN_DEAD)
+		mob_icon.ColorTone(rgb(10,50,0))
+		mob_icon.SetIntensity(0.7)
+
+	if(!isnull(s_tone))
+		if(s_tone >= 0)
+			mob_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
+		else
+			mob_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
+	else if(s_col)
+		mob_icon.Blend(s_col, ICON_ADD)
+
+	if(tattoo)
+		var/icon/tattoo_icon = new/icon('icons/mob/tattoo.dmi', "[organ_tag]_[tattoo][body_build]")
+		tattoo_icon.Blend(tattoo_color, ICON_ADD)
+		mob_icon.Blend(tattoo_icon, ICON_OVERLAY)
+	if(tattoo2)
+		mob_icon.Blend(new/icon('icons/mob/tattoo.dmi', "[organ_tag]2_[tattoo2][body_build]"), ICON_OVERLAY)
+
+	dir = EAST
+	icon = mob_icon
+
+	return mob_icon
 
 /obj/item/organ/external/head
 	var/icon/hair
@@ -80,61 +124,12 @@ var/global/list/limb_icon_cache = list()
 	return mob_icon
 
 /obj/item/organ/external/proc/get_icon_key()
-	if(robotic >= ORGAN_ROBOT)
-		. = "2[model ? "-[model]": ""]"
-	else if(status & ORGAN_MUTATED)
-		. = "3"
+	if(status & ORGAN_MUTATED)
+		. = "mutated"
 	else if(status & ORGAN_DEAD)
-		. = "4"
+		. = "dead"
 	else
-		. = "1[tattoo][tattoo2]"
-
-/obj/item/organ/external/proc/get_icon(var/skeletal)
-
-	var/gender = "_f"
-	var/body_build = ""
-	if(owner)
-		if(owner.gender == MALE)
-			gender = "_m"
-		body_build = owner.body_build.index
-
-	icon_state = "[organ_tag][gendered ? gender : ""][body_build]"
-
-	if(force_icon)
-		mob_icon = new /icon(force_icon, icon_state)
-	else
-		if((robotic >= ORGAN_ROBOT) && !(owner.species && owner.species.flags & IS_SYNTHETIC))
-			mob_icon = new /icon('icons/mob/human_races/robotic.dmi', icon_state)
-		else if(skeletal)
-			mob_icon = new /icon('icons/mob/human_races/skeleton.dmi', icon_state)
-		else
-			if (status & ORGAN_MUTATED)
-				mob_icon = new /icon(owner.species.deform, icon_state)
-			else
-				if(is_stump()) icon_state+="_s"
-				mob_icon = new /icon(owner.species.icobase, icon_state)
-
-			if(status & ORGAN_DEAD)
-				mob_icon.ColorTone(rgb(10,50,0))
-				mob_icon.SetIntensity(0.7)
-
-			if(!isnull(s_tone))
-				if(s_tone >= 0)
-					mob_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
-				else
-					mob_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
-			else if(s_col)
-				mob_icon.Blend(s_col, ICON_ADD)
-
-			if(tattoo)
-				mob_icon.Blend(new/icon('icons/mob/tattoo.dmi', "[organ_tag]_[tattoo][body_build]"), ICON_OVERLAY)
-			if(tattoo2)
-				mob_icon.Blend(new/icon('icons/mob/tattoo.dmi', "[organ_tag]2_[tattoo2][body_build]"), ICON_OVERLAY)
-
-	dir = EAST
-	icon = mob_icon
-
-	return mob_icon
+		. = "[model][tattoo][tattoo2]"
 
 // new damage icon system
 // adjusted to set damage_state to brute/burn code only (without r_name0 as before)

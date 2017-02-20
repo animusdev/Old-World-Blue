@@ -214,28 +214,6 @@
 	else
 		H.equip_to_slot_or_del(new custom_survival_gear(H), slot_r_hand)
 
-/datum/species/proc/create_organs(var/mob/living/carbon/human/H) //Handles creation of mob organs.
-
-	for(var/obj/item/organ/organ in (H.organs|H.internal_organs))
-		qdel(organ)
-
-	if(H.organs.len)                  H.organs.Cut()
-	if(H.internal_organs.len)         H.internal_organs.Cut()
-	if(H.organs_by_name.len)          H.organs_by_name.Cut()
-	if(H.internal_organs_by_name.len) H.internal_organs_by_name.Cut()
-
-	var/organ_type = null
-
-	for(var/limb_type in has_limbs)
-		var/datum/organ_description/OD = has_limbs[limb_type]
-		organ_type = OD.default_type
-		new organ_type(H, OD)
-
-	for(var/organ in has_organ)
-		organ_type = has_organ[organ]
-		new organ_type(H)
-
-
 /datum/species/proc/hug(var/mob/living/carbon/human/H,var/mob/living/target)
 
 	var/t_him = "them"

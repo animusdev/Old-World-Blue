@@ -192,19 +192,6 @@ emp_act
 	if((user != src) && check_shields(effective_force, I, user, "the [I.name]"))
 		return 0
 
-	if(istype(I,/obj/item/weapon/card/emag))
-		if(affecting.robotic < ORGAN_ROBOT)
-			user << "\red That limb isn't robotic."
-			return
-		if(affecting.sabotaged)
-			user << "\red [src]'s [affecting.name] is already sabotaged!"
-		else
-			user << "\red You sneakily slide [I] into the dataport on [src]'s [affecting.name] and short out the safeties."
-			var/obj/item/weapon/card/emag/emag = I
-			emag.uses--
-			affecting.sabotaged = 1
-		return 1
-
 	if(I.attack_verb.len)
 		visible_message("\red <B>[user] [pick(I.attack_verb)] [src] in the [hit_area] with [I.name]!</B>")
 	else

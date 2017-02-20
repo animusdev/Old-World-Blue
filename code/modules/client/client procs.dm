@@ -365,7 +365,7 @@ client/verb/character_setup()
 	set name = "Character Setup"
 	set category = "Preferences"
 	if(prefs)
-		prefs.ShowChoices(usr)
+		prefs.NewShowChoices(usr)
 
 client/verb/new_character_setup()
 	set name = "New Character Setup"

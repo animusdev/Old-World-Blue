@@ -4,3 +4,4 @@
 	organ_tag = O_HEART
 	parent_organ = BP_CHEST
 	dead_icon = "heart-off"
+

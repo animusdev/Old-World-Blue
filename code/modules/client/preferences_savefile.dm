@@ -1,5 +1,5 @@
 #define SAVEFILE_VERSION_MIN	1
-#define SAVEFILE_VERSION_MAX	1
+#define SAVEFILE_VERSION_MAX	2
 
 //handles converting savefiles to new formats
 //MAKE SURE YOU KEEP THIS UP TO DATE!
@@ -20,6 +20,9 @@
 					savefile_version = SAVEFILE_VERSION_MIN
 				break
 		return 0
+
+	if(savefile_version < 2)
+		savefile_version = 2
 
 	if(savefile_version == SAVEFILE_VERSION_MAX)	//update successful.
 		save_preferences()
@@ -73,23 +76,23 @@
 	return 1
 
 /datum/preferences/proc/save_preferences()
-	if(!path)				return 0
-	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
+	if(!path)			return 0
+	var/savefile/S =	new /savefile(path)
+	if(!S)				return 0
 	S.cd = "/"
 
-	S["version"] 			<< savefile_version
+	S["version"] 		<< savefile_version
 
 	//general preferences
-	S["ooccolor"]			<< ooccolor
-	S["lastchangelog"]		<< lastchangelog
-	S["UI_style"]			<< UI_style
-	S["be_special"]			<< be_special
-	S["default_slot"]		<< default_slot
-	S["toggles"]			<< toggles
-	S["chat_toggles"]		<< chat_toggles
-	S["UI_style_color"]		<< UI_style_color
-	S["UI_style_alpha"]		<< UI_style_alpha
+	S["ooccolor"]		<< ooccolor
+	S["lastchangelog"]	<< lastchangelog
+	S["UI_style"]		<< UI_style
+	S["be_special"]		<< be_special
+	S["default_slot"]	<< default_slot
+	S["toggles"]		<< toggles
+	S["chat_toggles"]	<< chat_toggles
+	S["UI_style_color"]	<< UI_style_color
+	S["UI_style_alpha"]	<< UI_style_alpha
 
 	return 1
 
@@ -108,7 +111,7 @@
 
 	//Character
 	S["real_name"]			>> real_name
-	S["name_is_always_random"] >> random_name
+	S["name_is_random"] 	>> random_name
 	S["gender"]				>> gender
 	S["age"]				>> age
 	S["species"]			>> species
@@ -148,15 +151,19 @@
 		S["flavor_texts_[flavor]"]	>> flavor_texts[flavor]
 
 	//Flavour text for robots.
-	S["flavour_texts_robot_Default"] >> flavour_texts_robot["Default"]
+	S["flavor_texts_robot_Default"] >> flavor_texts_robot["Default"]
 	for(var/module in robot_modules)
-		S["flavour_texts_robot_[module]"] >> flavour_texts_robot[module]
+		S["flavour_texts_robot_[module]"] >> flavor_texts_robot[module]
 
 	var/mod_id = "nothing"
+	var/color = "#ffffff"
 	for(var/organ in modifications_types)
 		S["modification_[organ]"] >> mod_id
+		S["color_[organ]"] >> color
 		modifications_data[organ] = mod_id ? body_modifications[mod_id] : get_default_modificaton()
-	check_childred_modifications()
+		modifications_colors[organ] = color ? color : "#ffffff"
+
+	check_child_modifications()
 
 	//Miscellaneous
 	S["med_record"]			>> med_record
@@ -165,9 +172,6 @@
 	S["be_special"]			>> be_special
 	S["disabilities"]		>> disabilities
 	S["player_alt_titles"]	>> player_alt_titles
-	S["organ_data"]			>> organ_data
-	S["rlimb_data"]			>> rlimb_data
-	S["tattoo_data"]		>> tattoo_data
 	S["gear"]				>> gear
 	S["home_system"] 		>> home_system
 	S["citizenship"] 		>> citizenship
@@ -224,9 +228,6 @@
 
 	if(isnull(disabilities)) disabilities = 0
 	if(!player_alt_titles) player_alt_titles = new()
-	if(!organ_data) src.organ_data = list()
-	if(!rlimb_data) src.rlimb_data = list()
-	if(!tattoo_data) src.tattoo_data = list()
 	if(!modifications_data) src.modifications_data = list()
 	if(!modifications_colors) src.modifications_colors = list()
 	if(!gear) src.gear = list()
@@ -252,7 +253,7 @@
 
 	//Character
 	S["real_name"]			<< real_name
-	S["name_is_always_random"] << random_name
+	S["name_is_random"] 	<< random_name
 	S["gender"]				<< gender
 	S["body"]				<< body
 	S["age"]				<< age
@@ -290,9 +291,14 @@
 		S["flavor_texts_[flavor]"]	<< flavor_texts[flavor]
 
 	//Flavour text for robots.
-	S["flavour_texts_robot_Default"] << flavour_texts_robot["Default"]
+	S["flavour_texts_robot_Default"] << flavor_texts_robot["Default"]
 	for(var/module in robot_modules)
-		S["flavour_texts_robot_[module]"] << flavour_texts_robot[module]
+		S["flavour_texts_robot_[module]"] << flavor_texts_robot[module]
+
+	for(var/organ in modifications_types)
+		var/datum/body_modification/BM = modifications_data[organ]
+		S["modification_[organ]"] << BM.id
+		S["color_[organ]"]  	  << modifications_colors[organ]
 
 	//Miscellaneous
 	S["med_record"]			<< med_record
@@ -301,19 +307,16 @@
 	S["player_alt_titles"]	<< player_alt_titles
 	S["be_special"]			<< be_special
 	S["disabilities"]		<< disabilities
-	S["organ_data"]			<< organ_data
-	S["rlimb_data"]			<< rlimb_data
-	S["tattoo_data"]		<< tattoo_data
 	S["gear"]				<< gear
 	S["home_system"] 		<< home_system
 	S["citizenship"] 		<< citizenship
 	S["faction"] 			<< faction
 	S["religion"] 			<< religion
 
-	S["nanotrasen_relation"] << nanotrasen_relation
+	S["nanotrasen_relation"]<< nanotrasen_relation
 
-	S["uplinklocation"] << uplinklocation
-	S["exploit_record"]	<< exploit_record
+	S["uplinklocation"]		<< uplinklocation
+	S["exploit_record"]		<< exploit_record
 
 	return 1
 

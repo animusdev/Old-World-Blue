@@ -30,7 +30,7 @@
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		var/newSpecies = chosen_dna.speciesName
-		H.set_species(newSpecies,1)
+		H.set_species(newSpecies)
 
 	src.dna = chosen_dna.dna.Clone()
 	src.dna.b_type = "AB+" //This is needed to avoid blood rejection bugs.  The fact that the blood type might not match up w/ records could be a *FEATURE* too.
