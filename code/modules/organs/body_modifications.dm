@@ -302,6 +302,7 @@ var/global/list/modifications_types = list(
 	create_organ(var/organ_type, var/color)
 		var/obj/item/organ/internal/eyes/E = ..()
 		E.eye_color = color
+		return E
 
 
 /datum/body_modification/organ/heterochromia
