@@ -10,9 +10,9 @@
 		dat += "<a href='?src=\ref[src];flavor=[flavor]'>[flavs_list[flavor]]:</a> "
 		dat += TextPreview(cp1251_to_utf8(flavor_texts[flavor]),58)
 		dat += "<br>"
-	dat += "<hr />"
+	dat += "<br><hr />"
 
-	dat += "<br><center><b>Set Robot Flavour Text</b> <hr /></center>"
+	dat += "<center><b>Set Robot Flavour Text</b> <hr /></center>"
 	dat += "<a href ='?src=\ref[src];preference=flavour_text_robot;task=Default'>Default:</a> "
 	dat += TextPreview(cp1251_to_utf8(flavor_texts_robot["Default"]))
 	dat += "<br>"
