@@ -20,6 +20,8 @@ datum/preferences
 		var/b=body_build.index
 		g+=b
 
+		var/s_tone = 35 - src.s_tone
+
 		var/icon/icobase = current_species.icobase
 
 		preview_icon = new /icon('icons/mob/human.dmi', "blank")
