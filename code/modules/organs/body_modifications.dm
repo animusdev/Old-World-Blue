@@ -162,6 +162,7 @@ var/global/list/modifications_types = list(
 		var/obj/item/organ/external/robotic/R = new replace_limb(null, O)
 		R.icon = icon
 		R.model = model
+		R.desc = desc
 		return R
 
 /datum/body_modification/limb/prosthesis/bishop
@@ -195,6 +196,7 @@ var/global/list/modifications_types = list(
 /datum/body_modification/limb/prosthesis/cyber_interprize
 	name = "Cyber Interprize"
 	id = "prosthesis_enforcer"
+	desc = "This limb has a dark metal casing and looks rather bulky."
 	icon = 'icons/mob/human_races/cyberlimbs/cyber.dmi'
 	model = "cyber"
 
@@ -248,7 +250,7 @@ var/global/list/modifications_types = list(
 		return I
 
 /datum/body_modification/organ/robotize_organ
-	name = "Assisted organ"
+	name = "Robotic organ"
 	short_name = "P: prosthesis"
 	id = "robotize_organ"
 	desc = "Robotic organ."
