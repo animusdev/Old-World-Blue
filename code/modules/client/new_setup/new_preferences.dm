@@ -422,6 +422,7 @@
 
 	else if(href_list["disabilities"])
 		disabilities ^= NEARSIGHTED
+		req_update_icon = 1
 
 	else if(href_list["mail"]) switch(href_list["mail"])
 		if("input")

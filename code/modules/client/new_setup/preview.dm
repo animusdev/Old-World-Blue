@@ -150,7 +150,7 @@ datum/preferences
 					clothes.Blend(new /icon(body_build.back_icon, initial(BP.icon_state)), ICON_OVERLAY)
 
 		if(disabilities & NEARSIGHTED)
-			preview_icon.Blend(new /icon(body_build.glasses_icon, "glasses"), ICON_OVERLAY)
+			eyes.Blend(new /icon(body_build.glasses_icon, "glasses"), ICON_OVERLAY)
 
 		preview_icon.Blend(eyes, ICON_OVERLAY)
 
