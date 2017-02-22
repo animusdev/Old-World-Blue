@@ -263,7 +263,7 @@ var/global/list/damage_icon_parts = list()
 		if(isnull(part))
 			icon_key += "0"
 		else
-			icon_key += part.get_icon_key()
+			icon_key += "[organ_tag][part.get_icon_key()]"
 
 	icon_key = "[icon_key][husk ? 1 : 0][fat ? 1 : 0][hulk ? 1 : 0][skeleton ? 1 : 0]"
 

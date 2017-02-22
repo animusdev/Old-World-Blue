@@ -132,7 +132,7 @@ var/list/limb_icon_cache = list()
 		. = "[model][tattoo][tattoo2]"
 
 	if(owner.species.flags & HAS_SKIN_TONE)
-		. = num2text(s_tone)
+		. += num2text(s_tone)
 	if(owner.species.flags & HAS_SKIN_COLOR)
 		. += s_col
 

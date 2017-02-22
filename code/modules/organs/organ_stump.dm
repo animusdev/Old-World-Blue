@@ -20,13 +20,15 @@
 	return 4
 
 /obj/item/organ/external/stump/get_icon_key()
-	return "5"
+	return "stump"
 
 /obj/item/organ/external/stump/get_icon(var/skeletal)
 	if(skeletal)
 		return null
 	icon_state = "[organ_tag][owner.body_build.index]_s"
 	mob_icon = icon(owner.species.icobase, icon_state)
+	icon = mob_icon
+
 	return mob_icon
 
 /obj/item/organ/external/stump/is_stump()
