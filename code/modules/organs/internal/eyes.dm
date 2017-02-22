@@ -50,10 +50,15 @@
 
 /obj/item/organ/internal/eyes/oneeye
 	get_icon()
-		mob_icon = icon(owner.species.icobase, "one_eye[owner.body_build.index]")
+		mob_icon = icon(owner.species.icobase, "left_eye[owner.body_build.index]")
 		mob_icon.Blend(eye_color, ICON_ADD)
 		return mob_icon
 
+/obj/item/organ/internal/eyes/oneeye/right
+	get_icon()
+		mob_icon = icon(owner.species.icobase, "right_eye[owner.body_build.index]")
+		mob_icon.Blend(eye_color, ICON_ADD)
+		return mob_icon
 
 //// Heterohromia ////
 
@@ -61,7 +66,7 @@
 	var/second_color = "#000000"
 	get_icon()
 		..()
-		var/icon/one_eye = icon(owner.species.icobase, "one_eye[owner.body_build.index]")
+		var/icon/one_eye = icon(owner.species.icobase, "left_eye[owner.body_build.index]")
 		one_eye.Blend(second_color, ICON_ADD)
 		mob_icon.Blend(one_eye, ICON_OVERLAY)
 		return mob_icon
@@ -113,7 +118,7 @@
 
 /obj/item/organ/internal/eyes/mechanic/cam/get_icon()
 	..() //basic eyes + color
-	var/icon/socket = icon(owner.species.icobase, "one_eye[owner.body_build.index]")
+	var/icon/socket = icon(owner.species.icobase, "left_eye[owner.body_build.index]")
 	if(camera)
 		socket.Blend("#C0C0C0", ICON_ADD)
 	mob_icon.Blend(socket, ICON_OVERLAY)

@@ -234,6 +234,7 @@ var/global/list/modifications_types = list(
 ////Internals////
 
 /datum/body_modification/organ
+	allowed_species = list("Human", "Skrell", "Tajara", "Unathi", "Vox")
 	create_organ(var/organ_type, var/color)
 		if(replace_limb)
 			return new replace_limb(null)
@@ -281,7 +282,7 @@ var/global/list/modifications_types = list(
 
 	get_mob_icon(organ, body_build, color, gender, species)
 		var/datum/species/S = all_species[species]
-		var/icon/I = new/icon(S.icobase, "one_eye_[body_build]")
+		var/icon/I = new/icon(S.icobase, "left_eye_[body_build]")
 		I.Blend("#C0C0C0", ICON_ADD)
 		return I
 
@@ -290,8 +291,8 @@ var/global/list/modifications_types = list(
 */
 
 /datum/body_modification/organ/oneeye
-	name = "One eye"
-	short_name = "M: One eye"
+	name = "One eye (left)"
+	short_name = "M: One eye (l)"
 	id = "missed_eye"
 	desc = "One of your eyes was missed."
 	body_parts = list(O_EYES)
@@ -299,7 +300,7 @@ var/global/list/modifications_types = list(
 
 	get_mob_icon(organ, body_build, color, gender, species)
 		var/datum/species/S = all_species[species]
-		var/icon/I = new/icon(S.icobase, "one_eye[body_build]")
+		var/icon/I = new/icon(S.icobase, "left_eye[body_build]")
 		I.Blend(color, ICON_ADD)
 		return I
 
@@ -308,6 +309,17 @@ var/global/list/modifications_types = list(
 		E.eye_color = color
 		return E
 
+/datum/body_modification/organ/oneeye/right
+	name = "One eye (right)"
+	short_name = "M: One eye (r)"
+	id = "missed_eye_right"
+	replace_limb = /obj/item/organ/internal/eyes/oneeye/right
+
+	get_mob_icon(organ, body_build, color, gender, species)
+		var/datum/species/S = all_species[species]
+		var/icon/I = new/icon(S.icobase, "right_eye[body_build]")
+		I.Blend(color, ICON_ADD)
+		return I
 
 /datum/body_modification/organ/heterochromia
 	name = "Heterochromia"
@@ -318,7 +330,7 @@ var/global/list/modifications_types = list(
 
 	get_mob_icon(organ, body_build, color, gender, species)
 		var/datum/species/S = all_species[species]
-		var/icon/I = new/icon(S.icobase, "one_eye[body_build]")
+		var/icon/I = new/icon(S.icobase, "left_eye[body_build]")
 		I.Blend(color, ICON_ADD)
 		return I
 
