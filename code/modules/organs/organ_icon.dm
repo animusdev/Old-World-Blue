@@ -124,6 +124,9 @@ var/list/limb_icon_cache = list()
 	return mob_icon
 
 /obj/item/organ/external/proc/get_icon_key()
+	if(!mob_icon)
+		return "notready"
+
 	if(status & ORGAN_MUTATED)
 		. = "mutated"
 	else if(status & ORGAN_DEAD)
