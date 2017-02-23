@@ -132,7 +132,9 @@ var/list/limb_icon_cache = list()
 	else if(status & ORGAN_DEAD)
 		. = "dead"
 	else
-		. = "[model][tattoo][tattoo2]"
+		. = "normal"
+
+	. += "[model][tattoo][tattoo_color][tattoo2]"
 
 	if(owner.species.flags & HAS_SKIN_TONE)
 		. += num2text(s_tone)

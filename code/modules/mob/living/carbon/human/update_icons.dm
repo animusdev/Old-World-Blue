@@ -2,7 +2,7 @@
 	Global associative list for caching humanoid icons.
 	Index format m or f, followed by a string of 0 and 1 to represent bodyparts followed by husk fat hulk skeleton 1 or 0.
 	TODO: Proper documentation
-	icon_key is [species.race_key][g][husk][fat][hulk][skeleton][s_tone]
+	icon_key is [species.race_key][gender][body_build][husk][fat][hulk][skeleton][s_tone]
 */
 var/global/list/human_icon_cache = list()
 var/global/list/tail_icon_cache = list() //key is [species.race_key][skin_color]
@@ -243,11 +243,7 @@ var/global/list/damage_icon_parts = list()
 		qdel(stand_icon)
 	stand_icon = new(species.icon_template ? species.icon_template : 'icons/mob/human.dmi',"blank")
 
-	var/g = "male"
-	if(gender == FEMALE)
-		g = "female"
-
-	var/icon_key = "[species.race_key][g][body_build.index]"
+	var/icon_key = "[species.race_key][gender][body_build.index]"
 	if(lip_color)
 		icon_key += lip_color
 	else
@@ -258,17 +254,24 @@ var/global/list/damage_icon_parts = list()
 	else
 		icon_key += "#000000"
 
+	icon_key += "[husk ? 1 : 0][fat ? 1 : 0][hulk ? 1 : 0][skeleton ? 1 : 0]"
+
 	for(var/organ_tag in species.has_limbs)
+		var/tmp_index = ""
 		var/obj/item/organ/external/part = organs_by_name[organ_tag]
 		if(isnull(part))
 			icon_key += "0"
 		else
-			icon_key += "[organ_tag][part.get_icon_key()]"
+			tmp_index = part.get_icon_key()
+			if(tmp_index == "notready")
+				icon_key += "[organ_tag][tmp_index]"
+			else
+				icon_key = null
+				break
 
-	icon_key = "[icon_key][husk ? 1 : 0][fat ? 1 : 0][hulk ? 1 : 0][skeleton ? 1 : 0]"
 
 	var/icon/base_icon
-	if(human_icon_cache[icon_key])
+	if(icon_key && human_icon_cache[icon_key])
 		base_icon = human_icon_cache[icon_key]
 	else
 		//BEGIN CACHED ICON GENERATION.
