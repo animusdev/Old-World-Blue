@@ -99,7 +99,27 @@ BLIND     // can't see anything
 	desc = "Yarr."
 	icon_state = "eyepatch"
 	item_state = "eyepatch"
+	wear_state = "eyepatch"
 	body_parts_covered = 0
+
+	New(var/mob/living/carbon/human/H)
+		..()
+		if(istype(H))
+			if(istype(H.internal_organs_by_name[O_EYES], /obj/item/organ/internal/eyes/oneeye/right))
+				wear_state = "[initial(wear_state)]_l"
+
+	verb/switcheye()
+		set name = "Switch Eyepatch"
+		set category = "Object"
+		set src in usr
+		if(!istype(usr, /mob/living)) return
+		if(usr.stat) return
+
+		if(wear_state != initial(wear_state))
+			wear_state = initial(wear_state)
+		else
+			wear_state = "[initial(wear_state)]_l"
+		update_clothing_icon()
 
 /obj/item/clothing/glasses/monocle
 	name = "monocle"

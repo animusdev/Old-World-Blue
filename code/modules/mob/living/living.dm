@@ -466,14 +466,14 @@ default behaviour is:
 	var/t7 = 1
 	if (restrained())
 		for(var/mob/living/M in range(src, 1))
-			if ((M.pulling == src && M.stat == 0 && !( M.restrained() )))
+			if (M.pulling == src && !M.stat && !M.restrained())
 				t7 = null
-	if ((t7 && (pulling && ((get_dist(src, pulling) <= 1 || pulling.loc == loc) && (client && client.moving)))))
+	if (t7 && pulling && (get_dist(src, pulling) <= 1) && client && client.moving)
 		var/turf/T = loc
 		. = ..()
 
 		if (pulling && pulling.loc)
-			if(!( isturf(pulling.loc) ))
+			if(!isturf(pulling.loc))
 				stop_pulling()
 				return
 
@@ -501,7 +501,7 @@ default behaviour is:
 								qdel(G)
 						else
 							ok = 0
-						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
+						if (locate(/obj/item/weapon/grab) in M.grabbed_by)
 							ok = 0
 					if (ok)
 						var/atom/movable/t = M.pulling
@@ -577,7 +577,7 @@ default behaviour is:
 		spawn() escape_buckle()
 
 	//Breaking out of a locker?
-	if( src.loc && (istype(src.loc, /obj/structure/closet)) )
+	if(istype(src.loc, /obj/structure/closet))
 		var/obj/structure/closet/C = loc
 		spawn() C.mob_breakout(src)
 

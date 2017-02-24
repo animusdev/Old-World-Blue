@@ -5,9 +5,6 @@
 /obj/item/weapon/cell/New()
 	..()
 	charge = maxcharge
-
-/obj/item/weapon/cell/initialize()
-	..()
 	update_icon()
 
 /obj/item/weapon/cell/drain_power(var/drain_check, var/surge, var/power = 0)
@@ -33,7 +30,7 @@
 		overlays += image('icons/obj/power.dmi', "cell-o1")
 
 /obj/item/weapon/cell/proc/percent()		// return % charge of cell
-	return 100.0*charge/maxcharge
+	return round(100.0*charge/maxcharge)
 
 /obj/item/weapon/cell/proc/fully_charged()
 	return (charge == maxcharge)
@@ -49,6 +46,7 @@
 		return 0
 	var/used = min(charge, amount)
 	charge -= used
+	update_icon()
 	return used
 
 // Checks if the specified amount can be provided. If it can, it removes the amount
@@ -82,9 +80,9 @@
 	if(.>1) return
 
 	if(maxcharge <= 2500)
-		user << "The manufacturer's label states this cell has a power rating of [maxcharge], and that you should not swallow it.\nThe charge meter reads [round(src.percent() )]%."
+		user << "The manufacturer's label states this cell has a power rating of [maxcharge], and that you should not swallow it.\nThe charge meter reads [percent()]%."
 	else
-		user << "This power cell has an exciting chrome finish, as it is an uber-capacity cell type! It has a power rating of [maxcharge]!\nThe charge meter reads [round(src.percent() )]%."
+		user << "This power cell has an exciting chrome finish, as it is an uber-capacity cell type! It has a power rating of [maxcharge]!\nThe charge meter reads [percent()]%."
 	if(crit_fail)
 		user << "\red This power cell seems to be faulty."
 

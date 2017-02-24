@@ -12,7 +12,7 @@ var/global/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","E
 	var/changelingID = "Changeling"
 	var/geneticdamage = 0
 	var/isabsorbing = 0
-	var/geneticpoints = 5
+	var/geneticpoints = 25
 	var/purchasedpowers = list()
 	var/mimicing = ""
 
@@ -125,45 +125,6 @@ var/global/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","E
 	add_language("Changeling")
 
 	return
-
-//Used to switch species based on the changeling datum.
-/mob/proc/changeling_change_species()
-
-	set category = "Changeling"
-	set name = "Change Species (5)"
-
-	var/mob/living/carbon/human/H = src
-	if(!istype(H))
-		src << "<span class='warning'>We may only use this power while in humanoid form.</span>"
-		return
-
-	var/datum/changeling/changeling = changeling_power(5,1,0)
-	if(!changeling)	return
-
-	if(changeling.absorbed_species.len < 2)
-		src << "<span class='warning'>We do not know of any other species genomes to use.</span>"
-		return
-
-	var/S = input("Select the target species: ", "Target Species", null) as null|anything in changeling.absorbed_species
-	if(!S)	return
-
-	domutcheck(src, null)
-
-	changeling.chem_charges -= 5
-	changeling.geneticdamage = 30
-
-	src.visible_message("<span class='warning'>[src] transforms!</span>")
-
-	src.verbs -= /mob/proc/changeling_change_species
-	H.set_species(S,1) //Until someone moves body colour into DNA, they're going to have to use the default.
-
-	spawn(10)
-		src.verbs += /mob/proc/changeling_change_species
-		src.regenerate_icons()
-
-	changeling_update_languages(changeling.absorbed_languages)
-
-	return 1
 
 /mob/proc/changeling_armblade()
 
@@ -882,17 +843,11 @@ var/list/datum/dna/hivemind_bank = list()
 
 
 
-/*/mob/proc/changeling_prepare_transformation_sting()
-	set category = "Changeling"
-	set name = "Transformation Sting (40)"
-	set desc="Sting target"
-
-	check_CH("Transformation Sting",/datum/click_handler/changeling/changeling_paralysis_sting)
-
-	return*/
-
-
 /mob/proc/changeling_transformation_sting()
+	set category = "Changeling"
+	set name = "Transform Target (40)"
+	set desc="Transform grabbed mob"
+
 	var/datum/changeling/changeling = changeling_power(40)
 	if(!changeling)	return 0
 
@@ -903,7 +858,6 @@ var/list/datum/dna/hivemind_bank = list()
 	if(G.state < GRAB_NECK)
 		src << "<span class='warning'>We must have a tighter grip to transform this creature.</span>"
 		return 0
-
 
 
 	var/list/names = list()

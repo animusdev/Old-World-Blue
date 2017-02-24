@@ -77,6 +77,7 @@
 /datum/body_build/tajaran
 	name		= "Tajaran"
 	mask_icon	= 'icons/inv_slots/masks/mob_tajaran.dmi'
+	suit_icon	= 'icons/inv_slots/suits/mob_tajaran.dmi'
 
 /datum/body_build/vox
 	name		= "Vox"

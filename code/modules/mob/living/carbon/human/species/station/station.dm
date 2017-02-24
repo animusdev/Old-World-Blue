@@ -357,7 +357,7 @@
 		)
 	rarity_value = 2
 
-	brute_mod = 0.5
+	brute_mod = 1
 	burn_mod = 1
 	show_ssd = "flashing a 'system offline' glyph on their monitor"
 	virus_immune = 1
@@ -404,7 +404,6 @@
 
 /datum/species/machine/handle_death(var/mob/living/carbon/human/H)
 	..()
-	if(flags & IS_SYNTHETIC)
-		H.h_style = ""
-		spawn(100)
-			if(H) H.update_hair()
+	H.h_style = ""
+	spawn(100)
+		if(H) H.update_hair()

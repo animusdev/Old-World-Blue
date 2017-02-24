@@ -338,10 +338,11 @@
 		var/dat = "<tt><center><h1><b>TagMaster 2.3</b></h1></center>"
 
 		dat += "<table style='width:100%; padding:4px;'><tr>"
-		for(var/i = 1, i <= tagger_locations.len, i++)
-			dat += "<td><a href='?src=\ref[src];nextTag=[tagger_locations[i]]'>[tagger_locations[i]]</a></td>"
+		var/i = 0
+		for(var/location in tagger_locations)
+			dat += "<td><a href='?src=\ref[src];nextTag=[location]'>[location]</a></td>"
 
-			if (i%4==0)
+			if (++i%4==0)
 				dat += "</tr><tr>"
 
 		dat += "</tr></table><br>Current Selection: [currTag ? currTag : "None"]</tt>"

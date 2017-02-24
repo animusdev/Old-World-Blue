@@ -22,7 +22,7 @@
 		if (H.mind && H.mind.role_alt_title)
 			switch(H.mind.role_alt_title)
 				if("Security Cadet")
-					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security2(H), slot_w_uniform)
+					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cadet(H), slot_w_uniform)
 				if("Technical Assistant")
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightbrown(H), slot_w_uniform)
 					H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/hazardvest(H), slot_wear_suit)

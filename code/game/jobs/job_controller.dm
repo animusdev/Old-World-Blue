@@ -377,8 +377,8 @@ var/global/datum/controller/occupations/job_master
 			H.equip_to_slot_or_del(new hidden_type, slot_undershirt)
 
 		//Equip custom gear loadout.
-		var/list/custom_equip_slots = list() //If more than one item takes the same slot, all after the first one spawn in storage.
-//		var/list/custom_equip_leftovers = list()
+		var/list/custom_equip_slots = list(slot_in_backpack) //If more than one item takes the same slot, all after the first one spawn in storage.
+		var/list/custom_equip_leftovers = list()
 		if(H.client.prefs.gear && H.client.prefs.gear.len)
 			for(var/thing in H.client.prefs.gear)
 				var/datum/gear/G = gear_datums[thing]
@@ -392,14 +392,12 @@ var/global/datum/controller/occupations/job_master
 					// This is a miserable way to fix the loadout overwrite bug, but the alternative requires
 					// adding an arg to a bunch of different procs. Will look into it after this merge. ~ Z
 					if(G.slot in list(slot_wear_mask,  slot_wear_suit, slot_head))
-						//custom_equip_leftovers += thing
-						put_in_storage.Add(I)
+						custom_equip_leftovers.Add(I)
 					else if(H.equip_to_slot_if_possible(I, G.slot))
 						H << "<span class='notice'>Equipping you with [I]!</span>"
 						custom_equip_slots.Add(G.slot)
 					else
-//						custom_equip_leftovers.Add(I)
-						put_in_storage.Add(I)
+						custom_equip_leftovers.Add(I)
 				else
 					put_in_storage.Add(I)
 
@@ -409,10 +407,11 @@ var/global/datum/controller/occupations/job_master
 		job.apply_fingerprints(H)
 
 		//If some custom items could not be equipped before, try again now.
-		for(var/obj/item/I in put_in_storage)
+		for(var/obj/item/I in custom_equip_leftovers)
 			if(H.equip_to_appropriate_slot(I))
-				put_in_storage -= I
 				H << "<span class='notice'>Equipping you with \the [I]!</span>"
+			else
+				put_in_storage.Add(I)
 
 		// If they're head, give them the account info for their department
 		if(H.mind && job.head_position)

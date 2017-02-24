@@ -264,7 +264,7 @@
 		var/mob/living/carbon/human/H = A
 		var/obj/item/organ/external/S = H.get_organ(user.zone_sel.selecting)
 
-		if (!S || !(S.status & ORGAN_ROBOT))
+		if (!S || S.robotic<ORGAN_ROBOT)
 			return ..()
 
 		if(S.brute_dam)

@@ -195,4 +195,3 @@
 	default_type = /obj/item/organ/external/tiny/slime
 
 
-

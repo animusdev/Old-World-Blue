@@ -34,6 +34,7 @@ var/list/organ_cache = list()
 	create_reagents(5)
 	if(!max_damage)
 		max_damage = min_broken_damage * 2
+
 	install(holder)
 
 /obj/item/organ/Destroy()
@@ -86,7 +87,7 @@ var/list/organ_cache = list()
 	return
 
 /obj/item/organ/proc/die()
-	if(status & ORGAN_ROBOT)
+	if(robotic >= ORGAN_ROBOT)
 		return
 	damage = max_damage
 	status |= ORGAN_DEAD
@@ -132,6 +133,11 @@ var/list/organ_cache = list()
 		handle_antibiotics()
 		handle_rejection()
 		handle_germ_effects()
+
+	//check if we've hit max_damage
+	if(damage >= max_damage)
+		die()
+
 
 /obj/item/organ/proc/handle_germ_effects()
 	//** Handle the effects of infections
@@ -226,7 +232,7 @@ var/list/organ_cache = list()
 
 //Note: external organs have their own version of this proc
 /obj/item/organ/proc/take_damage(amount, var/silent=0)
-	if(src.status & ORGAN_ROBOT)
+	if(src.robotic >= ORGAN_ROBOT)
 		src.damage = between(0, src.damage + (amount * 0.8), max_damage)
 	else
 		src.damage = between(0, src.damage + amount, max_damage)
@@ -241,20 +247,12 @@ var/list/organ_cache = list()
 	damage = max(damage, min_bruised_damage)
 
 /obj/item/organ/proc/robotize() //Being used to make robutt hearts, etc
-	robotic = 2
-	src.status &= ~ORGAN_BROKEN
-	src.status &= ~ORGAN_BLEEDING
-	src.status &= ~ORGAN_SPLINTED
-	src.status &= ~ORGAN_CUT_AWAY
-	src.status &= ~ORGAN_ATTACHABLE
-	src.status &= ~ORGAN_DESTROYED
-	src.status |= ORGAN_ROBOT
-	src.status |= ORGAN_ASSISTED
+	robotic = ORGAN_ROBOT
+	status = 0
 
 /obj/item/organ/proc/mechassist() //Used to add things like pacemakers, etc
-	robotize()
-	src.status &= ~ORGAN_ROBOT
-	robotic = 1
+	status = 0
+	robotic = ORGAN_ASSISTED
 	min_bruised_damage = 15
 	min_broken_damage = 35
 
@@ -284,3 +282,6 @@ var/list/organ_cache = list()
 				if(3.0)
 					take_damage(10,0)
 					return
+
+/obj/item/organ/proc/can_feel_pain()
+	return (robotic < ORGAN_ROBOT) && !(status & (ORGAN_DEAD|ORGAN_DESTROYED))

@@ -20,7 +20,7 @@
 			return 0
 		if (target_zone == BP_HEAD && target.species && (target.species.flags & IS_SYNTHETIC))
 			return 1
-		if (affected.status & ORGAN_ROBOT)
+		if (affected.robotic >= ORGAN_ROBOT)
 			return 0
 		return 1
 

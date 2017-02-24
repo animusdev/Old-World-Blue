@@ -9,7 +9,7 @@
 /mob/living/carbon/human/isSynthetic()
 	if(synthetic) return synthetic //Your synthetic-ness is not going away
 	var/obj/item/organ/external/T = organs_by_name[BP_CHEST]
-	if(T && T.status & ORGAN_ROBOT)
+	if(T && T.robotic >= ORGAN_ROBOT)
 //		src.verbs += /mob/living/carbon/human/proc/self_diagnostics
 		var/datum/robolimb/R = all_robolimbs[T.model]
 		return R ? R : basic_robolimb
@@ -22,14 +22,14 @@
 	//Look at their head
 	var/obj/item/organ/external/H = organs_by_name[BP_HEAD]
 	if(!head || !(head && (head.flags_inv & HIDEFACE)))
-		if(H && H.status & ORGAN_ROBOT) //Exactly robotic, not higher as lifelike is higher
+		if(H && H.robotic == ORGAN_ROBOT) //Exactly robotic, not higher as lifelike is higher
 			return 1
 
 	//Look at their torso
 	var/obj/item/organ/external/T = organs_by_name[BP_CHEST]
 	if(!wear_suit || (wear_suit && !(wear_suit.flags_inv & HIDEJUMPSUIT)))
 		if(!w_uniform || (w_uniform && !(w_uniform.body_parts_covered & UPPER_TORSO)))
-			if(T && T.status & ORGAN_ROBOT)
+			if(T && T.robotic == ORGAN_ROBOT)
 				return 1
 
 	return 0
@@ -42,7 +42,7 @@
 	else if(organ_check in list(O_LIVER, O_KIDNEYS))
 		affecting = organs_by_name[BP_GROIN]
 
-	if(affecting && (affecting.robotic >= ORGAN_ROBOT))
+	if(affecting && (affecting.robotic >= ORGAN_ROBOT)) //LETHALGHOST: check that
 		return 0
 	return (species && species.has_organ[organ_check])
 

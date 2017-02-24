@@ -10,21 +10,8 @@
 	var/construction_time = 100
 	var/list/construction_cost = list(DEFAULT_WALL_MATERIAL=18000)
 	var/list/part = null // Order of args is important for installing robolimbs.
-	var/sabotaged = 0 //Emagging limbs can have repercussions when installed as prosthetics.
 	var/allow_slim_body = 1
 	dir = SOUTH
-
-/obj/item/prosthesis/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/card/emag))
-		if(sabotaged)
-			user << "\red [src] is already sabotaged!"
-		else
-			user << "\red You slide [W] into the dataport on [src] and short out the safeties."
-			sabotaged = 1
-		return
-	else
-		return ..()
-
 
 
 //// Unbranded ////
@@ -32,28 +19,36 @@
 /obj/item/prosthesis/l_arm
 	name = "Unbranded left arm"
 	icon_state = BP_L_ARM
-	part = list(BP_L_ARM = /obj/item/organ/external/robotic/limb,
-				BP_L_HAND= /obj/item/organ/external/robotic/tiny)
+	part = list(
+		BP_L_ARM = /obj/item/organ/external/robotic/limb,
+		BP_L_HAND= /obj/item/organ/external/robotic/tiny
+	)
 
 /obj/item/prosthesis/r_arm
 	name = "Unbranded right arm"
 	icon_state = "r_arm"
-	part = list(BP_R_ARM = /obj/item/organ/external/robotic/limb,
-				BP_R_HAND= /obj/item/organ/external/robotic/tiny)
+	part = list(
+		BP_R_ARM = /obj/item/organ/external/robotic/limb,
+		BP_R_HAND= /obj/item/organ/external/robotic/tiny
+	)
 
 /obj/item/prosthesis/l_leg
 	name = "Unbranded left leg"
 	icon_state = "l_leg"
 	construction_cost = list(DEFAULT_WALL_MATERIAL=15000)
-	part = list(BP_L_LEG = /obj/item/organ/external/robotic/limb,
-				BP_L_FOOT= /obj/item/organ/external/robotic/tiny)
+	part = list(
+		BP_L_LEG = /obj/item/organ/external/robotic/limb,
+		BP_L_FOOT= /obj/item/organ/external/robotic/tiny
+	)
 
 /obj/item/prosthesis/r_leg
 	name = "Unbranded right leg"
 	icon_state = "r_leg"
 	construction_cost = list(DEFAULT_WALL_MATERIAL=15000)
-	part = list(BP_R_LEG = /obj/item/organ/external/robotic/limb,
-				BP_R_FOOT= /obj/item/organ/external/robotic/tiny)
+	part = list(
+		BP_R_LEG = /obj/item/organ/external/robotic/limb,
+		BP_R_FOOT= /obj/item/organ/external/robotic/tiny
+	)
 
 
 
@@ -84,3 +79,5 @@
 	name = "Enforcer Charge right leg"
 	icon_state = "r_leg"
 	part = list(BP_R_LEG = /obj/item/organ/external/robotic/enforcer/limb/leg)
+
+

@@ -64,7 +64,7 @@
 
 //DIONA ORGANS.
 /obj/item/organ/external/diona/removed()
-	if(status & ORGAN_ROBOT)
+	if(robotic >= ORGAN_ROBOT)
 		return ..()
 	var/mob/living/carbon/human/H = owner
 	..()
@@ -80,7 +80,7 @@
 	organ_tag = "special" // Turns into a nymph instantly, no transplanting possible.
 
 /obj/item/organ/internal/diona/removed(var/mob/living/user, var/skip_nymph)
-	if(status & ORGAN_ROBOT)
+	if(robotic >= ORGAN_ROBOT)
 		return ..()
 	var/mob/living/carbon/human/H = owner
 	..()

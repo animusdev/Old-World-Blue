@@ -26,12 +26,6 @@ var/list/datum/power/changeling/powerinstances = list()
 	genomecost = 0
 	verbpath = /mob/proc/changeling_transform
 
-/datum/power/changeling/change_species
-	name = "Change Species"
-	desc = "We take on the apperance of a species that we have absorbed."
-	genomecost = 0
-	verbpath = /mob/proc/changeling_change_species
-
 /datum/power/changeling/fakedeath
 	name = "Regenerative Stasis"
 	desc = "We become weakened to a death-like state, where we will rise again from death."
@@ -100,8 +94,8 @@ var/list/datum/power/changeling/powerinstances = list()
 	verbpath = /mob/proc/changeling_prepare_extract_dna_sting
 
 /datum/power/changeling/transformation_sting
-	name = "Transformation Sting"
-	desc = "We silently sting a human, injecting a retrovirus that forces them to transform into another."
+	name = "Transforma Target"
+	desc = "We sting grabbed human, injecting a retrovirus that forces them to transform into another."
 	helptext = "Requires a neck grab. Does not provide a warning to others. The victim will transform much like a changeling would."
 	genomecost = 3
 	verbpath = /mob/proc/changeling_transformation_sting
