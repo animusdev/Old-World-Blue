@@ -99,11 +99,13 @@ var/global/list/modifications_types = list(
 
 /datum/body_modification/limb/tattoo
 	name = "Abstract"
-	short_name = "T: Abstract"
 	desc = "Simple tattoo (use flavor)."
 	id = "abstract"
-	body_parts = list(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_R_ARM,\
-		BP_L_HAND, BP_R_HAND, BP_L_LEG, BP_R_LEG, BP_L_FOOT, BP_R_FOOT)
+	allowed_species = list("Human", "Skrell", "Tajara", "Unathi", "Vox")
+	body_parts = list(
+		BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_R_ARM,
+		BP_L_HAND, BP_R_HAND, BP_L_LEG, BP_R_LEG, BP_L_FOOT, BP_R_FOOT
+	)
 	icon = 'icons/mob/tattoo.dmi'
 	mob_icon = "abstract"
 
@@ -121,6 +123,50 @@ var/global/list/modifications_types = list(
 		E.tattoo = mob_icon
 		E.tattoo_color = color
 		return E
+
+/datum/body_modification/limb/tattoo/venom
+	name = "Venom"
+	id = "venom"
+	body_parts = list(BP_CHEST, "chest2", BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG)
+	mob_icon = "venom"
+
+/datum/body_modification/limb/tattoo/scar_left
+	name = "Scar (left eye)"
+	short_name = "T: scar (l)"
+	id = "scar_left"
+	body_parts = list(BP_HEAD)
+	mob_icon = "scar_l"
+
+/datum/body_modification/limb/tattoo/scar_right
+	name = "Scar (right eye)"
+	short_name = "T: scar (r)"
+	id = "scar_right"
+	body_parts = list(BP_HEAD)
+	mob_icon = "scar_r"
+
+/datum/body_modification/limb/tattoo/stripes
+	name = "Stripes"
+	id = "stripes"
+	body_parts = list(BP_R_ARM)
+	mob_icon = "stripes"
+
+/datum/body_modification/limb/tattoo/cross
+	name = "Cross"
+	id = "cross"
+	body_parts = list(BP_CHEST)
+	mob_icon = "cross"
+
+/datum/body_modification/limb/tattoo/skull
+	name = "Skull"
+	id = "skull"
+	body_parts = list(BP_CHEST)
+	mob_icon = "skull"
+
+/datum/body_modification/limb/tattoo/diamonds
+	name = "Spades"
+	id = "diamonds"
+	body_parts = list(BP_CHEST)
+	mob_icon = "diamonds"
 
 /datum/body_modification/limb/tattoo/tajara_stripes
 	name = "Tiger Stripes"
