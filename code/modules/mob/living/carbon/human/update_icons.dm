@@ -263,7 +263,7 @@ var/global/list/damage_icon_parts = list()
 			icon_key += "0"
 		else
 			tmp_index = part.get_icon_key()
-			if(tmp_index == "notready")
+			if(tmp_index != "notready")
 				icon_key += "[organ_tag][tmp_index]"
 			else
 				icon_key = null
