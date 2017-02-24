@@ -112,6 +112,8 @@
 /datum/click_handler/wizard/fireball/mob_check(mob/living/carbon/human/user)
 	return 1
 /datum/click_handler/wizard/fireball/use_ability(mob/living/carbon/human/user,atom/target)
+	if (target == user)
+		return 0
 	if (!isliving(target) && !isturf(target))
 		return 0
 	for(var/spell/spell_storage in user.mind.learned_spells)
