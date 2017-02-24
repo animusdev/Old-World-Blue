@@ -240,6 +240,9 @@
 			H.verbs |= verb_path
 	return
 
+/datum/species/proc/organs_spawned(var/mob/living/carbon/human/H)
+	return
+
 /datum/species/proc/handle_post_spawn(var/mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
 	add_inherent_verbs(H)
 	H.mob_bump_flag = bump_flag
