@@ -34,7 +34,7 @@
 		else
 			src << "For some reason you can't use [CH.handler_name] ability"
 			CH = null
-		return
+			return
 
 	if(!target.Click(location, control, params))
 		usr.ClickOn(target, params)

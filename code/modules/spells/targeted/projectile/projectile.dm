@@ -15,6 +15,8 @@ If the spell_projectile is seeking, it will update its target every process and 
 	var/proj_step_delay = 1 //lower = faster
 	var/cast_prox_range = 1
 
+/spell/targeted/projectile/
+
 /spell/targeted/projectile/cast(list/targets, mob/user = usr)
 
 	if(istext(proj_type))

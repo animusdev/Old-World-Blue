@@ -54,6 +54,7 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 
 	var/obj/screen/connected_button
 
+	var/CH_type
 ///////////////////////
 ///SETUP AND PROCESS///
 ///////////////////////
@@ -77,14 +78,20 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 /spell/proc/choose_targets(mob/user = usr) //depends on subtype - see targeted.dm, aoe_turf.dm, dumbfire.dm, or code in general folder
 	return
 
-/spell/proc/perform(mob/user = usr, skipcharge = 0) //if recharge is started is important for the trigger spells
+/spell/proc/perform(mob/user = usr, skipcharge = 0, atom/mouse_target = null) //if recharge is started is important for the trigger spells
+//	world << mouse_target
 	if(!holder)
 		holder = user //just in case
 	if(!cast_check(skipcharge, user))
-		return
+		return 0
 	if(cast_delay && !spell_do_after(user, cast_delay))
-		return
-	var/list/targets = choose_targets(user)
+		return 0
+	var/list/targets //= choose_targets(user)
+	if (mouse_target)
+		targets = list(mouse_target)
+	else
+		targets = choose_targets(user)
+//	world << "target 1 : [targets.Add]"
 	if(targets && targets.len)
 		invocation(user, targets)
 		take_charge(user, skipcharge)
@@ -96,9 +103,21 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 		else
 			cast(targets, user)
 		after_cast(targets) //generates the sparks, smoke, target messages etc.
-
+		return 1
 
 /spell/proc/cast(list/targets, mob/user) //the actual meat of the spell
+	return
+
+/spell/proc/prepare_spell() // for CH
+	if (ispath(src.CH_type))
+		if(!usr.client.CH || usr.client.CH.handler_name != src.name)
+			usr.client.CH = PoolOrNew(CH_type)
+			usr << "<span class='warning'>You prepare [src.name].</span>"
+		else
+			usr.client.CH = null
+			usr << "<span class='notice'>You unprepare [src.name].</span>"
+	else
+		src.perform(usr)
 	return
 
 /spell/proc/critfail(list/targets, mob/user) //the wizman has fucked up somehow

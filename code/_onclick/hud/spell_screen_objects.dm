@@ -199,6 +199,6 @@
 		qdel(src)
 		return 1
 
-	spell.perform(usr)
+	spell.prepare_spell()
 	update_charge(1)
 	return 1
