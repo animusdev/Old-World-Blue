@@ -83,6 +83,15 @@ var/list/organ_cache = list()
 
 	owner = null
 
+/obj/item/organ/proc/sync_colour_to_owner()
+	return
+
+/obj/item/organ/proc/get_icon()
+	return null
+
+/obj/item/organ/proc/get_icon_key()
+	return
+
 /obj/item/organ/proc/update_health()
 	return
 

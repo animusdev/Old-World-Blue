@@ -12,22 +12,19 @@ var/list/limb_icon_cache = list()
 				overlays += child.mob_icon
 		overlays += organ.mob_icon
 
-/obj/item/organ/external/proc/sync_colour_to_human(var/mob/living/carbon/human/human)
+/obj/item/organ/external/sync_colour_to_owner()
+	for(var/obj/item/organ/I in internal_organs)
+		I.sync_colour_to_owner()
 	s_tone = null
 	s_col = null
 	if(robotic >= ORGAN_ROBOT)
 		return
-	if(human.species.flags & HAS_SKIN_TONE)
-		s_tone = human.s_tone
-	if(human.species.flags & HAS_SKIN_COLOR)
-		s_col = human.skin_color
+	if(owner.species.flags & HAS_SKIN_TONE)
+		s_tone = owner.s_tone
+	if(owner.species.flags & HAS_SKIN_COLOR)
+		s_col = owner.skin_color
 
-/obj/item/organ/external/head/sync_colour_to_human(var/mob/living/carbon/human/human)
-	..()
-	var/obj/item/organ/internal/eyes/eyes = owner.internal_organs_by_name[O_EYES]
-	if(eyes) eyes.update_color()
-
-/obj/item/organ/external/proc/get_icon(var/skeletal)
+/obj/item/organ/external/get_icon(var/skeletal)
 
 	var/gender = "_f"
 	var/body_build = ""
@@ -66,6 +63,13 @@ var/list/limb_icon_cache = list()
 	if(tattoo2)
 		mob_icon.Blend(new/icon('icons/mob/tattoo.dmi', "[organ_tag]2_[tattoo2][body_build]"), ICON_OVERLAY)
 
+	if(internal_organs)
+		var/icon/tmp_icon = null
+		for(var/obj/item/organ/I in internal_organs)
+			tmp_icon = I.get_icon()
+			if(tmp_icon)
+				mob_icon.Blend(tmp_icon, ICON_OVERLAY)
+
 	dir = EAST
 	icon = mob_icon
 
@@ -88,6 +92,7 @@ var/list/limb_icon_cache = list()
 	overlays.Cut()
 	if(!owner || !owner.species)
 		return
+/*
 	if(owner.should_have_organ(O_EYES))
 		var/obj/item/organ/internal/eyes/eyes = owner.internal_organs_by_name[O_EYES]
 		var/icon/eyes_icon
@@ -98,7 +103,7 @@ var/list/limb_icon_cache = list()
 			eyes_icon.Blend(rgb(128,0,0), ICON_ADD)
 
 		mob_icon.Blend(eyes_icon, ICON_OVERLAY)
-
+*/
 	if(owner.lip_color && (owner.species.flags & HAS_LIPS))
 		var/icon/lip_icon = new/icon(owner.species.icobase, "lips[owner.body_build.index]")
 		lip_icon.Blend(owner.lip_color, ICON_ADD)
@@ -123,7 +128,7 @@ var/list/limb_icon_cache = list()
 	icon = mob_icon
 	return mob_icon
 
-/obj/item/organ/external/proc/get_icon_key()
+/obj/item/organ/external/get_icon_key()
 	if(!mob_icon)
 		return "notready"
 
@@ -140,6 +145,9 @@ var/list/limb_icon_cache = list()
 		. += num2text(s_tone)
 	if(owner.species.flags & HAS_SKIN_COLOR)
 		. += s_col
+
+	for(var/obj/item/organ/I in internal_organs)
+		. += I.get_icon_key()
 
 
 // new damage icon system

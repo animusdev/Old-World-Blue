@@ -1,8 +1,8 @@
 /mob/living/carbon/human/proc/update_eyes()
 	var/obj/item/organ/internal/eyes/eyes = internal_organs_by_name[O_EYES]
 	if(eyes)
-		eyes.update_color()
-		regenerate_icons()
+		eyes.sync_colour_to_owner()
+		update_body()
 
 /mob/living/carbon/var/list/internal_organs = list()
 /mob/living/carbon/human/var/list/organs = list()

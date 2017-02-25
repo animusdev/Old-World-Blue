@@ -1196,6 +1196,7 @@
 			organ_type = species.has_organ[organ_tag]
 			new organ_type(src)
 
+	species.organs_spawned(src)
 	update_body()
 
 

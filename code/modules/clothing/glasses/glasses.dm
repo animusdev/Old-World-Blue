@@ -98,8 +98,7 @@ BLIND     // can't see anything
 	name = "eyepatch"
 	desc = "Yarr."
 	icon_state = "eyepatch"
-	item_state = "eyepatch"
-	wear_state = "eyepatch"
+	item_state = ""
 	body_parts_covered = 0
 
 	New(var/mob/living/carbon/human/H)
@@ -115,10 +114,11 @@ BLIND     // can't see anything
 		if(!istype(usr, /mob/living)) return
 		if(usr.stat) return
 
-		if(wear_state != initial(wear_state))
-			wear_state = initial(wear_state)
+		if(icon_state == initial(icon_state))
+			icon_state = "[initial(icon_state)]_l"
 		else
-			wear_state = "[initial(wear_state)]_l"
+			icon_state = initial(icon_state)
+
 		update_clothing_icon()
 
 /obj/item/clothing/glasses/monocle

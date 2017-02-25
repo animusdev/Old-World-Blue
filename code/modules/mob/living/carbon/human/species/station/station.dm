@@ -398,7 +398,8 @@
 /datum/species/machine/equip_survival_gear(var/mob/living/carbon/human/H)
 	return
 
-/datum/species/machine/handle_post_spawn(var/mob/living/carbon/human/H)
+/datum/species/machine/organs_spawned(var/mob/living/carbon/human/H)
+	..()
 	for(var/obj/item/organ/O in H.organs)
 		O.robotize()
 

@@ -14,10 +14,10 @@
 	if(eye_color)
 		owner.eyes_color = eye_color
 	else
-		update_color()
+		sync_colour_to_owner()
 	owner.update_eyes()
 
-/obj/item/organ/internal/eyes/proc/get_icon()
+/obj/item/organ/internal/eyes/get_icon()
 	mob_icon = new/icon(owner.species.icobase, "eyes[owner.body_build.index]")
 	if(robotic >= ORGAN_ROBOT)
 		mob_icon.Blend(robo_color, ICON_ADD)
@@ -25,7 +25,10 @@
 		mob_icon.Blend(eye_color, ICON_ADD)
 	return mob_icon
 
-/obj/item/organ/internal/eyes/proc/update_color()
+/obj/item/organ/internal/eyes/get_icon_key()
+	return "eyes[eye_color]"
+
+/obj/item/organ/internal/eyes/sync_colour_to_owner()
 	if(!owner)
 		return
 	eye_color = owner.eyes_color ? owner.eyes_color : "#000000"
