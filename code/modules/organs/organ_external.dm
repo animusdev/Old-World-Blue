@@ -1003,28 +1003,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	status &= ~ORGAN_BROKEN
 	return 1
 
-/obj/item/organ/external/robotize(var/company)
-	..()
-
-	brute_mod = 0.8
-	burn_mod = 0.8
-
-	if(company)
-		model = company
-		var/datum/robolimb/R = all_robolimbs[company]
-		if(R)
-			force_icon = R.icon
-			name = "[R.company] [name]"
-			desc = "[R.desc]"
-
-	dislocated = -1 //TODO, make robotic limbs a separate type, remove snowflake
-	cannot_break = 1
-	get_icon()
-	unmutate()
-
-	for(var/obj/item/organ/external/T in children)
-		T.robotize()
-
 /obj/item/organ/external/proc/mutate()
 	if(robotic >= ORGAN_ROBOT)
 		return

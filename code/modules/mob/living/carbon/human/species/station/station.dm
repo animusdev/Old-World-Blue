@@ -401,7 +401,7 @@
 /datum/species/machine/organs_spawned(var/mob/living/carbon/human/H)
 	..()
 	for(var/obj/item/organ/O in H.organs)
-		O.robotize()
+		O.robotic = 2
 
 /datum/species/machine/handle_death(var/mob/living/carbon/human/H)
 	..()
