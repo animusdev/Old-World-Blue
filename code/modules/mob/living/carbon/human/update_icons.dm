@@ -248,11 +248,6 @@ var/global/list/damage_icon_parts = list()
 		icon_key += lip_color
 	else
 		icon_key += "nolips"
-	var/obj/item/organ/internal/eyes/eyes = internal_organs_by_name[O_EYES]
-	if(eyes)
-		icon_key += eyes.eye_color
-	else
-		icon_key += "#000000"
 
 	icon_key += "[husk ? 1 : 0][fat ? 1 : 0][hulk ? 1 : 0][skeleton ? 1 : 0]"
 

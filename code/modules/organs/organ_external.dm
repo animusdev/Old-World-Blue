@@ -86,7 +86,7 @@
 
 	..(holder)
 	if(owner)
-		sync_colour_to_human(owner)
+		sync_colour_to_owner()
 /*
 	spawn(1)
 		if(owner)
