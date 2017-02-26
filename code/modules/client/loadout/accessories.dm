@@ -4,9 +4,13 @@
 	slot = slot_tie
 	sort_category = "Accessories"
 
-/datum/gear/accessory/amulete
+/datum/gear/accessory/amulet
 	display_name = "aquila"
 	path = /obj/item/clothing/accessory/amulet/aquila
+
+/datum/gear/accessory/amulet/dogtag
+	display_name = "dogtag"
+	path = /obj/item/clothing/accessory/amulet/dogtag
 
 /datum/gear/accessory/cargo
 	display_name = "armband, cargo"
