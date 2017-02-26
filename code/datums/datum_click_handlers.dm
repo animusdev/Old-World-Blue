@@ -104,13 +104,15 @@
 
 //WIZARD CH
 /datum/click_handler/wizard/mob_check(mob/living/carbon/human/user)
-	return 1
+	if(ishuman(user))
+		return 1
+	return 0
 /datum/click_handler/wizard/use_ability(mob/living/carbon/human/user,atom/target)
 
 /datum/click_handler/wizard/fireball
 	handler_name = "Fireball"
-/datum/click_handler/wizard/fireball/mob_check(mob/living/carbon/human/user)
-	return 1
+/*/datum/click_handler/wizard/fireball/mob_check(mob/living/carbon/human/user)
+	return 1*/
 /datum/click_handler/wizard/fireball/use_ability(mob/living/carbon/human/user,atom/target)
 	if (target == user)
 		return 0
@@ -120,4 +122,5 @@
 		if (src.handler_name == spell_storage.name)
 			return spell_storage.perform(user,0,target)
 	user << "We cannot find it's power... call admins"
-	return 0
+//	src.qdel()
+	return 1
