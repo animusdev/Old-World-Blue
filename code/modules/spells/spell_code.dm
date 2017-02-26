@@ -110,7 +110,7 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 
 /spell/proc/prepare_spell() // for CH
 	if (ispath(src.CH_type))
-		if(!usr.client.CH || usr.client.CH.handler_name != src.name)
+		if(!usr.client.CH || !istype(usr.client.CH,src.CH_type))//(usr.client.CH.handler_name != src.name))
 			usr.client.CH = PoolOrNew(CH_type)
 			usr << "<span class='warning'>You prepare [src.name].</span>"
 		else

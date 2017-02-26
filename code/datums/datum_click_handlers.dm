@@ -119,8 +119,9 @@
 	if (!isliving(target) && !isturf(target))
 		return 0
 	for(var/spell/spell_storage in user.mind.learned_spells)
-		if (src.handler_name == spell_storage.name)
+		if (istype(src,spell_storage.CH_type))//(src.handler_name == spell_storage.name)
 			return spell_storage.perform(user,0,target)
-	user << "We cannot find it's power... call admins"
+	user << "We cannot find it's power..."
 //	src.qdel()
-	return 1
+	qdel(user.client.CH)
+	return 0
