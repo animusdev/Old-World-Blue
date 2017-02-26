@@ -35,8 +35,8 @@ var/list/limb_icon_cache = list()
 
 	icon_state = "[organ_tag][gendered ? gender : ""][body_build]"
 
-	if(force_icon)
-		mob_icon = new /icon(force_icon, icon_state)
+	if(default_icon)
+		mob_icon = new /icon(default_icon, icon_state)
 	else if(skeletal)
 		mob_icon = new /icon('icons/mob/human_races/skeleton.dmi', icon_state)
 	else if (status & ORGAN_MUTATED)

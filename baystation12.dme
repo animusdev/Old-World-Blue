@@ -1471,6 +1471,7 @@
 #include "code\modules\organs\subtypes\standart.dm"
 #include "code\modules\organs\subtypes\unbreakable.dm"
 #include "code\modules\organs\subtypes\xenomorph.dm"
+#include "code\modules\organs\subtypes\robotic\basic_types.dm"
 #include "code\modules\organs\subtypes\robotic\enforcer.dm"
 #include "code\modules\organs\subtypes\robotic\runner.dm"
 #include "code\modules\overmap\_defines.dm"

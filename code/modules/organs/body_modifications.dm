@@ -195,60 +195,39 @@ var/global/list/modifications_types = list(
 	replace_limb = /obj/item/organ/external/robotic
 	icon = 'icons/mob/human_races/cyberlimbs/robotic.dmi'
 	allowed_species = list("Human","Tajaran","Unathi","Skrell")
-	mob_icon = ""
-	var/model = "basic"
 	nature = MODIFICATION_SILICON
 
 	New()
+		var/obj/item/organ/external/robotic/R = replace_limb
+		name = initial(R.name)
+		icon = initial(R.default_icon)
+		desc = initial(R.desc)
 		short_name = "P: [name]"
 		name = "Prosthesis: [name]"
-		if(mob_icon)
-			mob_icon = "_[mob_icon]"
 
 	get_mob_icon(organ, body_build)
-		return new/icon(icon, "[organ][mob_icon][body_build]")
-
-	create_organ(var/datum/organ_description/O, var/color)
-		var/obj/item/organ/external/robotic/R = new replace_limb(null, O)
-		R.icon = icon
-		R.model = model
-		R.desc = desc
-		return R
+		return new/icon(icon, "[organ][body_build]")
 
 /datum/body_modification/limb/prosthesis/bishop
-	name = "Bishop"
 	id = "prosthesis_bishop"
-	desc = "Prosthesis with white polymer casing with blue holo-displays."
-	icon = 'icons/mob/human_races/cyberlimbs/bishop.dmi'
-	model = "bishop"
+	replace_limb = /obj/item/organ/external/robotic/bishop
 
 /datum/body_modification/limb/prosthesis/hesphaistos
-	name = "Hesphaistos"
 	id = "prosthesis_hesphaistos"
-	desc = "Prosthesis with militaristic black and green casing with gold stripes."
-	icon = 'icons/mob/human_races/cyberlimbs/hesphaistos.dmi'
-	model = "hesphaistos"
+	replace_limb = /obj/item/organ/external/robotic/hesphaistos
 
 /datum/body_modification/limb/prosthesis/zenghu
-	name = "Zeng-Hu"
 	id = "prosthesis_zenghu"
-	desc = "Prosthesis with rubbery fleshtone covering with visible seams."
-	icon = 'icons/mob/human_races/cyberlimbs/zenghu.dmi'
-	model = "zenghu"
+	replace_limb = /obj/item/organ/external/robotic/zenghu
 
 /datum/body_modification/limb/prosthesis/xion
-	name = "Xion"
 	id = "prosthesis_xion"
-	desc = "Prosthesis with minimalist black and red casing."
-	icon = 'icons/mob/human_races/cyberlimbs/xion.dmi'
-	model = "xion"
+	replace_limb = /obj/item/organ/external/robotic/xion
 
-/datum/body_modification/limb/prosthesis/cyber_interprize
-	name = "Cyber Interprize"
+/datum/body_modification/limb/prosthesis/cyber
 	id = "prosthesis_enforcer"
-	desc = "This limb has a dark metal casing and looks rather bulky."
-	icon = 'icons/mob/human_races/cyberlimbs/cyber.dmi'
-	model = "cyber"
+	replace_limb = /obj/item/organ/external/robotic/cyber
+
 
 /datum/body_modification/limb/mutation
 	New()
@@ -266,7 +245,7 @@ var/global/list/modifications_types = list(
 
 	create_organ(var/datum/organ_description/O, var/color)
 		var/obj/item/organ/external/E = ..(O, color)
-		E.force_icon = icon
+		E.default_icon = icon
 		E.model = "exo"
 		E.brute_mod = 0.8
 		return E
