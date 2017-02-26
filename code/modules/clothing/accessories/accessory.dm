@@ -5,7 +5,7 @@
 	icon_state = "bluetie"
 	item_state = ""	//no inhands
 	slot_flags = SLOT_TIE
-	w_class = 2.0
+	w_class = 1
 	var/slot = "decor"
 	var/obj/item/clothing/has_suit = null		//the suit the tie may be attached to
 	var/image/inv_overlay = null	//overlay used when attached to clothing.
@@ -103,6 +103,7 @@
 	name = "stethoscope"
 	desc = "An outdated medical apparatus for listening to the sounds of the human body. It also makes you look like you know what you're doing."
 	icon_state = "stethoscope"
+	w_class = 2
 
 /obj/item/clothing/accessory/stethoscope/do_surgery(mob/living/carbon/human/M, mob/living/user)
 	if(user.a_intent != I_HELP) //in case it is ever used as a surgery tool
@@ -218,6 +219,7 @@
 /obj/item/clothing/accessory/scarf
 	name = "scarf"
 	desc = "A stylish scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks."
+	w_class = 2
 
 /obj/item/clothing/accessory/scarf/red
 	name = "red scarf"
@@ -266,6 +268,45 @@
 /obj/item/clothing/accessory/amulet
 	slot_flags = SLOT_TIE|SLOT_MASK
 	desc = "An ancient amulet adorned with pictures"
+
+/obj/item/clothing/accessory/amulet/dogtag
+	name = "dog tag"
+	desc = "Identification tags worn by military personnel."
+	var/owner_name = ""
+	var/owner_rank = ""
+	var/owner_blood = ""
+	icon_state = "dogtag"
+
+/obj/item/clothing/accessory/amulet/dogtag/examine(user, return_dist = 1)
+	. = ..()
+	if(.<3)
+		user << "Current owner data:"
+		user << " Name: [owner_name]"
+		user << " Rank: [owner_rank]"
+		user << " Blood type: [owner_blood]"
+
+/obj/item/clothing/accessory/amulet/dogtag/New(new_loc)
+	..()
+	set_owner(new_loc)
+
+/obj/item/clothing/accessory/amulet/dogtag/proc/set_owner(var/mob/living/carbon/human/user)
+	if(!istype(user))
+		return
+
+	owner_name = user.real_name
+	if (user.job == "Assistant")
+		switch(user.age)
+			if(0 to 30)
+				owner_rank = "Recruit"
+			if (30 to 50)
+				owner_rank = "Demobilized"
+			else
+				owner_rank = "Veteran"
+	else
+		owner_rank = user.job
+
+	if (user.dna)
+		owner_blood = user.b_type
 
 /obj/item/clothing/accessory/amulet/aquila
 	name = "aquila"
