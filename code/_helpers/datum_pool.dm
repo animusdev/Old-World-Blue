@@ -71,7 +71,6 @@ var/global/list/GlobalPool = list()
 		GlobalPool[D.type] = list()
 
 	GlobalPool[D.type] += D
-
 	D.Destroy()
 	D.ResetVars()
 	D.disposed = 1 //Set to stop processing while pooled

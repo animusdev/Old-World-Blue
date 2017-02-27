@@ -4,6 +4,19 @@
 	var/mouse_icon
 	var/handler_name
 	var/one_use_flag = 1//drop client.CH after succes ability use
+	var/client/owner
+
+/datum/click_handler/New(client/_owner)
+	owner = _owner
+
+//datum/click_handler/Prepare(/client/_owner)
+
+/datum/click_handler/Destroy()
+	..()
+	if (owner)
+		owner.CH = null
+	return
+//	owner = null
 
 /datum/click_handler/proc/mob_check(mob/living/carbon/human/user) //Check can mob use a ability
 	return

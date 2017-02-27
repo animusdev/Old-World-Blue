@@ -31,6 +31,7 @@
 		if(CH.mob_check(mob))
 			if (CH.use_ability(mob,target) && CH.one_use_flag)
 				qdel(CH) //= null
+				return
 		else
 			src << "For some reason you can't use [CH.handler_name] ability"
 			qdel(CH) // = null
