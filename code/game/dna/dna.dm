@@ -135,6 +135,7 @@
 		gender = add_zero2(num2hex((rand(1,(2050+BLOCKADD))),1), 3)
 	else
 		gender = add_zero2(num2hex((rand((2051+BLOCKADD),4094)),1), 3)
+
 	body_build = character.body_build.name
 
 	temp += gender

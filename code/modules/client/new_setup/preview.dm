@@ -72,19 +72,19 @@ datum/preferences
 			var/obj/item/clothing/hidden/H = all_underwears[underwear]
 			var/t_state = initial(H.wear_state)
 			if(!t_state) t_state = initial(H.icon_state)
-			preview_icon.Blend(icon(body_build.hidden_icon, t_state), ICON_OVERLAY)
+			preview_icon.Blend(icon(body_build.get_mob_icon("hidden", t_state), t_state), ICON_OVERLAY)
 		// Socks
 		if(socks)
 			var/obj/item/clothing/hidden/H = all_socks[socks]
 			var/t_state = initial(H.wear_state)
 			if(!t_state) t_state = initial(H.icon_state)
-			preview_icon.Blend(icon(body_build.hidden_icon, t_state), ICON_OVERLAY)
+			preview_icon.Blend(icon(body_build.get_mob_icon("hidden", t_state), t_state), ICON_OVERLAY)
 		// Undershirt
 		if(undershirt && current_species.flags & HAS_UNDERWEAR)
 			var/obj/item/clothing/hidden/H = all_undershirts[undershirt]
 			var/t_state = initial(H.wear_state)
 			if(!t_state) t_state = initial(H.icon_state)
-			preview_icon.Blend(icon(body_build.hidden_icon, t_state), ICON_OVERLAY)
+			preview_icon.Blend(icon(body_build.get_mob_icon("hidden", t_state), t_state), ICON_OVERLAY)
 
 		// Eyes color
 		var/icon/eyes = new /icon('icons/mob/human.dmi', "blank")
@@ -121,23 +121,31 @@ datum/preferences
 		else
 			var/datum/job/J = job_master.GetJob(high_job_title)
 			if(J)
+				var/t_state
+
 				var/obj/item/clothing/under/UF = J.uniform
-				clothes = new /icon(body_build.uniform_icon, initial(UF.icon_state))
+				t_state = initial(UF.icon_state)
+				clothes = new /icon(body_build.get_mob_icon("uniforms", t_state), t_state)
 
 				var/obj/item/clothing/shoes/SH = J.shoes
-				clothes.Blend(new /icon(body_build.shoes_icon, initial(SH.icon_state)), ICON_UNDERLAY)
+				t_state = initial(SH.icon_state)
+				clothes.Blend(new /icon(body_build.get_mob_icon("shoes", t_state), t_state), ICON_UNDERLAY)
 
 				var/obj/item/clothing/gloves/GL = J.gloves
-				if(GL) clothes.Blend(new /icon(body_build.gloves_icon, initial(GL.icon_state)), ICON_UNDERLAY)
+				t_state = initial(GL.icon_state)
+				if(GL) clothes.Blend(new /icon(body_build.get_mob_icon("gloves", t_state), t_state), ICON_UNDERLAY)
 
 				var/obj/item/weapon/storage/belt/BT = J.belt
-				if(BT) clothes.Blend(new /icon(body_build.belt_icon, initial(BT.icon_state)), ICON_OVERLAY)
+				t_state = initial(BT.icon_state)
+				if(BT) clothes.Blend(new /icon(body_build.get_mob_icon("belt", t_state), t_state), ICON_OVERLAY)
 
 				var/obj/item/clothing/suit/ST = J.suit
-				if(ST) clothes.Blend(new /icon(body_build.suit_icon, initial(ST.icon_state)), ICON_OVERLAY)
+				t_state =  initial(ST.icon_state)
+				if(ST) clothes.Blend(new /icon(body_build.get_mob_icon("suit", t_state), t_state), ICON_OVERLAY)
 
 				var/obj/item/clothing/head/HT = J.hat
-				if(HT) clothes.Blend(new /icon(body_build.hat_icon, initial(HT.icon_state)), ICON_OVERLAY)
+				t_state = initial(HT.icon_state)
+				if(HT) clothes.Blend(new /icon(body_build.get_mob_icon("head", t_state), t_state), ICON_OVERLAY)
 
 				if( backbag > 1 )
 					var/obj/item/weapon/storage/backpack/BP = J.backpack
@@ -147,10 +155,11 @@ datum/preferences
 						if("Satchel Job")	BP = J.satchel_j
 						if("Dufflebag")		BP = J.dufflebag
 						if("Messenger")		BP = J.messenger
-					clothes.Blend(new /icon(body_build.back_icon, initial(BP.icon_state)), ICON_OVERLAY)
+					t_state = initial(BP.icon_state)
+					clothes.Blend(new /icon(body_build.get_mob_icon("back", t_state), t_state), ICON_OVERLAY)
 
 		if(disabilities & NEARSIGHTED)
-			eyes.Blend(new /icon(body_build.glasses_icon, "glasses"), ICON_OVERLAY)
+			eyes.Blend(new /icon(body_build.get_mob_icon("glasses", "glasses"), "glasses"), ICON_OVERLAY)
 
 		preview_icon.Blend(eyes, ICON_OVERLAY)
 

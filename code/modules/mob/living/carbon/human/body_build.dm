@@ -1,5 +1,8 @@
+var/datum/body_build/default_body_build = new
+
 /datum/body_build
 	var/name		= "Default"
+
 	var/genders		= list(MALE, FEMALE, NEUTER, PLURAL)
 	var/index		= ""
 	var/misk_icon	= 'icons/mob/mob.dmi'
@@ -45,8 +48,37 @@
 	else
 		return (hand == LEFT) ? l_hand : r_hand
 
+/datum/body_build/proc/get_mob_icon(var/slot, var/icon_state)
+	var/icon/I
+	for(var/build in list(src, default_body_build))
+		var/datum/body_build/BB = build
+		switch(slot)
+			if("misk")    I = BB.misk_icon
+			if("uniform") I = BB.uniform_icon
+			if("suit")    I = BB.suit_icon
+			if("gloves")  I = BB.gloves_icon
+			if("glasses") I = BB.glasses_icon
+			if("ears")    I = BB.ears_icon
+			if("mask")    I = BB.mask_icon
+			if("head")    I = BB.hat_icon
+			if("shoes")   I = BB.shoes_icon
+			if("belt")    I = BB.belt_icon
+			if("s_store") I = BB.s_store_icon
+			if("back")    I = BB.back_icon
+			if("tie")     I = BB.ties_icon
+			if("hidden")  I = BB.hidden_icon
+			if("rig")     I = BB.rig_back
+			else
+				world.log << "##ERROR. Wrong sprite group for mob icon \"[slot]\""
+		if(icon_state in icon_states(I)) break
+
+	return I
+
+
+
 /datum/body_build/slim
 	name			= "Slim"
+
 	index			= "_slim"
 	genders			= list(FEMALE)
 	uniform_icon	= 'icons/inv_slots/uniforms/mob_slim.dmi'
@@ -76,15 +108,30 @@
 
 /datum/body_build/tajaran
 	name		= "Tajaran"
-	mask_icon	= 'icons/inv_slots/masks/mob_tajaran.dmi'
+
 	suit_icon	= 'icons/inv_slots/suits/mob_tajaran.dmi'
+	gloves_icon	= 'icons/inv_slots/gloves/mob_tajaran.dmi'
+	mask_icon	= 'icons/inv_slots/masks/mob_tajaran.dmi'
+	shoes_icon	= 'icons/inv_slots/shoes/mob_tajaran.dmi'
+	hat_icon	= 'icons/inv_slots/hats/mob_tajaran.dmi'
+	hidden_icon = 'icons/inv_slots/hidden/mob_tajaran.dmi'
+
+/datum/body_build/unathi
+	name		= "Unathi"
+
+	suit_icon	= 'icons/inv_slots/suits/mob_unathi.dmi'
+	mask_icon	= 'icons/inv_slots/masks/mob_unathi.dmi'
+	hat_icon	= 'icons/inv_slots/hats/mob_unathi.dmi'
+	hidden_icon = 'icons/inv_slots/hidden/mob_unathi.dmi'
 
 /datum/body_build/vox
 	name		= "Vox"
+
 	uniform_icon= 'icons/inv_slots/uniforms/mob_vox.dmi'
 	suit_icon	= 'icons/inv_slots/suits/mob_vox.dmi'
 	gloves_icon	= 'icons/inv_slots/gloves/mob_vox.dmi'
 	glasses_icon= 'icons/inv_slots/glasses/mob_vox.dmi'
 	mask_icon	= 'icons/inv_slots/masks/mob_vox.dmi'
+	hat_icon	= 'icons/inv_slots/hats/mob_vox.dmi'
 	shoes_icon	= 'icons/inv_slots/shoes/mob_vox.dmi'
 	ties_icon	= 'icons/inv_slots/acessories/mob_vox.dmi'

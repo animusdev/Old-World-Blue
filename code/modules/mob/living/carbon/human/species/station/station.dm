@@ -98,6 +98,10 @@
 				  "Ñ"="Ññ", "Ø"="Øø", "Ù"="Ùù")
 	accentFL = list("ã" = "õ", "Ã" = "Õ")
 
+	body_builds = list(
+		new/datum/body_build/unathi
+	)
+
 	restricted_jobs = list(
 		"Captain", "Head of Personnel", "Head of Security", "Chief Engineer",
 		"Research Director", "Chief Medical Officer", "Detective",
