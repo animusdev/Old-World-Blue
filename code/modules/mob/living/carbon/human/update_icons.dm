@@ -768,7 +768,7 @@ var/global/list/damage_icon_parts = list()
 	var/image/standing = new/image('icons/mob/mob.dmi', "blank")
 	for( var/obj/item/clothing/hidden/C in list(h_underwear, h_socks, h_undershirt) )
 		if(!C) continue
-		var/image/item = image(body_build.get_mob_icon("hidden", C.wear_state))
+		var/image/item = image(body_build.get_mob_icon("hidden", C.wear_state), C.wear_state)
 		item.appearance_flags = RESET_COLOR
 		item.color = C.color
 		standing.overlays += item

@@ -125,7 +125,7 @@ datum/preferences
 
 				var/obj/item/clothing/under/UF = J.uniform
 				t_state = initial(UF.icon_state)
-				clothes = new /icon(body_build.get_mob_icon("uniforms", t_state), t_state)
+				clothes = new /icon(body_build.get_mob_icon("uniform", t_state), t_state)
 
 				var/obj/item/clothing/shoes/SH = J.shoes
 				t_state = initial(SH.icon_state)
