@@ -36,7 +36,6 @@
 	var/list/queue = list()
 	var/processing_queue = 0
 	var/screen = "main"
-	var/opened = 0
 	var/temp
 	var/output_dir = SOUTH	//the direction relative to the fabber at which completed parts appear.
 	var/list/part_sets = list( //set names must be unique
@@ -698,52 +697,43 @@
 	return result
 
 
+/obj/machinery/mecha_part_fabricator/update_icon()
+	..()
+	if(panel_open)
+		icon_state = "fab-o"
+	else
+		icon_state = "fab-idle"
+
+/obj/machinery/mecha_part_fabricator/dismantle()
+	for(var/material in resources)
+		if(resources[material] >= 2000)
+			var/units = round(resources[material]/2000/60)
+			for(var/i = 1 to units)
+				var/obj/item/stack/material/S = new(src.loc)
+				S.set_material(material)
+				S.amount = round(resources[material]/S.perunit)
+	..()
+
+
 /obj/machinery/mecha_part_fabricator/attackby(obj/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/screwdriver))
-		if (!opened)
-			opened = 1
-			icon_state = "fab-o"
-			user << "You open the maintenance hatch of [src]."
-		else
-			opened = 0
-			icon_state = "fab-idle"
-			user << "You close the maintenance hatch of [src]."
+	if(src.being_built)
+		user << "The fabricator is currently processing. Please wait until completion."
 		return
 
-	if (opened)
-		if(istype(W, /obj/item/weapon/crowbar))
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new (src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				if(I.reliability != 100 && crit_fail)
-					I.crit_fail = 1
-				I.loc = src.loc
-			for(var/material in resources)
-				if(resources[material] >= 2000)
-					var/obj/item/stack/material/S = new(src.loc)
-					S.set_material(material)
-					S.amount = round(resources[material]/S.perunit)
-			qdel(src)
-			return 1
-		else
-			user << "\red You can't load the [src.name] while it's opened."
-			return 1
-
+	if(default_deconstruction_screwdriver(user, W))
+		return
+	if(default_deconstruction_crowbar(user, W))
+		return
+	if(default_part_replacement(user, W))
+		return
 
 	if(istype(W, /obj/item/stack/material))
 		var/material = W.get_material_name()
 		if(!material in resources) return ..()
 
-		if(src.being_built)
-			user << "The fabricator is currently processing. Please wait until completion."
-			return
-
 		var/obj/item/stack/material/stack = W
 
 		var/sname = stack.name
-		var/amnt = stack.perunit
 		if(src.resources[material] < res_max_amount)
 			if(stack && stack.amount >= 1)
 				var/count = 0
@@ -751,7 +741,7 @@
 				sleep(10)
 
 				while(src.resources[material] < res_max_amount && stack.amount >= 1)
-					src.resources[material] += amnt
+					src.resources[material] += 2000
 					stack.use(1)
 					count++
 				src.overlays -= "fab-load-[material]"

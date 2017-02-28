@@ -252,7 +252,7 @@ Class Procs:
 		return
 
 	if(ispath(circuit))
-		circuit = new circuit(src)
+		circuit = new circuit(null)
 
 	if(circuit)
 		component_parts += circuit
