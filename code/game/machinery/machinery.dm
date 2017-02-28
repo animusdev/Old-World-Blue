@@ -130,10 +130,7 @@ Class Procs:
 	machines -= src
 	if(component_parts)
 		for(var/atom/A in component_parts)
-			if(A.loc == src) // If the components are inside the machine, delete them.
-				qdel(A)
-			else // Otherwise we assume they were dropped to the ground during deconstruction, and were not removed from the component_parts list by deconstruction code.
-				component_parts -= A
+			qdel(A)
 	if(contents) // The same for contents.
 		for(var/atom/A in contents)
 			qdel(A)
@@ -252,17 +249,17 @@ Class Procs:
 		return
 
 	if(ispath(circuit))
-		circuit = new circuit(null)
+		circuit = PoolOrNew(circuit, null)
 
 	if(circuit)
 		component_parts += circuit
 
 	for(var/item in circuit.req_components)
 		if(item == /obj/item/stack/cable_coil)
-			component_parts += new item(src, circuit.req_components[item])
+			component_parts += PoolOrNew(item, list(null, circuit.req_components[item]))
 		else
 			for(var/j = 1 to circuit.req_components[item])
-				component_parts += new item(src)
+				component_parts += PoolOrNew(item, null)
 
 	RefreshParts()
 
@@ -351,12 +348,13 @@ Class Procs:
 
 /obj/machinery/proc/dismantle()
 	playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-	var/obj/machinery/constructable_frame/machine_frame/M = new (loc)
+	var/obj/machinery/constructable_frame/machine_frame/M = PoolOrNew(/obj/machinery/constructable_frame/machine_frame, loc)
 	M.set_dir(src.dir)
 	M.state = 2
 	M.icon_state = "box_1"
 	for(var/obj/I in component_parts)
 		I.forceMove(loc)
+		component_parts -= I
 	circuit.forceMove(loc)
 	qdel(src)
 	return 1

@@ -707,12 +707,13 @@
 /obj/machinery/mecha_part_fabricator/dismantle()
 	for(var/material in resources)
 		if(resources[material] >= 2000)
-			var/units = round(resources[material]/2000/60)
-			for(var/i = 1 to units)
-				var/obj/item/stack/material/S = new(src.loc)
+			var/units = round(resources[material]/2000)
+			while(units>0)
+				var/obj/item/stack/material/S = PoolOrNew(/obj/item/stack/material, src.loc)
 				S.set_material(material)
-				S.amount = round(resources[material]/S.perunit)
-	..()
+				S.amount = min(units,S.max_amount)
+				units -= S.amount
+	return ..()
 
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/W as obj, mob/user as mob)
