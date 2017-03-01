@@ -37,11 +37,6 @@
 	icon_state = "marker"
 	var/list/beacon_systems = list("Station")
 
-/obj/shuttle_marker/New()
-	..()
-	spawn(5)
-		setup()
-
 /obj/shuttle_marker/verb/setup()
 	set name = "Init shuttle"
 	set category = "Object"
