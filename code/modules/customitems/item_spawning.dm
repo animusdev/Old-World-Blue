@@ -79,6 +79,17 @@
 	var/datum/custom_item/current_data
 	var/list/L
 
+///Gremy4uu///
+
+	L = list()
+
+	current_data = new()
+	current_data.character_name = "Jennifer Kollon"
+	current_data.item_path = /obj/item/clothing/accessory/locket/Evans
+	L |= current_data
+
+	custom_items["gremy4uu"] = L
+
 ///Fox231///
 
 	L = list()
