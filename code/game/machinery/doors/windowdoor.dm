@@ -30,10 +30,7 @@
 	else
 		icon_state = "[base_state]open"
 
-/obj/machinery/door/window/proc/shatter(var/display_message = 1)
-	new /obj/item/weapon/material/shard(src.loc)
-	new /obj/item/weapon/material/shard(src.loc)
-	new /obj/item/stack/cable_coil(src.loc, 1)
+/obj/machinery/door/window/proc/drop_electronics()
 	var/obj/item/weapon/airlock_electronics/ae
 	if(!electronics)
 		ae = new/obj/item/weapon/airlock_electronics( src.loc )
@@ -51,10 +48,16 @@
 	if(operating == -1)
 		ae.icon_state = "door_electronics_smoked"
 		operating = 0
-	src.density = 0
+
+
+/obj/machinery/door/window/proc/shatter(var/display_message = 1)
+	new /obj/item/weapon/material/shard(src.loc)
+	new /obj/item/weapon/material/shard(src.loc)
+	new /obj/item/stack/cable_coil(src.loc, 1)
 	playsound(src, "shatter", 70, 1)
 	if(display_message)
 		visible_message("[src] shatters!")
+	drop_electronics()
 	qdel(src)
 
 /obj/machinery/door/window/Destroy()
@@ -129,7 +132,7 @@
 	return 1
 
 /obj/machinery/door/window/close()
-	if (operating)
+	if (operating || panel_open)
 		return 0
 	src.operating = 1
 	flick(text("[]closing", src.base_state), src)
@@ -173,11 +176,61 @@
 		open()
 		return 1
 
+/obj/machinery/door/window/default_deconstruction_screwdriver()
+	if(!density) //Open
+		return ..()
+	else
+		return 0
+
+/obj/machinery/door/window/default_deconstruction_crowbar(mob/user, obj/item/weapon/crowbar/crowbar)
+	if(!istype(crowbar))
+		return 0
+
+	if(!panel_open || in_use)
+		return 1
+
+	in_use = 1
+
+	playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
+	user.visible_message(
+		"[user] removes the electronics from the windoor.",
+		"You start to remove electronics from the windoor."
+	)
+	if (do_after(user,40,src) && !panel_open)
+		in_use = 0
+		user << "<span class='notice'>You removed the windoor electronics!</span>"
+		..()
+	if(src)
+		in_use = 0
+	return 1
+
+/obj/machinery/door/window/dismantle()
+	var/obj/structure/windoor_assembly/wa = new(src.loc)
+	if (istype(src, /obj/machinery/door/window/brigdoor))
+		wa.secure = "secure_"
+		wa.name = "secure wired windoor assembly"
+	else
+		wa.name = "wired windoor assembly"
+	if (src.base_state == "right" || src.base_state == "rightsecure")
+		wa.facing = "r"
+	wa.set_dir(src.dir)
+	wa.state = "02"
+	wa.update_icon()
+
+	drop_electronics()
+
+	return ..()
+
 /obj/machinery/door/window/attackby(obj/item/weapon/I as obj, mob/user as mob)
 
 	//If it's in the process of opening/closing, ignore the click
 	if (src.operating == 1)
 		return
+
+	if(default_deconstruction_screwdriver(user,I))
+		return 1
+	if(default_deconstruction_crowbar(user,I))
+		return 1
 
 	//Emags and ninja swords? You may pass.
 	if (istype(I, /obj/item/weapon/melee/energy/blade))
@@ -189,28 +242,6 @@
 			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 			visible_message("<span class='warning'>The glass door was sliced open by [user]!</span>")
 		return 1
-
-	//If it's emagged, crowbar can pry electronics out.
-	if (src.operating == -1 && istype(I, /obj/item/weapon/crowbar))
-		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
-		user.visible_message("[user] removes the electronics from the windoor.", "You start to remove electronics from the windoor.")
-		if (do_after(user,40,src))
-			user << "<span class='notice'>You removed the windoor electronics!</span>"
-
-			var/obj/structure/windoor_assembly/wa = new(src.loc)
-			if (istype(src, /obj/machinery/door/window/brigdoor))
-				wa.secure = "secure_"
-				wa.name = "secure wired windoor assembly"
-			else
-				wa.name = "wired windoor assembly"
-			if (src.base_state == "right" || src.base_state == "rightsecure")
-				wa.facing = "r"
-			wa.set_dir(src.dir)
-			wa.state = "02"
-			wa.update_icon()
-
-			shatter(src)
-			return
 
 	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
