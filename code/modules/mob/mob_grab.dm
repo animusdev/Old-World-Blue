@@ -280,6 +280,9 @@
 
 	return 1
 
+/obj/item/weapon/grab/do_surgery()
+	return 0
+
 /obj/item/weapon/grab/attack(mob/M, mob/living/user)
 	if(!affecting)
 		return

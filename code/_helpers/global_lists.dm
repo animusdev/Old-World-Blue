@@ -32,17 +32,6 @@ var/global/list/playable_species = list("Human")    // A list of ALL playable sp
 // Posters
 var/global/list/poster_designs = list()
 
-// AI icons
-var/global/list/AI_icons = list( "Rainbow" = "ai-clown", "Monochrome" = "ai-mono", "Inverted" = "ai-u",\
-		"Firewall" = "ai-magma", "Green" = "ai-wierd", "Red" = "ai-red", "Static" = "ai-static",\
-		"Text" = "ai-text", "Smiley" = "ai-smiley", "Matrix" = "ai-matrix", "Angry" = "ai-angryface",\
-		"Dorf"  = "ai-dorf", "Bliss" = "ai-bliss", "Triumvirate" = "ai-triumvirate",\
-		"Triumvirate Static" = "ai-triumvirate-malf", "Soviet" = "ai-redoctober", "Trapped" = "ai-hades",\
-		"Heartline" = "ai-heartline", "Chatterbox" = "ai-president", "Helios" = "ai-helios", "Goon" = "ai-goon",\
-		"Dug Too Deep" = "ai-toodeep", "Database" = "ai-database", "Glitchman" = "ai-glitchman",\
-		"Lonestar" = "ai-lonestar", "Nanotrasen" = "ai-nanotrasen", "Whale" = "ai-whale", "Zone AI" = "ai-zone",\
-		"House" = "ai-rhouse", "Yuki" = "ai-yuki", "Xeno" = "ai-xeno", "Sparkles" = "ai-sparkles")
-
 // Uplinks
 var/list/obj/item/device/uplink/world_uplinks = list()
 
@@ -62,24 +51,10 @@ var/global/list/all_socks = list("None")
 var/global/list/backbaglist = list("None", "Backpack", "Satchel", "Satchel Job", "Dufflebag", "Messenger")
 var/global/list/exclude_jobs = list(/datum/job/ai,/datum/job/cyborg)
 
-	//Tattoo
-var/global/list/tattoo_list = list(
-	BP_CHEST  = list("Abstract" = 1),
-	"chest2"  = list("Abstract" = 1, "Cross" = 2, "Skull" = 3, "Spades" = 4),
-	BP_HEAD   = list("Abstract" = 1, "Over left eye scar" = 2, "Over right eye scar" = 3),
-	BP_GROIN  = list("Abstract" = 1),
-	BP_L_ARM  = list("Abstract" = 1),
-	BP_L_HAND = list("Abstract" = 1),
-	BP_R_ARM  = list("Abstract" = 1, "Stripes" = 2),
-	BP_R_HAND = list("Abstract" = 1),
-	BP_L_LEG  = list("Abstract" = 1),
-	BP_L_FOOT = list("Abstract" = 1),
-	BP_R_LEG  = list("Abstract" = 1),
-	BP_R_FOOT = list("Abstract" = 1)
+var/global/list/flavs_list = list(
+	"general"="General", "torso"="Body", "head"="Head", "face"="Face", "eyes"="Eyes",
+	"arms"="Arms", "hands"="Hands", "legs"="Legs", "feet"="Feet"
 )
-
-var/global/list/flavs_list = list("general"="General", "torso"="Body", "head"="Head", "face"="Face", "eyes"="Eyes",\
-				"arms"="Arms", "hands"="Hands", "legs"="Legs", "feet"="Feet")
 
 var/global/list/organ_structure = list(
 	chest = list(name= "Chest", children=list()),
@@ -130,7 +105,7 @@ var/global/list/endgame_safespawns = list()
 		all_species[S.name] = S
 
 		if(!(S.flags & IS_RESTRICTED))
-			playable_species += S.name
+			playable_species |= S.name
 		if(S.flags & IS_WHITELISTED)
 			whitelisted_species += S.name
 

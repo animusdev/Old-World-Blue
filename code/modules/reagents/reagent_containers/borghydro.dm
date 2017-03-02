@@ -18,7 +18,7 @@
 	var/list/reagent_names = list()
 
 /obj/item/weapon/reagent_containers/borghypo/surgeon
-	reagent_ids = list("bicaridine", "inaprovaline", "dexalin", "dermaline", "anti_toxin", "tricordrazine")
+	reagent_ids = list("bicaridine", "inaprovaline", "dexalin", "dermaline", "anti_toxin", "tricordrazine", "tramadol",)
 
 /obj/item/weapon/reagent_containers/borghypo/crisis
 	reagent_ids = list("tricordrazine", "inaprovaline", "tramadol", "bicaridine", "dermaline", "anti_toxin", "dexalin")

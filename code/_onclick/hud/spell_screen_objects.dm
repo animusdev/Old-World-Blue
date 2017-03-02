@@ -33,9 +33,10 @@
 /obj/screen/movable/spell_master/Click()
 	if(!spell_objects.len)
 		qdel(src)
-		return
+		return 1
 
 	toggle_open()
+	return 1
 
 /obj/screen/movable/spell_master/proc/toggle_open(var/forced_state = 0)
 	if(showing && (forced_state != 2))
@@ -196,7 +197,8 @@
 /obj/screen/spell/Click()
 	if(!usr || !spell)
 		qdel(src)
-		return
+		return 1
 
-	spell.perform(usr)
+	spell.prepare_spell()
 	update_charge(1)
+	return 1

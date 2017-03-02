@@ -34,6 +34,7 @@
 	var/blood_volume = 560                               // Initial blood volume.
 	var/hunger_factor = 0.05                             // Multiplier for hunger.
 	var/taste_sensitivity = TASTE_NORMAL
+	var/list/emotes                                      // Special emotes for that species.
 
 	var/min_age = 17
 	var/max_age = 70
@@ -161,6 +162,8 @@
 	//Species Abilities
 	var/tmp/evolution_points = 0 //How many points race have for abilities
 
+	var/ability_datum = null
+
 /datum/species/New()
 	//If the species has eyes, they are the default vision organ
 	if(!vision_organ && has_organ[O_EYES])
@@ -170,6 +173,13 @@
 		if(!inherent_verbs)
 			inherent_verbs = list()
 		inherent_verbs |= /mob/living/carbon/human/proc/regurgitate
+
+	if(emotes && emotes.len)
+		var/list/emote_paths = emotes.Copy()
+		emotes.Cut()
+		for(var/T in emote_paths)
+			var/datum/emote/E = new T
+			emotes[E.key] = E
 
 /datum/species/proc/get_station_variant()
 	return name
@@ -204,28 +214,6 @@
 	else
 		H.equip_to_slot_or_del(new custom_survival_gear(H), slot_r_hand)
 
-/datum/species/proc/create_organs(var/mob/living/carbon/human/H) //Handles creation of mob organs.
-
-	for(var/obj/item/organ/organ in (H.organs|H.internal_organs))
-		qdel(organ)
-
-	if(H.organs.len)                  H.organs.Cut()
-	if(H.internal_organs.len)         H.internal_organs.Cut()
-	if(H.organs_by_name.len)          H.organs_by_name.Cut()
-	if(H.internal_organs_by_name.len) H.internal_organs_by_name.Cut()
-
-	var/organ_type = null
-
-	for(var/limb_type in has_limbs)
-		var/datum/organ_description/OD = has_limbs[limb_type]
-		organ_type = OD.default_type
-		new organ_type(H, OD)
-
-	for(var/organ in has_organ)
-		organ_type = has_organ[organ]
-		new organ_type(H)
-
-
 /datum/species/proc/hug(var/mob/living/carbon/human/H,var/mob/living/target)
 
 	var/t_him = "them"
@@ -235,8 +223,10 @@
 		if(FEMALE)
 			t_him = "her"
 
-	H.visible_message("<span class='notice'>[H] hugs [target] to make [t_him] feel better!</span>", \
-					"<span class='notice'>You hug [target] to make [t_him] feel better!</span>")
+	H.visible_message(
+		"<span class='notice'>[H] hugs [target] to make [t_him] feel better!</span>",
+		"<span class='notice'>You hug [target] to make [t_him] feel better!</span>"
+	)
 
 /datum/species/proc/remove_inherent_verbs(var/mob/living/carbon/human/H)
 	if(inherent_verbs)
@@ -248,6 +238,9 @@
 	if(inherent_verbs)
 		for(var/verb_path in inherent_verbs)
 			H.verbs |= verb_path
+	return
+
+/datum/species/proc/organs_spawned(var/mob/living/carbon/human/H)
 	return
 
 /datum/species/proc/handle_post_spawn(var/mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.

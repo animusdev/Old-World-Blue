@@ -21,9 +21,9 @@
 	name = "man-machine interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
 	icon = 'icons/obj/assemblies.dmi'
-	icon_state = "mmi_empty"
+	icon_state = "mmi"
 	w_class = 3
-	origin_tech = "biotech=3"
+	origin_tech = list(TECH_BIO = 3)
 
 	var/list/construction_cost = list(DEFAULT_WALL_MATERIAL=1000,"glass"=500)
 	var/construction_time = 75
@@ -43,29 +43,26 @@
 
 			var/obj/item/organ/internal/brain/B = O
 			if(B.health <= 0)
-				user << "\red That brain is well and truly dead."
+				user << "<span class='warning'>That brain is well and truly dead.</span>"
 				return
 			else if(!B.brainmob)
-				user << "\red You aren't sure where this brain came from, but you're pretty sure it's a useless brain."
+				user << "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's useless.</span>"
 				return
 
-			for(var/mob/V in viewers(src, null))
-				V.show_message(text("\blue [user] sticks \a [O] into \the [src]."))
+			user.visible_message("<span class='notice'>\The [user] sticks \a [O] into \the [src].</span>")
 
-			brainmob = O:brainmob
-			O:brainmob = null
+			brainmob = B.brainmob
+			B.brainmob = null
 			brainmob.loc = src
 			brainmob.container = src
 			brainmob.stat = 0
 			dead_mob_list -= brainmob//Update dem lists
 			living_mob_list += brainmob
 
-			user.drop_from_inventory(O, src)
-			brainobj = O
+			user.drop_from_inventory(B, src)
+			brainobj = B
 
-			name = "Man-Machine Interface: [brainmob.real_name]"
-			icon_state = "mmi_full"
-
+			update_icon()
 			locked = 1
 
 			return
@@ -73,23 +70,31 @@
 		if((istype(O,/obj/item/weapon/card/id)||istype(O,/obj/item/device/pda)) && brainmob)
 			if(allowed(user))
 				locked = !locked
-				user << "\blue You [locked ? "lock" : "unlock"] the brain holder."
+				user << "<span class='notice'>You [locked ? "lock" : "unlock"] the brain holder.</span>"
 			else
-				user << "\red Access denied."
+				user << "<span class='warning'>Access denied.</span>"
 			return
 		if(brainmob)
 			O.attack(brainmob, user)//Oh noooeeeee
 			return
 		..()
 
+	update_icon()
+		if(brainmob)
+			icon_state = "[initial(icon_state)]_full"
+			src.name ="[initial(name)]: [brainmob.real_name]"
+		else
+			icon_state = initial(icon_state)
+			name = initial(name)
+
 	//TODO: ORGAN REMOVAL UPDATE. Make the brain remain in the MMI so it doesn't lose organ data.
 	attack_self(mob/user as mob)
 		if(!brainmob)
-			user << "\red You upend the MMI, but there's nothing in it."
+			user << "<span class='warning'>You upend the MMI, but there's nothing in it.</span>"
 		else if(locked)
-			user << "\red You upend the MMI, but the brain is clamped into place."
+			user << "<span class='warning'>You upend the MMI, but the brain is clamped into place.</span>"
 		else
-			user << "\blue You upend the MMI, spilling the brain onto the floor."
+			user << "<span class='notice'>You upend the MMI, spilling the brain onto the floor.</span>"
 			var/obj/item/organ/internal/brain/brain
 			if (brainobj)	//Pull brain organ out of MMI.
 				brainobj.loc = user.loc
@@ -102,21 +107,24 @@
 			living_mob_list -= brainmob//Get outta here
 			brain.brainmob = brainmob//Set the brain to use the brainmob
 			brainmob = null//Set mmi brainmob var to null
-
-			icon_state = "mmi_empty"
-			name = "Man-Machine Interface"
+			update_icon()
 
 	proc
-		transfer_identity(var/mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->robot people.
-			brainmob = new(src)
-			brainmob.name = H.real_name
-			brainmob.real_name = H.real_name
-			brainmob.dna = H.dna
+		set_identity(var/name, var/dna)
+			if(!brainmob)
+				brainmob = new(src)
+			brainmob.name = name
+			brainmob.real_name = name
+			brainmob.dna = dna ? dna : new()
 			brainmob.container = src
 
-			name = "Man-Machine Interface: [brainmob.real_name]"
-			icon_state = "mmi_full"
+			update_icon()
+
 			locked = 1
+			return
+
+		transfer_identity(var/mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->robot people.
+			set_identity(H.real_name, H.dna)
 			return
 
 /obj/item/device/mmi/Destroy()
@@ -131,7 +139,7 @@
 /obj/item/device/mmi/radio_enabled
 	name = "radio-enabled man-machine interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity. This one comes with a built-in radio."
-	origin_tech = "biotech=4"
+	origin_tech = list(TECH_BIO = 4)
 
 	var/obj/item/device/radio/radio = null//Let's give it a radio.
 
@@ -152,7 +160,7 @@
 				brainmob << "Can't do that while incapacitated or dead."
 
 			radio.broadcasting = radio.broadcasting==1 ? 0 : 1
-			brainmob << "\blue Radio is [radio.broadcasting==1 ? "now" : "no longer"] broadcasting."
+			brainmob << "<span class='notice'>Radio is [radio.broadcasting==1 ? "now" : "no longer"] broadcasting.</span>"
 
 		Toggle_Listening()
 			set name = "Toggle Listening"
@@ -165,7 +173,7 @@
 				brainmob << "Can't do that while incapacitated or dead."
 
 			radio.listening = radio.listening==1 ? 0 : 1
-			brainmob << "\blue Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast."
+			brainmob << "<span class='notice'>Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.</span>"
 
 /obj/item/device/mmi/emp_act(severity)
 	if(!brainmob)

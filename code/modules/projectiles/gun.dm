@@ -44,7 +44,7 @@
 	throw_speed = 4
 	throw_range = 5
 	force = 5
-	origin_tech = "combat=1"
+	origin_tech = list(TECH_COMBAT = 1)
 	attack_verb = list("struck", "hit", "bashed")
 	zoomdevicename = "scope"
 
@@ -155,6 +155,8 @@
 		if (world.time % 3) //to prevent spam
 			user << "<span class='warning'>[src] is not ready to fire again!</span>"
 		return
+
+	self_attack_log(user, "shot [target] ([target.x],[target.y],[target.z]) with [src]", 1)
 
 	//unpack firemode data
 	var/datum/firemode/firemode = firemodes[sel_mode]

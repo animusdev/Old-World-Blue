@@ -27,7 +27,7 @@
 	throw_speed = 5
 	throw_range = 20
 	flags = 0
-	origin_tech = "biotech=1"
+	origin_tech = list(TECH_BIO = 1)
 
 /obj/item/stack/tile/grass/full
 	amount = 50

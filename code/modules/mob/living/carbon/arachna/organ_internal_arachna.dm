@@ -45,12 +45,11 @@
 	..()
 	create_reagents(0)*/
 
-
 /obj/item/organ/internal/arachna/poison_gland/proc/init(var/list/init_reagents)
 	del(reagents)
 	create_reagents(init_reagents.len * 5)
 	poisons = init_reagents
-	for (var/reagent in init_reagents)
+	for (var/reagent in poisons)
 		reagents.add_reagent(reagent, 5)
 
 /obj/item/organ/internal/arachna/poison_gland/process()

@@ -47,20 +47,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	req_access = list(access_research)	//Data and setting manipulation requires scientist access.
 
-/obj/machinery/computer/rdconsole/proc/CallTechName(var/ID) //A simple helper proc to find the name of a tech with a given ID.
-	var/datum/tech/check_tech
-	var/return_name = null
-	for(var/T in typesof(/datum/tech) - /datum/tech)
-		check_tech = null
-		check_tech = new T()
-		if(check_tech.id == ID)
-			return_name = check_tech.name
-			qdel(check_tech)
-			check_tech = null
-			break
-
-	return return_name
-
 /obj/machinery/computer/rdconsole/proc/CallMaterialName(var/ID)
 	var/datum/reagent/temp_reagent
 	var/return_name = null
@@ -130,11 +116,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole/initialize()
 	SyncRDevices()
 
-/*	Instead of calling this every tick, it is only being called when needed
-/obj/machinery/computer/rdconsole/process()
-	griefProtection()
-*/
-
 /obj/machinery/computer/rdconsole/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
 	//Loading a disk into it.
 	if(istype(D, /obj/item/weapon/disk))
@@ -149,16 +130,19 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			return
 		user.drop_from_inventory(D, src)
 		user << "\blue You add the disk to the machine!"
-	else if(istype(D, /obj/item/weapon/card/emag) && !emagged)
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
-		emagged = 1
-		user << "\blue You you disable the security protocols"
 	else
 		//The construction/deconstruction of the console code.
 		..()
 
 	src.updateUsrDialog()
 	return
+
+/obj/machinery/computer/rdconsole/emp_act(var/remaining_charges, var/mob/user)
+	if(!emagged)
+		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
+		emagged = 1
+		user << "<span class='notice'>You you disable the security protocols.</span>"
+		return 1
 
 /obj/machinery/computer/rdconsole/Topic(href, href_list)
 	if(..())
@@ -169,7 +153,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	usr.set_machine(src)
 	if(href_list["menu"]) //Switches menu screens. Converts a sent text string into a number. Saves a LOT of code.
 		var/temp_screen = text2num(href_list["menu"])
-		if(temp_screen <= 1.1 || (3 <= temp_screen && 4.9 >= temp_screen) || src.allowed(usr) || emagged) //Unless you are making something, you need access.
+		if(temp_screen <= 1.1 || (3 <= temp_screen && 4.9 >= temp_screen) || allowed(usr) || emagged) //Unless you are making something, you need access.
 			screen = temp_screen
 		else
 			usr << "Unauthorized Access."
@@ -215,7 +199,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		d_disk.blueprint = null
 
 	else if(href_list["eject_design"]) //Eject the design disk.
-		d_disk:loc = src.loc
+		d_disk.loc = loc
 		d_disk = null
 		screen = 1.0
 
@@ -242,7 +226,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(linked_destroy.busy)
 				usr << "\red The destructive analyzer is busy at the moment."
 			else
-				if(alert("Proceeding will destroy loaded item. Continue?", "Destructive analyzer confirmation", "Yes", "No") == "No" || !linked_destroy) return
+				if(alert("Proceeding will destroy loaded item. Continue?", "Destructive analyzer confirmation", "Yes", "No") == "No" || !linked_destroy)
+					return
 				linked_destroy.busy = 1
 				screen = 0.1
 				updateUsrDialog()
@@ -250,21 +235,17 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				spawn(24)
 					if(linked_destroy)
 						linked_destroy.busy = 0
-						if(!linked_destroy.hacked)
-							if(!linked_destroy.loaded_item)
-								usr <<"\red The destructive analyzer appears to be empty."
-								screen = 1.0
-								return
-							if(linked_destroy.loaded_item.reliability >= linked_destroy.min_reliability)
-								var/list/temp_tech = ConvertReqString2List(linked_destroy.loaded_item.origin_tech)
-								for(var/T in temp_tech)
-									files.UpdateTech(T, temp_tech[T])
-							if(linked_destroy.loaded_item.reliability < 100 && linked_destroy.loaded_item.crit_fail)
-								files.UpdateDesign(linked_destroy.loaded_item.type)
-							if(linked_lathe && linked_destroy.loaded_item.matter) //Also sends salvaged materials to a linked protolathe, if any.
-								linked_lathe.m_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.matter[DEFAULT_WALL_MATERIAL]*linked_destroy.decon_mod))
-								linked_lathe.g_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.matter["glass"]*linked_destroy.decon_mod))
-							linked_destroy.loaded_item = null
+						if(!linked_destroy.loaded_item)
+							usr <<"<span class='notice'>The destructive analyzer appears to be empty.</span>"
+							screen = 1.0
+							return
+
+						for(var/T in linked_destroy.loaded_item.origin_tech)
+							files.UpdateTech(T, linked_destroy.loaded_item.origin_tech[T])
+						if(linked_lathe && linked_destroy.loaded_item.matter) // Also sends salvaged materials to a linked protolathe, if any.
+							linked_lathe.m_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.matter[DEFAULT_WALL_MATERIAL]*linked_destroy.decon_mod))
+							linked_lathe.g_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.matter["glass"]*linked_destroy.decon_mod))
+						linked_destroy.loaded_item = null
 						for(var/obj/I in linked_destroy.contents)
 							for(var/mob/M in I.contents)
 								M.death()
@@ -280,12 +261,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								if(!(I in linked_destroy.component_parts))
 									qdel(I)
 									linked_destroy.icon_state = "d_analyzer"
+
 						use_power(linked_destroy.active_power_usage)
 						screen = 1.0
 						updateUsrDialog()
 
 	else if(href_list["lock"]) //Lock the console from use by anyone without tox access.
-		if(src.allowed(usr))
+		if(allowed(usr))
 			screen = text2num(href_list["lock"])
 		else
 			usr << "Unauthorized Access."
@@ -546,6 +528,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/dat
 	dat += "<UL>"
 	for(var/datum/tech/T in files.known_tech)
+		if(T.level < 1)
+			continue
 		dat += "<LI>"
 		dat += "[T.name]"
 		dat += "<UL>"
@@ -594,9 +578,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	switch(screen)
 
 		//////////////////////R&D CONSOLE SCREENS//////////////////
-		if(0.0) dat += "Updating Database...."
+		if(0.0)
+			dat += "Updating Database..."
 
-		if(0.1) dat += "Processing and Updating Database..."
+		if(0.1)
+			dat += "Processing and Updating Database..."
 
 		if(0.2)
 			dat += "SYSTEM LOCKED<BR><BR>"
@@ -750,16 +736,15 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "Name: [linked_destroy.loaded_item.name]<BR>"
 			dat += "Origin Tech:"
 			dat += "<UL>"
-			var/list/temp_tech = ConvertReqString2List(linked_destroy.loaded_item.origin_tech)
-			for(var/T in temp_tech)
-				dat += "<LI>[CallTechName(T)] [temp_tech[T]]"
+			for(var/T in linked_destroy.loaded_item.origin_tech)
+				dat += "<LI>[CallTechName(T)] [linked_destroy.loaded_item.origin_tech[T]]"
 				for(var/datum/tech/F in files.known_tech)
 					if(F.name == CallTechName(T))
 						dat += " (Current: [F.level])"
 						break
 			dat += "</UL>"
 			dat += "<HR><A href='?src=\ref[src];deconstruct=1'>Deconstruct Item</A> || "
-			dat += "<A href='?src=\ref[src];eject_item=1'>Eject Item</A> || "
+			dat += "<A href='?src=\ref[src];eject_item=1'>Eject Item</A>"
 
 		/////////////////////PROTOLATHE SCREENS/////////////////////////
 		if(3.0)
@@ -840,10 +825,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				switch(M)
 					if(DEFAULT_WALL_MATERIAL)
 						amount = linked_lathe.m_amount
-						sheetsize = 3750
+						sheetsize = 2000
 					if("glass")
 						amount = linked_lathe.g_amount
-						sheetsize = 3750
+						sheetsize = 2000
 					if("gold")
 						amount = linked_lathe.gold_amount
 					if("silver")
@@ -953,7 +938,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				switch(M)
 					if("glass")
 						amount = linked_imprinter.g_amount
-						sheetsize = 3750
+						sheetsize = 2000
 					if("gold")
 						amount = linked_imprinter.gold_amount
 					if("diamond")

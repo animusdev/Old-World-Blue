@@ -112,6 +112,7 @@
 	a hostile enviroment."
 	icon = 'icons/obj/cryobag.dmi'
 	icon_state = "bodybag_folded"
+	origin_tech = list(TECH_BIO = 4)
 
 /obj/item/bodybag/cryobag/attack_self(mob/user)
 	var/obj/structure/closet/body_bag/cryobag/R = new (user.loc)
@@ -154,6 +155,11 @@
 		H.in_stasis = 1
 		src.used = 1
 
+	if(istype(AM, /obj/item/organ))
+		var/obj/item/organ/O = AM
+		O.preserved = 1
+		for(var/obj/item/organ/organ in O)
+			organ.preserved = 1
 	..()
 
 /obj/structure/closet/body_bag/cryobag/Exited(atom/movable/AM)
@@ -161,6 +167,11 @@
 		var/mob/living/carbon/human/H = AM
 		H.in_stasis = 0
 
+	if(istype(AM, /obj/item/organ))
+		var/obj/item/organ/O = AM
+		O.preserved = 0
+		for(var/obj/item/organ/organ in O)
+			organ.preserved = 0
 	..()
 
 /obj/structure/closet/body_bag/cryobag/return_air() //Used to make stasis bags protect from vacuum.

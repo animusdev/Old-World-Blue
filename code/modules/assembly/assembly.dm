@@ -9,7 +9,7 @@
 	throwforce = 2
 	throw_speed = 3
 	throw_range = 10
-	origin_tech = "magnets=1"
+	origin_tech = list(TECH_MAGNET = 1)
 
 	var/secured = 1
 	var/list/attached_overlays = null
@@ -138,8 +138,8 @@
 
 	nano_host()
 		if(holder)
-			return holder
-		return src
+			return holder.nano_host()
+		return ..()
 
 /*
 	var/small_icon_state = null//If this obj will go inside the assembly use this for icons

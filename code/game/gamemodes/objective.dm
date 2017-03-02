@@ -137,8 +137,13 @@ datum/objective/anti_revolution/brig
 		if(target && target.current)
 			if(target.current.stat == DEAD)
 				return 0
-			if(target.is_brigged(10 * 60 * 10))
-				already_completed = 1
+			var/area/check_area = get_area(target.current)
+			if( istype(check_area,/area/security/prison) || istype(check_area, /area/security/brig) )
+				for(var/obj/item/weapon/card/id/card in target.current)
+					return 0
+				for(var/obj/item/device/pda/P in target.current)
+					if(P.id)
+						return 0
 				return 1
 			return 0
 		return 0
@@ -240,6 +245,39 @@ datum/objective/protect//The opposite of killing a dude.
 		return 0
 
 
+datum/objective/explosion
+	explanation_text = "Arrange a terrorist act. Expode at least two of command rooms (Head office, EVA, bridge, etc)"
+	target_amount = 2
+	var/list/command_rooms = list(
+		/area/ai_monitored/storage/eva,
+		/area/turret_protected/ai,
+		/area/turret_protected/ai_upload,
+		/area/crew_quarters/heads/hop,
+		/area/crew_quarters/heads/hor,
+		/area/crew_quarters/heads/chief,
+		/area/crew_quarters/heads/hos,
+		/area/crew_quarters/heads/cmo,
+		/area/crew_quarters/captain,
+		/area/security/armoury,
+		/area/tcommsat/chamber,
+		/area/engineering/engine_room,
+		/area/engineering/atmos,
+		/area/bridge,
+		/area/server
+	)
+
+	check_completion()
+		var/ammount = 0
+		for(var/item in explosions_log)
+			var/datum/log/explosion/E = item
+			if(!(E.location in command_rooms))
+				continue
+			if(E.devastation_range<1)
+				continue
+			ammount += 1
+		return ammount >= target_amount
+
+
 datum/objective/hijack
 	explanation_text = "Hijack the emergency shuttle by escaping alone."
 
@@ -288,13 +326,12 @@ datum/objective/silence
 		if(!emergency_shuttle.returned())
 			return 0
 
+		var/area/checking = null
 		for(var/mob/living/player in player_list)
 			if(player == owner.current || !player.mind || player.stat == DEAD)
 				continue
-			if(get_area(player) in list(/area/shuttle/escape/centcom, \
-				/area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, \
-				/area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod5/centcom) \
-			)
+			checking = get_area(player)
+			if(checking.is_escape_location)
 				return 0
 		return 1
 
@@ -320,24 +357,11 @@ datum/objective/escape
 		if(istype(location, /turf/simulated/shuttle/floor4))
 			if(istype(owner.current, /mob/living/carbon))
 				var/mob/living/carbon/C = owner.current
-				if (!C.handcuffed)
-					return 1
-			return 0
+				if(C.handcuffed)
+					return 0
 
-		var/area/check_area = location.loc
-		if(istype(check_area, /area/shuttle/escape/centcom))
-			return 1
-		if(istype(check_area, /area/shuttle/escape_pod1/centcom))
-			return 1
-		if(istype(check_area, /area/shuttle/escape_pod2/centcom))
-			return 1
-		if(istype(check_area, /area/shuttle/escape_pod3/centcom))
-			return 1
-		if(istype(check_area, /area/shuttle/escape_pod5/centcom))
-			return 1
-		else
-			return 0
-
+		var/area/check_area = get_area(owner.current)
+		return check_area.is_escape_location
 
 
 datum/objective/survive
@@ -349,43 +373,6 @@ datum/objective/survive
 		if(issilicon(owner.current) && owner.current != owner.original)
 			return 0
 		return 1
-
-// Similar to the anti-rev objective, but for traitors
-datum/objective/brig
-	var/already_completed = 0
-
-	find_target()
-		..()
-		if(target && target.current)
-			explanation_text = "Have [target.current.real_name], the [target.assigned_role] brigged for 10 minutes."
-		else
-			explanation_text = "Free Objective"
-		return target
-
-
-	find_target_by_role(role, role_type=0)
-		..(role, role_type)
-		if(target && target.current)
-			explanation_text = "Have [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role] brigged for 10 minutes."
-		else
-			explanation_text = "Free Objective"
-		return target
-
-	check_completion()
-		if(!target)//If it's a free objective.
-			return 1
-		if(already_completed)
-			return 1
-
-		if(target && target.current)
-			if(target.current.stat == DEAD)
-				return 0
-			// Make the actual required time a bit shorter than the official time
-			if(target.is_brigged(10 * 60 * 5))
-				already_completed = 1
-				return 1
-			return 0
-		return 0
 
 // Harm a crew member, making an example of them
 datum/objective/harm
@@ -419,18 +406,9 @@ datum/objective/harm
 				return 0
 
 			var/mob/living/carbon/human/H = target.current
-			for(var/obj/item/organ/external/E in H.organs)
-				if(E.status & ORGAN_BROKEN)
-					return 1
-			for(var/limb_tag in H.species.has_limbs) //todo check prefs for robotic limbs and amputations.
-				var/list/organ_data = H.species.has_limbs[limb_tag]
-				var/limb_type = organ_data["path"]
-				var/found
-				for(var/obj/item/organ/external/E in H.organs)
-					if(limb_type == E.type)
-						found = 1
-						break
-				if(!found)
+			for(var/limb_tag in H.species.has_limbs)
+				var/obj/item/organ/external/E = H.get_organ(limb_tag)
+				if(!E || (E.status & ORGAN_BROKEN))
 					return 1
 
 			var/obj/item/organ/external/head/head = H.get_organ(BP_HEAD)
@@ -442,6 +420,8 @@ datum/objective/harm
 datum/objective/nuclear
 	explanation_text = "Destroy the station with a nuclear device."
 
+	check_completion()
+		return ticker.mode.station_was_nuked
 
 
 datum/objective/steal
@@ -557,19 +537,9 @@ datum/objective/steal
 							return 1
 
 				for(var/mob/living/silicon/ai/ai in world)
-					var/turf/T = get_turf(ai)
-					if(istype(T))
-						var/area/check_area = get_area(ai)
-						if(istype(check_area, /area/shuttle/escape/centcom))
-							return 1
-						if(istype(check_area, /area/shuttle/escape_pod1/centcom))
-							return 1
-						if(istype(check_area, /area/shuttle/escape_pod2/centcom))
-							return 1
-						if(istype(check_area, /area/shuttle/escape_pod3/centcom))
-							return 1
-						if(istype(check_area, /area/shuttle/escape_pod5/centcom))
-							return 1
+					var/area/check_area = get_area(ai)
+					if(check_area.is_escape_location)
+						return 1
 			else
 				for(var/obj/I in all_items) //Check for items
 					if(istype(I, steal_target))

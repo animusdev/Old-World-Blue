@@ -16,7 +16,7 @@
 
 	if(!species)
 		if(new_species)
-			set_species(new_species,1)
+			set_species(new_species)
 		else
 			set_species()
 
@@ -164,7 +164,7 @@
 
 /mob/living/carbon/human/meteorhit(O as obj)
 	for(var/mob/M in viewers(src, null))
-		if ((M.client && !( M.blinded )))
+		if ((M.client && !(M.blinded)))
 			M.show_message("\red [src] has been hit by [O]", 1)
 	if (health > 0)
 		var/obj/item/organ/external/affecting = get_organ(pick(BP_CHEST, BP_CHEST, BP_CHEST, BP_HEAD))
@@ -366,8 +366,9 @@
 /mob/living/carbon/human/Topic(href, href_list)
 
 	if (href_list["refresh"])
-		if((machine)&&(in_range(src, usr)))
-			show_inv(machine)
+		if(machine &&in_range(src, machine))
+			var/mob/living/L = machine
+			L.show_inv(src)
 
 	if (href_list["mach_close"])
 		var/t1 = text("window=[]", href_list["mach_close"])
@@ -375,6 +376,7 @@
 		src << browse(null, t1)
 
 	if(href_list["item"])
+		usr.face_atom(src)
 		handle_strip(href_list["item"],usr)
 
 	if (href_list["criminal"])
@@ -930,7 +932,7 @@
 
 	// Fix up all organs.
 	// This will ignore any prosthetics in the prefs currently.
-	species.create_organs(src)
+	rebuild_organs()
 
 	if(!client || !key) //Don't boot out anyone already in the mob.
 		for (var/obj/item/organ/internal/brain/H in world)
@@ -1043,7 +1045,7 @@
 					src << msg
 
 				organ.take_damage(rand(1,3), 0, 0)
-				if(!(organ.status & ORGAN_ROBOT) && (should_have_organ(O_HEART))) //There is no blood in protheses.
+				if(!(organ.robotic >= ORGAN_ROBOT) && should_have_organ(O_HEART)) //There is no blood in protheses.
 					organ.status |= ORGAN_BLEEDING
 					src.adjustToxLoss(rand(1,3))
 
@@ -1075,7 +1077,7 @@
 	else
 		usr << "<span class='warning'>You failed to check the pulse. Try again.</span>"
 
-/mob/living/carbon/human/proc/set_species(var/new_species, var/default_colour)
+/mob/living/carbon/human/proc/set_species(var/new_species)
 
 	if(!dna)
 		if(!new_species)
@@ -1111,7 +1113,7 @@
 	if(species.default_language)
 		add_language(species.default_language)
 
-	if(species.base_color && default_colour)
+	if(species.base_color)
 		//Apply colour.
 		skin_color = species.base_color
 	else
@@ -1122,21 +1124,16 @@
 
 	icon_state = lowertext(species.name)
 
-	species.create_organs(src)
+	rebuild_organs()
 
 	species.handle_post_spawn(src)
 
 	maxHealth = species.total_health
 
-	spawn(0)
-		regenerate_icons()
-		if(vessel.total_volume < species.blood_volume)
-			vessel.maximum_volume = species.blood_volume
-			vessel.add_reagent("blood", species.blood_volume - vessel.total_volume)
-		else if(vessel.total_volume > species.blood_volume)
-			vessel.remove_reagent("blood", vessel.total_volume - species.blood_volume)
-			vessel.maximum_volume = species.blood_volume
-		fixblood()
+	fixblood()
+
+	if (species.ability_datum)
+		species_abilities = new species.ability_datum
 
 	// Rebuild the HUD. If they aren't logged in then login() should reinstantiate it for them.
 	if(client && client.screen)
@@ -1149,6 +1146,59 @@
 		return 1
 	else
 		return 0
+
+/mob/living/carbon/human/proc/rebuild_organs(var/from_preference = 0)
+	if(!species)
+		return 0
+
+	for(var/obj/item/organ/organ in (organs|internal_organs))
+		qdel(organ)
+
+	if(organs.len)                  organs.Cut()
+	if(internal_organs.len)         internal_organs.Cut()
+	if(organs_by_name.len)          organs_by_name.Cut()
+	if(internal_organs_by_name.len) internal_organs_by_name.Cut()
+
+
+	if(from_preference)
+		var/datum/preferences/Pref
+		if(istype(from_preference, /datum/preferences))
+			Pref = from_preference
+		else if(client)
+			Pref = client.prefs
+		else
+			return
+
+		var/datum/body_modification/BM = null
+		var/obj/item/organ/Organ = null
+
+		for(var/tag in species.has_limbs)
+			BM = Pref.get_modification(tag)
+			Organ = BM.create_organ(species.has_limbs[tag], Pref.modifications_colors[tag])
+			if(Organ)
+				Organ.install(src, 0) // Not update icon
+
+		for(var/tag in species.has_organ)
+			BM = Pref.get_modification(tag)
+			Organ = BM.create_organ(species.has_organ[tag], Pref.modifications_colors[tag])
+			if(Organ)
+				Organ.install(src)
+
+	else
+		var/organ_type = null
+
+		for(var/limb_tag in species.has_limbs)
+			var/datum/organ_description/OD = species.has_limbs[limb_tag]
+			organ_type = OD.default_type
+			new organ_type(src, OD)
+
+		for(var/organ_tag in species.has_organ)
+			organ_type = species.has_organ[organ_tag]
+			new organ_type(src)
+
+	species.organs_spawned(src)
+	update_body()
+
 
 /mob/living/carbon/human/proc/bloody_doodle()
 	set category = "IC"
@@ -1219,7 +1269,7 @@
 	if(!affecting)
 		. = 0
 		fail_msg = "They are missing that limb."
-	else if (affecting.status & ORGAN_ROBOT)
+	else if (affecting.robotic >= ORGAN_ROBOT)
 		. = 0
 		fail_msg = "That limb is robotic."
 	else

@@ -77,11 +77,7 @@
 		name = "Bald"
 		icon_state = "bald"
 		gender = MALE
-		New()
-			..()
-			species_allowed = list()
-			for(var/S in all_species)
-				species_allowed += S
+		species_allowed = list("Human","Unathi")
 
 
 	afro
@@ -133,7 +129,7 @@
 		name = "Birdnest"
 		icon_state = "birdnest"
 
-	birdnest
+	birdnest2
 		name = "Birdnest 2"
 		icon_state = "birdnest2"
 

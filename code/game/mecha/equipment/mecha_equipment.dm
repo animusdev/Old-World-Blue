@@ -6,7 +6,7 @@
 	icon = 'icons/mecha/mecha_equipment.dmi'
 	icon_state = "mecha_equip"
 	force = 5
-	origin_tech = "materials=2"
+	origin_tech = list(TECH_MATERIAL = 2)
 	construction_time = 100
 	construction_cost = list(DEFAULT_WALL_MATERIAL=10000)
 	var/equip_cooldown = 0

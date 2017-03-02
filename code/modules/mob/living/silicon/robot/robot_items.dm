@@ -28,12 +28,10 @@
 				user << "You activate the analyzer's microlaser, analyzing \the [loaded_item] and breaking it down."
 				flick("portable_analyzer_scan", src)
 				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
-				if(loaded_item.reliability >= min_reliability)
-					var/list/temp_tech = ConvertReqString2List(loaded_item.origin_tech)
-					for(var/T in temp_tech)
-						files.UpdateTech(T, temp_tech[T])
-						user << "\The [loaded_item] had level [temp_tech[T]] in [T]."
-					loaded_item = null
+				for(var/T in loaded_item.origin_tech)
+					files.UpdateTech(T, loaded_item.origin_tech[T])
+					user << "\The [loaded_item] had level [loaded_item.origin_tech[T]] in [CallTechName(T)]."
+				loaded_item = null
 				for(var/obj/I in contents)
 					for(var/mob/M in I.contents)
 						M.death()
@@ -184,9 +182,9 @@
 
 		var droppedSomething = 0
 
-		for(var/obj/item/I in carrying)
+		for(var/obj/item/I in src)
 			I.loc = dropspot
-			carrying.Remove(I)
+			contents.Remove(I)
 			droppedSomething = 1
 			if(!foundtable && isturf(dropspot))
 				// if no table, presume that the person just shittily dropped the tray on the ground and made a mess everywhere!
@@ -354,7 +352,7 @@
 			return
 
 		if(T && istype(T))
-			new /obj/structure/inflatable/wall(T)
+			new /obj/structure/inflatable(T)
 			stored_walls--
 
 	playsound(T, 'sound/items/zip.ogg', 75, 1)
@@ -362,33 +360,33 @@
 
 /obj/item/weapon/inflatable_dispenser/proc/pick_up(var/obj/A, var/mob/living/user)
 	if(istype(A, /obj/structure/inflatable))
-		if(istype(A, /obj/structure/inflatable/wall))
-			if(stored_walls >= max_walls)
-				user << "\The [src] is full."
-				return
-			stored_walls++
-			qdel(A)
-		else
+		if(istype(A, /obj/structure/inflatable/door))
 			if(stored_doors >= max_doors)
 				user << "\The [src] is full."
 				return
 			stored_doors++
+			qdel(A)
+		else
+			if(stored_walls >= max_walls)
+				user << "\The [src] is full."
+				return
+			stored_walls++
 			qdel(A)
 		playsound(loc, 'sound/machines/hiss.ogg', 75, 1)
 		visible_message("\The [user] deflates \the [A] with \the [src]!")
 		return
 	if(istype(A, /obj/item/inflatable))
-		if(istype(A, /obj/item/inflatable/wall))
-			if(stored_walls >= max_walls)
-				user << "\The [src] is full."
-				return
-			stored_walls++
-			qdel(A)
-		else
+		if(istype(A, /obj/item/inflatable/door))
 			if(stored_doors >= max_doors)
 				usr << "\The [src] is full!"
 				return
 			stored_doors++
+			qdel(A)
+		else
+			if(stored_walls >= max_walls)
+				user << "\The [src] is full."
+				return
+			stored_walls++
 			qdel(A)
 		visible_message("\The [user] picks up \the [A] with \the [src]!")
 		return

@@ -106,18 +106,18 @@
 		var/tint = border_type == /obj/structure/window/reinforced/polarized
 		icon_state = "plating"
 		..()
-		spawn(5)
-			var/type = /turf/simulated/floor/plating
-			if(strict_typecheck) type = src.type
-			new /obj/structure/grille(src)
-			var/obj/structure/window/reinforced/W = null
-			for(var/dir in cardinal)
-				if(!istype(get_step(src,dir), type))
-					W = new border_type(src)
-					W.dir = dir
-					if(src.id && tint)
-						W:id = src.id
-			blocks_air = 0
+		var/type = /turf/simulated/floor/plating
+		if(strict_typecheck)
+			type = src.type
+		new /obj/structure/grille(src)
+		var/obj/structure/window/reinforced/W = null
+		for(var/dir in cardinal)
+			if(!istype(get_step(src,dir), type))
+				W = new border_type(src)
+				W.dir = dir
+				if(src.id && tint)
+					W:id = src.id
+		blocks_air = 0
 
 /turf/simulated/floor/plating/with_grille/reinforced
 	border_type = /obj/structure/window/reinforced

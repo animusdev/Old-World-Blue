@@ -7,22 +7,14 @@
 	..()
 
 /mob/living/carbon/human/get_possible_emotes()
-	return human_emotes_list
-
-
-/*
-if("swish")
-	src.animate_tail_once()
-
-if("wag", "sway")
-	src.animate_tail_start()
-
-if("qwag", "fastsway")
-	src.animate_tail_fast()
-
-if("swag", "stopsway")
-	src.animate_tail_stop()
-*/
+	var/list/tmp_emotes = human_emotes_list.Copy()
+	if(species.emotes)
+		for(var/emote in species.emotes)
+			tmp_emotes[emote] = species.emotes[emote]
+	if(isSynthetic())
+		for(var/emote in robot_emotes_list)
+			tmp_emotes[emote] = robot_emotes_list[emote]
+	return tmp_emotes
 
 /mob/living/carbon/human/verb/pose()
 	set name = "Set Pose"

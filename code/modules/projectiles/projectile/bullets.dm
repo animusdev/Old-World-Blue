@@ -42,7 +42,7 @@
 			damage *= 0.7 //squishy mobs absorb KE
 		return 1
 
-	var/chance = 0
+	var/chance = damage
 	if(istype(A, /turf/simulated/wall))
 		var/turf/simulated/wall/W = A
 		chance = round(damage/W.material.integrity*180)
@@ -52,13 +52,11 @@
 		if(D.glass) chance *= 2
 	else if(istype(A, /obj/structure/girder))
 		chance = 100
-	else if(istype(A, /obj/machinery) || istype(A, /obj/structure))
-		chance = damage
 
 	if(prob(chance))
 		if(A.opacity)
 			//display a message so that people on the other side aren't so confused
-			A.visible_message("<span class='warning'>\The [src] pierces through \the [A]!")
+			A.visible_message("<span class='warning'>\The [src] pierces through \the [A]!</span>")
 		return 1
 
 	return 0
@@ -69,8 +67,8 @@
 	damage = 20
 	//icon_state = "bullet" //TODO: would be nice to have it's own icon state
 	var/pellets = 4			//number of pellets
-	var/range_step = 2		//effective pellet count decreases every few tiles
-	var/base_spread = 90	//lower means the pellets spread more across body parts
+	var/range_step = 2		//projectile will lose a fragment each time it travels this distance. Can be a non-integer.
+	var/base_spread = 90	//lower means the pellets spread more across body parts. If zero then this is considered a shrapnel explosion instead of a shrapnel cone
 	var/spread_step = 10	//higher means the pellets spread more across body parts with distance
 
 /obj/item/projectile/bullet/pellet/Bumped()
@@ -109,33 +107,33 @@
 	sharp = 0
 
 /obj/item/projectile/bullet/pistol/medium
-	damage = 40
-	sharp = 0
+	damage = 35
 
 /obj/item/projectile/bullet/pistol/strong //revolvers and matebas
 	damage = 60
 
 /obj/item/projectile/bullet/pistol/rubber //"rubber" bullets
 	name = "rubber bullet"
-	check_armour = "melee"
-	damage = 10
+	damage = 4
 	agony = 70
 	embed = 0
 	sharp = 0
+	check_armour = "melee"
 
 /* shotgun projectiles */
 
 /obj/item/projectile/bullet/shotgun
 	name = "slug"
-	damage = 60
+	damage = 50
+	armor_penetration = 20
 
 /obj/item/projectile/bullet/shotgun/beanbag		//because beanbags are not bullets
 	name = "beanbag"
-	check_armour = "melee"
 	damage = 20
 	agony = 60
 	embed = 0
 	sharp = 0
+	check_armour = "melee"
 
 //Should do about 80 damage at 1 tile distance (adjacent), and 50 damage at 3 tiles distance.
 //Overall less damage than slugs in exchange for more damage at very close range and more embedding
@@ -148,16 +146,44 @@
 
 /* "Rifle" rounds */
 
+/obj/item/projectile/bullet/rifle
+	armor_penetration = 25
+	penetrating = 1
+
 /obj/item/projectile/bullet/rifle/a762
-	damage = 40
+	damage = 30
+	armor_penetration = 20
+	sharp = 0
+
+/obj/item/projectile/bullet/rifle/a762/ap
+	damage = 25
+	armor_penetration = 60
 	penetrating = 1
 	sharp = 0
+	embed = 0
+
+/obj/item/projectile/bullet/rifle/a762/hp
+	damage = 50
+	armor_penetration = 5
+
+/obj/item/projectile/bullet/rifle/a556
+	damage = 35
+	armor_penetration = 10
+
+/obj/item/projectile/bullet/rifle/a556/ap
+	damage = 30
+	armor_penetration = 35
+	embed = 0
+
+/obj/item/projectile/bullet/rifle/a556/hp
+	damage = 60
 
 /obj/item/projectile/bullet/rifle/a145
 	damage = 80
 	stun = 3
 	weaken = 3
 	penetrating = 5
+	armor_penetration = 80
 	hitscan = 1 //so the PTR isn't useless as a sniper weapon
 
 /obj/item/projectile/bullet/rifle/a556
@@ -204,6 +230,7 @@
 
 /obj/item/projectile/bullet/rifle/a556/practice
 	damage = 5
+	penetrating = 0
 
 /obj/item/projectile/bullet/shotgun/practice
 	name = "practice"

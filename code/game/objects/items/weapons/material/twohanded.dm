@@ -165,42 +165,7 @@
 			var/obj/effect/plant/P = A
 			P.die_off()
 
-/obj/item/weapon/material/twohanded/dualsaber
-	icon_state = "dualsaber0"
-	base_icon = "dualsaber"
-	name = "double-bladed energy sword"
-	desc = "Handle with care."
-	force = 3
-	throwforce = 5.0
-	throw_speed = 1
-	throw_range = 5
-	w_class = 2.0
-	force_wielded = 30
-	wieldsound = 'sound/weapons/saberon.ogg'
-	unwieldsound = 'sound/weapons/saberoff.ogg'
-	origin_tech = "magnets=3;syndicate=4"
-	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	sharp = 1
-	edge = 1
-	applies_material_colour = 0
 
-/obj/item/weapon/material/twohanded/dualsaber/attack(target as mob, mob/living/user as mob)
-	..()
-	if((CLUMSY in user.mutations) && (wielded) &&prob(40))
-		user << "\red You twirl around a bit before losing your balance and impaling yourself on the [src]."
-		user.take_organ_damage(20,25)
-		return
-	if((wielded) && prob(50))
-		spawn(0)
-			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
-				user.set_dir(i)
-				sleep(1)
-
-/obj/item/weapon/material/twohanded/dualsaber/IsShield()
-	if(wielded)
-		return 1
-	else
-		return 0
 
 
 //spears, bay edition
@@ -224,6 +189,7 @@
 
 /obj/item/weapon/material/twohanded/bostaff
 	icon_state = "bostaff0"
+	wear_state = "bostaff"
 	base_icon = "bostaff"
 	name = "bo staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts. Can be wielded to both kill and incapacitate."

@@ -21,11 +21,11 @@
 	icon_state = "wrench"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	force = 5.0
-	throwforce = 7.0
+	force = 6
+	throwforce = 7
 	w_class = 2.0
+	origin_tech = list(TECH_MATERIAL = 1, TECH_ENGINEERING = 1)
 	matter = list(DEFAULT_WALL_MATERIAL = 150)
-	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
 
@@ -39,18 +39,19 @@
 	icon_state = "screwdriver"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT | SLOT_EARS
-	force = 5.0
+	force = 6
 	w_class = 1.0
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	matter = list(DEFAULT_WALL_MATERIAL = 75)
 	attack_verb = list("stabbed")
+	sharp  = 1
 
 	suicide_act(mob/user)
 		viewers(user) << pick(\
-			"\red <b>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</b>", \
-			"\red <b>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</b>")
+			"<span class='danger'>\The [user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
+			"<span class='danger'>\The [user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>")
 		return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/New()
@@ -79,10 +80,11 @@
 
 	if (prob(75))
 		src.pixel_y = rand(0, 16)
-	return
+	..()
 
 /obj/item/weapon/screwdriver/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	if(!istype(M))	return ..()
+	if(!istype(M) || user.a_intent == "help")
+		return ..()
 	if(user.zone_sel.selecting != O_EYES && user.zone_sel.selecting != BP_HEAD)
 		return ..()
 	if((CLUMSY in user.mutations) && prob(50))
@@ -99,12 +101,12 @@
 	icon_state = "cutters"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	force = 6.0
+	force = 6
 	throw_speed = 2
 	throw_range = 9
 	w_class = 2.0
+	origin_tech = list(TECH_MATERIAL = 1, TECH_ENGINEERING = 1)
 	matter = list(DEFAULT_WALL_MATERIAL = 80)
-	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("pinched", "nipped")
 	sharp = 1
 	edge = 1
@@ -113,9 +115,10 @@
 	if(prob(50))
 		icon_state = "cutters-y"
 		item_state = "cutters_yellow"
+	..()
 
 /obj/item/weapon/wirecutters/attack(mob/living/carbon/C as mob, mob/user as mob)
-	if((C.handcuffed) && (istype(C.handcuffed, /obj/item/weapon/handcuffs/cable)))
+	if(user.a_intent == I_HELP && (C.handcuffed) && (istype(C.handcuffed, /obj/item/weapon/handcuffs/cable)))
 		usr.visible_message("\The [usr] cuts \the [C]'s restraints with \the [src]!",\
 		"You cut \the [C]'s restraints with \the [src]!",\
 		"You hear cable being cut.")
@@ -148,7 +151,7 @@
 	matter = list(DEFAULT_WALL_MATERIAL = 70, "glass" = 30)
 
 	//R&D tech level
-	origin_tech = "engineering=1"
+	origin_tech = list(TECH_ENGINEERING = 1)
 
 	//Welding tool specific stuff
 	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
@@ -161,12 +164,12 @@
 	reagents = R
 	R.my_atom = src
 	R.add_reagent("fuel", max_fuel)
-	return
+	..()
 
 /obj/item/weapon/weldingtool/Destroy()
 	if(welding)
 		processing_objects -= src
-	..()
+	return ..()
 
 /obj/item/weapon/weldingtool/examine(mob/user, return_dist = 1)
 	. = ..()
@@ -174,7 +177,7 @@
 		user << text("\icon[] [] contains []/[] units of fuel!", src, src.name, get_fuel(),src.max_fuel )
 
 
-/obj/item/weapon/weldingtool/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/weapon/weldingtool/attackby(obj/item/W as obj, mob/living/user as mob)
 	if(istype(W,/obj/item/weapon/screwdriver))
 		if(welding)
 			user << "<span class='danger'>Stop welding first!</span>"
@@ -217,17 +220,13 @@
 		if(prob(5))
 			remove_fuel(1)
 
-		if(get_fuel() == 0)
+		if(get_fuel() < 1)
 			setWelding(0)
 
 	//I'm not sure what this does. I assume it has to do with starting fires...
 	//...but it doesnt check to see if the welder is on or not.
-	var/turf/location = src.loc
-	if(istype(location, /mob/))
-		var/mob/M = location
-		if(M.l_hand == src || M.r_hand == src)
-			location = get_turf(M)
-	if (istype(location, /turf))
+	var/turf/location = get_turf(src)
+	if (isturf(location))
 		location.hotspot_expose(700, 5)
 
 
@@ -241,8 +240,7 @@
 	else if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.welding)
 		message_admins("[key_name_admin(user)] triggered a fueltank explosion with a welding tool.")
 		log_game("[key_name(user)] triggered a fueltank explosion with a welding tool.")
-		user << "\red You begin welding on the fueltank and with a moment of lucidity you realize,\
-				 this might not have been the smartest thing you've ever done."
+		user << "<span class='danger'>You begin welding on the fueltank and with a moment of lucidity you realize, this might not have been the smartest thing you've ever done.</span>"
 		var/obj/structure/reagent_dispensers/fueltank/tank = O
 		tank.explode()
 		return
@@ -261,27 +259,23 @@
 	setWelding(!welding, usr)
 	return
 
+/obj/item/weapon/weldingtool/attack(var/atom/A, var/mob/living/user, var/def_zone)
+	if(ishuman(A) && user.a_intent == I_HELP)
+		var/mob/living/carbon/human/H = A
+		var/obj/item/organ/external/S = H.get_organ(user.zone_sel.selecting)
 
-/obj/item/weapon/weldingtool/attack(mob/M as mob, mob/user as mob)
-
-	if(hasorgans(M))
-
-		var/obj/item/organ/external/S = M:organs_by_name[user.zone_sel.selecting]
-
-		if (!S) return
-		if(!(S.status & ORGAN_ROBOT) || user.a_intent != I_HELP)
+		if (!S || S.robotic<ORGAN_ROBOT)
 			return ..()
 
 		if(S.brute_dam)
 			S.heal_damage(15,0,0,1)
-			user.visible_message("\red \The [user] patches some dents on \the [M]'s [S.name] with \the [src].")
+			user.visible_message("\red \The [user] patches some dents on \the [H]'s [S.name] with \the [src].")
 			return
 		else
 			user << "Nothing to fix!"
 
 	else
 		return ..()
-
 
 //Returns the amount of fuel in the welder
 /obj/item/weapon/weldingtool/proc/get_fuel()
@@ -365,29 +359,29 @@
 		return
 	switch(safety)
 		if(1)
-			usr << "\red Your eyes sting a little."
+			usr << "<span class='warning'>Your eyes sting a little.</span>"
 			E.damage += rand(1, 2)
 			if(E.damage > 12)
 				user.eye_blurry += rand(3,6)
 		if(0)
-			usr << "\red Your eyes burn."
+			usr << "<span class='warning'>Your eyes burn.</span>"
 			E.damage += rand(2, 4)
 			if(E.damage > 10)
 				E.damage += rand(4,10)
 		if(-1)
-			usr << "\red Your thermals intensify the welder's glow. Your eyes itch and burn severely."
+			usr << "<span class='danger'>Your thermals intensify the welder's glow. Your eyes itch and burn severely.</span>"
 			user.eye_blurry += rand(12,20)
 			E.damage += rand(12, 16)
 	if(safety<2)
 
 		if(E.damage > 10)
-			user << "\red Your eyes are really starting to hurt. This can't be good for you!"
+			user << "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>"
 
 		if (E.damage >= E.min_broken_damage)
-			user << "\red You go blind!"
+			user << "<span class='danger'>You go blind!</span>"
 			user.sdisabilities |= BLIND
 		else if (E.damage >= E.min_bruised_damage)
-			user << "\red You go blind!"
+			user << "<span class='danger'>You go blind!</span>"
 			user.eye_blind = 5
 			user.eye_blurry = 5
 			user.disabilities |= NEARSIGHTED
@@ -399,22 +393,22 @@
 /obj/item/weapon/weldingtool/largetank
 	name = "industrial welding tool"
 	max_fuel = 40
+	origin_tech = list(TECH_ENGINEERING = 2)
 	matter = list(DEFAULT_WALL_MATERIAL = 70, "glass" = 60)
-	origin_tech = "engineering=2"
 
 /obj/item/weapon/weldingtool/hugetank
 	name = "upgraded welding tool"
 	max_fuel = 80
 	w_class = 3.0
+	origin_tech = list(TECH_ENGINEERING = 3)
 	matter = list(DEFAULT_WALL_MATERIAL = 70, "glass" = 120)
-	origin_tech = "engineering=3"
 
 /obj/item/weapon/weldingtool/experimental
 	name = "experimental welding tool"
 	max_fuel = 40
 	w_class = 3.0
+	origin_tech = list(TECH_ENGINEERING = 4, TECH_PHORON = 3)
 	matter = list(DEFAULT_WALL_MATERIAL = 70, "glass" = 120)
-	origin_tech = "engineering=4;phorontech=3"
 	var/last_gen = 0
 
 //Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
@@ -435,13 +429,13 @@
 	icon_state = "crowbar"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	force = 5.0
-	throwforce = 7.0
+	force = 6
+	throwforce = 7
 	pry = 1
 	item_state = "crowbar"
 	w_class = 2.0
+	origin_tech = list(TECH_ENGINEERING = 1)
 	matter = list(DEFAULT_WALL_MATERIAL = 50)
-	origin_tech = "engineering=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 
 /obj/item/weapon/crowbar/red

@@ -26,7 +26,7 @@ var/datum/antagonist/raider/raiders
 		/obj/item/clothing/under/redcoat,
 		/obj/item/clothing/under/serviceoveralls,
 		/obj/item/clothing/under/captain_fly,
-		/obj/item/clothing/under/det,
+		/obj/item/clothing/under/rank/det,
 		/obj/item/clothing/under/color/brown,
 		)
 
@@ -94,9 +94,9 @@ var/datum/antagonist/raider/raiders
 		)
 
 	var/list/raider_holster = list(
-		/obj/item/clothing/accessory/holster/armpit,
-		/obj/item/clothing/accessory/holster/waist,
-		/obj/item/clothing/accessory/holster/hip
+		/obj/item/clothing/accessory/holster/gun/armpit,
+		/obj/item/clothing/accessory/holster/gun/waist,
+		/obj/item/clothing/accessory/holster/gun/hip
 		)
 
 /datum/antagonist/raider/New()
@@ -237,7 +237,7 @@ var/datum/antagonist/raider/raiders
 	var/turf/T = get_turf(player)
 
 	var/obj/item/primary = new new_gun(T)
-	var/obj/item/clothing/accessory/holster/holster = null
+	var/obj/item/clothing/accessory/holster/gun/holster = null
 
 	//Give some of the raiders a pirate gun as a secondary
 	if(prob(60))

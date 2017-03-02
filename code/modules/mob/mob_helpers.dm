@@ -73,10 +73,10 @@ var/list/global/base_miss_chance = list(
 	BP_HEAD   = 30,
 	BP_CHEST  = 0,
 	BP_GROIN  = 10,
-	BP_L_LEG  = 10,
-	BP_R_LEG  = 10,
-	BP_L_ARM  = 10,
-	BP_R_ARM  = 10,
+	BP_L_LEG  = 20,
+	BP_R_LEG  = 20,
+	BP_L_ARM  = 20,
+	BP_R_ARM  = 20,
 	BP_L_HAND = 40,
 	BP_R_HAND = 40,
 	BP_L_FOOT = 40,
@@ -101,8 +101,8 @@ var/list/global/organ_rel_size = list(
 
 var/list/global/nearest_part = list(
 	BP_HEAD   = list(BP_CHEST),
-	BP_CHEST  = list(BP_HEAD, BP_GROIN, BP_R_ARM, BP_L_ARM),
-	BP_GROIN  = list(BP_L_LEG, BP_R_LEG, BP_CHEST),
+	BP_CHEST  = list(BP_HEAD,  BP_GROIN,  BP_R_ARM, BP_L_ARM),
+	BP_GROIN  = list(BP_L_LEG, BP_R_LEG,  BP_CHEST),
 	BP_L_LEG  = list(BP_R_LEG, BP_L_FOOT, BP_GROIN),
 	BP_R_LEG  = list(BP_L_LEG, BP_R_FOOT, BP_GROIN),
 	BP_L_ARM  = list(BP_CHEST, BP_L_HAND),
@@ -153,16 +153,25 @@ var/list/global/nearest_part = list(
 /proc/get_zone_with_miss_chance(zone, var/mob/target, var/miss_chance_mod = 0, var/ranged_attack=0)
 	zone = check_zone(zone)
 
-	if(!ranged_attack)
-		// you cannot miss if your target is prone or restrained
-		if(target.buckled || target.lying)
-			return zone
-		// if your target is being grabbed aggressively by someone you cannot miss either
-		for(var/obj/item/weapon/grab/G in target.grabbed_by)
-			if(G.state >= GRAB_AGGRESSIVE)
-				return zone
+	var/miss_chance = 0
 
-	var/miss_chance = 10
+	if(ranged_attack)
+		miss_chance += 10
+		if(target.lying)
+			miss_chance += 10
+	else
+		if(target.lying)
+			miss_chance -= 10
+
+	// if your target is restrained miss chance is lowered
+	if(target.buckled)
+		miss_chance -= 20
+
+	// if your target is being grabbed aggressively by someone miss chance is lowered either
+	for(var/obj/item/weapon/grab/G in target.grabbed_by)
+		if(G.state >= GRAB_AGGRESSIVE)
+			miss_chance -= 20
+
 	if (zone in base_miss_chance)
 		miss_chance = base_miss_chance[zone]
 	miss_chance = max(miss_chance + miss_chance_mod, 0)
@@ -217,21 +226,20 @@ proc/slur(phrase)
 			if(1,3,5,8)	newletter="[rlowertext(newletter)]"
 			if(2,4,6,15)	newletter="[ruppertext(newletter)]"
 			if(7)	newletter+="'"
-			//if(9,10)	newletter="<b>[newletter]</b>"
+			if(9,10)	newletter="<b>[newletter]</b>"
 			//if(11,12)	newletter="<big>[newletter]</big>"
 			//if(13)	newletter="<small>[newletter]</small>"
 		newphrase+="[newletter]";counter-=1
 	return newphrase
 
 /proc/stutter(n)
-	var/te = rhtml_decode(n)
-	var/t = ""//placed before the message. Not really sure what it's for.
+	var/te = russian_to_cp1251(n)
 	n = length(n)//length of the entire word
-	var/p = null
-	p = 1//1 is the start of any word
+	var/list/t = list()
+	var/p = 1//1 is the start of any word
 	while(p <= n)//while P, which starts at 1 is less or equal to N which is the length.
 		var/n_letter = copytext(te, p, p + 1)//copies text from a certain distance. In this case, only one letter at a time.
-		if (prob(80) && (ckey(n_letter) in list("b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","v","w","x","y","z")))
+		if (prob(80) && (rlowertext(n_letter) in LIST_OF_CONSONANT))
 			if (prob(10))
 				n_letter = text("[n_letter]-[n_letter]-[n_letter]-[n_letter]")//replaces the current letter with this instead.
 			else
@@ -242,9 +250,9 @@ proc/slur(phrase)
 						n_letter = null
 					else
 						n_letter = text("[n_letter]-[n_letter]")
-		t = text("[t][n_letter]")//since the above is ran through for each letter, the text just adds up back to the original word.
+		t += n_letter //since the above is ran through for each letter, the text just adds up back to the original word.
 		p++//for each letter p is increased to find where the next letter will be.
-	return sanitize(t)
+	return sanitize(jointext(t,null))
 
 
 proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
@@ -307,8 +315,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		if(istype(oldeye, /mob/observer/eye/aiEye))
 			aiEyeFlag = 1
 
-		var/x
-		for(x=0; x<duration, x++)
+		for(var/x=0; x<duration, x++)
 			if(aiEyeFlag)
 				M.client.eye = locate(dd_range(1,oldeye.loc.x+rand(-strength,strength),world.maxx),dd_range(1,oldeye.loc.y+rand(-strength,strength),world.maxy),oldeye.loc.z)
 			else

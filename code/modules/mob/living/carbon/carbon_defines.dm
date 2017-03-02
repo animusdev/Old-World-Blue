@@ -26,3 +26,4 @@
 
 	var/does_not_breathe = 0 //Used for specific mobs that can't take advantage of the species flags (changelings)
 
+	var/datum/species_abilities/species_abilities = null //Experimental. For "Arachna" for current moment.

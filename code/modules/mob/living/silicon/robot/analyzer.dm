@@ -12,9 +12,17 @@
 	w_class = 2.0
 	throw_speed = 5
 	throw_range = 10
-	origin_tech = "magnets=2;biotech=1;engineering=2"
+	origin_tech = list(TECH_MAGNET = 2, TECH_BIO = 1, TECH_ENGINEERING = 2)
 	matter = list(DEFAULT_WALL_MATERIAL = 500, "glass" = 200)
 	var/mode = 1;
+
+
+/obj/item/device/robotanalyzer/do_surgery(mob/living/M, mob/living/user)
+	if(user.a_intent != I_HELP) //in case it is ever used as a surgery tool
+		return ..()
+	do_scan(M, user) //default surgery behaviour is just to scan as usual
+	return 1
+
 
 /obj/item/device/robotanalyzer/attack(mob/living/M as mob, mob/living/user as mob)
 	do_scan(M, user)

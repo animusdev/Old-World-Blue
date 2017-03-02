@@ -520,7 +520,7 @@ obj/structure/cable/proc/cableColor(var/colorC)
 			user << "<span class='warning'>[M] miss that body part!</span>"
 			return
 
-		if(!(S.status & ORGAN_ROBOT) || user.a_intent != "help")
+		if(S.robotic<ORGAN_ROBOT || user.a_intent != "help")
 			return ..()
 
 		if(S.burn_dam > 0 && use(1))
@@ -868,6 +868,9 @@ obj/structure/cable/proc/cableColor(var/colorC)
 	pixel_y = rand(-2,2)
 	update_icon()
 	update_wclass()
+
+/obj/item/stack/cable_coil/red
+	color = COLOR_RED
 
 /obj/item/stack/cable_coil/yellow
 	color = COLOR_YELLOW

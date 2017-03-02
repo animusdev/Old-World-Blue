@@ -244,7 +244,7 @@
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/weapon/material/minihoe(Tsec)
-	new /obj/item/weapon/reagent_containers/glass/bucket(Tsec)
+	new /obj/item/weapon/reagent_containers/glass/beaker/bucket(Tsec)
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 	new /obj/item/device/analyzer/plant_analyzer(Tsec)
 
@@ -321,7 +321,7 @@
 		user.remove_from_mob(W)
 		qdel(W)
 
-	else if((istype(W, /obj/item/weapon/reagent_containers/glass/bucket)) && (build_step == 1))
+	else if((istype(W, /obj/item/weapon/reagent_containers/glass/beaker/bucket)) && (build_step == 1))
 		build_step++
 		user << "You add a bucket to [src]."
 		name = "farmbot assembly with bucket"

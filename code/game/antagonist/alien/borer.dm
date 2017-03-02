@@ -36,9 +36,11 @@ var/datum/antagonist/xenos/borer/borers
 	if(istype(borer))
 		var/mob/living/carbon/human/host
 		for(var/mob/living/carbon/human/H in mob_list)
-			if(H.stat != DEAD && !(H.species.flags & IS_SYNTHETIC) && !H.has_brain_worms())
-				host = H
-				break
+			if(H.stat != DEAD && !H.has_brain_worms())
+				var/obj/item/organ/external/head = H.get_organ(BP_HEAD)
+				if(head && !(head.robotic >= ORGAN_ROBOT))
+					host = H
+					break
 		if(istype(host))
 			var/obj/item/organ/external/head = host.get_organ(BP_HEAD)
 			if(head)

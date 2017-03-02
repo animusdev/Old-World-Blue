@@ -238,6 +238,18 @@ datum/design/circuit/arcademachine
 	req_tech = list("programming" = 1)
 	build_path = /obj/item/weapon/circuitboard/arcade
 
+datum/design/circuit/faxmachine
+	name = "fax machine"
+	id = "faxmachine"
+	req_tech = list("programming" = 2)
+	build_path = /obj/item/weapon/circuitboard/fax
+
+datum/design/circuit/commandfaxmachine
+	name = "fax machine (command)"
+	id = "commandfaxmachine"
+	req_tech = list("programming" = 3)
+	build_path = /obj/item/weapon/circuitboard/fax/command
+
 datum/design/circuit/powermonitor
 	name = "power monitoring console"
 	id = "powermonitor"
@@ -496,10 +508,12 @@ datum/design/circuit/tcom/bluespacerelay
 /////////////////////////////////////
 ////////////PROSTHESIS////////////////
 /////////////////////////////////////
-datum/design/prosthesis/enforcer
+datum/design/prosthesis
 	build_type = MECHFAB
-	req_tech = list("materials" = 3, "engineering" = 2, "combat" = 2, "biotech" = 3)
 	category = "Prosthesis"
+
+datum/design/prosthesis/enforcer
+	req_tech = list("materials" = 3, "engineering" = 2, "combat" = 2, "biotech" = 3)
 	desc = "Fulllimb combat prosthesis with magboots and powerfists modules."
 
 datum/design/prosthesis/enforcer/AssembleDesignName()
@@ -526,6 +540,23 @@ datum/design/prosthesis/enforcer/l_leg
 	build_path = /obj/item/prosthesis/enforcer/l_leg
 
 
+
+datum/design/prosthesis/runner
+	req_tech = list("materials" = 3, "engineering" = 2, "biotech" = 3)
+	desc = "Fulllimb runner prosthesis. Light and quick."
+
+datum/design/prosthesis/runner/AssembleDesignName()
+	name = "Prosthesis design of \"R.U.N.N.E.R.\" ([name])"
+
+datum/design/prosthesis/runner/r_leg
+	name = "right leg"
+	id = "runner_r_leg"
+	build_path = /obj/item/prosthesis/runner/r_leg
+
+datum/design/prosthesis/runner/l_leg
+	name = "left leg"
+	id = "runner_l_leg"
+	build_path = /obj/item/prosthesis/runner/l_leg
 
 ///////////////////////////////////
 ////////////Mecha Modules//////////

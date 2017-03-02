@@ -72,6 +72,7 @@
 	name = "roboticist's jumpskirt"
 	icon_state = "roboticsf"
 	item_state = "robotics"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
 /obj/item/clothing/under/rank/mechatronic
 	desc = "It's a lilac-blue jumpsuit with a pink duffel jacket, all the rage for mechatronic engineers."

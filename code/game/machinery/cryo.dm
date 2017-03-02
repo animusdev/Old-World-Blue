@@ -301,6 +301,19 @@
 	update_icon()
 	return 1
 
+/obj/machinery/atmospherics/unary/cryo_cell/MouseDrop_T(var/mob/target, var/mob/user)
+	if(!ismob(target))
+		return
+	if (target.buckled)
+		usr << "\red <B>Unbuckle the subject before attempting to move them</B>"
+		return
+	user.visible_message("<span class='notice'>\The [user] begins placing \the [target] into \the [src].</span>", "<span class='notice'>You start placing \the [target] into \the [src].</span>")
+	if(!do_after(user, 30, src))
+		return
+	put_mob(target)
+	return
+
+
 /obj/machinery/atmospherics/unary/cryo_cell/verb/move_eject()
 	set name = "Eject occupant"
 	set category = "Object"

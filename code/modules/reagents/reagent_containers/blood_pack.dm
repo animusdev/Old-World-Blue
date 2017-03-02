@@ -40,6 +40,21 @@
 		if(10 to 50) 		icon_state = "half"
 		if(51 to INFINITY)	icon_state = "full"
 
+/obj/item/weapon/reagent_containers/blood/afterattack(var/obj/target, var/mob/user, var/flag)
+	if(!flag)
+		return
+	..()
+
+	if(user.a_intent == I_HELP)
+		if(standard_feed_mob(user, target))
+			return
+
+/obj/item/weapon/reagent_containers/blood/standard_feed_mob(var/mob/user, var/mob/living/carbon/human/target)
+	if(!istype(target) || target.species.reagent_tag != IS_VAMPIRE)
+		return
+	..()
+
+
 /obj/item/weapon/reagent_containers/blood/APlus
 	blood_type = "A+"
 

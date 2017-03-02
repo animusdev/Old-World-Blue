@@ -35,30 +35,24 @@
 		wear_state = icon_state
 		base_wear_state = base_state
 
-/obj/item/clothing/suit/storage/toggle/varsityred
+/obj/item/clothing/suit/storage/toggle/varsity
 	name = "red varsity jacket"
 	icon_state = "varsity_red"
 	body_parts_covered = UPPER_TORSO|ARMS
 	cold_protection = UPPER_TORSO|ARMS
 
-/obj/item/clothing/suit/storage/toggle/varsityblue
+/obj/item/clothing/suit/storage/toggle/varsity/blue
 	name = "blue varsity jacket"
 	icon_state = "varsity_blue"
-	body_parts_covered = UPPER_TORSO|ARMS
-	cold_protection = UPPER_TORSO|ARMS
 
-/obj/item/clothing/suit/storage/toggle/varsityblack
+/obj/item/clothing/suit/storage/toggle/varsity/black
 	name = "black varsity jacket"
 	icon_state = "varsity_black"
-	body_parts_covered = UPPER_TORSO|ARMS
-	cold_protection = UPPER_TORSO|ARMS
 
-/obj/item/clothing/suit/storage/toggle/varsitybrown
+/obj/item/clothing/suit/storage/toggle/varsity/brown
 	name = "brown varsity jacket"
 	desc = "Where are you right now?"
 	icon_state = "varsity_brown"
-	body_parts_covered = UPPER_TORSO|ARMS
-	cold_protection = UPPER_TORSO|ARMS
 
 /obj/item/clothing/suit/storage/toggle/bomber
 	name = "bomber jacket"

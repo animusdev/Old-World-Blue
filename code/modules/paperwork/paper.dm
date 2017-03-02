@@ -388,6 +388,17 @@
 	if(user.mind && (user.mind.assigned_role == "Clown"))
 		clown = 1
 
+	if(istype(P, /obj/item/weapon/reagent_containers/food/snacks/grown))
+		var/obj/item/weapon/reagent_containers/food/snacks/grown/G = P
+		if(G.reagents && (G.reagents.has_reagent("space_drugs")||G.reagents.has_reagent("psilocybin")))
+			var/obj/item/weapon/weed_paper/WP = new(src.loc)
+			user << "You grind some [P] on the paper."
+			WP.attackby(P, user)
+			user.u_equip(src)
+			user.put_in_hands(WP)
+			del(src)
+			return
+
 	if(istype(P, /obj/item/weapon/tape_roll))
 		var/obj/item/weapon/tape_roll/tape = P
 		tape.stick(src, user)

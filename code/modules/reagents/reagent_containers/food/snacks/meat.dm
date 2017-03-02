@@ -4,10 +4,12 @@
 	icon_state = "meat"
 	health = 180
 	filling_color = "#FF1C1C"
-	New()
-		..()
-		reagents.add_reagent("protein", 9)
-		src.bitesize = 3
+	center_of_mass = list("x"=16, "y"=14)
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/New()
+	..()
+	reagents.add_reagent("protein", 9)
+	src.bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/material/knife))

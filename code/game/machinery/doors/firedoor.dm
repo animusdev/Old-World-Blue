@@ -84,7 +84,7 @@
 
 /obj/machinery/door/firedoor/examine(mob/user, return_dist = 1)
 	. = ..()
-	if((.>1) || !density)
+	if(!density || !issilicon(user) && (.>1))
 		return
 
 	if(pdiff >= FIREDOOR_MAX_PRESSURE_DIFF)
@@ -357,7 +357,6 @@
 			use_power(360)
 	else
 		log_admin("[usr]([usr.ckey]) has forced open an emergency shutter.")
-		message_admins("[usr]([usr.ckey]) has forced open an emergency shutter.")
 	latetoggle()
 	return ..()
 

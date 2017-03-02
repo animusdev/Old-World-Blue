@@ -235,6 +235,7 @@
 			You have been ghosted. Please make a bug report so we can fix this bug.</span>"
 			ghostize()
 			//ERROR("A borg has been destroyed, but its MMI lacked a brainmob, so the mind could not be transferred. Player: [ckey].")
+		mmi.update_icon()
 		mmi = null
 	if(connected_ai)
 		connected_ai.connected_robots -= src
@@ -301,11 +302,11 @@
 
 	//Flavour text.
 	if(client)
-		var/module_flavour = client.prefs.flavour_texts_robot[modtype]
+		var/module_flavour = client.prefs.flavor_texts_robot[modtype]
 		if(module_flavour)
 			flavor_text = module_flavour
 		else
-			flavor_text = client.prefs.flavour_texts_robot["Default"]
+			flavor_text = client.prefs.flavor_texts_robot["Default"]
 
 /mob/living/silicon/robot/verb/Namepick()
 	set category = "Robot Commands"
@@ -416,8 +417,8 @@
 // this function displays the cyborgs current cell charge in the stat panel
 /mob/living/silicon/robot/proc/show_cell_power()
 	if(cell)
-		stat(null, text("Charge Left: [round(cell.percent())]%"))
-		stat(null, text("Cell Rating: [round(cell.maxcharge)]")) // Round just in case we somehow get crazy values
+		stat(null, text("Charge Left: [cell.percent()]%"))
+		stat(null, text("Cell Rating: [cell.maxcharge]") )
 		stat(null, text("Power Cell Load: [round(used_power_this_tick)]W"))
 	else
 		stat(null, text("No Cell Inserted!"))
@@ -509,7 +510,7 @@
 			for(var/mob/O in viewers(user, null))
 				O.show_message(text("\red [user] has fixed some of the burnt wires on [src]!"), 1)
 
-	else if (istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
+	else if(istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
 		if(opened)
 			if(cell)
 				user << "You close the cover."

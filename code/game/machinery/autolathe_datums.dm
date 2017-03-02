@@ -29,7 +29,7 @@
 
 /datum/autolathe/recipe/bucket
 	name = "bucket"
-	path = /obj/item/weapon/reagent_containers/glass/bucket
+	path = /obj/item/weapon/reagent_containers/glass/beaker/bucket
 	category = "General"
 
 /datum/autolathe/recipe/flashlight
@@ -428,4 +428,10 @@
 	hidden = 1
 	category = "General"
 
+
+/datum/autolathe/recipe/a145
+	name = "14.5 shell"
+	path = /obj/item/ammo_casing/a145
+	hidden = 1
+	category = "Arms and Ammunition"
 

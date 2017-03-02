@@ -71,9 +71,13 @@
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
 					H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/toggle/fr_jacket(H), slot_wear_suit)
 				if("Surgeon")
-					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/blue(H), slot_w_uniform)
+					if(H.gender == FEMALE)
+						H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/sleeveless/blue(H), slot_w_uniform)
+						H.equip_to_slot_or_del(new /obj/item/clothing/head/surgery/blue(H), slot_head)
+					else
+						H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/sleeveless/green(H), slot_w_uniform)
+						H.equip_to_slot_or_del(new /obj/item/clothing/head/surgery/green(H), slot_head)
 					H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/toggle/labcoat(H), slot_wear_suit)
-					H.equip_to_slot_or_del(new /obj/item/clothing/head/surgery/blue(H), slot_head)
 				if("Virologist")
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/virologist(H), slot_w_uniform)
 					H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/toggle/labcoat/virologist(H), slot_wear_suit)
@@ -95,7 +99,7 @@
 							H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/nurse(H), slot_w_uniform)
 						H.equip_to_slot_or_del(new /obj/item/clothing/head/nursehat(H), slot_head)
 					else
-						H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/purple(H), slot_w_uniform)
+						H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/sleeveless/purple(H), slot_w_uniform)
 		..()
 		return 1
 
@@ -128,7 +132,6 @@
 			switch(H.mind.role_alt_title)
 				if("Pharmacist")
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/pharma(H), slot_w_uniform)
-					H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/toggle/fr_jacket(H), slot_wear_suit)
 		return ..()
 
 
@@ -193,7 +196,7 @@
 	)
 	alt_titles = list("Emergency Medical Technician")
 
-	uniform = /obj/item/clothing/under/rank/medical/paramedic_dark
+	uniform = /obj/item/clothing/under/rank/medical/sleeveless/paramedic
 	suit = /obj/item/clothing/suit/storage/vest/ems
 	hat = /obj/item/clothing/head/soft/emt
 	shoes = /obj/item/clothing/shoes/jackboots
@@ -212,5 +215,5 @@
 		if (H.mind && H.mind.role_alt_title)
 			switch(H.mind.role_alt_title)
 				if("Emergency Medical Technician")
-					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/paramedic_dark(H), slot_w_uniform)
+					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/sleeveless/paramedic(H), slot_w_uniform)
 		return ..()

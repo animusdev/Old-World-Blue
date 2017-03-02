@@ -18,7 +18,7 @@
 	w_class = 2
 	sharp = 1
 	edge = 1
-	origin_tech = "materials=2;combat=1"
+	origin_tech = list(TECH_MATERIAL = 2, TECH_COMBAT = 1)
 	attack_verb = list("chopped", "torn", "cut")
 	applies_material_colour = 0
 
@@ -66,10 +66,10 @@
 	throw_range = 3
 	w_class = 4
 	slot_flags = SLOT_BACK
-	origin_tech = "materials=2;combat=2"
+	origin_tech = list(TECH_MATERIAL = 2, TECH_COMBAT = 2)
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 
-	/obj/item/weapon/material/knuckles
+/obj/item/weapon/material/knuckles
 	icon_state = "knuckles"
 	name = "brass knuckles"
 	desc = "Prepare your teeth!"

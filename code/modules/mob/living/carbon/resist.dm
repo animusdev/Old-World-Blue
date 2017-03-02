@@ -26,6 +26,7 @@
 		spawn() escape_legcuffs()
 
 /mob/living/carbon/proc/escape_handcuffs()
+	self_attack_log(src, "try remove handcuffs")
 	//if(!(last_special <= world.time)) return
 
 	//This line represent a significant buff to grabs...
@@ -58,6 +59,7 @@
 			"<span class='danger'>\The [src] manages to remove \the [handcuffed]!</span>",
 			"<span class='notice'>You successfully remove \the [handcuffed].</span>"
 			)
+		self_attack_log(src, "remove handcuffs", 1)
 		drop_from_inventory(handcuffed)
 
 /mob/living/carbon/proc/escape_legcuffs()
@@ -110,6 +112,8 @@
 	if(do_after(src, 50))
 		if(!handcuffed || buckled)
 			return
+
+		self_attack_log(src, "break self handcuffs", 1)
 
 		visible_message(
 			"<span class='danger'>[src] manages to break \the [handcuffed]!</span>",

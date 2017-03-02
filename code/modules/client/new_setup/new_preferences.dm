@@ -1,20 +1,21 @@
 #define PAGE_LOAD		1
-#define PAGE_RECORDS	2
-#define PAGE_LIMBS		3
-#define PAGE_OCCUPATION	4
-#define PAGE_LOADOUT	5
-#define PAGE_SILICON	6
-#define PAGE_PREFS		7
-#define PAGE_SPECIES	8
+#define PAGE_SAVE		2
+#define PAGE_RECORDS	3
+#define PAGE_LIMBS		4
+#define PAGE_OCCUPATION	5
+#define PAGE_LOADOUT	6
+#define PAGE_FLAVOR		7
+#define PAGE_PREFS		8
+#define PAGE_SPECIES	9
 
 /datum/preferences
 	var/global/list/setup_pages = list(
-		"General"     = PAGE_RECORDS,\
-		"Augmentation"= PAGE_LIMBS,\
-		"Occupations" = PAGE_OCCUPATION,\
-		"Loadout"     = PAGE_LOADOUT,\
-		"Silicon"     = PAGE_SILICON,\
-		"Preferences" = PAGE_PREFS,\
+		"General"     = PAGE_RECORDS,
+		"Flavor"      = PAGE_FLAVOR,
+		"Occupations" = PAGE_OCCUPATION,
+		"Augmentation"= PAGE_LIMBS,
+		"Loadout"     = PAGE_LOADOUT,
+		"Preferences" = PAGE_PREFS,
 	)
 
 	var/current_page = PAGE_RECORDS
@@ -25,7 +26,6 @@
 	var/facial_color = "#000000"
 	var/eyes_color   = "#000000"
 	var/skin_color   = "#000000"
-	var/skin_tone    = 35			//LETHALGHOST: -s_tone + 35.
 
 	var/email = ""					//Character email adress.
 	var/email_is_public = 1			//Add or not to email-list at round join.
@@ -52,7 +52,7 @@
 /datum/preferences/proc/NewShowChoices(mob/user)
 	if(!user || !user.client)	return
 	if(req_update_icon)
-		new_update_preview_icon()
+		update_preview_icon()
 		user << browse_rsc(preview_south, "new_previewicon[SOUTH].png") // TODO: return to list of dirs?
 		user << browse_rsc(preview_north, "new_previewicon[NORTH].png")
 		user << browse_rsc(preview_east,  "new_previewicon[EAST].png" )
@@ -66,6 +66,8 @@
 		</script>
 		<style>
 			span.box{display: inline-block; width: 20px; height: 10px; border:1px solid #000;}
+			div.limited{display:none}
+			div.limited.[species]{display: inline-block}
 			td{padding: 0px}
 		</style>
 		</head>
@@ -73,10 +75,9 @@
 	"}
 
 	if(path)
-		dat += "Slot - "
 		dat += "<span onclick=\"set('switch_page', [PAGE_LOAD])\">Load slot</span> - "
 		dat += "<span onclick=\"set('reload', 'reload')\">Reload slot</span> - "
-		dat += "<span onclick=\"set('save', 'save')\">Save slot</span><hr>"
+		dat += "<span onclick=\"set('switch_page', [PAGE_SAVE])\">Save slot</span><hr>"
 	else
 		dat += "Please create an account to save your preferences.<hr>"
 
@@ -92,10 +93,11 @@
 
 	switch(current_page)
 		if(PAGE_LOAD)		dat += GetLoadPage(user)
+		if(PAGE_SAVE)		dat += GetSavePage(user)
 		if(PAGE_RECORDS)	dat += GetRecordsPage(user)
 		if(PAGE_LIMBS)		dat += GetLimbsPage(user)
 		if(PAGE_OCCUPATION)	dat += GetOccupationPage(user)
-		if(PAGE_SILICON)	dat += GetSiliconPage(user)
+		if(PAGE_FLAVOR)		dat += GetFlavorPage(user)
 		if(PAGE_PREFS)		dat += GetPrefsPage(user)
 		if(PAGE_LOADOUT)	dat += GetLoadOutPage(user)
 		if(PAGE_SPECIES)	dat += GetSpeciesPage(user)
@@ -108,9 +110,6 @@
 	var/mob/user = usr
 	if(!user || !user.client)
 		return
-
-	if(href_list["preference"] || href_list["task"]) // OLD Setup Character
-		return ..()
 
 	if(href_list["switch_page"])
 		current_page = text2num(href_list["switch_page"])
@@ -131,18 +130,14 @@
 
 	switch(current_page)
 		if(PAGE_LOAD)		HandleLoadTopic(user, href_list)
+		if(PAGE_SAVE)		HandleSaveTopic(user, href_list)
 		if(PAGE_RECORDS)	HandleRecordsTopic(user, href_list)
 		if(PAGE_LIMBS)		HandleLimbsTopic(user, href_list)
 		if(PAGE_LOADOUT)	HandleLoadOutTopic(user, href_list)
 		if(PAGE_OCCUPATION)	HandleOccupationTopic(user, href_list)
-		if(PAGE_SILICON)	HandleSiliconTopic(user, href_list)
+		if(PAGE_FLAVOR)		HandleFlavorTopic(user, href_list)
 		if(PAGE_PREFS)		HandlePrefsTopic(user, href_list)
 		if(PAGE_SPECIES)	HandleSpeciesTopic(user, href_list)
-
-/*
-	if(user.ready)
-		return
-*/
 
 	spawn()
 		NewShowChoices(user)
@@ -185,13 +180,44 @@
 		if("delete")
 			delete_character(href_list["num"])
 
+/datum/preferences/proc/GetSavePage()
+	var/dat = "<tt><center>"
+	var/savefile/S = new /savefile(path)
+	if(S)
+		dat += "<b>Select a character slot to load:</b><hr>"
+		var/name
+		for(var/i=1, i<= config.character_slots, i++)
+			S.cd = "/character[i]"
+			S["real_name"] >> name
+			var/removable = 1
+			if(!name)
+				name = "Character[i]"
+				removable = 0
+			if(i==default_slot)
+				name = "<b>[name]</b>"
+			dat += "<a href='?src=\ref[src];character=save;num=[i]'>[name]</a>"
+			if(removable)
+				dat += " <a href='?src=\ref[src];character=delete;num=[i]'>\[X]</a>"
+			dat += "<br>"
+	dat += "</center></tt>"
+	return dat
+
+/datum/preferences/proc/HandleSaveTopic(mob/user, list/href_list)
+	switch(href_list["character"])
+		if("save")
+			save_preferences()
+			save_character(text2num(href_list["num"]))
+			current_page = PAGE_RECORDS
+		if("delete")
+			delete_character(href_list["num"])
+
 
 /datum/preferences/proc/GetRecordsPage()
-	var/dat = "<table><tr><td width='320px'>"
+	var/dat = "<table><tr><td width='260px'>"
 	dat += "<b>General Information</b><br>"
 	dat += "Name: <a id='name' href='?src=\ref[src];name=input'>[real_name]</a><br>"
 	dat += "(<a href='?src=\ref[src];name=random'>Random Name</a>) "
-	dat += "(<a href='?src=\ref[src];name=random_always'>Always Random Name: [random_name ? "Yes" : "No"]</a>)"
+	dat += "(Always? <a href='?src=\ref[src];name=random_always'>[random_name ? "Yes" : "No"]</a>)"
 	dat += "<br>"
 
 	dat += "Species: <a href='?src=\ref[src];switch_page=[PAGE_SPECIES]'>[species]</a><br>"
@@ -200,7 +226,7 @@
 	dat += "Body build: <a href='?src=\ref[src];build=switch'>[body]</a><br>"
 
 	if(current_species.flags & HAS_SKIN_TONE)
-		dat += "Skin Tone: <a href='?src=\ref[src];skin_tone=input'>[skin_tone]/220</a><br>"
+		dat += "Skin Tone: <a href='?src=\ref[src];skin_tone=input'>[s_tone]/220</a><br>"
 
 	dat += "<table style='border-collapse:collapse'>"
 	dat += "<tr><td>Hair:</td><td><a href='?src=\ref[src];hair=color'>Color "
@@ -221,12 +247,14 @@
 		dat += "<span class='box' style='background-color:[skin_color]'></span></a></td></tr>"
 	dat += "</table>"
 
+	dat += "Blood Type: <a href='?src=\ref[src];blood_type=input'>[b_type]</a><br>"
 	dat += "Age: <a href='?src=\ref[src];age=input'>[age]</a><br>"
 	dat += "Spawn Point: <a href='?src=\ref[src];spawnpoint=input'>[spawnpoint]</a><br>"
-	dat += "Corporate mail: <a href='?src=\ref[src];mail=input'>[email ? email : "\[RANDOM MAIL\]"]</a>@mail.nt<br>"
-	dat += "Add your mail to public catalogs: <a href='?src=\ref[src];mail=public'>[email_is_public?"Yes":"No"]</a>"
+	dat += "Second language: <a href='?src=\ref[src];language=input'>[language]</a><br>"
+//	dat += "Corporate mail: <a href='?src=\ref[src];mail=input'>[email ? email : "\[RANDOM MAIL\]"]</a>@mail.nt<br>"
+//	dat += "Add your mail to public catalogs: <a href='?src=\ref[src];mail=public'>[email_is_public?"Yes":"No"]</a><br>"
 
-	dat += "<br><br><b>Background Information</b><br>"
+	dat += "<br><b>Background Information</b><br>"
 	dat += "Nanotrasen Relation: <a href ='?src=\ref[src];nt_relation=input'>[nanotrasen_relation]</a><br>"
 	dat += "Home system: <a href='?src=\ref[src];home_system=input'>[home_system]</a><br>"
 	dat += "Citizenship: <a href='?src=\ref[src];citizenship=input'>[citizenship]</a><br>"
@@ -252,9 +280,10 @@
 
 	dat += "<br><br>"
 
+	dat += "Need Glasses: <a href='?src=\ref[src];disabilities=glasses'>[disabilities & NEARSIGHTED ? "Yes" : "No"]</a><br>"
 	dat += "<table style='position:relative; left:-3px'>"
 	dat += "<tr><td>Backpack:</td>\
-		<td>	<a href ='?src=\ref[src];inventory=back'>[backbaglist[backbag]]</a></td></tr>"
+		<td><a href ='?src=\ref[src];inventory=back'>[backbaglist[backbag]]</a></td></tr>"
 	dat += "<tr><td>Underwear:</td>\
 		<td><a href ='?src=\ref[src];inventory=underwear'>[underwear]</a></td></tr>"
 	dat += "<tr><td>Undershirt:</td>\
@@ -294,13 +323,18 @@
 		if("random_always")
 			random_name = !random_name
 
-	else if(href_list["species"])
-		var/choice = input("Which species would you like to look at?") as null|anything in playable_species
-		if(!choice) return
-		species_preview = choice
-		spawn()
-			SetSpecies(user)
-			req_update_icon = 1 // LETHALGHOST: Move to species select!
+	else if(href_list["language"])
+		var/list/new_languages = list("None")
+
+		for(var/L in all_languages)
+			var/datum/language/lang = all_languages[L]
+			if(lang.flags & PUBLIC)
+				new_languages += lang.name
+
+		for(var/L in current_species.secondary_langs)
+			new_languages += L
+
+		language = input("Please select a secondary language", "Character Generation", null) in new_languages
 
 	else if(href_list["gender"])
 		req_update_icon = 1
@@ -357,12 +391,17 @@
 		if(new_age)
 			age = max(min( round(text2num(new_age)), current_species.max_age),current_species.min_age)
 
+	else if(href_list["blood_type"])
+		var/new_b_type = input(usr, "Choose your character's blood-type:", "Character Preference") as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
+		if(new_b_type)
+			b_type = new_b_type
+
 	else if(href_list["skin_tone"])
 		if(current_species.flags & HAS_SKIN_TONE)
-			var/new_skin_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference", skin_tone)  as num|null
-			if(new_skin_tone && new_skin_tone!=skin_tone)
+			var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference", s_tone)  as num|null
+			if(new_s_tone && new_s_tone!=s_tone)
 				req_update_icon = 1
-				skin_tone = max(min( round(new_skin_tone), 255),1)
+				s_tone = max( min(new_s_tone, 220), 1)
 
 	else if(href_list["skin"])
 		if(current_species.flags & HAS_SKIN_COLOR)
@@ -381,6 +420,9 @@
 			return
 		spawnpoint = choice
 
+	else if(href_list["disabilities"])
+		disabilities ^= NEARSIGHTED
+		req_update_icon = 1
 
 	else if(href_list["mail"]) switch(href_list["mail"])
 		if("input")
@@ -554,13 +596,14 @@
 	return dat
 
 /datum/preferences/proc/get_modification(var/organ)
-	if(!organ) return body_modifications["nothing"]
+	if(!organ || !modifications_data[organ])
+		return body_modifications["nothing"]
 	return modifications_data[organ]
 
-/datum/preferences/proc/check_childred_modifications(var/organ = BP_CHEST)
+/datum/preferences/proc/check_child_modifications(var/organ = BP_CHEST)
 	var/list/organ_data = organ_structure[organ]
 	if(!organ_data) return
-	var/datum/body_modification/mod = modifications_data[organ]
+	var/datum/body_modification/mod = get_modification(organ)
 	for(var/child_organ in organ_data["children"])
 		var/datum/body_modification/child_mod = get_modification(child_organ)
 		if(child_mod.nature < mod.nature)
@@ -568,7 +611,7 @@
 				modifications_data[child_organ] = mod
 			else
 				modifications_data[child_organ] = get_default_modificaton(mod.nature)
-			check_childred_modifications(child_organ)
+			check_child_modifications(child_organ)
 	return
 
 /datum/preferences/proc/HandleLimbsTopic(mob/user, list/href_list)
@@ -587,133 +630,8 @@
 		var/datum/body_modification/mod = body_modifications[href_list["body_modification"]]
 		if(mod && mod.is_allowed(current_organ, src))
 			modifications_data[current_organ] = mod
-			check_childred_modifications(current_organ)
+			check_child_modifications(current_organ)
 			req_update_icon = 1
-
-/*
-/datum/preferences/proc/GetLoadOutPage()
-//	loadout
-/datum/preferences/proc/HandleLoadOutTopic(mob/user, list/href_list)
-*/
-
-/datum/preferences/proc/GetOccupationPage()
-	if(!job_master)
-		return
-
-	//limit     - The amount of jobs allowed per column. Defaults to 17 to make it look nice.
-	//splitJobs - Allows you split the table by job. You can make different tables for each department by including their heads. Defaults to CE to make it look nice.
-	var/limit = 17
-	var/list/splitJobs = list("Chief Medical Officer")
-	var/datum/job/lastJob
-
-
-	var/dat = "<style>td.job{text-align:right; width:60%}</style><tt><center>"
-	dat += "<b>Choose occupation chances</b><br>Unavailable occupations are crossed out.<br>"
-	dat += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
-	dat += "<table width='100%' cellpadding='1' cellspacing='0'>"
-	var/index = -1
-
-	//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
-	if (!job_master)		return
-	var/mob/user = usr
-	for(var/datum/job/job in job_master.occupations)
-		index += 1
-		if((index >= limit) || (job.title in splitJobs))
-			if((index < limit) && (lastJob != null))
-				//If the cells were broken up by a job in the splitJob list then it will fill in the rest of the cells with
-				//the last job's selection color. Creating a rather nice effect.
-				for(var/i = 0, i < (limit - index), i += 1)
-					dat += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'><a>&nbsp</a></td><td><a>&nbsp</a></td></tr>"
-
-			dat += "</table></td><td width='20%'><table width='100%' cellpadding='1' cellspacing='0'>"
-			index = 0
-
-		dat += "<tr bgcolor='[job.selection_color]'><td class='job'>"
-		var/rank = job.title
-		lastJob = job
-		var/job_name = rank
-		if(job.alt_titles)
-			job_name = "<a href=\"?src=\ref[src];act=alt_title;job=\ref[job]\">\[[GetPlayerAltTitle(job)]\]</a>"
-		if(jobban_isbanned(user, rank))
-			dat += "<del>[job_name]</del></td><td><b> \[BANNED]</b></td></tr>"
-			continue
-		if(!job.player_old_enough(user.client))
-			var/available_in_days = job.available_in_days(user.client)
-			dat += "<del>[job_name]</del></td><td> \[IN [(available_in_days)] DAYS]</td></tr>"
-			continue
-		if((job_civilian_low & ASSISTANT) && (rank != "Assistant"))
-			dat += "<font color=orange>[job_name]</font></td><td>\[NEVER]</td></tr>"
-			continue
-		if((rank in command_positions) || (rank == "AI"))//Bold head jobs
-			dat += "<b>[job_name]</b>"
-		else
-			dat += "[job_name]"
-
-		dat += "</td><td width='40%'>"
-
-		dat += "<a href='?src=\ref[src];act=input;text=[rank]'>"
-
-		if(rank == "Assistant")//Assistant is special
-			if(job_civilian_low & ASSISTANT)
-				dat += " <font color=green>\[Yes]</font>"
-			else
-				dat += " <font color=red>\[No]</font>"
-			dat += "</a></td></tr>"
-			continue
-
-		if(GetJobDepartment(job, 1) & job.flag)
-			dat += " <font color=blue>\[High]</font>"
-		else if(GetJobDepartment(job, 2) & job.flag)
-			dat += " <font color=green>\[Medium]</font>"
-		else if(GetJobDepartment(job, 3) & job.flag)
-			dat += " <font color=orange>\[Low]</font>"
-		else
-			dat += " <font color=red>\[NEVER]</font>"
-		dat += "</a></td></tr>"
-
-	dat += "</table></td></tr>"
-
-	dat += "</table>"
-
-	switch(alternate_option)
-		if(GET_RANDOM_JOB)
-			dat += "<br><u><a href='?src=\ref[src];act=random'>\
-				<font color=green>Get random job if preferences unavailable</font></a></u><br>"
-		if(BE_ASSISTANT)
-			dat += "<br><u><a href='?src=\ref[src];act=random'>\
-				<font color=red>Be assistant if preference unavailable</font></a></u><br>"
-		if(RETURN_TO_LOBBY)
-			dat += "<br><u><a href='?src=\ref[src];act=random'>\
-				<font color=purple>Return to lobby if preference unavailable</font></a></u><br>"
-
-	dat += "<a href='?src=\ref[src];act=reset'>\[Reset\]</a>"
-	dat += "</center></tt>"
-
-	return dat
-
-/datum/preferences/proc/HandleOccupationTopic(mob/user, list/href_list)
-	switch(href_list["act"])
-		if("random")
-			if(alternate_option == GET_RANDOM_JOB || alternate_option == BE_ASSISTANT)
-				alternate_option += 1
-			else if(alternate_option == RETURN_TO_LOBBY)
-				alternate_option = 0
-		if ("alt_title")
-			var/datum/job/job = locate(href_list["job"])
-			if (job)
-				var/choices = list(job.title) + job.alt_titles
-				var/choice = input("Pick a title for [job.title].", "Character Generation", GetPlayerAltTitle(job)) as anything in choices | null
-				if(choice)
-					SetPlayerAltTitle(job, choice)
-		if("input")
-			SetJob(user, href_list["text"])
-		if("reset")
-			ResetJobs()
-
-
-
-/datum/preferences/proc/GetSiliconPage()
-/datum/preferences/proc/HandleSiliconTopic(mob/user, list/href_list)
 
 
 /datum/preferences/proc/GetPrefsPage(var/mob/user)
@@ -811,13 +729,120 @@
 		var/num = text2num(href_list["be_special"])
 		be_special ^= (1<<num)
 
-/datum/preferences/proc/GetSpeciesPage()
+/datum/preferences/proc/GetSpeciesPage(mob/user)
+	if(!species_preview || !(species_preview in all_species))
+		species_preview = "Human"
+	var/datum/species/show_species = all_species[species_preview]
+	var/dat = list()
+	dat += "<select onchange=\"set('preview', this.options\[this.selectedIndex\].text)\">"
+	for(var/name in playable_species)
+		dat += "<option [species_preview==name ? "selected" : null]>[name]</option>"
+
+	dat += "</select>"
+
+	var/restricted = 0
+	if(jobban_isbanned(user, show_species.name))
+		restricted = 1
+	else if(config.usealienwhitelist) //If we're using the whitelist, make sure to check it!
+		if(!(show_species.flags & CAN_JOIN))
+			restricted = 2
+		else if((show_species.flags & IS_WHITELISTED) && !is_alien_whitelisted(user,show_species))
+			restricted = 1
+
+	if(restricted)
+		if(restricted == 1)
+			dat += "<font color='red'><b>You cannot play as this species.</br><small>If you wish to be whitelisted, you can make an application post on <a href='?src=\ref[src];preference=open_whitelist_forum'>the forums</a>.</small></b></font></br>"
+		else if(restricted == 2)
+			dat += "<font color='red'><b>You cannot play as this species.</br><small>This species is not available for play as a station race..</small></b></font></br>"
+	if(!restricted || check_rights(R_ADMIN, 0))
+		dat += "\[<a href='?src=\ref[src];select_species=1'>select</a>\]<hr/>"
+
+	dat += "<table padding='8px'>"
+	dat += "<tr>"
+	dat += "<td width = 180 align='center'>"
+	if("preview" in icon_states(show_species.icobase))
+		usr << browse_rsc(icon(show_species.icobase,"preview"), "species_preview_[show_species.name].png")
+		dat += "<img src='species_preview_[show_species.name].png' width='64px' height='64px'><br/><br/>"
+	dat += "<b>Language:</b> [show_species.language]<br/>"
+	dat += "<small>"
+	if(show_species.flags & CAN_JOIN)
+		dat += "</br><b>Often present on human stations.</b>"
+	if(show_species.flags & IS_WHITELISTED)
+		dat += "</br><b>Whitelist restricted.</b>"
+	if(show_species.flags & NO_BLOOD)
+		dat += "</br><b>Does not have blood.</b>"
+	if(show_species.flags & NO_BREATHE)
+		dat += "</br><b>Does not breathe.</b>"
+	if(show_species.flags & NO_SCAN)
+		dat += "</br><b>Does not have DNA.</b>"
+	if(show_species.flags & NO_PAIN)
+		dat += "</br><b>Does not feel pain.</b>"
+	if(show_species.flags & NO_SLIP)
+		dat += "</br><b>Has excellent traction.</b>"
+	if(show_species.flags & NO_POISON)
+		dat += "</br><b>Immune to most poisons.</b>"
+	if(show_species.flags & HAS_SKIN_TONE)
+		dat += "</br><b>Has a variety of skin tones.</b>"
+	if(show_species.flags & HAS_SKIN_COLOR)
+		dat += "</br><b>Has a variety of skin colours.</b>"
+	if(show_species.flags & HAS_EYE_COLOR)
+		dat += "</br><b>Has a variety of eye colours.</b>"
+	if(show_species.flags & IS_PLANT)
+		dat += "</br><b>Has a plantlike physiology.</b>"
+	if(show_species.flags & IS_SYNTHETIC)
+		dat += "</br><b>Is machine-based.</b>"
+	dat += "</small></td>"
+	dat += "<td width = 400>[show_species.blurb]</td>"
+	dat += "</tr>"
+	dat += "</table><center>"
+
+	dat += "</center>"
+	return jointext(dat, "")
+
 /datum/preferences/proc/HandleSpeciesTopic(mob/user, list/href_list)
+	if(href_list["preview"])
+		species_preview = href_list["preview"]
+	else if(href_list["select_species"])
+		if(!species_preview in playable_species || jobban_isbanned(user, species_preview))
+			return
+		var/datum/species/new_species = all_species[species_preview]
+		if((new_species.flags&IS_WHITELISTED) && !is_alien_whitelisted(user,species_preview))
+			return
+		if(current_species.name != species_preview)
+			var/datum/sprite_accessory/HS = hair_styles_list[h_style]
+			if(HS.gender != gender || !(new_species.get_bodytype() in HS.species_allowed))
+				//grab one of the valid hair styles for the newly chosen species
+				var/list/hairstyles = get_hair_styles_list(new_species.get_bodytype(), gender)
+				h_style = pick(hairstyles)
+
+			HS = facial_hair_styles_list[f_style]
+			if(HS.gender != gender || !(new_species.get_bodytype() in HS.species_allowed))
+				//grab one of the valid facial hair styles for the newly chosen species
+				var/list/facialstyles = get_facial_styles_list(new_species.get_bodytype(), gender)
+				f_style = pick(facialstyles)
+
+			//reset hair colour and skin colour
+			if(!new_species.flags&HAS_SKIN_COLOR)
+				hair_color = initial(hair_color)
+			else
+				if(!current_species.flags&HAS_SKIN_COLOR && new_species.base_color)
+					hair_color = new_species.base_color
+
+			if(! (new_species.flags & current_species.flags & HAS_SKIN_TONE) )
+				s_tone = 0
+
+			current_species = new_species
+			species = new_species.name
+			sanitize_body_build()
+
+			current_page = PAGE_RECORDS
+
+			req_update_icon = 1
 
 
 #undef PAGE_RECORDS
 #undef PAGE_LIMBS
 #undef PAGE_OCCUPATION
 #undef PAGE_LOADOUT
-#undef PAGE_SILICON
+#undef PAGE_FLAVOR
 #undef PAGE_PREFS

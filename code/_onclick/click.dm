@@ -4,7 +4,7 @@
 */
 
 // 1 decisecond click delay (above and beyond mob/next_move)
-/mob/var/next_click = 0
+/client/var/next_click = 0
 
 /*
 	Before anything else, defer these calls to a per-mobtype handler.  This allows us to
@@ -16,13 +16,39 @@
 	Note that this proc can be overridden, and is in the case of screen objects.
 */
 
+
+/client/Click(var/atom/target, location, control, params)
+	if(world.time <= next_click) // Hard check, before anything else, to avoid crashing
+		return
+
+	next_click = world.time + 1
+
+	if(buildmode && !istype(target, /obj/screen))
+		buildmode.build_click(src.mob, params, target)
+		return
+
+	if(CH)
+		if(CH.mob_check(mob))
+			if (CH.use_ability(mob,target) && CH.one_use_flag)
+				qdel(CH) //= null
+				return
+		else
+			src << "For some reason you can't use [CH.handler_name] ability"
+			qdel(CH) // = null
+			return
+
+	if(!target.Click(location, control, params))
+		usr.ClickOn(target, params)
+
 /atom/Click(var/location, var/control, var/params) // This is their reaction to being clicked on (standard proc)
-	if(src)
-		usr.ClickOn(src, params)
+	return 0
+
+/client/DblClick(target, location, control, params)
+	mob.DblClickOn(target, params)
+	..()
 
 /atom/DblClick(var/location, var/control, var/params)
-	if(src)
-		usr.DblClickOn(src, params)
+	return 0
 
 /*
 	Standard mob ClickOn()
@@ -38,15 +64,6 @@
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
 /mob/proc/ClickOn(var/atom/A, var/params)
-
-	if(world.time <= next_click) // Hard check, before anything else, to avoid crashing
-		return
-
-	next_click = world.time + 1
-
-	if(client.buildmode)
-		build_click(src, client.buildmode, params, A)
-		return
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["ctrl"])

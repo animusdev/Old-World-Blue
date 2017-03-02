@@ -10,7 +10,7 @@
 	edge = 0
 	throwforce = 7
 	w_class = 3
-	origin_tech = "combat=2"
+	origin_tech = list(TECH_COMBAT = 2)
 	attack_verb = list("beaten")
 	var/stunforce = 2
 	var/agonyforce = 80
@@ -57,7 +57,7 @@
 		return
 
 	if(bcell)
-		user <<"<span class='notice'>The baton is [round(bcell.percent())]% charged.</span>"
+		user <<"<span class='notice'>The baton is [bcell.percent()]% charged.</span>"
 	else
 		user <<"<span class='warning'>The baton does not have a power source installed.</span>"
 

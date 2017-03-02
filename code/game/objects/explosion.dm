@@ -1,3 +1,17 @@
+var/list/explosions_log = list()
+
+/datum/log/explosion
+	var/area/location = null
+	var/devastation_range  = 0
+	var/heavy_impact_range = 0
+	var/light_impact_range = 0
+
+/datum/log/explosion/New(var/area/explosion_area, var/_devastation_range, var/_heavy_impact_range, var/_light_impact_range)
+	location = explosion_area
+	devastation_range  = _devastation_range
+	heavy_impact_range = _heavy_impact_range
+	light_impact_range = _light_impact_range
+
 //TODO: Flash range does nothing currently
 
 ///// Z-Level Stuff
@@ -58,6 +72,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 			// check if the mob can hear
 			if(M.ear_deaf <= 0 || !M.ear_deaf) if(!istype(M.loc,/turf/space))
 				M << 'sound/effects/explosionfar.ogg'
+		explosions_log += new/datum/log/explosion(epicenter.loc.type, devastation_range, heavy_impact_range, light_impact_range)
 		if(adminlog)
 			message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>JMP</a>)")
 			log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ")

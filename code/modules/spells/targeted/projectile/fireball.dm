@@ -27,6 +27,8 @@
 
 	hud_state = "wiz_fireball"
 
+	CH_type = /datum/click_handler/wizard/fireball
+
 /spell/targeted/projectile/dumbfire/fireball/prox_cast(var/list/targets, spell_holder)
 	for(var/mob/living/M in targets)
 		apply_spell_damage(M)

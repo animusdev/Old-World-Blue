@@ -32,6 +32,11 @@ proc/admin_attacker_log_many_victims(var/mob/attacker, var/list/mob/victims, var
 	for(var/mob/victim in victims)
 		admin_attack_log(attacker, victim, attacker_message, victim_message, admin_message)
 
+proc/self_attack_log(var/mob/affected, var/attack_message, var/danger)
+	var/message = "\[[time_stamp()]] <font color='[danger?"red":"orange"]'>[attack_message]</font>"
+	affected.attack_log += message
+	log_attack("[key_name(affected)] [attack_message]. ([affected.x],[affected.y],[affected.z])")
+
 proc/admin_inject_log(mob/attacker, mob/victim, obj/item/weapon, reagents, amount_transferred, violent=0)
 	if(violent)
 		violent = "violently "

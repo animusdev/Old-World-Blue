@@ -4,7 +4,7 @@
 	desc = "A tube of paste containing swarms of repair nanites. Very effective in repairing robotic machinery."
 	icon = 'icons/obj/nanopaste.dmi'
 	icon_state = "tube"
-	origin_tech = "materials=4;engineering=3"
+	origin_tech = list(TECH_MATERIAL = 4, TECH_ENGINEERING = 3)
 	amount = 10
 
 
@@ -18,7 +18,7 @@
 			R.adjustFireLoss(-15)
 			R.updatehealth()
 			use(1)
-			user.visible_message("<span class='notice'>\The [user] applied some [src] at [R]'s damaged areas.</span>",\
+			user.visible_message("<span class='notice'>\The [user] applied some [src] on [R]'s damaged areas.</span>",\
 				"<span class='notice'>You apply some [src] at [R]'s damaged areas.</span>")
 		else
 			user << "<span class='notice'>All [R]'s systems are nominal.</span>"
@@ -30,20 +30,13 @@
 			user << "<span class='warning'>[M] miss that body part!</span>"
 			return
 
-		if(S.open == 1)
-			if (S && (S.status & ORGAN_ROBOT))
-				if(!S.get_damage())
-					user << "<span class='notice'>Nothing to fix here.</span>"
-				else if(can_use(1))
-					user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
-					S.heal_damage(15, 15, robo_repair = 1)
-					H.updatehealth()
-					use(1)
-					user.visible_message("<span class='notice'>\The [user] applies some nanite paste on [user != M ? "[M]'s [S.name]" : "[S]"] with [src].</span>",\
-					"<span class='notice'>You apply some nanite paste on [user == M ? "your" : "[M]'s"] [S.name].</span>")
-		else
-			if (can_operate(H))
-				if (do_surgery(H,user,src))
-					return
-			else
-				user << "<span class='notice'>Nothing to fix in here.</span>"
+		if(S.open == 1 && S.robotic >= ORGAN_ROBOT)
+			if(!S.get_damage())
+				user << "<span class='notice'>Nothing to fix here.</span>"
+			else if(can_use(1))
+				user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
+				S.heal_damage(15, 15, robo_repair = 1)
+				H.updatehealth()
+				use(1)
+				user.visible_message("<span class='notice'>\The [user] applies some nanite paste on [user != M ? "[M]'s [S.name]" : "[S]"] with [src].</span>",\
+				"<span class='notice'>You apply some nanite paste on [user == M ? "your" : "[M]'s"] [S.name].</span>")

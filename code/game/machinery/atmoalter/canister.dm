@@ -130,7 +130,7 @@ update_flag
 
 	if (src.destroyed)
 		src.overlays = 0
-		src.icon_state = text("[]-1", src.canister_color)
+		src.icon_state = "[canister_color]-1"
 		return
 
 	if(icon_state != "[canister_color]")
@@ -252,6 +252,17 @@ update_flag
 		src.health -= W.force
 		src.add_fingerprint(user)
 		healthcheck()
+
+	if(destroyed && istype(W,/obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = W
+		if(!WT.isOn())
+			return 0
+		if(WT.remove_fuel(5) && do_after(user, 30))
+			WT.remove_fuel(5)
+			var/obj/item/stack/material/G = new(loc, 5)
+			G.set_material(DEFAULT_WALL_MATERIAL)
+			qdel(src)
+		return
 
 	if(istype(user, /mob/living/silicon/robot) && istype(W, /obj/item/weapon/tank/jetpack))
 		var/datum/gas_mixture/thejetpack = W:air_contents

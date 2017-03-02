@@ -24,6 +24,8 @@
 		"Monkey" = "monkey",
 		"Borgi" = "borgi",
 		"Fairy" = "fairy",
+		"Puppy" = "puppy",
+		"Bunny" = "rabbit",
 		"Spider" = "spider"
 		)
 

@@ -16,7 +16,7 @@
 /datum/supply_packs/supply/food
 	name = "Kitchen supply crate"
 	contains = list(
-		/obj/item/weapon/reagent_containers/food/condiment/flour = 6,
+		/obj/item/weapon/reagent_containers/condiment/flour = 6,
 		/obj/item/weapon/reagent_containers/glass/drinks/milk = 3,
 		/obj/item/weapon/reagent_containers/glass/drinks/soymilk = 2,
 		/obj/item/weapon/storage/fancy/egg_box = 2,
@@ -37,7 +37,7 @@
 /datum/supply_packs/supply/janitor
 	name = "Janitorial supplies"
 	contains = list(
-		/obj/item/weapon/reagent_containers/glass/bucket = 3,
+		/obj/item/weapon/reagent_containers/glass/beaker/bucket = 3,
 		/obj/item/weapon/mop,
 		/obj/item/weapon/caution = 4,
 		/obj/item/weapon/storage/bag/trash,

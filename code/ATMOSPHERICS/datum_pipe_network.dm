@@ -20,7 +20,8 @@ datum/pipe_network
 		//Equalize gases amongst pipe if called for
 		if(update)
 			update = 0
-			reconcile_air() //equalize_gases(gases)
+			spawn()
+				reconcile_air() //equalize_gases(gases)
 
 		//Give pipelines their process call for pressure checking and what not. Have to remove pressure checks for the time being as pipes dont radiate heat - Mport
 		//for(var/datum/pipeline/line_member in line_members)

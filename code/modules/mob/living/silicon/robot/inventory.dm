@@ -9,11 +9,17 @@
 	if(istype(module_active, /obj/item/weapon/gripper))
 		var/obj/item/weapon/gripper/G = module_active
 		G.drop_to(Target)
-		usr << "<span class='warning'>You can't unequip [I]!</span>"
+		return 1
+	usr << "<span class='warning'>You can't unequip [I]!</span>"
 	return 0
 
 /mob/living/silicon/robot/drop_active_hand(var/atom/target)
-	return unEquip(get_active_hand(), target)
+	if(istype(module_active, /obj/item/weapon/gripper))
+		if(!target) target = get_turf(src)
+		if(unEquip(get_active_hand(), target))
+			return 1
+	else
+		uneq_active()
 
 /*-------TODOOOOOOOOOO--------*/
 

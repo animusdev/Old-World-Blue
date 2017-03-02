@@ -125,9 +125,6 @@ var/list/slot_equipment_priority = list(
 // If canremove or other conditions need to be checked then use unEquip instead.
 /mob/proc/drop_from_inventory(var/obj/item/W, var/atom/Target = null)
 	if(W)
-		if(!Target)
-			Target = loc
-
 		remove_from_mob(W, Target)
 		if(!(W && W.loc)) return 1 // self destroying objects (tk, grabs)
 
@@ -135,7 +132,6 @@ var/list/slot_equipment_priority = list(
 		return 1
 	return 0
 
-//Drops the item in our active hand. TODO: rename this to drop_active_hand or something
 /mob/proc/drop_active_hand(var/atom/Target)
 	return 0
 
@@ -198,7 +194,7 @@ var/list/slot_equipment_priority = list(
 	O.screen_loc = null
 	if(istype(O, /obj/item))
 		var/obj/item/I = O
-		I.forceMove(Target ? Target : src.loc)
+		I.forceMove(Target ? Target : get_turf(src))
 		I.dropped(src)
 	return 1
 

@@ -1,8 +1,8 @@
+///////// .357 /////////
+
 /obj/item/ammo_magazine/a357
-	//name = "ammo box (.357)"
-	//desc = "A box of .357 ammo"
-	//icon_state = "357"
 	name = "speed loader (.357)"
+	desc = "A speedloader for .357 revolvers."
 	icon_state = "T38"
 	caliber = "357"
 	ammo_type = /obj/item/ammo_casing/a357
@@ -10,8 +10,11 @@
 	max_ammo = 7
 	multiple_sprites = 1
 
+///////// .38 /////////
+
 /obj/item/ammo_magazine/c38
-	name = "speed loader (.38)"
+	name = "speedloader (.38)"
+	desc = "A speedloader for .38 revolvers."
 	icon_state = "38"
 	caliber = "38"
 	matter = list(DEFAULT_WALL_MATERIAL = 360)
@@ -20,11 +23,13 @@
 	multiple_sprites = 1
 
 /obj/item/ammo_magazine/c38/rubber
-	name = "speed loader (.38 rubber)"
+	name = "speedloader (.38 rubber)"
 	ammo_type = /obj/item/ammo_casing/c38/rubber
 
+///////// .45 /////////
+
 /obj/item/ammo_magazine/c45m
-	name = "magazine (.45)"
+	name = "pistol magazine (.45)"
 	icon_state = "45"
 	mag_type = MAGAZINE
 	ammo_type = /obj/item/ammo_casing/c45
@@ -69,7 +74,7 @@
 /obj/item/ammo_magazine/mc9mm
 	name = "magazine (9mm)"
 	icon_state = "9x19p"
-	origin_tech = "combat=2"
+	origin_tech = list(TECH_COMBAT = 2)
 	mag_type = MAGAZINE
 	matter = list(DEFAULT_WALL_MATERIAL = 600)
 	caliber = "9mm"
@@ -80,7 +85,7 @@
 /obj/item/ammo_magazine/mc9mmarmy
 	name = "magazine (9mm)"
 	icon_state = "9x19army"
-	origin_tech = "combat=2"
+	origin_tech = list(TECH_COMBAT = 2)
 	mag_type = MAGAZINE
 	matter = list(DEFAULT_WALL_MATERIAL = 600)
 	caliber = "9mm"
@@ -99,7 +104,7 @@
 /obj/item/ammo_magazine/c9mm
 	name = "ammunition Box (9mm)"
 	icon_state = "9mm"
-	origin_tech = "combat=2"
+	origin_tech = list(TECH_COMBAT = 2)
 	matter = list(DEFAULT_WALL_MATERIAL = 1800)
 	caliber = "9mm"
 	ammo_type = /obj/item/ammo_casing/c9mm
@@ -132,7 +137,7 @@
 /obj/item/ammo_magazine/c45
 	name = "ammunition Box (.45)"
 	icon_state = "9mm"
-	origin_tech = "combat=2"
+	origin_tech = list(TECH_COMBAT = 2)
 	caliber = ".45"
 	matter = list(DEFAULT_WALL_MATERIAL = 2250)
 	ammo_type = /obj/item/ammo_casing/c9mm/practice
@@ -144,7 +149,7 @@
 /obj/item/ammo_magazine/a12mm
 	name = "magazine (12mm)"
 	icon_state = "12mm"
-	origin_tech = "combat=2"
+	origin_tech = list(TECH_COMBAT = 2)
 	mag_type = MAGAZINE
 	caliber = "12mm"
 	matter = list(DEFAULT_WALL_MATERIAL = 1500)
@@ -158,7 +163,7 @@
 /obj/item/ammo_magazine/a556
 	name = "magazine (5.56mm)"
 	icon_state = "5.56"
-	origin_tech = "combat=2"
+	origin_tech = list(TECH_COMBAT = 2)
 	mag_type = MAGAZINE
 	caliber = "a556"
 	matter = list(DEFAULT_WALL_MATERIAL = 1800)
@@ -169,7 +174,7 @@
 /obj/item/ammo_magazine/a556army
 	name = "magazine (5.56mm)"
 	icon_state = "556army"
-	origin_tech = "combat=3"
+	origin_tech = list(TECH_COMBAT = 2)
 	mag_type = MAGAZINE
 	caliber = "a556"
 	matter = list(DEFAULT_WALL_MATERIAL = 1800)
@@ -188,7 +193,7 @@
 /obj/item/ammo_magazine/a50
 	name = "magazine (.50)"
 	icon_state = "50ae"
-	origin_tech = "combat=2"
+	origin_tech = list(TECH_COMBAT = 2)
 	mag_type = MAGAZINE
 	caliber = ".50"
 	matter = list(DEFAULT_WALL_MATERIAL = 1260)
@@ -214,7 +219,7 @@
 /obj/item/ammo_magazine/a762
 	name = "magazine box (7.62mm)"
 	icon_state = "a762"
-	origin_tech = "combat=2"
+	origin_tech = list(TECH_COMBAT = 2)
 	mag_type = MAGAZINE
 	caliber = "a762"
 	matter = list(DEFAULT_WALL_MATERIAL = 4500)

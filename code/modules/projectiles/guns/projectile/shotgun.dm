@@ -9,7 +9,7 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
 	caliber = "shotgun"
-	origin_tech = "combat=4;materials=2"
+	origin_tech = list(TECH_COMBAT = 4, TECH_MATERIAL = 2)
 	load_method = SINGLE_CASING
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	handle_casings = HOLD_CASINGS
@@ -45,7 +45,7 @@
 	desc = "Built for close quarters combat, the Hesphaistos Industries KS-40 is widely regarded as a weapon of choice for repelling boarders."
 	icon_state = "cshotgun"
 	item_state = "cshotgun"
-	origin_tech = "combat=5;materials=2"
+	origin_tech = list(TECH_COMBAT = 5, TECH_MATERIAL = 2)
 	max_shells = 7 //match the ammo box capacity, also it can hold a round in the chamber anyways, for a total of 8.
 	ammo_type = /obj/item/ammo_casing/shotgun
 
@@ -64,7 +64,7 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
 	caliber = "shotgun"
-	origin_tech = "combat=3;materials=1"
+	origin_tech = list(TECH_COMBAT = 3, TECH_MATERIAL = 1)
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	fire_sound = 'sound/weapons/shotgun_shoot.ogg'
 
@@ -123,7 +123,7 @@
 	desc = "That's the Hutchinson 680, standard-issue weapon of the NT colonial infantry.."
 	icon_state = "hutchinson680"
 	item_state = "hutchinson680"
-	origin_tech = "combat=7;materials=4"
+	origin_tech = list(TECH_COMBAT = 5, TECH_MATERIAL = 4)
 	max_shells = 11
 	slot_flags = SLOT_BACK
 	ammo_type = /obj/item/ammo_casing/shotgun

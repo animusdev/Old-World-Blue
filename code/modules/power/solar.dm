@@ -365,11 +365,11 @@ var/list/solars_list = list()
 
 /obj/machinery/power/solar_control/update_icon()
 	if(stat & BROKEN)
-		icon_state = "broken"
+		icon_state = "solarb"
 		overlays.Cut()
 		return
 	if(stat & NOPOWER)
-		icon_state = "c_unpowered"
+		icon_state = "solar0"
 		overlays.Cut()
 		return
 	icon_state = "solar"

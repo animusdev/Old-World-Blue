@@ -36,7 +36,7 @@
 				user << "<span class='warning'>You can't apply [src] through [H.wear_suit]!</span>"
 				return 1
 
-		if(affecting.status & ORGAN_ROBOT)
+		if(affecting.robotic >= ORGAN_ROBOT)
 			user << "<span class='warning'>This isn't useful at all on a robotic limb.</span>"
 			return 1
 
@@ -57,7 +57,7 @@
 	singular_name = "gauze length"
 	desc = "Some sterile gauze to wrap around bloody stumps."
 	icon_state = "brutepack"
-	origin_tech = "biotech=1"
+	origin_tech = list(TECH_BIO = 1)
 	var/clean = 0
 
 /obj/item/stack/medical/bruise_pack/advanced
@@ -75,12 +75,8 @@
 	var/obj/item/organ/external/affecting = H.get_organ(user.zone_sel.selecting)
 
 	if(affecting.open)
-		if(can_operate(H)) //Checks if mob is lying down on table for surgery
-			if(do_surgery(H,user,src))
-				return 1
-		else
-			user << "<span class='notice'>The [affecting.name] is cut open, you'll need more than a bandage!</span>"
-			return 1
+		user << "<span class='notice'>The [affecting.name] is cut open, you'll need more than a bandage!</span>"
+		return 1
 
 	if(affecting.is_bandaged() && (!clean || affecting.is_disinfected()))
 		user << "<span class='warning'>The wounds on [H]'s [affecting.name] have already been treated.</span>"
@@ -141,7 +137,7 @@
 	singular_name = "ointment"
 	icon_state = "ointment"
 	heal_burn = 1
-	origin_tech = "biotech=1"
+	origin_tech = list(TECH_BIO = 1)
 
 /obj/item/stack/medical/ointment/advanced
 	name = "advanced burn kit"
@@ -157,12 +153,8 @@
 	var/obj/item/organ/external/affecting = H.get_organ(user.zone_sel.selecting)
 
 	if(affecting.open)
-		if(can_operate(H)) //Checks if mob is lying down on table for surgery
-			if(do_surgery(H,user,src))
-				return 1
-		else
-			user << "<span class='notice'>The [affecting.name] is cut open, you'll need more than a bandage!</span>"
-			return 1
+		user << "<span class='notice'>The [affecting.name] is cut open, you'll need more than a bandage!</span>"
+		return 1
 
 	if(affecting.is_salved())
 		user << "<span class='warning'>The wounds on [H]'s [affecting.name] have already been salved.</span>"

@@ -1,7 +1,7 @@
 /obj/machinery/washing_machine
 	name = "Washing Machine"
 	icon = 'icons/obj/machines/washing_machine.dmi'
-	icon_state = "wm_10"
+	icon_state = "wm_1"
 	density = 1
 	anchored = 1.0
 	var/state = 1
@@ -72,7 +72,10 @@
 
 
 /obj/machinery/washing_machine/update_icon()
-	icon_state = "wm_[state][panel]"
+	overlays.Cut()
+	icon_state = "wm_[state]"
+	if(panel)
+		overlays += "panel"
 
 /obj/machinery/washing_machine/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	/*if(istype(W,/obj/item/weapon/screwdriver))
@@ -96,14 +99,17 @@
 				state = 3
 		else
 			..()
-	else if(istype(W,/obj/item/stack/material/hairlesshide) || \
-		istype(W,/obj/item/clothing/under) || \
-		istype(W,/obj/item/clothing/mask) || \
-		istype(W,/obj/item/clothing/head) || \
-		istype(W,/obj/item/clothing/gloves) || \
-		istype(W,/obj/item/clothing/shoes) || \
-		istype(W,/obj/item/clothing/suit) || \
-		istype(W,/obj/item/weapon/bedsheet))
+	else if(is_type_in_list(W,list(\
+		/obj/item/stack/material/hairlesshide,
+		/obj/item/clothing/under,
+		/obj/item/clothing/hidden,
+		/obj/item/clothing/mask,
+		/obj/item/clothing/head,
+		/obj/item/clothing/gloves,
+		/obj/item/clothing/shoes,
+		/obj/item/clothing/suit,
+		/obj/item/weapon/bedsheet)\
+	))
 
 		//YES, it's hardcoded... saves a var/can_be_washed for every single clothing item.
 		if ( istype(W,/obj/item/clothing/suit/space ) )
@@ -163,6 +169,7 @@
 			state = 1
 			for(var/atom/movable/O in contents)
 				O.loc = src.loc
+			crayon = null
 		if(3)
 			state = 4
 		if(4)

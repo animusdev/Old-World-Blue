@@ -357,6 +357,7 @@
 		if(access_cent_captain)
 			return "Code Gold"
 
+/*
 /proc/get_all_jobs()
 	var/list/all_jobs = list()
 	var/list/all_datums = typesof(/datum/job)
@@ -366,6 +367,7 @@
 		jobdatum = new jobtype
 		all_jobs.Add(jobdatum.title)
 	return all_jobs
+*/
 
 /proc/get_all_centcom_jobs()
 	return list("VIP Guest",

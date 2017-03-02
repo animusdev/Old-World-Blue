@@ -2,7 +2,7 @@
 	name = "laser"
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	damage = 40
+	damage = 45
 	damage_type = BURN
 	check_armour = "laser"
 	eyeblur = 4
@@ -15,40 +15,33 @@
 	impact_type = /obj/effect/projectile/laser/impact
 
 /obj/item/projectile/beam/practice
-	name = "laser"
-	icon_state = "laser"
-	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 0
-	damage_type = BURN
-	check_armour = "laser"
 	eyeblur = 2
 
-/obj/item/projectile/beam/heavylaser
-	name = "heavy laser"
-	icon_state = "heavylaser"
-	damage = 60
-
-	muzzle_type = /obj/effect/projectile/laser_heavy/muzzle
-	tracer_type = /obj/effect/projectile/laser_heavy/tracer
-	impact_type = /obj/effect/projectile/laser_heavy/impact
-
 /obj/item/projectile/beam/laserlight
-	name = "laser"
-	icon_state = "laser"
-	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 18
-	damage_type = BURN
-	check_armour = "laser"
 	eyeblur = 2
 
 	muzzle_type = /obj/effect/projectile/laserlight/muzzle
 	tracer_type = /obj/effect/projectile/laserlight/tracer
 	impact_type = /obj/effect/projectile/laserlight/impact
 
+/obj/item/projectile/beam/heavylaser
+	name = "heavy laser"
+	icon_state = "heavylaser"
+	damage = 60
+	armor_penetration = 40
+
+	muzzle_type = /obj/effect/projectile/laser_heavy/muzzle
+	tracer_type = /obj/effect/projectile/laser_heavy/tracer
+	impact_type = /obj/effect/projectile/laser_heavy/impact
+
+
 /obj/item/projectile/beam/xray
 	name = "xray beam"
 	icon_state = "xray"
-	damage = 30
+	damage = 25
+	armor_penetration = 50
 
 	muzzle_type = /obj/effect/projectile/xray/muzzle
 	tracer_type = /obj/effect/projectile/xray/tracer
@@ -57,7 +50,8 @@
 /obj/item/projectile/beam/pulse
 	name = "pulse"
 	icon_state = "u_laser"
-	damage = 50
+	damage = 60
+	armor_penetration = 60
 
 	muzzle_type = /obj/effect/projectile/laser_pulse/muzzle
 	tracer_type = /obj/effect/projectile/laser_pulse/tracer
@@ -133,10 +127,8 @@
 /obj/item/projectile/beam/sniper
 	name = "sniper beam"
 	icon_state = "xray"
-	damage = 60
-	stun = 3
-	weaken = 3
-	stutter = 3
+	damage = 50
+	armor_penetration = 10
 
 	muzzle_type = /obj/effect/projectile/xray/muzzle
 	tracer_type = /obj/effect/projectile/xray/tracer
@@ -147,9 +139,14 @@
 	icon_state = "stun"
 	nodamage = 1
 	taser_effect = 1
-	agony = 70
+	agony = 40
 	damage_type = HALLOSS
 
 	muzzle_type = /obj/effect/projectile/stun/muzzle
 	tracer_type = /obj/effect/projectile/stun/tracer
 	impact_type = /obj/effect/projectile/stun/impact
+
+/obj/item/projectile/beam/stun/weak
+	name = "weak stun beam"
+	icon_state = "stun"
+	agony = 25

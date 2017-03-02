@@ -1312,7 +1312,7 @@
 	return 1
 
 /mob/living/carbon/human/proc/process_glasses(var/obj/item/clothing/glasses/G)
-	if(G && G.active)
+	if(istype(G) && G.active)
 		see_in_dark += G.darkness_view
 		if(G.overlay)
 			client.screen |= G.overlay

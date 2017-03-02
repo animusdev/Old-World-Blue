@@ -18,6 +18,16 @@
 
 	matter = list(DEFAULT_WALL_MATERIAL = 50,"glass" = 20)
 
-	origin_tech = "magnets=1;engineering=1"
+	origin_tech = list(TECH_MAGNET = 1, TECH_ENGINEERING = 1)
 	var/obj/machinery/telecomms/buffer // simple machine buffer for device linkage
 	var/obj/machinery/clonepod/connecting //same for cryopod linkage
+	var/obj/machinery/connectable	//Used to connect machinery.
+
+/obj/item/device/multitool/attack_self(mob/user)
+	var/clear = alert("Do you want to clear the buffers on the [src]?",, "Yes", "No",)
+	if(clear == "Yes")
+		buffer = null
+		connecting = null
+		connectable = null
+	else
+		..()

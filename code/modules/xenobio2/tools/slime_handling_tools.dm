@@ -1,11 +1,11 @@
 /*	What this file contains:
 
 	* A specialized stun prod, for handling fiesty slimes
-	
+
 	* A specialized stun gun, for handling many fiesty slimes
-	
+
 	* A stun projectile for handling xenomorphs.
-	
+
 */
 /obj/item/weapon/melee/baton/slime
 	name = "slimebaton"
@@ -27,14 +27,14 @@
 		else
 			X.stasis += (stasisforce / 6)
 	..()
-	
+
 /obj/item/weapon/melee/baton/slime/loaded/New()
 	..()
 	bcell = new/obj/item/weapon/cell/high(src)
 	update_icon()
 	return
-	
-	
+
+
 // Xeno stun gun + projectile
 /obj/item/weapon/gun/energy/taser/xeno
 	name = "xeno taser gun"
@@ -43,16 +43,16 @@
 	fire_sound = 'sound/weapons/taser2.ogg'
 	max_shots = 10
 	projectile_type = /obj/item/projectile/beam/stun/xeno
-	
+
 /obj/item/projectile/beam/stun/xeno
 	icon_state = "omni"
 	agony = 4
 	var/stasisforce = 40
-	
+
 	muzzle_type = /obj/effect/projectile/laser_omni/muzzle
 	tracer_type = /obj/effect/projectile/laser_omni/tracer
 	impact_type = /obj/effect/projectile/laser_omni/impact
-	
+
 /obj/item/projectile/beam/stun/xeno/on_hit(var/atom/target, var/blocked = 0)
 	if(istype(target, /mob/living/simple_animal/xeno))
 		var/mob/living/simple_animal/xeno/X = target

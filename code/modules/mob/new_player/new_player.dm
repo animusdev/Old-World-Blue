@@ -89,7 +89,7 @@
 			return 1
 
 		if(href_list["show_preferences"])
-			client.prefs.ShowChoices(src)
+			client.prefs.NewShowChoices(src)
 			return 1
 
 		if(href_list["ready"])
@@ -205,7 +205,7 @@
 	proc/IsJobAvailable(rank)
 		var/datum/job/job = job_master.GetJob(rank)
 		if(!job)								return 0
-		if(!job.is_position_available())		return 0
+		if(!job.is_position_available(1))		return 0
 		if(jobban_isbanned(src,rank))			return 0
 		if(IsJobRestricted(rank))				return 0
 		if(!job.player_old_enough(src.client))	return 0
@@ -225,33 +225,29 @@
 			src << alert("[rank] is not available. Please try another.")
 			return 0
 
+		if(!job_master.AssignRole(src, rank, 1))
+			return 0
+
 		spawning = 1
 		close_spawn_windows()
 
-		job_master.AssignRole(src, rank, 1)
+		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
 
-		var/mob/living/character = create_character()	//creates the human and transfers vars and mind
-		character = job_master.EquipRank(character, rank, 1)					//equips the human
-		UpdateFactionList(character)
-		equip_custom_items(character)
-
-		// AIs don't need a spawnpoint, they must spawn at an empty core
-		if(character.mind.assigned_role == "AI")
-
-			character = character.AIize(move=0) // AIize the character, but don't move them yet
-
-			// IsJobAvailable for AI checks that there is an empty core available in this list
-			var/obj/structure/AIcore/deactivated/C = empty_playable_ai_cores[1]
-			empty_playable_ai_cores -= C
-
-			character.loc = C.loc
-
-			AnnounceCyborg(character, rank, "has been downloaded to the empty core in \the [character.loc.loc]")
-			ticker.mode.handle_latejoin(character)
-
-			qdel(C)
-			qdel(src)
-			return
+		var/mob/living/character
+		switch(mind.assigned_role)
+			if("AI")
+				var/mob/living/silicon/ai/O = src.AIize(1,0) //SRC was deleted here!
+				AnnounceCyborg(O, rank, "has been downloaded to the empty core in \the [O.loc.loc]")
+				ticker.mode.handle_latejoin(O)
+				qdel(src)
+				return
+			if("Cyborg")
+				character = create_robot_character()
+			else
+				character = create_character()	//creates the human and transfers vars and mind
+				job_master.EquipRank(character, rank)					//equips the human
+				UpdateFactionList(character)
+				equip_custom_items(character)
 
 		//Find our spawning point.
 		var/join_message
@@ -279,13 +275,10 @@
 			character.buckled.set_dir(character.dir)
 
 		ticker.mode.handle_latejoin(character)
+		ticker.minds += character.mind //AIs handle this in the transform proc.	//TODO!!!!! ~Carn
 
 		if(character.mind.assigned_role != "Cyborg")
 			data_core.manifest_inject(character)
-			ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
-
-			//Grab some data from the character prefs for use in random news procs.
-
 			AnnounceArrival(character, rank, join_message)
 		else
 			AnnounceCyborg(character, rank, join_message)
@@ -370,8 +363,6 @@
 		else
 			client.prefs.copy_to(new_character)
 
-		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
-
 		if(mind)
 			mind.active = 0					//we wish to transfer the key manually
 			mind.original = new_character
@@ -397,6 +388,28 @@
 		new_character.key = key		//Manually transfer the key to log them in
 
 		return new_character
+
+	proc/create_robot_character()
+		spawning = 1
+		close_spawn_windows()
+
+		var/mob/living/silicon/robot/R = new (src.loc)
+		R.job = "Cyborg"
+		switch(mind.role_alt_title)
+			if("Android")
+				R.mmi = new /obj/item/device/mmi/digital/posibrain(R)
+			if("Robot")
+				R.mmi = new /obj/item/device/mmi/digital/robot(R)
+			else
+				R.mmi = new /obj/item/device/mmi(R)
+		R.mmi.set_identity(client.prefs.real_name)
+		if(mind)
+			mind.active = 0		//we wish to transfer the key manually
+			mind.original = R
+			mind.transfer_to(R)	//won't transfer key since the mind is not active
+		R.key = key				//Manually transfer the key to log them in
+		return R
+
 
 	proc/ViewManifest()
 		var/dat = "<html><body>"

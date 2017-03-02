@@ -28,10 +28,23 @@ var/const/BLOOD_VOLUME_SURVIVE = 40
 
 //Resets blood data
 /mob/living/carbon/human/proc/fixblood()
+	if(!vessel)
+		make_blood()
+	else
+		if(vessel.total_volume < species.blood_volume)
+			vessel.maximum_volume = species.blood_volume
+			vessel.add_reagent("blood", species.blood_volume - vessel.total_volume)
+		else if(vessel.total_volume > species.blood_volume)
+			vessel.remove_reagent("blood", vessel.total_volume - species.blood_volume)
+			vessel.maximum_volume = species.blood_volume
+
 	for(var/datum/reagent/blood/B in vessel.reagent_list)
 		if(B.id == "blood")
-			B.data = list(	"donor"=src,"viruses"=null,"species"=species.name,"blood_DNA"=dna.unique_enzymes,"blood_colour"= get_blood_colour(),"blood_type"=dna.b_type,	\
-							"resistances"=null,"trace_chem"=null, "virus2" = null, "antibodies" = list())
+			B.data = list(
+				"donor"=src,"species"=species.name,"blood_DNA"=dna.unique_enzymes,
+				"blood_colour"= get_blood_colour(),"blood_type"=dna.b_type,
+				"trace_chem"=null, "virus2" = null, "antibodies" = list()
+			)
 			B.color = B.data["blood_colour"]
 
 // Takes care blood loss and regeneration
@@ -127,7 +140,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 40
 		//Bleeding out
 		var/blood_max = 0
 		for(var/obj/item/organ/external/temp in organs)
-			if(!(temp.status & ORGAN_BLEEDING) || temp.status&ORGAN_ROBOT)
+			if(!(temp.status & ORGAN_BLEEDING) || temp.robotic >= ORGAN_ROBOT)
 				continue
 			for(var/datum/wound/W in temp.wounds) if(W.bleeding())
 				blood_max += W.damage / 40

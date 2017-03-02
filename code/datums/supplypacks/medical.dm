@@ -69,7 +69,7 @@
 /datum/supply_packs/med/sterile
 	name = "Sterile equipment crate"
 	contains = list(
-		/obj/item/clothing/under/rank/medical/green = 2,
+		/obj/item/clothing/under/rank/medical/sleeveless/green = 2,
 		/obj/item/clothing/head/surgery/green = 2,
 		/obj/item/weapon/storage/box/masks,
 		/obj/item/weapon/storage/box/gloves,

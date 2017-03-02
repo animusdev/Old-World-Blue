@@ -29,33 +29,6 @@
 	desc = "An armored vest that protects against some damage. This one has a NanoTrasen corporate badge."
 	icon_state = "armorsec"
 
-/obj/item/clothing/suit/armor/vest/warden
-	name = "Warden's jacket"
-	desc = "An armoured jacket with silver rank pips and livery."
-	icon_state = "warden_jacket"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-
-/obj/item/clothing/suit/armor/hos
-	name = "armored coat"
-	desc = "A greatcoat enhanced with a special alloy for some protection and style."
-	icon_state = "hos"
-	item_state = "jensencoat"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	armor = list(melee = 65, bullet = 30, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
-	flags_inv = HIDEJUMPSUIT
-	siemens_coefficient = 0.6
-
-/obj/item/clothing/suit/armor/hos/solyarkin
-	name = "Internal Security coat"
-	desc = "A lot of time ago this coat worn only internal security members. \
-			But now, nobody remember about those great men"
-	icon_state = "commi_coat"
-
-/obj/item/clothing/suit/armor/hos/jensen
-	name = "armored trenchcoat"
-	desc = "A trenchcoat augmented with a special alloy for some protection and style."
-	icon_state = "jensencoat"
-
 /obj/item/clothing/suit/armor/riot
 	name = "Riot Suit"
 	desc = "A suit of armor with heavy padding to protect against melee attacks. Looks like it might impair movement."
@@ -160,8 +133,26 @@
 	slowdown = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 
-/obj/item/clothing/suit/armor/reactive/IsShield()
-	if(active)
+/obj/item/clothing/suit/armor/reactive/handle_shield(mob/user, var/damage, atom/damage_source = null, mob/attacker = null, var/attack_text = "the attack")
+	if(prob(50)) //áðîíÿ øðåäèãåðà
+		user.visible_message("<span class='danger'>The reactive teleport system flings [user] clear of the attack!</span>")
+		var/list/turfs = new/list()
+		for(var/turf/T in orange(6, user))
+			if(istype(T,/turf/space)) continue
+			if(T.density) continue
+			if(T.x>world.maxx-6 || T.x<6)	continue
+			if(T.y>world.maxy-6 || T.y<6)	continue
+			turfs += T
+		if(!turfs.len) turfs += pick(/turf in orange(6))
+		var/turf/picked = pick(turfs)
+		if(!isturf(picked)) return
+
+		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		spark_system.set_up(5, 0, user.loc)
+		spark_system.start()
+		playsound(user.loc, "sparks", 50, 1)
+
+		user.loc = picked
 		return 1
 	return 0
 
@@ -191,7 +182,7 @@
 	slowdown = 1
 	armor = list(melee = 60, bullet = 60, laser = 60, energy = 40, bomb = 20, bio = 0, rad = 0)
 	siemens_coefficient = 0.7
-	var/obj/item/clothing/accessory/holster/holster = new
+	var/obj/item/clothing/accessory/holster/gun/holster = new
 
 /obj/item/clothing/suit/armor/tactical/attackby(obj/item/W as obj, mob/user as mob)
 	..()
@@ -256,6 +247,39 @@
 					/obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/handcuffs, \
 					/obj/item/device/flashlight, /obj/item/weapon/melee/telebaton, \
 					/obj/item/clothing/head/helmet/security, /obj/item/clothing/mask/gas)
+
+/obj/item/clothing/suit/storage/vest/warden
+	name = "Warden's jacket"
+	desc = "An armoured jacket with silver rank pips and livery."
+	icon_state = "warden_jacket"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
+/obj/item/clothing/suit/storage/hos
+	name = "armored coat"
+	desc = "A greatcoat enhanced with a special alloy for some protection and style."
+	icon_state = "hos"
+	item_state = "jensencoat"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	armor = list(melee = 65, bullet = 30, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
+	flags_inv = HIDEJUMPSUIT
+	siemens_coefficient = 0.6
+	allowed = list(
+		/obj/item/weapon/gun/energy, /obj/item/weapon/reagent_containers/spray/pepper,
+		/obj/item/weapon/gun/projectile, /obj/item/ammo_magazine,/obj/item/ammo_casing,
+		/obj/item/weapon/melee/baton, /obj/item/weapon/handcuffs,/obj/item/device/flashlight,
+		/obj/item/weapon/melee/telebaton, /obj/item/clothing/head/helmet/security,
+		/obj/item/clothing/mask/gas)
+
+/obj/item/clothing/suit/storage/hos/solyarkin
+	name = "Internal Security coat"
+	desc = "A lot of time ago this coat worn only internal security members. \
+			But now, nobody remember about those great men"
+	icon_state = "commi_coat"
+
+/obj/item/clothing/suit/storage/hos/jensen
+	name = "armored trenchcoat"
+	desc = "A trenchcoat augmented with a special alloy for some protection and style."
+	icon_state = "jensencoat"
 
 /obj/item/clothing/suit/storage/vest/seclight
 	name = "lightened plate carrier"

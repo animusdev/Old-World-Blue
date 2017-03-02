@@ -45,8 +45,6 @@ research holder datum.
 ***************************************************************/
 
 /datum/research								//Holder for all the existing, archived, and known tech. Individual to console.
-
-									//Datum/tech go here.
 	var/list/possible_tech = list()			//List of all tech in the game that players have access to (barring special events).
 	var/list/known_tech = list()				//List of locally known tech.
 	var/list/possible_designs = list()		//List of all designs (at base reliability).
@@ -159,108 +157,81 @@ research holder datum.
 			if(KT.level <= level) KT.level = max((KT.level + 1), (level - 1))
 	return
 
-/datum/research/proc/UpdateDesign(var/path)
-	for(var/datum/design/KD in known_designs)
-		if(KD.build_path == path)
-			KD.reliability_mod += rand(1,2)
-			break
-	return
-
-
-
+// A simple helper proc to find the name of a tech with a given ID.
+/proc/CallTechName(var/ID)
+	for(var/T in subtypesof(/datum/tech))
+		var/datum/tech/check_tech = T
+		if(initial(check_tech.id) == ID)
+			return  initial(check_tech.name)
 
 /***************************************************************
 **						Technology Datums					  **
 **	Includes all the various technoliges and what they make.  **
 ***************************************************************/
 
-datum/tech	//Datum of individual technologies.
+/datum/tech //Datum of individual technologies.
 	var/name = "name"					//Name of the technology.
 	var/desc = "description"			//General description of what it does and what it makes.
 	var/id = "id"						//An easily referenced ID. Must be alphanumeric, lower-case, and no symbols.
 	var/level = 1						//A simple number scale of the research level. Level 0 = Secret tech.
 	var/list/req_tech = list()			//List of ids associated values of techs required to research this tech. "id" = #
 
-
-//Trunk Technologies (don't require any other techs and you start knowning them).
-
-datum/tech/materials
+/datum/tech/materials
 	name = "Materials Research"
 	desc = "Development of new and improved materials."
-	id = "materials"
+	id = TECH_MATERIAL
 
-datum/tech/engineering
+/datum/tech/engineering
 	name = "Engineering Research"
 	desc = "Development of new and improved engineering parts."
-	id = "engineering"
+	id = TECH_ENGINEERING
 
-datum/tech/phorontech
+/datum/tech/phorontech
 	name = "Phoron Research"
 	desc = "Research into the mysterious substance colloqually known as 'phoron'."
-	id = "phorontech"
+	id = TECH_PHORON
 
-datum/tech/powerstorage
+/datum/tech/powerstorage
 	name = "Power Manipulation Technology"
 	desc = "The various technologies behind the storage and generation of electicity."
-	id = "powerstorage"
+	id = TECH_POWER
 
-datum/tech/bluespace
+/datum/tech/bluespace
 	name = "'Blue-space' Research"
 	desc = "Research into the sub-reality known as 'blue-space'"
-	id = "bluespace"
+	id = TECH_BLUESPACE
 
-datum/tech/biotech
+/datum/tech/biotech
 	name = "Biological Technology"
 	desc = "Research into the deeper mysteries of life and organic substances."
-	id = "biotech"
+	id = TECH_BIO
 
-datum/tech/combat
+/datum/tech/combat
 	name = "Combat Systems Research"
 	desc = "The development of offensive and defensive systems."
-	id = "combat"
+	id = TECH_COMBAT
 
-datum/tech/magnets
+/datum/tech/magnets
 	name = "Electromagnetic Spectrum Research"
 	desc = "Research into the electromagnetic spectrum. No clue how they actually work, though."
-	id = "magnets"
+	id = TECH_MAGNET
 
-datum/tech/programming
+/datum/tech/programming
 	name = "Data Theory Research"
 	desc = "The development of new computer and artificial intelligence and data storage systems."
-	id = "programming"
+	id = TECH_DATA
 
-datum/tech/syndicate
+/datum/tech/syndicate
 	name = "Illegal Technologies Research"
-	desc = "The study of technologies that violate standard Nanotrasen regulations."
-	id = "syndicate"
+	desc = "The study of technologies that violate standard government regulations."
+	id = TECH_ILLEGAL
+	level = 0
 
-/*
-datum/tech/arcane
+/datum/tech/arcane
 	name = "Arcane Research"
 	desc = "Research into the occult and arcane field for use in practical science"
-	id = "arcane"
-	level = 0 //It didn't become "secret" as advertised.
-
-//Branch Techs
-datum/tech/explosives
-	name = "Explosives Research"
-	desc = "The creation and application of explosive materials."
-	id = "explosives"
-	req_tech = list("materials" = 3)
-
-datum/tech/generators
-	name = "Power Generation Technology"
-	desc = "Research into more powerful and more reliable sources."
-	id = "generators"
-	req_tech = list("powerstorage" = 2)
-
-datum/tech/robotics
-	name = "Robotics Technology"
-	desc = "The development of advanced automated, autonomous machines."
-	id = "robotics"
-	req_tech = list("materials" = 3, "programming" = 3)
-*/
-
+	id = TECH_ARCANE
+	level = 0
 
 /obj/item/weapon/disk/tech_disk
 	name = "technology disk"
@@ -273,8 +244,9 @@ datum/tech/robotics
 	var/datum/tech/stored
 
 /obj/item/weapon/disk/tech_disk/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
+	..()
 
 /obj/item/weapon/disk/design_disk
 	name = "component design disk"
@@ -283,9 +255,10 @@ datum/tech/robotics
 	icon_state = "datadisk2"
 	item_state = "card-id"
 	w_class = 2.0
-	matter = list(DEFAULT_WALL_MATERIAL = 30,"glass" = 10)
+	matter = list(DEFAULT_WALL_MATERIAL = 30, "glass" = 10)
 	var/datum/design/blueprint
 
 /obj/item/weapon/disk/design_disk/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
+	..()

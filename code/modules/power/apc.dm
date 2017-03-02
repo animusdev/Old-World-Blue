@@ -77,6 +77,7 @@
 	var/locked = 1
 	var/coverlocked = 1
 	var/aidisabled = 0
+	var/alarmdisabled = 0
 	var/tdir = null
 	var/obj/machinery/power/terminal/terminal = null
 	var/lastused_light = 0
@@ -104,6 +105,9 @@
 	var/global/list/status_overlays_equipment
 	var/global/list/status_overlays_lighting
 	var/global/list/status_overlays_environ
+
+/obj/machinery/power/apc/disalarmed
+	alarmdisabled = 1
 
 /obj/machinery/power/apc/updateDialog()
 	if (stat & (BROKEN|MAINT))
@@ -141,6 +145,8 @@
 /obj/machinery/power/apc/New(turf/loc, var/ndir, var/building=0)
 	..()
 	wires = new(src)
+	if(alarmdisabled)
+		wires.UpdateCut(APC_WIRE_ALARM_CONTROL)
 
 	// offset 24 pixels in direction of dir
 	// this allows the APC to be embedded in a wall, yet still inside an area
@@ -1108,7 +1114,8 @@
 		equipment = autoset(equipment, 0)
 		lighting = autoset(lighting, 0)
 		environ = autoset(environ, 0)
-		power_alarm.triggerAlarm(loc, src)
+		if(!alarmdisabled)
+			power_alarm.triggerAlarm(loc, src)
 		autoflag = 0
 
 	// update icon & area power if anything changed
@@ -1141,7 +1148,8 @@
 			equipment = autoset(equipment, 2)
 			lighting = autoset(lighting, 1)
 			environ = autoset(environ, 1)
-			power_alarm.triggerAlarm(loc, src)
+			if(!alarmdisabled)
+				power_alarm.triggerAlarm(loc, src)
 			autoflag = 2
 
 	// <15%, turn off lighting & equipment
@@ -1150,7 +1158,8 @@
 			equipment = autoset(equipment, 2)
 			lighting = autoset(lighting, 2)
 			environ = autoset(environ, 1)
-			power_alarm.triggerAlarm(loc, src)
+			if(!alarmdisabled)
+				power_alarm.triggerAlarm(loc, src)
 			autoflag = 1
 
 	// zero charge, turn all off
@@ -1158,7 +1167,8 @@
 		equipment = autoset(equipment, 0)
 		lighting = autoset(lighting, 0)
 		environ = autoset(environ, 0)
-		power_alarm.triggerAlarm(loc, src)
+		if(!alarmdisabled)
+			power_alarm.triggerAlarm(loc, src)
 		autoflag = 0
 
 // val 0=off, 1=off(auto) 2=on 3=on(auto)

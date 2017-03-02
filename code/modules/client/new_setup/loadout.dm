@@ -54,6 +54,17 @@ var/list/gear_datums = list()
 	if (!sort_category)
 		sort_category = "[slot]"
 
+/datum/gear/proc/spawn_for(var/mob/living/carbon/human/H)
+	if(allowed_roles && !(H.job in allowed_roles))
+		H << "<span class='warning'>Your current job does not permit you to spawn with [display_name]!</span>"
+		return null
+
+	if(whitelisted && !is_alien_whitelisted(H, whitelisted))
+		H << "<span class='warning'>Your current whitelist status does not permit you to spawn with [display_name]!</span>"
+		return null
+
+	return new path(H)
+
 //PAGE GENERATION AND HANDLING
 
 /datum/preferences
@@ -100,7 +111,7 @@ var/list/gear_datums = list()
 	. += "</center></div>"
 
 	var/datum/loadout_category/LC = loadout_categories[current_tab]
-	. += "<div style='height:340px;overflow-y:auto;border:solid;margin: 7,0,0,0;padding:3px'>"
+	. += "<div style='height:335px;overflow-y:auto;border:solid;margin: 7,0,0,0;padding:3px'>"
 	for(var/gear_name in LC.gear)
 		var/datum/gear/G = LC.gear[gear_name]
 		var/ticked = (G.display_name in gear)

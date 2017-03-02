@@ -27,29 +27,24 @@ item/resolve_attackby() calls the target atom's attackby() proc.
 		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
 
 /mob/living/attackby(obj/item/I, mob/user)
-	if(istype(I) && ismob(user))
-		user.next_move = world.time + 8
-		I.attack(src, user)
-
+	if(!ismob(user))
+		return 0
+	if(can_operate(src) && I.do_surgery(src,user)) //Surgery
+		return 1
+	user.next_move = world.time + 8
+	return I.attack(src, user, user.zone_sel.selecting)
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
 /obj/item/proc/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	return
 
-//TODO: refactor mob attack code.
-/*
-Busy writing something else that I don't want to get mixed up in a general attack code, and I don't want to forget this so leaving a note here.
-leave attackby() as handling the general case of "using an item on a mob"
-attackby() will decide to call attacked_by() or not.
-attacked_by() will be made a living level proc and handle the specific case of "attacking with an item to cause harm"
-attacked_by() will then call attack() so that stunbatons and other weapons that have special attack effects can do their thing.
-attacked_by() will handle hitting/missing/logging as it does now, and will call attack() to apply the attack effects (damage) instead of the other way around (as it is now).
-*/
-
-/obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
-
-	if(!istype(M) || (can_operate(M) && do_surgery(M,user,src))) return 0
+//I would prefer to rename this attack_as_weapon(), but that would involve touching hundreds of files.
+/obj/item/proc/attack(mob/living/M, mob/living/user, var/target_zone)
+	if(!force || (flags & NOBLUDGEON))
+		return 0
+	if(M == user && user.a_intent != I_HURT)
+		return 0
 
 	// Knifing
 	if(edge)
@@ -90,8 +85,8 @@ attacked_by() will handle hitting/missing/logging as it does now, and will call 
 		// Handle striking to cripple.
 		var/dislocation_str
 		if(user.a_intent == "disarm")
-			dislocation_str = H.attack_joint(src, user, def_zone)
-		if(H.attacked_by(src, user, def_zone) && hitsound)
+			dislocation_str = H.attack_joint(src, user, target_zone)
+		if(H.attacked_by(src, user, target_zone) && hitsound)
 			playsound(loc, hitsound, 50, 1, -1)
 			spawn(1) //ugh I hate this but I don't want to root through human attack procs to print it after this call resolves.
 				if(dislocation_str) user.visible_message("<span class='danger'>[dislocation_str]</span>")

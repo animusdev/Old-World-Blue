@@ -91,6 +91,8 @@
 			living_mob_list += src
 			stat = CONSCIOUS
 			density = 1
+		else
+			walk(src, 0)
 		return 0
 
 
@@ -113,7 +115,7 @@
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Soma animals don't move when pulled
-					/var/moving_to = 0 // otherwise it always picks 4, fuck if I know.   Did I mention fuck BYOND
+					var/moving_to = 0 // otherwise it always picks 4, fuck if I know.   Did I mention fuck BYOND
 					moving_to = pick(cardinal)
 					dir = moving_to			//How about we turn them the direction they are moving, yay.
 					Move(get_step(src,moving_to))
@@ -272,7 +274,7 @@
 
 /mob/living/simple_animal/attackby(var/obj/item/O, var/mob/user)
 	if(istype(O, /obj/item/stack/medical))
-		setClickCooldown(DEFAULT_QUICK_COOLDOWN)
+		user.setClickCooldown(DEFAULT_QUICK_COOLDOWN)
 		if(stat != DEAD)
 			var/obj/item/stack/medical/MED = O
 			if(health < maxHealth)
@@ -294,23 +296,25 @@
 
 //TODO: refactor mob attackby(), attacked_by(), and friends.
 /mob/living/simple_animal/proc/attacked_with_item(var/obj/item/O, var/mob/user)
-	setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
+	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	if(!O.force)
 		visible_message("<span class='notice'>[user] gently taps [src] with \the [O].</span>")
 		return
 
-	if(O.force > resistance)
-		var/damage = O.force
-		if (O.damtype == HALLOSS)
-			damage = 0
-		if(supernatural && istype(O,/obj/item/weapon/nullrod))
-			damage *= 2
-			purge = 3
-		adjustBruteLoss(damage)
-	else
-		usr << "<span class='danger>This weapon is ineffective, it does no damage.</span>"
-
 	visible_message("<span class='danger'>[user] attacked [src] with the [O].</span>")
+
+	if(O.force <= resistance)
+		user << "<span class='danger'>This weapon is ineffective, it does no damage.</span>"
+		return 2
+
+	var/damage = O.force
+	if (O.damtype == HALLOSS)
+		damage = 0
+	if(supernatural && istype(O,/obj/item/weapon/nullrod))
+		damage *= 2
+		purge = 3
+	adjustBruteLoss(damage)
+
 	user.do_attack_animation(src)
 
 /mob/living/simple_animal/movement_delay()

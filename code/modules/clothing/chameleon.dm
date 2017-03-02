@@ -7,6 +7,7 @@ var/global/list/chameleons_categories = list(
 	"gloves" = list(),
 	"mask" = list(),
 	"glasses" = list(),
+	"belt" = list(),
 	"backpack" = list(),
 	"gun" = list()
 )
@@ -27,6 +28,7 @@ var/global/list/chameleons_categories = list(
 	initialize_chameleon_list("mask", /obj/item/clothing/mask, list(/obj/item/clothing/mask/scarf))
 	initialize_chameleon_list("glasses", /obj/item/clothing/glasses)
 	initialize_chameleon_list("backpack", /obj/item/weapon/storage/backpack)
+	initialize_chameleon_list("belt", /obj/item/weapon/storage/belt)
 	initialize_chameleon_list("gun", /obj/item/weapon/gun/projectile)
 	return 1
 
@@ -62,11 +64,18 @@ var/global/list/chameleons_categories = list(
 	permeability_coefficient = 0.90
 	icon = 'icons/obj/device.dmi'
 	icon_state = "shield0"
-	origin_tech = "syndicate=2"
+	origin_tech = list(TECH_ILLEGAL = 2)
+	w_class = 1
 	var/category = ""
 	var/obj/item/captured_item
 	var/default_type
 	var/emp_type
+
+/obj/item/chameleon/AltClick(user)
+	if(src in user)
+		attack_self(user)
+	else
+		..()
 
 /obj/item/chameleon/New()
 	..()
@@ -93,6 +102,21 @@ var/global/list/chameleons_categories = list(
 	update_icon()
 
 	in_use = 0
+
+/obj/item/chameleon/attackby(obj/item/weapon/W, mob/user)
+	if(iswirecutter(W) && captured_item)
+		if(isturf(loc))
+			change_item_appearance(src, type)
+			user << "<span class='notice'>You cut [src] from [captured_item].</span>"
+			category = null
+			captured_item.forceMove(src.loc)
+			src.transfer_fingerprints_to(captured_item)
+			captured_item = null
+			armor = initial(armor)
+			return 1
+		else
+			user << "<span class='warning'>You must place [src] on flat surface for detach [initial(name)]!</span>"
+	..()
 
 /obj/item/chameleon/attack_self(var/mob/living/user)
 	if(in_use) return
@@ -123,6 +147,8 @@ var/global/list/chameleons_categories = list(
 			new /obj/item/chameleon/proc/change(src,"Change [capitalize(category)] Appearance")
 			user.drop_from_inventory(src, A.loc)
 			captured_item = A
+			captured_item.transfer_fingerprints_to(src)
+			src.armor = captured_item.armor
 			src.w_class = captured_item.w_class
 			A.forceMove(src)
 			change_item_appearance(src, captured_item.type)
@@ -306,7 +332,7 @@ var/global/list/chameleons_categories = list(
 	w_class = 3.0
 	max_shells = 7
 	caliber = ".45"
-	origin_tech = "combat=2;materials=2;syndicate=3"
+	origin_tech = list(TECH_COMBAT = 2, TECH_MATERIAL = 2, TECH_ILLEGAL = 3)
 	ammo_type = /obj/item/ammo_casing/chameleon
 	matter = list()
 
