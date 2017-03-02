@@ -148,6 +148,7 @@
 	H.flavor_texts = R.flavor.Copy()
 	H.suiciding = 0
 	attempting = 0
+	occupant = H
 	return 1
 
 //Grow clones to maturity then kick them out.  FREELOADERS
