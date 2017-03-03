@@ -144,7 +144,8 @@ proc/spawn_money(var/sum, spawnloc, mob/living/carbon/human/human_user as mob)
 		var/obj/item/weapon/spacecash/bundle/bundle = new (spawnloc)
 		bundle.worth = sum
 		bundle.update_icon()
-		human_user.put_in_hands(bundle)
+		if(human_user)
+			human_user.put_in_hands(bundle)
 	return
 
 /obj/item/weapon/spacecash/ewallet
