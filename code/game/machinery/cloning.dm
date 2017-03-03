@@ -148,6 +148,14 @@
 
 	if(occupant && (occupant.loc == src))
 		if((occupant.stat == DEAD) || occupant.suiciding || !occupant.key)  //Autoeject corpses and suiciding dudes.
+			var/log = "Cloning aborted. "
+			if(occupant.stat == DEAD)
+				log += "Occupant is dead."
+			if(occupant.suiciding)
+				log += "Occupant is suiciding."
+			if(!occupant.key)
+				log += "Occupant key is missed."
+			log_debug(log)
 			locked = 0
 			go_out()
 			connected_message("Clone Rejected: Deceased.")

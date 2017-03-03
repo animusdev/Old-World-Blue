@@ -363,7 +363,7 @@
 	if (subject.suiciding == 1)
 		scantemp = "Error: Subject's brain is not responding to scanning stimuli."
 		return
-	if ((!subject.ckey) || (!subject.client))
+	if (!subject.ckey || !subject.client)
 		scantemp = "Error: Mental interface failure."
 		return
 	if (NOCLONE in subject.mutations)
@@ -398,7 +398,7 @@
 		R.implant = "\ref[imp]"
 
 	if (!isnull(subject.mind)) //Save that mind so traitors can continue traitoring after cloning.
-		R.mind = "\ref[subject.mind]"
+		R.mind = subject.mind
 
 	records += R
 	scantemp = "Subject successfully scanned."

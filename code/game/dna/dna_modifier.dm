@@ -15,7 +15,7 @@
 	var/id=null
 	var/implant=null
 	var/ckey=null
-	var/mind=null
+	var/datum/mind/mind=null
 	var/languages=null
 	var/list/flavor=null
 
@@ -64,7 +64,7 @@
 	set category = "Object"
 	set name = "Eject DNA Scanner"
 
-	if (usr.stat != 0)
+	if (usr.stat)
 		return
 
 	eject_occupant()
@@ -85,7 +85,7 @@
 	set category = "Object"
 	set name = "Enter DNA Scanner"
 
-	if (usr.stat != 0)
+	if (usr.stat)
 		return
 	if (!ishuman(usr) && !issmall(usr)) //Make sure they're a mob that has dna
 		usr << "<span class='notice'>Try as you might, you can not climb up into the scanner.</span>"
