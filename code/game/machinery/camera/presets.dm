@@ -150,7 +150,8 @@ var/global/list/engineering_networks = list(
 
 /obj/machinery/camera/proc/isXRay()
 	if(!assembly)
-		world.log << "Cam without assembly! At [x],[y],[z]."
+		var/turf/location = get_turf(src)
+		world.log << "Cam without assembly! At [location.x],[location.y],[location.z]. Location: [loc]."
 		return null
 	var/obj/item/weapon/stock_parts/scanning_module/O = locate(/obj/item/weapon/stock_parts/scanning_module) in assembly.upgrades
 	if (O && O.rating >= 2)
