@@ -45,9 +45,10 @@
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
 	var/biomass = 0
 
-/obj/machinery/clonepod/initialize()
+/obj/machinery/clonepod/New()
 	..()
-	biomass = CLONE_BIOMASS * 3
+	if(!(ticker && ticker.current_state == GAME_STATE_PLAYING))
+		biomass = CLONE_BIOMASS * 3
 
 /obj/machinery/clonepod/attack_ai(mob/user as mob)
 
