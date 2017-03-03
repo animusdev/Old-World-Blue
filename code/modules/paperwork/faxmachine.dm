@@ -215,10 +215,8 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 
 		if(href_list["scan"])
 			if (scan)
-				if(ishuman(usr))
-					usr.put_in_hands(scan)
-				else
-					scan.forceMove(loc)
+				usr.put_in_hands(scan)
+				scan.forceMove(loc)
 				scan = null
 			else
 				var/obj/item/I = usr.get_active_hand()

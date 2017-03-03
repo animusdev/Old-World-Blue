@@ -32,9 +32,7 @@
 
 	if(scan)
 		usr << "You remove \the [scan] from \the [src]."
-		scan.loc = get_turf(src)
-		if(!usr.get_active_hand() && ishuman(usr))
-			usr.put_in_hands(scan)
+		usr.put_in_hands(scan)
 		scan = null
 	else
 		usr << "There is nothing to remove from the console."
@@ -249,10 +247,7 @@ What a mess.*/
 
 			if("Confirm Identity")
 				if (scan)
-					if(ishuman(usr) && !usr.get_active_hand())
-						usr.put_in_hands(scan)
-					else
-						scan.loc = get_turf(src)
+					usr.put_in_hands(scan)
 					scan = null
 				else
 					var/obj/item/I = usr.get_active_hand()

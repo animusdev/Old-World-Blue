@@ -26,9 +26,7 @@
 
 	if(scan)
 		usr << "You remove \the [scan] from \the [src]."
-		scan.loc = get_turf(src)
-		if(!usr.get_active_hand() && ishuman(usr))
-			usr.put_in_hands(scan)
+		usr.put_in_hands(scan)
 		scan = null
 	else
 		usr << "There is nothing to remove from the console."
@@ -164,18 +162,8 @@
 
 		if (href_list["scan"])
 			if (src.scan)
-
-				if(ishuman(usr))
-					scan.loc = usr.loc
-
-					if(!usr.get_active_hand())
-						usr.put_in_hands(scan)
-
-					scan = null
-
-				else
-					src.scan.loc = src.loc
-					src.scan = null
+				usr.put_in_hands(scan)
+				scan = null
 
 			else
 				var/obj/item/I = usr.get_active_hand()

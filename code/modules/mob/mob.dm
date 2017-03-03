@@ -898,7 +898,6 @@ mob/proc/yank_out_object()
 			var/mob/living/carbon/human/human_user = U
 			human_user.bloody_hands(H)
 
-	selection.forceMove(get_turf(src))
 	U.put_in_hands(selection)
 
 	for(var/obj/item/weapon/O in pinned)

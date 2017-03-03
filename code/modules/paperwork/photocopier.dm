@@ -65,7 +65,6 @@
 		updateUsrDialog()
 	else if(href_list["remove"])
 		if(copyitem)
-			copyitem.loc = usr.loc
 			usr.put_in_hands(copyitem)
 			usr << "<span class='notice'>You take \the [copyitem] out of \the [src].</span>"
 			copyitem = null

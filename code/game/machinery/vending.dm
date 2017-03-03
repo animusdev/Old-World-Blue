@@ -409,9 +409,7 @@
 			usr << "There is no coin in this machine."
 			return
 
-		coin.forceMove(src.loc)
-		if(!usr.get_active_hand())
-			usr.put_in_hands(coin)
+		usr.put_in_hands(coin)
 		usr << "\blue You remove the [coin] from the [src]"
 		coin = null
 		categories &= ~CAT_COIN

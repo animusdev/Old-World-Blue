@@ -93,7 +93,6 @@
 		item_quants[N] -= 1
 		for(var/obj/O in contents)
 			if(O.name == N)
-				O.loc = get_turf(src)
 				usr.put_in_hands(O)
 				break
 

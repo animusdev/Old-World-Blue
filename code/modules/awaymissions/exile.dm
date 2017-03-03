@@ -7,7 +7,7 @@
 /obj/item/weapon/implanter/exile/New()
 	src.imp = new /obj/item/weapon/implant/exile( src )
 	..()
-	update()
+	update_icon()
 	return
 
 

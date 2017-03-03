@@ -2943,7 +2943,7 @@
 
 /obj/item/pizzabox/attack_hand( mob/user as mob )
 
-	if( open && pizza )
+	if(open && pizza)
 		user.put_in_hands( pizza )
 
 		user << "<span class='warning'>You take \the [src.pizza] out of \the [src].</span>"

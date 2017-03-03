@@ -40,15 +40,11 @@
 
 	if(scan)
 		usr << "You remove \the [scan] from \the [src]."
-		scan.loc = get_turf(src)
-		if(!usr.get_active_hand() && ishuman(usr))
-			usr.put_in_hands(scan)
+		usr.put_in_hands(scan)
 		scan = null
 	else if(modify)
 		usr << "You remove \the [modify] from \the [src]."
-		modify.loc = get_turf(src)
-		if(!usr.get_active_hand() && ishuman(usr))
-			usr.put_in_hands(modify)
+		usr.put_in_hands(modify)
 		modify = null
 	else
 		usr << "There is nothing to remove from the console."
@@ -144,14 +140,8 @@
 			if (modify)
 				data_core.manifest_modify(modify.registered_name, modify.assignment)
 				modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
-				if(ishuman(usr))
-					modify.loc = usr.loc
-					if(!usr.get_active_hand())
-						usr.put_in_hands(modify)
-					modify = null
-				else
-					modify.loc = loc
-					modify = null
+				usr.put_in_hands(modify)
+				modify = null
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
@@ -160,14 +150,8 @@
 
 		if ("scan")
 			if (scan)
-				if(ishuman(usr))
-					scan.loc = usr.loc
-					if(!usr.get_active_hand())
-						usr.put_in_hands(scan)
-					scan = null
-				else
-					scan.loc = src.loc
-					scan = null
+				usr.put_in_hands(scan)
+				scan = null
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))

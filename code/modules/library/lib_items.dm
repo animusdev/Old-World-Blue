@@ -44,11 +44,8 @@
 		if(choice)
 			if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
 				return
-			if(ishuman(user))
-				if(!user.get_active_hand())
-					user.put_in_hands(choice)
-			else
-				choice.loc = get_turf(src)
+			if(!user.put_in_hands(choice))
+				choice.forceMove(get_turf(src))
 			update_icon()
 
 /obj/structure/bookcase/ex_act(severity)

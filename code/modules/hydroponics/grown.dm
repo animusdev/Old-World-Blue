@@ -180,7 +180,7 @@
 				//TODO: generalize this.
 				user << "<span class='notice'>You add some cable to the [src.name] and slide it inside the battery casing.</span>"
 				var/obj/item/weapon/cell/potato/pocell = new /obj/item/weapon/cell/potato(get_turf(user))
-				if(src.loc == user && ishuman(user))
+				if(src.loc == user)
 					user.put_in_hands(pocell)
 				pocell.maxcharge = src.potency * 10
 				pocell.charge = pocell.maxcharge

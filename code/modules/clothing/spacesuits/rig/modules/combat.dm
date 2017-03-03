@@ -234,7 +234,6 @@
 			H << "<span class='danger'>Your hands are full."
 		else
 			var/obj/item/new_weapon = new fabrication_type()
-			new_weapon.forceMove(H)
 			H << "<font color='blue'><b>You quickly fabricate \a [new_weapon].</b></font>"
 			H.put_in_hands(new_weapon)
 

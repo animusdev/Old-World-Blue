@@ -568,7 +568,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			S.reagents = reagents
 			S.chem_volume = reagents.total_volume
 			reagents = null
-			user.u_equip(src)
+			user.unEquip(src)
 			user.put_in_hands(S)
 			del(src)
 

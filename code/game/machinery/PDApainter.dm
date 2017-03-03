@@ -103,8 +103,7 @@
 		usr << "<span class='notice'>The [src] is working right now. Wait please.</span>"
 		return
 	if(storedpda)
-		if(istype(usr, /mob) && loc.Adjacent(usr)) usr.put_in_hands(storedpda)
-		else 				 storedpda.loc = get_turf(src.loc)
+		usr.put_in_hands(storedpda)
 		storedpda = null
 		update_icon()
 	else

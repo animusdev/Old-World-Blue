@@ -210,28 +210,14 @@
 
 	proc/remove_reader(var/mob/living/L)
 		if(reader)
-			reader.loc = loc
-			if(istype(L) && !L.get_active_hand())
-				if(ishuman(L))
-					L.put_in_hands(reader)
-				else
-					reader.loc = get_turf(computer)
-			else
-				reader.loc = get_turf(computer)
+			L.put_in_hands(reader)
 			reader = null
 			return 1
 		return 0
 
 	proc/remove_writer(var/mob/living/L)
 		if(writer && dualslot)
-			writer.loc = loc
-			if(istype(L) && !L.get_active_hand())
-				if(ishuman(L))
-					L.put_in_hands(writer)
-				else
-					writer.loc = get_turf(computer)
-			else
-				writer.loc = get_turf(computer)
+			L.put_in_hands(writer)
 			writer = null
 			return 1
 		return 0
@@ -315,13 +301,7 @@
 
 		if(card == reader) reader = null
 		if(card == writer) writer = null
-		card.loc = loc
-
-		var/mob/living/carbon/human/user = usr
-		if(ishuman(user) && !user.get_active_hand())
-			user.put_in_hands(card)
-		else
-			card.loc = computer.loc
+		user.put_in_hands(card)
 */
 
 

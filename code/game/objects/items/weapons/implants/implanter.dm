@@ -7,19 +7,18 @@
 	throw_range = 5
 	w_class = 2.0
 	var/obj/item/weapon/implant/imp = null
-
+/*
 /obj/item/weapon/implanter/attack_self(var/mob/user)
 	if(!imp)
 		return ..()
-	imp.loc = get_turf(src)
 	user.put_in_hands(imp)
 	user << "<span class='notice'>You remove \the [imp] from \the [src].</span>"
 	name = "implanter"
 	imp = null
-	update()
+	update_icon()
 	return
-
-/obj/item/weapon/implanter/proc/update()
+*/
+/obj/item/weapon/implanter/update_icon()
 	if (src.imp)
 		src.icon_state = "implanter1"
 	else
@@ -62,7 +61,7 @@
 						BITSET(M:hud_updateflag, IMPLOYAL_HUD)
 
 				src.imp = null
-				update()
+				update_icon()
 
 	return
 
@@ -72,7 +71,7 @@
 /obj/item/weapon/implanter/loyalty/New()
 	src.imp = new /obj/item/weapon/implant/loyalty( src )
 	..()
-	update()
+	update_icon()
 	return
 
 /obj/item/weapon/implanter/explosive
@@ -81,7 +80,7 @@
 /obj/item/weapon/implanter/explosive/New()
 	src.imp = new /obj/item/weapon/implant/explosive( src )
 	..()
-	update()
+	update_icon()
 	return
 
 /obj/item/weapon/implanter/adrenalin
@@ -90,7 +89,7 @@
 /obj/item/weapon/implanter/adrenalin/New()
 	src.imp = new /obj/item/weapon/implant/adrenalin(src)
 	..()
-	update()
+	update_icon()
 	return
 
 /obj/item/weapon/implanter/compressed
@@ -100,10 +99,10 @@
 /obj/item/weapon/implanter/compressed/New()
 	imp = new /obj/item/weapon/implant/compressed( src )
 	..()
-	update()
+	update_icon()
 	return
 
-/obj/item/weapon/implanter/compressed/update()
+/obj/item/weapon/implanter/compressed/update_icon()
 	if (imp)
 		var/obj/item/weapon/implant/compressed/c = imp
 		if(!c.scanned)
@@ -138,4 +137,4 @@
 			var/obj/item/weapon/storage/S = A.loc
 			S.remove_from_storage(A)
 		A.loc.contents.Remove(A)
-		update()
+		update_icon()

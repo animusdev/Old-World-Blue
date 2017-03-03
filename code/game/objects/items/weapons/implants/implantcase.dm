@@ -48,8 +48,8 @@
 			M.imp.loc = src
 			src.imp = M.imp
 			M.imp = null
-			src.update()
-			M.update()
+			src.update_icon()
+			M.update_icon()
 		else
 			if (src.imp)
 				if (M.imp)
@@ -58,7 +58,7 @@
 				M.imp = src.imp
 				src.imp = null
 				update()
-			M.update()
+			M.update_icon()
 	return
 
 

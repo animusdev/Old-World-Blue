@@ -106,7 +106,6 @@
 	user << "You remove \the [initial(name)] from [stuck]."
 
 	user.drop_from_inventory(src)
-	stuck.forceMove(get_turf(src))
 	user.put_in_hands(stuck)
 	stuck = null
 	overlays = null

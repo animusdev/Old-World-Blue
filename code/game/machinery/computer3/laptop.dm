@@ -129,7 +129,7 @@
 		set category = "Object"
 		set src in view(1)
 
-		if(usr.stat || usr.restrained() || usr.lying || !istype(usr, /mob/living) || !Adjacent(usr)) return
+		if(usr.stat || usr.restrained() || usr.lying || !istype(usr, /mob/living) || !Adjacent(usr))
 			usr << "\red You can't do that."
 			return
 
