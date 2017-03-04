@@ -30,7 +30,7 @@
 	else
 		icon_state = "[base_state]open"
 
-/obj/machinery/door/window/proc/drop_electronics()
+/obj/machinery/door/window/proc/get_electronics()
 	var/obj/item/weapon/airlock_electronics/ae
 	if(!electronics)
 		ae = new/obj/item/weapon/airlock_electronics( src.loc )
@@ -47,8 +47,7 @@
 		ae.loc = src.loc
 	if(operating == -1)
 		ae.icon_state = "door_electronics_smoked"
-		operating = 0
-
+	return ae
 
 /obj/machinery/door/window/proc/shatter(var/display_message = 1)
 	new /obj/item/weapon/material/shard(src.loc)
@@ -57,7 +56,8 @@
 	playsound(src, "shatter", 70, 1)
 	if(display_message)
 		visible_message("[src] shatters!")
-	drop_electronics()
+	var/obj/item/E = get_electronics()
+	E.forceMove(src.loc)
 	qdel(src)
 
 /obj/machinery/door/window/Destroy()
@@ -196,7 +196,7 @@
 		"[user] removes the electronics from the windoor.",
 		"You start to remove electronics from the windoor."
 	)
-	if (do_after(user,40,src) && !panel_open)
+	if (do_after(user,40,src) && panel_open)
 		in_use = 0
 		user << "<span class='notice'>You removed the windoor electronics!</span>"
 		..()
@@ -206,20 +206,23 @@
 
 /obj/machinery/door/window/dismantle()
 	var/obj/structure/windoor_assembly/wa = new(src.loc)
+	wa.electronics = get_electronics()
+	wa.electronics.forceMove(wa)
+
 	if (istype(src, /obj/machinery/door/window/brigdoor))
 		wa.secure = "secure_"
 		wa.name = "secure wired windoor assembly"
 	else
 		wa.name = "wired windoor assembly"
+
 	if (src.base_state == "right" || src.base_state == "rightsecure")
 		wa.facing = "r"
+
 	wa.set_dir(src.dir)
 	wa.state = "02"
 	wa.update_icon()
+	qdel(src)
 
-	drop_electronics()
-
-	return ..()
 
 /obj/machinery/door/window/attackby(obj/item/weapon/I as obj, mob/user as mob)
 
