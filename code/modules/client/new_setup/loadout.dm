@@ -43,6 +43,7 @@ var/list/gear_datums = list()
 	var/display_name       //Name/index. Must be unique.
 	var/description        //Description of this gear. If left blank will default to the description of the pathed item.
 	var/path               //Path to item.
+	var/list/options       //Specific modificators list. Affect spawned item or way it spawns.
 	var/cost = 1           //Number of points used. Items in general cost 1 point, storage/armor/gloves/special use costs 2 points.
 	var/slot               //Slot to equip to.
 	var/list/allowed_roles //Roles that can spawn with this item.
@@ -54,7 +55,11 @@ var/list/gear_datums = list()
 	if (!sort_category)
 		sort_category = "[slot]"
 
-/datum/gear/proc/spawn_for(var/mob/living/carbon/human/H)
+/datum/gear/proc/set_option(var/mob/user)
+	var/option = input(user, "Select special modifications of item for spawn", "Select modification") as null|anything in options
+	return option ? option : options[1]
+
+/datum/gear/proc/spawn_for(var/mob/living/carbon/human/H, var/option)
 	if(allowed_roles && !(H.job in allowed_roles))
 		H << "<span class='warning'>Your current job does not permit you to spawn with [display_name]!</span>"
 		return null
@@ -63,7 +68,11 @@ var/list/gear_datums = list()
 		H << "<span class='warning'>Your current whitelist status does not permit you to spawn with [display_name]!</span>"
 		return null
 
-	return new path(H)
+	var/build_path = path
+	if(option && option in options)
+		build_path = options[option]
+
+	return new build_path(H)
 
 //PAGE GENERATION AND HANDLING
 
@@ -112,19 +121,18 @@ var/list/gear_datums = list()
 
 	var/datum/loadout_category/LC = loadout_categories[current_tab]
 	. += "<div style='height:335px;overflow-y:auto;border:solid;margin: 7,0,0,0;padding:3px'>"
+
 	for(var/gear_name in LC.gear)
 		var/datum/gear/G = LC.gear[gear_name]
 		var/ticked = (G.display_name in gear)
 		. += "<div title = \"[G.description]\">"
 		. += "<a[ticked ? " style='font-weight: bold;'" : ""] href='?src=\ref[src];toggle_gear=[html_encode(G.display_name)]'>[G.display_name]</a>"
+		if(ticked && G.options)
+			var/option = gear[G.display_name]
+			if(!option) option = G.options[1]
+			. += ", <a href='?src=\ref[src];gear=[G.display_name];option=set'>\[[option]]</a>"
 		. += " ([G.cost])</div>"
-/*
-		if(ticked)
-			. += "<tr><td colspan=3>"
-			for(var/datum/gear_tweak/tweak in G.gear_tweaks)
-				. += " <a href='?src=\ref[src];gear=[G.display_name];tweak=\ref[tweak]'>[tweak.get_contents(get_tweak_metadata(G, tweak))]</a>"
-			. += "</td></tr>"
-*/
+
 	. += "</div>"
 	return (jointext(., null))
 
@@ -142,18 +150,16 @@ var/list/gear_datums = list()
 			if((total_cost+TG.cost) <= MAX_GEAR_COST)
 				gear += TG.display_name
 		return
-/*
-	if(href_list["gear"] && href_list["tweak"])
-		var/datum/gear/gear = gear_datums[href_list["gear"]]
-		var/datum/gear_tweak/tweak = locate(href_list["tweak"])
-		if(!tweak || !istype(gear) || !(tweak in gear.gear_tweaks))
+
+	if(href_list["gear"] && href_list["option"])
+		var/datum/gear/G = gear_datums[href_list["gear"]]
+		if(!G.display_name in gear)
 			return
-		var/metadata = tweak.get_metadata(user, get_tweak_metadata(gear, tweak))
-		if(!metadata || !CanUseTopic(user))
-			return
-		set_tweak_metadata(gear, tweak, metadata)
+		var/option = G.set_option(usr)
+		if(G.display_name in gear)
+			gear[G.display_name] = option
 		return
-*/
+
 	else if(href_list["select_category"])
 		current_tab = href_list["select_category"]
 		return

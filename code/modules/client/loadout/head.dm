@@ -53,9 +53,10 @@
 	path = /obj/item/clothing/head/beret/sec/warden/corp
 	allowed_roles = list("Warden")
 
-/datum/gear/head/cap/blue
-	display_name = "cap, blue"
-	path = /obj/item/clothing/head/soft/blue
+/datum/gear/head/cap/corp
+	display_name = "cap, corporate (Security)"
+	path = /obj/item/clothing/head/soft/sec/corp
+	allowed_roles = list("Security Officer","Head of Security","Warden", "Detective")
 
 /datum/gear/head/cap/mailman
 	display_name = "cap, blue station"
@@ -65,76 +66,46 @@
 	display_name = "cap, brown-flat"
 	path = /obj/item/clothing/head/flatcap
 
-/datum/gear/head/cap/corp
-	display_name = "cap, corporate (Security)"
-	path = /obj/item/clothing/head/soft/sec/corp
-	allowed_roles = list("Security Officer","Head of Security","Warden", "Detective")
-
-/datum/gear/head/cap/green
-	display_name = "cap, green"
-	path = /obj/item/clothing/head/soft/green
-
-/datum/gear/head/cap/grey
-	display_name = "cap, grey"
+/datum/gear/head/cap/color
+	display_name = "cap"
 	path = /obj/item/clothing/head/soft/grey
-
-/datum/gear/head/cap/orange
-	display_name = "cap, orange"
-	path = /obj/item/clothing/head/soft/orange
-
-/datum/gear/head/cap/purple
-	display_name = "cap, purple"
-	path = /obj/item/clothing/head/soft/purple
-
-/datum/gear/head/cap/rainbow
-	display_name = "cap, rainbow"
-	path = /obj/item/clothing/head/soft/rainbow
-
-/datum/gear/head/cap/red
-	display_name = "cap, red"
-	path = /obj/item/clothing/head/soft/red
-
-/datum/gear/head/cap/yellow
-	display_name = "cap, yellow"
-	path = /obj/item/clothing/head/soft/yellow
-
-/datum/gear/head/cap/white
-	display_name = "cap, white"
-	path = /obj/item/clothing/head/soft/mime
+	options = list(
+		"grey"    = /obj/item/clothing/head/soft/grey,
+		"blue"    = /obj/item/clothing/head/soft/blue,
+		"green"   = /obj/item/clothing/head/soft/green,
+		"orange"  = /obj/item/clothing/head/soft/orange,
+		"purple"  = /obj/item/clothing/head/soft/purple,
+		"rainbow" = /obj/item/clothing/head/soft/rainbow,
+		"red"     = /obj/item/clothing/head/soft/red,
+		"yellow"  = /obj/item/clothing/head/soft/yellow,
+		"white"   = /obj/item/clothing/head/soft/mime
+	)
 
 /datum/gear/head/hairflower
 	display_name = "hair flower pin, red"
 	path = /obj/item/clothing/head/hairflower
 
 /datum/gear/head/hardhat
-	display_name = "hardhat, yellow"
+	display_name = "hardhat"
 	path = /obj/item/clothing/head/hardhat
 	cost = 2
-
-/datum/gear/head/hardhat/blue
-	display_name = "hardhat, blue"
-	path = /obj/item/clothing/head/hardhat/dblue
-
-/datum/gear/head/hardhat/orange
-	display_name = "hardhat, orange"
-	path = /obj/item/clothing/head/hardhat/orange
-
-/datum/gear/head/hardhat/red
-	display_name = "hardhat, red"
-	path = /obj/item/clothing/head/hardhat/red
+	options = list(
+		"yellow" = /obj/item/clothing/head/hardhat,
+		"blue"   = /obj/item/clothing/head/hardhat/dblue,
+		"orange" = /obj/item/clothing/head/hardhat/orange,
+		"red"    = /obj/item/clothing/head/hardhat/red
+	)
 
 /datum/gear/head/welding
-	display_name = "welding helmet, flame"
-	path = /obj/item/clothing/head/welding/flame
+	display_name = "welding helmet"
+	path = /obj/item/clothing/head/welding
+	options = list(
+		"default"= /obj/item/clothing/head/welding,
+		"flame"  = /obj/item/clothing/head/welding/flame,
+		"white"  = /obj/item/clothing/head/welding/white,
+		"blue"   = /obj/item/clothing/head/welding/blue
+	)
 	cost = 2
-
-/datum/gear/head/welding/white
-	display_name = "welding helmet, white"
-	path = /obj/item/clothing/head/welding/white
-
-/datum/gear/head/welding/blue
-	display_name = "welding helmet, blue"
-	path = /obj/item/clothing/head/welding/blue
 
 /datum/gear/head/boater
 	display_name = "hat, boatsman"
