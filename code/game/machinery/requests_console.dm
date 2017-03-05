@@ -236,7 +236,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 		var/new_message = rhtml_encode(input_utf8(usr, "Write your message:", "Awaiting Input", "", "message"))
 		if(new_message)
-			message = new_message
+			message = cp1251_to_utf8(new_message)
 			screen = 9
 			switch(href_list["priority"])
 				if("2")	priority = 2
@@ -321,7 +321,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 						screen = 6
 						Console.set_light(2)
-				messages += "<B>Message sent to [dpt]</B><BR>[cp1251_to_utf8(message)]"
+				messages += "<B>Message sent to [dpt]</B><BR>[message]"
 			else
 				for (var/mob/O in hearers(4, src.loc))
 					O.show_message(text("\icon[src] *The Requests Console beeps: 'NOTICE: No server detected!'"))
