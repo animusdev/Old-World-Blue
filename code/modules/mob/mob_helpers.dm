@@ -210,7 +210,6 @@ var/list/global/nearest_part = list(
 	return t
 
 proc/slur(phrase)
-	phrase = rhtml_decode(phrase)
 	var/leng=lentext(phrase)
 	var/counter=lentext(phrase)
 	var/newphrase=""
@@ -229,11 +228,12 @@ proc/slur(phrase)
 			if(9,10)	newletter="<b>[newletter]</b>"
 			//if(11,12)	newletter="<big>[newletter]</big>"
 			//if(13)	newletter="<small>[newletter]</small>"
-		newphrase+="[newletter]";counter-=1
+		newphrase+="[newletter]"
+		counter-=1
 	return newphrase
 
 /proc/stutter(n)
-	var/te = russian_to_cp1251(n)
+	var/te = n
 	n = length(n)//length of the entire word
 	var/list/t = list()
 	var/p = 1//1 is the start of any word
@@ -252,7 +252,7 @@ proc/slur(phrase)
 						n_letter = text("[n_letter]-[n_letter]")
 		t += n_letter //since the above is ran through for each letter, the text just adds up back to the original word.
 		p++//for each letter p is increased to find where the next letter will be.
-	return sanitize(jointext(t,null))
+	return sanitize(t.Join(null))
 
 
 proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
