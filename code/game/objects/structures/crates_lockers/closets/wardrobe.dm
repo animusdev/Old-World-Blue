@@ -340,8 +340,8 @@
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/clothing/gloves/black(src)
-	new /obj/item/device/radio/headset/headset_rob(src)
-	new /obj/item/device/radio/headset/headset_rob(src)
+	new /obj/item/device/radio/headset/rob(src)
+	new /obj/item/device/radio/headset/rob(src)
 	return
 
 

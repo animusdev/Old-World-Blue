@@ -84,7 +84,7 @@
 		new /obj/item/clothing/suit/storage/toggle/labcoat(src)
 		new /obj/item/clothing/suit/storage/toggle/fr_jacket(src)
 		new /obj/item/clothing/shoes/white(src)
-		new /obj/item/device/radio/headset/headset_med(src)
+		new /obj/item/device/radio/headset/med(src)
 		return
 
 /obj/structure/closet/secure_closet/paramedic
@@ -110,7 +110,7 @@
 		new /obj/item/weapon/storage/belt/medical/emt(src)
 		new /obj/item/clothing/mask/gas(src)
 		new /obj/item/clothing/suit/storage/toggle/fr_jacket/ems(src)
-		new /obj/item/device/radio/headset/headset_med/alt(src)
+		new /obj/item/device/radio/headset/med/alt(src)
 		new /obj/item/weapon/cartridge/medical(src)
 		new /obj/item/device/flashlight(src)
 		new /obj/item/weapon/tank/emergency_oxygen/engi(src)

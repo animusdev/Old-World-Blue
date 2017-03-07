@@ -5,7 +5,7 @@
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
 
-	ear = /obj/item/device/radio/headset/headset_sci
+	ear = /obj/item/device/radio/headset/sci
 	shoes = /obj/item/clothing/shoes/white
 	suit = /obj/item/clothing/suit/storage/toggle/labcoat/science
 
@@ -106,7 +106,7 @@
 	minimum_character_age = 23
 
 	uniform = /obj/item/clothing/under/rank/roboticist
-	ear = /obj/item/device/radio/headset/headset_rob
+	ear = /obj/item/device/radio/headset/rob
 	pda = /obj/item/device/pda/roboticist
 	hand = /obj/item/weapon/storage/toolbox/mechanical
 	shoes = /obj/item/clothing/shoes/black

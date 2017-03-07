@@ -137,7 +137,7 @@
 
 /obj/effect/landmark/corpse/doctor
 	name = "Doctor"
-	corpseradio = /obj/item/device/radio/headset/headset_med
+	corpseradio = /obj/item/device/radio/headset/med
 	corpseuniform = /obj/item/clothing/under/rank/medical
 	corpsesuit = /obj/item/clothing/suit/storage/toggle/labcoat
 	corpseback = /obj/item/weapon/storage/backpack/medic
@@ -149,7 +149,7 @@
 
 /obj/effect/landmark/corpse/engineer
 	name = "Engineer"
-	corpseradio = /obj/item/device/radio/headset/headset_eng
+	corpseradio = /obj/item/device/radio/headset/eng
 	corpseuniform = /obj/item/clothing/under/rank/engineer
 	corpseback = /obj/item/weapon/storage/backpack/industrial
 	corpseshoes = /obj/item/clothing/shoes/orange
@@ -179,7 +179,7 @@
 
 /obj/effect/landmark/corpse/scientist
 	name = "Scientist"
-	corpseradio = /obj/item/device/radio/headset/headset_sci
+	corpseradio = /obj/item/device/radio/headset/sci
 	corpseuniform = /obj/item/clothing/under/rank/scientist
 	corpsesuit = /obj/item/clothing/suit/storage/toggle/labcoat/science
 	corpseback = /obj/item/weapon/storage/backpack
@@ -189,7 +189,7 @@
 	corpseidaccess = "Scientist"
 
 /obj/effect/landmark/corpse/miner
-	corpseradio = /obj/item/device/radio/headset/headset_cargo
+	corpseradio = /obj/item/device/radio/headset/cargo
 	corpseuniform = /obj/item/clothing/under/rank/miner
 	corpsegloves = /obj/item/clothing/gloves/black
 	corpseback = /obj/item/weapon/storage/backpack/industrial

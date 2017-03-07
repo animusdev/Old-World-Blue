@@ -8,7 +8,7 @@
 	economic_modifier = 5
 	minimal_player_age = 14
 
-	ear = /obj/item/device/radio/headset/headset_eng
+	ear = /obj/item/device/radio/headset/eng
 	custom_survival_gear = /obj/item/weapon/storage/box/engineer
 
 	backpack  = /obj/item/weapon/storage/backpack/industrial

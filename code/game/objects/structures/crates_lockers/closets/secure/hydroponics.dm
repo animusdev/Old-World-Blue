@@ -15,7 +15,7 @@
 		new /obj/item/weapon/storage/bag/plants(src)
 		new /obj/item/clothing/under/rank/hydroponics(src)
 		new /obj/item/device/analyzer/plant_analyzer(src)
-		new /obj/item/device/radio/headset/headset_service(src)
+		new /obj/item/device/radio/headset/service(src)
 		new /obj/item/clothing/head/greenbandana(src)
 		new /obj/item/weapon/material/minihoe(src)
 		new /obj/item/weapon/material/hatchet(src)

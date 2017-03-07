@@ -9,7 +9,7 @@
 
 	shoes = /obj/item/clothing/shoes/jackboots
 	gloves = /obj/item/clothing/gloves/black
-	ear = /obj/item/device/radio/headset/headset_sec
+	ear = /obj/item/device/radio/headset/sec
 
 	backpack  = /obj/item/weapon/storage/backpack/security
 	satchel_j = /obj/item/weapon/storage/backpack/satchel/sec
