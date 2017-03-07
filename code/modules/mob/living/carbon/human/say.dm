@@ -162,7 +162,7 @@
 	returns[3] = speech_problem_flag
 	return returns
 
-/mob/living/carbon/human/handle_message_mode(message_mode, message, verb, speaking, used_radios, alt_name)
+/mob/living/carbon/human/handle_message_mode(message_mode, message, verb, speaking, list/used_radios, alt_name)
 	switch(message_mode)
 		if("intercom")
 			if(!src.restrained())
@@ -181,26 +181,20 @@
 				used_radios += r_ear
 		if("right ear")
 			var/obj/item/device/radio/R
-			var/has_radio = 0
-			if(r_ear && istype(r_ear,/obj/item/device/radio))
-				R = r_ear
-				has_radio = 1
 			if(r_hand && istype(r_hand, /obj/item/device/radio))
 				R = r_hand
-				has_radio = 1
-			if(has_radio)
+			if(r_ear && istype(r_ear,/obj/item/device/radio))
+				R = r_ear
+			if(R)
 				R.talk_into(src,message,null,verb,speaking)
 				used_radios += R
 		if("left ear")
 			var/obj/item/device/radio/R
-			var/has_radio = 0
-			if(l_ear && istype(l_ear,/obj/item/device/radio))
-				R = l_ear
-				has_radio = 1
 			if(l_hand && istype(l_hand,/obj/item/device/radio))
 				R = l_hand
-				has_radio = 1
-			if(has_radio)
+			if(l_ear && istype(l_ear,/obj/item/device/radio))
+				R = l_ear
+			if(R)
 				R.talk_into(src,message,null,verb,speaking)
 				used_radios += R
 		if("whisper")
@@ -209,11 +203,11 @@
 		else
 			if(message_mode)
 				if(l_ear && istype(l_ear,/obj/item/device/radio))
-					l_ear.talk_into(src,message, message_mode, verb, speaking)
-					used_radios += l_ear
-				else if(r_ear && istype(r_ear,/obj/item/device/radio))
-					r_ear.talk_into(src,message, message_mode, verb, speaking)
-					used_radios += r_ear
+					if(l_ear.talk_into(src,message, message_mode, verb, speaking))
+						used_radios += l_ear
+				if(!used_radios.len && r_ear && istype(r_ear,/obj/item/device/radio))
+					if(r_ear.talk_into(src,message, message_mode, verb, speaking))
+						used_radios += r_ear
 
 /mob/living/carbon/human/handle_speech_sound()
 	if(species.speech_sounds && prob(species.speech_chance))
