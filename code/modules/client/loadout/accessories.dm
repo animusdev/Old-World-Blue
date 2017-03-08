@@ -10,7 +10,7 @@
 
 /datum/gear/accessory/armband
 	display_name = "armband"
-	path = /obj/item/clothing/accessory/armband/engine
+	path = /obj/item/clothing/accessory/armband
 	options = list(
 		"red"         = /obj/item/clothing/accessory/armband,
 		"cargo"       = /obj/item/clothing/accessory/armband/cargo,
