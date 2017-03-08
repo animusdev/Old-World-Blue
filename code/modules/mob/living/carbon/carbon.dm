@@ -304,6 +304,7 @@
 		var/obj/item/weapon/grab/G = item
 		item = G.throw_held() //throw the person instead of the grab
 		if(ismob(item))
+			Stun(3)
 			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 			var/turf/end_T = get_turf(target)
 			if(start_T && end_T)
@@ -420,7 +421,7 @@
 	return
 
 /mob/living/carbon/slip(var/slipped_on,stun_duration=8)
-	if(buckled)
+	if(buckled || lying)
 		return 0
 	stop_pulling()
 	src << "<span class='warning'>You slipped on [slipped_on]!</span>"
