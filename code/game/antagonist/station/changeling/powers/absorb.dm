@@ -54,7 +54,7 @@
 				T << "<span class='danger'>You feel a sharp stabbing pain!</span>"
 				T.attack_log += text("\[[time_stamp()]\] <font color='red'>Was absorbed by [key_name(src)]</font>")
 				src.attack_log += text("\[[time_stamp()]\] <font color='orange'> Absorbed [key_name(T)]</font>")
-				msg_admin_attack("[key_name(T)] was absorbed by [key_name(src)]")
+				msg_admin_attack("[key_name(T)] was absorbed by [key_name(src)]", T)
 				var/obj/item/organ/external/affecting = T.get_organ(src.zone_sel.selecting)
 				if(affecting.take_damage(39,0,1,0,"large organic needle"))
 					T:UpdateDamageIcon()
