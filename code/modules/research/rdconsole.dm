@@ -48,38 +48,36 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	req_access = list(access_research)	//Data and setting manipulation requires scientist access.
 
 /obj/machinery/computer/rdconsole/proc/CallMaterialName(var/ID)
+	var/return_name = ID
+	switch(return_name)
+		if("metal")
+			return_name = "Metal"
+		if("glass")
+			return_name = "Glass"
+		if("gold")
+			return_name = "Gold"
+		if("silver")
+			return_name = "Silver"
+		if("phoron")
+			return_name = "Solid Phoron"
+		if("uranium")
+			return_name = "Uranium"
+		if("diamond")
+			return_name = "Diamond"
+	return return_name
+
+/obj/machinery/computer/rdconsole/proc/CallReagentName(var/ID)
+	var/return_name = ID
 	var/datum/reagent/temp_reagent
-	var/return_name = null
-	if (copytext(ID, 1, 2) == "$")
-		return_name = copytext(ID, 2)
-		switch(return_name)
-			if(DEFAULT_WALL_MATERIAL)
-				return_name = "Steel"
-			if("glass")
-				return_name = "Glass"
-			if("gold")
-				return_name = "Gold"
-			if("silver")
-				return_name = "Silver"
-			if("phoron")
-				return_name = "Solid Phoron"
-			if("uranium")
-				return_name = "Uranium"
-			if("diamond")
-				return_name = "Diamond"
-	else
-		for(var/R in typesof(/datum/reagent) - /datum/reagent)
-			temp_reagent = null
-			temp_reagent = new R()
-			if(temp_reagent.id == ID)
-				return_name = temp_reagent.name
-				qdel(temp_reagent)
-				temp_reagent = null
-				break
+	for(var/R in subtypesof(/datum/reagent))
+		temp_reagent = R
+		if(initial(temp_reagent.id) == ID)
+			return_name = initial(temp_reagent.name)
+			break
 	return return_name
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
-	for(var/obj/machinery/r_n_d/D in oview(3,src))
+	for(var/obj/machinery/r_n_d/D in range(3, src))
 		if(D.linked_console != null || D.disabled || D.panel_open)
 			continue
 		if(istype(D, /obj/machinery/r_n_d/destructive_analyzer))
@@ -96,7 +94,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				D.linked_console = src
 	return
 
-//Have it automatically push research to the centcomm server so wild griffins can't fuck up R&D's work --NEO
+//Have it automatically push research to the centcomm server so wild griffins can't fuck up R&D's work
 /obj/machinery/computer/rdconsole/proc/griefProtection()
 	for(var/obj/machinery/r_n_d/server/centcom/C in machines)
 		for(var/datum/tech/T in files.known_tech)
@@ -115,6 +113,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 /obj/machinery/computer/rdconsole/initialize()
 	SyncRDevices()
+	..()
 
 /obj/machinery/computer/rdconsole/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
 	//Loading a disk into it.
@@ -665,7 +664,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				switch(d_disk.blueprint.build_type)
 					if(IMPRINTER) dat += "Lathe Type: Circuit Imprinter<BR>"
 					if(PROTOLATHE) dat += "Lathe Type: Proto-lathe<BR>"
-					if(AUTOLATHE) dat += "Lathe Type: Auto-lathe<BR>"
 				dat += "Required Materials:<BR>"
 				for(var/M in d_disk.blueprint.materials)
 					if(copytext(M, 1, 2) == "$") dat += "* [copytext(M, 2)] x [d_disk.blueprint.materials[M]]<BR>"
@@ -842,10 +840,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					else
 						continue
 				dat += "<LI><B>[capitalize(M)]</B>: [amount] cm<sup>3</sup>"
-				if(amount >= sheetsize)
+				if(amount >= SHEET_MATERIAL_AMOUNT)
 					dat += " || Eject "
-					for (var/C in list(1,3,5,10,15,20,25,30,40))
-						if(amount < C * sheetsize)
+					for (var/C in list(1, 3, 5, 10, 15, 20, 25, 30, 40))
+						if(amount < C * SHEET_MATERIAL_AMOUNT)
 							break
 						dat += "[C > 1 ? ", " : ""]<A href='?src=\ref[src];lathe_ejectsheet=[M];amount=[C]'>[C]</A> "
 
@@ -878,44 +876,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			for(var/datum/design/D in files.known_designs)
 				if(!D.build_path || !(D.build_type & IMPRINTER))
 					continue
-				var/temp_dat
-				var/check_materials = 1
-				var/enough_material
-				for(var/M in D.materials)
-					enough_material = 1
-					if(copytext(M, 1, 2) == "$")
-						switch(M)
-							if("$glass")
-								if(D.materials[M]*linked_imprinter.mat_efficiency > linked_imprinter.g_amount)
-									check_materials = 0
-									enough_material = 0
-							if("$gold")
-								if(D.materials[M]*linked_imprinter.mat_efficiency > linked_imprinter.gold_amount)
-									check_materials = 0
-									enough_material = 0
-							if("$diamond")
-								if(D.materials[M]*linked_imprinter.mat_efficiency > linked_imprinter.diamond_amount)
-									check_materials = 0
-									enough_material = 0
-							if("$uranium")
-								if(D.materials[M]*linked_imprinter.mat_efficiency > linked_imprinter.uranium_amount)
-									check_materials = 0
-									enough_material = 0
-					else if (!linked_imprinter.reagents.has_reagent(M, D.materials[M]*linked_imprinter.mat_efficiency))
-						check_materials = 0
-						enough_material = 0
-					if(enough_material)
-						temp_dat += ", [D.materials[M]*linked_imprinter.mat_efficiency] [CallMaterialName(M)]"
-					else
-						temp_dat += ", <span class ='deficiency'>[D.materials[M]*linked_imprinter.mat_efficiency] [CallMaterialName(M)]</span>"
-				if(temp_dat)
-					temp_dat = "<br><span class='requirements'>\[[copytext(temp_dat,3)]\]</span>"
-				if (check_materials)
-					dat += "<LI><B><A href='?src=\ref[src];imprint=[D.id]'>[D.name]</A></B>[temp_dat]"
+				var/material_string = linked_inmprinter.get_material_string(D)
+				if(linked_imprinter.canBuild(D))
+					dat += "<LI><B><A href='?src=\ref[src];imprint=[D.id]'>[D.name]</A></B>[material_string]"
 				else
-					dat += "<LI><B>[D.name]</B>[temp_dat]"
-				if(D.reliability < 100)
-					dat += " (Reliability: [D.reliability])"
+					dat += "<LI><B>[D.name]</B>[material_string]"
 			dat += "</UL>"
 
 		if(4.2)
@@ -932,24 +897,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<A href='?src=\ref[src];menu=4.1'>Circuit Imprinter Menu</A><HR>"
 			dat += "Material Storage<BR><HR>"
 			dat += "<UL>"
-			for(var/M in list("glass", "gold", "diamond", "uranium"))
-				var/amount
-				var/sheetsize = 2000
-				switch(M)
-					if("glass")
-						amount = linked_imprinter.g_amount
-						sheetsize = 2000
-					if("gold")
-						amount = linked_imprinter.gold_amount
-					if("diamond")
-						amount = linked_imprinter.diamond_amount
-					if("uranium")
-						amount = linked_imprinter.uranium_amount
+			for(var/M in linked_imprinter.materials)
+				var/amount = linked_imprinter.materials[M]
 				dat += "<LI><B>[capitalize(M)]</B>: [amount] cm<sup>3</sup>"
-				if(amount >= sheetsize)
+				if(amount >= SHEET_MATERIAL_AMOUNT)
 					dat += " || Eject: "
-					for (var/C in list(1,3,5,10,15,20,25,30,40))
-						if(amount < C * sheetsize)
+					for (var/C in list(1, 3, 5, 10, 15, 20, 25, 30, 40))
+						if(amount < C * SHEET_MATERIAL_AMOUNT)
 							break
 						dat += "[C > 1 ? ", " : ""]<A href='?src=\ref[src];imprinter_ejectsheet=[M];amount=[C]'>[C]</A> "
 
@@ -964,7 +918,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "List of Researched Technologies and Designs:"
 			dat += GetResearchListInfo()
 
-	user << browse("<TITLE>Research and Development Console</TITLE><HR>[dat]", "window=rdconsole;size=570x400")
+	user << browse("<TITLE>Research and Development Console</TITLE><HR>[dat]", "window=rdconsole;size=570x400") //780x400
 	onclose(user, "rdconsole")
 
 /obj/machinery/computer/rdconsole/robotics

@@ -1,20 +1,18 @@
 /*///////////////Circuit Imprinter (By Darem)////////////////////////
 	Used to print new circuit boards (for computers and similar systems) and AI modules. Each circuit board pattern are stored in
 a /datum/desgin on the linked R&D console. You can then print them out in a fasion similar to a regular lathe. However, instead of
-using metal and glass, it uses glass and reagents (usually sulfuric acis).
-
+using metal and glass, it uses glass and reagents (usually sulphuric acid).
 */
+
 /obj/machinery/r_n_d/circuit_imprinter
-	name = "Circuit Imprinter"
+	name = "\improper Circuit Imprinter"
 	icon_state = "circuit_imprinter"
 	flags = OPENCONTAINER
 	circuit = /obj/item/weapon/circuitboard/circuit_imprinter
 
-	var/g_amount = 0
-	var/gold_amount = 0
-	var/diamond_amount = 0
-	var/uranium_amount = 0
-	var/max_material_amount = 75000.0
+	var/list/materials = list("glass" = 0, "gold" = 0, "diamond" = 0, "uranium" = 0)
+
+	var/max_material_storage = 75000
 	var/mat_efficiency = 1
 
 	use_power = 1
@@ -25,13 +23,10 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	var/T = 0
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 		T += G.reagents.maximum_volume
-	var/datum/reagents/R = new/datum/reagents(T)		//Holder for the reagents used as materials.
-	reagents = R
-	R.my_atom = src
-	T = 0
+	create_reagents(T)
+	max_material_storage = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
-		T += M.rating
-	max_material_amount = T * 75000.0
+		max_material_storage += M.rating * 75000
 	T = 0
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		T += M.rating
@@ -101,7 +96,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		user << "<span class='notice'>\The [src] is busy. Please wait for completion of previous operation.</span>"
 		return 1
 
-	if(istype(O, /obj/item/stack/material) && O.get_material_name() in list("glass", "gold", "diamond", "uranium"))
+	if(istype(O, /obj/item/stack/material) && O.get_material_name() in materials)
 
 		var/obj/item/stack/material/stack = O
 		if((TotalMaterials() + stack.perunit) > max_material_amount)
@@ -136,6 +131,29 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 	..()
 
-//This is to stop these machines being hackable via clicking.
-/obj/machinery/r_n_d/circuit_imprinter/attack_hand(mob/user as mob)
-	return
+/obj/machinery/r_n_d/circuit_imprinter/proc/get_material_string(var/datum/design/D)
+	. = list()
+	for(var/M in D.materials)
+		var/req_ammount = D.materials[M] * mat_efficiency
+		if(materials[M] <= req_ammount)
+			. += "<span class ='deficiency'>[req_ammount] [CallMaterialName(M)]</span>"
+		else
+			. += "[req_ammount] [CallMaterialName(M)]"
+	for(var/C in D.chemicals)
+		var/req_ammount = D.chemicals[C] * mat_efficiency
+		if(!reagents.has_reagent(C, req_ammount))
+			. += "<span class ='deficiency'>[req_ammount] [CallReagentName(C)]</span>"
+		else
+			. += "[req_ammount] [CallReagentName(C)]"
+	return jointext(., ", ")
+
+
+/obj/machinery/r_n_d/circuit_imprinter/proc/canBuild(var/datum/design/D)
+	for(var/M in D.materials)
+		if(materials[M] <= D.materials[M] * mat_efficiency)
+			return 0
+	for(var/C in D.chemicals)
+		if(!reagents.has_reagent(C, D.chemicals[C]))
+			return 0
+	return 1
+
