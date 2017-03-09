@@ -64,9 +64,9 @@
 		return
 	user << "<span class='warning'>You stab [M] with the pen.</span>"
 //	M << "\red You feel a tiny prick!" //That's a whole lot of meta!
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stabbed with [name]  by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [name] to stab [M.name] ([M.ckey])</font>")
-	msg_admin_attack("[user.name] ([user.ckey]) Used the [name] to stab [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+	M.attack_log += text("\[[time_stamp()]] <font color='orange'>Has been stabbed with [name]  by [key_name(user)]</font>")
+	user.attack_log += text("\[[time_stamp()]] <font color='red'>Used the [name] to stab [key_name(M)]</font>")
+	msg_admin_attack("[key_name(user)] Used the [name] to stab [key_name(M)]", user)
 	return
 
 /*

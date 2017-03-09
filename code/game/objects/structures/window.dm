@@ -242,9 +242,9 @@
 					M.Weaken(5)
 					M.apply_damage(20)
 					hit(50)
-			user.attack_log += "\[[time_stamp()]\]<font color='red'> Smashed [M.name] ([M.ckey]) against \the [src]</font>"
-			M.attack_log += "\[[time_stamp()]\]<font color='orange'> Smashed against \the [src] by [user.name] ([user.ckey])</font>"
-			msg_admin_attack("[key_name(user)] smashed [key_name(M)] against \the [src]")
+			user.attack_log += "\[[time_stamp()]\]<font color='red'> Smashed [key_name(M)] against \the [src]</font>"
+			M.attack_log += "\[[time_stamp()]\]<font color='orange'> Smashed against \the [src] by [key_name(user)]</font>"
+			msg_admin_attack("[key_name(user)] smashed [key_name(M)] against \the [src]", M)
 			return
 
 	if(W.flags & NOBLUDGEON) return
