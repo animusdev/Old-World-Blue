@@ -82,12 +82,13 @@
 
 	New()
 		..()
-		var/list/parts = list(/obj/item/mecha_parts/part/gygax_torso,
-									/obj/item/mecha_parts/part/gygax_head,
-									/obj/item/mecha_parts/part/gygax_left_arm,
-									/obj/item/mecha_parts/part/gygax_right_arm,
-									/obj/item/mecha_parts/part/gygax_left_leg,
-									/obj/item/mecha_parts/part/gygax_right_leg)
+		var/list/parts = list(
+			/obj/item/mecha_parts/part/gygax_torso,
+			/obj/item/mecha_parts/part/gygax_head,
+			/obj/item/mecha_parts/part/gygax_left_arm,
+			/obj/item/mecha_parts/part/gygax_right_arm,
+			/obj/item/mecha_parts/part/gygax_left_leg,
+			/obj/item/mecha_parts/part/gygax_right_leg)
 		for(var/i=0;i<2;i++)
 			if(!isemptylist(parts) && prob(40))
 				var/part = pick(parts)
@@ -118,11 +119,12 @@
 
 	New()
 		..()
-		var/list/parts = list(/obj/item/mecha_parts/part/ripley_torso,
-									/obj/item/mecha_parts/part/ripley_left_arm,
-									/obj/item/mecha_parts/part/ripley_right_arm,
-									/obj/item/mecha_parts/part/ripley_left_leg,
-									/obj/item/mecha_parts/part/ripley_right_leg)
+		var/list/parts = list(
+			/obj/item/mecha_parts/part/ripley_torso,
+			/obj/item/mecha_parts/part/ripley_left_arm,
+			/obj/item/mecha_parts/part/ripley_right_arm,
+			/obj/item/mecha_parts/part/ripley_left_leg,
+			/obj/item/mecha_parts/part/ripley_right_leg)
 		for(var/i=0;i<2;i++)
 			if(!isemptylist(parts) && prob(40))
 				var/part = pick(parts)
@@ -136,12 +138,13 @@
 
 	New()
 		..()
-		var/list/parts = list(/obj/item/mecha_parts/part/ripley_torso,
-									/obj/item/mecha_parts/part/ripley_left_arm,
-									/obj/item/mecha_parts/part/ripley_right_arm,
-									/obj/item/mecha_parts/part/ripley_left_leg,
-									/obj/item/mecha_parts/part/ripley_right_leg,
-									/obj/item/clothing/suit/fire)
+		var/list/parts = list(
+			/obj/item/mecha_parts/part/ripley_torso,
+			/obj/item/mecha_parts/part/ripley_left_arm,
+			/obj/item/mecha_parts/part/ripley_right_arm,
+			/obj/item/mecha_parts/part/ripley_left_leg,
+			/obj/item/mecha_parts/part/ripley_right_leg,
+			/obj/item/clothing/suit/fire)
 		for(var/i=0;i<2;i++)
 			if(!isemptylist(parts) && prob(40))
 				var/part = pick(parts)
@@ -152,7 +155,7 @@
 /obj/effect/decal/mecha_wreckage/ripley/deathripley
 	name = "Death-Ripley wreckage"
 	icon_state = "deathripley-broken"
-	
+
 /obj/effect/decal/mecha_wreckage/ripley/lagan
 	name = "Lagann wreckage"
 	icon_state = "lagann-broken"
@@ -164,12 +167,12 @@
 	New()
 		..()
 		var/list/parts = list(
-									/obj/item/mecha_parts/part/durand_torso,
-									/obj/item/mecha_parts/part/durand_head,
-									/obj/item/mecha_parts/part/durand_left_arm,
-									/obj/item/mecha_parts/part/durand_right_arm,
-									/obj/item/mecha_parts/part/durand_left_leg,
-									/obj/item/mecha_parts/part/durand_right_leg)
+			/obj/item/mecha_parts/part/durand_torso,
+			/obj/item/mecha_parts/part/durand_head,
+			/obj/item/mecha_parts/part/durand_left_arm,
+			/obj/item/mecha_parts/part/durand_right_arm,
+			/obj/item/mecha_parts/part/durand_left_leg,
+			/obj/item/mecha_parts/part/durand_right_leg)
 		for(var/i=0;i<2;i++)
 			if(!isemptylist(parts) && prob(40))
 				var/part = pick(parts)
@@ -189,12 +192,12 @@
 	New()
 		..()
 		var/list/parts = list(
-									/obj/item/mecha_parts/part/odysseus_torso,
-									/obj/item/mecha_parts/part/odysseus_head,
-									/obj/item/mecha_parts/part/odysseus_left_arm,
-									/obj/item/mecha_parts/part/odysseus_right_arm,
-									/obj/item/mecha_parts/part/odysseus_left_leg,
-									/obj/item/mecha_parts/part/odysseus_right_leg)
+			/obj/item/mecha_parts/part/odysseus_torso,
+			/obj/item/mecha_parts/part/odysseus_head,
+			/obj/item/mecha_parts/part/odysseus_left_arm,
+			/obj/item/mecha_parts/part/odysseus_right_arm,
+			/obj/item/mecha_parts/part/odysseus_left_leg,
+			/obj/item/mecha_parts/part/odysseus_right_leg)
 		for(var/i=0;i<2;i++)
 			if(!isemptylist(parts) && prob(40))
 				var/part = pick(parts)
