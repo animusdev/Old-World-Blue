@@ -6,7 +6,7 @@
 	step_in = 6
 	max_temperature = 20000
 	health = 200
-	wreckage = /obj/effect/decal/mecha_wreckage/laydlaw
+//	wreckage = /obj/effect/decal/mecha_wreckage/laydlaw
 	cargo_capacity = 6
 	var/running = 0
 
@@ -29,12 +29,13 @@
 		return
 	running = !running
 	if(running)
-		step_in = 2
+		step_in = 1
 		src.occupant_message("<font color='blue'>You enable [src] running mode.</font>")
 	else
 		step_in = initial(step_in)
 		src.occupant_message("<font color='red'>You disable [src] running mode.</font>")
 	src.log_message("Toggled running mode.")
+	update_icon()
 	return
 
 /obj/mecha/working/laydlaw/click_action(atom/target,mob/user)
@@ -66,3 +67,14 @@
 	if (href_list["toggle_running_mode"])
 		src.running_mode()
 	return
+
+/obj/mecha/working/laydlaw/update_icon()
+	if (initial_icon)
+		icon_state = initial_icon
+	else
+		icon_state = initial(icon_state)
+
+	if(!occupant)
+		icon_state += "-open"
+	else if(running)
+		icon_state += "-run"
