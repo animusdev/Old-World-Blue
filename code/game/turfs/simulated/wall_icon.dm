@@ -86,7 +86,7 @@
 	if(density)
 		check_relatives(1)
 	else
-		set_wall_state("fwall_open")
+		set_wall_state("open")
 
 	if(damage == 0)
 		if(damage_overlay != 0)
