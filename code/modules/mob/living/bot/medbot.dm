@@ -65,7 +65,7 @@
 				if(get_dist(src, patient) > 7 || frustration > 8)
 					patient = null
 		else
-			for(var/mob/living/carbon/human/H in reverselist(view(7, src))) // Time to find a patient!
+			for(var/mob/living/carbon/human/H in reverseRange(view(7, src))) // Time to find a patient!
 				if(valid_healing_target(H))
 					patient = H
 					frustration = 0

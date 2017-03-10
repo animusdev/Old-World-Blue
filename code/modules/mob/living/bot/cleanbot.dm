@@ -71,7 +71,7 @@
 		return
 
 	if(!target) // Find a target
-		for(var/obj/effect/decal/cleanable/D in reverselist(view(src)))
+		for(var/obj/effect/decal/cleanable/D in reverseRange(view(src)))
 			if(D in ignorelist)
 				continue
 			for(var/T in target_types)
