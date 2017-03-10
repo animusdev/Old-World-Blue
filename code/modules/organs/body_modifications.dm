@@ -254,7 +254,7 @@ var/global/list/modifications_types = list(
 		if(organ in list(BP_HEAD, BP_CHEST, BP_GROIN))
 			return new/icon(icon, "[organ]_[gender==FEMALE?"f":"m"][body_build]")
 		else
-			return new/icon(icon, "[organ]_[body_build]")
+			return new/icon(icon, "[organ][body_build]")
 
 ////Internals////
 
