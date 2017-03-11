@@ -80,7 +80,7 @@
 
 	who << sound_copy
 	#if DM_VERSION < 511
-		sound_copy.frequency = 1
+	sound_copy.frequency = 1
 	#endif
 	spawn(duration)
 		var/delta_volume = player.volume / sustain_timer
