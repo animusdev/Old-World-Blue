@@ -617,7 +617,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 			dat += "<UL>"
 			for(var/datum/design/D in files.known_designs)
-				if(!D.build_path || !(D.build_type & IMPRINTER))
+				if(!D.build_path || !(D.build_type & PROTOLATHE))
 					continue
 				var/material_string = linked_lathe.get_requirements(D)
 				if(linked_lathe.canBuild(D))
