@@ -1,21 +1,19 @@
 /*///////////////Circuit Imprinter (By Darem)////////////////////////
 	Used to print new circuit boards (for computers and similar systems) and AI modules. Each circuit board pattern are stored in
 a /datum/desgin on the linked R&D console. You can then print them out in a fasion similar to a regular lathe. However, instead of
-using metal and glass, it uses glass and reagents (usually sulfuric acis).
-
+using metal and glass, it uses glass and reagents (usually sulphuric acid).
 */
+
 /obj/machinery/r_n_d/circuit_imprinter
-	name = "Circuit Imprinter"
+	name = "\improper Circuit Imprinter"
 	icon_state = "circuit_imprinter"
 	flags = OPENCONTAINER
 	circuit = /obj/item/weapon/circuitboard/circuit_imprinter
 
-	var/g_amount = 0
-	var/gold_amount = 0
-	var/diamond_amount = 0
-	var/uranium_amount = 0
-	var/max_material_amount = 75000.0
-	var/mat_efficiency = 1
+	materials = list("glass" = 0, "gold" = 0, "diamond" = 0, "uranium" = 0)
+
+	max_material_storage = 75000
+	mat_efficiency = 1
 
 	use_power = 1
 	idle_power_usage = 30
@@ -25,13 +23,10 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	var/T = 0
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 		T += G.reagents.maximum_volume
-	var/datum/reagents/R = new/datum/reagents(T)		//Holder for the reagents used as materials.
-	reagents = R
-	R.my_atom = src
-	T = 0
+	create_reagents(T)
+	max_material_storage = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
-		T += M.rating
-	max_material_amount = T * 75000.0
+		max_material_storage += M.rating * 75000
 	T = 0
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		T += M.rating
@@ -50,27 +45,6 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 /obj/machinery/r_n_d/circuit_imprinter/meteorhit()
 	qdel(src)
 	return
-
-/obj/machinery/r_n_d/circuit_imprinter/proc/TotalMaterials()
-	return g_amount + gold_amount + diamond_amount + uranium_amount
-
-/obj/machinery/r_n_d/circuit_imprinter/dismantle()
-	for(var/obj/I in component_parts)
-		if(istype(I, /obj/item/weapon/reagent_containers/glass/beaker))
-			reagents.trans_to_obj(I, reagents.total_volume)
-	if(g_amount >= 2000)
-		var/obj/item/stack/material/glass/G = new /obj/item/stack/material/glass(loc)
-		G.amount = round(g_amount / 2000)
-	if(gold_amount >= 2000)
-		var/obj/item/stack/material/gold/G = new /obj/item/stack/material/gold(loc)
-		G.amount = round(gold_amount / 2000)
-	if(diamond_amount >= 2000)
-		var/obj/item/stack/material/diamond/G = new /obj/item/stack/material/diamond(loc)
-		G.amount = round(diamond_amount / 2000)
-	if(uranium_amount >= 2000)
-		var/obj/item/stack/material/uranium/G = new /obj/item/stack/material/uranium(loc)
-		G.amount = round(uranium_amount / 2000)
-	..()
 
 /obj/machinery/r_n_d/circuit_imprinter/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(shocked)
@@ -101,41 +75,51 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		user << "<span class='notice'>\The [src] is busy. Please wait for completion of previous operation.</span>"
 		return 1
 
-	if(istype(O, /obj/item/stack/material) && O.get_material_name() in list("glass", "gold", "diamond", "uranium"))
+	if(istype(O, /obj/item/stack/material) && O.get_material_name() in materials)
 
 		var/obj/item/stack/material/stack = O
-		if((TotalMaterials() + stack.perunit) > max_material_amount)
-			user << "<span class='notice'>\The [src] is full. Please remove glass from \the [src] in order to insert more.</span>"
+		var/free_space = (max_material_storage - TotalMaterials())/SHEET_MATERIAL_AMOUNT
+		if(free_space < 1)
+			user << "<span class='notice'>\The [src] is full. Please remove some material from \the [src] in order to insert more.</span>"
 			return 1
 
 		var/amount = round(input("How many sheets do you want to add?") as num)
-		if(amount < 0)
-			amount = 0
-		if(amount == 0)
+		amount = min(amount, stack.amount, free_space)
+		if(amount <= 0 || busy)
 			return
-		if(amount > stack.amount)
-			amount = min(stack.amount, round((max_material_amount - TotalMaterials()) / stack.perunit))
 
 		busy = 1
-		var/stacktype = stack.type
+		var/material = stack.get_material_name()
 		if(do_after(usr, 16) && stack.use(amount))
 			user << "<span class='notice'>You add [amount] sheets to \the [src].</span>"
-			use_power(max(1000, (3750 * amount / 10)))
-			switch(stacktype)
-				if(/obj/item/stack/material/glass)
-					g_amount += amount * 2000
-				if(/obj/item/stack/material/gold)
-					gold_amount += amount * 2000
-				if(/obj/item/stack/material/diamond)
-					diamond_amount += amount * 2000
-				if(/obj/item/stack/material/uranium)
-					uranium_amount += amount * 2000
+			use_power(max(1000, (SHEET_MATERIAL_AMOUNT * amount / 10)))
+			materials[material] += amount * SHEET_MATERIAL_AMOUNT
 		busy = 0
 		updateUsrDialog()
 		return
 
-	..()
+/obj/machinery/r_n_d/circuit_imprinter/proc/Build(var/datum/design/D)
+	busy = 1
 
-//This is to stop these machines being hackable via clicking.
-/obj/machinery/r_n_d/circuit_imprinter/attack_hand(mob/user as mob)
-	return
+	var/power = active_power_usage
+	for(var/M in D.materials)
+		power += round(D.materials[M] / 5)
+	power = max(active_power_usage, power)
+
+	flick("circuit_imprinter_ani", src)
+	sleep(16)
+	use_power(power)
+
+	for(var/M in D.materials)
+		materials[M] = max(0, materials[M] - D.materials[M] * mat_efficiency)
+
+	for(var/C in D.chemicals)
+		reagents.remove_reagent(C, D.chemicals[C] * mat_efficiency)
+
+	var/obj/new_item = new D.build_path(src.loc)
+	new_item.reliability = D.reliability
+	if(hacked)
+		new_item.reliability = max((reliability / 2), 0)
+
+	busy = 0
+

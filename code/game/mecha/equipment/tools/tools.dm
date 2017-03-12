@@ -884,7 +884,7 @@
 	get_equip_info()
 		var/output = ..()
 		if(output)
-			return "[output] \[[fuel]: [round(fuel.amount*fuel.perunit,0.1)] cm<sup>3</sup>\] - <a href='?src=\ref[src];toggle=1'>[pr_mech_generator.active()?"Dea":"A"]ctivate</a>"
+			return "[output] \[[fuel]: [round(fuel.amount*SHEET_MATERIAL_AMOUNT,0.1)] cm<sup>3</sup>\] - <a href='?src=\ref[src];toggle=1'>[pr_mech_generator.active()?"Dea":"A"]ctivate</a>"
 		return
 
 	action(target)
@@ -903,9 +903,9 @@
 
 	proc/load_fuel(var/obj/item/stack/material/P)
 		if(P.type == fuel.type && P.amount)
-			var/to_load = max(max_fuel - fuel.amount*fuel.perunit,0)
+			var/to_load = max(max_fuel - fuel.amount*SHEET_MATERIAL_AMOUNT,0)
 			if(to_load)
-				var/units = min(max(round(to_load / P.perunit),1),P.amount)
+				var/units = min(max(round(to_load / SHEET_MATERIAL_AMOUNT),1),P.amount)
 				if(units)
 					fuel.amount += units
 					P.use(units)
@@ -967,7 +967,7 @@
 		if(cur_charge<EG.chassis.cell.maxcharge)
 			use_fuel = EG.fuel_per_cycle_active
 			EG.chassis.give_power(EG.power_per_cycle)
-		EG.fuel.amount -= min(use_fuel/EG.fuel.perunit,EG.fuel.amount)
+		EG.fuel.amount -= min(use_fuel/SHEET_MATERIAL_AMOUNT,EG.fuel.amount)
 		EG.update_equip_info()
 		return 1
 
