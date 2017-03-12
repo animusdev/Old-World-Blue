@@ -47,35 +47,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	req_access = list(access_research)	//Data and setting manipulation requires scientist access.
 
-/obj/machinery/computer/rdconsole/proc/CallMaterialName(var/ID)
-	var/return_name = ID
-	switch(return_name)
-		if("metal")
-			return_name = "Metal"
-		if("glass")
-			return_name = "Glass"
-		if("gold")
-			return_name = "Gold"
-		if("silver")
-			return_name = "Silver"
-		if("phoron")
-			return_name = "Solid Phoron"
-		if("uranium")
-			return_name = "Uranium"
-		if("diamond")
-			return_name = "Diamond"
-	return return_name
-
-/obj/machinery/computer/rdconsole/proc/CallReagentName(var/ID)
-	var/return_name = ID
-	var/datum/reagent/temp_reagent
-	for(var/R in subtypesof(/datum/reagent))
-		temp_reagent = R
-		if(initial(temp_reagent.id) == ID)
-			return_name = initial(temp_reagent.name)
-			break
-	return return_name
-
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
 	for(var/obj/machinery/r_n_d/D in range(3, src))
 		if(D.linked_console != null || D.disabled || D.panel_open)
@@ -241,9 +212,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 						for(var/T in linked_destroy.loaded_item.origin_tech)
 							files.UpdateTech(T, linked_destroy.loaded_item.origin_tech[T])
+/*
 						if(linked_lathe && linked_destroy.loaded_item.matter) // Also sends salvaged materials to a linked protolathe, if any.
 							linked_lathe.m_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.matter[DEFAULT_WALL_MATERIAL]*linked_destroy.decon_mod))
 							linked_lathe.g_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.matter["glass"]*linked_destroy.decon_mod))
+*/
 						linked_destroy.loaded_item = null
 						for(var/obj/I in linked_destroy.contents)
 							for(var/mob/M in I.contents)
@@ -313,57 +286,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					being_built = D
 					break
 			if(being_built)
-				var/power = linked_lathe.active_power_usage
-				for(var/M in being_built.materials)
-					power += round(being_built.materials[M] / 5)
-				power = max(linked_lathe.active_power_usage, power)
 				screen = 0.3
-				linked_lathe.busy = 1
-				flick("protolathe_n",linked_lathe)
-				var/key = usr.key	//so we don't lose the info during the spawn delay
-				spawn(16)
-					use_power(power)
-					spawn(16)
-						errored = 1
-						for(var/M in being_built.materials)
-							switch(M)
-								if("$metal")
-									linked_lathe.m_amount = max(0, (linked_lathe.m_amount-being_built.materials[M]*linked_lathe.mat_efficiency))
-								if("$glass")
-									linked_lathe.g_amount = max(0, (linked_lathe.g_amount-being_built.materials[M]*linked_lathe.mat_efficiency))
-								if("$gold")
-									linked_lathe.gold_amount = max(0, (linked_lathe.gold_amount-being_built.materials[M]*linked_lathe.mat_efficiency))
-								if("$silver")
-									linked_lathe.silver_amount = max(0, (linked_lathe.silver_amount-being_built.materials[M]*linked_lathe.mat_efficiency))
-								if("$phoron")
-									linked_lathe.phoron_amount = max(0, (linked_lathe.phoron_amount-being_built.materials[M]*linked_lathe.mat_efficiency))
-								if("$uranium")
-									linked_lathe.uranium_amount = max(0, (linked_lathe.uranium_amount-being_built.materials[M]*linked_lathe.mat_efficiency))
-								if("$diamond")
-									linked_lathe.diamond_amount = max(0, (linked_lathe.diamond_amount-being_built.materials[M]*linked_lathe.mat_efficiency))
-								else
-									linked_lathe.reagents.remove_reagent(M, being_built.materials[M]*linked_lathe.mat_efficiency)
-
-						if(being_built.build_path)
-							var/obj/new_item = new being_built.build_path(src)
-							if( new_item.type == /obj/item/weapon/storage/backpack/holding )
-								new_item.investigate_log("built by [key]","singulo")
-							new_item.reliability = being_built.reliability
-							if(linked_lathe.hacked) being_built.reliability = max((reliability / 2), 0)
-							/*if(being_built.locked)
-								var/obj/item/weapon/storage/lockbox/L = new/obj/item/weapon/storage/lockbox(linked_lathe.loc)
-								new_item.loc = L
-								L.name += " ([new_item.name])"*/
-							else
-								new_item.loc = linked_lathe.loc
-							if(linked_lathe.mat_efficiency != 1) // No matter out of nowhere
-								if(new_item.matter && new_item.matter.len > 0)
-									for(var/i in new_item.matter)
-										new_item.matter[i] = new_item.matter[i] * linked_lathe.mat_efficiency
-							linked_lathe.busy = 0
-							screen = 3.1
-							errored = 0
-						updateUsrDialog()
+				errored = 1
+				linked_lathe.Build(being_built)
+				errored = 0
+				screen = 3.1
+				updateUsrDialog()
 
 	else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
 		if(linked_imprinter)
@@ -373,36 +301,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					being_built = D
 					break
 			if(being_built)
-				var/power = linked_imprinter.active_power_usage
-				for(var/M in being_built.materials)
-					power += round(being_built.materials[M] / 5)
-				power = max(linked_imprinter.active_power_usage, power)
 				screen = 0.4
-				linked_imprinter.busy = 1
-				flick("circuit_imprinter_ani",linked_imprinter)
-				spawn(16)
-					errored = 1
-					use_power(power)
-					for(var/M in being_built.materials)
-						switch(M)
-							if("$glass")
-								linked_imprinter.g_amount = max(0, (linked_imprinter.g_amount-being_built.materials[M]*linked_imprinter.mat_efficiency))
-							if("$gold")
-								linked_imprinter.gold_amount = max(0, (linked_imprinter.gold_amount-being_built.materials[M]*linked_imprinter.mat_efficiency))
-							if("$diamond")
-								linked_imprinter.diamond_amount = max(0, (linked_imprinter.diamond_amount-being_built.materials[M]*linked_imprinter.mat_efficiency))
-							if("$uranium")
-								linked_imprinter.uranium_amount = max(0, (linked_imprinter.uranium_amount-being_built.materials[M]*linked_imprinter.mat_efficiency))
-							else
-								linked_imprinter.reagents.remove_reagent(M, being_built.materials[M]*linked_imprinter.mat_efficiency)
-					var/obj/new_item = new being_built.build_path(src)
-					new_item.reliability = being_built.reliability
-					if(linked_imprinter.hacked) being_built.reliability = max((reliability / 2), 0)
-					new_item.loc = linked_imprinter.loc
-					linked_imprinter.busy = 0
-					screen = 4.1
-					errored = 0
-					updateUsrDialog()
+				errored = 1
+				linked_imprinter.Build(being_built)
+				errored = 0
+				screen = 4.1
+				updateUsrDialog()
 
 	else if(href_list["disposeI"] && linked_imprinter)  //Causes the circuit imprinter to dispose of a single reagent (all of it)
 		linked_imprinter.reagents.del_reagent(href_list["dispose"])
@@ -440,10 +344,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 		if(ispath(type) && hasvar(linked_lathe, res_amount))
 			var/obj/item/stack/material/sheet = new type(linked_lathe.loc)
-			var/available_num_sheets = round(linked_lathe.vars[res_amount]/sheet.perunit)
+			var/available_num_sheets = round(linked_lathe.vars[res_amount]/SHEET_MATERIAL_AMOUNT)
 			if(available_num_sheets>0)
 				sheet.amount = min(available_num_sheets, desired_num_sheets)
-				linked_lathe.vars[res_amount] = max(0, (linked_lathe.vars[res_amount]-sheet.amount * sheet.perunit))
+				linked_lathe.vars[res_amount] = max(0, (linked_lathe.vars[res_amount]-sheet.amount * SHEET_MATERIAL_AMOUNT))
 			else
 				qdel(sheet)
 	else if(href_list["imprinter_ejectsheet"] && linked_imprinter) //Causes the protolathe to eject a sheet of material
@@ -464,10 +368,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				res_amount = "uranium_amount"
 		if(ispath(type) && hasvar(linked_imprinter, res_amount))
 			var/obj/item/stack/material/sheet = new type(linked_imprinter.loc)
-			var/available_num_sheets = round(linked_imprinter.vars[res_amount]/sheet.perunit)
+			var/available_num_sheets = round(linked_imprinter.vars[res_amount]/SHEET_MATERIAL_AMOUNT)
 			if(available_num_sheets>0)
 				sheet.amount = min(available_num_sheets, desired_num_sheets)
-				linked_imprinter.vars[res_amount] = max(0, (linked_imprinter.vars[res_amount]-sheet.amount * sheet.perunit))
+				linked_imprinter.vars[res_amount] = max(0, (linked_imprinter.vars[res_amount]-sheet.amount * SHEET_MATERIAL_AMOUNT))
 			else
 				qdel(sheet)
 
@@ -756,58 +660,17 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "Protolathe Menu:<BR><BR>"
 			dat += "<B>Material Amount:</B> [linked_lathe.TotalMaterials()] cm<sup>3</sup> (MAX: [linked_lathe.max_material_storage])<BR>"
 			dat += "<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] (MAX: [linked_lathe.reagents.maximum_volume])<HR>"
+
+
 			dat += "<UL>"
 			for(var/datum/design/D in files.known_designs)
-				if(!D.build_path || !(D.build_type & PROTOLATHE))
+				if(!D.build_path || !(D.build_type & IMPRINTER))
 					continue
-				var/temp_dat
-				var/check_materials = 1
-				var/enough_material
-				for(var/M in D.materials)
-					enough_material = 1
-					if(copytext(M, 1, 2) == "$")
-						switch(M)
-							if("$glass")
-								if(D.materials[M]*linked_lathe.mat_efficiency > linked_lathe.g_amount)
-									enough_material = 0
-									check_materials = 0
-							if("$metal")
-								if(D.materials[M]*linked_lathe.mat_efficiency > linked_lathe.m_amount)
-									enough_material = 0
-									check_materials = 0
-							if("$gold")
-								if(D.materials[M]*linked_lathe.mat_efficiency > linked_lathe.gold_amount)
-									enough_material = 0
-									check_materials = 0
-							if("$silver")
-								if(D.materials[M]*linked_lathe.mat_efficiency > linked_lathe.silver_amount)
-									enough_material = 0
-									check_materials = 0
-							if("$phoron")
-								if(D.materials[M]*linked_lathe.mat_efficiency > linked_lathe.phoron_amount)
-									enough_material = 0
-									check_materials = 0
-							if("$uranium")
-								if(D.materials[M]*linked_lathe.mat_efficiency > linked_lathe.uranium_amount)
-									enough_material = 0
-									check_materials = 0
-							if("$diamond")
-								if(D.materials[M]*linked_lathe.mat_efficiency > linked_lathe.diamond_amount)
-									enough_material = 0
-									check_materials = 0
-					else if (!linked_lathe.reagents.has_reagent(M, D.materials[M]*linked_lathe.mat_efficiency))
-						check_materials = 0
-						enough_material = 0
-					if(enough_material)
-						temp_dat += ", [D.materials[M]*linked_lathe.mat_efficiency] [CallMaterialName(M)]"
-					else
-						temp_dat += ", <span class='deficiency'>[D.materials[M]*linked_lathe.mat_efficiency] [CallMaterialName(M)]</span>"
-				if(temp_dat)
-					temp_dat = "<br><span class='requirements'>\[[copytext(temp_dat,3)]\]</span>"
-				if(check_materials)
-					dat += "<LI><B><A href='?src=\ref[src];build=[D.id]'>[D.name]</A></B>[temp_dat]"
+				var/material_string = linked_lathe.get_requirements(D)
+				if(linked_lathe.canBuild(D))
+					dat += "<LI><B><A href='?src=\ref[src];imprint=[D.id]'>[D.name]</A></B>[material_string]"
 				else
-					dat += "<LI><B>[D.name]</B>[temp_dat]"
+					dat += "<LI><B>[D.name]</B>[material_string]"
 				if(D.reliability < 100)
 					dat += " (Reliability: [D.reliability])"
 			dat += "</UL>"
@@ -817,28 +680,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<A href='?src=\ref[src];menu=3.1'>Protolathe Menu</A><HR>"
 			dat += "Material Storage<BR><HR>"
 			dat += "<UL>"
-			for(var/M in list(DEFAULT_WALL_MATERIAL, "glass", "gold", "silver", "phoron", "uranium", "diamond"))
-				var/amount
-				var/sheetsize = 2000
-				switch(M)
-					if(DEFAULT_WALL_MATERIAL)
-						amount = linked_lathe.m_amount
-						sheetsize = 2000
-					if("glass")
-						amount = linked_lathe.g_amount
-						sheetsize = 2000
-					if("gold")
-						amount = linked_lathe.gold_amount
-					if("silver")
-						amount = linked_lathe.silver_amount
-					if("phoron")
-						amount = linked_lathe.phoron_amount
-					if("uranium")
-						amount = linked_lathe.uranium_amount
-					if("diamond")
-						amount = linked_lathe.diamond_amount
-					else
-						continue
+			for(var/M in linked_lathe.materials)
+				var/amount = linked_lathe.materials[M]
 				dat += "<LI><B>[capitalize(M)]</B>: [amount] cm<sup>3</sup>"
 				if(amount >= SHEET_MATERIAL_AMOUNT)
 					dat += " || Eject "
@@ -876,7 +719,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			for(var/datum/design/D in files.known_designs)
 				if(!D.build_path || !(D.build_type & IMPRINTER))
 					continue
-				var/material_string = linked_inmprinter.get_material_string(D)
+				var/material_string = linked_imprinter.get_requirements(D)
 				if(linked_imprinter.canBuild(D))
 					dat += "<LI><B><A href='?src=\ref[src];imprint=[D.id]'>[D.name]</A></B>[material_string]"
 				else

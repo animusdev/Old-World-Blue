@@ -1,3 +1,12 @@
+/proc/create_material_stack(var/material, var/amount, var/atom/location)
+	var/units = round(amount/SHEET_MATERIAL_AMOUNT)
+	while(units>=SHEET_MATERIAL_AMOUNT)
+		var/obj/item/stack/material/S = PoolOrNew(/obj/item/stack/material, location)
+		S.set_material(material)
+		S.amount = min(units,S.max_amount)
+		units -= S.amount
+
+
 // Stacked resources. They use a material datum for a lot of inherited values.
 /obj/item/stack/material
 	force = 5.0
@@ -9,7 +18,6 @@
 
 	var/default_type = DEFAULT_WALL_MATERIAL
 	var/material/material
-	var/perunit
 	var/apply_colour //temp pending icon rewrite
 
 /obj/item/stack/material/New()
@@ -36,7 +44,6 @@
 	recipes = material.get_recipes()
 	stacktype = material.stack_type
 	origin_tech = material.stack_origin_tech
-	perunit = material.stack_per_sheet
 
 	if(apply_colour)
 		color = material.icon_colour

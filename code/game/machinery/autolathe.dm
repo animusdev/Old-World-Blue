@@ -294,13 +294,6 @@
 /obj/machinery/autolathe/dismantle()
 
 	for(var/mat in stored_material)
-		var/material/M = get_material_by_name(mat)
-		if(!istype(M))
-			continue
-		var/obj/item/stack/material/S = new M.stack_type(get_turf(src))
-		if(stored_material[mat] > S.perunit)
-			S.amount = round(stored_material[mat] / S.perunit)
-		else
-			qdel(S)
+		create_material_stack(mat, stored_material[mat], get_turf(src))
 	..()
 	return 1
