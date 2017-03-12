@@ -114,30 +114,30 @@ Note: Must be placed west/left of and R&D console to function.
 	power = max(active_power_usage, power)
 
 	var/key = usr.key	//so we don't lose the info during the spawn delay
-	spawn(16)
-		flick("protolathe_n",src)
-		use_power(power)
-		spawn(16)
-			for(var/M in D.materials)
-				materials[M] = max(0, materials[M] - D.materials[M] * mat_efficiency)
+	sleep(16)
+	flick("protolathe_n",src)
+	use_power(power)
+	sleep(16)
+	for(var/M in D.materials)
+		materials[M] = max(0, materials[M] - D.materials[M] * mat_efficiency)
 
-			for(var/C in D.chemicals)
-				reagents.remove_reagent(C, D.materials[C] * mat_efficiency)
+	for(var/C in D.chemicals)
+		reagents.remove_reagent(C, D.materials[C] * mat_efficiency)
 
-			if(D.build_path)
-				var/obj/new_item = new D.build_path(loc)
+	if(D.build_path)
+		var/obj/new_item = new D.build_path(loc)
 
-				if( new_item.type == /obj/item/weapon/storage/backpack/holding )
-					new_item.investigate_log("built by [key]","singulo")
+		if( new_item.type == /obj/item/weapon/storage/backpack/holding )
+			new_item.investigate_log("built by [key]","singulo")
 
-				new_item.reliability = D.reliability
-				if(hacked)
-					D.reliability = max((reliability / 2), 0)
-				if(mat_efficiency != 1) // No matter out of nowhere
-					if(new_item.matter && new_item.matter.len > 0)
-						for(var/i in new_item.matter)
-							new_item.matter[i] = new_item.matter[i] * mat_efficiency
-				busy = 0
+		new_item.reliability = D.reliability
+		if(hacked)
+			D.reliability = max((reliability / 2), 0)
+		if(mat_efficiency != 1) // No matter out of nowhere
+			if(new_item.matter && new_item.matter.len > 0)
+				for(var/i in new_item.matter)
+					new_item.matter[i] = new_item.matter[i] * mat_efficiency
+	busy = 0
 
 //This is to stop these machines being hackable via clicking.
 /obj/machinery/r_n_d/protolathe/attack_hand(mob/user as mob)

@@ -1,6 +1,6 @@
 /proc/create_material_stack(var/material, var/amount, var/atom/location)
 	var/units = round(amount/SHEET_MATERIAL_AMOUNT)
-	while(units>=SHEET_MATERIAL_AMOUNT)
+	while(units > 0)
 		var/obj/item/stack/material/S = PoolOrNew(/obj/item/stack/material, location)
 		S.set_material(material)
 		S.amount = min(units,S.max_amount)
@@ -69,7 +69,8 @@
 
 /obj/item/stack/material/use(var/used)
 	. = ..()
-	update_strings()
+	if(src)
+		update_strings()
 	return
 
 /obj/item/stack/material/transfer_to(obj/item/stack/S, var/tamount=null, var/type_verified)

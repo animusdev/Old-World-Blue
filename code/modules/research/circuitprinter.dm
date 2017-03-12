@@ -98,7 +98,6 @@ using metal and glass, it uses glass and reagents (usually sulphuric acid).
 		updateUsrDialog()
 		return
 
-
 /obj/machinery/r_n_d/circuit_imprinter/proc/Build(var/datum/design/D)
 	busy = 1
 
@@ -107,20 +106,20 @@ using metal and glass, it uses glass and reagents (usually sulphuric acid).
 		power += round(D.materials[M] / 5)
 	power = max(active_power_usage, power)
 
-	spawn(16)
-		flick("circuit_imprinter_ani", src)
-		use_power(power)
+	flick("circuit_imprinter_ani", src)
+	sleep(16)
+	use_power(power)
 
-		for(var/M in D.materials)
-			materials[M] = max(0, materials[M] - D.materials[M] * mat_efficiency)
+	for(var/M in D.materials)
+		materials[M] = max(0, materials[M] - D.materials[M] * mat_efficiency)
 
-		for(var/C in D.chemicals)
-			reagents.remove_reagent(C, D.materials[C] * mat_efficiency)
+	for(var/C in D.chemicals)
+		reagents.remove_reagent(C, D.chemicals[C] * mat_efficiency)
 
-		var/obj/new_item = new D.build_path(src.loc)
-		new_item.reliability = D.reliability
-		if(hacked)
-			new_item.reliability = max((reliability / 2), 0)
+	var/obj/new_item = new D.build_path(src.loc)
+	new_item.reliability = D.reliability
+	if(hacked)
+		new_item.reliability = max((reliability / 2), 0)
 
-		busy = 0
+	busy = 0
 

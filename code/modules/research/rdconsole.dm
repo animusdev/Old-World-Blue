@@ -279,7 +279,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		sync = !sync
 
 	else if(href_list["build"]) //Causes the Protolathe to build something.
-		if(linked_lathe)
+		if(linked_lathe && !linked_lathe.busy)
 			var/datum/design/being_built = null
 			for(var/datum/design/D in files.known_designs)
 				if(D.id == href_list["build"])
@@ -287,14 +287,15 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					break
 			if(being_built)
 				screen = 0.3
-				errored = 1
-				linked_lathe.Build(being_built)
-				errored = 0
-				screen = 3.1
-				updateUsrDialog()
+				spawn()
+					errored = 1
+					linked_lathe.Build(being_built)
+					errored = 0
+					screen = 3.1
+					updateUsrDialog()
 
 	else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
-		if(linked_imprinter)
+		if(linked_imprinter && !linked_imprinter.busy)
 			var/datum/design/being_built = null
 			for(var/datum/design/D in files.known_designs)
 				if(D.id == href_list["imprint"])
@@ -302,11 +303,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					break
 			if(being_built)
 				screen = 0.4
-				errored = 1
-				linked_imprinter.Build(being_built)
-				errored = 0
-				screen = 4.1
-				updateUsrDialog()
+				spawn()
+					errored = 1
+					linked_imprinter.Build(being_built)
+					errored = 0
+					screen = 4.1
+					updateUsrDialog()
 
 	else if(href_list["disposeI"] && linked_imprinter)  //Causes the circuit imprinter to dispose of a single reagent (all of it)
 		linked_imprinter.reagents.del_reagent(href_list["dispose"])
@@ -321,59 +323,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		linked_lathe.reagents.clear_reagents()
 
 	else if(href_list["lathe_ejectsheet"] && linked_lathe) //Causes the protolathe to eject a sheet of material
-		var/desired_num_sheets = text2num(href_list["amount"])
-		var/res_amount, type
-		var/material/M = get_material_by_name(href_list["lathe_ejectsheet"])
-		if(istype(M))
-			type = M.stack_type
-			switch(M.name)
-				if(DEFAULT_WALL_MATERIAL)
-					res_amount = "m_amount"
-				if("glass")
-					res_amount = "g_amount"
-				if("gold")
-					res_amount = "gold_amount"
-				if("silver")
-					res_amount = "silver_amount"
-				if("phoron")
-					res_amount = "phoron_amount"
-				if("uranium")
-					res_amount = "uranium_amount"
-				if("diamond")
-					res_amount = "diamond_amount"
-
-		if(ispath(type) && hasvar(linked_lathe, res_amount))
-			var/obj/item/stack/material/sheet = new type(linked_lathe.loc)
-			var/available_num_sheets = round(linked_lathe.vars[res_amount]/SHEET_MATERIAL_AMOUNT)
-			if(available_num_sheets>0)
-				sheet.amount = min(available_num_sheets, desired_num_sheets)
-				linked_lathe.vars[res_amount] = max(0, (linked_lathe.vars[res_amount]-sheet.amount * SHEET_MATERIAL_AMOUNT))
-			else
-				qdel(sheet)
-	else if(href_list["imprinter_ejectsheet"] && linked_imprinter) //Causes the protolathe to eject a sheet of material
-		var/desired_num_sheets = text2num(href_list["amount"])
-		var/res_amount, type
-		switch(href_list["imprinter_ejectsheet"])
-			if("glass")
-				type = /obj/item/stack/material/glass
-				res_amount = "g_amount"
-			if("gold")
-				type = /obj/item/stack/material/gold
-				res_amount = "gold_amount"
-			if("diamond")
-				type = /obj/item/stack/material/diamond
-				res_amount = "diamond_amount"
-			if("uranium")
-				type = /obj/item/stack/material/uranium
-				res_amount = "uranium_amount"
-		if(ispath(type) && hasvar(linked_imprinter, res_amount))
-			var/obj/item/stack/material/sheet = new type(linked_imprinter.loc)
-			var/available_num_sheets = round(linked_imprinter.vars[res_amount]/SHEET_MATERIAL_AMOUNT)
-			if(available_num_sheets>0)
-				sheet.amount = min(available_num_sheets, desired_num_sheets)
-				linked_imprinter.vars[res_amount] = max(0, (linked_imprinter.vars[res_amount]-sheet.amount * SHEET_MATERIAL_AMOUNT))
-			else
-				qdel(sheet)
+		linked_lathe.eject_matter(href_list["lathe_ejectsheet"], text2num(href_list["amount"]))
+	else if(href_list["imprinter_ejectsheet"] && linked_imprinter) //Causes the circuit imprinter to eject a sheet of material
+		linked_imprinter.eject_matter(href_list["imprinter_ejectsheet"], text2num(href_list["amount"]))
 
 	else if(href_list["find_device"]) //The R&D console looks for devices nearby to link up with.
 		screen = 0.0
@@ -570,8 +522,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					if(PROTOLATHE) dat += "Lathe Type: Proto-lathe<BR>"
 				dat += "Required Materials:<BR>"
 				for(var/M in d_disk.blueprint.materials)
-					if(copytext(M, 1, 2) == "$") dat += "* [copytext(M, 2)] x [d_disk.blueprint.materials[M]]<BR>"
-					else dat += "* [M] x [d_disk.blueprint.materials[M]]<BR>"
+					dat += "* [M] x [d_disk.blueprint.materials[M]]<BR>"
+				for(var/C in d_disk.blueprint.chemicals)
+					dat += "* [C] x [d_disk.blueprint.chemicals[C]]<BR>"
 				dat += "<HR>Operations: "
 				dat += "<A href='?src=\ref[src];updt_design=1'>Upload to Database</A> || "
 				dat += "<A href='?src=\ref[src];clear_design=1'>Clear Disk</A> || "
@@ -668,9 +621,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					continue
 				var/material_string = linked_lathe.get_requirements(D)
 				if(linked_lathe.canBuild(D))
-					dat += "<LI><B><A href='?src=\ref[src];imprint=[D.id]'>[D.name]</A></B>[material_string]"
+					dat += "<LI><B><A href='?src=\ref[src];imprint=[D.id]'>[D.name]</A></B> [material_string]"
 				else
-					dat += "<LI><B>[D.name]</B>[material_string]"
+					dat += "<LI><B>[D.name]</B> [material_string]"
 				if(D.reliability < 100)
 					dat += " (Reliability: [D.reliability])"
 			dat += "</UL>"
@@ -691,7 +644,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						dat += "[C > 1 ? ", " : ""]<A href='?src=\ref[src];lathe_ejectsheet=[M];amount=[C]'>[C]</A> "
 
 					dat += " or <A href='?src=\ref[src];lathe_ejectsheet=[M];amount=50'>max</A> sheets"
-				dat += ""
 			dat += "</UL>"
 
 		if(3.3) //Protolathe Chemical Storage Submenu
@@ -721,9 +673,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					continue
 				var/material_string = linked_imprinter.get_requirements(D)
 				if(linked_imprinter.canBuild(D))
-					dat += "<LI><B><A href='?src=\ref[src];imprint=[D.id]'>[D.name]</A></B>[material_string]"
+					dat += "<LI><B><A href='?src=\ref[src];imprint=[D.id]'>[D.name]</A></B> [material_string]"
 				else
-					dat += "<LI><B>[D.name]</B>[material_string]"
+					dat += "<LI><B>[D.name]</B> [material_string]"
 			dat += "</UL>"
 
 		if(4.2)

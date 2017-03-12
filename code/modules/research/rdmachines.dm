@@ -46,6 +46,14 @@
 		create_material_stack(M, materials[M], src.loc)
 	..()
 
+/obj/machinery/r_n_d/proc/eject_matter(var/M, var/amount)
+	if(!M in materials || amount <= 0)
+		return
+	var/eject_amount = min(round(amount)*SHEET_MATERIAL_AMOUNT, materials[M])
+	if(eject_amount > SHEET_MATERIAL_AMOUNT)
+		materials[M] = materials[M] - eject_amount
+		create_material_stack(M, eject_amount, src.loc)
+
 /obj/machinery/r_n_d/attack_hand(mob/user as mob)
 	if (shocked)
 		shock(user,50)
