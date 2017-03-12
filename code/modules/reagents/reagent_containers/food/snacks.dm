@@ -133,14 +133,52 @@
 		..() // -> item/attackby()
 		return
 
+	if(has_edge(W))
+		if(!is_sliceable())
+			return
+
+		var/can_slice_here = 0
+		if(isturf(src.loc))
+			if(locate(/obj/structure/table) in src.loc)
+				can_slice_here = 1
+			else if(locate(/obj/machinery/optable) in src.loc)
+				can_slice_here = 1
+			else if(locate(/obj/item/weapon/tray) in src.loc)
+				can_slice_here = 1
+
+		if (!can_slice_here)
+			user << "<span class='warning'>You cannot slice \the [src] here! You need a table or at least a tray to do it.</span>"
+			return
+
+		var/slices_lost = 0
+		if (W.w_class > 3)
+			user.visible_message(
+				"<span class='notice'>\The [user] crudely slices \the [src] with [W]!</span>",
+				"<span class='notice'>You crudely slice \the [src] with your [W]!</span>"
+			)
+			slices_lost = rand(1,min(1,round(slices_num/2)))
+		else
+			user.visible_message(
+				"<span class='notice'>\The [user] slices \the [src]!</span>",
+				"<span class='notice'>You slice \the [src]!</span>"
+			)
+
+		var/reagents_per_slice = reagents.total_volume/slices_num
+		for(var/i=1 to (slices_num-slices_lost))
+			var/obj/slice = new slice_path (src.loc)
+			reagents.trans_to_obj(slice, reagents_per_slice)
+		qdel(src)
+		return
+
+
 	// Eating with forks
-	if(istype(W,/obj/item/weapon/material/kitchen/utensil))
+	else if(istype(W,/obj/item/weapon/material/kitchen/utensil))
 		var/obj/item/weapon/material/kitchen/utensil/U = W
 
 		if(!U.reagents)
 			U.create_reagents(5)
 
-		if (U.reagents.total_volume > 0)
+		else if (U.reagents.total_volume > 0)
 			user << "<span class='warning'>You already have something on your [U].</span>"
 			return
 
@@ -162,54 +200,15 @@
 			qdel(src)
 		return
 
-	if (is_sliceable())
-		//these are used to allow hiding edge items in food that is not on a table/tray
-		var/can_slice_here = 0
-		if(isturf(src.loc))
-			if(locate(/obj/structure/table) in src.loc)
-				can_slice_here = 1
-			else if(locate(/obj/machinery/optable) in src.loc)
-				can_slice_here = 1
-			else if(locate(/obj/item/weapon/tray) in src.loc)
-				can_slice_here = 1
-
-		var/hide_item = !has_edge(W) || !can_slice_here
-
-		if (hide_item)
-			if (W.w_class >= src.w_class || is_robot_module(W))
-				return
-
+	if(is_sliceable())
+		if (W.w_class >= src.w_class)
+			return
+		if(user.unEquip(W, src))
 			user << "<span class='warning'>You slip \the [W] inside \the [src].</span>"
-			user.remove_from_mob(W)
-			W.dropped(user)
 			add_fingerprint(user)
 			contents += W
-			return
+		return
 
-		if (has_edge(W))
-			if (!can_slice_here)
-				user << "<span class='warning'>You cannot slice \the [src] here! You need a table or at least a tray to do it.</span>"
-				return
-
-			var/slices_lost = 0
-			if (W.w_class > 3)
-				user.visible_message(
-					"<span class='notice'>\The [user] crudely slices \the [src] with [W]!</span>",
-					"<span class='notice'>You crudely slice \the [src] with your [W]!</span>"
-				)
-				slices_lost = rand(1,min(1,round(slices_num/2)))
-			else
-				user.visible_message(
-					"<span class='notice'>\The [user] slices \the [src]!</span>",
-					"<span class='notice'>You slice \the [src]!</span>"
-				)
-
-			var/reagents_per_slice = reagents.total_volume/slices_num
-			for(var/i=1 to (slices_num-slices_lost))
-				var/obj/slice = new slice_path (src.loc)
-				reagents.trans_to_obj(slice, reagents_per_slice)
-			qdel(src)
-			return
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/is_sliceable()
 	return (slices_num && slice_path && slices_num > 0)
