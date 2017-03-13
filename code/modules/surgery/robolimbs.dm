@@ -29,13 +29,17 @@
 			return isnull(target.get_organ(target_zone))
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("[user] starts attaching \the [tool] to [target].", \
-		"You start attaching \the [tool] to [target].")
+		user.visible_message(
+			"[user] starts attaching \the [tool] to [target].",
+			"You start attaching \the [tool] to [target]."
+		)
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/prosthesis/L = tool
-		user.visible_message("\blue [user] has attached \the [tool] to [target].",	\
-		"\blue You have attached \the [tool] to [target].")
+		user.visible_message(
+			NOTICE("[user] has attached \the [tool] to [target]."),
+			NOTICE("You have attached \the [tool] to [target].")
+		)
 
 		if(L.part)
 			for(var/part_name in L.part)
@@ -54,6 +58,8 @@
 		qdel(tool)
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\red [user]'s hand slips, damaging [target]'s flesh!", \
-		"\red Your hand slips, damaging [target]'s flesh!")
+		user.visible_message(
+			WARNING("[user]'s hand slips, damaging [target]'s flesh!"),
+			WARNING("Your hand slips, damaging [target]'s flesh!")
+		)
 		target.apply_damage(10, BRUTE, null, sharp=1)

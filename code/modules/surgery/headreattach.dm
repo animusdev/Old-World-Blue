@@ -12,12 +12,16 @@
 		return isnull(head) && target_zone == BP_HEAD && !isnull(target.species.has_limbs[BP_HEAD])
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("[user] starts attaching [tool] to [target]'s neck.", \
-		"You start attaching [tool] to [target]'s neck.")
+		user.visible_message(
+			"[user] starts attaching [tool] to [target]'s neck.",
+			"You start attaching [tool] to [target]'s neck."
+		)
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\blue [user] has attached [target]'s head to the body.",	\
-		"\blue You have attached [target]'s head to the body.")
+		user.visible_message(
+			NOTICE("[user] has attached [target]'s head to the body."),
+			NOTICE("You have attached [target]'s head to the body.")
+		)
 		var/obj/item/organ/external/head = tool
 		user.drop_from_inventory(head)
 		head.install(target)
@@ -28,6 +32,8 @@
 		target.UpdateDamageIcon()
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message("\red [user]'s hand slips, damaging [target]'s neck!", \
-		"\red Your hand slips, damaging [target]'s neck!")
+		user.visible_message(
+			WARNING("[user]'s hand slips, damaging [target]'s neck!"),
+			WARNING("Your hand slips, damaging [target]'s neck!")
+		)
 		target.apply_damage(10, BRUTE, null, sharp=1)
