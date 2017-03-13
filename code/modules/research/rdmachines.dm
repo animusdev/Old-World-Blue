@@ -127,7 +127,7 @@
 			return_name = "Uranium"
 		if("diamond")
 			return_name = "Diamond"
-	return return_name
+	return capitalize(return_name)
 
 /obj/machinery/r_n_d/proc/CallReagentName(var/ID)
 	var/return_name = ID
