@@ -47,36 +47,30 @@
 	construction_time = 200
 	construction_cost = list(DEFAULT_WALL_MATERIAL=40000,"glass"=15000)
 
-/obj/item/mecha_parts/part/ripley_left_arm
-	name="Ripley Left Arm"
+/obj/item/mecha_parts/part/ripley
 	desc="A Ripley APLU left arm. Data and power sockets are compatible with most exosuit tools."
+	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 2)
+	construction_time = 150
+	construction_cost = list(DEFAULT_WALL_MATERIAL=25000)
+
+/obj/item/mecha_parts/part/ripley/left_arm
+	name="Ripley Left Arm"
 	icon_state = "ripley_l_arm"
-	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 2)
-	construction_time = 150
-	construction_cost = list(DEFAULT_WALL_MATERIAL=25000)
 
-/obj/item/mecha_parts/part/ripley_right_arm
+/obj/item/mecha_parts/part/ripley/right_arm
 	name="Ripley Right Arm"
-	desc="A Ripley APLU right arm. Data and power sockets are compatible with most exosuit tools."
 	icon_state = "ripley_r_arm"
-	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 2)
-	construction_time = 150
-	construction_cost = list(DEFAULT_WALL_MATERIAL=25000)
 
-/obj/item/mecha_parts/part/ripley_left_leg
+/obj/item/mecha_parts/part/ripley/left_leg
 	name="Ripley Left Leg"
 	desc="A Ripley APLU left leg. Contains somewhat complex servodrives and balance maintaining systems."
 	icon_state = "ripley_l_leg"
-	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 2)
-	construction_time = 150
 	construction_cost = list(DEFAULT_WALL_MATERIAL=30000)
 
-/obj/item/mecha_parts/part/ripley_right_leg
+/obj/item/mecha_parts/part/ripley/right_leg
 	name="Ripley Right Leg"
 	desc="A Ripley APLU right leg. Contains somewhat complex servodrives and balance maintaining systems."
 	icon_state = "ripley_r_leg"
-	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 2)
-	construction_time = 150
 	construction_cost = list(DEFAULT_WALL_MATERIAL=30000)
 
 ///////// Gygax
@@ -105,34 +99,28 @@
 	construction_time = 200
 	construction_cost = list(DEFAULT_WALL_MATERIAL=20000,"glass"=10000)
 
-/obj/item/mecha_parts/part/gygax_left_arm
-	name="Gygax Left Arm"
+/obj/item/mecha_parts/part/gygax
 	desc="A Gygax left arm. Data and power sockets are compatible with most exosuit tools and weapons."
+	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 3)
+	construction_time = 200
+	construction_cost = list(DEFAULT_WALL_MATERIAL=30000)
+
+/obj/item/mecha_parts/part/gygax/left_arm
+	name="Gygax Left Arm"
 	icon_state = "gygax_l_arm"
-	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 3)
-	construction_time = 200
-	construction_cost = list(DEFAULT_WALL_MATERIAL=30000)
 
-/obj/item/mecha_parts/part/gygax_right_arm
+/obj/item/mecha_parts/part/gygax/right_arm
 	name="Gygax Right Arm"
-	desc="A Gygax right arm. Data and power sockets are compatible with most exosuit tools and weapons."
 	icon_state = "gygax_r_arm"
-	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 3)
-	construction_time = 200
-	construction_cost = list(DEFAULT_WALL_MATERIAL=30000)
 
-/obj/item/mecha_parts/part/gygax_left_leg
+/obj/item/mecha_parts/part/gygax/left_leg
 	name="Gygax Left Leg"
 	icon_state = "gygax_l_leg"
-	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 3)
-	construction_time = 200
 	construction_cost = list(DEFAULT_WALL_MATERIAL=35000)
 
-/obj/item/mecha_parts/part/gygax_right_leg
+/obj/item/mecha_parts/part/gygax/right_leg
 	name="Gygax Right Leg"
 	icon_state = "gygax_r_leg"
-	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 3)
-	construction_time = 200
 	construction_cost = list(DEFAULT_WALL_MATERIAL=35000)
 
 /obj/item/mecha_parts/part/gygax_armour
@@ -167,32 +155,27 @@
 	construction_time = 200
 	construction_cost = list(DEFAULT_WALL_MATERIAL=25000,"glass"=10000,"silver"=3000)
 
-/obj/item/mecha_parts/part/durand_left_arm
+/obj/item/mecha_parts/part/durand
+	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 3, TECH_ENGINEERING = 3)
+	construction_time = 200
+	construction_cost = list(DEFAULT_WALL_MATERIAL=35000,"silver"=3000)
+
+/obj/item/mecha_parts/part/durand/left_arm
 	name="Durand Left Arm"
 	icon_state = "durand_l_arm"
-	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 3, TECH_ENGINEERING = 3)
-	construction_time = 200
-	construction_cost = list(DEFAULT_WALL_MATERIAL=35000,"silver"=3000)
 
-/obj/item/mecha_parts/part/durand_right_arm
+/obj/item/mecha_parts/part/durand/right_arm
 	name="Durand Right Arm"
 	icon_state = "durand_r_arm"
-	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 3, TECH_ENGINEERING = 3)
-	construction_time = 200
-	construction_cost = list(DEFAULT_WALL_MATERIAL=35000,"silver"=3000)
 
-/obj/item/mecha_parts/part/durand_left_leg
+/obj/item/mecha_parts/part/durand/left_leg
 	name="Durand Left Leg"
 	icon_state = "durand_l_leg"
-	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 3, TECH_ENGINEERING = 3)
-	construction_time = 200
 	construction_cost = list(DEFAULT_WALL_MATERIAL=40000,"silver"=3000)
 
-/obj/item/mecha_parts/part/durand_right_leg
+/obj/item/mecha_parts/part/durand/right_leg
 	name="Durand Right Leg"
 	icon_state = "durand_r_leg"
-	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 3, TECH_ENGINEERING = 3)
-	construction_time = 200
 	construction_cost = list(DEFAULT_WALL_MATERIAL=40000,"silver"=3000)
 
 /obj/item/mecha_parts/part/durand_armour
@@ -258,33 +241,27 @@
 	construction_cost = list(DEFAULT_WALL_MATERIAL=15000,"glass"=5000,"phoron"=10000,"silver"=3000)
 	origin_tech = list(TECH_DATA = 4, TECH_MATERIAL = 5, TECH_MAGNET = 6)
 
-/obj/item/mecha_parts/part/phazon_left_arm
+/obj/item/mecha_parts/part/phazon
+	construction_time = 200
+	construction_cost = list(DEFAULT_WALL_MATERIAL=20000,"phoron"=10000,"silver"=3000)
+	origin_tech = list(TECH_MATERIAL = 5, TECH_BLUESPACE = 2, TECH_MAGNET = 2)
+
+
+/obj/item/mecha_parts/part/phazon/left_arm
 	name="Phazon Left Arm"
 	icon_state = "phazon_l_arm"
-	construction_time = 200
-	construction_cost = list(DEFAULT_WALL_MATERIAL=20000,"phoron"=10000,"silver"=3000)
-	origin_tech = list(TECH_MATERIAL = 5, TECH_BLUESPACE = 2, TECH_MAGNET = 2)
 
-/obj/item/mecha_parts/part/phazon_right_arm
+/obj/item/mecha_parts/part/phazon/right_arm
 	name="Phazon Right Arm"
 	icon_state = "phazon_r_arm"
-	construction_time = 200
-	construction_cost = list(DEFAULT_WALL_MATERIAL=20000,"phoron"=10000,"silver"=3000)
-	origin_tech = list(TECH_MATERIAL = 5, TECH_BLUESPACE = 2, TECH_MAGNET = 2)
 
-/obj/item/mecha_parts/part/phazon_left_leg
+/obj/item/mecha_parts/part/phazon/left_leg
 	name="Phazon Left Leg"
 	icon_state = "phazon_l_leg"
-	construction_time = 200
-	construction_cost = list(DEFAULT_WALL_MATERIAL=20000,"phoron"=10000,"silver"=3000)
-	origin_tech = list(TECH_MATERIAL = 5, TECH_BLUESPACE = 3, TECH_MAGNET = 3)
 
-/obj/item/mecha_parts/part/phazon_right_leg
+/obj/item/mecha_parts/part/phazon/right_leg
 	name="Phazon Right Leg"
 	icon_state = "phazon_r_leg"
-	construction_time = 200
-	construction_cost = list(DEFAULT_WALL_MATERIAL=20000,"phoron"=10000,"silver"=3000)
-	origin_tech = list(TECH_MATERIAL = 5, TECH_BLUESPACE = 3, TECH_MAGNET = 3)
 
 
 /obj/item/mecha_parts/part/phazon_armor
@@ -319,35 +296,32 @@
 	construction_time = 180
 	construction_cost = list(DEFAULT_WALL_MATERIAL=25000)
 
-/obj/item/mecha_parts/part/odysseus_left_arm
+/obj/item/mecha_parts/part/odysseus
+	desc="Data and power sockets are compatible with most exosuit tools."
+	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 2)
+	construction_time = 120
+	construction_cost = list(DEFAULT_WALL_MATERIAL=10000)
+
+/obj/item/mecha_parts/part/odysseus/left_arm
 	name="Odysseus Left Arm"
 	desc="An Odysseus left arm. Data and power sockets are compatible with most exosuit tools."
 	icon_state = "odysseus_l_arm"
-	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 2)
-	construction_time = 120
-	construction_cost = list(DEFAULT_WALL_MATERIAL=10000)
 
-/obj/item/mecha_parts/part/odysseus_right_arm
+/obj/item/mecha_parts/part/odysseus/right_arm
 	name="Odysseus Right Arm"
-	desc="An Odysseus right arm. Data and power sockets are compatible with most exosuit tools."
 	icon_state = "odysseus_r_arm"
-	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 2)
-	construction_time = 120
-	construction_cost = list(DEFAULT_WALL_MATERIAL=10000)
 
-/obj/item/mecha_parts/part/odysseus_left_leg
+/obj/item/mecha_parts/part/odysseus/left_leg
 	name="Odysseus Left Leg"
-	desc="An Odysseus left leg. Contains somewhat complex servodrives and balance maintaining systems."
+	desc="Contains somewhat complex servodrives and balance maintaining systems."
 	icon_state = "odysseus_l_leg"
-	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 2)
 	construction_time = 130
 	construction_cost = list(DEFAULT_WALL_MATERIAL=15000)
 
-/obj/item/mecha_parts/part/odysseus_right_leg
+/obj/item/mecha_parts/part/odysseus/right_leg
 	name="Odysseus Right Leg"
 	desc="A Odysseus right leg. Contains somewhat complex servodrives and balance maintaining systems."
 	icon_state = "odysseus_r_leg"
-	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 2)
 	construction_time = 130
 	construction_cost = list(DEFAULT_WALL_MATERIAL=15000)
 

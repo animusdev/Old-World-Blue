@@ -70,10 +70,10 @@
 /datum/construction/mecha/ripley_chassis
 	steps = list(
 		list("key"=/obj/item/mecha_parts/part/ripley_torso),//1
-		list("key"=/obj/item/mecha_parts/part/ripley_left_arm),//2
-		list("key"=/obj/item/mecha_parts/part/ripley_right_arm),//3
-		list("key"=/obj/item/mecha_parts/part/ripley_left_leg),//4
-		list("key"=/obj/item/mecha_parts/part/ripley_right_leg)//5
+		list("key"=/obj/item/mecha_parts/part/ripley/left_arm),//2
+		list("key"=/obj/item/mecha_parts/part/ripley/right_arm),//3
+		list("key"=/obj/item/mecha_parts/part/ripley/left_leg),//4
+		list("key"=/obj/item/mecha_parts/part/ripley/right_leg)//5
 	)
 
 	custom_action(step, atom/used_atom, mob/user)
@@ -357,10 +357,10 @@
 /datum/construction/mecha/gygax_chassis
 	steps = list(
 		list("key"=/obj/item/mecha_parts/part/gygax_torso),//1
-		list("key"=/obj/item/mecha_parts/part/gygax_left_arm),//2
-		list("key"=/obj/item/mecha_parts/part/gygax_right_arm),//3
-		list("key"=/obj/item/mecha_parts/part/gygax_left_leg),//4
-		list("key"=/obj/item/mecha_parts/part/gygax_right_leg),//5
+		list("key"=/obj/item/mecha_parts/part/gygax/left_arm),//2
+		list("key"=/obj/item/mecha_parts/part/gygax/right_arm),//3
+		list("key"=/obj/item/mecha_parts/part/gygax/left_leg),//4
+		list("key"=/obj/item/mecha_parts/part/gygax/right_leg),//5
 		list("key"=/obj/item/mecha_parts/part/gygax_head)
 	)
 
@@ -751,10 +751,10 @@
 /datum/construction/mecha/firefighter_chassis
 	steps = list(
 		list("key"=/obj/item/mecha_parts/part/ripley_torso),//1
-		list("key"=/obj/item/mecha_parts/part/ripley_left_arm),//2
-		list("key"=/obj/item/mecha_parts/part/ripley_right_arm),//3
-		list("key"=/obj/item/mecha_parts/part/ripley_left_leg),//4
-		list("key"=/obj/item/mecha_parts/part/ripley_right_leg),//5
+		list("key"=/obj/item/mecha_parts/part/ripley/left_arm),//2
+		list("key"=/obj/item/mecha_parts/part/ripley/right_arm),//3
+		list("key"=/obj/item/mecha_parts/part/ripley/left_leg),//4
+		list("key"=/obj/item/mecha_parts/part/ripley/right_leg),//5
 		list("key"=/obj/item/clothing/suit/fire)//6
 	)
 
@@ -1061,10 +1061,10 @@
 /datum/construction/mecha/durand_chassis
 	steps = list(
 		list("key"=/obj/item/mecha_parts/part/durand_torso),//1
-		list("key"=/obj/item/mecha_parts/part/durand_left_arm),//2
-		list("key"=/obj/item/mecha_parts/part/durand_right_arm),//3
-		list("key"=/obj/item/mecha_parts/part/durand_left_leg),//4
-		list("key"=/obj/item/mecha_parts/part/durand_right_leg),//5
+		list("key"=/obj/item/mecha_parts/part/durand/left_arm),//2
+		list("key"=/obj/item/mecha_parts/part/durand/right_arm),//3
+		list("key"=/obj/item/mecha_parts/part/durand/left_leg),//4
+		list("key"=/obj/item/mecha_parts/part/durand/right_leg),//5
 		list("key"=/obj/item/mecha_parts/part/durand_head)
 	)
 
@@ -1461,10 +1461,10 @@
 /datum/construction/mecha/phazon_chassis
 	steps = list(
 		list("key"=/obj/item/mecha_parts/part/phazon_torso),//1
-		list("key"=/obj/item/mecha_parts/part/phazon_left_arm),//2
-		list("key"=/obj/item/mecha_parts/part/phazon_right_arm),//3
-		list("key"=/obj/item/mecha_parts/part/phazon_left_leg),//4
-		list("key"=/obj/item/mecha_parts/part/phazon_right_leg),//5
+		list("key"=/obj/item/mecha_parts/part/phazon/left_arm),//2
+		list("key"=/obj/item/mecha_parts/part/phazon/right_arm),//3
+		list("key"=/obj/item/mecha_parts/part/phazon/left_leg),//4
+		list("key"=/obj/item/mecha_parts/part/phazon/right_leg),//5
 		list("key"=/obj/item/mecha_parts/part/phazon_head)
 	)
 
@@ -1924,10 +1924,10 @@
 	steps = list(
 		list("key"=/obj/item/mecha_parts/part/odysseus_torso),//1
 		list("key"=/obj/item/mecha_parts/part/odysseus_head),//2
-		list("key"=/obj/item/mecha_parts/part/odysseus_left_arm),//3
-		list("key"=/obj/item/mecha_parts/part/odysseus_right_arm),//4
-		list("key"=/obj/item/mecha_parts/part/odysseus_left_leg),//5
-		list("key"=/obj/item/mecha_parts/part/odysseus_right_leg)//6
+		list("key"=/obj/item/mecha_parts/part/odysseus/left_arm),//3
+		list("key"=/obj/item/mecha_parts/part/odysseus/right_arm),//4
+		list("key"=/obj/item/mecha_parts/part/odysseus/left_leg),//5
+		list("key"=/obj/item/mecha_parts/part/odysseus/right_leg)//6
 	)
 
 	custom_action(step, atom/used_atom, mob/user)
