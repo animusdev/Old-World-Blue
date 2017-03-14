@@ -1,4 +1,4 @@
-var/list/limb_icon_cache = list()
+var/global/list/limb_icon_cache = list()
 
 /obj/item/organ/external/set_dir()
 	return
@@ -24,16 +24,28 @@ var/list/limb_icon_cache = list()
 	if(owner.species.flags & HAS_SKIN_COLOR)
 		s_col = owner.skin_color
 
-/obj/item/organ/external/get_icon(var/skeletal)
+	if(gendered)
+		gendered = (owner.gender == MALE)? "_m": "_f"
+	body_build = owner.body_build.index
 
-	var/gender = "_f"
-	var/body_build = ""
+/obj/item/organ/external/update_icon(var/skeletal)
+
 	if(owner)
-		if(owner.gender == MALE)
-			gender = "_m"
+		if(gendered)
+			gendered = (owner.gender == MALE)? "_m": "_f"
 		body_build = owner.body_build.index
 
-	icon_state = "[organ_tag][gendered ? gender : ""][body_build]"
+	get_icon(skeletal)
+	apply_colors()
+	draw_internals()
+	dir  = EAST
+	icon = mob_icon
+	return mob_icon
+
+/obj/item/organ/external/get_icon(var/skeletal)
+	icon_state = "[organ_tag][gendered][body_build]"
+	if(owner)
+		icon_cache_key = "[icon_state][owner.species.name]"
 
 	if(default_icon)
 		mob_icon = new /icon(default_icon, icon_state)
@@ -43,7 +55,9 @@ var/list/limb_icon_cache = list()
 		mob_icon = new /icon(owner.species.deform, icon_state)
 	else
 		mob_icon = new /icon(owner.species.icobase, icon_state)
+	return mob_icon
 
+/obj/item/organ/external/proc/apply_colors()
 	if(status & ORGAN_DEAD)
 		mob_icon.ColorTone(rgb(10,50,0))
 		mob_icon.SetIntensity(0.7)
@@ -63,15 +77,15 @@ var/list/limb_icon_cache = list()
 	if(tattoo2)
 		mob_icon.Blend(new/icon('icons/mob/tattoo.dmi', "[organ_tag]2_[tattoo2][body_build]"), ICON_OVERLAY)
 
+	return mob_icon
+
+/obj/item/organ/external/proc/draw_internals()
 	if(internal_organs)
 		var/icon/tmp_icon = null
 		for(var/obj/item/organ/I in internal_organs)
 			tmp_icon = I.get_icon()
 			if(tmp_icon)
 				mob_icon.Blend(tmp_icon, ICON_OVERLAY)
-
-	dir = EAST
-	icon = mob_icon
 
 	return mob_icon
 
@@ -80,30 +94,18 @@ var/list/limb_icon_cache = list()
 	var/icon/facial
 
 /obj/item/organ/external/head/removed(user, delete_children)
-	get_icon()
+	update_icon()
 	if(hair)   mob_icon.Blend(hair, ICON_OVERLAY)
 	if(facial) mob_icon.Blend(facial, ICON_OVERLAY)
-	icon = mob_icon
 	..()
 
-/obj/item/organ/external/head/get_icon()
+/obj/item/organ/external/head/update_icon()
 
 	..()
 	overlays.Cut()
 	if(!owner || !owner.species)
 		return
-/*
-	if(owner.should_have_organ(O_EYES))
-		var/obj/item/organ/internal/eyes/eyes = owner.internal_organs_by_name[O_EYES]
-		var/icon/eyes_icon
-		if(eyes)
-			eyes_icon = eyes.get_icon()
-		else
-			eyes_icon = new/icon(owner.species.icobase, "eyes[owner.body_build.index]")
-			eyes_icon.Blend(rgb(128,0,0), ICON_ADD)
 
-		mob_icon.Blend(eyes_icon, ICON_OVERLAY)
-*/
 	if(owner.lip_color && (owner.species.flags & HAS_LIPS))
 		var/icon/lip_icon = new/icon(owner.species.icobase, "lips[owner.body_build.index]")
 		lip_icon.Blend(owner.lip_color, ICON_ADD)
@@ -149,12 +151,38 @@ var/list/limb_icon_cache = list()
 	for(var/obj/item/organ/I in internal_organs)
 		. += I.get_icon_key()
 
+/obj/item/organ/external
+	var/icon_cache_key
+	// HUD element variable, see organ_icon.dm get_damage_hud_image()
+	var/image/hud_damage_image
 
-// new damage icon system
-// adjusted to set damage_state to brute/burn code only (without r_name0 as before)
-/obj/item/organ/external/update_icon()
-	var/n_is = damage_state_text()
-	if (n_is != damage_state)
-		damage_state = n_is
-		return 1
-	return 0
+// Returns an image for use by the human health dolly HUD element.
+// If the user has traumatic shock, it will be passed in as a minimum
+// damage amount to represent the pain of the injuries involved.
+
+// Global scope, used in code below.
+var/list/flesh_hud_colours = list("#02BA08","#9ECF19","#DEDE10","#FFAA00","#FF0000","#AA0000","#660000")
+var/list/robot_hud_colours = list("#CFCFCF","#AFAFAF","#8F8F8F","#6F6F6F","#4F4F4F","#2F2F2F","#000000")
+
+/obj/item/organ/external/proc/get_damage_hud_image(var/min_dam_state)
+
+	// Generate the greyscale base icon and cache it for later.
+	// icon_cache_key is set by any get_icon() calls that are made.
+	if(!hud_damage_image)
+		var/cache_key = "dambase-[icon_cache_key]"
+		if(!icon_cache_key || !limb_icon_cache[cache_key])
+			var/icon/new_icon = icon(get_icon(), null, SOUTH)
+			new_icon.Blend("#000000", ICON_MULTIPLY)
+			new_icon.SwapColor("#000000", "#FFFFFF")
+			limb_icon_cache[cache_key] = new_icon
+		hud_damage_image = image(limb_icon_cache[cache_key])
+
+	// Calculate the required color index.
+	var/dam_state = min(1,((brute_dam+burn_dam)/max_damage))
+	// Apply traumatic shock min damage state.
+	if(!isnull(min_dam_state) && dam_state < min_dam_state)
+		dam_state = min_dam_state
+	// Apply colour and return product.
+	var/list/hud_colours = (robotic < ORGAN_ROBOT) ? flesh_hud_colours : robot_hud_colours
+	hud_damage_image.color = hud_colours[max(1,min(ceil(dam_state*hud_colours.len),hud_colours.len))]
+	return hud_damage_image

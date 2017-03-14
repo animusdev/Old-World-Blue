@@ -21,12 +21,13 @@
 	max_damage = 45
 	min_broken_damage = 30
 	w_class = 3
+	tally = -0.25
 	forced_children = list(
 		BP_L_LEG = list(BP_L_FOOT = /obj/item/organ/external/robotic/limb/runner/tiny),
 		BP_R_LEG = list(BP_R_FOOT = /obj/item/organ/external/robotic/limb/runner/tiny)
 		)
 
 /obj/item/organ/external/robotic/limb/runner/tiny
-	tally = -0.25
+	tally = 0
 	min_broken_damage = 15
 	w_class = 2

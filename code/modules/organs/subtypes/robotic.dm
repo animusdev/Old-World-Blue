@@ -25,19 +25,22 @@
 	if(can_activate())
 		activate()
 
+/obj/item/organ/external/sync_colour_to_owner()
+	for(var/obj/item/organ/I in internal_organs)
+		I.sync_colour_to_owner()
+
+	if(gendered)
+		gendered = (owner.gender == MALE)? "_m": "_f"
+	body_build = owner.body_build.index
+
 /obj/item/organ/external/robotic/get_icon()
-	var/gender = "_m"
-	var/body_build = ""
-	if(owner)
-		if(owner.gender == FEMALE)
-			gender = "_f"
-		body_build = owner.body_build.index
-	icon_state = "[organ_tag][gendered ? "[gender]" : ""][body_build]"
+	icon_state = "[organ_tag][gendered][body_build]"
 
 	mob_icon = new /icon(default_icon, icon_state)
-	icon = mob_icon
-	dir = SOUTH
 	return mob_icon
+
+/obj/item/organ/external/apply_colors()
+	return
 
 /obj/item/organ/external/robotic/get_icon_key()
 	. = "robotic"

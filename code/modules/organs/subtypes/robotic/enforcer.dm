@@ -3,32 +3,29 @@
 	brute_mod = 0.7
 	burn_mod = 0.7
 
+/obj/item/organ/external/robotic/enforcer/set_description()
+	..()
+	w_class ++ // I't large than normal organ
+
 /obj/item/organ/external/robotic/enforcer/limb
-	max_damage = 70
-	min_broken_damage = 35
-	w_class = 4
 	forced_children = list(
-		BP_L_ARM = list(BP_L_HAND = /obj/item/organ/external/robotic/enforcer/tiny/hand),
-		BP_R_ARM = list(BP_R_HAND = /obj/item/organ/external/robotic/enforcer/tiny/hand),
-		BP_L_LEG = list(BP_L_FOOT = /obj/item/organ/external/robotic/enforcer/tiny),
-		BP_R_LEG = list(BP_R_FOOT = /obj/item/organ/external/robotic/enforcer/tiny)
+		BP_L_ARM = list(BP_L_HAND = /obj/item/organ/external/robotic/enforcer/hand),
+		BP_R_ARM = list(BP_R_HAND = /obj/item/organ/external/robotic/enforcer/hand),
+		BP_L_LEG = list(BP_L_FOOT = /obj/item/organ/external/robotic/enforcer),
+		BP_R_LEG = list(BP_R_FOOT = /obj/item/organ/external/robotic/enforcer)
 		)
 
-/obj/item/organ/external/robotic/enforcer/tiny
-	min_broken_damage = 20
-	w_class = 3
-
-/obj/item/organ/external/robotic/enforcer/tiny/hand
+/obj/item/organ/external/robotic/enforcer/hand
 	var/datum/unarmed_attack/enforcer/active_atack = new
 
 	activate()
-		verbs += /obj/item/organ/external/robotic/enforcer/tiny/hand/proc/toggle
+		verbs += /obj/item/organ/external/robotic/enforcer/hand/proc/toggle
 		owner << "<span class='notice'>Power system controller successfuly activated inside your [name].</span>"
 
 	deactivate(emergency = 1)
 		owner << "<span class = 'warning'>Your [name] power module has been emergency disabled!</span>"
 		if(emergency)
-			verbs -= /obj/item/organ/external/robotic/enforcer/tiny/hand/proc/toggle
+			verbs -= /obj/item/organ/external/robotic/enforcer/hand/proc/toggle
 			qdel(active_atack)
 
 	proc/toggle()

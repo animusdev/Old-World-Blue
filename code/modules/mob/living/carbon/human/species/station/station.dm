@@ -271,7 +271,7 @@
 	)
 
 	has_limbs = list(
-		BP_CHEST =  new /datum/organ_description/diona,
+		BP_CHEST =  new /datum/organ_description/chest/diona,
 		BP_GROIN =  new /datum/organ_description/groin/diona,
 		BP_HEAD =   new /datum/organ_description/head/diona,
 		BP_L_ARM =  new /datum/organ_description/arm/left/diona,
