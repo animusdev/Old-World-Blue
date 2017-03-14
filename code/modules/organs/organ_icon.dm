@@ -17,8 +17,6 @@ var/global/list/limb_icon_cache = list()
 		I.sync_colour_to_owner()
 	s_tone = null
 	s_col = null
-	if(robotic >= ORGAN_ROBOT)
-		return
 	if(owner.species.flags & HAS_SKIN_TONE)
 		s_tone = owner.s_tone
 	if(owner.species.flags & HAS_SKIN_COLOR)
@@ -35,7 +33,7 @@ var/global/list/limb_icon_cache = list()
 			gendered = (owner.gender == MALE)? "_m": "_f"
 		body_build = owner.body_build.index
 
-	get_icon(skeletal)
+	mob_icon = get_icon(skeletal)
 	apply_colors()
 	draw_internals()
 	dir  = EAST
@@ -47,15 +45,16 @@ var/global/list/limb_icon_cache = list()
 	if(owner)
 		icon_cache_key = "[icon_state][model][owner.species.name]"
 
+	var/icon/tmp_icon
 	if(default_icon)
-		mob_icon = new /icon(default_icon, icon_state)
+		tmp_icon = new /icon(default_icon, icon_state)
 	else if(skeletal)
-		mob_icon = new /icon('icons/mob/human_races/skeleton.dmi', icon_state)
+		tmp_icon = new /icon('icons/mob/human_races/skeleton.dmi', icon_state)
 	else if (status & ORGAN_MUTATED)
-		mob_icon = new /icon(owner.species.deform, icon_state)
+		tmp_icon = new /icon(owner.species.deform, icon_state)
 	else
-		mob_icon = new /icon(owner.species.icobase, icon_state)
-	return mob_icon
+		tmp_icon = new /icon(owner.species.icobase, icon_state)
+	return tmp_icon
 
 /obj/item/organ/external/proc/apply_colors()
 	if(status & ORGAN_DEAD)
@@ -67,7 +66,7 @@ var/global/list/limb_icon_cache = list()
 			mob_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
 		else
 			mob_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
-	else if(s_col)
+	if(s_col)
 		mob_icon.Blend(s_col, ICON_ADD)
 
 	if(tattoo)

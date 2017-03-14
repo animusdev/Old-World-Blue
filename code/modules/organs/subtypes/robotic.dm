@@ -25,7 +25,7 @@
 	if(can_activate())
 		activate()
 
-/obj/item/organ/external/sync_colour_to_owner()
+/obj/item/organ/external/robotic/sync_colour_to_owner()
 	for(var/obj/item/organ/I in internal_organs)
 		I.sync_colour_to_owner()
 
@@ -39,13 +39,11 @@
 	mob_icon = new /icon(default_icon, icon_state)
 	return mob_icon
 
-/obj/item/organ/external/apply_colors()
+/obj/item/organ/external/robotic/apply_colors()
 	return
 
 /obj/item/organ/external/robotic/get_icon_key()
-	. = "robotic"
-	if(model)
-		. += model
+	. = "robotic[model]"
 
 /obj/item/organ/external/robotic/Destroy()
 	deactivate(1)
