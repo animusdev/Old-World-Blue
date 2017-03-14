@@ -70,7 +70,7 @@ var/list/gear_datums = list()
 
 	var/build_path = path
 	if(options)
-		if(!option in options)
+		if(!option || !option in options)
 			option = options[1]
 		build_path = options[option]
 
