@@ -210,7 +210,7 @@
 	if(recharge_port)
 		recharge_port.stop_charge()
 
-/obj/machinery/computer/mech_bay_power_console/attack_hand(mob/user as mob)
+/obj/machinery/computer/mech_bay_power_console/attack_hand(mob/user)
 	if(..())
 		return
 	if(!recharge_floor || !recharge_port)
@@ -219,11 +219,14 @@
 			F.init_devices()
 	ui_interact(user)
 
-/obj/machinery/computer/mech_bay_power_console/attackby(I as obj, user as mob)
-	if(istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda))
+/obj/machinery/computer/mech_bay_power_console/attackby(obj/item/I, mob/living/user)
+	if(I.GetID())
 		if(allowed(user))
 			locked = !locked
-			user << "<span class='notice'>[recharge_port] now [!locked?"un":null]locked</span>"
+			user.visible_message(
+				"<span class='notice'>User [!locked?"un":null]locked [recharge_port].</span>",
+				"<span class='notice'>[recharge_port] now [!locked?"un":null]locked.</span>"
+			)
 	else if(istype(I, /obj/item/weapon/card/emag) && locked)
 		locked = 0
 

@@ -102,7 +102,7 @@
 
 		move_into_gibber(user,G.affecting)
 		// Grab() process should clean up the grab item, no need to del it.
-	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	else if(W.GetID())
 		if(allowed(usr))
 			emagged = !emagged
 			usr << "The safety guard is [emagged ? "<span class='danger'>disabled</span>" : "enabled"]."

@@ -771,16 +771,10 @@
 		else
 			user << "You were unable to attach [W] to [src]"
 		return
-	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	if(W.GetID())
 		if(add_req_access || maint_access)
 			if(internals_access_allowed(usr))
-				var/obj/item/weapon/card/id/id_card
-				if(istype(W, /obj/item/weapon/card/id))
-					id_card = W
-				else
-					var/obj/item/device/pda/pda = W
-					id_card = pda.id
-				output_maintenance_dialog(id_card, user)
+				output_maintenance_dialog(W.GetID(), user)
 				return
 			else
 				user << "\red Invalid ID: Access denied."

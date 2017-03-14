@@ -84,7 +84,7 @@
 	if(stat & BROKEN)
 		return
 
-	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	if(W.GetID())
 		if(allowed(usr))
 			if(emagged)
 				user << "<span class='notice'>The turret control is unresponsive.</span>"

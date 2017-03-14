@@ -206,7 +206,7 @@
 			return
 		if(default_part_replacement(user, W))
 			return
-	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	if(W.GetID())
 		if(!check_access(W))
 			user << "<span class='warning'>Access Denied.</span>"
 			return

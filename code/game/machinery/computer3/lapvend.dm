@@ -210,8 +210,8 @@
 	newlap.spawn_parts()
 
 /obj/machinery/lapvend/proc/scan_card(var/obj/item/weapon/card/I)
-	if (istype(I, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/C = I
+	if (I.GetID())
+		var/obj/item/weapon/card/id/C = I.GetID()
 		visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
 		var/datum/money_account/CH = get_account(C.associated_account_number)
 		if(!CH)
@@ -361,8 +361,8 @@
 
 
 /obj/machinery/lapvend/proc/reimburse(var/obj/item/weapon/card/I)
-	if (istype(I, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/C = I
+	if (I.GetID())
+		var/obj/item/weapon/card/id/C = I.GetID()
 		visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
 		var/datum/money_account/CH = get_account(C.associated_account_number)
 		if(!CH)

@@ -960,8 +960,8 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 					src.scanned_user = GetNameAndAssignmentFromId(P.id)
 				else
 					src.scanned_user = "Unknown"
-			else if(istype(human_user.wear_id, /obj/item/weapon/card/id) )
-				var/obj/item/weapon/card/id/ID = human_user.wear_id
+			else if(istype(human_user.wear_id.GetID(), /obj/item/weapon/card/id) )
+				var/obj/item/weapon/card/id/ID = human_user.wear_id.GetID()
 				src.scanned_user = GetNameAndAssignmentFromId(ID)
 			else
 				src.scanned_user ="Unknown"
