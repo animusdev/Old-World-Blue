@@ -45,7 +45,7 @@ var/global/list/limb_icon_cache = list()
 /obj/item/organ/external/get_icon(var/skeletal)
 	icon_state = "[organ_tag][gendered][body_build]"
 	if(owner)
-		icon_cache_key = "[icon_state][owner.species.name]"
+		icon_cache_key = "[icon_state][model][owner.species.name]"
 
 	if(default_icon)
 		mob_icon = new /icon(default_icon, icon_state)
