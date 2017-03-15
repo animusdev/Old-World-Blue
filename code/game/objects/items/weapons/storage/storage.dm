@@ -210,7 +210,7 @@
 
 	//var/mob/living/carbon/human/H = user
 	var/row_num = 0
-	var/col_count = min(7,storage_slots) -1
+	var/col_count = storage_slots ? min(7,storage_slots) -1 : 6
 	if (adjusted_contents > 7)
 		row_num = round((adjusted_contents-1) / 7) // 7 is the maximum allowed width.
 	src.standard_orient_objs(row_num, col_count, numbered_contents)
@@ -239,6 +239,11 @@
 		if(!stop_messages)
 			usr << "<span class='notice'>[src] cannot hold [W].</span>"
 		return 0
+
+	if(storage_slots && contents.len >= storage_slots)
+		if(!stop_messages)
+			usr << "<span class='notice'>[src] is full, make some space.</span>"
+		return 0 //Storage item is full
 
 	if (W.w_class > max_w_class)
 		if(!stop_messages)
