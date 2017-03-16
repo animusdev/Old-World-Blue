@@ -208,24 +208,26 @@ var/global/photo_count = 0
 	// Sort the atoms into their layers
 	var/list/sorted = sort_atoms_by_layer(atoms)
 	var/center_offset = (size-1)/2 * 32 + 1
-	for(var/i; i <= sorted.len; i++)
-		var/atom/A = sorted[i]
-		if(A)
-			var/icon/img = getFlatIcon(A)//build_composite_icon(A)
+	var/i = 1
+	for(var/item in sorted)
+		if(++i % 10)
+			sleep()
+		var/atom/A = item
+		var/icon/img = getFlatIcon(A)//build_composite_icon(A)
 
-			// If what we got back is actually a picture, draw it.
-			if(istype(img, /icon))
-				// Check if we're looking at a mob that's lying down
-				if(istype(A, /mob/living) && A:lying)
-					// If they are, apply that effect to their picture.
-					img.BecomeLying()
-				// Calculate where we are relative to the center of the photo
-				var/xoff = (A.x - center.x) * 32 + center_offset
-				var/yoff = (A.y - center.y) * 32 + center_offset
-				if (istype(A,/atom/movable))
-					xoff+=A:step_x
-					yoff+=A:step_y
-				res.Blend(img, blendMode2iconMode(A.blend_mode),  A.pixel_x + xoff, A.pixel_y + yoff)
+		// If what we got back is actually a picture, draw it.
+		if(istype(img, /icon))
+			// Check if we're looking at a mob that's lying down
+			if(istype(A, /mob/living) && A:lying)
+				// If they are, apply that effect to their picture.
+				img.BecomeLying()
+			// Calculate where we are relative to the center of the photo
+			var/xoff = (A.x - center.x) * 32 + center_offset
+			var/yoff = (A.y - center.y) * 32 + center_offset
+			if (istype(A,/atom/movable))
+				xoff+=A:step_x
+				yoff+=A:step_y
+			res.Blend(img, blendMode2iconMode(A.blend_mode),  A.pixel_x + xoff, A.pixel_y + yoff)
 
 	// Lastly, render any contained effects on top.
 	for(var/turf/the_turf in turfs)
