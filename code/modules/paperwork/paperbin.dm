@@ -54,7 +54,6 @@
 			else if (response == "Carbon-Copy")
 				P = new /obj/item/weapon/paper/carbon
 
-		P.loc = user.loc
 		user.put_in_hands(P)
 		user << "<span class='notice'>You take [P] out of the [src].</span>"
 	else

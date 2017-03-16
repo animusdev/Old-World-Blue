@@ -104,8 +104,8 @@ BLIND     // can't see anything
 	New(var/mob/living/carbon/human/H)
 		..()
 		if(istype(H))
-			if(istype(H.internal_organs_by_name[O_EYES], /obj/item/organ/internal/eyes/oneeye/right))
-				wear_state = "[initial(wear_state)]_l"
+			if(!istype(H.internal_organs_by_name[O_EYES], /obj/item/organ/internal/eyes/oneeye/right))
+				icon_state = "[initial(icon_state)]_l"
 
 	verb/switcheye()
 		set name = "Switch Eyepatch"

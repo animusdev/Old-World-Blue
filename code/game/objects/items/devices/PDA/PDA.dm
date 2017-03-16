@@ -1132,8 +1132,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		return
 
 	if (can_use(usr) && !isnull(cartridge))
-		var/turf/T = get_turf(src)
-		cartridge.loc = T
 		if (ismob(loc))
 			var/mob/M = loc
 			M.put_in_hands(cartridge)
@@ -1158,8 +1156,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				user.drop_from_inventory(I, src)
 				id = I
 	else
-		var/obj/item/weapon/card/I = user.get_active_hand()
-		if (istype(I, /obj/item/weapon/card/id) && I:registered_name)
+		var/obj/item/weapon/card/id/I = user.get_active_hand()
+		if (istype(I, /obj/item/weapon/card/id) && I.registered_name)
 			var/obj/old_id = id
 			user.drop_from_inventory(I, src)
 			id = I

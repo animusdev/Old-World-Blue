@@ -14,7 +14,7 @@
 		if(2) new /obj/item/weapon/storage/backpack/satchel/eng(src)
 		if(3) new /obj/item/weapon/storage/backpack/dufflebag/eng(src)
 		if(4) new /obj/item/weapon/storage/backpack/messenger/eng(src)
-	new /obj/item/device/radio/headset/headset_cargo(src)
+	new /obj/item/device/radio/headset/cargo(src)
 	new /obj/item/clothing/under/rank/miner(src)
 	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/clothing/shoes/black(src)

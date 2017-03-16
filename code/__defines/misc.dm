@@ -2,6 +2,10 @@
 
 #define subtypesof(type) (typesof(type) - type)
 
+#define NOTICE(text) "<span class='notice'>[text]</span>"
+#define WARNING(text) "<span class='warning'>[text]</span>"
+#define DANGER(text) "<span class='danger'>[text]</span>"
+
 // Turf-only flags.
 #define NOJAUNT 1 // This is used in literally one place, turf.dm, to block ethereal jaunt.
 

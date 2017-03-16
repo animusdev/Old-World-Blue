@@ -85,7 +85,7 @@
 	..()
 	events = new
 
-	icon_state += "-open"
+	update_icon()
 	add_radio()
 	add_cabin()
 	if(!add_airtank()) //we check this here in case mecha does not have an internal tank available by default - WIP
@@ -154,6 +154,18 @@
 
 	mechas_list -= src //global mech list
 	..()
+
+/obj/mecha/update_icon()
+	if (initial_icon)
+		icon_state = initial_icon
+	else
+		icon_state = initial(icon_state)
+
+	if(!occupant)
+		icon_state += "-open"
+
+
+
 
 ////////////////////////
 ////// Helpers /////////
@@ -759,16 +771,10 @@
 		else
 			user << "You were unable to attach [W] to [src]"
 		return
-	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	if(W.GetID())
 		if(add_req_access || maint_access)
 			if(internals_access_allowed(usr))
-				var/obj/item/weapon/card/id/id_card
-				if(istype(W, /obj/item/weapon/card/id))
-					id_card = W
-				else
-					var/obj/item/device/pda/pda = W
-					id_card = pda.id
-				output_maintenance_dialog(id_card, user)
+				output_maintenance_dialog(W.GetID(), user)
 				return
 			else
 				user << "\red Invalid ID: Access denied."
@@ -1102,7 +1108,7 @@
 		src.add_fingerprint(H)
 		src.forceMove(src.loc)
 		src.log_append_to_last("[H] moved in as pilot.")
-		src.icon_state = src.reset_icon()
+		update_icon()
 		set_dir(dir_in)
 		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 		if(!hasInternalDamage())
@@ -1191,7 +1197,7 @@
 			src.occupant.canmove = 0
 			src.verbs += /obj/mecha/verb/eject
 		src.occupant = null
-		src.icon_state = src.reset_icon()+"-open"
+		update_icon()
 		src.set_dir(dir_in)
 	return
 
@@ -1767,13 +1773,6 @@
 		cell.give(amount)
 		return 1
 	return 0
-
-/obj/mecha/proc/reset_icon()
-	if (initial_icon)
-		icon_state = initial_icon
-	else
-		icon_state = initial(icon_state)
-	return icon_state
 
 /obj/mecha/attack_generic(var/mob/user, var/damage, var/attack_message)
 

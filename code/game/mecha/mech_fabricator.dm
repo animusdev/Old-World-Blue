@@ -52,30 +52,30 @@
 		"Ripley"=list(
 			/obj/item/mecha_parts/chassis/ripley,
 			/obj/item/mecha_parts/part/ripley_torso,
-			/obj/item/mecha_parts/part/ripley_left_arm,
-			/obj/item/mecha_parts/part/ripley_right_arm,
-			/obj/item/mecha_parts/part/ripley_left_leg,
-			/obj/item/mecha_parts/part/ripley_right_leg
+			/obj/item/mecha_parts/part/ripley/left_arm,
+			/obj/item/mecha_parts/part/ripley/right_arm,
+			/obj/item/mecha_parts/part/ripley/left_leg,
+			/obj/item/mecha_parts/part/ripley/right_leg
 		),
 
 		"Odysseus"=list(
 			/obj/item/mecha_parts/chassis/odysseus,
 			/obj/item/mecha_parts/part/odysseus_torso,
 			/obj/item/mecha_parts/part/odysseus_head,
-			/obj/item/mecha_parts/part/odysseus_left_arm,
-			/obj/item/mecha_parts/part/odysseus_right_arm,
-			/obj/item/mecha_parts/part/odysseus_left_leg,
-			/obj/item/mecha_parts/part/odysseus_right_leg
+			/obj/item/mecha_parts/part/odysseus/left_arm,
+			/obj/item/mecha_parts/part/odysseus/right_arm,
+			/obj/item/mecha_parts/part/odysseus/left_leg,
+			/obj/item/mecha_parts/part/odysseus/right_leg
 		),
 
 		"Gygax"=list(
 			/obj/item/mecha_parts/chassis/gygax,
 			/obj/item/mecha_parts/part/gygax_torso,
 			/obj/item/mecha_parts/part/gygax_head,
-			/obj/item/mecha_parts/part/gygax_left_arm,
-			/obj/item/mecha_parts/part/gygax_right_arm,
-			/obj/item/mecha_parts/part/gygax_left_leg,
-			/obj/item/mecha_parts/part/gygax_right_leg,
+			/obj/item/mecha_parts/part/gygax/left_arm,
+			/obj/item/mecha_parts/part/gygax/right_arm,
+			/obj/item/mecha_parts/part/gygax/left_leg,
+			/obj/item/mecha_parts/part/gygax/right_leg,
 			/obj/item/mecha_parts/part/gygax_armour
 		),
 
@@ -83,10 +83,10 @@
 			/obj/item/mecha_parts/chassis/durand,
 			/obj/item/mecha_parts/part/durand_torso,
 			/obj/item/mecha_parts/part/durand_head,
-			/obj/item/mecha_parts/part/durand_left_arm,
-			/obj/item/mecha_parts/part/durand_right_arm,
-			/obj/item/mecha_parts/part/durand_left_leg,
-			/obj/item/mecha_parts/part/durand_right_leg,
+			/obj/item/mecha_parts/part/durand/left_arm,
+			/obj/item/mecha_parts/part/durand/right_arm,
+			/obj/item/mecha_parts/part/durand/left_leg,
+			/obj/item/mecha_parts/part/durand/right_leg,
 			/obj/item/mecha_parts/part/durand_armour
 		),
 
@@ -94,10 +94,10 @@
 			/obj/item/mecha_parts/chassis/phazon,
 			/obj/item/mecha_parts/part/phazon_torso,
 			/obj/item/mecha_parts/part/phazon_head,
-			/obj/item/mecha_parts/part/phazon_left_arm,
-			/obj/item/mecha_parts/part/phazon_right_arm,
-			/obj/item/mecha_parts/part/phazon_left_leg,
-			/obj/item/mecha_parts/part/phazon_right_leg,
+			/obj/item/mecha_parts/part/phazon/left_arm,
+			/obj/item/mecha_parts/part/phazon/right_arm,
+			/obj/item/mecha_parts/part/phazon/left_leg,
+			/obj/item/mecha_parts/part/phazon/right_leg,
 			/obj/item/mecha_parts/part/phazon_armor
 		),
 
@@ -415,7 +415,7 @@
 	if(!files) return
 	var/i = 0
 	for(var/datum/design/D in files.known_designs)
-		if(D.build_type&16)
+		if(D.build_type&MECHFAB)
 			if(D.category in part_sets)//Checks if it's a valid category
 				if(add_part_to_set(D.category, D.build_path))//Adds it to said category
 					i++
@@ -683,13 +683,13 @@
 	var/obj/item/stack/material/res = new type(src)
 
 	// amount available to take out
-	var/total_amount = round(resources[mat_string]/res.perunit)
+	var/total_amount = round(resources[mat_string]/SHEET_MATERIAL_AMOUNT)
 
 	// number of stacks we're going to take out
 	res.amount = round(min(total_amount,amount))
 
 	if(res.amount>0)
-		resources[mat_string] -= res.amount*res.perunit
+		resources[mat_string] -= res.amount*SHEET_MATERIAL_AMOUNT
 		res.Move(src.loc)
 		result = res.amount
 	else
@@ -706,13 +706,7 @@
 
 /obj/machinery/mecha_part_fabricator/dismantle()
 	for(var/material in resources)
-		if(resources[material] >= 2000)
-			var/units = round(resources[material]/2000)
-			while(units>0)
-				var/obj/item/stack/material/S = PoolOrNew(/obj/item/stack/material, src.loc)
-				S.set_material(material)
-				S.amount = min(units,S.max_amount)
-				units -= S.amount
+		create_material_stack(material, resources[material], src.loc)
 	return ..()
 
 
@@ -742,7 +736,7 @@
 				sleep(10)
 
 				while(src.resources[material] < res_max_amount && stack.amount >= 1)
-					src.resources[material] += 2000
+					src.resources[material] += SHEET_MATERIAL_AMOUNT
 					stack.use(1)
 					count++
 				src.overlays -= "fab-load-[material]"

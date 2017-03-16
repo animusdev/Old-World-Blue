@@ -138,14 +138,8 @@
 		switch(href_list["action"])
 			if ("id")
 				if (giver)
-					if(ishuman(usr))
-						giver.loc = usr.loc
-						if(!usr.get_active_hand())
-							usr.put_in_hands(giver)
-						giver = null
-					else
-						giver.loc = src.loc
-						giver = null
+					usr.put_in_hands(giver)
+					giver = null
 					accesses.Cut()
 				else
 					var/obj/item/I = usr.get_active_hand()

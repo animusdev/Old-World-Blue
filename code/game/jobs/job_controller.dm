@@ -384,7 +384,7 @@ var/global/datum/controller/occupations/job_master
 				var/datum/gear/G = gear_datums[thing]
 				if(!G)
 					continue
-				var/obj/item/I = G.spawn_for(H)
+				var/obj/item/I = G.spawn_for(H, H.client.prefs.gear[thing])
 				if(!I)
 					continue
 

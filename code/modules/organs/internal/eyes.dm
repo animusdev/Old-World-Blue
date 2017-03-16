@@ -57,11 +57,17 @@
 		mob_icon.Blend(eye_color, ICON_ADD)
 		return mob_icon
 
+/obj/item/organ/internal/eyes/oneeye/get_icon_key()
+	return "eyes_left[eye_color]"
+
 /obj/item/organ/internal/eyes/oneeye/right
 	get_icon()
 		mob_icon = icon(owner.species.icobase, "right_eye[owner.body_build.index]")
 		mob_icon.Blend(eye_color, ICON_ADD)
 		return mob_icon
+
+/obj/item/organ/internal/eyes/oneeye/right/get_icon_key()
+	return "eyes_right[eye_color]"
 
 //// Heterohromia ////
 
@@ -73,6 +79,9 @@
 		one_eye.Blend(second_color, ICON_ADD)
 		mob_icon.Blend(one_eye, ICON_OVERLAY)
 		return mob_icon
+
+/obj/item/organ/internal/eyes/heterohromia/get_icon_key()
+	return "eyes_hetero[eye_color]&[second_color]"
 
 //// Eye-camera ////
 
@@ -126,6 +135,9 @@
 		socket.Blend("#C0C0C0", ICON_ADD)
 	mob_icon.Blend(socket, ICON_OVERLAY)
 	return mob_icon
+
+/obj/item/organ/internal/eyes/mechanic/cam/get_icon_key()
+	return "eyes_[eye_color]&[camera?"full":"empty"]"
 
 /obj/item/organ/internal/eyes/mechanic/cam/proc/switch_view()
 	set name = "Toggle eye-cam view"

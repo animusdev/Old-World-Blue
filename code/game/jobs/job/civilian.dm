@@ -15,7 +15,7 @@
 	uniform = /obj/item/clothing/under/rank/bartender
 	pda = /obj/item/device/pda/bar
 	suit = /obj/item/clothing/suit/storage/vest
-	ear = /obj/item/device/radio/headset/headset_service
+	ear = /obj/item/device/radio/headset/service
 
 	equip(var/mob/living/carbon/human/H)
 		if(!..())	return 0
@@ -62,7 +62,7 @@
 	pda = /obj/item/device/pda/chef
 	hat = /obj/item/clothing/head/chefhat
 	suit = /obj/item/clothing/suit/chef
-	ear = /obj/item/device/radio/headset/headset_service
+	ear = /obj/item/device/radio/headset/service
 
 /datum/job/hydro
 	title = "Gardener"
@@ -82,7 +82,7 @@
 	pda = /obj/item/device/pda/botanist
 	suit = /obj/item/clothing/suit/apron
 	gloves = /obj/item/clothing/gloves/botanic_leather
-	ear = /obj/item/device/radio/headset/headset_service
+	ear = /obj/item/device/radio/headset/service
 
 	backpack  = /obj/item/weapon/storage/backpack/hydroponics
 	satchel_j = /obj/item/weapon/storage/backpack/satchel/hyd
@@ -113,7 +113,7 @@
 	shoes = /obj/item/clothing/shoes/brown
 	pda = /obj/item/device/pda/quartermaster
 	gloves = /obj/item/clothing/gloves/black
-	ear = /obj/item/device/radio/headset/headset_cargo
+	ear = /obj/item/device/radio/headset/cargo
 	hand = /obj/item/weapon/clipboard
 	glasses = /obj/item/clothing/glasses/sunglasses
 
@@ -134,7 +134,7 @@
 
 	uniform = /obj/item/clothing/under/rank/cargoshort
 	pda = /obj/item/device/pda/cargo
-	ear = /obj/item/device/radio/headset/headset_cargo
+	ear = /obj/item/device/radio/headset/cargo
 
 
 /datum/job/mining
@@ -153,7 +153,7 @@
 
 	uniform = /obj/item/clothing/under/rank/miner
 	pda = /obj/item/device/pda/shaftminer
-	ear = /obj/item/device/radio/headset/headset_cargo
+	ear = /obj/item/device/radio/headset/cargo
 
 	put_in_backpack = list(
 		/obj/item/weapon/crowbar,
@@ -176,7 +176,7 @@
 
 	uniform = /obj/item/clothing/under/rank/janitor
 	pda = /obj/item/device/pda/janitor
-	ear = /obj/item/device/radio/headset/headset_service
+	ear = /obj/item/device/radio/headset/service
 
 
 

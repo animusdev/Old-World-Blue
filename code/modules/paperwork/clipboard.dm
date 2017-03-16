@@ -110,7 +110,6 @@
 
 			if(P && (P.loc == src) && (istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/photo)) )
 
-				P.loc = usr.loc
 				usr.put_in_hands(P)
 				if(P == toppaper)
 					toppaper = null

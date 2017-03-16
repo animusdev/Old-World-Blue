@@ -236,7 +236,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 		var/new_message = rhtml_encode(input_utf8(usr, "Write your message:", "Awaiting Input", "", "message"))
 		if(new_message)
-			message = new_message
+			message = cp1251_to_utf8(new_message)
 			screen = 9
 			switch(href_list["priority"])
 				if("2")	priority = 2
@@ -321,7 +321,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 						screen = 6
 						Console.set_light(2)
-				messages += "<B>Message sent to [dpt]</B><BR>[cp1251_to_utf8(message)]"
+				messages += "<B>Message sent to [dpt]</B><BR>[message]"
 			else
 				for (var/mob/O in hearers(4, src.loc))
 					O.show_message(text("\icon[src] *The Requests Console beeps: 'NOTICE: No server detected!'"))
@@ -392,13 +392,13 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		else
 			user << "You can't do much with that."*/
 
-	if (istype(O, /obj/item/weapon/card/id))
+	if (O.GetID())
 		if(screen == 9)
-			var/obj/item/weapon/card/id/T = O
+			var/obj/item/weapon/card/id/T = O.GetID()
 			msgVerified = text("<font color='green'><b>Verified by [T.registered_name] ([T.assignment])</b></font>")
 			updateUsrDialog()
 		if(screen == 10)
-			var/obj/item/weapon/card/id/ID = O
+			var/obj/item/weapon/card/id/ID = O.GetID()
 			if (access_RC_announce in ID.GetAccess())
 				announceAuth = 1
 				announcement.announcer = ID.assignment ? "[ID.assignment] [ID.registered_name]" : ID.registered_name

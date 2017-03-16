@@ -502,7 +502,7 @@
 
 	if(S.secured)
 		qdel(S)
-		var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
+		var/obj/item/weapon/secbot_assembly/A = new
 		user.put_in_hands(A)
 		user << "You add the signaler to the helmet."
 		user.drop_from_inventory(src)

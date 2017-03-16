@@ -6,7 +6,7 @@
 
 	if(density)
 		can_open = WALL_OPENING
-		set_wall_state("[material.icon_base]fwall_open")
+		set_wall_state("open")
 		//flick("[material.icon_base]fwall_opening", src)
 		density = 0
 		opacity = 0
@@ -16,7 +16,7 @@
 	else
 		can_open = WALL_OPENING
 		//flick("[material.icon_base]fwall_closing", src)
-		set_wall_state("[material.icon_base]0")
+		set_wall_state("0")
 		density = 1
 		opacity = 1
 		blocks_air = 1

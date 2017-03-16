@@ -131,7 +131,8 @@
 		if(blinded)
 			blind.alpha = 255
 		else
-			blind.alpha = 0
+			if(blind)
+				blind.alpha = 0
 			if (disabilities & NEARSIGHTED)
 				client.screen += global_hud.vimpaired
 			if (eye_blurry)

@@ -32,7 +32,7 @@
 	push_flags = MONKEY|SLIME|SIMPLE_ANIMAL
 
 	has_limbs = list(
-		BP_CHEST =  new /datum/organ_description/slime,
+		BP_CHEST =  new /datum/organ_description/chest/slime,
 		BP_GROIN =  new /datum/organ_description/groin/slime,
 		BP_HEAD =   new /datum/organ_description/head/slime,
 		BP_L_ARM =  new /datum/organ_description/arm/left/slime,

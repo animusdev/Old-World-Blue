@@ -17,19 +17,16 @@ Note: Must be placed west/left of and R&D console to function.
 	idle_power_usage = 30
 	active_power_usage = 5000
 
-	var/max_material_storage = 100000 //All this could probably be done better with a list but meh.
-	var/m_amount = 0.0
-	var/g_amount = 0.0
-	var/gold_amount = 0.0
-	var/silver_amount = 0.0
-	var/phoron_amount = 0.0
-	var/uranium_amount = 0.0
-	var/diamond_amount = 0.0
-
-	var/mat_efficiency = 1
-
-/obj/machinery/r_n_d/protolathe/proc/TotalMaterials() //returns the total of all the stored materials. Makes code neater.
-	return m_amount + g_amount + gold_amount + silver_amount + phoron_amount + uranium_amount + diamond_amount
+	max_material_storage = 100000 //All this could probably be done better with a list but meh.
+	materials = list(
+		DEFAULT_WALL_MATERIAL = 0,
+		"glass" = 0,
+		"gold" = 0,
+		"silver" = 0,
+		"phoron" = 0,
+		"uranium" = 0,
+		"diamond" = 0
+	)
 
 /obj/machinery/r_n_d/protolathe/RefreshParts()
 	var/T = 0
@@ -46,33 +43,6 @@ Note: Must be placed west/left of and R&D console to function.
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		T += M.rating
 	mat_efficiency = 1 - (T - 2) / 8
-
-/obj/machinery/r_n_d/protolathe/dismantle()
-	for(var/obj/I in component_parts)
-		if(istype(I, /obj/item/weapon/reagent_containers/glass/beaker))
-			reagents.trans_to_obj(I, reagents.total_volume)
-	if(m_amount >= 2000)
-		var/obj/item/stack/material/steel/G = new /obj/item/stack/material/steel(loc)
-		G.amount = round(m_amount / G.perunit)
-	if(g_amount >= 2000)
-		var/obj/item/stack/material/glass/G = new /obj/item/stack/material/glass(loc)
-		G.amount = round(g_amount / G.perunit)
-	if(phoron_amount >= 2000)
-		var/obj/item/stack/material/phoron/G = new /obj/item/stack/material/phoron(loc)
-		G.amount = round(phoron_amount / G.perunit)
-	if(silver_amount >= 2000)
-		var/obj/item/stack/material/silver/G = new /obj/item/stack/material/silver(loc)
-		G.amount = round(silver_amount / G.perunit)
-	if(gold_amount >= 2000)
-		var/obj/item/stack/material/gold/G = new /obj/item/stack/material/gold(loc)
-		G.amount = round(gold_amount / G.perunit)
-	if(uranium_amount >= 2000)
-		var/obj/item/stack/material/uranium/G = new /obj/item/stack/material/uranium(loc)
-		G.amount = round(uranium_amount / G.perunit)
-	if(diamond_amount >= 2000)
-		var/obj/item/stack/material/diamond/G = new /obj/item/stack/material/diamond(loc)
-		G.amount = round(diamond_amount / G.perunit)
-	..()
 
 /obj/machinery/r_n_d/protolathe/update_icon()
 	if(panel_open)
@@ -107,57 +77,69 @@ Note: Must be placed west/left of and R&D console to function.
 		return 1
 	if(stat)
 		return 1
-	if(istype(O,/obj/item/stack/material))
-		var/obj/item/stack/material/S = O
-		if(TotalMaterials() + S.perunit > max_material_storage)
-			user << "<span class='notice'>\The [src]'s material bin is full. Please remove material before adding more.</span>"
-			return 1
+
+	if(istype(O, /obj/item/stack/material) && O.get_material_name() in materials)
 
 		var/obj/item/stack/material/stack = O
-		var/amount = round(input("How many sheets do you want to add?") as num)//No decimals
-		if(!O)
+		var/free_space = (max_material_storage - TotalMaterials())/SHEET_MATERIAL_AMOUNT
+		if(free_space < 1)
+			user << "<span class='notice'>\The [src] is full. Please remove some material from \the [src] in order to insert more.</span>"
+			return 1
+
+		var/amount = round(input("How many sheets do you want to add?") as num)
+		amount = min(amount, stack.amount, free_space)
+		if(amount <= 0 || busy)
 			return
-		if(amount < 0)//No negative numbers
-			amount = 0
-		if(amount == 0)
-			return
-		if(amount > stack.get_amount())
-			amount = stack.get_amount()
-		if(max_material_storage - TotalMaterials() < (amount * stack.perunit))//Can't overfill
-			amount = min(stack.amount, round((max_material_storage - TotalMaterials()) / stack.perunit))
+
+		busy = 1
 
 		overlays += "protolathe_[stack.name]"
 		sleep(10)
 		overlays -= "protolathe_[stack.name]"
 
-		icon_state = "protolathe"
-		busy = 1
-		use_power(max(1000, (3750 * amount / 10)))
-		var/material/material = stack.get_material()
-		if(istype(material) && do_after(user, 16) && stack.use(amount))
+		var/material = stack.get_material_name()
+		if(do_after(usr, 16) && stack.use(amount))
 			user << "<span class='notice'>You add [amount] sheets to \the [src].</span>"
-			icon_state = "protolathe"
-
-			var/amount_to_add = amount * material.stack_per_sheet
-			switch(material.name)
-				if(DEFAULT_WALL_MATERIAL)
-					m_amount += amount_to_add
-				if("glass")
-					g_amount += amount_to_add
-				if("gold")
-					gold_amount += amount_to_add
-				if("silver")
-					silver_amount += amount_to_add
-				if("phoron")
-					phoron_amount += amount_to_add
-				if("uranium")
-					uranium_amount += amount_to_add
-				if("diamond")
-					diamond_amount += amount_to_add
+			use_power(max(1000, (SHEET_MATERIAL_AMOUNT * amount / 10)))
+			materials[material] += amount * SHEET_MATERIAL_AMOUNT
 		busy = 0
 		updateUsrDialog()
 		return
-	..()
+
+/obj/machinery/r_n_d/protolathe/proc/Build(var/datum/design/D)
+	if(!canBuild(D))
+		return 0
+	busy = 1
+	var/power = active_power_usage
+	for(var/M in D.materials)
+		power += round(D.materials[M] / 5)
+	power = max(active_power_usage, power)
+
+	var/key = usr.key	//so we don't lose the info during the spawn delay
+	sleep(16)
+	flick("protolathe_n",src)
+	use_power(power)
+	sleep(16)
+	for(var/M in D.materials)
+		materials[M] = max(0, materials[M] - D.materials[M] * mat_efficiency)
+
+	for(var/C in D.chemicals)
+		reagents.remove_reagent(C, D.materials[C] * mat_efficiency)
+
+	if(D.build_path)
+		var/obj/new_item = new D.build_path(loc)
+
+		if( new_item.type == /obj/item/weapon/storage/backpack/holding )
+			new_item.investigate_log("built by [key]","singulo")
+
+		new_item.reliability = D.reliability
+		if(hacked)
+			D.reliability = max((reliability / 2), 0)
+		if(mat_efficiency != 1) // No matter out of nowhere
+			if(new_item.matter && new_item.matter.len > 0)
+				for(var/i in new_item.matter)
+					new_item.matter[i] = new_item.matter[i] * mat_efficiency
+	busy = 0
 
 //This is to stop these machines being hackable via clicking.
 /obj/machinery/r_n_d/protolathe/attack_hand(mob/user as mob)

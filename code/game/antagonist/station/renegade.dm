@@ -49,9 +49,8 @@ var/datum/antagonist/renegade/renegades
 		return
 
 	var/gun_type = pick(spawn_guns)
-	var/obj/item/gun = new gun_type(get_turf(player))
-	if(!(player.l_hand && player.r_hand))
-		player.put_in_hands(gun)
+	var/obj/item/gun = new gun_type
+	player.put_in_hands(gun)
 
 
 /proc/rightandwrong()

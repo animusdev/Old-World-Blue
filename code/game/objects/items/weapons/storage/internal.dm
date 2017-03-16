@@ -87,12 +87,5 @@
 			src.close(M)
 	return 1
 
-/obj/item/weapon/storage/internal/can_be_inserted(obj/item/W as obj, stop_messages = 0)
-	if(contents.len >= storage_slots)
-		if(!stop_messages)
-			usr << "<span class='notice'>[src] is full, make some space.</span>"
-		return 0 //Storage item is full
-	return ..()
-
 /obj/item/weapon/storage/internal/Adjacent(var/atom/neighbor)
 	return master_item.Adjacent(neighbor)

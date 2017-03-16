@@ -21,7 +21,7 @@
 		name = "[material.display_name] wall"
 		desc = "It seems to be a section of hull plated with [material.display_name]."
 
-	set_wall_state("[material.icon_base]0")
+	set_wall_state("0")
 
 	if(material.opacity > 0.5 && !opacity)
 		set_light(1)
@@ -46,13 +46,15 @@
 	overlays.Cut()
 	damage_overlay = 0
 
+	new_state = "[material.icon_base]_[new_state]"
+
 	if(!wall_cache["[new_state]-[material.icon_colour]"])
 		var/image/I = image(icon='icons/turf/wall_masks.dmi',icon_state="[new_state]")
 		I.color = material.icon_colour
 		wall_cache["[new_state]-[material.icon_colour]"] = I
 	overlays |= wall_cache["[new_state]-[material.icon_colour]"]
-	if(reinf_material)
 
+	if(reinf_material)
 		var/cache_key = "[material.icon_reinf]-[reinf_material.icon_colour]"
 		if(!isnull(construction_stage) && construction_stage<6)
 			cache_key = "reinf_construct-[reinf_material.icon_colour]-[construction_stage]"
@@ -84,7 +86,7 @@
 	if(density)
 		check_relatives(1)
 	else
-		set_wall_state("[material.icon_base]fwall_open")
+		set_wall_state("open")
 
 	if(damage == 0)
 		if(damage_overlay != 0)
@@ -120,9 +122,9 @@
 /turf/simulated/wall/proc/check_relatives(var/update_self)
 	if(!material)
 		return
-	var/junction
+	var/list/junction
 	if(update_self)
-		junction = 0
+		junction = list()
 	for(var/checkdir in cardinal)
 		var/turf/simulated/wall/T = get_step(src, checkdir)
 		if(!istype(T) || !T.material)
@@ -133,7 +135,29 @@
 		else
 			T.check_relatives(1)
 	if(!isnull(junction))
-		set_wall_state("[material.icon_base][junction]")
+		switch(junction.len)
+			if(0)
+				set_wall_state("0")
+			if(4)
+				set_wall_state("full")
+			if(3)
+				set_wall_state("complex")
+				dir = 0
+				for(var/t_dir in junction)
+					dir |= t_dir
+				dir = (SOUTH|NORTH|EAST|WEST) - dir
+			if(2)
+				if(junction[1] == reverse_dir[junction[2]])
+					set_wall_state("line")
+					dir = junction[1]
+				else
+					set_wall_state("simple")
+					dir = 0
+					for(var/t_dir in junction)
+						dir |= t_dir
+			if(1)
+				set_wall_state("simple")
+				dir = junction[1]
 	return
 
 /turf/simulated/wall/proc/can_join_with(var/turf/simulated/wall/W)

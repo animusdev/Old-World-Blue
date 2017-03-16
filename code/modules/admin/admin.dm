@@ -11,8 +11,13 @@ var/global/floorIsLava = 0
 		if((R_ADMIN|R_MOD) & C.holder.rights)
 			C << msg
 
-/proc/msg_admin_attack(var/text) //Toggleable Attack Messages
-	log_attack(text)
+/proc/msg_admin_attack(var/text, var/location) //Toggleable Attack Messages
+	var/turf/T = get_turf(location)
+	if(location && T)
+		log_attack("[text] ([T.x],[T.y],[T.z])")
+		text += " (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)"
+	else
+		log_attack(text)
 	var/rendered = "<span class=\"log_message\"><span class=\"prefix\">ATTACK:</span> <span class=\"message\">[text]</span></span>"
 	for(var/client/C in admins)
 		if((R_ADMIN|R_MOD) & C.holder.rights)

@@ -474,17 +474,13 @@ log transactions
 	if(!held_card)
 		return
 
-	held_card.loc = src.loc
 	authenticated_account = null
-
-	if(ishuman(human_user) && !human_user.get_active_hand())
-		human_user.put_in_hands(held_card)
+	human_user.put_in_hands(held_card)
 	held_card = null
 
 
 /obj/machinery/atm/proc/spawn_ewallet(var/sum, loc, mob/living/carbon/human/human_user as mob)
 	var/obj/item/weapon/spacecash/ewallet/E = new /obj/item/weapon/spacecash/ewallet(loc)
-	if(ishuman(human_user) && !human_user.get_active_hand())
-		human_user.put_in_hands(E)
+	human_user.put_in_hands(E)
 	E.worth = sum
 	E.owner_name = authenticated_account.owner_name

@@ -99,21 +99,15 @@
 	display_name = "jumpsuit, SID"
 	path = /obj/item/clothing/under/SID
 
-/datum/gear/uniform/skirt_blue
-	display_name = "plaid skirt, blue"
+/datum/gear/uniform/skirt
+	display_name = "plaid skirt"
 	path = /obj/item/clothing/under/dress/plaid_blue
-
-/datum/gear/uniform/skirt_purple
-	display_name = "plaid skirt, purple"
-	path = /obj/item/clothing/under/dress/plaid_purple
-
-/datum/gear/uniform/skirt_red
-	display_name = "plaid skirt, red"
-	path = /obj/item/clothing/under/dress/plaid_red
-
-/datum/gear/uniform/skirt_black_plaid
-	display_name = "plaid skirt, black"
-	path = /obj/item/clothing/under/dress/plaid_black
+	options = list(
+		"blue"   = /obj/item/clothing/under/dress/plaid_blue,
+		"purple" = /obj/item/clothing/under/dress/plaid_purple,
+		"red"    = /obj/item/clothing/under/dress/plaid_red,
+		"black"  = /obj/item/clothing/under/dress/plaid_black
+	)
 
 /datum/gear/uniform/skirt_black
 	display_name = "skirt, black"

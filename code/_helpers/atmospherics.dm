@@ -1,4 +1,7 @@
 /obj/proc/analyze_gases(var/obj/A, var/mob/user)
+	if(!istype(A))
+		return 0
+
 	if(src != A)
 		user.visible_message("<span class='notice'>\The [user] has used \an [src] on \the [A]</span>")
 

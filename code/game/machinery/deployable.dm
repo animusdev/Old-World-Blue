@@ -173,7 +173,7 @@ for reference:
 	icon_state = "barrier[locked]"
 
 /obj/machinery/deployable/barrier/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/card/id/))
+	if(W.GetID())
 		if(allowed(user))
 			if	(emagged < 2.0)
 				locked = !locked
@@ -226,7 +226,7 @@ for reference:
 			if(health <= 0)
 				explode()
 			return
-			
+
 /obj/machinery/deployable/barrier/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
 		return

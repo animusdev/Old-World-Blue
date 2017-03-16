@@ -7,7 +7,7 @@
 
 	uniform = /obj/item/clothing/under/rank/medical
 	shoes = /obj/item/clothing/shoes/white
-	ear = /obj/item/device/radio/headset/headset_med
+	ear = /obj/item/device/radio/headset/med
 	pda = /obj/item/device/pda/medical
 
 	backpack  = /obj/item/weapon/storage/backpack/medic
@@ -147,7 +147,7 @@
 
 	uniform = /obj/item/clothing/under/rank/geneticist
 	pda = /obj/item/device/pda/geneticist
-	ear = /obj/item/device/radio/headset/headset_medsci
+	ear = /obj/item/device/radio/headset/medsci
 	suit = /obj/item/clothing/suit/storage/toggle/labcoat/genetics
 	suit_store = /obj/item/device/flashlight/pen
 

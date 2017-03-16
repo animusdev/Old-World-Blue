@@ -102,7 +102,7 @@
 
 		move_into_gibber(user,G.affecting)
 		// Grab() process should clean up the grab item, no need to del it.
-	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	else if(W.GetID())
 		if(allowed(usr))
 			emagged = !emagged
 			usr << "The safety guard is [emagged ? "<span class='danger'>disabled</span>" : "enabled"]."
@@ -214,9 +214,9 @@
 		if(src.occupant.reagents)
 			src.occupant.reagents.trans_to_obj(new_meat, round(occupant.reagents.total_volume/slab_count,1))
 
-	src.occupant.attack_log += "\[[time_stamp()]\] Was gibbed by <b>[user]/[user.ckey]</b>" //One shall not simply gib a mob unnoticed!
-	user.attack_log += "\[[time_stamp()]\] Gibbed <b>[src.occupant]/[src.occupant.ckey]</b>"
-	msg_admin_attack("[user.name] ([user.ckey]) gibbed [src.occupant] ([src.occupant.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+	src.occupant.attack_log += "\[[time_stamp()]\] Was gibbed by <b>[key_name(user)]</b>" //One shall not simply gib a mob unnoticed!
+	user.attack_log += "\[[time_stamp()]\] Gibbed <b>[key_name(src.occupant)]</b>"
+	msg_admin_attack("[key_name(user)] gibbed [key_name(src.occupant)]", user)
 
 	src.occupant.ghostize()
 

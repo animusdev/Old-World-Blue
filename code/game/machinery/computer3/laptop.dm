@@ -73,14 +73,17 @@
 /obj/item/device/laptop/verb/eject_id()
 	set category = "Object"
 	set name = "Eject ID Card"
-	set src in oview(1)
+	set src in view(1)
 
 	if(stored_computer)
 		stored_computer.eject_id()
+
 /obj/machinery/computer3/laptop/verb/eject_id()
 	set category = "Object"
 	set name = "Eject ID Card"
-	set src in oview(1)
+	set src in view(1)
+
+	if(!usr || usr.stat || usr.lying || !Adjacent(usr)) return
 	var/obj/item/part/computer/cardslot/C = locate() in src.contents
 
 	if(!C)
@@ -126,7 +129,7 @@
 		set category = "Object"
 		set src in view(1)
 
-		if(usr.stat || usr.restrained() || usr.lying || !istype(usr, /mob/living))
+		if(usr.stat || usr.restrained() || usr.lying || !istype(usr, /mob/living) || !Adjacent(usr))
 			usr << "\red You can't do that."
 			return
 

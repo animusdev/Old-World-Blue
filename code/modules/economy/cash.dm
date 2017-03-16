@@ -31,11 +31,9 @@
 			bundle = W
 		bundle.worth += src.worth
 		bundle.update_icon()
-		if(ishuman(user))
-			var/mob/living/carbon/human/h_user = user
-			h_user.drop_from_inventory(src)
-			h_user.drop_from_inventory(bundle)
-			h_user.put_in_hands(bundle)
+		user.drop_from_inventory(src)
+		user.drop_from_inventory(bundle)
+		user.put_in_hands(bundle)
 		user << "<span class='notice'>You add [src.worth] Thalers worth of money to the bundles.<br>It holds [bundle.worth] Thalers now.</span>"
 		qdel(src)
 
@@ -141,13 +139,12 @@ proc/spawn_money(var/sum, spawnloc, mob/living/carbon/human/human_user as mob)
 	if(sum in list(1000,500,200,100,50,20,10,1))
 		var/cash_type = text2path("/obj/item/weapon/spacecash/c[sum]")
 		var/obj/cash = new cash_type (usr.loc)
-		if(ishuman(human_user) && !human_user.get_active_hand())
-			human_user.put_in_hands(cash)
+		human_user.put_in_hands(cash)
 	else
 		var/obj/item/weapon/spacecash/bundle/bundle = new (spawnloc)
 		bundle.worth = sum
 		bundle.update_icon()
-		if (ishuman(human_user) && !human_user.get_active_hand())
+		if(human_user)
 			human_user.put_in_hands(bundle)
 	return
 

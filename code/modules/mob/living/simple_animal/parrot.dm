@@ -86,11 +86,11 @@
 /mob/living/simple_animal/parrot/New()
 	..()
 	if(!ears)
-		var/headset = pick(/obj/item/device/radio/headset/headset_sec, \
-						/obj/item/device/radio/headset/headset_eng, \
-						/obj/item/device/radio/headset/headset_med, \
-						/obj/item/device/radio/headset/headset_sci, \
-						/obj/item/device/radio/headset/headset_cargo)
+		var/headset = pick(/obj/item/device/radio/headset/sec, \
+						/obj/item/device/radio/headset/eng, \
+						/obj/item/device/radio/headset/med, \
+						/obj/item/device/radio/headset/sci, \
+						/obj/item/device/radio/headset/cargo)
 		ears = new headset(src)
 
 	parrot_sleep_dur = parrot_sleep_max //In case someone decides to change the max without changing the duration var
@@ -177,15 +177,15 @@
 							usr << "\red This object won't fit."
 							return
 
-						var/obj/item/device/radio/headset/headset_to_add = item_to_add
+						var/obj/item/device/radio/headset/to_add = item_to_add
 
 						if(!usr.unEquip(item_to_add, src))
 							return
-						src.ears = headset_to_add
+						src.ears = to_add
 						usr << "You fit the headset onto [src]."
 
 						clearlist(available_channels)
-						for(var/ch in headset_to_add.channels)
+						for(var/ch in to_add.channels)
 							switch(ch)
 								if("Engineering")
 									available_channels.Add(":e")
@@ -200,7 +200,7 @@
 								if("Cargo")
 									available_channels.Add(":u")
 
-						if(headset_to_add.translate_binary)
+						if(to_add.translate_binary)
 							available_channels.Add(":b")
 		else
 			..()
@@ -687,7 +687,7 @@
 	)
 
 /mob/living/simple_animal/parrot/Poly/New()
-	ears = new /obj/item/device/radio/headset/headset_eng(src)
+	ears = new /obj/item/device/radio/headset/eng(src)
 	available_channels = list(":e")
 	..()
 

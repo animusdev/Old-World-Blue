@@ -511,7 +511,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	if(lit == 1)
 		M.IgniteMob()
-		msg_admin_attack("[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] and lit them on fire (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		msg_admin_attack("[key_name(user)] attacked [key_name(M)] with [src.name] and lit them on fire (INTENT: [uppertext(user.a_intent)])", user)
 
 	if(istype(M.wear_mask, /obj/item/clothing/mask/smokable/cigarette) && user.zone_sel.selecting == O_MOUTH && lit)
 		var/obj/item/clothing/mask/smokable/cigarette/cig = M.wear_mask
@@ -568,7 +568,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			S.reagents = reagents
 			S.chem_volume = reagents.total_volume
 			reagents = null
-			user.u_equip(src)
+			user.unEquip(src)
 			user.put_in_hands(S)
 			del(src)
 

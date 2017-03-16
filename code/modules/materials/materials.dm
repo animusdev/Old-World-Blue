@@ -84,7 +84,6 @@ var/list/name_to_material
 	var/door_icon_base = "metal"          // Door base icon tag. See header.
 	var/icon_reinf = "reinf_metal"        // Overlay used
 	var/list/stack_origin_tech = list(TECH_MATERIAL = 1) // Research level for stacks.
-	var/stack_per_sheet = 2000            // perunit value for stacks.
 
 	// Attributes
 	var/cut_delay = 0            // Delay in ticks when cutting through this wall.
@@ -142,8 +141,7 @@ var/list/name_to_material
 	target_stack.use(1)
 	user << "<span class='notice'>You attach wire to the [name].</span>"
 	var/obj/item/product = new wire_product(get_turf(user))
-	if(!(user.l_hand && user.r_hand))
-		user.put_in_hands(product)
+	user.put_in_hands(product)
 
 // Make sure we have a display name and shard icon even if they aren't explicitly set.
 /material/New()
@@ -169,8 +167,8 @@ var/list/name_to_material
 	if(islist(composite_material))
 		for(var/material_string in composite_material)
 			temp_matter[material_string] = composite_material[material_string]
-	else if(stack_per_sheet)
-		temp_matter[name] = stack_per_sheet
+	else
+		temp_matter[name] = SHEET_MATERIAL_AMOUNT
 	return temp_matter
 
 // As above.
@@ -244,7 +242,6 @@ var/list/name_to_material
 	tableslam_noise = 'sound/effects/Glasshit.ogg'
 	hardness = 100
 	stack_origin_tech = list(TECH_MATERIAL = 6)
-	stack_per_sheet = 3750
 
 /material/gold
 	name = "gold"
@@ -554,7 +551,6 @@ var/list/name_to_material
 	icon_state = "sheet-silver"
 	icon_colour = "#5C5454"
 	weight = 22
-	stack_per_sheet = 3750
 	sheet_singular_name = "ingot"
 	sheet_plural_name = "ingots"
 

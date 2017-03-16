@@ -112,9 +112,8 @@
 
 		if ("do_killall" in href_list)
 			var/obj/item/weapon/card/id/I = usr.get_active_hand()
-			if (istype(I, /obj/item/device/pda))
-				var/obj/item/device/pda/pda = I
-				I = pda.id
+			if (!istype(I) && I.GetID())
+				I = I.GetID()
 			if (istype(I))
 				if(src.check_access(I))
 					if (!status)

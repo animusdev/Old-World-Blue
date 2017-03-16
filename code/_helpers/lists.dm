@@ -139,6 +139,16 @@ proc/listclearnulls(list/list)
 
 	return null
 
+/proc/moveElement(list/L, fromIndex, toIndex)
+	if(fromIndex == toIndex || fromIndex+1 == toIndex)	//no need to move
+		return
+	if(fromIndex > toIndex)
+		++fromIndex	//since a null will be inserted before fromIndex, the index needs to be nudged right by one
+
+	L.Insert(toIndex, null)
+	L.Swap(fromIndex, toIndex)
+	L.Cut(fromIndex, fromIndex+1)
+
 //Pick a random element from the list and remove it from the list.
 /proc/pick_n_take(list/listfrom)
 	if (listfrom.len > 0)
@@ -167,12 +177,21 @@ proc/listclearnulls(list/list)
  */
 
 //Reverses the order of items in the list
-/proc/reverselist(list/L)
-	var/list/output = list()
-	if(L)
-		for(var/i = L.len; i >= 1; i--)
-			output += L[i]
-	return output
+//replaces reverseRange ~Carnie
+/proc/reverseRange(list/L, start=1, end=0)
+	if(L.len)
+		start = start % L.len
+		end = end % (L.len+1)
+		if(start <= 0)
+			start += L.len
+		if(end <= 0)
+			end += L.len + 1
+
+		--end
+		while(start < end)
+			L.Swap(start++,end--)
+
+	return L
 
 //Randomize: Return the list in a random order
 /proc/shuffle(var/list/shufflelist)
@@ -422,7 +441,7 @@ proc/listclearnulls(list/list)
 	//world.log << "descending len input: [L.len]"
 	var/list/out = insertion_sort_numeric_list_ascending(L)
 	//world.log << "	output: [out.len]"
-	return reverselist(out)
+	return reverseRange(out)
 
 /proc/dd_sortedObjectList(var/list/L, var/cache=list())
 	if(L.len < 2)
@@ -535,6 +554,26 @@ proc/dd_sortedObjectList(list/incoming)
 		sorted_list += list_bottom
 	return sorted_list
 */
+
+/proc/moveRange(list/L, fromIndex, toIndex, len=1)
+	var/distance = abs(toIndex - fromIndex)
+	if(len >= distance)	//there are more elements to be moved than the distance to be moved. Therefore the same result can be achieved (with fewer operations) by moving elements between where we are and where we are going. The result being, our range we are moving is shifted left or right by dist elements
+		if(fromIndex <= toIndex)
+			return	//no need to move
+		fromIndex += len	//we want to shift left instead of right
+
+		for(var/i=0, i<distance, ++i)
+			L.Insert(fromIndex, null)
+			L.Swap(fromIndex, toIndex)
+			L.Cut(toIndex, toIndex+1)
+	else
+		if(fromIndex > toIndex)
+			fromIndex += len
+
+		for(var/i=0, i<len, ++i)
+			L.Insert(toIndex, null)
+			L.Swap(fromIndex, toIndex)
+			L.Cut(fromIndex, fromIndex+1)
 
 proc/dd_sortedtextlist(list/incoming, case_sensitive = 0)
 	// Returns a new list with the text values sorted.

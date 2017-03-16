@@ -45,13 +45,10 @@
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
 	var/biomass = 0
 
-/obj/machinery/clonepod/initialize()
-	..()
-	biomass = CLONE_BIOMASS * 3
-
 /obj/machinery/clonepod/New()
 	..()
-	update_icon()
+	if(!(ticker && ticker.current_state == GAME_STATE_PLAYING))
+		biomass = CLONE_BIOMASS * 3
 
 /obj/machinery/clonepod/attack_ai(mob/user as mob)
 
@@ -59,9 +56,9 @@
 	return attack_hand(user)
 
 /obj/machinery/clonepod/attack_hand(mob/user as mob)
-	if((isnull(occupant)) || (stat & NOPOWER))
+	if(isnull(occupant) || (stat & NOPOWER))
 		return
-	if((!isnull(occupant)) && (occupant.stat != 2))
+	if(occupant.stat != DEAD)
 		var/completion = (100 * ((occupant.health + 50) / (heal_level + 100))) // Clones start at -150 health
 		user << "Current clone cycle is [round(completion)]% complete."
 	return
@@ -72,7 +69,7 @@
 /obj/machinery/clonepod/proc/growclone(var/datum/dna2/record/R)
 	if(mess || attempting)
 		return 0
-	var/datum/mind/clonemind = locate(R.mind)
+	var/datum/mind/clonemind = R.mind
 
 	if(!istype(clonemind, /datum/mind))	//not a mind
 		return 0
@@ -97,6 +94,7 @@
 		eject_wait = 0
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src, R.dna.species)
+	occupant = H
 
 	if(!R.dna.real_name)	//to prevent null names
 		R.dna.real_name = "clone ([rand(0,999)])"
@@ -104,7 +102,7 @@
 
 	//Get the clone body ready
 	H.adjustCloneLoss(150) // New damage var so you can't eject a clone early then stab them to abuse the current damage system --NeoFite
-	H.adjustBrainLoss(80) // Even if healed to full health, it will have some brain damage
+	H.adjustBrainLoss(20) // Even if healed to full health, it will have some brain damage
 	H.Paralyse(4)
 
 	//Here let's calculate their health so the pod doesn't immediately eject them!!!
@@ -138,7 +136,6 @@
 	H.flavor_texts = R.flavor.Copy()
 	H.suiciding = 0
 	attempting = 0
-	occupant = H
 	return 1
 
 //Grow clones to maturity then kick them out.  FREELOADERS
@@ -150,8 +147,16 @@
 			go_out()
 		return
 
-	if((occupant) && (occupant.loc == src))
-		if((occupant.stat == DEAD) || (occupant.suiciding) || !occupant.key)  //Autoeject corpses and suiciding dudes.
+	if(occupant && (occupant.loc == src))
+		if((occupant.stat == DEAD) || occupant.suiciding || !occupant.key)  //Autoeject corpses and suiciding dudes.
+			var/log = "Cloning aborted. "
+			if(occupant.stat == DEAD)
+				log += "Occupant is dead."
+			if(occupant.suiciding)
+				log += "Occupant is suiciding."
+			if(!occupant.key)
+				log += "Occupant key is missed."
+			log_debug(log)
 			locked = 0
 			go_out()
 			connected_message("Clone Rejected: Deceased.")
@@ -184,7 +189,7 @@
 			go_out()
 			return
 
-	else if((!occupant) || (occupant.loc != src))
+	else if(!occupant || (occupant.loc != src))
 		occupant = null
 		if(locked)
 			locked = 0
@@ -201,13 +206,13 @@
 			return
 		if(default_part_replacement(user, W))
 			return
-	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	if(W.GetID())
 		if(!check_access(W))
 			user << "<span class='warning'>Access Denied.</span>"
 			return
-		if((!locked) || (isnull(occupant)))
+		if(!locked || isnull(occupant))
 			return
-		if((occupant.health < -20) && (occupant.stat != 2))
+		if((occupant.health < -20) && (occupant.stat != DEAD))
 			user << "<span class='warning'>Access Refused.</span>"
 			return
 		else
@@ -223,17 +228,15 @@
 		if(locked && (anchored || occupant))
 			user << "<span class='warning'>Can not do that while [src] is in use.</span>"
 		else
-			if(anchored)
-				anchored = 0
-				connected.pods -= src
-				connected = null
-			else
-				anchored = 1
+			anchored = !anchored
 			playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 			if(anchored)
 				user.visible_message("[user] secures [src] to the floor.", "You secure [src] to the floor.")
 			else
 				user.visible_message("[user] unsecures [src] from the floor.", "You unsecure [src] from the floor.")
+				if(connected)
+					connected.pods -= src
+					connected = null
 	else if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = W
 		M.connecting = src
@@ -252,7 +255,7 @@
 
 //Put messages in the connected computer's temp var for display.
 /obj/machinery/clonepod/proc/connected_message(var/message)
-	if((isnull(connected)) || (!istype(connected, /obj/machinery/computer/cloning)))
+	if(isnull(connected) || !istype(connected, /obj/machinery/computer/cloning))
 		return 0
 	if(!message)
 		return 0
@@ -280,7 +283,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(usr.stat != 0)
+	if(usr.stat)
 		return
 	go_out()
 	add_fingerprint(usr)
@@ -296,7 +299,7 @@
 		update_icon()
 		return
 
-	if(!(occupant))
+	if(!occupant)
 		return
 
 	if(occupant.client)
@@ -335,21 +338,21 @@
 /obj/machinery/clonepod/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			for(var/atom/movable/A as mob|obj in src)
+			for(var/atom/movable/A in src)
 				A.loc = loc
 				ex_act(severity)
 			qdel(src)
 			return
 		if(2.0)
 			if(prob(50))
-				for(var/atom/movable/A as mob|obj in src)
+				for(var/atom/movable/A in src)
 					A.loc = loc
 					ex_act(severity)
 				qdel(src)
 				return
 		if(3.0)
 			if(prob(25))
-				for(var/atom/movable/A as mob|obj in src)
+				for(var/atom/movable/A in src)
 					A.loc = loc
 					ex_act(severity)
 				qdel(src)
@@ -486,9 +489,3 @@
 	<i>A good diskette is a great way to counter aforementioned genetic drift!</i><br>
 	<br>
 	<font size=1>This technology produced under license from Thinktronic Systems, LTD.</font>"}
-
-//SOME SCRAPS I GUESS
-/* EMP grenade/spell effect
-		if(istype(A, /obj/machinery/clonepod))
-			A:malfunction()
-*/

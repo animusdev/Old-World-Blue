@@ -17,8 +17,8 @@
 
 /datum/surgery_step/open_encased/saw
 	allowed_tools = list(
-	/obj/item/weapon/circular_saw = 100, \
-	/obj/item/weapon/material/hatchet = 75
+		/obj/item/weapon/circular_saw = 100,
+		/obj/item/weapon/material/hatchet = 75
 	)
 
 	min_duration = 50
@@ -36,8 +36,10 @@
 			return
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 
-		user.visible_message("[user] begins to cut through [target]'s [affected.encased] with \the [tool].", \
-		"You begin to cut through [target]'s [affected.encased] with \the [tool].")
+		user.visible_message(
+			"[user] begins to cut through [target]'s [affected.encased] with \the [tool].",
+			"You begin to cut through [target]'s [affected.encased] with \the [tool]."
+		)
 		target.custom_pain("Something hurts horribly in your [affected.name]!",1)
 		..()
 
@@ -47,8 +49,10 @@
 			return
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 
-		user.visible_message("\blue [user] has cut [target]'s [affected.encased] open with \the [tool].",		\
-		"\blue You have cut [target]'s [affected.encased] open with \the [tool].")
+		user.visible_message(
+			NOTICE("[user] has cut [target]'s [affected.encased] open with \the [tool]."),
+			NOTICE("You have cut [target]'s [affected.encased] open with \the [tool].")
+		)
 		affected.open = 2.5
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -57,8 +61,10 @@
 			return
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 
-		user.visible_message("\red [user]'s hand slips, cracking [target]'s [affected.encased] with \the [tool]!" , \
-		"\red Your hand slips, cracking [target]'s [affected.encased] with \the [tool]!" )
+		user.visible_message(
+			WARNING("[user]'s hand slips, cracking [target]'s [affected.encased] with \the [tool]!"),
+			WARNING("Your hand slips, cracking [target]'s [affected.encased] with \the [tool]!")
+		)
 
 		affected.createwound(CUT, 20)
 		affected.fracture()
@@ -66,8 +72,8 @@
 
 /datum/surgery_step/open_encased/retract
 	allowed_tools = list(
-	/obj/item/weapon/retractor = 100, 	\
-	/obj/item/weapon/crowbar = 75
+		/obj/item/weapon/retractor = 100,
+		/obj/item/weapon/crowbar = 75
 	)
 
 	min_duration = 30
@@ -85,9 +91,10 @@
 			return
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 
-		var/msg = "[user] starts to force open the [affected.encased] in [target]'s [affected.name] with \the [tool]."
-		var/self_msg = "You start to force open the [affected.encased] in [target]'s [affected.name] with \the [tool]."
-		user.visible_message(msg, self_msg)
+		user.visible_message(
+			"[user] starts to force open the [affected.encased] in [target]'s [affected.name] with \the [tool].",
+			"You start to force open the [affected.encased] in [target]'s [affected.name] with \the [tool]."
+		)
 		target.custom_pain("Something hurts horribly in your [affected.name]!",1)
 		..()
 
@@ -97,9 +104,10 @@
 			return
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 
-		var/msg = "\blue [user] forces open [target]'s [affected.encased] with \the [tool]."
-		var/self_msg = "\blue You force open [target]'s [affected.encased] with \the [tool]."
-		user.visible_message(msg, self_msg)
+		user.visible_message(
+			NOTICE("[user] forces open [target]'s [affected.encased] with \the [tool]."),
+			NOTICE("You force open [target]'s [affected.encased] with \the [tool].")
+		)
 
 		affected.open = 3
 
@@ -113,17 +121,18 @@
 			return
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 
-		var/msg = "\red [user]'s hand slips, cracking [target]'s [affected.encased]!"
-		var/self_msg = "\red Your hand slips, cracking [target]'s  [affected.encased]!"
-		user.visible_message(msg, self_msg)
+		user.visible_message(
+			WARNING("[user]'s hand slips, cracking [target]'s [affected.encased]!"),
+			WARNING("Your hand slips, cracking [target]'s  [affected.encased]!")
+		)
 
 		affected.createwound(BRUISE, 20)
 		affected.fracture()
 
 /datum/surgery_step/open_encased/close
 	allowed_tools = list(
-	/obj/item/weapon/retractor = 100, 	\
-	/obj/item/weapon/crowbar = 75
+		/obj/item/weapon/retractor = 100,
+		/obj/item/weapon/crowbar = 75
 	)
 
 	min_duration = 20
@@ -142,9 +151,10 @@
 			return
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 
-		var/msg = "[user] starts bending [target]'s [affected.encased] back into place with \the [tool]."
-		var/self_msg = "You start bending [target]'s [affected.encased] back into place with \the [tool]."
-		user.visible_message(msg, self_msg)
+		user.visible_message(
+			"[user] starts bending [target]'s [affected.encased] back into place with \the [tool].",
+			"You start bending [target]'s [affected.encased] back into place with \the [tool]."
+		)
 		target.custom_pain("Something hurts horribly in your [affected.name]!",1)
 		..()
 
@@ -154,9 +164,10 @@
 			return
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 
-		var/msg = "\blue [user] bends [target]'s [affected.encased] back into place with \the [tool]."
-		var/self_msg = "\blue You bend [target]'s [affected.encased] back into place with \the [tool]."
-		user.visible_message(msg, self_msg)
+		user.visible_message(
+			NOTICE("[user] bends [target]'s [affected.encased] back into place with \the [tool]."),
+			NOTICE("You bend [target]'s [affected.encased] back into place with \the [tool].")
+		)
 
 		affected.open = 2.5
 
@@ -166,9 +177,10 @@
 			return
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 
-		var/msg = "\red [user]'s hand slips, bending [target]'s [affected.encased] the wrong way!"
-		var/self_msg = "\red Your hand slips, bending [target]'s [affected.encased] the wrong way!"
-		user.visible_message(msg, self_msg)
+		user.visible_message(
+			WARNING("[user]'s hand slips, bending [target]'s [affected.encased] the wrong way!"),
+			WARNING("Your hand slips, bending [target]'s [affected.encased] the wrong way!")
+		)
 
 		affected.createwound(BRUISE, 20)
 		affected.fracture()
@@ -176,13 +188,15 @@
 		if(affected.internal_organs && affected.internal_organs.len)
 			if(prob(40))
 				var/obj/item/organ/internal/O = pick(affected.internal_organs) //TODO weight by organ size
-				user.visible_message("<span class='danger'>A wayward piece of [target]'s [affected.encased] pierces \his [O.name]!</span>")
+				user.visible_message(
+					DANGER("A wayward piece of [target]'s [affected.encased] pierces \his [O.name]!")
+				)
 				O.bruise()
 
 /datum/surgery_step/open_encased/mend
 	allowed_tools = list(
-	/obj/item/weapon/bonegel = 100,	\
-	/obj/item/weapon/screwdriver = 75
+		/obj/item/weapon/bonegel = 100,
+		/obj/item/weapon/screwdriver = 75
 	)
 
 	min_duration = 20
@@ -201,9 +215,10 @@
 			return
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 
-		var/msg = "[user] starts applying \the [tool] to [target]'s [affected.encased]."
-		var/self_msg = "You start applying \the [tool] to [target]'s [affected.encased]."
-		user.visible_message(msg, self_msg)
+		user.visible_message(
+			"[user] starts applying \the [tool] to [target]'s [affected.encased].",
+			"You start applying \the [tool] to [target]'s [affected.encased]."
+		)
 		target.custom_pain("Something hurts horribly in your [affected.name]!",1)
 		..()
 
@@ -213,8 +228,9 @@
 			return
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 
-		var/msg = "\blue [user] applied \the [tool] to [target]'s [affected.encased]."
-		var/self_msg = "\blue You applied \the [tool] to [target]'s [affected.encased]."
-		user.visible_message(msg, self_msg)
+		user.visible_message(
+			NOTICE("[user] applied \the [tool] to [target]'s [affected.encased]."),
+			NOTICE("You applied \the [tool] to [target]'s [affected.encased].")
+		)
 
 		affected.open = 2

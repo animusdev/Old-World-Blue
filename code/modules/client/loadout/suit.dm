@@ -15,48 +15,27 @@
 	path = /obj/item/clothing/suit/storage/toggle/bomber
 
 /datum/gear/suit/leather_jacket
-	display_name = "leather jacket, black"
+	display_name = "leather jacket"
 	path = /obj/item/clothing/suit/storage/toggle/leather_jacket
-
-/datum/gear/suit/leather_jacket/boar
-	display_name = "leather jacket, boar"
-	path = /obj/item/clothing/suit/storage/toggle/leather_jacket/boar
-
-/datum/gear/suit/leather_jacket/cerber
-	display_name = "leather jacket, cerber"
-	path = /obj/item/clothing/suit/storage/toggle/leather_jacket/cerberus
-
-/datum/gear/suit/leather_jacket/fox
-	display_name = "leather jacket, fox"
-	path = /obj/item/clothing/suit/storage/toggle/leather_jacket/fox
-
-/datum/gear/suit/leather_jacket/mouse
-	display_name = "leather jacket, rat"
-	path = /obj/item/clothing/suit/storage/toggle/leather_jacket/mouse
-
-/datum/gear/suit/leather_jacket/nt
-	display_name = "leather jacket, NanoTrasen"
-	path = /obj/item/clothing/suit/storage/toggle/leather_jacket/nanotrasen
-
-/datum/gear/suit/leather_jacket/skull
-	display_name = "leather jacket, skull"
-	path = /obj/item/clothing/suit/storage/toggle/leather_jacket/skull
-
-/datum/gear/suit/leather_jacket/snake
-	display_name = "leather jacket, snake"
-	path = /obj/item/clothing/suit/storage/toggle/leather_jacket/snake
-
-/datum/gear/suit/leather_jacket/wolf
-	display_name = "leather jacket, wolf"
-	path = /obj/item/clothing/suit/storage/toggle/leather_jacket/wolf
+	options = list(
+		"black"  = /obj/item/clothing/suit/storage/toggle/leather_jacket,
+		"boar"   = /obj/item/clothing/suit/storage/toggle/leather_jacket/boar,
+		"cerber" = /obj/item/clothing/suit/storage/toggle/leather_jacket/cerberus,
+		"fox"    = /obj/item/clothing/suit/storage/toggle/leather_jacket/fox,
+		"rat"    = /obj/item/clothing/suit/storage/toggle/leather_jacket/mouse,
+		"skull"  = /obj/item/clothing/suit/storage/toggle/leather_jacket/skull,
+		"snake"  = /obj/item/clothing/suit/storage/toggle/leather_jacket/snake,
+		"wolf"   = /obj/item/clothing/suit/storage/toggle/leather_jacket/wolf,
+		"NanoTrasen" = /obj/item/clothing/suit/storage/toggle/leather_jacket/nanotrasen
+	)
 
 /datum/gear/suit/brown_jacket
-	display_name = "leather jacket, brown"
+	display_name = "leather jacket"
 	path = /obj/item/clothing/suit/storage/toggle/brown_jacket
-
-/datum/gear/suit/brown_jacket/nt
-	display_name = "brown jacket, NanoTrasen"
-	path = /obj/item/clothing/suit/storage/toggle/brown_jacket/nanotrasen
+	options = list(
+		"default" = /obj/item/clothing/suit/storage/toggle/brown_jacket,
+		"NanoTrasen" = /obj/item/clothing/suit/storage/toggle/brown_jacket/nanotrasen
+	)
 
 /datum/gear/suit/militaryjacket
 	display_name = "military jacket"
@@ -87,51 +66,30 @@
 /datum/gear/suit/labcoat
 	display_name = "labcoat"
 	path = /obj/item/clothing/suit/storage/toggle/labcoat
-
-/datum/gear/suit/labcoat/blue
-	display_name = "labcoat, blue"
-	path = /obj/item/clothing/suit/storage/toggle/labcoat/blue
-
-/datum/gear/suit/labcoat/green
-	display_name = "labcoat, green"
-	path = /obj/item/clothing/suit/storage/toggle/labcoat/green
-
-/datum/gear/suit/labcoat/orange
-	display_name = "labcoat, orange"
-	path = /obj/item/clothing/suit/storage/toggle/labcoat/orange
-
-/datum/gear/suit/labcoat/purple
-	display_name = "labcoat, purple"
-	path = /obj/item/clothing/suit/storage/toggle/labcoat/purple
-
-/datum/gear/suit/labcoat/red
-	display_name = "labcoat, red"
-	path = /obj/item/clothing/suit/storage/toggle/labcoat/red
+	options = list(
+		"default" = /obj/item/clothing/suit/storage/toggle/labcoat,
+		"blue"    = /obj/item/clothing/suit/storage/toggle/labcoat/blue,
+		"green"   = /obj/item/clothing/suit/storage/toggle/labcoat/green,
+		"orange"  = /obj/item/clothing/suit/storage/toggle/labcoat/orange,
+		"purple"  = /obj/item/clothing/suit/storage/toggle/labcoat/purple,
+		"red"     = /obj/item/clothing/suit/storage/toggle/labcoat/red
+	)
 
 /datum/gear/suit/overalls
 	display_name = "overalls"
 	path = /obj/item/clothing/suit/apron/overalls
 	cost = 1
 
-/datum/gear/suit/bponcho
-	display_name = "poncho, blue"
-	path = /obj/item/clothing/suit/poncho/blue
-
-/datum/gear/suit/gponcho
-	display_name = "poncho, green"
-	path = /obj/item/clothing/suit/poncho/green
-
-/datum/gear/suit/pponcho
-	display_name = "poncho, purple"
-	path = /obj/item/clothing/suit/poncho/purple
-
-/datum/gear/suit/rponcho
-	display_name = "poncho, red"
-	path = /obj/item/clothing/suit/poncho/red
-
 /datum/gear/suit/poncho
-	display_name = "poncho, tan"
-	path = /obj/item/clothing/suit/poncho
+	display_name = "poncho"
+	path = /obj/item/clothing/suit/poncho/blue
+	options = list(
+		"blue"   = /obj/item/clothing/suit/poncho/blue,
+		"green"  = /obj/item/clothing/suit/poncho/green,
+		"purple" = /obj/item/clothing/suit/poncho/purple,
+		"red"    = /obj/item/clothing/suit/poncho/red,
+		"tan"    = /obj/item/clothing/suit/poncho
+	)
 
 /datum/gear/suit/unathi_robe
 	display_name = "roughspun robe"
@@ -151,32 +109,23 @@
 	path = /obj/item/clothing/suit/wcoat
 
 /datum/gear/suit/varsityred
-	display_name = "Varsity jacket, red"
+	display_name = "Varsity jacket"
 	path = /obj/item/clothing/suit/storage/toggle/varsity
-
-/datum/gear/suit/varsityblue
-	display_name = "Varsity jacket, blue"
-	path = /obj/item/clothing/suit/storage/toggle/varsity/blue
-
-/datum/gear/suit/varsityblack
-	display_name = "Varsity jacket, black"
-	path = /obj/item/clothing/suit/storage/toggle/varsity/black
-
-/datum/gear/suit/varsitybrown
-	display_name = "Varsity jacket, brown"
-	path = /obj/item/clothing/suit/storage/toggle/varsity/brown
+	options = list(
+		"red"   = /obj/item/clothing/suit/storage/toggle/varsity,
+		"blue"  = /obj/item/clothing/suit/storage/toggle/varsity/blue,
+		"black" = /obj/item/clothing/suit/storage/toggle/varsity/black,
+		"brown" = /obj/item/clothing/suit/storage/toggle/varsity/brown
+	)
 
 /datum/gear/suit/flannel
-	display_name = "flannel, grey"
+	display_name = "flannel"
 	path = /obj/item/clothing/suit/storage/flannel
-
-/datum/gear/suit/flannel/red
-	display_name = "flannel, red"
-	path = /obj/item/clothing/suit/storage/flannel/red
-
-/datum/gear/suit/flannel/aqua
-	display_name = "flannel, aqua"
-	path = /obj/item/clothing/suit/storage/flannel/aqua
+	options = list(
+		"grey" = /obj/item/clothing/suit/storage/flannel,
+		"red"  = /obj/item/clothing/suit/storage/flannel/red,
+		"aqua" = /obj/item/clothing/suit/storage/flannel/aqua
+	)
 
 /datum/gear/suit/zhan_furs
 	display_name = "Zhan-Khazan furs (Tajaran)"

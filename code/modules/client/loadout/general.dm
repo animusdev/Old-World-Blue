@@ -1,3 +1,13 @@
+/datum/gear/lipstick
+	display_name = "lipstick"
+	path = /obj/item/weapon/lipstick
+	options = list(
+		"red"    = /obj/item/weapon/lipstick,
+		"jade"   = /obj/item/weapon/lipstick/jade,
+		"black"  = /obj/item/weapon/lipstick/black,
+		"purple" = /obj/item/weapon/lipstick/purple,
+	)
+
 /datum/gear/cane
 	display_name = "cane"
 	path = /obj/item/weapon/cane
@@ -67,19 +77,13 @@
 // Belt
 
 /datum/gear/fannypack
-	display_name = "fannypack, leather"
+	display_name = "fannypack"
 	path = /obj/item/weapon/storage/belt/fannypack
 	slot = slot_belt
 	cost = 2
-
-/datum/gear/fannypack/red
-	display_name = "fannypack, red"
-	path = /obj/item/weapon/storage/belt/fannypack/red
-
-/datum/gear/fannypack/white
-	display_name = "fannypack, white"
-	path = /obj/item/weapon/storage/belt/fannypack/white
-
-/datum/gear/fannypack/black
-	display_name = "fannypack, black"
-	path = /obj/item/weapon/storage/belt/fannypack/black
+	options = list(
+		"leather"= /obj/item/weapon/storage/belt/fannypack,
+		"red"    = /obj/item/weapon/storage/belt/fannypack/red,
+		"white"  = /obj/item/weapon/storage/belt/fannypack/white,
+		"black"  = /obj/item/weapon/storage/belt/fannypack/black
+	)

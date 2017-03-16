@@ -61,9 +61,8 @@
 		if("login")
 			var/mob/M = usr
 			var/obj/item/weapon/card/id/I = M.get_active_hand()
-			if (istype(I, /obj/item/device/pda))
-				var/obj/item/device/pda/pda = I
-				I = pda.id
+			if (!istype(I) && I.GetID())
+				I = I.GetID()
 			if (I && istype(I))
 				if(src.check_access(I))
 					authenticated = 1
@@ -77,9 +76,8 @@
 		if("swipeidseclevel")
 			var/mob/M = usr
 			var/obj/item/weapon/card/id/I = M.get_active_hand()
-			if (istype(I, /obj/item/device/pda))
-				var/obj/item/device/pda/pda = I
-				I = pda.id
+			if (!istype(I) && I.GetID())
+				I = I.GetID()
 			if (I && istype(I))
 				if(access_heads in I.access) //Let heads change the alert level.
 					var/old_level = security_level

@@ -74,6 +74,7 @@
 			msg = input(user, message, title, edit_cp1251(default)) as message
 		if("text")
 			msg = input(user, message, title, default) as text
+	msg = russian_to_cp1251(msg)
 	return post_edit_cp1251(msg)
 
 /proc/input_utf8(var/mob/user = usr, var/message, var/title, var/default, var/type = "message")
@@ -83,6 +84,7 @@
 			msg = input(user, message, title, edit_utf8(default)) as message
 		if("text")
 			msg = input(user, message, title, default) as text
+	msg = russian_to_utf8(msg)
 	return post_edit_utf8(msg)
 
 

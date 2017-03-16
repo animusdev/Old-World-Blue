@@ -176,10 +176,7 @@ What a mess.*/
 
 			if("Confirm Identity")
 				if (scan)
-					if(ishuman(usr) && !usr.get_active_hand())
-						usr.put_in_hands(scan)
-					else
-						scan.loc = get_turf(src)
+					usr.put_in_hands(scan)
 					scan = null
 				else
 					var/obj/item/I = usr.get_active_hand()

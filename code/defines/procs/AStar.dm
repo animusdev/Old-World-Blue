@@ -14,9 +14,9 @@ So an example use might be:
 
 src.path_list = AStar(src.loc, target.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance)
 
-Note: The path is returned starting at the END node, so i wrote reverselist to reverse it for ease of use.
+Note: The path is returned starting at the END node, so i wrote reverseRange to reverse it for ease of use.
 
-src.path_list = reverselist(src.pathlist)
+src.path_list = reverseRange(src.pathlist)
 
 Then to start on the path, all you need to do it:
 Step_to(src, src.path_list[1])

@@ -34,13 +34,13 @@
 	var/model                          // Used when caching robolimb icons.
 	var/icon/default_icon              // Used to force override of species-specific limb icons (for prosthetics).
 	var/icon/mob_icon                  // Cached icon for use in mob overlays.
-	var/gendered = 0
+	var/gendered = null
 	var/s_tone				// Skin tone.
 	var/s_col				// skin colour
+	var/body_build
 	var/tattoo = 0
 	var/tattoo_color = ""
 	var/tattoo2 = 0
-
 
 	// Wound and structural data.
 	var/wound_update_accuracy = 1		// how often wounds should be updated, a higher number means less often
@@ -97,6 +97,9 @@
 	src.name = desc.name
 	src.amputation_point = desc.amputation_point
 	src.joint = desc.joint
+	src.max_damage = desc.max_damage
+	src.min_broken_damage = desc.min_broken_damage
+	src.w_class = desc.w_class
 
 /obj/item/organ/external/install(mob/living/carbon/human/H)
 	if(..(H)) return 1
@@ -106,6 +109,7 @@
 	if(outdated)
 		outdated.removed()
 	owner.organs_by_name[organ_tag] = src
+
 	for(var/obj/item/organ/organ in src)
 		organ.install(owner)
 

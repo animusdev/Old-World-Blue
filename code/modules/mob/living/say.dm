@@ -56,6 +56,7 @@ proc/get_radio_key_from_channel(var/channel)
 	return 0
 
 /mob/living/proc/handle_speech_problems(var/message, var/verb)
+	message = rhtml_decode(message)
 	var/list/returns[3]
 	var/speech_problem_flag = 0
 
@@ -72,7 +73,7 @@ proc/get_radio_key_from_channel(var/channel)
 		verb = pick("stammers","stutters")
 		speech_problem_flag = 1
 
-	returns[1] = message
+	returns[1] = russian_to_cp1251(message)
 	returns[2] = verb
 	returns[3] = speech_problem_flag
 	return returns
@@ -144,7 +145,7 @@ proc/get_radio_key_from_channel(var/channel)
 			message = H.species.handle_accent(message)
 
 	if(speaking != all_languages["Noise"])
-		message = capitalize_cp1251(message)
+		message = capitalize(message)
 
 	if (speaking)
 		// This is broadcast to all mobs with the language,

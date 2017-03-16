@@ -47,7 +47,7 @@
 				var/agony = 80 * siemens //Does more than if hit with an electric hand, since grabbing is slower.
 				G.affecting.stun_effect_act(0, agony, BP_CHEST, src)
 
-				msg_admin_attack("[key_name(src)] shocked [key_name(G.affecting)] with the [src].")
+				msg_admin_attack("[key_name(src)] shocked [key_name(G.affecting)] with the [src].", G.affecting)
 
 				if(siemens)
 					visible_message("<span class='warning'>Arcs of electricity strike [G.affecting]!</span>",
@@ -147,7 +147,7 @@
 		C.electrocute_act(electrocute_amount * siemens,src,1.0,BP_CHEST)
 		C.stun_effect_act(0, agony_amount * siemens, BP_CHEST, src)
 
-		msg_admin_attack("[key_name(user)] shocked [key_name(C)] with the [src].")
+		msg_admin_attack("[key_name(user)] shocked [key_name(C)] with the [src].", C)
 
 		if(siemens)
 			visible_message("<span class='warning'>Arcs of electricity strike [C]!</span>",

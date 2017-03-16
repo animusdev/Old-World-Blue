@@ -28,7 +28,7 @@ mob/living/carbon/human/proc/try_bite(atom/A)
 		src << "<span class='alium'>You need to be closer.</span>"
 		return 0
 
-	msg_admin_attack("[key_name_admin(src)] bite and poison [key_name_admin(A)] with [I.reagents.get_reagents()] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
+	msg_admin_attack("[key_name_admin(src)] bite and poison [key_name_admin(A)] with [I.reagents.get_reagents()]", src)
 	I.reagents.trans_to_mob(A, I.reagents.total_volume, CHEM_BLOOD)
 	visible_message("<span class='warning'>[src] bite [A]!</span>", "<span class='alium'>You bite a [A].</span>")
 //	src.client.CH = null
@@ -56,7 +56,7 @@ mob/living/carbon/human/proc/try_bite(atom/A)
 /*/mob/living/carbon/human/arachna/UnarmedAttack(mob/living/carbon/human/M as mob)
 	var/obj/item/organ/internal/arachna/poison_gland/I = internal_organs_by_name["poison_gland"]
 	if (src.bite_ready)
-		msg_admin_attack("[key_name_admin(src)] bite and poison [key_name_admin(M)] with [I.reagents.get_reagents()] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
+		msg_admin_attack("[key_name_admin(src)] bite and poison [key_name_admin(M)] with [I.reagents.get_reagents()]", src)
 		I.reagents.trans_to_mob(M, I.reagents.total_volume, CHEM_BLOOD)
 		visible_message("<span class='warning'>[src] bite [M]!</span>", "<span class='alium'>You bite a [M].</span>")
 		I.bite_ready = 0

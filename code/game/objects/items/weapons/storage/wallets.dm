@@ -58,7 +58,7 @@
 	return front_id
 
 /obj/item/weapon/storage/wallet/GetAccess()
-	return front_id.access
+	return front_id && front_id.access
 
 /obj/item/weapon/storage/wallet/random/New()
 	..()
