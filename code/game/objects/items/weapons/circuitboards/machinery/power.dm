@@ -27,6 +27,6 @@
 //TODO: rewrite this!
 /obj/item/weapon/circuitboard/ghettosmes/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if (istype(W, /obj/item/device/multitool))
-		var/obj/item/weapon/module/power_control/newcircuit = new (user.loc)
+		var/obj/item/weapon/power_control/newcircuit = new (user.loc)
 		qdel(src)
 		user.put_in_hands(newcircuit)

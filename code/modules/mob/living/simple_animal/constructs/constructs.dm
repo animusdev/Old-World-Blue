@@ -79,6 +79,12 @@
 
 	user << msg
 
+/obj/item/weapon/ectoplasm
+	name = "ectoplasm"
+	desc = "Spooky."
+	gender = PLURAL
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "ectoplasm"
 
 /////////////////Juggernaut///////////////
 

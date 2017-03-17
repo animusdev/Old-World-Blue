@@ -1,3 +1,10 @@
+/obj/effect/stop
+	var/victim = null
+	icon_state = "empty"
+	name = "Geas"
+	desc = "You can't resist."
+	// name = ""
+
 //The effect when you wrap a dead body in gift wrap
 /obj/effect/spresent
 	name = "strange present"

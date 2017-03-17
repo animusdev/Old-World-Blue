@@ -10,25 +10,23 @@
 	var/channel_name = "Station Announcements"
 	var/announcement_type = "Announcement"
 
+/datum/announcement/priority
+	title = "Priority Announcement"
+	announcement_type = "Priority Announcement"
+
+/datum/announcement/priority/security
+	title = "Security Announcement"
+	announcement_type = "Security Announcement"
+
 /datum/announcement/New(var/do_log = 0, var/new_sound = null, var/do_newscast = 0)
 	sound = new_sound
 	log = do_log
 	newscast = do_newscast
 
-/datum/announcement/priority/New(var/do_log = 1, var/new_sound = 'sound/misc/notice2.ogg', var/do_newscast = 0)
-	..(do_log, new_sound, do_newscast)
-	title = "Priority Announcement"
-	announcement_type = "Priority Announcement"
-
 /datum/announcement/priority/command/New(var/do_log = 1, var/new_sound = 'sound/misc/notice2.ogg', var/do_newscast = 0)
 	..(do_log, new_sound, do_newscast)
 	title = "[command_name()] Update"
 	announcement_type = "[command_name()] Update"
-
-/datum/announcement/priority/security/New(var/do_log = 1, var/new_sound = 'sound/misc/notice2.ogg', var/do_newscast = 0)
-	..(do_log, new_sound, do_newscast)
-	title = "Security Announcement"
-	announcement_type = "Security Announcement"
 
 /datum/announcement/proc/Announce(var/message as text, var/new_title = "", var/new_sound = null, var/do_newscast = newscast, var/msg_sanitized = 0)
 	if(!message)

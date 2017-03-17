@@ -24,6 +24,16 @@
 		icon_state = "gift[pick(1, 2, 3)]"
 	return
 
+/obj/item/weapon/gift
+	name = "gift"
+	desc = "A wrapped item."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "gift3"
+	var/size = 3.0
+	var/obj/item/gift = null
+	item_state = "gift"
+	w_class = 4.0
+
 /obj/item/weapon/gift/attack_self(mob/user as mob)
 	user.unEquip(src)
 	if(src.gift)
