@@ -55,6 +55,9 @@
 	update_strings()
 
 /obj/item/stack/material/proc/update_strings()
+	if(!material)
+		return
+
 	// Update from material datum.
 	singular_name = material.sheet_singular_name
 
@@ -67,10 +70,14 @@
 		desc = "A [material.sheet_singular_name] of [material.use_name]."
 		gender = NEUTER
 
+/obj/item/stack/material/split()
+	var/obj/item/stack/material/M = ..()
+	M.set_material(material.name)
+	return M
+
 /obj/item/stack/material/use(var/used)
 	. = ..()
-	if(src)
-		update_strings()
+	update_strings()
 	return
 
 /obj/item/stack/material/transfer_to(obj/item/stack/S, var/tamount=null, var/type_verified)
