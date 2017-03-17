@@ -11,6 +11,7 @@
 	slot_flags = SLOT_BACK
 	max_w_class = 3
 	max_storage_space = 28
+	storage_slots = 0
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (src.use_sound)
@@ -60,7 +61,6 @@
 	icon_state = "giftbag0"
 	item_state = "giftbag"
 	w_class = 4.0
-	storage_slots = 20
 	max_w_class = 3
 	max_storage_space = 400 // can store a ton of shit!
 	item_state_slots = null
@@ -140,7 +140,6 @@
 	name = "dufflebag"
 	desc = "A large dufflebag for holding extra things."
 	icon_state = "duffle"
-	storage_slots = 9
 	max_storage_space = 34
 	slowdown = 1
 
