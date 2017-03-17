@@ -5,7 +5,7 @@
 	slot = slot_w_uniform
 	sort_category = "Uniforms and Dress"
 
-/datum/gear/uniform/skirt
+/datum/gear/uniform/job_skirt
 	display_name = "job, skirt"
 	description = "Totally as your default uniform, but with skirt!"
 	path = /obj/item/clothing/under
@@ -13,7 +13,7 @@
 	"Research Director","Scientist","Chief Medical Officer","Chemist","Medical Doctor","Geneticist",\
 	"Head of Security","Warden","Security Officer")
 
-/datum/gear/uniform/skirt/spawn_for(var/mob/living/carbon/human/H)
+/datum/gear/uniform/job_skirt/spawn_for(var/mob/living/carbon/human/H)
 	if(allowed_roles && !(H.job in allowed_roles))
 		H << "<span class='warning'>Your current job does not permit you to spawn with [display_name]!</span>"
 		return null
@@ -43,14 +43,14 @@
 	return new tmp_path(H)
 
 
-/datum/gear/uniform/jeans
+/datum/gear/uniform/job_jeans
 	display_name = "job, jeans"
 	description = "Totally as your default uniform, but with jeans!"
 	path = /obj/item/clothing/under
 	allowed_roles = list("QM", "Cargo Technician","Station Engineer","Atmospheric Technician","Detective",\
 	"Research Director","Scientist","Chief Medical Officer","Chemist","Medical Doctor","Geneticist")
 
-/datum/gear/uniform/jeans/spawn_for(var/mob/living/carbon/human/H)
+/datum/gear/uniform/job_jeans/spawn_for(var/mob/living/carbon/human/H)
 	if(allowed_roles && !(H.job in allowed_roles))
 		H << "<span class='warning'>Your current job does not permit you to spawn with [display_name]!</span>"
 		return null
@@ -99,8 +99,8 @@
 	display_name = "jumpsuit, SID"
 	path = /obj/item/clothing/under/SID
 
-/datum/gear/uniform/skirt
-	display_name = "plaid skirt"
+/datum/gear/uniform/plaid_skirt
+	display_name = "skirt, plaid"
 	path = /obj/item/clothing/under/dress/plaid_blue
 	options = list(
 		"blue"   = /obj/item/clothing/under/dress/plaid_blue,
