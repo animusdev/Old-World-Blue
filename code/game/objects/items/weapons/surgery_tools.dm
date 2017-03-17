@@ -62,6 +62,7 @@
 	flags = CONDUCT
 	force = 15.0
 	w_class = 3
+	center_of_mass = list("x" = 10, "y" = 16)
 	origin_tech = list(TECH_MATERIAL = 1, TECH_BIO = 1)
 	attack_verb = list("drilled")
 
