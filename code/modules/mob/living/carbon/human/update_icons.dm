@@ -205,6 +205,7 @@ var/global/list/damage_icon_parts = list()
 		if(O.is_stump())
 			continue
 
+		O.update_damstate()
 		O.update_icon()
 		if(O.damage_state == "00") continue
 		var/icon/DI
