@@ -8,11 +8,7 @@
 	throw_range = 15
 	sharp = 1
 	edge =  1
-
-/obj/item/weapon/material/star/New()
-	..()
-	src.pixel_x = rand(-12, 12)
-	src.pixel_y = rand(-12, 12)
+	randpixel = 12
 
 /obj/item/weapon/material/star/throw_impact(atom/hit_atom)
 	..()

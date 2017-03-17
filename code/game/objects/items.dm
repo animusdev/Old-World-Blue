@@ -5,6 +5,7 @@
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
 	var/tmp/image/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
+	var/randpixel = 0
 	var/tmp/abstract = 0
 	var/r_speed = 1.0
 	var/health = null
@@ -65,7 +66,15 @@
 	*/
 	var/tmp/list/sprite_sheets_obj = null
 
+/obj/item/New()
+	..()
+	if(randpixel && (!pixel_x && !pixel_y) && isturf(loc)) //hopefully this will prevent us from messing with mapper-set pixel_x/y
+		pixel_x = rand(-randpixel, randpixel)
+		pixel_y = rand(-randpixel, randpixel)
+
 /obj/item/Destroy()
+	qdel(hidden_uplink)
+	hidden_uplink = null
 	if(ismob(loc))
 		var/mob/m = loc
 		m.drop_from_inventory(src)

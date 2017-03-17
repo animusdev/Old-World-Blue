@@ -317,11 +317,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	w_class = 1
 	slot_flags = SLOT_EARS
 	throwforce = 1
+	randpixel = 10
 
 /obj/item/weapon/cigbutt/New()
 	..()
-	pixel_x = rand(-10,10)
-	pixel_y = rand(-10,10)
 	transform = turn(transform,rand(0,360))
 
 /obj/item/weapon/cigbutt/cigarbutt

@@ -5,6 +5,7 @@
 	icon = 'icons/obj/hydroponics_products.dmi'
 	icon_state = "blank"
 	desc = "Nutritious! Probably."
+	randpixel = 5
 
 	var/plantname
 	var/datum/seed/seed
@@ -15,8 +16,6 @@
 	..()
 	if(!dried_type)
 		dried_type = type
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
 
 	// Fill the object up with the appropriate reagents.
 	if(planttype)

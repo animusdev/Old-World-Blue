@@ -167,6 +167,7 @@
 /obj/item/weapon/reagent_containers/condiment/flour
 	name = "flour sack"
 	desc = "A big bag of flour. Good for baking!"
+	randpixel = 10
 	icon = 'icons/obj/food.dmi'
 	icon_state = "flour"
 	item_state = "flour"
@@ -177,5 +178,3 @@
 /obj/item/weapon/reagent_containers/condiment/flour/New()
 	..()
 	reagents.add_reagent("flour", 30)
-	src.pixel_x = rand(-10.0, 10)
-	src.pixel_y = rand(-10.0, 10)

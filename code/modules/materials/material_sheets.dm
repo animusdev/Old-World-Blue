@@ -12,6 +12,7 @@
 	force = 5.0
 	throwforce = 5
 	w_class = 3.0
+	randpixel = 4
 	throw_speed = 3
 	throw_range = 3
 	max_amount = 50
@@ -22,8 +23,6 @@
 
 /obj/item/stack/material/New()
 	..()
-	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
 
 	if(!default_type)
 		default_type = DEFAULT_WALL_MATERIAL

@@ -4,14 +4,10 @@
 	icon = 'icons/obj/hydroponics_machines.dmi'
 	icon_state = "disk"
 	w_class = 1.0
+	randpixel = 5
 
 	var/list/genes = list()
 	var/genesource = "unknown"
-
-/obj/item/weapon/disk/botany/New()
-	..()
-	pixel_x = rand(-5,5)
-	pixel_y = rand(-5,5)
 
 /obj/item/weapon/disk/botany/attack_self(var/mob/user as mob)
 	if(genes.len)

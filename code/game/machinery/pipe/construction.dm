@@ -54,6 +54,7 @@ Buildable meters
 /obj/item/pipe
 	name = "pipe"
 	desc = "A pipe"
+	randpixel = 5
 	var/pipe_type = 0
 	//var/pipe_dir = 0
 	var/pipename
@@ -200,8 +201,6 @@ Buildable meters
 			connect_types = CONNECT_TYPE_REGULAR|CONNECT_TYPE_SUPPLY|CONNECT_TYPE_SCRUBBER
 	//src.pipe_dir = get_pipe_dir()
 	update()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
 
 //update the name and icon of the pipe item depending on the type
 

@@ -4,6 +4,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = null
 	w_class = 2
+	randpixel = 6
 	var/amount_per_transfer_from_this = 5
 	var/possible_transfer_amounts = list(5,10,15,25,30)
 	var/volume = 30
@@ -25,10 +26,6 @@
 	if(!possible_transfer_amounts)
 		src.verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
 	create_reagents(volume)
-
-	if (!pixel_x && !pixel_y)
-		src.pixel_x = rand(-6.0, 6) //Randomizes postion
-		src.pixel_y = rand(-6.0, 6)
 
 
 /obj/item/weapon/reagent_containers/attack_self(mob/user as mob)

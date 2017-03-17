@@ -29,6 +29,7 @@ var/global/photo_count = 0
 	icon_state = "photo"
 	item_state = "paper"
 	w_class = 2.0
+	randpixel = 10
 	var/id
 	var/icon/img	//Big photo image
 	var/scribble	//Scribble on the back.
@@ -144,6 +145,7 @@ var/global/photo_count = 0
 	icon_state = "camera"
 	item_state = "electropack"
 	w_class = 2.0
+	randpixel = 5
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	matter = list(DEFAULT_WALL_MATERIAL = 2000)
@@ -210,7 +212,7 @@ var/global/photo_count = 0
 	var/center_offset = (size-1)/2 * 32 + 1
 	var/i = 1
 	for(var/item in sorted)
-		if(++i % 10)
+		if(!(++i % 10))
 			sleep()
 		var/atom/A = item
 		var/icon/img = getFlatIcon(A)//build_composite_icon(A)
@@ -253,8 +255,6 @@ var/global/photo_count = 0
 					holding = "They are holding \a [A.r_hand]"
 		if(ishuman(A))
 			if(A.pose) posenow = "They're appears to [A.pose] on this photo."
-
-
 
 		if(!mob_detail)
 			mob_detail = "You can see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]. [posenow] "
@@ -324,16 +324,12 @@ var/global/photo_count = 0
 	p.tiny = pc
 	p.img = photoimage
 	p.desc = mobs
-	p.pixel_x = rand(-10, 10)
-	p.pixel_y = rand(-10, 10)
 	p.photo_size = size
 
 	return p
 
 /obj/item/device/camera/proc/printpicture(mob/user, obj/item/weapon/photo/p)
-	p.loc = user.loc
-	if(!user.get_inactive_hand())
-		user.put_in_inactive_hand(p)
+	user.put_in_hands(p)
 
 /obj/item/weapon/photo/proc/copy(var/copy_id = 0)
 	var/obj/item/weapon/photo/p = new/obj/item/weapon/photo()

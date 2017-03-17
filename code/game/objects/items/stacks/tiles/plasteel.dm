@@ -9,12 +9,7 @@
 	throw_speed = 5
 	throw_range = 20
 	flags = CONDUCT
-
-/obj/item/stack/tile/steel/New(var/loc, var/amount=null)
-	..()
-	src.pixel_x = rand(1, 14)
-	src.pixel_y = rand(1, 14)
-	return
+	randpixel = 6
 
 /obj/item/stack/tile/steel/cyborg
 	name = "floor tile synthesizer"
