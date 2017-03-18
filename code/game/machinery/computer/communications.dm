@@ -61,6 +61,7 @@
 		if("login")
 			var/mob/M = usr
 			var/obj/item/weapon/card/id/I = M.get_active_hand()
+			if (!I) return
 			if (!istype(I) && I.GetID())
 				I = I.GetID()
 			if (I && istype(I))
