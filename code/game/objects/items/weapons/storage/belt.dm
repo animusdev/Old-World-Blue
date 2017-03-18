@@ -143,7 +143,7 @@
 		/obj/item/weapon/melee,
 		/obj/item/clothing/accessory/badge,
 		/obj/item/weapon/gun/projectile/sec,
-		/obj/item/taperoll/police
+		/obj/item/taperoll
 		)
 
 /obj/item/weapon/storage/belt/detective
@@ -177,7 +177,7 @@
 		/obj/item/device/megaphone,
 		/obj/item/device/radio/headset,
 		/obj/item/clothing/gloves,
-		/obj/item/taperoll/police,
+		/obj/item/taperoll,
 		/obj/item/weapon/reagent_containers/spray/pepper,
 		/obj/item/weapon/handcuffs,
 		/obj/item/device/flash,
@@ -254,7 +254,7 @@
 		/obj/item/device/megaphone,
 		/obj/item/weapon/melee,
 		/obj/item/weapon/gun/projectile/sec,
-		/obj/item/taperoll/police
+		/obj/item/taperoll
 		)
 
 /obj/item/weapon/storage/belt/fannypack
