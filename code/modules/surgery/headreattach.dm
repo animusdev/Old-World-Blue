@@ -19,8 +19,8 @@
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message(
-			NOTICE("[user] has attached [target]'s head to the body."),
-			NOTICE("You have attached [target]'s head to the body.")
+			SPAN_NOTE("[user] has attached [target]'s head to the body."),
+			SPAN_NOTE("You have attached [target]'s head to the body.")
 		)
 		var/obj/item/organ/external/head = tool
 		user.drop_from_inventory(head)
@@ -33,7 +33,7 @@
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message(
-			WARNING("[user]'s hand slips, damaging [target]'s neck!"),
-			WARNING("Your hand slips, damaging [target]'s neck!")
+			SPAN_WARN("[user]'s hand slips, damaging [target]'s neck!"),
+			SPAN_WARN("Your hand slips, damaging [target]'s neck!")
 		)
 		target.apply_damage(10, BRUTE, null, sharp=1)

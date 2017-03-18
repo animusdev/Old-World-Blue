@@ -52,8 +52,8 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			NOTICE("[user] has made a bloodless incision on [target]'s [affected.name] with \the [tool]."),
-			NOTICE("You have made a bloodless incision on [target]'s [affected.name] with \the [tool].")
+			SPAN_NOTE("[user] has made a bloodless incision on [target]'s [affected.name] with \the [tool]."),
+			SPAN_NOTE("You have made a bloodless incision on [target]'s [affected.name] with \the [tool].")
 		)
 		//Could be cleaner ...
 		affected.open = 1
@@ -68,8 +68,8 @@
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			WARNING("[user]'s hand slips as the blade sputters, searing a long gash in [target]'s [affected.name] with \the [tool]!"),\
-			WARNING("Your hand slips as the blade sputters, searing a long gash in [target]'s [affected.name] with \the [tool]!")
+			SPAN_WARN("[user]'s hand slips as the blade sputters, searing a long gash in [target]'s [affected.name] with \the [tool]!"),\
+			SPAN_WARN("Your hand slips as the blade sputters, searing a long gash in [target]'s [affected.name] with \the [tool]!")
 		)
 		affected.createwound(CUT, 7.5)
 		affected.createwound(BURN, 12.5)
@@ -99,8 +99,8 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			NOTICE("[user] has constructed a prepared incision on and within [target]'s [affected.name] with \the [tool]."),
-			NOTICE("You have constructed a prepared incision on and within [target]'s [affected.name] with \the [tool].")
+			SPAN_NOTE("[user] has constructed a prepared incision on and within [target]'s [affected.name] with \the [tool]."),
+			SPAN_NOTE("You have constructed a prepared incision on and within [target]'s [affected.name] with \the [tool].")
 		)
 		affected.open = 1
 
@@ -114,8 +114,8 @@
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			WARNING("[user]'s hand jolts as the system sparks, ripping a gruesome hole in [target]'s [affected.name] with \the [tool]!"), \
-			WARNING("Your hand jolts as the system sparks, ripping a gruesome hole in [target]'s [affected.name] with \the [tool]!")
+			SPAN_WARN("[user]'s hand jolts as the system sparks, ripping a gruesome hole in [target]'s [affected.name] with \the [tool]!"), \
+			SPAN_WARN("Your hand jolts as the system sparks, ripping a gruesome hole in [target]'s [affected.name] with \the [tool]!")
 		)
 		affected.createwound(CUT, 20)
 		affected.createwound(BURN, 15)
@@ -147,8 +147,8 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			NOTICE("[user] has made an incision on [target]'s [affected.name] with \the [tool]."),
-			NOTICE("You have made an incision on [target]'s [affected.name] with \the [tool].")
+			SPAN_NOTE("[user] has made an incision on [target]'s [affected.name] with \the [tool]."),
+			SPAN_NOTE("You have made an incision on [target]'s [affected.name] with \the [tool].")
 		)
 		affected.open = 1
 
@@ -161,8 +161,8 @@
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			WARNING("[user]'s hand slips, slicing open [target]'s [affected.name] in the wrong place with \the [tool]!"),
-			WARNING("Your hand slips, slicing open [target]'s [affected.name] in the wrong place with \the [tool]!")
+			SPAN_WARN("[user]'s hand slips, slicing open [target]'s [affected.name] in the wrong place with \the [tool]!"),
+			SPAN_WARN("Your hand slips, slicing open [target]'s [affected.name] in the wrong place with \the [tool]!")
 		)
 		affected.createwound(CUT, 10)
 
@@ -196,8 +196,8 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			NOTICE("[user] clamps bleeders in [target]'s [affected.name] with \the [tool]."),
-			NOTICE("You clamp bleeders in [target]'s [affected.name] with \the [tool].")
+			SPAN_NOTE("[user] clamps bleeders in [target]'s [affected.name] with \the [tool]."),
+			SPAN_NOTE("You clamp bleeders in [target]'s [affected.name] with \the [tool].")
 		)
 		affected.clamp()
 		spread_germs_to_organ(affected, user)
@@ -206,8 +206,8 @@
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			WARNING("[user]'s hand slips, tearing blood vessals and causing massive bleeding in [target]'s [affected.name] with \the [tool]!"),
-			WARNING("Your hand slips, tearing blood vessels and causing massive bleeding in [target]'s [affected.name] with \the [tool]!")
+			SPAN_WARN("[user]'s hand slips, tearing blood vessals and causing massive bleeding in [target]'s [affected.name] with \the [tool]!"),
+			SPAN_WARN("Your hand slips, tearing blood vessels and causing massive bleeding in [target]'s [affected.name] with \the [tool]!")
 		)
 		affected.createwound(CUT, 10)
 
@@ -242,27 +242,27 @@
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
-		var/msg = NOTICE("[user] keeps the incision open on [target]'s [affected.name] with \the [tool].")
-		var/self_msg = NOTICE("You keep the incision open on [target]'s [affected.name] with \the [tool].")
+		var/msg = SPAN_NOTE("[user] keeps the incision open on [target]'s [affected.name] with \the [tool].")
+		var/self_msg = SPAN_NOTE("You keep the incision open on [target]'s [affected.name] with \the [tool].")
 		if (target_zone == BP_CHEST)
-			msg = NOTICE("[user] keeps the ribcage open on [target]'s torso with \the [tool].")
-			self_msg = NOTICE("You keep the ribcage open on [target]'s torso with \the [tool].")
+			msg = SPAN_NOTE("[user] keeps the ribcage open on [target]'s torso with \the [tool].")
+			self_msg = SPAN_NOTE("You keep the ribcage open on [target]'s torso with \the [tool].")
 		else if (target_zone == BP_GROIN)
-			msg = NOTICE("[user] keeps the incision open on [target]'s lower abdomen with \the [tool].")
-			self_msg = NOTICE("You keep the incision open on [target]'s lower abdomen with \the [tool].")
+			msg = SPAN_NOTE("[user] keeps the incision open on [target]'s lower abdomen with \the [tool].")
+			self_msg = SPAN_NOTE("You keep the incision open on [target]'s lower abdomen with \the [tool].")
 		user.visible_message(msg, self_msg)
 		affected.open = 2
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
-		var/msg = WARNING("[user]'s hand slips, tearing the edges of the incision on [target]'s [affected.name] with \the [tool]!")
-		var/self_msg = WARNING("Your hand slips, tearing the edges of the incision on [target]'s [affected.name] with \the [tool]!")
+		var/msg = SPAN_WARN("[user]'s hand slips, tearing the edges of the incision on [target]'s [affected.name] with \the [tool]!")
+		var/self_msg = SPAN_WARN("Your hand slips, tearing the edges of the incision on [target]'s [affected.name] with \the [tool]!")
 		if (target_zone == BP_CHEST)
-			msg = WARNING("[user]'s hand slips, damaging several organs in [target]'s torso with \the [tool]!")
-			self_msg = WARNING("Your hand slips, damaging several organs in [target]'s torso with \the [tool]!")
+			msg = SPAN_WARN("[user]'s hand slips, damaging several organs in [target]'s torso with \the [tool]!")
+			self_msg = SPAN_WARN("Your hand slips, damaging several organs in [target]'s torso with \the [tool]!")
 		else if (target_zone == BP_GROIN)
-			msg = WARNING("[user]'s hand slips, damaging several organs in [target]'s lower abdomen with \the [tool]")
-			self_msg = WARNING("Your hand slips, damaging several organs in [target]'s lower abdomen with \the [tool]!")
+			msg = SPAN_WARN("[user]'s hand slips, damaging several organs in [target]'s lower abdomen with \the [tool]")
+			self_msg = SPAN_WARN("Your hand slips, damaging several organs in [target]'s lower abdomen with \the [tool]!")
 		user.visible_message(msg, self_msg)
 		target.apply_damage(12, BRUTE, affected, sharp=1)
 
@@ -294,8 +294,8 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			NOTICE("[user] cauterizes the incision on [target]'s [affected.name] with \the [tool]."),
-			NOTICE("You cauterize the incision on [target]'s [affected.name] with \the [tool].")
+			SPAN_NOTE("[user] cauterizes the incision on [target]'s [affected.name] with \the [tool]."),
+			SPAN_NOTE("You cauterize the incision on [target]'s [affected.name] with \the [tool].")
 		)
 		affected.open = 0
 		affected.germ_level = 0
@@ -304,8 +304,8 @@
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			WARNING("[user]'s hand slips, leaving a small burn on [target]'s [affected.name] with \the [tool]!"),
-			WARNING("Your hand slips, leaving a small burn on [target]'s [affected.name] with \the [tool]!")
+			SPAN_WARN("[user]'s hand slips, leaving a small burn on [target]'s [affected.name] with \the [tool]!"),
+			SPAN_WARN("Your hand slips, leaving a small burn on [target]'s [affected.name] with \the [tool]!")
 		)
 		target.apply_damage(3, BURN, affected)
 
@@ -342,16 +342,16 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			NOTICE("[user] amputates [target]'s [affected.name] at the [affected.amputation_point] with \the [tool]."),
-			NOTICE("You amputate [target]'s [affected.name] with \the [tool].")
+			SPAN_NOTE("[user] amputates [target]'s [affected.name] at the [affected.amputation_point] with \the [tool]."),
+			SPAN_NOTE("You amputate [target]'s [affected.name] with \the [tool].")
 		)
 		affected.droplimb(1,DROPLIMB_EDGE)
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			WARNING("[user]'s hand slips, sawing through the bone in [target]'s [affected.name] with \the [tool]!"),
-			WARNING("Your hand slips, sawwing through the bone in [target]'s [affected.name] with \the [tool]!")
+			SPAN_WARN("[user]'s hand slips, sawing through the bone in [target]'s [affected.name] with \the [tool]!"),
+			SPAN_WARN("Your hand slips, sawwing through the bone in [target]'s [affected.name] with \the [tool]!")
 		)
 		affected.createwound(CUT, 30)
 		affected.fracture()

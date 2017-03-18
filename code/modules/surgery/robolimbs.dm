@@ -37,8 +37,8 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/prosthesis/L = tool
 		user.visible_message(
-			NOTICE("[user] has attached \the [tool] to [target]."),
-			NOTICE("You have attached \the [tool] to [target].")
+			SPAN_NOTE("[user] has attached \the [tool] to [target]."),
+			SPAN_NOTE("You have attached \the [tool] to [target].")
 		)
 
 		if(L.part)
@@ -59,7 +59,7 @@
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message(
-			WARNING("[user]'s hand slips, damaging [target]'s flesh!"),
-			WARNING("Your hand slips, damaging [target]'s flesh!")
+			SPAN_WARN("[user]'s hand slips, damaging [target]'s flesh!"),
+			SPAN_WARN("Your hand slips, damaging [target]'s flesh!")
 		)
 		target.apply_damage(10, BRUTE, null, sharp=1)
