@@ -14,6 +14,7 @@
 	throw_speed = 2
 	throw_range = 8
 	var/empty = 0
+	storage_slots = 0
 	max_storage_space = 14
 
 
@@ -164,6 +165,7 @@
 	allow_quick_gather = 1
 	use_to_pickup = 1
 	use_sound = null
+	storage_slots = 0
 	max_storage_space = 14
 	max_w_class = 1
 

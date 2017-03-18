@@ -9,4 +9,5 @@
 	throw_range = 4
 	w_class = 4
 	max_w_class = 3
+	storage_slots = 0
 	max_storage_space = 16

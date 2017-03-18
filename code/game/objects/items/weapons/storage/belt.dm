@@ -3,7 +3,7 @@
 	desc = "Can hold various things."
 	icon = 'icons/inv_slots/belts/icon.dmi'
 	icon_state = "utility"
-	storage_slots = 7
+	storage_slots = 0
 	max_storage_space = 28 //This should ensure belts always have enough room to store whatever.
 	max_w_class = 3
 	slot_flags = SLOT_BELT
