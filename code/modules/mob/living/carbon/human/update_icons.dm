@@ -658,9 +658,6 @@ var/global/list/damage_icon_parts = list()
 					if(!i_state) i_state = i.icon_state
 					standing.overlays += image(body_build.get_mob_icon("belt", i_state), i_state)
 
-		standing.appearance_flags = RESET_COLOR
-		standing.color = belt.color
-
 		overlays_standing[belt_layer] = standing
 	else
 		overlays_standing[BELT_LAYER] = null
