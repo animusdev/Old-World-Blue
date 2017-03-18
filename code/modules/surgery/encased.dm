@@ -189,7 +189,7 @@
 			if(prob(40))
 				var/obj/item/organ/internal/O = pick(affected.internal_organs) //TODO weight by organ size
 				user.visible_message(
-					DANGER("A wayward piece of [target]'s [affected.encased] pierces \his [O.name]!")
+					SPAN_DANG("A wayward piece of [target]'s [affected.encased] pierces \his [O.name]!")
 				)
 				O.bruise()
 
