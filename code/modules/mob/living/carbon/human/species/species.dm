@@ -208,11 +208,15 @@
 			if(covered)
 				H << "<span class='danger'>[pick(heat_discomfort_strings)]</span>"
 
-/datum/species/proc/equip_survival_gear(var/mob/living/carbon/human/H, var/custom_survival_gear = /obj/item/weapon/storage/box/survival)
+/datum/species/proc/equip_survival_gear(var/mob/living/carbon/human/H, var/advanced_gear = 0)
+	var/gear = /obj/item/weapon/storage/box/survival
+	if(advanced_gear)
+		gear = /obj/item/weapon/storage/box/engineer
+
 	if(H.back && istype(H.back,/obj/item/weapon/storage))
-		H.equip_to_slot_or_del(new custom_survival_gear(H.back), slot_in_backpack)
+		H.equip_to_slot_or_del(new gear(H.back), slot_in_backpack)
 	else
-		H.equip_to_slot_or_del(new custom_survival_gear(H), slot_r_hand)
+		H.equip_to_slot_or_del(new gear(H), slot_r_hand)
 
 /datum/species/proc/hug(var/mob/living/carbon/human/H,var/mob/living/target)
 

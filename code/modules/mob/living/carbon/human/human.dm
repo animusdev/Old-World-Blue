@@ -50,8 +50,8 @@
 		qdel(organ)
 	return ..()
 
-/mob/living/carbon/human/proc/equip_survival_gear(var/custom_survival_gear)
-	species.equip_survival_gear(src, custom_survival_gear)
+/mob/living/carbon/human/proc/equip_survival_gear(var/advanced_gear)
+	species.equip_survival_gear(src, advanced_gear)
 
 /mob/living/carbon/human/Stat()
 	..()

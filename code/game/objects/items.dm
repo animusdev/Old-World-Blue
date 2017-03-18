@@ -292,7 +292,7 @@ var/list/global/slot_flags_enumeration = list(
 		if(H.species.hud && H.species.hud.equip_slots)
 			mob_equip = H.species.hud.equip_slots
 
-		if(H.species && !(slot in mob_equip))
+		if(!(slot in mob_equip))
 			return 0
 
 	//First check if the item can be equipped to the desired slot.
@@ -350,13 +350,10 @@ var/list/global/slot_flags_enumeration = list(
 			if(!istype(src, /obj/item/weapon/legcuffs))
 				return 0
 		if(slot_in_backpack) //used entirely for equipping spawned mobs or at round start
-			var/allow = 0
-			if(H.back && istype(H.back, /obj/item/weapon/storage/backpack))
-				var/obj/item/weapon/storage/backpack/B = H.back
-				if(B.contents.len < B.storage_slots && w_class <= B.max_w_class)
-					allow = 1
-			if(!allow)
-				return 0
+			if(H.back && istype(H.back, /obj/item/weapon/storage))
+				var/obj/item/weapon/storage/B = H.back
+				if(!B.can_be_inserted(src, disable_warning))
+					return 0
 		if(slot_tie)
 			if(!H.w_uniform && (slot_w_uniform in mob_equip))
 				if(!disable_warning)
