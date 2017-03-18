@@ -227,7 +227,7 @@
 			if(istype(W,/obj/item/weapon/hemostat))
 				if(contents.len)
 					var/obj/item/removing = pick(contents)
-					removing.loc = get_turf(user.loc)
+					removing.forceMove(get_turf(user))
 					user.put_in_hands(removing)
 					user.visible_message("<span class='danger'><b>[user]</b> extracts [removing] from [src] with [W]!</span>")
 				else
@@ -887,7 +887,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			return 1
 	return 0
 
-/obj/item/organ/external/proc/is_usable()
+/obj/item/organ/external/is_usable()
 	return !is_dislocated() && !(status & (ORGAN_MUTATED|ORGAN_DEAD))
 
 /obj/item/organ/external/proc/is_malfunctioning()
@@ -927,29 +927,28 @@ Note that amputating the affected organ does in fact remove the infection from t
 	disfigured = 1
 
 /obj/item/organ/external/proc/get_wounds_desc()
-	. = ""
-	if(status & ORGAN_DESTROYED && !is_stump())
-		. += "tear at [amputation_point] so severe that it hangs by a scrap of flesh"
-
-	//Handle robotic and synthetic organ damage
 	if(robotic >= ORGAN_ROBOT)
+		var/list/descriptors = list()
 		if(brute_dam)
 			switch(brute_dam)
 				if(0 to 20)
-					. += " some dents"
+					descriptors += "some dents"
 				if(21 to INFINITY)
-					. += pick(" a lot of dents"," severe denting")
-		if(brute_dam && burn_dam)
-			. += " and "
-
+					descriptors += pick("a lot of dents","severe denting")
 		if(burn_dam)
 			switch(burn_dam)
 				if(0 to 20)
-					. += "some burns"
+					descriptors += "some burns"
 				if(21 to INFINITY)
-					. += pick(" a lot of burns"," severe melting")
-		return
+					descriptors += pick("a lot of burns","severe melting")
+		if(open)
+			descriptors += "an open panel"
 
+		return english_list(descriptors)
+
+	. = ""
+	if((status & ORGAN_CUT_AWAY) && !is_stump() && !(parent && parent.status & ORGAN_CUT_AWAY))
+		. += "tear at [amputation_point] so severe that it hangs by a scrap of flesh"
 	//Normal organic organ damage
 	var/list/wound_descriptors = list()
 	if(open > 1)

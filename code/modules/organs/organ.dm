@@ -69,6 +69,7 @@ var/list/organ_cache = list()
 	loc = get_turf(owner)
 	processing_objects |= src
 	rejecting = null
+	status |= ORGAN_CUT_AWAY
 
 	var/datum/reagent/blood/organ_blood = locate(/datum/reagent/blood) in reagents.reagent_list
 	if(!organ_blood || !organ_blood.data["blood_DNA"])
@@ -283,4 +284,7 @@ var/list/organ_cache = list()
 					return
 
 /obj/item/organ/proc/can_feel_pain()
-	return (robotic < ORGAN_ROBOT) && !(status & (ORGAN_DEAD|ORGAN_DESTROYED))
+	return (robotic < ORGAN_ROBOT) && !(status & (ORGAN_CUT_AWAY|ORGAN_DEAD|ORGAN_DESTROYED))
+
+/obj/item/organ/proc/is_usable()
+	return !(status & (ORGAN_CUT_AWAY|ORGAN_MUTATED|ORGAN_DEAD))
