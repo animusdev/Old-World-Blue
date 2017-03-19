@@ -4,7 +4,7 @@
 
 /datum/preferences/proc/GetMatchmakingPage(mob/user)
 	.=list()
-	. += "<div style='height:425px;overflow-y:auto'>"
+	. += "<div style='height:420px;overflow-y:auto'>"
 	. += "Characters with enabled relations are paired up randomly after spawn. You can terminate relations when you first open relations info window, but after that it's final."
 	. += "<hr>"
 	. += "<br><b>What do they know about you?</b> This is the general info that all kinds of your connections would know. <a href='?src=\ref[src];relation_info=["general"]'>Edit</a>"
