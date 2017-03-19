@@ -621,7 +621,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					continue
 				var/material_string = linked_lathe.get_requirements(D)
 				if(linked_lathe.canBuild(D))
-					dat += "<LI><B><A href='?src=\ref[src];imprint=[D.id]'>[D.name]</A></B> [material_string]"
+					dat += "<LI><B><A href='?src=\ref[src];build=[D.id]'>[D.name]</A></B> [material_string]"
 				else
 					dat += "<LI><B>[D.name]</B> [material_string]"
 				if(D.reliability < 100)

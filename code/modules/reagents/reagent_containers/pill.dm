@@ -9,6 +9,7 @@
 	item_state = "pill"
 	possible_transfer_amounts = null
 	w_class = 1
+	randpixel = 8
 	slot_flags = SLOT_EARS
 	volume = 60
 	center_of_mass = list("x"=16, "y"=15)

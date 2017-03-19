@@ -11,6 +11,7 @@
 	item_state = "paper"
 	throwforce = 0
 	w_class = 1
+	randpixel = 8
 	throw_range = 1
 	throw_speed = 1
 	layer = 4
@@ -39,8 +40,6 @@
 
 /obj/item/weapon/paper/New()
 	..()
-	pixel_y = rand(-8, 8)
-	pixel_x = rand(-9, 9)
 	stamps = ""
 
 	if(name != "paper")

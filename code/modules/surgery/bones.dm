@@ -34,16 +34,16 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			NOTICE("[user] applies some [tool] to [target]'s bone in [affected.name]"),
-			NOTICE("You apply some [tool] to [target]'s bone in [affected.name] with \the [tool].")
+			SPAN_NOTE("[user] applies some [tool] to [target]'s bone in [affected.name]"),
+			SPAN_NOTE("You apply some [tool] to [target]'s bone in [affected.name] with \the [tool].")
 		)
 		affected.stage = 1
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			WARNING("[user]'s hand slips, smearing [tool] in the incision in [target]'s [affected.name]!"),
-			WARNING("Your hand slips, smearing [tool] in the incision in [target]'s [affected.name]!")
+			SPAN_WARN("[user]'s hand slips, smearing [tool] in the incision in [target]'s [affected.name]!"),
+			SPAN_WARN("Your hand slips, smearing [tool] in the incision in [target]'s [affected.name]!")
 		)
 
 /datum/surgery_step/set_bone
@@ -75,22 +75,22 @@
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		if (affected.status & ORGAN_BROKEN)
 			user.visible_message(
-				NOTICE("[user] sets the bone in [target]'s [affected.name] in place with \the [tool]."),
-				NOTICE("You set the bone in [target]'s [affected.name] in place with \the [tool].")
+				SPAN_NOTE("[user] sets the bone in [target]'s [affected.name] in place with \the [tool]."),
+				SPAN_NOTE("You set the bone in [target]'s [affected.name] in place with \the [tool].")
 			)
 			affected.stage = 2
 		else
 			user.visible_message(
-				NOTICE("[user] sets the bone in [target]'s [affected.name]\red in the WRONG place with \the [tool]."),
-				NOTICE("You set the bone in [target]'s [affected.name]\red in the WRONG place with \the [tool].")
+				SPAN_NOTE("[user] sets the bone in [target]'s [affected.name]\red in the WRONG place with \the [tool]."),
+				SPAN_NOTE("You set the bone in [target]'s [affected.name]\red in the WRONG place with \the [tool].")
 			)
 			affected.fracture()
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			WARNING("[user]'s hand slips, damaging the bone in [target]'s [affected.name] with \the [tool]!"),
-			WARNING("Your hand slips, damaging the bone in [target]'s [affected.name] with \the [tool]!")
+			SPAN_WARN("[user]'s hand slips, damaging the bone in [target]'s [affected.name] with \the [tool]!"),
+			SPAN_WARN("Your hand slips, damaging the bone in [target]'s [affected.name] with \the [tool]!")
 		)
 		affected.createwound(BRUISE, 5)
 
@@ -119,16 +119,16 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			NOTICE("[user] sets [target]'s skull with \the [tool]."),
-			NOTICE("You set [target]'s skull with \the [tool].")
+			SPAN_NOTE("[user] sets [target]'s skull with \the [tool]."),
+			SPAN_NOTE("You set [target]'s skull with \the [tool].")
 		)
 		affected.stage = 2
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			WARNING("[user]'s hand slips, damaging [target]'s face with \the [tool]!"),
-			WARNING("Your hand slips, damaging [target]'s face with \the [tool]!")
+			SPAN_WARN("[user]'s hand slips, damaging [target]'s face with \the [tool]!"),
+			SPAN_WARN("Your hand slips, damaging [target]'s face with \the [tool]!")
 		)
 		var/obj/item/organ/external/head/h = affected
 		h.createwound(BRUISE, 10)
@@ -162,8 +162,8 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			NOTICE("[user] has mended the damaged bones in [target]'s [affected.name] with \the [tool]."),
-			NOTICE("You have mended the damaged bones in [target]'s [affected.name] with \the [tool].")
+			SPAN_NOTE("[user] has mended the damaged bones in [target]'s [affected.name] with \the [tool]."),
+			SPAN_NOTE("You have mended the damaged bones in [target]'s [affected.name] with \the [tool].")
 		)
 		affected.status &= ~ORGAN_BROKEN
 		affected.status &= ~ORGAN_SPLINTED
@@ -173,6 +173,6 @@
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			WARNING("[user]'s hand slips, smearing [tool] in the incision in [target]'s [affected.name]!"),
-			WARNING("Your hand slips, smearing [tool] in the incision in [target]'s [affected.name]!")
+			SPAN_WARN("[user]'s hand slips, smearing [tool] in the incision in [target]'s [affected.name]!"),
+			SPAN_WARN("Your hand slips, smearing [tool] in the incision in [target]'s [affected.name]!")
 		)

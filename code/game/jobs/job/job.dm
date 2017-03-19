@@ -25,7 +25,7 @@
 	var/economic_modifier = 2			  // With how much does this job modify the initial account amount?
 
 	var/idtype = /obj/item/weapon/card/id // The type of the ID the player will have
-	var/custom_survival_gear = null       // Custom box for spawn in backpack
+	var/adv_survival_gear = null          // Spawn default or advanced survival gears.
 
 	//job equipment
 	var/implanted = 0
@@ -101,9 +101,6 @@ For copy-pasting:
 			for( var/path in put_in_backpack )
 				new path(BPK)
 
-	//Survival equipment
-	H.equip_survival_gear(custom_survival_gear)
-
 	//No-check items (suits, gloves, etc)
 	if(ear)
 		H.equip_to_slot_or_del(new ear (H), slot_l_ear)
@@ -142,6 +139,9 @@ For copy-pasting:
 				new path(H.r_hand)
 			else if(istype(H.l_hand, /obj/item/weapon/storage))
 				new path(H.l_hand)
+
+	//Survival equipment
+	H.equip_survival_gear(adv_survival_gear)
 
 	//Loyalty implant
 	if(implanted) H.implant_loyalty(H)

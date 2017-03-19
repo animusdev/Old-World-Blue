@@ -41,8 +41,8 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-				NOTICE("[user] has patched the damaged vein in [target]'s [affected.name] with \the [tool]."),
-				NOTICE("You have patched the damaged vein in [target]'s [affected.name] with \the [tool].")
+				SPAN_NOTE("[user] has patched the damaged vein in [target]'s [affected.name] with \the [tool]."),
+				SPAN_NOTE("You have patched the damaged vein in [target]'s [affected.name] with \the [tool].")
 			)
 
 		for(var/datum/wound/W in affected.wounds) if(W.internal)
@@ -53,8 +53,8 @@
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			WARNING("[user]'s hand slips, smearing [tool] in the incision in [target]'s [affected.name]!"),
-			WARNING("Your hand slips, smearing [tool] in the incision in [target]'s [affected.name]!")
+			SPAN_WARN("[user]'s hand slips, smearing [tool] in the incision in [target]'s [affected.name]!"),
+			SPAN_WARN("Your hand slips, smearing [tool] in the incision in [target]'s [affected.name]!")
 		)
 		affected.take_damage(5, 0)
 
@@ -95,8 +95,8 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-				NOTICE("[user] has cut away necrotic tissue in [target]'s [affected.name] with \the [tool]."),
-				NOTICE("You have cut away necrotic tissue in [target]'s [affected.name] with \the [tool].")
+				SPAN_NOTE("[user] has cut away necrotic tissue in [target]'s [affected.name] with \the [tool]."),
+				SPAN_NOTE("You have cut away necrotic tissue in [target]'s [affected.name] with \the [tool].")
 			)
 		affected.open = 3
 		playsound(target.loc, 'sound/effects/squelch1.ogg', 50, 1)
@@ -104,8 +104,8 @@
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			WARNING("[user]'s hand slips, slicing an artery inside [target]'s [affected.name] with \the [tool]!"),
-			WARNING("Your hand slips, slicing an artery inside [target]'s [affected.name] with \the [tool]!")
+			SPAN_WARN("[user]'s hand slips, slicing an artery inside [target]'s [affected.name] with \the [tool]!"),
+			SPAN_WARN("Your hand slips, slicing an artery inside [target]'s [affected.name] with \the [tool]!")
 		)
 		affected.createwound(CUT, 20, 1)
 
@@ -167,8 +167,8 @@
 				affected.status &= ~ORGAN_DEAD
 
 			user.visible_message(
-					NOTICE("[user] applies [trans] units of the solution to affected tissue in [target]'s [affected.name]"),
-					NOTICE("You apply [trans] units of the solution to affected tissue in [target]'s [affected.name] with \the [tool].")
+					SPAN_NOTE("[user] applies [trans] units of the solution to affected tissue in [target]'s [affected.name]"),
+					SPAN_NOTE("You apply [trans] units of the solution to affected tissue in [target]'s [affected.name] with \the [tool].")
 				)
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -182,8 +182,8 @@
 		var/trans = container.reagents.trans_to_mob(target, container.amount_per_transfer_from_this, CHEM_BLOOD)
 
 		user.visible_message(
-			WARNING("[user]'s hand slips, applying [trans] units of the solution to the wrong place in [target]'s [affected.name] with the [tool]!"),
-			WARNING("Your hand slips, applying [trans] units of the solution to the wrong place in [target]'s [affected.name] with the [tool]!")
+			SPAN_WARN("[user]'s hand slips, applying [trans] units of the solution to the wrong place in [target]'s [affected.name] with the [tool]!"),
+			SPAN_WARN("Your hand slips, applying [trans] units of the solution to the wrong place in [target]'s [affected.name] with the [tool]!")
 		)
 
 		//no damage or anything, just wastes medicine

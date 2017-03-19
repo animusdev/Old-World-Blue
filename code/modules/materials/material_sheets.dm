@@ -12,6 +12,7 @@
 	force = 5.0
 	throwforce = 5
 	w_class = 3.0
+	randpixel = 4
 	throw_speed = 3
 	throw_range = 3
 	max_amount = 50
@@ -22,8 +23,6 @@
 
 /obj/item/stack/material/New()
 	..()
-	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
 
 	if(!default_type)
 		default_type = DEFAULT_WALL_MATERIAL
@@ -55,6 +54,9 @@
 	update_strings()
 
 /obj/item/stack/material/proc/update_strings()
+	if(!material)
+		return
+
 	// Update from material datum.
 	singular_name = material.sheet_singular_name
 
@@ -67,10 +69,14 @@
 		desc = "A [material.sheet_singular_name] of [material.use_name]."
 		gender = NEUTER
 
+/obj/item/stack/material/split()
+	var/obj/item/stack/material/M = ..()
+	M.set_material(material.name)
+	return M
+
 /obj/item/stack/material/use(var/used)
 	. = ..()
-	if(src)
-		update_strings()
+	update_strings()
 	return
 
 /obj/item/stack/material/transfer_to(obj/item/stack/S, var/tamount=null, var/type_verified)

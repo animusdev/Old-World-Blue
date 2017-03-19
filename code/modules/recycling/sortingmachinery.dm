@@ -212,13 +212,22 @@
 				user << "<span class='notice'>It has a note attached which reads, \"[examtext]\"</span>"
 		return
 
+/obj/item/weapon/c_tube
+	name = "cardboard tube"
+	desc = "A tube... of cardboard."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "c_tube"
+	throwforce = 1
+	w_class = 2.0
+	throw_speed = 4
+	throw_range = 5
+
 /obj/item/weapon/packageWrap
 	name = "package wrapper"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "deliveryPaper"
 	w_class = 3.0
 	var/amount = 25.0
-
 
 	afterattack(var/obj/target as obj, mob/user as mob, proximity)
 		if(!proximity) return

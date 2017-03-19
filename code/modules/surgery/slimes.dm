@@ -30,15 +30,15 @@
 
 	end_step(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
 		user.visible_message(
-			NOTICE("[user] cuts through [target]'s flesh with \the [tool]."),
-			NOTICE("You cut through [target]'s flesh with \the [tool], revealing its silky innards.")
+			SPAN_NOTE("[user] cuts through [target]'s flesh with \the [tool]."),
+			SPAN_NOTE("You cut through [target]'s flesh with \the [tool], revealing its silky innards.")
 		)
 		target.core_removal_stage = 1
 
 	fail_step(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
 		user.visible_message(
-			WARNING("[user]'s hand slips, tearing [target]'s flesh with \the [tool]!"),
-			WARNING("Your hand slips, tearing [target]'s flesh with \the [tool]!")
+			SPAN_WARN("[user]'s hand slips, tearing [target]'s flesh with \the [tool]!"),
+			SPAN_WARN("Your hand slips, tearing [target]'s flesh with \the [tool]!")
 		)
 
 /datum/surgery_step/slime/cut_innards
@@ -62,15 +62,15 @@
 
 	end_step(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
 		user.visible_message(
-			NOTICE("[user] cuts [target]'s innards apart with \the [tool], exposing the cores."),
-			NOTICE("You cut [target]'s innards apart with \the [tool], exposing the cores.")
+			SPAN_NOTE("[user] cuts [target]'s innards apart with \the [tool], exposing the cores."),
+			SPAN_NOTE("You cut [target]'s innards apart with \the [tool], exposing the cores.")
 		)
 		target.core_removal_stage = 2
 
 	fail_step(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
 		user.visible_message(
-			WARNING("[user]'s hand slips, tearing [target]'s innards with \the [tool]!"),
-			WARNING("Your hand slips, tearing [target]'s innards with \the [tool]!")
+			SPAN_WARN("[user]'s hand slips, tearing [target]'s innards with \the [tool]!"),
+			SPAN_WARN("Your hand slips, tearing [target]'s innards with \the [tool]!")
 		)
 
 /datum/surgery_step/slime/saw_core
@@ -94,8 +94,8 @@
 	end_step(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
 		target.cores--
 		user.visible_message(
-			NOTICE("[user] cuts out one of [target]'s cores with \the [tool]."),
-			NOTICE("You cut out one of [target]'s cores with \the [tool]. [target.cores] cores left.")
+			SPAN_NOTE("[user] cuts out one of [target]'s cores with \the [tool]."),
+			SPAN_NOTE("You cut out one of [target]'s cores with \the [tool]. [target.cores] cores left.")
 		)
 
 		if(target.cores >= 0)
@@ -106,6 +106,6 @@
 
 	fail_step(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
 		user.visible_message(
-			WARNING("[user]'s hand slips, causing \him to miss the core!"),
-			WARNING("Your hand slips, causing you to miss the core!")
+			SPAN_WARN("[user]'s hand slips, causing \him to miss the core!"),
+			SPAN_WARN("Your hand slips, causing you to miss the core!")
 		)

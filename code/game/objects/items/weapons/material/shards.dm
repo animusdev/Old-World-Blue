@@ -15,6 +15,7 @@
 	default_material = "glass"
 	unbreakable = 1 //It's already broken.
 	drops_debris = 0
+	randpixel = 8
 
 /obj/item/weapon/material/shard/suicide_act(mob/user)
 	viewers(user) << pick("\red <b>[user] is slitting \his wrists with \the [src]! It looks like \he's trying to commit suicide.</b>", \
@@ -27,8 +28,6 @@
 		return
 
 	icon_state = "[material.shard_icon][pick("large", "medium", "small")]"
-	pixel_x = rand(-8, 8)
-	pixel_y = rand(-8, 8)
 	update_icon()
 
 	if(material.shard_type)

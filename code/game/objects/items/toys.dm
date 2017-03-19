@@ -1008,7 +1008,6 @@
 	name = "inflatable duck"
 	desc = "No bother to sink or swim when you can just float!"
 	icon_state = "inflatable"
-	item_state = "inflatable"
 	icon = 'icons/inv_slots/belts/icon.dmi'
 	slot_flags = SLOT_BELT
 
@@ -1017,4 +1016,3 @@
 	desc = "It seems like there is no power button. No power switch, too. Duh."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "tv"
-	item_state = "tv"

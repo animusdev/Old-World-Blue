@@ -52,30 +52,30 @@
 		"Ripley"=list(
 			/obj/item/mecha_parts/chassis/ripley,
 			/obj/item/mecha_parts/part/ripley_torso,
-			/obj/item/mecha_parts/part/ripley_left_arm,
-			/obj/item/mecha_parts/part/ripley_right_arm,
-			/obj/item/mecha_parts/part/ripley_left_leg,
-			/obj/item/mecha_parts/part/ripley_right_leg
+			/obj/item/mecha_parts/part/ripley/left_arm,
+			/obj/item/mecha_parts/part/ripley/right_arm,
+			/obj/item/mecha_parts/part/ripley/left_leg,
+			/obj/item/mecha_parts/part/ripley/right_leg
 		),
 
 		"Odysseus"=list(
 			/obj/item/mecha_parts/chassis/odysseus,
 			/obj/item/mecha_parts/part/odysseus_torso,
 			/obj/item/mecha_parts/part/odysseus_head,
-			/obj/item/mecha_parts/part/odysseus_left_arm,
-			/obj/item/mecha_parts/part/odysseus_right_arm,
-			/obj/item/mecha_parts/part/odysseus_left_leg,
-			/obj/item/mecha_parts/part/odysseus_right_leg
+			/obj/item/mecha_parts/part/odysseus/left_arm,
+			/obj/item/mecha_parts/part/odysseus/right_arm,
+			/obj/item/mecha_parts/part/odysseus/left_leg,
+			/obj/item/mecha_parts/part/odysseus/right_leg
 		),
 
 		"Gygax"=list(
 			/obj/item/mecha_parts/chassis/gygax,
 			/obj/item/mecha_parts/part/gygax_torso,
 			/obj/item/mecha_parts/part/gygax_head,
-			/obj/item/mecha_parts/part/gygax_left_arm,
-			/obj/item/mecha_parts/part/gygax_right_arm,
-			/obj/item/mecha_parts/part/gygax_left_leg,
-			/obj/item/mecha_parts/part/gygax_right_leg,
+			/obj/item/mecha_parts/part/gygax/left_arm,
+			/obj/item/mecha_parts/part/gygax/right_arm,
+			/obj/item/mecha_parts/part/gygax/left_leg,
+			/obj/item/mecha_parts/part/gygax/right_leg,
 			/obj/item/mecha_parts/part/gygax_armour
 		),
 
@@ -83,10 +83,10 @@
 			/obj/item/mecha_parts/chassis/durand,
 			/obj/item/mecha_parts/part/durand_torso,
 			/obj/item/mecha_parts/part/durand_head,
-			/obj/item/mecha_parts/part/durand_left_arm,
-			/obj/item/mecha_parts/part/durand_right_arm,
-			/obj/item/mecha_parts/part/durand_left_leg,
-			/obj/item/mecha_parts/part/durand_right_leg,
+			/obj/item/mecha_parts/part/durand/left_arm,
+			/obj/item/mecha_parts/part/durand/right_arm,
+			/obj/item/mecha_parts/part/durand/left_leg,
+			/obj/item/mecha_parts/part/durand/right_leg,
 			/obj/item/mecha_parts/part/durand_armour
 		),
 
@@ -94,10 +94,10 @@
 			/obj/item/mecha_parts/chassis/phazon,
 			/obj/item/mecha_parts/part/phazon_torso,
 			/obj/item/mecha_parts/part/phazon_head,
-			/obj/item/mecha_parts/part/phazon_left_arm,
-			/obj/item/mecha_parts/part/phazon_right_arm,
-			/obj/item/mecha_parts/part/phazon_left_leg,
-			/obj/item/mecha_parts/part/phazon_right_leg,
+			/obj/item/mecha_parts/part/phazon/left_arm,
+			/obj/item/mecha_parts/part/phazon/right_arm,
+			/obj/item/mecha_parts/part/phazon/left_leg,
+			/obj/item/mecha_parts/part/phazon/right_leg,
 			/obj/item/mecha_parts/part/phazon_armor
 		),
 
@@ -415,7 +415,7 @@
 	if(!files) return
 	var/i = 0
 	for(var/datum/design/D in files.known_designs)
-		if(D.build_type&16)
+		if(D.build_type&MECHFAB)
 			if(D.category in part_sets)//Checks if it's a valid category
 				if(add_part_to_set(D.category, D.build_path))//Adds it to said category
 					i++

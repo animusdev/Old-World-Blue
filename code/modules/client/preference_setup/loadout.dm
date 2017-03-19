@@ -68,11 +68,12 @@ var/list/gear_datums = list()
 		H << "<span class='warning'>Your current whitelist status does not permit you to spawn with [display_name]!</span>"
 		return null
 
-	var/build_path = path
-	if(options)
-		if(!option in options)
-			option = options[1]
+	var/build_path
+	if(options && option in options)
 		build_path = options[option]
+
+	if(!build_path)
+		build_path = path
 
 	return new build_path(H)
 

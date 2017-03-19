@@ -65,9 +65,7 @@
 	name = "bottle of BeezEez"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle17"
-	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
+	randpixel = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/honeycomb
 	name = "honeycomb"

@@ -45,7 +45,7 @@
 /datum/species/human/vampire/get_bodytype()
 	return "Human"
 
-/datum/species/human/vampire/equip_survival_gear(var/mob/living/carbon/human/H, var/custom_survival_gear = /obj/item/weapon/storage/box/survival)
+/datum/species/human/vampire/equip_survival_gear(mob/living/carbon/human/H, advanced_gear)
 	var/pack_type = pick(
 		/obj/item/weapon/reagent_containers/blood/APlus,
 		/obj/item/weapon/reagent_containers/blood/AMinus,

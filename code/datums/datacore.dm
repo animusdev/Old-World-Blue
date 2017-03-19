@@ -5,6 +5,11 @@ var/global/ManifestJSON
 	data_core = new /datum/datacore()
 	return 1
 
+/datum/data/record
+	var/name = "record"
+	var/size = 5
+	var/list/fields = list()
+
 /datum/datacore
 	var/name = "datacore"
 	var/list/medical[] = list()
@@ -13,139 +18,6 @@ var/global/ManifestJSON
 	//This list tracks characters spawned in the world and cannot be modified in-game. Currently referenced by respawn_character().
 	var/list/locked[] = list()
 
-/datum/datacore/proc/manifest()
-	spawn()
-		for(var/mob/living/carbon/human/H in player_list)
-			manifest_inject(H)
-		return
-
-/datum/datacore/proc/manifest_modify(var/name, var/assignment)
-	if(PDA_Manifest.len)
-		PDA_Manifest.Cut()
-	var/datum/data/record/foundrecord
-	var/real_title = assignment
-
-	for(var/datum/data/record/t in data_core.general)
-		if (t)
-			if(t.fields["name"] == name)
-				foundrecord = t
-				break
-
-	var/list/all_jobs = job_master.occupations
-
-	for(var/datum/job/J in all_jobs)
-		var/list/alttitles = get_alternate_titles(J.title)
-		if(!J)	continue
-		if(assignment in alttitles)
-			real_title = J.title
-			break
-
-	if(foundrecord)
-		foundrecord.fields["rank"] = assignment
-		foundrecord.fields["real_rank"] = real_title
-
-/datum/datacore/proc/manifest_inject(var/mob/living/carbon/human/H)
-	if(PDA_Manifest.len)
-		PDA_Manifest.Cut()
-
-	if(H.mind && !player_is_antag(H.mind, only_offstation_roles = 1))
-		var/assignment
-		if(H.mind.role_alt_title)
-			assignment = H.mind.role_alt_title
-		else if(H.mind.assigned_role)
-			assignment = H.mind.assigned_role
-		else if(H.job)
-			assignment = H.job
-		else
-			assignment = "Unassigned"
-
-		var/id = generate_record_id()
-		var/icon/front = new(get_id_photo(H), dir = SOUTH)
-		var/icon/side = new(get_id_photo(H), dir = WEST)
-		//General Record
-		var/datum/data/record/G = new()
-		G.fields["id"]			= id
-		G.fields["name"]		= H.real_name
-		G.fields["real_rank"]	= H.mind.assigned_role
-		G.fields["rank"]		= assignment
-		G.fields["age"]			= H.age
-		G.fields["fingerprint"]	= md5(H.dna.uni_identity)
-		G.fields["p_stat"]		= "Active"
-		G.fields["m_stat"]		= "Stable"
-		G.fields["sex"]			= H.gender
-		G.fields["species"]		= H.get_species()
-		G.fields["home_system"]	= H.home_system
-		G.fields["citizenship"]	= H.citizenship
-		G.fields["faction"]		= H.personal_faction
-		G.fields["religion"]	= H.religion
-		G.fields["photo_front"]	= front
-		G.fields["photo_side"]	= side
-		if(H.gen_record && !jobban_isbanned(H, "Records"))
-			G.fields["notes"] = H.gen_record
-		else
-			G.fields["notes"] = "No notes found."
-		general += G
-
-		//Medical Record
-		var/datum/data/record/M = new()
-		M.fields["id"]			= id
-		M.fields["name"]		= H.real_name
-		M.fields["b_type"]		= H.b_type
-		M.fields["b_dna"]		= H.dna.unique_enzymes
-		M.fields["mi_dis"]		= "None"
-		M.fields["mi_dis_d"]	= "No minor disabilities have been declared."
-		M.fields["ma_dis"]		= "None"
-		M.fields["ma_dis_d"]	= "No major disabilities have been diagnosed."
-		M.fields["alg"]			= "None"
-		M.fields["alg_d"]		= "No allergies have been detected in this patient."
-		M.fields["cdi"]			= "None"
-		M.fields["cdi_d"]		= "No diseases have been diagnosed at the moment."
-		if(H.med_record && !jobban_isbanned(H, "Records"))
-			M.fields["notes"] = H.med_record
-		else
-			M.fields["notes"] = "No notes found."
-		medical += M
-
-		//Security Record
-		var/datum/data/record/S = new()
-		S.fields["id"]			= id
-		S.fields["name"]		= H.real_name
-		S.fields["criminal"]	= "None"
-		S.fields["mi_crim"]		= "None"
-		S.fields["mi_crim_d"]	= "No minor crime convictions."
-		S.fields["ma_crim"]		= "None"
-		S.fields["ma_crim_d"]	= "No major crime convictions."
-		S.fields["notes"]		= "No notes."
-		if(H.sec_record && !jobban_isbanned(H, "Records"))
-			S.fields["notes"] = H.sec_record
-		else
-			S.fields["notes"] = "No notes."
-		security += S
-
-		//Locked Record
-		var/datum/data/record/L = new()
-		L.fields["id"]			= md5("[H.real_name][H.mind.assigned_role]")
-		L.fields["name"]		= H.real_name
-		L.fields["rank"] 		= H.mind.assigned_role
-		L.fields["age"]			= H.age
-		L.fields["fingerprint"]	= md5(H.dna.uni_identity)
-		L.fields["sex"]			= H.gender
-		L.fields["b_type"]		= H.b_type
-		L.fields["b_dna"]		= H.dna.unique_enzymes
-		L.fields["enzymes"]		= H.dna.SE // Used in respawning
-		L.fields["identity"]	= H.dna.UI // "
-		L.fields["species"]		= H.get_species()
-		L.fields["home_system"]	= H.home_system
-		L.fields["citizenship"]	= H.citizenship
-		L.fields["faction"]		= H.personal_faction
-		L.fields["religion"]	= H.religion
-		L.fields["image"]		= getFlatIcon(H)	//This is god-awful
-		if(H.exploit_record && !jobban_isbanned(H, "Records"))
-			L.fields["exploit_record"] = H.exploit_record
-		else
-			L.fields["exploit_record"] = "No additional information acquired."
-		locked += L
-	return
 
 /datum/datacore/proc/get_manifest(monochrome, OOC)
 	var/list/heads = new()
@@ -254,11 +126,177 @@ var/global/ManifestJSON
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[misc[name]]</td><td>[isactive[name]]</td></tr>"
 			even = !even
 
+
 	dat += "</table>"
 	dat = replacetext(dat, "\n", "") // so it can be placed on paper correctly
 	dat = replacetext(dat, "\t", "")
 	return dat
 
+/datum/datacore/proc/manifest()
+	spawn()
+		for(var/mob/living/carbon/human/H in player_list)
+			manifest_inject(H)
+		return
+
+/datum/datacore/proc/manifest_modify(var/name, var/assignment)
+	ResetPDAManifest()
+	var/datum/data/record/foundrecord
+	var/real_title = assignment
+
+	for(var/datum/data/record/t in data_core.general)
+		if (t)
+			if(t.fields["name"] == name)
+				foundrecord = t
+				break
+
+	var/list/all_jobs = job_master.occupations
+
+	for(var/datum/job/J in all_jobs)
+		var/list/alttitles = get_alternate_titles(J.title)
+		if(!J)	continue
+		if(assignment in alttitles)
+			real_title = J.title
+			break
+
+	if(foundrecord)
+		foundrecord.fields["rank"] = assignment
+		foundrecord.fields["real_rank"] = real_title
+
+/datum/datacore/proc/manifest_inject(var/mob/living/carbon/human/H)
+	if(H.mind && !player_is_antag(H.mind, only_offstation_roles = 1))
+
+		var/id = generate_record_id()
+		//General Record
+		var/datum/data/record/G = CreateGeneralRecord(H, id)
+
+		//Medical Record
+		var/datum/data/record/M = CreateMedicalRecord(H.real_name, id)
+		M.fields["b_type"]		= H.b_type
+		M.fields["b_dna"]		= H.dna.unique_enzymes
+		if(H.med_record && !jobban_isbanned(H, "Records"))
+			M.fields["notes"] = H.med_record
+
+		//Security Record
+		var/datum/data/record/S = CreateSecurityRecord(H.real_name, id)
+		if(H.sec_record && !jobban_isbanned(H, "Records"))
+			S.fields["notes"] = H.sec_record
+
+		//Locked Record
+		var/datum/data/record/L = new()
+		L.fields = G.fields.Copy()
+		L.fields["id"]			= md5("[H.real_name][H.mind.assigned_role]")
+		L.fields["b_type"]		= H.b_type
+		L.fields["b_dna"]		= H.dna.unique_enzymes
+		L.fields["enzymes"]		= H.dna.SE // Used in respawning
+		L.fields["identity"]	= H.dna.UI // "
+		L.fields["image"]		= L.fields["photo_front"]
+		if(H.exploit_record && !jobban_isbanned(H, "Records"))
+			L.fields["exploit_record"] = H.exploit_record
+		else
+			L.fields["exploit_record"] = "No additional information acquired."
+		locked += L
+	return
+
+/proc/generate_record_id()
+	return add_zero(num2hex(rand(1, 65535)), 4)	//no point generating higher numbers because of the limitations of num2hex
+
+/datum/datacore/proc/CreateGeneralRecord(var/mob/living/carbon/human/H, var/id)
+	ResetPDAManifest()
+	var/icon/front = new(get_id_photo(H), dir = SOUTH)
+	var/icon/side = new(get_id_photo(H), dir = WEST)
+
+	if(!id) id = text("[]", add_zero(num2hex(rand(1, 1.6777215E7)), 6))
+	var/datum/data/record/G = new /datum/data/record()
+	G.name = "Employee Record #[id]"
+	G.fields["id"] = id
+	G.fields["name"] = H ? H.real_name : "New Record"
+	G.fields["rank"] = H ? GetAssignment(H) : "Unassigned"
+	G.fields["real_rank"] = H ? H.mind.assigned_role : "Unassigned"
+	G.fields["sex"] = H ? H.gender : "Unknown"
+	G.fields["age"] = H ? H.age :"Unknown"
+	G.fields["fingerprint"] = H ? md5(H.dna.uni_identity) : "Unknown"
+	G.fields["p_stat"] = "Active"
+	G.fields["m_stat"] = "Stable"
+	G.fields["species"] = H ? H.get_species() : "Human"
+	G.fields["home_system"]	= H ? H.home_system : "Unknown"
+	G.fields["citizenship"]	= H ? H.citizenship : "Unknown"
+	G.fields["faction"]		= H ? H.personal_faction : "Unknown"
+	G.fields["religion"]	= H ? H.religion : "Unknown"
+	G.fields["photo_front"]	= front
+	G.fields["photo_side"]	= side
+	G.fields["notes"] = "No notes found."
+	if(H && H.gen_record && !jobban_isbanned(H, "Records"))
+		G.fields["notes"] = H.gen_record
+	G.fields["connections"] =  list()
+	general += G
+
+	return G
+
+/datum/datacore/proc/CreateSecurityRecord(var/name, var/id)
+	ResetPDAManifest()
+	var/datum/data/record/R = new /datum/data/record()
+	R.name = "Security Record #[id]"
+	R.fields["name"] = name
+	R.fields["id"] = id
+	R.fields["criminal"]	= "None"
+	R.fields["mi_crim"]		= "None"
+	R.fields["mi_crim_d"]	= "No minor crime convictions."
+	R.fields["ma_crim"]		= "None"
+	R.fields["ma_crim_d"]	= "No major crime convictions."
+	R.fields["notes"]		= "No notes."
+	R.fields["notes"] = "No notes."
+	data_core.security += R
+
+	return R
+
+/datum/datacore/proc/CreateMedicalRecord(var/name, var/id)
+	ResetPDAManifest()
+	var/datum/data/record/M = new()
+	M.name = "Medical Record #[id]"
+	M.fields["id"]			= id
+	M.fields["name"]		= name
+	M.fields["b_type"]		= "AB+"
+	M.fields["b_dna"]		= md5(name)
+	M.fields["mi_dis"]		= "None"
+	M.fields["mi_dis_d"]	= "No minor disabilities have been declared."
+	M.fields["ma_dis"]		= "None"
+	M.fields["ma_dis_d"]	= "No major disabilities have been diagnosed."
+	M.fields["alg"]			= "None"
+	M.fields["alg_d"]		= "No allergies have been detected in this patient."
+	M.fields["cdi"]			= "None"
+	M.fields["cdi_d"]		= "No diseases have been diagnosed at the moment."
+	M.fields["notes"] = "No notes found."
+	data_core.medical += M
+
+	return M
+
+/datum/datacore/proc/ResetPDAManifest()
+	if(PDA_Manifest.len)
+		PDA_Manifest.Cut()
+
+/proc/find_general_record(field, value)
+	return find_record(field, value, data_core.general)
+
+/proc/find_medical_record(field, value)
+	return find_record(field, value, data_core.medical)
+
+/proc/find_security_record(field, value)
+	return find_record(field, value, data_core.security)
+
+/proc/find_record(field, value, list/L)
+	for(var/datum/data/record/R in L)
+		if(R.fields[field] == value)
+			return R
+
+/proc/GetAssignment(var/mob/living/carbon/human/H)
+	if(H.mind.role_alt_title)
+		return H.mind.role_alt_title
+	else if(H.mind.assigned_role)
+		return H.mind.assigned_role
+	else if(H.job)
+		return H.job
+	else
+		return "Unassigned"
 
 /var/list/acting_rank_prefixes = list("acting", "temporary", "interim", "provisional")
 
@@ -352,9 +390,6 @@ using /datum/datacore/proc/manifest_inject( ), or manifest_insert( )
 		)
 	ManifestJSON = list2json(PDA_Manifest)
 	return
-
-/proc/generate_record_id()
-	return add_zero(num2hex(rand(1, 65535)), 4)	//no point generating higher numbers because of the limitations of num2hex
 
 /proc/get_id_photo(var/mob/living/carbon/human/H, var/assigned_role)
 

@@ -158,7 +158,7 @@
 
 /datum/autolathe/recipe/powermodule
 	name = "power control module"
-	path = /obj/item/weapon/module/power_control
+	path = /obj/item/weapon/power_control
 	category = "Engineering"
 
 /datum/autolathe/recipe/rcd_ammo

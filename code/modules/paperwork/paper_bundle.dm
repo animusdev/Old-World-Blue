@@ -6,6 +6,7 @@
 	item_state = "paper"
 	throwforce = 0
 	w_class = 2
+	randpixel = 8
 	throw_range = 2
 	throw_speed = 1
 	layer = 4

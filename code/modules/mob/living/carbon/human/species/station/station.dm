@@ -111,7 +111,15 @@
 
 /datum/species/unathi/equip_survival_gear(var/mob/living/carbon/human/H)
 	..()
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H),slot_shoes)
+	var/obj/item/shoes = H.shoes
+	var/gear = /obj/item/clothing/shoes/sandal
+	if(shoes)
+		if(istype(shoes, /obj/item/clothing/shoes/jackboots))
+			gear = /obj/item/clothing/shoes/jackboots/unathi
+		if(H.unEquip(shoes))
+			qdel(shoes)
+	if(!H.shoes)
+		H.equip_to_slot_or_del(new gear (H),slot_shoes)
 
 /datum/species/tajaran
 	name = "Tajara"
@@ -190,9 +198,18 @@
 	)
 	accent = list("ð" = "ðð", "Ð" = "Ðð")
 
-/datum/species/tajaran/equip_survival_gear(var/mob/living/carbon/human/H)
+/datum/species/tajaran/equip_survival_gear(mob/living/carbon/human/H)
 	..()
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H),slot_shoes)
+	var/obj/item/shoes = H.shoes
+	var/gear = /obj/item/clothing/shoes/sandal
+	if(shoes)
+		if(istype(shoes, /obj/item/clothing/shoes/jackboots))
+			gear = /obj/item/clothing/shoes/jackboots/unathi
+		if(H.unEquip(shoes))
+			qdel(shoes)
+	if(!H.shoes)
+		H.equip_to_slot_or_del(new gear (H),slot_shoes)
+
 
 /datum/species/skrell
 	name = "Skrell"
@@ -271,7 +288,7 @@
 	)
 
 	has_limbs = list(
-		BP_CHEST =  new /datum/organ_description/diona,
+		BP_CHEST =  new /datum/organ_description/chest/diona,
 		BP_GROIN =  new /datum/organ_description/groin/diona,
 		BP_HEAD =   new /datum/organ_description/head/diona,
 		BP_L_ARM =  new /datum/organ_description/arm/left/diona,

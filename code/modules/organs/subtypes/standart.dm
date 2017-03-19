@@ -3,60 +3,23 @@
 ****************************************************/
 
 /obj/item/organ/external/chest
-	name = "upper body"
-	organ_tag = BP_CHEST
-	max_damage = 100
-	min_broken_damage = 35
-	w_class = 5
-	body_part = UPPER_TORSO
 	vital = 1
 	gendered = 1
-	amputation_point = "spine"
-	joint = "neck"
 	dislocated = -1
 	cannot_amputate = 1
-	parent_organ = null
 	encased = "ribcage"
 
 /obj/item/organ/external/groin
-	name = "lower body"
-	organ_tag = BP_GROIN
-	max_damage = 100
-	min_broken_damage = 35
-	w_class = 5
-	body_part = LOWER_TORSO
 	vital = 1
 	gendered = 1
-	parent_organ = BP_CHEST
-	amputation_point = "lumbar"
-	joint = "hip"
 	dislocated = -1
 
-/obj/item/organ/external/limb
-	max_damage = 50
-	min_broken_damage = 30
-	w_class = 3
-
-/obj/item/organ/external/tiny
-	min_broken_damage = 15
-	w_class = 2
-
 /obj/item/organ/external/head
-	organ_tag = BP_HEAD
-	name = "head"
-	max_damage = 75
-	min_broken_damage = 35
-	w_class = 3
-	body_part = HEAD
 	vital = 1
 	gendered = 1
-	parent_organ = BP_CHEST
-	joint = "jaw"
-	amputation_point = "neck"
 	encased = "skull"
 	var/hairstyle
 	var/real_name
-	var/visible_name
 
 /obj/item/organ/external/head/removed(user, delete_children)
 	if(owner)
@@ -64,7 +27,6 @@
 		name = "[owner.name]'s head"
 		hairstyle = owner.h_style
 		real_name = owner.real_name
-		visible_name =  owner.name
 		spawn(1)
 			if(last_owner)
 				last_owner.update_hair()
@@ -73,7 +35,7 @@
 /obj/item/organ/external/head/install()
 	if(..()) return 1
 
-	name = initial(name)
+	name = "head"
 	if(hairstyle)
 		owner.h_style = hairstyle
 	if(real_name)

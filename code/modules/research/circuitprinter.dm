@@ -99,6 +99,9 @@ using metal and glass, it uses glass and reagents (usually sulphuric acid).
 		return
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/Build(var/datum/design/D)
+	if(!canBuild(D))
+		return 0
+
 	busy = 1
 
 	var/power = active_power_usage

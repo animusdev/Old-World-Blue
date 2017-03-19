@@ -451,7 +451,7 @@
 						user.visible_message(\
 							"<span class='warning'>[user.name] has removed the power control board from [src.name]!</span>",\
 							"<span class='notice'>You remove the power control board.</span>")
-						new /obj/item/weapon/module/power_control(loc)
+						new /obj/item/weapon/power_control(loc)
 		else if (opened!=2) //cover isn't removed
 			opened = 0
 			update_icon()
@@ -570,7 +570,7 @@
 				new /obj/item/stack/cable_coil(loc,10)
 				user << "<span class='notice'>You cut the cables and dismantle the power terminal.</span>"
 				qdel(terminal)
-	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0)
+	else if (istype(W, /obj/item/weapon/power_control) && opened && has_electronics==0)
 		if ((stat & BROKEN))
 			user << "<span class='warning'>You cannot put the board inside, the frame is damaged.</span>"
 			return
@@ -1283,4 +1283,19 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 	update_icon()
 	return 1
 
+/obj/item/weapon/power_control
+	name = "power control module"
+	desc = "Heavy-duty switching circuits for power control."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "power_mod"
+	item_state = "electronic"
+	matter = list(DEFAULT_WALL_MATERIAL = 50, "glass" = 50)
+	w_class = 2.0
+	flags = CONDUCT
+
+/obj/item/weapon/power_control/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	if (istype(W, /obj/item/device/multitool))
+		var/obj/item/weapon/circuitboard/ghettosmes/newcircuit = new(user.loc)
+		qdel(src)
+		user.put_in_hands(newcircuit)
 #undef APC_UPDATE_ICON_COOLDOWN

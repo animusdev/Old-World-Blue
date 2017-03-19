@@ -135,6 +135,9 @@
 		O.set_dir(user.dir)
 		O.add_fingerprint(user)
 
+		if (istype(O, /obj/item))
+			user.put_in_hands(O)
+
 		if (istype(O, /obj/item/stack))
 			var/obj/item/stack/S = O
 			S.amount = produced

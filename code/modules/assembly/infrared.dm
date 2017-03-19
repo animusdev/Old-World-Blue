@@ -1,5 +1,11 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
+/obj/effect/beam
+	name = "beam"
+	unacidable = 1//Just to be sure.
+	var/def_zone
+	pass_flags = PASSTABLE
+
 /obj/item/device/assembly/infra
 	name = "infrared emitter"
 	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted."

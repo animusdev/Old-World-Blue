@@ -12,6 +12,7 @@
 	possible_transfer_amounts = list(5,10,15,25,30,60)
 	volume = 60
 	w_class = 2
+	randpixel = 6
 	flags = OPENCONTAINER
 	center_of_mass = list("x"=16, "y"=16)
 	var/isGlass = 1
@@ -143,8 +144,10 @@
 
 	if(user.a_intent == I_HURT)
 		if(reagents && reagents.total_volume)
-			user.visible_message("<span class='warning'>[user.name] splashed the solution of [src] onto [target]</span>", \
-							"<span class='notice'>You splash the solution onto [target].</span>")
+			user.visible_message(
+				"<span class='warning'>[user.name] splashed the solution of [src] onto [target]</span>",
+				"<span class='notice'>You splash the solution onto [target].</span>"
+			)
 			reagents.splash(target, reagents.total_volume)
 			return
 

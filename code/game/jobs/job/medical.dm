@@ -203,7 +203,7 @@
 	pda = /obj/item/device/pda/emt
 	belt = /obj/item/weapon/storage/belt/medical/emt
 	hand = /obj/item/weapon/storage/firstaid/adv
-	custom_survival_gear = /obj/item/weapon/storage/box/engineer
+	adv_survival_gear = 1
 
 	backpack  = /obj/item/weapon/storage/backpack/emt
 	satchel_j = /obj/item/weapon/storage/backpack/satchel/emt

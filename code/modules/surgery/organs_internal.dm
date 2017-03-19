@@ -47,8 +47,8 @@
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message(
-			WARNING("[user] rips the larva out of [target]'s ribcage!"),
-			WARNING("You rip the larva out of [target]'s ribcage!")
+			SPAN_WARN("[user] rips the larva out of [target]'s ribcage!"),
+			SPAN_WARN("You rip the larva out of [target]'s ribcage!")
 		)
 
 		for(var/obj/item/alien_embryo/A in target)
@@ -117,8 +117,8 @@
 			if(I && I.damage > 0)
 				if(I.robotic < 2)
 					user.visible_message(
-						NOTICE("[user] treats damage to [target]'s [I.name] with [tool_name]."),
-						NOTICE("You treat damage to [target]'s [I.name] with [tool_name].")
+						SPAN_NOTE("[user] treats damage to [target]'s [I.name] with [tool_name]."),
+						SPAN_NOTE("You treat damage to [target]'s [I.name] with [tool_name].")
 					)
 					I.damage = 0
 
@@ -129,8 +129,8 @@
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 
 		user.visible_message(
-			WARNING("[user]'s hand slips, getting mess and tearing the inside of [target]'s [affected.name] with \the [tool]!"),
-			WARNING("Your hand slips, getting mess and tearing the inside of [target]'s [affected.name] with \the [tool]!")
+			SPAN_WARN("[user]'s hand slips, getting mess and tearing the inside of [target]'s [affected.name] with \the [tool]!"),
+			SPAN_WARN("Your hand slips, getting mess and tearing the inside of [target]'s [affected.name] with \the [tool]!")
 		)
 		var/dam_amt = 2
 
@@ -194,8 +194,8 @@
 
 			if(I && I.damage > 0 && I.robotic >= ORGAN_ROBOT)
 				user.visible_message(
-					NOTICE("[user] repairs [target]'s [I.name] with [tool]."),
-					NOTICE("You repair [target]'s [I.name] with [tool].")
+					SPAN_NOTE("[user] repairs [target]'s [I.name] with [tool]."),
+					SPAN_NOTE("You repair [target]'s [I.name] with [tool].")
 				)
 				I.damage = 0
 
@@ -206,8 +206,8 @@
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 
 		user.visible_message(
-			WARNING("[user]'s hand slips, gumming up the mechanisms inside of [target]'s [affected.name] with \the [tool]!"),
-			WARNING("Your hand slips, gumming up the mechanisms inside of [target]'s [affected.name] with \the [tool]!")
+			SPAN_WARN("[user]'s hand slips, gumming up the mechanisms inside of [target]'s [affected.name] with \the [tool]!"),
+			SPAN_WARN("Your hand slips, gumming up the mechanisms inside of [target]'s [affected.name] with \the [tool]!")
 		)
 
 		target.adjustToxLoss(5)
@@ -263,8 +263,8 @@
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message(
-			NOTICE("[user] has separated [target]'s [target.op_stage.current_organ] with \the [tool]."),
-			NOTICE("You have separated [target]'s [target.op_stage.current_organ] with \the [tool].")
+			SPAN_NOTE("[user] has separated [target]'s [target.op_stage.current_organ] with \the [tool]."),
+			SPAN_NOTE("You have separated [target]'s [target.op_stage.current_organ] with \the [tool].")
 		)
 
 		var/obj/item/organ/internal/I = target.internal_organs_by_name[target.op_stage.current_organ]
@@ -274,8 +274,8 @@
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			WARNING("[user]'s hand slips, slicing an artery inside [target]'s [affected.name] with \the [tool]!"),
-			WARNING("Your hand slips, slicing an artery inside [target]'s [affected.name] with \the [tool]!")
+			SPAN_WARN("[user]'s hand slips, slicing an artery inside [target]'s [affected.name] with \the [tool]!"),
+			SPAN_WARN("Your hand slips, slicing an artery inside [target]'s [affected.name] with \the [tool]!")
 		)
 		affected.createwound(CUT, rand(30,50), 1)
 
@@ -320,8 +320,8 @@
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message(
-			NOTICE("[user] has removed [target]'s [target.op_stage.current_organ] with \the [tool]."),
-			NOTICE("You have removed [target]'s [target.op_stage.current_organ] with \the [tool].")
+			SPAN_NOTE("[user] has removed [target]'s [target.op_stage.current_organ] with \the [tool]."),
+			SPAN_NOTE("You have removed [target]'s [target.op_stage.current_organ] with \the [tool].")
 		)
 
 		// Extract the organ!
@@ -334,8 +334,8 @@
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			WARNING("[user]'s hand slips, damaging the flesh in [target]'s [affected.name] with \the [tool]!"),
-			WARNING("Your hand slips, damaging the flesh in [target]'s [affected.name] with \the [tool]!")
+			SPAN_WARN("[user]'s hand slips, damaging the flesh in [target]'s [affected.name] with \the [tool]!"),
+			SPAN_WARN("Your hand slips, damaging the flesh in [target]'s [affected.name] with \the [tool]!")
 		)
 		affected.createwound(BRUISE, 20)
 
@@ -359,7 +359,7 @@
 			return 0
 
 		if(!target.species)
-			user << WARNING("You have no idea what species this person is. Report this on the bug tracker.")
+			user << SPAN_WARN("You have no idea what species this person is. Report this on the bug tracker.")
 			return 2
 
 		var/o_is = (O.gender == PLURAL) ? "are" : "is"
@@ -371,22 +371,22 @@
 		else if(target.species.has_organ[O.organ_tag])
 
 			if(O.damage > (O.max_damage * 0.75))
-				user << WARNING("\The [O.organ_tag] [o_is] in no state to be transplanted.")
+				user << SPAN_WARN("\The [O.organ_tag] [o_is] in no state to be transplanted.")
 				return 2
 
 			if(!target.internal_organs_by_name[O.organ_tag])
 				organ_missing = 1
 			else
-				user << WARNING("\The [target] already has [o_a][O.organ_tag].")
+				user << SPAN_WARN("\The [target] already has [o_a][O.organ_tag].")
 				return 2
 
 			if(O && affected.organ_tag == O.parent_organ)
 				organ_compatible = 1
 			else
-				user << WARNING("\The [O.organ_tag] [o_do] normally go in \the [affected.name].")
+				user << SPAN_WARN("\The [O.organ_tag] [o_do] normally go in \the [affected.name].")
 				return 2
 		else
-			user << WARNING("You're pretty sure [target.species.name_plural] don't normally have [o_a][O.organ_tag].")
+			user << SPAN_WARN("You're pretty sure [target.species.name_plural] don't normally have [o_a][O.organ_tag].")
 			return 2
 
 		return ..() && organ_missing && organ_compatible
@@ -403,8 +403,8 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			NOTICE("[user] has transplanted \the [tool] into [target]'s [affected.name]."),
-			NOTICE("You have transplanted \the [tool] into [target]'s [affected.name].")
+			SPAN_NOTE("[user] has transplanted \the [tool] into [target]'s [affected.name]."),
+			SPAN_NOTE("You have transplanted \the [tool] into [target]'s [affected.name].")
 		)
 		var/obj/item/organ/internal/O = tool
 		if(istype(O))
@@ -413,8 +413,8 @@
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message(
-			WARNING("[user]'s hand slips, damaging \the [tool]!"),
-			WARNING("Your hand slips, damaging \the [tool]!")
+			SPAN_WARN("[user]'s hand slips, damaging \the [tool]!"),
+			SPAN_WARN("Your hand slips, damaging \the [tool]!")
 		)
 		var/obj/item/organ/internal/I = tool
 		if(istype(I))
@@ -459,8 +459,8 @@
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message(
-			NOTICE("[user] has reattached [target]'s [target.op_stage.current_organ] with \the [tool]."),
-			NOTICE("You have reattached [target]'s [target.op_stage.current_organ] with \the [tool].")
+			SPAN_NOTE("[user] has reattached [target]'s [target.op_stage.current_organ] with \the [tool]."),
+			SPAN_NOTE("You have reattached [target]'s [target.op_stage.current_organ] with \the [tool].")
 		)
 
 		var/obj/item/organ/internal/I = target.internal_organs_by_name[target.op_stage.current_organ]
@@ -470,7 +470,7 @@
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			WARNING("[user]'s hand slips, damaging the flesh in [target]'s [affected.name] with \the [tool]!"),
-			WARNING("Your hand slips, damaging the flesh in [target]'s [affected.name] with \the [tool]!")
+			SPAN_WARN("[user]'s hand slips, damaging the flesh in [target]'s [affected.name] with \the [tool]!"),
+			SPAN_WARN("Your hand slips, damaging the flesh in [target]'s [affected.name] with \the [tool]!")
 		)
 		affected.createwound(BRUISE, 20)

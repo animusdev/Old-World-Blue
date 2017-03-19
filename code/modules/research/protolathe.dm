@@ -107,6 +107,8 @@ Note: Must be placed west/left of and R&D console to function.
 		return
 
 /obj/machinery/r_n_d/protolathe/proc/Build(var/datum/design/D)
+	if(!canBuild(D))
+		return 0
 	busy = 1
 	var/power = active_power_usage
 	for(var/M in D.materials)

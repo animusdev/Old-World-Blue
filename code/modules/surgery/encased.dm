@@ -50,8 +50,8 @@
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 
 		user.visible_message(
-			NOTICE("[user] has cut [target]'s [affected.encased] open with \the [tool]."),
-			NOTICE("You have cut [target]'s [affected.encased] open with \the [tool].")
+			SPAN_NOTE("[user] has cut [target]'s [affected.encased] open with \the [tool]."),
+			SPAN_NOTE("You have cut [target]'s [affected.encased] open with \the [tool].")
 		)
 		affected.open = 2.5
 
@@ -62,8 +62,8 @@
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 
 		user.visible_message(
-			WARNING("[user]'s hand slips, cracking [target]'s [affected.encased] with \the [tool]!"),
-			WARNING("Your hand slips, cracking [target]'s [affected.encased] with \the [tool]!")
+			SPAN_WARN("[user]'s hand slips, cracking [target]'s [affected.encased] with \the [tool]!"),
+			SPAN_WARN("Your hand slips, cracking [target]'s [affected.encased] with \the [tool]!")
 		)
 
 		affected.createwound(CUT, 20)
@@ -105,8 +105,8 @@
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 
 		user.visible_message(
-			NOTICE("[user] forces open [target]'s [affected.encased] with \the [tool]."),
-			NOTICE("You force open [target]'s [affected.encased] with \the [tool].")
+			SPAN_NOTE("[user] forces open [target]'s [affected.encased] with \the [tool]."),
+			SPAN_NOTE("You force open [target]'s [affected.encased] with \the [tool].")
 		)
 
 		affected.open = 3
@@ -122,8 +122,8 @@
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 
 		user.visible_message(
-			WARNING("[user]'s hand slips, cracking [target]'s [affected.encased]!"),
-			WARNING("Your hand slips, cracking [target]'s  [affected.encased]!")
+			SPAN_WARN("[user]'s hand slips, cracking [target]'s [affected.encased]!"),
+			SPAN_WARN("Your hand slips, cracking [target]'s  [affected.encased]!")
 		)
 
 		affected.createwound(BRUISE, 20)
@@ -165,8 +165,8 @@
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 
 		user.visible_message(
-			NOTICE("[user] bends [target]'s [affected.encased] back into place with \the [tool]."),
-			NOTICE("You bend [target]'s [affected.encased] back into place with \the [tool].")
+			SPAN_NOTE("[user] bends [target]'s [affected.encased] back into place with \the [tool]."),
+			SPAN_NOTE("You bend [target]'s [affected.encased] back into place with \the [tool].")
 		)
 
 		affected.open = 2.5
@@ -178,8 +178,8 @@
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 
 		user.visible_message(
-			WARNING("[user]'s hand slips, bending [target]'s [affected.encased] the wrong way!"),
-			WARNING("Your hand slips, bending [target]'s [affected.encased] the wrong way!")
+			SPAN_WARN("[user]'s hand slips, bending [target]'s [affected.encased] the wrong way!"),
+			SPAN_WARN("Your hand slips, bending [target]'s [affected.encased] the wrong way!")
 		)
 
 		affected.createwound(BRUISE, 20)
@@ -189,7 +189,7 @@
 			if(prob(40))
 				var/obj/item/organ/internal/O = pick(affected.internal_organs) //TODO weight by organ size
 				user.visible_message(
-					DANGER("A wayward piece of [target]'s [affected.encased] pierces \his [O.name]!")
+					SPAN_DANG("A wayward piece of [target]'s [affected.encased] pierces \his [O.name]!")
 				)
 				O.bruise()
 
@@ -229,8 +229,8 @@
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 
 		user.visible_message(
-			NOTICE("[user] applied \the [tool] to [target]'s [affected.encased]."),
-			NOTICE("You applied \the [tool] to [target]'s [affected.encased].")
+			SPAN_NOTE("[user] applied \the [tool] to [target]'s [affected.encased]."),
+			SPAN_NOTE("You applied \the [tool] to [target]'s [affected.encased].")
 		)
 
 		affected.open = 2

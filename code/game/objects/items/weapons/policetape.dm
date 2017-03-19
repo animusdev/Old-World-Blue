@@ -1,24 +1,40 @@
 //Define all tape types in policetape.dm
 /obj/item/taperoll
-	name = "tape roll"
+	name = "police tape"
+	desc = "A roll of police tape used to block off crime scenes from the public."
+	icon_state = "police"
 	icon = 'icons/policetape.dmi'
-	icon_state = "rollstart"
 	w_class = 2.0
 	var/turf/start
 	var/turf/end
 	var/tape_type = /obj/item/tape
-	var/icon_base
+
+/obj/item/taperoll/equipped()
+	. = ..()
+	update_icon()
+
+/obj/item/taperoll/dropped()
+	. = ..()
+	update_icon()
+
+/obj/item/taperoll/update_icon()
+	overlays.Cut()
+	. = ..()
+	if(ismob(loc))
+		overlays += start ? "stop" : "start"
 
 var/list/image/hazard_overlays
 var/list/tape_roll_applications = list()
 
 /obj/item/tape
-	name = "tape"
+	name = "police tape"
+	desc = "A length of police tape.  Do not cross."
+	req_access = list(access_security)
 	icon = 'icons/policetape.dmi'
 	anchored = 1
 	var/lifted = 0
 	var/crumpled = 0
-	var/icon_base
+	var/icon_base = "police"
 
 /obj/item/tape/New()
 	..()
@@ -29,25 +45,11 @@ var/list/tape_roll_applications = list()
 		hazard_overlays["[SOUTH]"]	= new/image('icons/effects/warning_stripes.dmi', icon_state = "S")
 		hazard_overlays["[WEST]"]	= new/image('icons/effects/warning_stripes.dmi', icon_state = "W")
 
-/obj/item/taperoll/police
-	name = "police tape"
-	desc = "A roll of police tape used to block off crime scenes from the public."
-	icon_state = "police_start"
-	tape_type = /obj/item/tape/police
-	icon_base = "police"
-
-/obj/item/tape/police
-	name = "police tape"
-	desc = "A length of police tape.  Do not cross."
-	req_access = list(access_security)
-	icon_base = "police"
-
 /obj/item/taperoll/engineering
 	name = "engineering tape"
 	desc = "A roll of engineering tape used to block off working areas from the public."
-	icon_state = "engineering_start"
+	icon_state = "engineering"
 	tape_type = /obj/item/tape/engineering
-	icon_base = "engineering"
 
 /obj/item/tape/engineering
 	name = "engineering tape"
@@ -56,12 +58,11 @@ var/list/tape_roll_applications = list()
 	icon_base = "engineering"
 
 /obj/item/taperoll/attack_self(mob/user as mob)
-	if(icon_state == "[icon_base]_start")
+	if(!start)
 		start = get_turf(src)
+		update_icon()
 		usr << "\blue You place the first end of the [src]."
-		icon_state = "[icon_base]_stop"
 	else
-		icon_state = "[icon_base]_start"
 		end = get_turf(src)
 		if(start.y != end.y && start.x != end.x || start.z != end.z)
 			usr << "\blue [src] can only be laid horizontally or vertically."
@@ -107,6 +108,8 @@ var/list/tape_roll_applications = list()
 				P.icon_state = "[P.icon_base]_[dir]"
 			cur = get_step_towards(cur,end)
 		usr << "\blue You finish placing the [src]."	//Git Test
+		start = null
+		update_icon()
 
 /obj/item/taperoll/afterattack(var/atom/A, mob/user as mob, proximity)
 	if(!proximity)
@@ -116,7 +119,7 @@ var/list/tape_roll_applications = list()
 		var/turf/T = get_turf(A)
 		var/obj/item/tape/P = new tape_type(T.x,T.y,T.z)
 		P.loc = locate(T.x,T.y,T.z)
-		P.icon_state = "[src.icon_base]_door"
+		P.icon_state = "[src.icon_state]_door"
 		P.layer = 3.2
 		user << "\blue You finish placing the [src]."
 

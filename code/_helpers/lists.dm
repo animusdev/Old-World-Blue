@@ -658,3 +658,9 @@ datum/proc/dd_SortValue()
 	for(var/path in (typesof(prototype) - prototype))
 		L += new path()
 	return L
+
+/proc/filter_list(var/list/L, var/type)
+	. = list()
+	for(var/entry in L)
+		if(istype(entry, type))
+			. += entry

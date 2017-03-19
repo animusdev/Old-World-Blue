@@ -1,8 +1,13 @@
 /datum/organ_description
-	var/name = "upper body"
-	var/organ_tag = BP_CHEST
-	var/default_type = /obj/item/organ/external/chest
-	var/body_part = UPPER_TORSO
+	var/organ_tag = "limb"
+	var/name = "limb"
+	var/default_type = /obj/item/organ/external
+
+	var/min_broken_damage = 30
+	var/max_damage = 0
+	var/w_class = 3
+
+	var/body_part = null
 	var/amputation_point = "spine"
 	var/joint = "neck"
 	var/parent_organ = null
@@ -11,19 +16,41 @@
 	var/can_stand = 0
 	var/list/drop_on_remove = null
 
+/datum/organ_description/chest
+	organ_tag = BP_CHEST
+	name = "upper body"
+	default_type = /obj/item/organ/external/chest
+
+	min_broken_damage = 35
+	max_damage = 100
+	w_class = 5
+
+	body_part = UPPER_TORSO
+	amputation_point = "spine"
+
 /datum/organ_description/groin
-	name = "lower body"
 	organ_tag = BP_GROIN
+	name = "lower body"
 	default_type = /obj/item/organ/external/groin
+
+	min_broken_damage = 35
+	max_damage = 100
+	w_class = 4
+
 	body_part = LOWER_TORSO
 	joint = "hip"
 	amputation_point = "lumbar"
 	parent_organ = BP_CHEST
 
 /datum/organ_description/head
-	name = "head"
 	organ_tag = BP_HEAD
+	name = "head"
 	default_type = /obj/item/organ/external/head
+
+	max_damage = 75
+	min_broken_damage = 35
+	w_class = 3
+
 	body_part = HEAD
 	joint = "jaw"
 	amputation_point = "neck"
@@ -31,7 +58,9 @@
 	drop_on_remove = list(slot_glasses,slot_head,slot_l_ear,slot_r_ear,slot_wear_mask)
 
 /datum/organ_description/arm
-	default_type = /obj/item/organ/external/limb
+	max_damage = 50
+	min_broken_damage = 30
+	w_class = 3
 	parent_organ = BP_CHEST
 	can_grasp = 1
 
@@ -50,7 +79,9 @@
 	amputation_point = "right shoulder"
 
 /datum/organ_description/leg
-	default_type = /obj/item/organ/external/limb
+	max_damage = 50
+	min_broken_damage = 30
+	w_class = 3
 	parent_organ = BP_GROIN
 	can_stand = 1
 
@@ -71,7 +102,8 @@
 	amputation_point = "right hip"
 
 /datum/organ_description/hand
-	default_type = /obj/item/organ/external/tiny
+	min_broken_damage = 15
+	w_class = 2
 	can_grasp = 1
 	drop_on_remove = list(slot_gloves, slot_handcuffed)
 
@@ -93,6 +125,7 @@
 
 /datum/organ_description/foot
 	default_type = /obj/item/organ/external/tiny
+	min_broken_damage = 15
 	can_stand = 1
 	drop_on_remove = list(slot_shoes, slot_legcuffed)
 
@@ -115,8 +148,7 @@
 	amputation_point = "right ankle"
 
 ////DIONA////
-/datum/organ_description/diona
-	name = "upper body"
+/datum/organ_description/chest/diona
 	amputation_point = "branch"
 	joint = "structural ligament"
 	default_type = /obj/item/organ/external/diona/chest
@@ -159,7 +191,7 @@
 	default_type = /obj/item/organ/external/diona/tiny
 
 ////SLIME////
-/datum/organ_description/slime
+/datum/organ_description/chest/slime
 	name = "upper body"
 	default_type = /obj/item/organ/external/chest/slime
 

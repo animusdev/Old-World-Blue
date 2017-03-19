@@ -205,6 +205,7 @@ var/global/list/damage_icon_parts = list()
 		if(O.is_stump())
 			continue
 
+		O.update_damstate()
 		O.update_icon()
 		if(O.damage_state == "00") continue
 		var/icon/DI
@@ -273,7 +274,7 @@ var/global/list/damage_icon_parts = list()
 		base_icon = icon('icons/mob/human.dmi', "blank")
 
 		for(var/obj/item/organ/external/part in organs)
-			var/icon/temp = part.get_icon(skeleton)
+			var/icon/temp = part.update_icon(skeleton)
 			//That part makes left and right legs drawn topmost and lowermost when human looks WEST or EAST
 			//And no change in rendering for other parts (they icon_position is 0, so goes to 'else' part)
 			if(part.icon_position&(LEFT|RIGHT))
@@ -656,9 +657,6 @@ var/global/list/damage_icon_parts = list()
 					var/i_state = i.item_state
 					if(!i_state) i_state = i.icon_state
 					standing.overlays += image(body_build.get_mob_icon("belt", i_state), i_state)
-
-		standing.appearance_flags = RESET_COLOR
-		standing.color = belt.color
 
 		overlays_standing[belt_layer] = standing
 	else

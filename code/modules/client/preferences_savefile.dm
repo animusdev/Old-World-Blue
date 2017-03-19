@@ -155,6 +155,9 @@
 	for(var/module in robot_modules)
 		S["flavour_texts_robot_[module]"] >> flavor_texts_robot[module]
 
+	S["relations"]			>> relations
+	S["relations_info"]		>> relations_info
+
 	var/mod_id = "nothing"
 	var/color = "#ffffff"
 	for(var/organ in modifications_types)
@@ -231,6 +234,8 @@
 	if(!modifications_data) src.modifications_data = list()
 	if(!modifications_colors) src.modifications_colors = list()
 	if(!gear) src.gear = list()
+	if(!relations) src.relations = list()
+	if(!relations_info) src.relations_info = list()
 
 	if(!home_system) home_system = "Unset"
 	if(!citizenship) citizenship = "None"
@@ -294,6 +299,9 @@
 	S["flavour_texts_robot_Default"] << flavor_texts_robot["Default"]
 	for(var/module in robot_modules)
 		S["flavour_texts_robot_[module]"] << flavor_texts_robot[module]
+
+	S["relations"]			<< relations
+	S["relations_info"]		<< relations_info
 
 	for(var/organ in modifications_types)
 		var/datum/body_modification/BM = modifications_data[organ]

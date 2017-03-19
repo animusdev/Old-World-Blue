@@ -28,8 +28,8 @@
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message(
-			NOTICE("[user] takes out all the bone chips in [target]'s brain with \the [tool]."),
-			NOTICE("You take out all the bone chips in [target]'s brain with \the [tool].")
+			SPAN_NOTE("[user] takes out all the bone chips in [target]'s brain with \the [tool]."),
+			SPAN_NOTE("You take out all the bone chips in [target]'s brain with \the [tool].")
 		)
 		var/obj/item/organ/internal/brain/sponge = target.internal_organs_by_name[O_BRAIN]
 		if (sponge)
@@ -37,8 +37,8 @@
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message(
-			WARNING("[user]'s hand slips, jabbing \the [tool] in [target]'s brain!"),
-			WARNING("Your hand slips, jabbing \the [tool] in [target]'s brain!")
+			SPAN_WARN("[user]'s hand slips, jabbing \the [tool] in [target]'s brain!"),
+			SPAN_WARN("Your hand slips, jabbing \the [tool] in [target]'s brain!")
 		)
 		target.apply_damage(30, BRUTE, BP_HEAD, 1, sharp=1)
 
@@ -67,8 +67,8 @@
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message(
-			NOTICE("[user] mends hematoma in [target]'s brain with \the [tool]."),
-			NOTICE("You mend hematoma in [target]'s brain with \the [tool].")
+			SPAN_NOTE("[user] mends hematoma in [target]'s brain with \the [tool]."),
+			SPAN_NOTE("You mend hematoma in [target]'s brain with \the [tool].")
 		)
 		var/obj/item/organ/internal/brain/sponge = target.internal_organs_by_name[O_BRAIN]
 		if (sponge)
@@ -76,7 +76,7 @@
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message(
-			WARNING("[user]'s hand slips, bruising [target]'s brain with \the [tool]!"),
-			WARNING("Your hand slips, bruising [target]'s brain with \the [tool]!")
+			SPAN_WARN("[user]'s hand slips, bruising [target]'s brain with \the [tool]!"),
+			SPAN_WARN("Your hand slips, bruising [target]'s brain with \the [tool]!")
 		)
 		target.apply_damage(20, BRUTE, BP_HEAD, 1, sharp=1)

@@ -454,11 +454,9 @@
 			if(reagents.total_volume/count < 1) //Sanity checking.
 				return
 			while (count--)
-				var/obj/item/weapon/reagent_containers/pill/P = new/obj/item/weapon/reagent_containers/pill(src.loc)
+				var/obj/item/weapon/reagent_containers/pill/P = new (src.loc)
 				if(!name) name = reagents.get_master_reagent_name()
 				P.name = "[name] pill"
-				P.pixel_x = rand(-7, 7) //random position
-				P.pixel_y = rand(-7, 7)
 				P.icon_state = "pill"+pillsprite
 				reagents.trans_to_obj(P,amount_per_pill)
 				if(src.loaded_pill_bottle)
@@ -472,10 +470,8 @@
 				if(!name || !src.Adjacent(usr))
 					usr.unset_machine()
 					return
-				var/obj/item/weapon/reagent_containers/glass/beaker/bottle/P = new/obj/item/weapon/reagent_containers/glass/beaker/bottle(src.loc)
+				var/obj/item/weapon/reagent_containers/glass/beaker/bottle/P = new (src.loc)
 				P.name = "[name] bottle"
-				P.pixel_x = rand(-7, 7) //random position
-				P.pixel_y = rand(-7, 7)
 				P.icon_state = bottlesprite
 				reagents.trans_to_obj(P,60)
 				P.update_icon()

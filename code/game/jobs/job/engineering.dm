@@ -9,7 +9,7 @@
 	minimal_player_age = 14
 
 	ear = /obj/item/device/radio/headset/eng
-	custom_survival_gear = /obj/item/weapon/storage/box/engineer
+	adv_survival_gear = 1
 
 	backpack  = /obj/item/weapon/storage/backpack/industrial
 	satchel_j = /obj/item/weapon/storage/backpack/satchel/eng

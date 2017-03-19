@@ -36,16 +36,16 @@
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message(
-			NOTICE("[user] has cut open [target]'s face and neck with \the [tool]."),
-			NOTICE("You have cut open [target]'s face and neck with \the [tool].")
+			SPAN_NOTE("[user] has cut open [target]'s face and neck with \the [tool]."),
+			SPAN_NOTE("You have cut open [target]'s face and neck with \the [tool].")
 		)
 		target.op_stage.face = 1
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			WARNING("[user]'s hand slips, slicing [target]'s throat wth \the [tool]!"),
-			WARNING("Your hand slips, slicing [target]'s throat wth \the [tool]!")
+			SPAN_WARN("[user]'s hand slips, slicing [target]'s throat wth \the [tool]!"),
+			SPAN_WARN("Your hand slips, slicing [target]'s throat wth \the [tool]!")
 		)
 		affected.createwound(CUT, 60)
 		target.losebreath += 10
@@ -72,15 +72,15 @@
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message(
-			NOTICE("[user] mends [target]'s vocal cords with \the [tool]."),
-			NOTICE("You mend [target]'s vocal cords with \the [tool].")
+			SPAN_NOTE("[user] mends [target]'s vocal cords with \the [tool]."),
+			SPAN_NOTE("You mend [target]'s vocal cords with \the [tool].")
 		)
 		target.op_stage.face = 2
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message(
-			WARNING("[user]'s hand slips, clamping [target]'s trachea shut for a moment with \the [tool]!"),
-			WARNING("Your hand slips, clamping [user]'s trachea shut for a moment with \the [tool]!")
+			SPAN_WARN("[user]'s hand slips, clamping [target]'s trachea shut for a moment with \the [tool]!"),
+			SPAN_WARN("Your hand slips, clamping [user]'s trachea shut for a moment with \the [tool]!")
 		)
 		target.losebreath += 10
 
@@ -106,16 +106,16 @@
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message(
-			NOTICE("[user] pulls the skin on [target]'s face back in place with \the [tool]."),
-			NOTICE("You pull the skin on [target]'s face back in place with \the [tool].")
+			SPAN_NOTE("[user] pulls the skin on [target]'s face back in place with \the [tool]."),
+			SPAN_NOTE("You pull the skin on [target]'s face back in place with \the [tool].")
 		)
 		target.op_stage.face = 3
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			WARNING("[user]'s hand slips, tearing skin on [target]'s face with \the [tool]!"),
-			WARNING("Your hand slips, tearing skin on [target]'s face with \the [tool]!")
+			SPAN_WARN("[user]'s hand slips, tearing skin on [target]'s face with \the [tool]!"),
+			SPAN_WARN("Your hand slips, tearing skin on [target]'s face with \the [tool]!")
 		)
 		target.apply_damage(10, BRUTE, affected, sharp=1, sharp=1)
 
@@ -143,8 +143,8 @@
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			NOTICE("[user] cauterizes the incision on [target]'s face and neck with \the [tool]."),
-			NOTICE("You cauterize the incision on [target]'s face and neck with \the [tool].")
+			SPAN_NOTE("[user] cauterizes the incision on [target]'s face and neck with \the [tool]."),
+			SPAN_NOTE("You cauterize the incision on [target]'s face and neck with \the [tool].")
 		)
 		affected.open = 0
 		affected.status &= ~ORGAN_BLEEDING
@@ -156,7 +156,7 @@
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
-			WARNING("[user]'s hand slips, leaving a small burn on [target]'s face with \the [tool]!"),
-			WARNING("Your hand slips, leaving a small burn on [target]'s face with \the [tool]!")
+			SPAN_WARN("[user]'s hand slips, leaving a small burn on [target]'s face with \the [tool]!"),
+			SPAN_WARN("Your hand slips, leaving a small burn on [target]'s face with \the [tool]!")
 		)
 		target.apply_damage(4, BURN, affected)

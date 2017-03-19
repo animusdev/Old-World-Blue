@@ -17,6 +17,18 @@
 	var/cuff_sound = 'sound/weapons/handcuffs.ogg'
 	var/cuff_type = "handcuffs"
 
+/obj/item/weapon/legcuffs
+	name = "legcuffs"
+	desc = "Use this to keep prisoners in line."
+	gender = PLURAL
+	icon = 'icons/obj/items.dmi'
+	icon_state = "handcuff"
+	flags = CONDUCT
+	throwforce = 0
+	w_class = 3.0
+	origin_tech = list(TECH_MATERIAL = 1)
+	var/breakouttime = 300	//Deciseconds = 30s = 0.5 minute
+
 /obj/item/weapon/handcuffs/attack(var/mob/living/carbon/C, var/mob/living/user)
 
 	if(!user.IsAdvancedToolUser())

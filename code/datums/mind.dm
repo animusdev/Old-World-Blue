@@ -37,6 +37,8 @@
 	var/active = 0
 
 	var/memory
+	var/list/known_connections //list of known (RNG) relations between people
+	var/gen_relations_info
 
 	var/assigned_role
 	var/special_role

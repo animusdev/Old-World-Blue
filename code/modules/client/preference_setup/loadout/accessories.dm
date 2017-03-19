@@ -118,11 +118,11 @@
 
 /datum/gear/accessory/vest/drop_pouches
 	display_name = "drop pouches"
-	path = /obj/item/clothing/accessory/storage/brown_drop_pouches
+	path = /obj/item/clothing/accessory/storage/drop_pouches
 	options = list(
-		"engineering" = /obj/item/clothing/accessory/storage/brown_drop_pouches,
-		"security"    = /obj/item/clothing/accessory/storage/black_drop_pouches,
-		"medical"     = /obj/item/clothing/accessory/storage/white_drop_pouches
+		"security"    = /obj/item/clothing/accessory/storage/drop_pouches,
+		"engineering" = /obj/item/clothing/accessory/storage/drop_pouches/brown,
+		"medical"     = /obj/item/clothing/accessory/storage/drop_pouches/white
 	)
 
 /datum/gear/accessory/webbing
