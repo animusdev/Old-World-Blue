@@ -44,11 +44,11 @@ var/datum/antagonist/traitor/traitors
 					kill_objective.owner = traitor
 					kill_objective.find_target()
 					traitor.objectives += kill_objective
-				if(34 to 50)
+				if(34 to 44)
 					var/datum/objective/explosion/explosion_objective = new
 					explosion_objective.owner = traitor
 					traitor.objectives += explosion_objective
-				if(51 to 66)
+				if(45 to 66)
 					var/datum/objective/harm/harm_objective = new
 					harm_objective.owner = traitor
 					harm_objective.find_target()
