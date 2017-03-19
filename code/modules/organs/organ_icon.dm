@@ -163,7 +163,7 @@ var/global/list/limb_icon_cache = list()
 var/list/flesh_hud_colours = list("#02BA08","#9ECF19","#DEDE10","#FFAA00","#FF0000","#AA0000","#660000")
 var/list/robot_hud_colours = list("#CFCFCF","#AFAFAF","#8F8F8F","#6F6F6F","#4F4F4F","#2F2F2F","#000000")
 
-/obj/item/organ/external/proc/get_damage_hud_image(var/min_dam_state)
+/obj/item/organ/external/proc/get_damage_hud_image(var/forced_dam_state)
 
 	// Generate the greyscale base icon and cache it for later.
 	// icon_cache_key is set by any get_icon() calls that are made.
@@ -177,11 +177,20 @@ var/list/robot_hud_colours = list("#CFCFCF","#AFAFAF","#8F8F8F","#6F6F6F","#4F4F
 		hud_damage_image = image(limb_icon_cache[cache_key])
 
 	// Calculate the required color index.
-	var/dam_state = min(1,((brute_dam+burn_dam)/max_damage))
-	// Apply traumatic shock min damage state.
-	if(!isnull(min_dam_state) && dam_state < min_dam_state)
-		dam_state = min_dam_state
-	// Apply colour and return product.
-	var/list/hud_colours = (robotic < ORGAN_ROBOT) ? flesh_hud_colours : robot_hud_colours
-	hud_damage_image.color = hud_colours[max(1,min(ceil(dam_state*hud_colours.len),hud_colours.len))]
+	if(istext(forced_dam_state))
+		switch(forced_dam_state)
+			if("numb")
+				hud_damage_image.color = "#A8A8A8"
+			if("dead")
+				hud_damage_image.color = "#3D1212"
+	else
+		if(!isnum(forced_dam_state))
+			forced_dam_state = 0
+
+		var/dam_state = min(1,((brute_dam+burn_dam)/max_damage))
+		if(!isnull(forced_dam_state) && dam_state < forced_dam_state)
+			dam_state = forced_dam_state
+		// Apply colour and return product.
+		var/list/hud_colours = (robotic < ORGAN_ROBOT) ? flesh_hud_colours : robot_hud_colours
+		hud_damage_image.color = hud_colours[max(1,min(ceil(dam_state*hud_colours.len),hud_colours.len))]
 	return hud_damage_image

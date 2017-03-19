@@ -1135,7 +1135,16 @@
 		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS|SEE_SELF
 		see_in_dark = 8
 		if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-		if(healths)		healths.icon_state = "health7"	//DEAD healthmeter
+		if(healths)
+			var/list/health_images = list()
+			for(var/obj/item/organ/external/E in organs)
+				health_images += E.get_damage_hud_image("dead")
+			health_images += image('icons/mob/screen1_health.dmi',"dead")
+
+			healths.icon_state = "blank"
+			healths.overlays.Cut()
+			healths.overlays += health_images
+
 		if(client)
 			if(client.view != world.view) // If mob dies while zoomed in with device, unzoom them.
 				for(var/obj/item/item in contents)
@@ -1173,24 +1182,28 @@
 			process_glasses(equipped_glasses)
 
 		if(healths)
-			if (analgesic > 100)
-				healths.icon_state = "health_numb"
-			else
-				// Generate a by-limb health display.
-				healths.icon_state = "blank"
-				healths.overlays = null
+			// Generate a by-limb health display.
+			healths.icon_state = "blank"
+			healths.overlays.Cut()
 
+			var/list/health_images = list()
+			var/forced_state = null
+			if (analgesic > 100)
+				for(var/obj/item/organ/external/E in organs)
+					health_images += E.get_damage_hud_image("numb")
+					health_images += image('icons/mob/screen1_health.dmi',"numb")
+			else
 				var/no_damage = 1
 				var/trauma_val = 0 // Used in calculating softcrit/hardcrit indicators.
 				if(!(species.flags & NO_PAIN))
 					trauma_val = max(traumatic_shock,halloss)/species.total_health
-				var/limb_trauma_val = trauma_val*0.3
+				forced_state = trauma_val*0.3
+
 				// Collect and apply the images all at once to avoid appearance churn.
-				var/list/health_images = list()
 				for(var/obj/item/organ/external/E in organs)
 					if(no_damage && (E.brute_dam || E.burn_dam))
 						no_damage = 0
-					health_images += E.get_damage_hud_image(limb_trauma_val)
+					health_images += E.get_damage_hud_image(forced_state)
 
 				// Apply a fire overlay if we're burning.
 				if(on_fire)
@@ -1206,7 +1219,7 @@
 				else if(no_damage)
 					health_images += image('icons/mob/screen1_health.dmi',"fullhealth")
 
-				healths.overlays += health_images
+			healths.overlays += health_images
 
 		if(nutrition_icon)
 			switch(nutrition)
