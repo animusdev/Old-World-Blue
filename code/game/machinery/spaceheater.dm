@@ -53,14 +53,13 @@
 				return
 			else
 				// insert cell
-				var/obj/item/weapon/cell/C = usr.get_active_hand()
-				if(istype(C))
-					user.drop_from_inventory(C, src)
-					cell = C
-					C.add_fingerprint(usr)
+				var/obj/item/weapon/cell/C = I
+				user.drop_from_inventory(C, src)
+				cell = C
+				C.add_fingerprint(usr)
 
-					user.visible_message("\blue [user] inserts a power cell into [src].", "\blue You insert the power cell into [src].")
-					power_change()
+				user.visible_message("\blue [user] inserts a power cell into [src].", "\blue You insert the power cell into [src].")
+				power_change()
 		else
 			user << "The hatch must be open to insert a power cell."
 			return
