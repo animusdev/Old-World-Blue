@@ -22,7 +22,7 @@ var/global/datum/matchmaker/matchmaker = new()
 		if(R.other && !R.finalized)
 			to_warn |= R.holder.current
 	for(var/mob/M in to_warn)
-		to_chat(M,"<span class='warning'>You have new connections. Use \"See Relationship Info\" to view and finalize them.</span>")
+		M << "<span class='warning'>You have new connections. Use \"See Relationship Info\" to view and finalize them.</span>"
 
 /datum/matchmaker/proc/get_relationships(datum/mind/M)
 	. = list()
@@ -96,8 +96,8 @@ var/global/datum/matchmaker/matchmaker = new()
 	return 1
 
 /datum/relation/proc/sever()
-	to_chat(holder.current,"<span class='warning'>Your connection with [other.holder] is no more.</span>")
-	to_chat(other.holder.current,"<span class='warning'>Your connection with [holder] is no more.</span>")
+	holder.current << "<span class='warning'>Your connection with [other.holder] is no more.</span>"
+	other.holder.current << "<span class='warning'>Your connection with [holder] is no more.</span>"
 	other.other = null
 	matchmaker.relations -= other
 	matchmaker.relations -= src
@@ -190,7 +190,7 @@ var/global/datum/matchmaker/matchmaker = new()
 	if(href_list["info_relation"])
 		var/datum/relation/R = locate(href_list["info_relation"])
 		if(istype(R))
-			var/info = sanitize(input("What would you like the other party for this connection to know about your character?","Character info",R.info) as message|null)
+			var/info = input_utf8(usr, "What would you like the other party for this connection to know about your character?", "Character info", R.info, "message")
 			if(info)
 				R.info = info
 				see_relationship_info()
@@ -202,7 +202,7 @@ var/global/datum/matchmaker/matchmaker = new()
 			var/list/relations = matchmaker.get_relationships(mind)
 			for(var/datum/relation/R in relations)
 				R.finalize()
-			show_browser(usr,null, "window=relations")
+			usr << browse(null, "window=relations")
 		else
-			show_browser(usr,null, "window=relations")
+			usr << browse(null, "window=relations")
 		return 1

@@ -1,12 +1,13 @@
-#define PAGE_LOAD		1
-#define PAGE_SAVE		2
-#define PAGE_RECORDS	3
-#define PAGE_LIMBS		4
-#define PAGE_OCCUPATION	5
-#define PAGE_LOADOUT	6
-#define PAGE_FLAVOR		7
-#define PAGE_PREFS		8
-#define PAGE_SPECIES	9
+#define PAGE_LOAD        1
+#define PAGE_SAVE        2
+#define PAGE_RECORDS     3
+#define PAGE_LIMBS       4
+#define PAGE_OCCUPATION  5
+#define PAGE_LOADOUT     6
+#define PAGE_FLAVOR      7
+#define PAGE_MATCHMAKING 8
+#define PAGE_PREFS       9
+#define PAGE_SPECIES     10
 
 /datum/preferences
 	var/global/list/setup_pages = list(
@@ -15,6 +16,7 @@
 		"Occupations" = PAGE_OCCUPATION,
 		"Augmentation"= PAGE_LIMBS,
 		"Loadout"     = PAGE_LOADOUT,
+		"Matchmaking" = PAGE_MATCHMAKING,
 		"Preferences" = PAGE_PREFS,
 	)
 
@@ -100,6 +102,7 @@
 		if(PAGE_FLAVOR)		dat += GetFlavorPage(user)
 		if(PAGE_PREFS)		dat += GetPrefsPage(user)
 		if(PAGE_LOADOUT)	dat += GetLoadOutPage(user)
+		if(PAGE_MATCHMAKING)dat += GetMatchmakingPage(user)
 		if(PAGE_SPECIES)	dat += GetSpeciesPage(user)
 		else dat+=GetRecordsPage(user) // Protection
 	dat += "</body></html>"
@@ -136,6 +139,7 @@
 		if(PAGE_LOADOUT)	HandleLoadOutTopic(user, href_list)
 		if(PAGE_OCCUPATION)	HandleOccupationTopic(user, href_list)
 		if(PAGE_FLAVOR)		HandleFlavorTopic(user, href_list)
+		if(PAGE_MATCHMAKING)HandleMatchmakingTopic(user, href_list)
 		if(PAGE_PREFS)		HandlePrefsTopic(user, href_list)
 		if(PAGE_SPECIES)	HandleSpeciesTopic(user, href_list)
 

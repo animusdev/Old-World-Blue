@@ -1,52 +1,38 @@
-/datum/category_item/player_setup_item/relations
-	name = "Matchmaking"
-	sort_order = 1
+/datum/preferences
+	var/list/relations = list()
+	var/list/relations_info = list()
 
-/datum/category_item/player_setup_item/relations/load_character(var/savefile/S)
-	S["relations"]	>> pref.relations
-	S["relations_info"]	>> pref.relations_info
-
-/datum/category_item/player_setup_item/relations/save_character(var/savefile/S)
-	S["relations"]	<< pref.relations
-	S["relations_info"]	<< pref.relations_info
-
-/datum/category_item/player_setup_item/relations/sanitize_character()
-	if(!pref.relations)
-		pref.relations = list()
-	if(!pref.relations_info)
-		pref.relations_info = list()
-
-/datum/category_item/player_setup_item/relations/content(mob/user)
+/datum/preferences/proc/GetMatchmakingPage(mob/user)
 	.=list()
+	. += "<div style='height:425px;overflow-y:auto'>"
 	. += "Characters with enabled relations are paired up randomly after spawn. You can terminate relations when you first open relations info window, but after that it's final."
 	. += "<hr>"
 	. += "<br><b>What do they know about you?</b> This is the general info that all kinds of your connections would know. <a href='?src=\ref[src];relation_info=["general"]'>Edit</a>"
-	. += "<br><i>[pref.relations_info["general"] ? pref.relations_info["general"] : "Nothing specific."]</i>"
+	. += "<br><i>[relations_info["general"] ? relations_info["general"] : "Nothing specific."]</i>"
 	. += "<hr>"
 	for(var/T in subtypesof(/datum/relation))
 		var/datum/relation/R = T
 		. += "<b>[initial(R.name)]</b>\t"
-		if(initial(R.name) in pref.relations)
-			. += "<span class='linkOn'>On</span>"
+		if(initial(R.name) in relations)
 			. += "<a href='?src=\ref[src];relation=[initial(R.name)]'>Off</a>"
 		else
 			. += "<a href='?src=\ref[src];relation=[initial(R.name)]'>On</a>"
-			. += "<span class='linkOn'>Off</span>"
 		. += "<br><i>[initial(R.desc)]</i>"
 		. += "<br><b>What do they know about you?</b><a href='?src=\ref[src];relation_info=[initial(R.name)]'>Edit</a>"
-		. += "<br><i>[pref.relations_info[initial(R.name)] ? pref.relations_info[initial(R.name)] : "Nothing specific."]</i>"
+		. += "<br><i>[relations_info[initial(R.name)] ? relations_info[initial(R.name)] : "Nothing specific."]</i>"
 		. += "<hr>"
+	. += "</div>"
 	. = jointext(.,null)
 
-/datum/category_item/player_setup_item/relations/OnTopic(var/href,var/list/href_list, var/mob/user)
+/datum/preferences/proc/HandleMatchmakingTopic(var/mob/user,var/list/href_list)
 	if(href_list["relation"])
 		var/R = href_list["relation"]
-		pref.relations ^= R
-		return TOPIC_REFRESH
+		relations ^= R
+		return
 	if(href_list["relation_info"])
 		var/R = href_list["relation_info"]
-		var/info = sanitize(input("Character info", "What would you like the other party for this connection to know about your character?",pref.relations_info[R]) as message|null)
+		var/info = input_utf8(user, "Character info", "What would you like the other party for this connection to know about your character?", relations_info[R], "message")
 		if(info)
-			pref.relations_info[R] = info
-		return TOPIC_REFRESH
+			relations_info[R] = info
+		return
 	return ..()
