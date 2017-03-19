@@ -146,6 +146,8 @@
 
 ///Eclipse///
 
+	L = list()
+
 	current_data = new()
 	current_data.character_name = "Aiden McMurray"
 	current_data.item_path = /obj/item/clothing/under/rank/mechatronic/solar

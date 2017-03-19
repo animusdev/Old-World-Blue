@@ -163,3 +163,34 @@
 /obj/item/clothing/suit/storage/deverezzer
 	name = "Ambassador"
 	icon_state = "ambassador"
+
+
+// Joody customs
+/obj/item/clothing/suit/storage/toggleable_hood/cloak
+	name = "desert cloak"
+	desc = "A warm and comfortable cloak, which is the traditional garment of the Erg'ishchort people."
+	icon_state = "descloak"
+	hood_type = /obj/item/clothing/head/toggleable_hood/cloakhood
+
+	cold_protection = LOWER_TORSO|UPPER_TORSO|ARMS
+	min_cold_protection_temperature = T0C - 20
+
+/obj/item/clothing/head/toggleable_hood/cloakhood
+	name = "desert cloak hood"
+	icon_state = "cloak_hood"
+	flags_inv = BLOCKHAIR|HIDEFACE|HIDEEYES
+	cold_protection = HEAD
+	min_cold_protection_temperature = T0C - 20
+
+/obj/item/clothing/under/dbodywraps
+	name = "body wraps"
+	desc = "A bunch of tight bandages as additional to leather pants."
+	icon_state = "dbodywraps"
+
+/obj/item/clothing/shoes/leatherboots
+	name = "light leather boots"
+	desc = "Protects your legs from a cold wind."
+	icon_state = "leatherboots"
+
+	cold_protection = FEET
+	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE
