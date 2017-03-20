@@ -373,6 +373,32 @@
 
 	custom_items["subber"] = L
 
+///Joody///
+
+	L = list()
+
+	current_data = new()
+	current_data.character_name = "Aliah Shak'hanara"
+	current_data.item_path = /obj/item/clothing/suit/storage/toggleable_hood/cloak
+	L |= current_data
+
+	current_data = new()
+	current_data.character_name = "Aliah Shak'hanara"
+	current_data.item_path = /obj/item/clothing/under/dbodywraps
+	L |= current_data
+
+	current_data = new()
+	current_data.character_name = "Aliah Shak'hanara"
+	current_data.item_path = /obj/item/clothing/shoes/leatherboots
+	L |= current_data
+
+	current_data = new()
+	current_data.character_name = "Aliah Shak'hanara"
+	current_data.item_path = /obj/item/clothing/accessory/locket
+	L |= current_data
+
+	custom_items["joody"] = L
+
 ///MarcusAga///
 
 	L = list()
