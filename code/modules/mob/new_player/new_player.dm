@@ -279,6 +279,7 @@
 
 		if(character.mind.assigned_role != "Cyborg")
 			data_core.manifest_inject(character)
+			matchmaker.do_matchmaking()
 			AnnounceArrival(character, rank, join_message)
 		else
 			AnnounceCyborg(character, rank, join_message)
@@ -366,6 +367,13 @@
 		if(mind)
 			mind.active = 0					//we wish to transfer the key manually
 			mind.original = new_character
+			if(client.prefs.relations.len)
+				for(var/T in client.prefs.relations)
+					var/TT = matchmaker.relation_types[T]
+					var/datum/relation/R = new TT
+					R.holder = mind
+					R.info = client.prefs.relations_info[T]
+				mind.gen_relations_info = client.prefs.relations_info["general"]
 			mind.transfer_to(new_character)					//won't transfer key since the mind is not active
 
 		new_character.name = real_name

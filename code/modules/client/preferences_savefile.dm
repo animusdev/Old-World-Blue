@@ -304,7 +304,7 @@
 	S["relations_info"]		<< relations_info
 
 	for(var/organ in modifications_types)
-		var/datum/body_modification/BM = modifications_data[organ]
+		var/datum/body_modification/BM = get_modification(organ)
 		S["modification_[organ]"] << BM.id
 		S["color_[organ]"]  	  << modifications_colors[organ]
 

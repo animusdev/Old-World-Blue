@@ -14,9 +14,9 @@
 		var/datum/relation/R = T
 		. += "<b>[initial(R.name)]</b>\t"
 		if(initial(R.name) in relations)
-			. += "<a href='?src=\ref[src];relation=[initial(R.name)]'>Off</a>"
-		else
 			. += "<a href='?src=\ref[src];relation=[initial(R.name)]'>On</a>"
+		else
+			. += "<a href='?src=\ref[src];relation=[initial(R.name)]'>Off</a>"
 		. += "<br><i>[initial(R.desc)]</i>"
 		. += "<br><b>What do they know about you?</b><a href='?src=\ref[src];relation_info=[initial(R.name)]'>Edit</a>"
 		. += "<br><i>[relations_info[initial(R.name)] ? relations_info[initial(R.name)] : "Nothing specific."]</i>"
