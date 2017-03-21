@@ -55,15 +55,7 @@ var/global/datum/controller/occupations/job_master
 
 		if(!job)
 			return 0
-		if(jobban_isbanned(player,rank))
-			return 0
-		if(!player.client || !player.client.prefs)
-			return 0
-		if(player.client.prefs.IsJobRestricted(rank))
-			return 0
-		if(!job.player_old_enough(player.client))
-			return 0
-		if(job.minimum_character_age && (player.client.prefs.age < job.minimum_character_age))
+		if(!job.available_to(player))
 			return 0
 		return 1
 
