@@ -199,6 +199,9 @@ For copy-pasting:
 		return max(0, minimal_player_age - C.player_age)
 	return 0
 
+/datum/job/proc/available_to(var/mob/player)
+	return job_master.CanJoinJob(player,title)
+
 /datum/job/proc/apply_fingerprints(var/mob/living/carbon/human/target)
 	if(!istype(target))
 		return 0

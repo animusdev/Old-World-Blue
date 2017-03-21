@@ -45,10 +45,33 @@ var/global/datum/controller/occupations/job_master
 	proc/GetPlayerAltTitle(mob/new_player/player, rank)
 		return player.client.prefs.GetPlayerAltTitle(GetJob(rank))
 
+	proc/CanJoinJob(var/mob/player, var/rank)
+		if(!rank)
+			return 0
+		if(!player)
+			return 0
+
+		var/datum/job/job = GetJob(rank)
+
+		if(!job)
+			return 0
+		if(jobban_isbanned(player,rank))
+			return 0
+		if(!player.client || !player.client.prefs)
+			return 0
+		if(player.client.prefs.IsJobRestricted(rank))
+			return 0
+		if(!job.player_old_enough(player.client))
+			return 0
+		if(job.minimum_character_age && (player.client.prefs.age < job.minimum_character_age))
+			return 0
+		return 1
+
 	proc/AssignRole(var/mob/new_player/player, var/rank, var/latejoin = 0)
 		Debug("Running AR, Player: [player], Rank: [rank], LJ: [latejoin]")
 		if(player && player.mind && rank)
 			var/datum/job/job = GetJob(rank)
+			/*
 			if(!job)
 				Debug("AR has failed. Job can't be found. Player: [player], Rank: [rank]")
 				return 0
@@ -63,6 +86,10 @@ var/global/datum/controller/occupations/job_master
 				return 0
 			if(!job.player_old_enough(player.client))
 				Debug("AR has failed, Player account is not old enough.")
+				return 0
+				*/
+
+			if(!CanJoinJob(player, rank))
 				return 0
 
 			if(job.is_position_available(latejoin))
