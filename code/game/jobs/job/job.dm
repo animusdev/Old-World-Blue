@@ -199,6 +199,21 @@ For copy-pasting:
 		return max(0, minimal_player_age - C.player_age)
 	return 0
 
+/datum/job/proc/available_to(var/mob/player)
+	if(!player)
+		return 0
+	if(jobban_isbanned(player,title))
+		return 0
+	if(!player_old_enough(player.client))
+		return 0
+	if(!player.client || !player.client.prefs)
+		return 0
+	if(player.client.prefs.IsJobRestricted(title))
+		return 0
+	if(minimum_character_age && (player.client.prefs.age < minimum_character_age))
+		return 0
+	return 1
+
 /datum/job/proc/apply_fingerprints(var/mob/living/carbon/human/target)
 	if(!istype(target))
 		return 0
