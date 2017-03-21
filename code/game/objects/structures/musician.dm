@@ -1,4 +1,4 @@
-#defnie LINE_LIMIT 250
+#define LINE_LIMIT 250
 
 /datum/song
 	var/name = "Untitled"
