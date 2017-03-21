@@ -54,9 +54,18 @@
 		return good
 	return rest
 
+/datum/relation/pair
+	name = "Pair"
+	desc = "You are in a romantic relationship."
+	incompatible = list("Ex")
+
+/datum/relation/pair/get_desc_string()
+	return "[holder] is felled in love with [other.holder]."
+
 /datum/relation/ex
 	name = "Ex"
 	desc = "You used to be romantically involved, but not anymore."
+	incompatible = list("Pair")
 
 /datum/relation/ex/get_desc_string()
 	return "[holder] and [other.holder] used to be an item, but not anymore."
