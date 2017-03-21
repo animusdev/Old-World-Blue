@@ -959,6 +959,11 @@
 			icon_state = "wife"
 			gender = FEMALE
 
+		shorttail
+			name = "Tajara Short Tail"
+			icon_state = "shorttail"
+			gender = FEMALE
+
 	unathi
 		icon = 'icons/mob/hair_alien.dmi'
 		species_allowed = list("Unathi")
