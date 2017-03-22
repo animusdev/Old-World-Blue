@@ -106,6 +106,26 @@
 
 	custom_items["fox231"] = L
 
+////D00k-N00kem////
+	L = list()
+
+	current_data = new()
+	current_data.character_name = "Natalia Lynn"
+	current_data.item_path = /obj/item/clothing/suit/storage/labcoat/augmented
+	L |= current_data
+
+	current_data = new()
+	current_data.character_name = "Lorenzo Shere"
+	current_data.item_path = /obj/item/clothing/mask/gas/D00k_N00kem
+	L |= current_data
+
+	current_data = new()
+	current_data.character_name = "Lorenzo Shere"
+	current_data.item_path = /obj/item/clothing/suit/storage/labcoat/long
+	L |= current_data
+
+	custom_items["d00kn00kem"] = L
+
 ///Shamah///
 
 	L = list()
