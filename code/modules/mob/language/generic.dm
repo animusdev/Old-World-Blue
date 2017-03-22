@@ -79,7 +79,7 @@
 	flags = PUBLIC
 	space_chance = 100
 	syllables = list(
-"amolof","ando", "anyimal", "anyiye", "bap", "bek", "bekedabush", "bekpelesh", "belang", "belowt", "belta", "beltalowda", "belte", "bera", 
+"amolof", "ando", "anyimal", "anyiye", "bap", "bek", "bekedabush", "bekpelesh", "belang", "belowt", "belta", "beltalowda", "belte", "bera", 
 "beratna", "bi", "bik", "bikang", "bodzha", "bosmang", "buk", "burito", "buro", "bush", "but", "chek", "chesh", "de", 
 "dedawang", "demang", "den", "depelesh", "desh", "det", "detim", "deting", "dewe", "deya", "diye", "du-showxa", "dzhemang", "dzhush", "efa", 
 "eletisi", "ere", "ereluf", "fash", "felota", "feri", "feriting", "finyish", "fo", "fodagut", "fong", "fotowala", "fut", "ge", "gif", "go",
