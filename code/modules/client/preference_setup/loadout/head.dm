@@ -140,3 +140,7 @@
 	display_name = "sombrero"
 	path = /obj/item/clothing/head/sombrero
 
+/datum/gear/head/fedora
+	display_name = "fedora"
+	path = /obj/item/clothing/head/fedora
+	cost = 2
