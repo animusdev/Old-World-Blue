@@ -141,13 +141,15 @@
 
 	return ..()
 
-/obj/item/organ/external/removed(mob/living/user)
+/obj/item/organ/external/removed(mob/living/user, var/redraw_mob = 1)
 	if(!owner)
 		return
 
 	owner.organs -= src
 	owner.organs_by_name[organ_tag] = null // Remove from owner's vars.
 	owner.bad_external_organs -= src
+
+	drop_items()
 
 	for(var/atom/movable/implant in implants)
 		//large items and non-item objs fall to the floor, everything else stays
@@ -157,18 +159,6 @@
 		else
 			implant.loc = src
 	implants.Cut()
-
-	release_restraints()
-
-	var/obj/item/dropped = null
-	for(var/slot in drop_on_remove)
-		dropped = owner.get_equipped_item(slot)
-		owner.u_equip(dropped)
-		owner.drop_from_inventory(dropped)
-
-	if(parent)
-		parent.children -= src
-		parent = null
 
 	if(children)
 		for(var/obj/item/organ/external/child in children)
@@ -180,7 +170,13 @@
 			organ.removed()
 			organ.loc = src
 
+	// Remove parent references
+	parent.children -= src
+
+	var/mob/living/carbon/human/victim = owner
 	..()
+
+	if(redraw_mob) victim.update_body()
 
 /obj/item/organ/external/attack_self(var/mob/user)
 	if(!contents.len)
@@ -279,6 +275,17 @@
 	damage = min(max_damage, (brute_dam + burn_dam))
 	return
 
+/obj/item/organ/external/proc/drop_items()
+	if(!owner) return
+	var/obj/item/dropped = null
+	for(var/slot in drop_on_remove)
+		dropped = owner.get_equipped_item(slot)
+		if(dropped)
+			owner.visible_message(
+				"\The [dropped] falls off of [owner.name].",
+				"\The [dropped] falls off you."
+			)
+			owner.drop_from_inventory(dropped)
 
 /*
 This function completely restores a damaged organ to perfect condition.
@@ -317,7 +324,7 @@ This function completely restores a damaged organ to perfect condition.
 	// (because of the return)
 	//Possibly trigger an internal wound, too.
 	var/local_damage = brute_dam + burn_dam + damage
-	if(damage > 15 && type != BURN && local_damage > 30 && prob(damage) && (robotic<ORGAN_ROBOT))
+	if((damage > 15) && (type != BURN) && (local_damage > 30) && prob(damage) && (robotic < ORGAN_ROBOT))
 		var/datum/wound/internal_bleeding/I = new (min(damage - 15, 15))
 		wounds += I
 		owner.custom_pain("You feel something rip in your [name]!", 1)
@@ -744,22 +751,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/proc/is_stump()
 	return 0
 
-/obj/item/organ/external/proc/release_restraints(var/mob/living/carbon/human/holder)
-	if(!holder)
-		holder = owner
-	if(!holder)
-		return
-	if (holder.handcuffed && body_part in list(ARM_LEFT, ARM_RIGHT, HAND_LEFT, HAND_RIGHT))
-		holder.visible_message(\
-			"\The [holder.handcuffed.name] falls off of [holder.name].",\
-			"\The [holder.handcuffed.name] falls off you.")
-		holder.drop_from_inventory(holder.handcuffed)
-	if (holder.legcuffed && body_part in list(FOOT_LEFT, FOOT_RIGHT, LEG_LEFT, LEG_RIGHT))
-		holder.visible_message(
-			"\The [holder.legcuffed.name] falls off of [holder.name].",
-			"\The [holder.legcuffed.name] falls off you.")
-		holder.drop_from_inventory(holder.legcuffed)
-
 // checks if all wounds on the organ are bandaged
 /obj/item/organ/external/proc/is_bandaged()
 	for(var/datum/wound/W in wounds)
@@ -838,7 +829,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	// Fractures have a chance of getting you out of restraints
 	if (prob(25))
-		release_restraints()
+		drop_items()
 
 	// This is mostly for the ninja suit to stop ninja being so crippled by breaks.
 	// TODO: consider moving this to a suit proc or process() or something during
@@ -854,7 +845,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			if(isnull(suit.supporting_limbs))
 				return
 
-			owner << "You feel \the [suit] constrict about your [name], supporting it."
+			owner << "<span class='notice'>You feel \the [suit] constrict about your [name], supporting it.</span>"
 			status |= ORGAN_SPLINTED
 			suit.supporting_limbs |= src
 	return
