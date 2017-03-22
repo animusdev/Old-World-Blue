@@ -28,11 +28,12 @@ var/global/list/limb_icon_cache = list()
 
 /obj/item/organ/external/update_icon(var/skeletal)
 
+/*
 	if(owner)
 		if(gendered)
 			gendered = (owner.gender == MALE)? "_m": "_f"
 		body_build = owner.body_build.index
-
+*/
 	mob_icon = get_icon(skeletal)
 	apply_colors()
 	draw_internals()
@@ -152,8 +153,6 @@ var/global/list/limb_icon_cache = list()
 
 /obj/item/organ/external
 	var/icon_cache_key
-	// HUD element variable, see organ_icon.dm get_damage_hud_image()
-	var/image/hud_damage_image
 
 // Returns an image for use by the human health dolly HUD element.
 // If the user has traumatic shock, it will be passed in as a minimum
@@ -167,14 +166,13 @@ var/list/robot_hud_colours = list("#CFCFCF","#AFAFAF","#8F8F8F","#6F6F6F","#4F4F
 
 	// Generate the greyscale base icon and cache it for later.
 	// icon_cache_key is set by any get_icon() calls that are made.
-	if(!hud_damage_image)
-		var/cache_key = "dambase-[icon_cache_key]"
-		if(!icon_cache_key || !limb_icon_cache[cache_key])
-			var/icon/new_icon = icon(get_icon(), null, SOUTH)
-			new_icon.Blend("#000000", ICON_MULTIPLY)
-			new_icon.SwapColor("#000000", "#FFFFFF")
-			limb_icon_cache[cache_key] = new_icon
-		hud_damage_image = image(limb_icon_cache[cache_key])
+	var/cache_key = "dambase-[icon_cache_key]"
+	if(!icon_cache_key || !limb_icon_cache[cache_key])
+		var/icon/new_icon = icon(get_icon(), null, SOUTH)
+		new_icon.Blend("#000000", ICON_MULTIPLY)
+		new_icon.SwapColor("#000000", "#FFFFFF")
+		limb_icon_cache[cache_key] = new_icon
+	var/image/hud_damage_image = image(limb_icon_cache[cache_key])
 
 	// Calculate the required color index.
 	if(istext(forced_dam_state))
