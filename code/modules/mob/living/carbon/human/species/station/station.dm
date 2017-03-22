@@ -109,15 +109,19 @@
 		"Xenobiologist", "Quartermaster", "Internal Affairs Agent"
 	)
 
-/datum/species/unathi/equip_survival_gear(var/mob/living/carbon/human/H)
+/datum/species/tajaran/equip_survival_gear(mob/living/carbon/human/H)
 	..()
-	var/obj/item/shoes = H.shoes
 	var/gear = /obj/item/clothing/shoes/sandal
-	if(shoes)
-		if(istype(shoes, /obj/item/clothing/shoes/jackboots))
-			gear = /obj/item/clothing/shoes/jackboots/unathi
+	var/datum/job/J = job_master.GetJob(H.job)
+
+	if(J && ispath(J.shoes, /obj/item/clothing/shoes/jackboots))
+		gear = /obj/item/clothing/shoes/jackboots/unathi
+
+	if(H.shoes)
+		var/obj/item/shoes = H.shoes
 		if(H.unEquip(shoes))
 			qdel(shoes)
+
 	if(!H.shoes)
 		H.equip_to_slot_or_del(new gear (H),slot_shoes)
 
@@ -200,13 +204,17 @@
 
 /datum/species/tajaran/equip_survival_gear(mob/living/carbon/human/H)
 	..()
-	var/obj/item/shoes = H.shoes
 	var/gear = /obj/item/clothing/shoes/sandal
-	if(shoes)
-		if(istype(shoes, /obj/item/clothing/shoes/jackboots))
-			gear = /obj/item/clothing/shoes/jackboots/unathi
+	var/datum/job/J = job_master.GetJob(H.job)
+
+	if(J && ispath(J.shoes, /obj/item/clothing/shoes/jackboots))
+		gear = /obj/item/clothing/shoes/jackboots/unathi
+
+	if(H.shoes)
+		var/obj/item/shoes = H.shoes
 		if(H.unEquip(shoes))
 			qdel(shoes)
+
 	if(!H.shoes)
 		H.equip_to_slot_or_del(new gear (H),slot_shoes)
 
