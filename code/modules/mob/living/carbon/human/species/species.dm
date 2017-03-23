@@ -211,9 +211,9 @@
 			if(covered)
 				H << "<span class='danger'>[pick(heat_discomfort_strings)]</span>"
 
-/datum/species/proc/equip_survival_gear(var/mob/living/carbon/human/H, var/advanced_gear = 0)
+/datum/species/proc/equip_survival_gear(var/mob/living/carbon/human/H, var/datum/job/J)
 	var/gear = /obj/item/weapon/storage/box/survival
-	if(advanced_gear)
+	if(J && J.adv_survival_gear)
 		gear = /obj/item/weapon/storage/box/engineer
 
 	if(H.back && istype(H.back,/obj/item/weapon/storage))

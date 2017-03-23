@@ -141,7 +141,7 @@ For copy-pasting:
 				new path(H.l_hand)
 
 	//Survival equipment
-	H.equip_survival_gear(adv_survival_gear)
+	H.equip_survival_gear(src)
 
 	//Loyalty implant
 	if(implanted) H.implant_loyalty(H)

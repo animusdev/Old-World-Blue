@@ -109,10 +109,9 @@
 		"Xenobiologist", "Quartermaster", "Internal Affairs Agent"
 	)
 
-/datum/species/tajaran/equip_survival_gear(mob/living/carbon/human/H)
+/datum/species/tajaran/equip_survival_gear(mob/living/carbon/human/H, var/datum/job/J)
 	..()
 	var/gear = /obj/item/clothing/shoes/sandal
-	var/datum/job/J = job_master.GetJob(H.job)
 
 	if(J && ispath(J.shoes, /obj/item/clothing/shoes/jackboots))
 		gear = /obj/item/clothing/shoes/jackboots/unathi
@@ -202,10 +201,9 @@
 	)
 	accent = list("ð" = "ðð", "Ð" = "Ðð")
 
-/datum/species/tajaran/equip_survival_gear(mob/living/carbon/human/H)
+/datum/species/tajaran/equip_survival_gear(mob/living/carbon/human/H, var/datum/job/J)
 	..()
 	var/gear = /obj/item/clothing/shoes/sandal
-	var/datum/job/J = job_master.GetJob(H.job)
 
 	if(J && ispath(J.shoes, /obj/item/clothing/shoes/jackboots))
 		gear = /obj/item/clothing/shoes/jackboots/unathi
@@ -424,7 +422,7 @@
 		"Psychiatrist", "Paramedic", "Quartermaster", "Shaft Miner", "Internal Affairs Agent"
 	)
 
-/datum/species/machine/equip_survival_gear(var/mob/living/carbon/human/H)
+/datum/species/machine/equip_survival_gear()
 	return
 
 /datum/species/machine/sanitize_name(var/new_name)
