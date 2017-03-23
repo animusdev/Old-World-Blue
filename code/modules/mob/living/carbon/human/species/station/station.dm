@@ -144,7 +144,7 @@
 	brute_mod = 1.15
 	burn_mod =  1.15
 	gluttonous = 1
-	name_language = "Siik"
+	name_language = "Siik'tajr"
 
 	min_age = 17
 	max_age = 80
@@ -426,6 +426,9 @@
 
 /datum/species/machine/equip_survival_gear(var/mob/living/carbon/human/H)
 	return
+
+/datum/species/machine/sanitize_name(var/new_name)
+	return sanitizeName(new_name, allow_numbers = 1)
 
 /datum/species/machine/organs_spawned(var/mob/living/carbon/human/H)
 	..()

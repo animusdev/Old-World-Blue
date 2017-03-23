@@ -187,6 +187,9 @@
 /datum/species/proc/get_bodytype()
 	return name
 
+/datum/species/proc/sanitize_name(var/name)
+	return sanitizeName(name)
+
 /datum/species/proc/get_environment_discomfort(var/mob/living/carbon/human/H, var/msg_type)
 
 	if(!prob(5))

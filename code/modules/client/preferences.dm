@@ -134,7 +134,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	if(random_name || jobban_isbanned(usr, "Name"))
 		real_name = random_name(gender,species)
 
-	character.real_name = real_name
+	character.real_name = current_species.sanitize_name(real_name)
 	character.name = character.real_name
 	if(character.dna)
 		character.dna.real_name = character.real_name

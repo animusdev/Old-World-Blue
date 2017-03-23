@@ -188,11 +188,11 @@
 	S["exploit_record"]	>> exploit_record
 
 	//Sanitize
-	real_name		= sanitizeName(real_name)
-
 	if(isnull(species) || !(species in playable_species))
 		species = "Human"
 	current_species = all_species[species]
+
+	real_name		= current_species.sanitize_name(real_name)
 
 	if(!underwear  || !(underwear in all_underwears))   underwear = pick(all_underwears)
 	if(!undershirt || !(undershirt in all_undershirts)) undershirt = pick(all_undershirts)
@@ -202,7 +202,7 @@
 	if(isnull(language)) language = "None"
 	if(isnull(spawnpoint)) spawnpoint = "Arrivals Shuttle"
 	if(isnull(nanotrasen_relation)) nanotrasen_relation = initial(nanotrasen_relation)
-	if(!real_name) real_name = random_name(gender)
+	if(!real_name) real_name = random_name(gender, species)
 	random_name		= sanitize_integer(random_name, 0, 1, initial(random_name))
 	gender			= sanitize_gender(gender)
 	age				= sanitize_integer(age, current_species.min_age, current_species.max_age, initial(age))
