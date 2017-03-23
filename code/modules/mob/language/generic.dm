@@ -69,23 +69,36 @@
 					 "ka","aasi","far","wa","baq","ara","qara","zir","sam","mak","hrar","nja","rir","khan","jun","dar","rik","kah",
 					 "hal","ket","jurl","mah","tul","cresh","azu","ragh","mro","mra","mrro","mrra")
 
-//Russian Language
-/datum/language/slav
-	name = "Surzhyk"
-	desc = "A very old slavanian language. Refers to a range of mixed sociolects of Ukrainian and Russian languages used in certain colonies"
+// Belter language
+/datum/language/belter
+	name = "Belter Creole"
+	desc = "Often referred to simply as Belter, is the cultural language spoken by many Belters, people who inhabit asteroids in Sol and outer systems."
 	speech_verb = "says"
 	colour = "slav"
 	key = "r"
 	flags = PUBLIC
 	space_chance = 100
-	syllables = list("pjat", "strimjatsa", "virast", "mjezdu", "tjolstoj", "blyat",
-					 "suka", "sol", "vodka", "eb", "hui",
-					 "samoj", "vadit", "mat", "prareb", "budet", "ty", "igrje", "pindosi", "salo", "gorilka", "da", "nyet",
-					 "horosho", "pjos", "vsjo", "je", "stobi", "reptiloidi", "amerikosi", "pidor", "skalen", "sut", "takov",
-					 "eki", "pravo", "moskal", "krop", "zmii", "bliny", "ushanka", "beru", "idi", "na", "v", "poshel", "na", "edin",
-					 "sel", "vosem", "ruki", "memi", "chto", "on", "it", "iv", "ov",
-					 "vsjo", "sot", "holodno", "moja", "li", "mertvi",
-					 "hotet", "vidat", "vosjem", "ya", "uzje", "stancia", "vi")
+	syllables = list(
+"amolof", "ando", "anyimal", "anyiye", "bap", "bek", "bekedabush", "bekpelesh", "belang", "belowt", "belta", "beltalowda", "belte", "bera", 
+"beratna", "bi", "bik", "bikang", "bodzha", "bosmang", "buk", "burito", "buro", "bush", "but", "chek", "chesh", "de", 
+"dedawang", "demang", "den", "depelesh", "desh", "det", "detim", "deting", "dewe", "deya", "diye", "du-showxa", "dzhemang", "dzhush", "efa", 
+"eletisi", "ere", "ereluf", "fash", "felota", "feri", "feriting", "finyish", "fo", "fodagut", "fong", "fotowala", "fut", "ge", "gif", "go",
+"gonya", "gova", "govawala", "gufovedi", "gut", "gutegow", "idzhifobek", "im", "imalowda", "imbobo", "imim", "kaka", "kang", "kapawu",
+"ke", "kemang", "keng", "kepelesh", "keredu", "ketim", "keting", "kewe", "keya", "kom", "koming", "kong", "kopeng", "kori", "kowl", "kowltim",
+"kowlting", "kowmang", "kowpelesh", "koyo", "kula", "kuwang", "kuxaku", "lang", "leyalting", "lik", "lit", "livit", "lunye", "ma", "mali",
+"maliwala", "mamamang", "mang", "manting", "matna", "mesach", "meshang", "metexeng", "meyo", "mi", "milowda", "mo", "mogut", "momal", "mosh",
+"mowsh", "mowteng", "mung", "na", "nadzhush", "nafut", "nakangepensa", "namang", "naterash", "natet", "nating", "nawit", "nax", "o", "ong", 
+"ora", "oso", "owala", "owbit", "owkwa", "owkwakakawala", "owlesi", "oye", "oyedeng", "pagal", "pampa", "pash", "pashang", "pashangwala", 
+"paxoniseki", "paxopigi", "pelesh", "peng", "pensa", "pensating", "peyeting", "pirata", "pochuye", "pomang", "push", "redeshang", "rowm",
+"rowmwala", "sabaka", "sabakawala", "salta", "sasa", "sefesowng", "semowt", "seping", "ses", "sesata", "seteshang", "setop", "setoriye", 
+"shapu", "sheng", "sheru", "shetexe", "shetexeting", "showxa", "sif", "sili", "so", "sodhza", "sowngit", "soya", "sukit", "suku", "sundiye",
+"sut", "ta", "taki", "tatuyingi", "tekidok", "tekimang", "tekiting", "tili", "tim", "ting", "to", "tolowda", "towchu", "towsh", "tubik",
+"tudiye", "tufash", "tugufovedi", "tugut", "tumang", "tung", "tungeting", "unte", "vedi", "wa", "wala", "walowda", "wamali", "wamang", 
+"wameku", "wamotim", "wang", "wanya", "wash", "wel", "welte", "weltewala", "wit", "wok", "wow", "wowk", "wowl", "wowmow", "wowt", "wupo", 
+"xalte", "xash", "xelep", "xelixup", "xeta", "xetamang", "xom", "xunyam", "xush", "ya", "yaterash", "zakomang", "zakong", "adewu", "sirish",
+"erosh", "shukumi", "sempere", "dansa", "setara", "da", "du", "et", "eteteng", "faf", "faveteng", "fu", "futeng", "nang", "nangeteng", "seng",
+"sengeteng", "seri", "seriteng", "sikeseteng", "sikesh", "teng", "tuteng", "xanya", "tu", "inyalowda", "lowda", "xitim", "teki", "xi", "xiya",
+"welwala", "amash", "botiya", "nada", "tenye")
 
 // Criminal language.
 /datum/language/gutter
