@@ -97,6 +97,7 @@ var/global/list/limb_icon_cache = list()
 	update_icon()
 	if(hair)   mob_icon.Blend(hair, ICON_OVERLAY)
 	if(facial) mob_icon.Blend(facial, ICON_OVERLAY)
+	icon = mob_icon
 	..()
 
 /obj/item/organ/external/head/update_icon()
