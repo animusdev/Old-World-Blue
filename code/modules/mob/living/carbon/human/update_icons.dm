@@ -2,7 +2,7 @@
 	Global associative list for caching humanoid icons.
 	Index format m or f, followed by a string of 0 and 1 to represent bodyparts followed by husk fat hulk skeleton 1 or 0.
 	TODO: Proper documentation
-	icon_key is [species.race_key][gender][body_build][husk][fat][hulk][skeleton][s_tone]
+	icon_key is [species.race_key][gender][body_build][husk][hulk][skeleton]
 */
 var/global/list/human_icon_cache = list()
 var/global/list/tail_icon_cache = list() //key is [species.race_key][skin_color]
@@ -233,7 +233,6 @@ var/global/list/damage_icon_parts = list()
 	var/hulk_color_mod = rgb(48,224,40)
 
 	var/husk = (HUSK in src.mutations)
-	var/fat = (FAT in src.mutations)
 	var/hulk = (HULK in src.mutations)
 	var/skeleton = (SKELETON in src.mutations)
 
@@ -250,16 +249,16 @@ var/global/list/damage_icon_parts = list()
 	else
 		icon_key += "nolips"
 
-	icon_key += "[husk ? 1 : 0][fat ? 1 : 0][hulk ? 1 : 0][skeleton ? 1 : 0]"
+	icon_key += "[husk ? 1 : 0][hulk ? 1 : 0][skeleton ? 1 : 0]"
 
 	for(var/organ_tag in species.has_limbs)
 		var/tmp_index = ""
 		var/obj/item/organ/external/part = organs_by_name[organ_tag]
 		if(isnull(part))
-			icon_key += "0"
+			icon_key += "[organ_tag]missed"
 		else
 			tmp_index = part.get_icon_key()
-			if(tmp_index != "notready")
+			if(tmp_index)
 				icon_key += "[organ_tag][tmp_index]"
 			else
 				icon_key = null
@@ -363,10 +362,6 @@ var/global/list/damage_icon_parts = list()
 	if(update_icons)   update_icons()
 
 /mob/living/carbon/human/update_mutations(var/update_icons=1)
-	var/fat
-	if(FAT in mutations)
-		fat = "fat"
-
 	var/image/standing	= image('icons/effects/genetics.dmi')
 	var/add_image = 0
 	var/g = "m"
@@ -376,7 +371,7 @@ var/global/list/damage_icon_parts = list()
 		if(!gene.block)
 			continue
 		if(gene.is_active(src))
-			var/underlay=gene.OnDrawUnderlays(src,g,fat)
+			var/underlay=gene.OnDrawUnderlays(src,g)
 			if(underlay)
 				standing.underlays += underlay
 				add_image = 1
@@ -384,16 +379,13 @@ var/global/list/damage_icon_parts = list()
 		switch(mut)
 			/*
 			if(HULK)
-				if(fat)
-					standing.underlays	+= "hulk_[fat]_s"
-				else
-					standing.underlays	+= "hulk_[g]_s"
+				standing.underlays	+= "hulk_[g]_s"
 				add_image = 1
 			if(COLD_RESISTANCE)
-				standing.underlays	+= "fire[fat]_s"
+				standing.underlays	+= "fire_s"
 				add_image = 1
 			if(TK)
-				standing.underlays	+= "telekinesishead[fat]_s"
+				standing.underlays	+= "telekinesishead_s"
 				add_image = 1
 			*/
 			if(LASER)

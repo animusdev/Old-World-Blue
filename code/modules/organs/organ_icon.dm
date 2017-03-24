@@ -12,9 +12,9 @@ var/global/list/limb_icon_cache = list()
 				overlays += child.mob_icon
 		overlays += organ.mob_icon
 
-/obj/item/organ/external/sync_colour_to_owner()
+/obj/item/organ/external/sync_to_owner()
 	for(var/obj/item/organ/I in internal_organs)
-		I.sync_colour_to_owner()
+		I.sync_to_owner()
 	s_tone = null
 	s_col = null
 	if(owner.species.flags & HAS_SKIN_TONE)
@@ -34,12 +34,13 @@ var/global/list/limb_icon_cache = list()
 			gendered = (owner.gender == MALE)? "_m": "_f"
 		body_build = owner.body_build.index
 */
+	icon = null
 	mob_icon = get_icon(skeletal)
 	apply_colors()
 	draw_internals()
 	dir  = EAST
 	icon = mob_icon
-	return mob_icon
+	return icon
 
 /obj/item/organ/external/get_icon(var/skeletal)
 	icon_state = "[organ_tag][gendered][body_build]"
@@ -132,8 +133,8 @@ var/global/list/limb_icon_cache = list()
 	return mob_icon
 
 /obj/item/organ/external/get_icon_key()
-	if(!mob_icon)
-		return "notready"
+	if(!icon)
+		return null
 
 	if(status & ORGAN_MUTATED)
 		. = "mutated"

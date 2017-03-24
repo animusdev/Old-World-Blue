@@ -8,6 +8,7 @@
 	max_damage = 0
 	dir = SOUTH
 	organ_tag = "limb"
+	icon = null
 	var/tally = 0
 
 	// Strings
@@ -81,7 +82,7 @@
 
 	..(holder)
 	if(owner)
-		sync_colour_to_owner()
+		sync_to_owner()
 /*
 	spawn(1)
 		if(owner)
