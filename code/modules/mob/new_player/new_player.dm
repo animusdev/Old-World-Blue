@@ -243,9 +243,9 @@
 				character = create_robot_character()
 			else
 				character = create_character()	//creates the human and transfers vars and mind
+				equip_custom_items(character)
 				job_master.EquipRank(character, rank)					//equips the human
 				UpdateFactionList(character)
-				equip_custom_items(character)
 
 		//Find our spawning point.
 		var/join_message
