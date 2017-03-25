@@ -1,8 +1,3 @@
-// Metal sheets, glass sheets, and rod stacks.
-#define MAX_STACK_AMOUNT_METAL 50
-#define MAX_STACK_AMOUNT_GLASS 50
-#define MAX_STACK_AMOUNT_RODS  60
-
 // Number of identical messages required to get the spam-prevention auto-mute thing to trigger warnings and automutes.
 #define SPAM_TRIGGER_WARNING  5
 #define SPAM_TRIGGER_AUTOMUTE 10
@@ -37,17 +32,6 @@
 #define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY)
 #define CHAT_TOGGLES_DEFAULT (CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_ATTACKLOGS|CHAT_ADMINLOGS|CHAT_LOOC)
 
-// Languages.
-#define LANGUAGE_HUMAN  1
-#define LANGUAGE_ALIEN  2
-#define LANGUAGE_DOG    4
-#define LANGUAGE_CAT    8
-#define LANGUAGE_BINARY 16
-#define LANGUAGE_OTHER  32768
-
-#define LANGUAGE_UNIVERSAL 65535
-
-
 //Species size
 #define SMALL  1 //mouse
 #define MEDIUM 2 // human
@@ -76,8 +60,6 @@
 #define FIRE_DAMAGE_MODIFIER 0.0215 // Higher values result in more external fire damage to the skin. (default 0.0215)
 #define  AIR_DAMAGE_MODIFIER 2.025  // More means less damage from hot air scalding lungs, less = more damage. (default 2.025)
 #define INFINITY             1.#INF
-
-#define NEXT_MOVE_DELAY 8
 
 //singularity defines
 #define STAGE_ONE 	1
