@@ -157,8 +157,6 @@ var/Debug  = 0 // Global debug switch.
 var/Debug2 = 0
 var/datum/debug/debugobj
 
-var/datum/moduletypes/mods = new()
-
 var/wavesecret    = 0
 var/gravity_is_on = 1
 
