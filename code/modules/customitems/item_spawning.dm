@@ -414,7 +414,7 @@
 
 	current_data = new()
 	current_data.character_name = "Aliah Shak'hanara"
-	current_data.item_path = /obj/item/clothing/accessory/locket
+	current_data.item_path = /obj/item/clothing/accessory/locket/Evans
 	L |= current_data
 
 	custom_items["joody"] = L
