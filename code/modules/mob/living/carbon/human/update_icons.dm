@@ -228,7 +228,6 @@ var/global/list/damage_icon_parts = list()
 
 //BASE MOB SPRITE
 /mob/living/carbon/human/proc/update_body(var/update_icons=1)
-
 	var/husk_color_mod = rgb(96,88,80)
 	var/hulk_color_mod = rgb(48,224,40)
 
@@ -251,22 +250,19 @@ var/global/list/damage_icon_parts = list()
 
 	icon_key += "[husk ? 1 : 0][hulk ? 1 : 0][skeleton ? 1 : 0]"
 
+	var/force_update_body = 0
+
 	for(var/organ_tag in species.has_limbs)
-		var/tmp_index = ""
 		var/obj/item/organ/external/part = organs_by_name[organ_tag]
 		if(isnull(part))
 			icon_key += "[organ_tag]missed"
 		else
-			tmp_index = part.get_icon_key()
-			if(tmp_index)
-				icon_key += "[organ_tag][tmp_index]"
-			else
-				icon_key = null
-				break
+			force_update_body |= !(part.icon)
+			icon_key += "[organ_tag][part.get_icon_key()]"
 
 
 	var/icon/base_icon
-	if(icon_key && human_icon_cache[icon_key])
+	if(!force_update_body && human_icon_cache[icon_key])
 		base_icon = human_icon_cache[icon_key]
 	else
 		//BEGIN CACHED ICON GENERATION.

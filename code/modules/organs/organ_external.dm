@@ -9,6 +9,7 @@
 	dir = SOUTH
 	organ_tag = "limb"
 	icon = null
+	icon_state = null
 	var/tally = 0
 
 	// Strings
@@ -85,8 +86,7 @@
 		sync_to_owner()
 /*
 	spawn(1)
-		if(owner)
-			get_icon()
+		get_icon()
 */
 
 /obj/item/organ/external/proc/set_description(var/datum/organ_description/desc)
@@ -97,7 +97,7 @@
 	src.min_broken_damage = desc.min_broken_damage
 	src.w_class = desc.w_class
 
-/obj/item/organ/external/install(mob/living/carbon/human/H)
+/obj/item/organ/external/install(mob/living/carbon/human/H, var/redraw_mob = 1)
 	if(..(H)) return 1
 
 	owner.organs |= src
@@ -107,7 +107,7 @@
 	owner.organs_by_name[organ_tag] = src
 
 	for(var/obj/item/organ/organ in src)
-		organ.install(owner)
+		organ.install(owner, 0)
 
 	if(parent)
 		if(!parent.children)
@@ -119,6 +119,12 @@
 			parent.wounds -= W
 			qdel(W)
 		parent.update_damages()
+
+	update_icon()
+	if(redraw_mob)
+		owner.update_body()
+	owner.updatehealth()
+	owner.UpdateDamageIcon()
 
 
 /obj/item/organ/external/Destroy()
