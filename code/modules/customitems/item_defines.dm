@@ -164,6 +164,16 @@
 	name = "Ambassador"
 	icon_state = "ambassador"
 
+//Maglaj
+/obj/item/clothing/under/rank/security/maglaj
+	name = "officer's frock"
+	icon_state = "maglaj"
+	item_state = "mime"
+
+/obj/item/clothing/shoes/jackboots/maglaj
+	name = "jackboots"
+	desc = "When you REALLY want to turn up the heat"
+	icon_state = "maglaj"
 
 // Joody customs
 /obj/item/clothing/suit/storage/toggleable_hood/cloak
