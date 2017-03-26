@@ -275,7 +275,7 @@
 		ticker.mode.handle_latejoin(character)
 		ticker.minds += character.mind //AIs handle this in the transform proc.	//TODO!!!!! ~Carn
 
-		if(character.mind.assigned_role != "Cyborg")
+		if(character.mind.assigned_role != "Cyborg" && !player_is_antag(character.mind, only_offstation_roles = 1))
 			data_core.manifest_inject(character)
 			matchmaker.do_matchmaking()
 			AnnounceArrival(character, rank, join_message)
