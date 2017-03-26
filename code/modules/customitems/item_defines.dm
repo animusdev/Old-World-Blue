@@ -2,10 +2,16 @@
 	name = "Clown"
 	desc = "Reminder of the wonderful past"
 	icon_state = "sad_clown"
-
+/***************************************/
+/*****************LethalGhost****************/
+/***************************************/
 /obj/item/clothing/accessory/locket/Evans
 	desc = "This oval shaped, argentium sterling silver locket."
 	held = new /obj/item/weapon/photo/custom()
+
+/***************************************/
+/*****************Venligen*****************/
+/***************************************/
 
 /obj/item/clothing/under/rank/security/venligen
 	name = "\improper Black Turtleneck"
@@ -13,9 +19,10 @@
 	icon_state = "BW_uniform"
 	item_state = "jensen"
 
-/obj/item/clothing/under/rank/head_of_security/solyarkin
-	desc = "Better you do not meet the person who wears it."
-	icon_state = "commi"
+
+ /***************************************/
+/*****************Security medals*****************/
+/***************************************/
 
 /obj/item/clothing/accessory/purple_heart
 	name = "Purple Heart"
@@ -47,7 +54,9 @@
 	name = "leather jacket"
 	wear_state = "mil_jacket"
 
-
+/***************************************/
+/*****************Solar&Madman*****************/
+/***************************************/
 //private military contractors 4life <3
 /obj/item/clothing/suit/storage/vest/madman
 	name = "\improper MOLLE plate carrier"
@@ -153,7 +162,9 @@
 			item_state = initial(item_state)
 			usr << "You pull the keffieh down."
 
-
+/***************************************/
+/*****************Deverezzer*****************/
+/***************************************/
 /obj/item/weapon/flame/lighter/zippo/black
 	name = "\improper The Last Flame"
 	desc = "A black zippo lighter, which holds some form of sentimental value."
@@ -164,7 +175,10 @@
 	name = "Ambassador"
 	icon_state = "ambassador"
 
-//Maglaj
+/***************************************/
+/*****************Maglaj*****************/
+/***************************************/
+
 /obj/item/clothing/under/rank/security/maglaj
 	name = "officer's frock"
 	icon_state = "maglaj"
@@ -175,7 +189,9 @@
 	desc = "When you REALLY want to turn up the heat"
 	icon_state = "maglaj"
 
-// Joody customs
+/***************************************/
+/*****************Joody*****************/
+/***************************************/
 /obj/item/clothing/suit/storage/toggleable_hood/cloak
 	name = "desert cloak"
 	desc = "A warm and comfortable cloak, which is the traditional garment of the Erg'ishchort people."

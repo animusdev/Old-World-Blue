@@ -188,16 +188,6 @@
 
 	L = list()
 
-	current_data = new()
-	current_data.character_name = "Aiden McMurray"
-	current_data.item_path = /obj/item/clothing/under/rank/mechatronic/solar
-	L |= current_data
-
-	current_data = new()
-	current_data.req_titles = list("Paramedic")
-	current_data.character_name = "Aiden McMurray"
-	current_data.item_path = /obj/item/clothing/suit/storage/vest/pcrc
-	L |= current_data
 
 	current_data = new()
 	current_data.character_name = "Aiden McMurray"
@@ -301,35 +291,6 @@
 
 ///Tertiumdatur///
 
-	L = list()
-
-	current_data = new()
-	current_data.character_name = "Morlaiaschorr Ilirka"
-	current_data.item_desc = "A kit for modifying a voidsuit."
-	current_data.name = "Brown refitted modification of the ordinary atmospherics voidsuit made by Aether A&R. This one suitable only for tajaran."
-	current_data.item_path = /obj/item/device/kit/suit
-	current_data.req_titles = list("Atmospheric Technician", "Station Engineer")
-	current_data.kit_name = "dark brown voidsuit"
-	current_data.kit_desc = "Brown refitted version of the ordinary atmospherics voidsuit made by Aether A&R. This one suitable only for tajaran."
-	current_data.kit_icon = "rig-atmos_special"
-	L |= current_data
-
-	current_data = new()
-	current_data.character_name = "Morlaiaschorr Ilirka"
-	current_data.item_path = /obj/item/clothing/glasses/hud/engi
-	L |= current_data
-
-	current_data = new()
-	current_data.character_name = "Karamzi Khis'san"
-	current_data.item_path = /obj/item/clothing/head/floral_crown
-	L |= current_data
-
-	current_data = new()
-	current_data.character_name = "Judas Insufledor"
-	current_data.item_path = /obj/item/clothing/suit/storage/judas_jacket
-	L |= current_data
-
-	custom_items["tertiumdatur"] = L
 
 ///Nikiss2000///
 
@@ -342,6 +303,14 @@
 
 	custom_items["nikiss2000"] = L
 
+//NearBird
+	L = list()
+	current_data = new()
+	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
+	current_data.item_path = /obj/item/clothing/suit/storage/vest/solar
+	L |= current_data
+
+	custom_items["nearbird"] = L
 
 
 ///Nikiton///
@@ -441,29 +410,6 @@
 
 ///MarcusAga///
 
-	L = list()
-
-	current_data = new()
-	current_data.character_name = "Bertrand Francois"
-	current_data.item_path = /obj/item/clothing/under/pants/sweaterj
-	L |= current_data
-
-	current_data = new()
-	current_data.character_name = "Bertrand Francois"
-	current_data.item_path = /obj/item/clothing/suit/storage/pullover
-	L |= current_data
-
-	current_data = new()
-	current_data.character_name = "Bertrand Francois"
-	current_data.item_path = /obj/item/clothing/shoes/red_boots
-	L |= current_data
-
-	current_data = new()
-	current_data.character_name = "Bertrand Francois"
-	current_data.item_path = /obj/item/device/pda/chrome
-	L |= current_data
-
-	custom_items["marcusaga"] = L
 
 	return 1
 
