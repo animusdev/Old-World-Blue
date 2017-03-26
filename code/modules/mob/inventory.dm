@@ -81,7 +81,7 @@ var/list/slot_equipment_priority = list(
 	// Try put it in their backpack
 	if(istype(src.back,/obj/item/weapon/storage))
 		var/obj/item/weapon/storage/backpack = src.back
-		if(backpack.contents.len < backpack.storage_slots)
+		if(backpack.can_be_inserted(newitem))
 			newitem.forceMove(src.back)
 			return 1
 
