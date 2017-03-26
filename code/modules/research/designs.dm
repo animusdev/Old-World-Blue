@@ -498,6 +498,7 @@ other types of metals and chemistry for reagents).
 	build_type = MECHFAB
 	category = "Prosthesis"
 
+//Enforcer
 /datum/design/prosthesis/enforcer
 	req_tech = list("materials" = 3, "engineering" = 2, "combat" = 2, "biotech" = 3)
 	desc = "Fulllimb combat prosthesis with magboots and powerfists modules."
@@ -526,7 +527,7 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/prosthesis/enforcer/l_leg
 
 
-
+//Runner
 /datum/design/prosthesis/runner
 	req_tech = list("materials" = 3, "engineering" = 2, "biotech" = 3)
 	desc = "Fulllimb runner prosthesis. Light and quick."
@@ -543,6 +544,25 @@ other types of metals and chemistry for reagents).
 	name = "left leg"
 	id = "runner_l_leg"
 	build_path = /obj/item/prosthesis/runner/l_leg
+
+
+//Wolverine
+/datum/design/prosthesis/wolverine
+	req_tech = list("materials" = 3, "engineering" = 2, "combat" = 3, "biotech" = 3)
+	desc = "Fulllimb combat prosthesis with sharp cyber-blades."
+
+/datum/design/prosthesis/wolverine/AssembleDesignName()
+	name = "Prosthesis design of \"Wolverine Claws\" ([name])"
+
+/datum/design/prosthesis/wolverine/r_arm
+	name = "right arm"
+	id = "wolverine_r_arm"
+	build_path = /obj/item/prosthesis/wolverine/r_arm
+
+/datum/design/prosthesis/wolverine/l_arm
+	name = "left arm"
+	id = "wolverine_l_arm"
+	build_path = /obj/item/prosthesis/wolverine/l_arm
 
 ///////////////////////////////////
 ////////////Mecha Modules//////////
