@@ -50,9 +50,6 @@
 	)
 	user.drop_from_inventory(E)
 	E.install(target)
-	target.update_body()
-	target.updatehealth()
-	target.UpdateDamageIcon()
 
 /datum/surgery_step/limb/attach/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/E = tool

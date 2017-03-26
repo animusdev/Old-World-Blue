@@ -106,7 +106,27 @@
 
 	custom_items["fox231"] = L
 
+
+////Maglaj////
+
+	L = list()
+
+	current_data = new()
+	current_data.character_name = "Nikolay Bolotov"
+	current_data.item_path = /obj/item/clothing/under/rank/security/maglaj
+	current_data.req_titles = list("Security Officer")
+	L |= current_data
+
+	current_data = new()
+	current_data.character_name = "Nikolay Bolotov"
+	current_data.item_path = /obj/item/clothing/shoes/jackboots/maglaj
+	current_data.req_titles = list("Security Officer", "Paramedic")
+	L |= current_data
+
+	custom_items["maglaj"] = L
+
 ////D00k-N00kem////
+
 	L = list()
 
 	current_data = new()
@@ -414,7 +434,7 @@
 
 	current_data = new()
 	current_data.character_name = "Aliah Shak'hanara"
-	current_data.item_path = /obj/item/clothing/accessory/locket
+	current_data.item_path = /obj/item/clothing/accessory/locket/Evans
 	L |= current_data
 
 	custom_items["joody"] = L

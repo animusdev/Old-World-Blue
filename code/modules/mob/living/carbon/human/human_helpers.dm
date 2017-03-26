@@ -51,10 +51,6 @@
 		return 0
 	return !(species.flags & NO_PAIN)
 
-/mob/living/carbon/human/proc/set_body_build(var/prefered = "Default")
-	species.get_body_build(prefered)
-	fix_body_build()
-
 /mob/living/carbon/human/proc/fix_body_build()
 	if(body_build && (gender in body_build.genders) && (body_build in species.body_builds))
 		return 1

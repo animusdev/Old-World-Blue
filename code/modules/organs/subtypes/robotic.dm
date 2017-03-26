@@ -25,9 +25,9 @@
 	if(can_activate())
 		activate()
 
-/obj/item/organ/external/robotic/sync_colour_to_owner()
+/obj/item/organ/external/robotic/sync_to_owner()
 	for(var/obj/item/organ/I in internal_organs)
-		I.sync_colour_to_owner()
+		I.sync_to_owner()
 
 	if(gendered)
 		gendered = (owner.gender == MALE)? "_m": "_f"

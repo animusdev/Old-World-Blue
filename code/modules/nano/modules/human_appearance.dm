@@ -33,9 +33,14 @@
 			if(owner.change_gender(href_list["gender"]))
 				cut_and_generate_data()
 				return 1
+	if(href_list["body"])
+		if(can_change(APPEARANCE_GENDER))
+			if(owner.change_body_build(href_list["body"]))
+				cut_and_generate_data()
+				return 1
 	if(href_list["skin_tone"])
 		if(can_change_skin_tone())
-			var/new_s_tone = input(usr, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Skin Tone", owner.s_tone) as num|null
+			var/new_s_tone = input(usr, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Skin Tone", 35 - owner.s_tone) as num|null
 			if(isnum(new_s_tone) && can_still_topic(state))
 				new_s_tone = 35 - max(min( round(new_s_tone), 220),1)
 				return owner.change_skin_tone(new_s_tone)
@@ -98,6 +103,14 @@
 		data["species"] = species
 
 	data["change_gender"] = can_change(APPEARANCE_GENDER)
+	data["change_body"] = can_change(APPEARANCE_GENDER) && owner.species.body_builds.len > 1
+	if(data["change_body"])
+		data["current_body"] = owner.body_build.name
+		var/body_builds[0]
+		for(var/datum/body_build/BB in owner.species.body_builds)
+			body_builds += BB.name
+		data["bodies"] = body_builds
+
 	data["change_skin_tone"] = can_change_skin_tone()
 	data["change_skin_color"] = can_change_skin_color()
 	data["change_eye_color"] = can_change(APPEARANCE_EYE_COLOR)

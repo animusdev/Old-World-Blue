@@ -69,15 +69,14 @@
 	if(!proximity) return
 	if(istype(target,/turf/simulated/floor))
 		var/drawtype = input("Choose what you'd like to draw.", "Crayon scribbles") in list("graffiti","rune","letter")
-		switch(drawtype)
-			if("letter")
-				drawtype = input("Choose the letter.", "Crayon scribbles") in list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
-				user << "You start drawing a letter on the [target.name]."
-			if("graffiti")
-				user << "You start drawing graffiti on the [target.name]."
-			if("rune")
-				user << "You start drawing a rune on the [target.name]."
-		if(instant || do_after(user, 50))
+		if(drawtype =="letter")
+			drawtype = input("Choose the letter.", "Crayon scribbles") in list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
+			drawtype = "a letter"
+		if(!target.Adjacent(user))
+			user << SPAN_WARN("You move too far from [target.name]!")
+			return
+		user << "You start drawing [drawtype] on the [target.name]."
+		if(instant || do_after(user, 50, target))
 			new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
 			user << "You finish drawing."
 			target.add_fingerprint(user)		// Adds their fingerprints to the floor the crayon is drawn on.

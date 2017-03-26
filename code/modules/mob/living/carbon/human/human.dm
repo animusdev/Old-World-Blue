@@ -1182,7 +1182,7 @@
 			BM = Pref.get_modification(tag)
 			Organ = BM.create_organ(species.has_organ[tag], Pref.modifications_colors[tag])
 			if(Organ)
-				Organ.install(src)
+				Organ.install(src, 0) // Not update icon
 
 	else
 		var/organ_type = null

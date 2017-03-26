@@ -12,9 +12,9 @@ var/global/list/limb_icon_cache = list()
 				overlays += child.mob_icon
 		overlays += organ.mob_icon
 
-/obj/item/organ/external/sync_colour_to_owner()
+/obj/item/organ/external/sync_to_owner()
 	for(var/obj/item/organ/I in internal_organs)
-		I.sync_colour_to_owner()
+		I.sync_to_owner()
 	s_tone = null
 	s_col = null
 	if(owner.species.flags & HAS_SKIN_TONE)
@@ -25,6 +25,7 @@ var/global/list/limb_icon_cache = list()
 	if(gendered)
 		gendered = (owner.gender == MALE)? "_m": "_f"
 	body_build = owner.body_build.index
+	icon = null
 
 /obj/item/organ/external/update_icon(var/skeletal)
 
@@ -34,17 +35,16 @@ var/global/list/limb_icon_cache = list()
 			gendered = (owner.gender == MALE)? "_m": "_f"
 		body_build = owner.body_build.index
 */
+	icon = null
 	mob_icon = get_icon(skeletal)
 	apply_colors()
 	draw_internals()
 	dir  = EAST
 	icon = mob_icon
-	return mob_icon
+	return icon
 
 /obj/item/organ/external/get_icon(var/skeletal)
 	icon_state = "[organ_tag][gendered][body_build]"
-	if(owner)
-		icon_cache_key = "[icon_state][model][owner.species.name]"
 
 	var/icon/tmp_icon
 	if(default_icon)
@@ -105,7 +105,7 @@ var/global/list/limb_icon_cache = list()
 	..()
 	overlays.Cut()
 	if(!owner || !owner.species)
-		return
+		return icon
 
 	if(owner.lip_color && (owner.species.flags & HAS_LIPS))
 		var/icon/lip_icon = new/icon(owner.species.icobase, "lips[owner.body_build.index]")
@@ -129,12 +129,9 @@ var/global/list/limb_icon_cache = list()
 			overlays |= hair
 
 	icon = mob_icon
-	return mob_icon
+	return icon
 
 /obj/item/organ/external/get_icon_key()
-	if(!mob_icon)
-		return "notready"
-
 	if(status & ORGAN_MUTATED)
 		. = "mutated"
 	else if(status & ORGAN_DEAD)
@@ -167,7 +164,7 @@ var/list/robot_hud_colours = list("#CFCFCF","#AFAFAF","#8F8F8F","#6F6F6F","#4F4F
 
 	// Generate the greyscale base icon and cache it for later.
 	// icon_cache_key is set by any get_icon() calls that are made.
-	var/cache_key = "dambase-[icon_cache_key]"
+	var/cache_key = "[icon_state][model][owner.species.name]"
 	if(!icon_cache_key || !limb_icon_cache[cache_key])
 		var/icon/new_icon = icon(get_icon(), null, SOUTH)
 		new_icon.Blend("#000000", ICON_MULTIPLY)

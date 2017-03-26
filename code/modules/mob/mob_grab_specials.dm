@@ -142,15 +142,12 @@
 
 /obj/item/weapon/grab/proc/devour(mob/target, mob/user)
 	var/can_eat
-	if((FAT in user.mutations) && issmall(target))
-		can_eat = 1
-	else
-		var/mob/living/carbon/human/H = user
-		if(istype(H) && H.species.gluttonous)
-			if(H.species.gluttonous == 2)
-				can_eat = 2
-			else if(!ishuman(target) && !issmall(target) && (target.small || iscarbon(target)))
-				can_eat = 1
+	var/mob/living/carbon/human/H = user
+	if(istype(H) && H.species.gluttonous)
+		if(H.species.gluttonous == 2)
+			can_eat = 2
+		else if(!ishuman(target) && !issmall(target) && (target.small || iscarbon(target)))
+			can_eat = 1
 
 	if(can_eat)
 		var/mob/living/carbon/attacker = user
