@@ -296,8 +296,8 @@ var/list/donator_icons
 				if(rang == "Captain")
 					captainless=0
 				if(!player_is_antag(player.mind, only_offstation_roles = 1))
-					equip_custom_items(player)
 					job_master.EquipRank(player, rang)
+					equip_custom_items(player)
 					job_master.MoveAtSpawnPoint(player, rang)
 					if(ishuman(player))
 						UpdateFactionList(player)
