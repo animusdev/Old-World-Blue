@@ -129,60 +129,10 @@
 	throwforce = 2
 	slot_flags = SLOT_EARS
 
-/obj/item/clothing/ears/equipped(mob/user, slot)
-	..()
-	if(slot_flags & SLOT_TWOEARS)
-		var/mob/living/carbon/human/H = loc
-		if(istype(H))
-			if(slot == slot_l_ear)
-				H.equip_to_slot(new /obj/item/clothing/ears/offear(src), slot_r_ear, 0)
-			else if(slot == slot_r_ear)
-				H.equip_to_slot(new /obj/item/clothing/ears/offear(src), slot_l_ear, 0)
-
-/obj/item/clothing/ears/dropped(mob/user as mob)
-	..()
-	if(slot_flags & SLOT_TWOEARS)
-		var/mob/living/carbon/human/H = user
-		var/obj/item/clothing/ears/offear/Other = null
-
-		if(H.l_ear && istype(H.l_ear, /obj/item/clothing/ears/offear))
-			Other = H.l_ear
-		else if(H.r_ear && istype(H.r_ear, /obj/item/clothing/ears/offear))
-			Other = H.r_ear
-
-		if(Other) H.unEquip(Other)
-
 /obj/item/clothing/ears/update_clothing_icon()
 	if (ismob(src.loc))
 		var/mob/M = src.loc
 		M.update_inv_ears()
-
-/obj/item/clothing/ears/offear
-	name = "Other ear"
-	w_class = 5.0
-	icon = 'icons/mob/screen1_Midnight.dmi'
-	icon_state = "block"
-	slot_flags = SLOT_EARS
-	var/obj/item/clothing/ears/origin = null
-
-	New(var/obj/O)
-		name = O.name
-		desc = O.desc
-		icon = O.icon
-		icon_state = O.icon_state
-		origin = O
-		set_dir(O.dir)
-
-	attack_hand(user)
-		return origin.attack_hand(user)
-
-	dropped(mob/user)
-		..()
-		var/mob/living/carbon/human/H = user
-		if(H.l_ear == origin || H.r_ear == origin)
-			H.remove_from_mob(origin)
-		qdel(src)
-		return
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -466,6 +416,12 @@
 	if(has_sensor <= 0)
 		usr << "This suit does not have any sensors."
 		return 0
+
+/obj/item/clothing/under/AltClick(mob/living/carbon/human/user)
+	if(src in user)
+		set_sensors(user)
+	else
+		return ..()
 
 	var/list/modes = list("Off", "Binary sensors", "Vitals tracker", "Tracking beacon")
 	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) as null|anything in modes
