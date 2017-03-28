@@ -32,7 +32,6 @@
 	return results
 
 /obj/proc/atmosanalyze(var/mob/user)
-	return
 
 /obj/item/weapon/tank/atmosanalyze(var/mob/user)
 	return atmosanalyzer_scan(src, src.air_contents, user)
