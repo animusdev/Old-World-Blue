@@ -90,6 +90,17 @@
 
 	custom_items["gremy4uu"] = L
 
+///PhoeniX Vito///
+
+	L = list()
+
+	current_data = new()
+	current_data.character_name = "Vikro Box"
+	current_data.item_path = /obj/item/device/radio/headset/moonphones
+	L |= current_data
+
+	custom_items["PhoeniX Vito"] = L
+
 ///Fox231///
 
 	L = list()
@@ -114,13 +125,11 @@
 	current_data = new()
 	current_data.character_name = "Nikolay Bolotov"
 	current_data.item_path = /obj/item/clothing/under/rank/security/maglaj
-	current_data.req_titles = list("Security Officer")
 	L |= current_data
 
 	current_data = new()
 	current_data.character_name = "Nikolay Bolotov"
 	current_data.item_path = /obj/item/clothing/shoes/jackboots/maglaj
-	current_data.req_titles = list("Security Officer", "Paramedic")
 	L |= current_data
 
 	custom_items["maglaj"] = L
@@ -187,7 +196,6 @@
 ///Eclipse///
 
 	L = list()
-
 
 	current_data = new()
 	current_data.character_name = "Aiden McMurray"
@@ -289,9 +297,6 @@
 
 	custom_items["wajtswv"] = L
 
-///Tertiumdatur///
-
-
 ///Nikiss2000///
 
 	L = list()
@@ -303,7 +308,8 @@
 
 	custom_items["nikiss2000"] = L
 
-//NearBird
+////NearBird////
+
 	L = list()
 	current_data = new()
 	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
@@ -407,8 +413,6 @@
 	L |= current_data
 
 	custom_items["joody"] = L
-
-///MarcusAga///
 
 
 	return 1
