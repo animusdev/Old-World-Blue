@@ -146,35 +146,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	if (ticker.mode.deny_respawn) //BS12 EDIT
 		usr << "<span class='notice'>Respawn is disabled for this roundtype.</span>"
 		return
-	else
-		var/is_admin = 0
-		if(src.client)
-			is_admin = check_rights(0, 0)
-		var/deathtime = world.time - src.timeofdeath
-		if(!is_admin && isobserver(src))
-			if(has_enabled_antagHUD == 1 && config.antag_hud_restricted)
-				usr << "\blue <B>Upon using the antagHUD you forfeighted the ability to join the round.</B>"
-				return
-		var/deathtimeminutes = round(deathtime / 600)
-		var/pluralcheck = "minute"
-		if(deathtimeminutes == 0)
-			pluralcheck = ""
-		else if(deathtimeminutes == 1)
-			pluralcheck = " [deathtimeminutes] minute and"
-		else if(deathtimeminutes > 1)
-			pluralcheck = " [deathtimeminutes] minutes and"
-		var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10,1)
-		usr << "You have been dead for[pluralcheck] [deathtimeseconds] seconds."
-
-		if (deathtime < config.respawn_time*600)
-			if(is_admin)
-				if(alert("Normal players must wait at least [config.respawn_time] minutes to respawn! Continue?","Warning", "Respawn", "Cancel") == "Cancel")
-					return
-			else
-				usr << "You must wait [config.respawn_time] minutes to respawn!"
-				return
-		else
-			usr << "You can respawn now, enjoy your new life!"
+	else if(!MayRespawn())
+		return
 
 	log_game("[usr.name]/[usr.key] used abandon mob.")
 
@@ -852,6 +825,39 @@ mob/observer/dead/MayRespawn(var/feedback = 0)
 		if(feedback)
 			src << "<span class='warning'>antagHUD restrictions prevent you from respawning.</span>"
 		return 0
+
+	var/is_admin = check_rights(0, 0)
+
+	if(!is_admin)
+		if(has_enabled_antagHUD == 1 && config.antag_hud_restricted)
+			usr << "\blue <B>Upon using the antagHUD you forfeighted the ability to join the round.</B>"
+			return 0
+
+	var/deathtime = world.time - src.timeofdeath
+	if(feedback)
+		var/deathtimeminutes = round(deathtime / 600)
+		var/pluralcheck = "minute"
+		if(deathtimeminutes == 0)
+			pluralcheck = ""
+		else if(deathtimeminutes == 1)
+			pluralcheck = " [deathtimeminutes] minute and"
+		else if(deathtimeminutes > 1)
+			pluralcheck = " [deathtimeminutes] minutes and"
+		var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10,1)
+		usr << "You have been dead for[pluralcheck] [deathtimeseconds] seconds."
+
+	if (deathtime < config.respawn_time*600)
+		if(is_admin)
+			if(alert("Normal players must wait at least [config.respawn_time] minutes to respawn! Continue?","Warning", "Respawn", "Cancel") == "Cancel")
+				return 0
+		else
+			if(feedback)
+				usr << "You must wait [config.respawn_time] minutes to respawn!"
+			return 0
+
+	if(feedback)
+		usr << "You can respawn now, enjoy your new life!"
+
 	return 1
 
 //Culted Ghosts
