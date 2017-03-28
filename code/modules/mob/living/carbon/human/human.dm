@@ -50,8 +50,8 @@
 		qdel(organ)
 	return ..()
 
-/mob/living/carbon/human/proc/equip_survival_gear(var/advanced_gear)
-	species.equip_survival_gear(src, advanced_gear)
+/mob/living/carbon/human/proc/equip_survival_gear(var/datum/job/J)
+	species.equip_survival_gear(src, J)
 
 /mob/living/carbon/human/Stat()
 	..()
@@ -1182,7 +1182,7 @@
 			BM = Pref.get_modification(tag)
 			Organ = BM.create_organ(species.has_organ[tag], Pref.modifications_colors[tag])
 			if(Organ)
-				Organ.install(src)
+				Organ.install(src, 0) // Not update icon
 
 	else
 		var/organ_type = null

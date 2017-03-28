@@ -15,10 +15,10 @@
 	// Apply our eye color to the target.
 	if(eye_color)
 		owner.eyes_color = eye_color
-	sync_colour_to_owner()
+	sync_to_owner()
 	owner.update_eyes()
 
-/obj/item/organ/internal/eyes/sync_colour_to_owner()
+/obj/item/organ/internal/eyes/sync_to_owner()
 	if(!owner)
 		return
 	species = owner.species

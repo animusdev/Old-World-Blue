@@ -146,24 +146,15 @@ var/datum/station_state/start_state = null
 var/datum/configuration/config      = null
 var/datum/sun/sun                   = null
 
-var/list/combatlog = list()
-var/list/IClog     = list()
-var/list/OOClog    = list()
-var/list/adminlog  = list()
-
 var/list/powernets = list()
 
 var/Debug  = 0 // Global debug switch.
 var/Debug2 = 0
-var/datum/debug/debugobj
-
-var/datum/moduletypes/mods = new()
 
 var/wavesecret    = 0
 var/gravity_is_on = 1
 
 var/join_motd = null
-var/forceblob = 0
 
 var/datum/nanomanager/nanomanager		= new() // NanoManager, the manager for Nano UIs.
 var/datum/event_manager/event_manager	= new() // Event Manager, the manager for events.

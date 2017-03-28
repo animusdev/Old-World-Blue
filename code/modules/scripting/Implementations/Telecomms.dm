@@ -232,6 +232,8 @@ datum/signal
 
 		if((!message || message == "") && message != 0)
 			message = "*beep*"
+		else
+			message = russian_to_cp1251(message)
 		if(!source)
 			source = rhtml_encode(ruppertext(S.id))
 			hradio = new // sets the hradio as a radio intercom

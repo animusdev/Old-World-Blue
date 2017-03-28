@@ -123,13 +123,16 @@
 				set_temperature = dd_range(T0C, T0C + 90, set_temperature + value)
 
 			if("cellremove")
-				if(panel_open && cell && !usr.get_active_hand())
-					usr.visible_message("\blue [usr] removes \the [cell] from \the [src].", "\blue You remove \the [cell] from \the [src].")
+				if(panel_open && cell)
+					usr.visible_message(
+						"\blue [usr] removes \the [cell] from \the [src].",
+						"\blue You remove \the [cell] from \the [src]."
+					)
 					cell.update_icon()
-					usr.put_in_hands(cell)
-					cell.add_fingerprint(usr)
 					cell = null
 					power_change()
+					cell.add_fingerprint(usr)
+					usr.put_in_hands(cell)
 
 
 			if("cellinstall")

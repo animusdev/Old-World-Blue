@@ -121,6 +121,7 @@
 		'nano/templates/layout_default.tmpl',
 		'nano/templates/mech_bay_console.tmpl',
 		'nano/templates/multi_docking_console.tmpl',
+		'nano/templates/multibutton.tmpl',
 		'nano/templates/omni_filter.tmpl',
 		'nano/templates/omni_mixer.tmpl',
 		'nano/templates/pacman.tmpl',

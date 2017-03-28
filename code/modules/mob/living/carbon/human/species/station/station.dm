@@ -109,15 +109,18 @@
 		"Xenobiologist", "Quartermaster", "Internal Affairs Agent"
 	)
 
-/datum/species/unathi/equip_survival_gear(var/mob/living/carbon/human/H)
+/datum/species/tajaran/equip_survival_gear(mob/living/carbon/human/H, var/datum/job/J)
 	..()
-	var/obj/item/shoes = H.shoes
 	var/gear = /obj/item/clothing/shoes/sandal
-	if(shoes)
-		if(istype(shoes, /obj/item/clothing/shoes/jackboots))
-			gear = /obj/item/clothing/shoes/jackboots/unathi
+
+	if(J && ispath(J.shoes, /obj/item/clothing/shoes/jackboots))
+		gear = /obj/item/clothing/shoes/jackboots/unathi
+
+	if(H.shoes)
+		var/obj/item/shoes = H.shoes
 		if(H.unEquip(shoes))
 			qdel(shoes)
+
 	if(!H.shoes)
 		H.equip_to_slot_or_del(new gear (H),slot_shoes)
 
@@ -140,7 +143,7 @@
 	brute_mod = 1.15
 	burn_mod =  1.15
 	gluttonous = 1
-	name_language = "Siik"
+	name_language = "Siik'tajr"
 
 	min_age = 17
 	max_age = 80
@@ -198,15 +201,18 @@
 	)
 	accent = list("ð" = "ðð", "Ð" = "Ðð")
 
-/datum/species/tajaran/equip_survival_gear(mob/living/carbon/human/H)
+/datum/species/tajaran/equip_survival_gear(mob/living/carbon/human/H, var/datum/job/J)
 	..()
-	var/obj/item/shoes = H.shoes
 	var/gear = /obj/item/clothing/shoes/sandal
-	if(shoes)
-		if(istype(shoes, /obj/item/clothing/shoes/jackboots))
-			gear = /obj/item/clothing/shoes/jackboots/unathi
+
+	if(J && ispath(J.shoes, /obj/item/clothing/shoes/jackboots))
+		gear = /obj/item/clothing/shoes/jackboots/unathi
+
+	if(H.shoes)
+		var/obj/item/shoes = H.shoes
 		if(H.unEquip(shoes))
 			qdel(shoes)
+
 	if(!H.shoes)
 		H.equip_to_slot_or_del(new gear (H),slot_shoes)
 
@@ -416,8 +422,11 @@
 		"Psychiatrist", "Paramedic", "Quartermaster", "Shaft Miner", "Internal Affairs Agent"
 	)
 
-/datum/species/machine/equip_survival_gear(var/mob/living/carbon/human/H)
+/datum/species/machine/equip_survival_gear()
 	return
+
+/datum/species/machine/sanitize_name(var/new_name)
+	return sanitizeName(new_name, allow_numbers = 1)
 
 /datum/species/machine/organs_spawned(var/mob/living/carbon/human/H)
 	..()

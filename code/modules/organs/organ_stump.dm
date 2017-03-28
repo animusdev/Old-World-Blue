@@ -34,7 +34,7 @@
 /obj/item/organ/external/stump/is_stump()
 	return 1
 
-/obj/item/organ/external/stump/removed(user, delete_children)
+/obj/item/organ/external/stump/removed()
 	..()
 	qdel(src)
 

@@ -104,11 +104,6 @@ default behaviour is:
 			if(!can_move_mob(tmob, 0, 0))
 				now_pushing = 0
 				return
-			if(ishuman(tmob) && FAT in tmob.mutations)
-				if(prob(40) && !(FAT in src.mutations))
-					src << "<span class='danger'>You fail to push [tmob]'s fat ass out of the way.</span>"
-					now_pushing = 0
-					return
 			if(tmob.r_hand && istype(tmob.r_hand, /obj/item/weapon/shield/riot))
 				if(prob(99))
 					now_pushing = 0

@@ -64,6 +64,9 @@
 		if(jobban_isbanned(user, rank))
 			dat += "<del>[job_name]</del></td><td><b> \[BANNED]</b></td></tr>"
 			continue
+		if(job.minimum_character_age && (user.client.prefs.age < job.minimum_character_age))
+			dat += "<del>[job_name]</del></td><td><b> \[MIN AGE [job.minimum_character_age]]</b></td></tr>"
+			continue
 		if(!job.player_old_enough(user.client))
 			var/available_in_days = job.available_in_days(user.client)
 			dat += "<del>[job_name]</del></td><td> \[IN [(available_in_days)] DAYS]</td></tr>"

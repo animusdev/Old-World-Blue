@@ -315,7 +315,7 @@
 		if("input")
 			var/raw_name = input(user, "Choose your character's name:", "Character Preference")  as text|null
 			if (!isnull(raw_name)) // Check to ensure that the user entered text (rather than cancel.)
-				var/new_name = sanitizeName(raw_name)
+				var/new_name = current_species.sanitize_name(raw_name)
 				if(new_name)
 					real_name = new_name
 					send_byjax(user, "new_pref.browser", "name", real_name)

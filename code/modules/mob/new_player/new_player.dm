@@ -206,9 +206,7 @@
 		var/datum/job/job = job_master.GetJob(rank)
 		if(!job)								return 0
 		if(!job.is_position_available(1))		return 0
-		if(jobban_isbanned(src,rank))			return 0
-		if(IsJobRestricted(rank))				return 0
-		if(!job.player_old_enough(src.client))	return 0
+		if(!job.available_to(src))				return 0
 		return 1
 
 
@@ -246,8 +244,8 @@
 			else
 				character = create_character()	//creates the human and transfers vars and mind
 				job_master.EquipRank(character, rank)					//equips the human
-				UpdateFactionList(character)
 				equip_custom_items(character)
+				UpdateFactionList(character)
 
 		//Find our spawning point.
 		var/join_message
@@ -277,8 +275,9 @@
 		ticker.mode.handle_latejoin(character)
 		ticker.minds += character.mind //AIs handle this in the transform proc.	//TODO!!!!! ~Carn
 
-		if(character.mind.assigned_role != "Cyborg")
+		if(character.mind.assigned_role != "Cyborg" && !player_is_antag(character.mind, only_offstation_roles = 1))
 			data_core.manifest_inject(character)
+			matchmaker.do_matchmaking()
 			AnnounceArrival(character, rank, join_message)
 		else
 			AnnounceCyborg(character, rank, join_message)
@@ -366,6 +365,13 @@
 		if(mind)
 			mind.active = 0					//we wish to transfer the key manually
 			mind.original = new_character
+			if(client.prefs.relations.len)
+				for(var/T in client.prefs.relations)
+					var/TT = matchmaker.relation_types[T]
+					var/datum/relation/R = new TT
+					R.holder = mind
+					R.info = client.prefs.relations_info[T]
+				mind.gen_relations_info = client.prefs.relations_info["general"]
 			mind.transfer_to(new_character)					//won't transfer key since the mind is not active
 
 		new_character.name = real_name

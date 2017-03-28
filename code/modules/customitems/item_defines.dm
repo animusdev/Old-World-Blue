@@ -2,10 +2,16 @@
 	name = "Clown"
 	desc = "Reminder of the wonderful past"
 	icon_state = "sad_clown"
-
+/***************************************/
+/*****************LethalGhost****************/
+/***************************************/
 /obj/item/clothing/accessory/locket/Evans
 	desc = "This oval shaped, argentium sterling silver locket."
 	held = new /obj/item/weapon/photo/custom()
+
+/***************************************/
+/*****************Venligen*****************/
+/***************************************/
 
 /obj/item/clothing/under/rank/security/venligen
 	name = "\improper Black Turtleneck"
@@ -13,9 +19,10 @@
 	icon_state = "BW_uniform"
 	item_state = "jensen"
 
-/obj/item/clothing/under/rank/head_of_security/solyarkin
-	desc = "Better you do not meet the person who wears it."
-	icon_state = "commi"
+
+ /***************************************/
+/*****************Security medals*****************/
+/***************************************/
 
 /obj/item/clothing/accessory/purple_heart
 	name = "Purple Heart"
@@ -47,7 +54,9 @@
 	name = "leather jacket"
 	wear_state = "mil_jacket"
 
-
+/***************************************/
+/*****************Solar&Madman*****************/
+/***************************************/
 //private military contractors 4life <3
 /obj/item/clothing/suit/storage/vest/madman
 	name = "\improper MOLLE plate carrier"
@@ -153,7 +162,9 @@
 			item_state = initial(item_state)
 			usr << "You pull the keffieh down."
 
-
+/***************************************/
+/*****************Deverezzer*****************/
+/***************************************/
 /obj/item/weapon/flame/lighter/zippo/black
 	name = "\improper The Last Flame"
 	desc = "A black zippo lighter, which holds some form of sentimental value."
@@ -163,3 +174,49 @@
 /obj/item/clothing/suit/storage/deverezzer
 	name = "Ambassador"
 	icon_state = "ambassador"
+
+/***************************************/
+/*****************Maglaj*****************/
+/***************************************/
+
+/obj/item/clothing/under/rank/security/maglaj
+	name = "officer's frock"
+	icon_state = "maglaj"
+	item_state = "mime"
+
+/obj/item/clothing/shoes/jackboots/maglaj
+	name = "jackboots"
+	desc = "When you REALLY want to turn up the heat"
+	icon_state = "maglaj"
+
+/***************************************/
+/*****************Joody*****************/
+/***************************************/
+/obj/item/clothing/suit/storage/toggleable_hood/cloak
+	name = "desert cloak"
+	desc = "A warm and comfortable cloak, which is the traditional garment of the Erg'ishchort people."
+	icon_state = "descloak"
+	hood_type = /obj/item/clothing/head/toggleable_hood/cloakhood
+
+	cold_protection = LOWER_TORSO|UPPER_TORSO|ARMS
+	min_cold_protection_temperature = T0C - 20
+
+/obj/item/clothing/head/toggleable_hood/cloakhood
+	name = "desert cloak hood"
+	icon_state = "cloak_hood"
+	flags_inv = BLOCKHAIR|HIDEFACE|HIDEEYES
+	cold_protection = HEAD
+	min_cold_protection_temperature = T0C - 20
+
+/obj/item/clothing/under/dbodywraps
+	name = "body wraps"
+	desc = "A bunch of tight bandages as additional to leather pants."
+	icon_state = "dbodywraps"
+
+/obj/item/clothing/shoes/leatherboots
+	name = "light leather boots"
+	desc = "Protects your legs from a cold wind."
+	icon_state = "leatherboots"
+
+	cold_protection = FEET
+	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE

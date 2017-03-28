@@ -82,9 +82,10 @@ var/list/organ_cache = list()
 			msg_admin_attack("[key_name(user)] removed a vital organ ([src]) from [key_name(owner)] (INTENT: [uppertext(user.a_intent)])", user)
 		owner.death()
 
+	parent = null
 	owner = null
 
-/obj/item/organ/proc/sync_colour_to_owner()
+/obj/item/organ/proc/sync_to_owner()
 	return
 
 /obj/item/organ/proc/get_icon()
@@ -119,7 +120,7 @@ var/list/organ_cache = list()
 	if(preserved)
 		return
 	//Process infections
-	if (robotic >= 2 || (owner && owner.species && (owner.species.flags & IS_PLANT)))
+	if ((robotic >= ORGAN_ROBOT) || (owner && owner.species && (owner.species.flags & IS_PLANT)))
 		germ_level = 0
 		return
 

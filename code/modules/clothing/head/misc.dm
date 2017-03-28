@@ -200,12 +200,13 @@
 	icon_state = "boater_hat"
 	item_state = "boater_hat"
 	desc = "The ultimate in summer fashion."
-
-/obj/item/clothing/head/fedora
-	name = "fedora"
-	icon_state = "fedora"
-	item_state = "fedora"
+/*
+/obj/item/clothing/head/oldfedora
+	name = "\improper fedora"
+	icon_state = "fedora_old"
+	item_state = "fedora_old"
 	desc = "A sharp, stylish hat."
+*/
 
 /obj/item/clothing/head/feathertrilby
 	name = "feather trilby"
@@ -298,3 +299,27 @@
 	name = "Armored army beret"
 	desc = "That's the khaki-colored beret. Has a NTCI insignia on it"
 	armor = list(melee = 50, bullet = 15, laser = 50,energy = 10, bomb = 25, bio = 0, rad = 0)
+
+/obj/item/clothing/head/fedora
+	name = "fedora"
+	icon_state = "fedora"
+	item_state = "fedora"
+	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
+	action_button_name = "Tip Fedora"
+
+/obj/item/clothing/head/fedora/attack_self(mob/user)
+	fedoraproc(user)
+
+/obj/item/clothing/head/fedora/proc/fedoraproc(mob/user)
+	if(user.canmove && !user.stat && !user.restrained())
+		user.visible_message(
+			"[user] tips their [src].",
+			"You tips your [src]."
+		)
+
+/obj/item/clothing/head/fedora/verb/fedoratip()
+	set category = "Object"
+	set name = "Tip Fedora"
+	set src in usr
+
+	fedoraproc(usr)

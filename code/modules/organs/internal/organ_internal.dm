@@ -31,6 +31,8 @@
 	owner.internal_organs_by_name[organ_tag] = null
 	owner.internal_organs -= src
 
+	parent.internal_organs -= src
+
 	var/datum/reagent/blood/transplant_blood = locate(/datum/reagent/blood) in reagents.reagent_list
 	transplant_data = list()
 	if(!transplant_blood)

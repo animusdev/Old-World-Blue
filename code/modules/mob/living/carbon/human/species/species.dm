@@ -187,6 +187,9 @@
 /datum/species/proc/get_bodytype()
 	return name
 
+/datum/species/proc/sanitize_name(var/name)
+	return sanitizeName(name)
+
 /datum/species/proc/get_environment_discomfort(var/mob/living/carbon/human/H, var/msg_type)
 
 	if(!prob(5))
@@ -208,9 +211,9 @@
 			if(covered)
 				H << "<span class='danger'>[pick(heat_discomfort_strings)]</span>"
 
-/datum/species/proc/equip_survival_gear(var/mob/living/carbon/human/H, var/advanced_gear = 0)
+/datum/species/proc/equip_survival_gear(var/mob/living/carbon/human/H, var/datum/job/J)
 	var/gear = /obj/item/weapon/storage/box/survival
-	if(advanced_gear)
+	if(J && J.adv_survival_gear)
 		gear = /obj/item/weapon/storage/box/engineer
 
 	if(H.back && istype(H.back,/obj/item/weapon/storage))

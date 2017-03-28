@@ -23,8 +23,20 @@
 
 	src.gender = gender
 	reset_hair()
+	fix_body_build()
+	force_update_limbs()
 	update_body()
 	update_dna()
+	return 1
+
+/mob/living/carbon/human/proc/change_body_build(var/prefered = "Default")
+	body_build = species.get_body_build(gender, prefered)
+	fix_body_build()
+	force_update_limbs()
+	update_body()
+	regenerate_icons()
+	update_dna()
+
 	return 1
 
 /mob/living/carbon/human/proc/change_hair(var/hair_style)
@@ -141,5 +153,5 @@
 
 /mob/living/carbon/human/proc/force_update_limbs()
 	for(var/obj/item/organ/external/O in organs)
-		O.sync_colour_to_owner()
+		O.sync_to_owner()
 	update_body(0)

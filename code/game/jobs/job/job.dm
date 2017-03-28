@@ -141,7 +141,7 @@ For copy-pasting:
 				new path(H.l_hand)
 
 	//Survival equipment
-	H.equip_survival_gear(adv_survival_gear)
+	H.equip_survival_gear(src)
 
 	//Loyalty implant
 	if(implanted) H.implant_loyalty(H)
@@ -198,6 +198,21 @@ For copy-pasting:
 	if(C && config.use_age_restriction_for_jobs && isnum(C.player_age) && isnum(minimal_player_age))
 		return max(0, minimal_player_age - C.player_age)
 	return 0
+
+/datum/job/proc/available_to(var/mob/player)
+	if(!player)
+		return 0
+	if(jobban_isbanned(player,title))
+		return 0
+	if(!player_old_enough(player.client))
+		return 0
+	if(!player.client || !player.client.prefs)
+		return 0
+	if(player.client.prefs.IsJobRestricted(title))
+		return 0
+	if(minimum_character_age && (player.client.prefs.age < minimum_character_age))
+		return 0
+	return 1
 
 /datum/job/proc/apply_fingerprints(var/mob/living/carbon/human/target)
 	if(!istype(target))
