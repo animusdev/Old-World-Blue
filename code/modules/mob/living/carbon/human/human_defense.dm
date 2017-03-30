@@ -192,7 +192,7 @@ emp_act
 	if((user != src) && check_shields(effective_force, I, user, "the [I.name]"))
 		return 0
 
-	if(I.attack_verb.len)
+	if(I.attack_verb)
 		visible_message("\red <B>[user] [pick(I.attack_verb)] [src] in the [hit_area] with [I.name]!</B>")
 	else
 		visible_message("\red <B>[user] attacked [src] in the [hit_area] with [I.name]!</B>")

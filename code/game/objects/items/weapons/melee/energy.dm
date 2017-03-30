@@ -150,7 +150,7 @@
 	if(active)
 		user << "<span class='notice'>\The [src] deactivates!</span>"
 	..()
-	attack_verb = list()
+	attack_verb = null
 	icon_state = initial(icon_state)
 
 /obj/item/weapon/melee/energy/sword/handle_shield(mob/user, var/damage, atom/damage_source = null, mob/attacker = null, var/attack_text = "the attack")
