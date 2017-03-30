@@ -35,8 +35,6 @@
 	..()
 	desc += owner
 
-/obj/item/clothing/accessory/purple_heart/nikiton
-	owner = "Leroy Woodward"
 
 /obj/item/clothing/accessory/purple_heart/egorkor
 	owner = "Graham Maclagan"

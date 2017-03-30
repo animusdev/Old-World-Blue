@@ -5,7 +5,7 @@
 	item_flags = THICKMATERIAL
 	item_state = "helmet"
 	armor = list(melee = 50, bullet = 15, laser = 50,energy = 10, bomb = 25, bio = 0, rad = 0)
-	flags_inv = HIDEEARS|HIDEEYES
+	flags_inv = HIDEEARS|HIDEEYES|BLOCKHEADHAIR
 	body_parts_covered = HEAD|EYES
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_COLD_PROTECTION_TEMPERATURE
