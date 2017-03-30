@@ -28,7 +28,7 @@ proc/admin_attack_log(var/mob/attacker, var/mob/victim, var/attacker_message, va
 		victim.attack_log   += "\[[time_stamp()]\] <font color='orange'>[key_name(attacker)] - [victim_message]</font>"
 	if(attacker)
 		attacker.attack_log += "\[[time_stamp()]\] <font color='red'>[key_name(victim)] - [attacker_message]</font>"
-	log_attack("[key_name(attacker)] [admin_message] [key_name(victim)] ([attacker? uppertext(attacker.a_intent) : "N/A"])", attacker)
+	log_attack("[key_name(attacker)] [admin_message] [key_name(victim)] ([attacker? uppertext(attacker.a_intent) : "N/A"])", victim)
 
 
 proc/admin_attacker_log_many_victims(var/mob/attacker, var/list/mob/victims, var/attacker_message, var/victim_message, var/admin_message)

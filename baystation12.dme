@@ -953,7 +953,6 @@
 #include "code\modules\clothing\accessories\lockets.dm"
 #include "code\modules\clothing\accessories\storage.dm"
 #include "code\modules\clothing\ears\miscellaneous.dm"
-#include "code\modules\clothing\ears\moonphones.dm"
 #include "code\modules\clothing\ears\skrell.dm"
 #include "code\modules\clothing\glasses\glasses.dm"
 #include "code\modules\clothing\glasses\hud.dm"
