@@ -437,12 +437,12 @@ var/list/admin_verbs_mentor = list(
 			temp = input(usr,"Set time (in minutes)","Time to respawn",initial(config.respawn_time)) as num|null
 			if (temp >= 0)
 				config.respawn_time = temp
-				log_admin("[key_name(usr)] edit humans respawn time to [config.respawn_time]")
+				log_admin("[usr.key] edit humans respawn time to [config.respawn_time]")
 		if ("Mouse")
 			temp = input(usr,"Set time (in minutes)?","Time to respawn",initial(config.respawn_time_mouse)) as num|null
 			if (temp >= 0)
 				config.respawn_time_mouse = temp
-				log_admin("[key_name(usr)] edit mice respawn time to [config.respawn_time_mouse]")
+				log_admin("[usr.key] edit mice respawn time to [config.respawn_time_mouse]")
 		if ("Cancel")
 			return
 
@@ -472,7 +472,7 @@ var/list/admin_verbs_mentor = list(
 	set category = "Admin"
 	if(holder)
 		holder.check_antagonists()
-		log_admin("[key_name(usr)] checked antagonists.", null, 0)
+		log_admin("[usr.key] checked antagonists.", null, 0)
 	return
 /*
 /client/proc/jobbans()
@@ -538,7 +538,7 @@ var/list/admin_verbs_mentor = list(
 			holder.fakekey = new_key
 			if(istype(mob, /mob/new_player))
 				mob.name = new_key
-		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]", null, 0)
+		log_admin("[usr.key] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]", null, 0)
 
 #define MAX_WARNS 3
 #define AUTOBANTIME 30
@@ -633,7 +633,7 @@ var/list/admin_verbs_mentor = list(
 				D.affected_species |= H.species.greater_form
 	infect_virus2(T,D,1)
 
-	log_admin("[key_name(usr)] gave [key_name(T)] a [greater] disease2 with infection chance [D.infectionchance].", T)
+	log_admin("[usr.key] gave [key_name(T)] a [greater] disease2 with infection chance [D.infectionchance].", T)
 
 /client/proc/make_sound(var/obj/O in world) // -- TLE
 	set category = "Special Verbs"
@@ -645,7 +645,7 @@ var/list/admin_verbs_mentor = list(
 			return
 		for (var/mob/V in hearers(O))
 			V.show_message(message, 2)
-		log_admin("[key_name(usr)] made [O] make a sound \"[message]\".", O, 0)
+		log_admin("[usr.key] made [O] make a sound \"[message]\".", O, 0)
 
 
 /client/proc/togglebuildmodeself()
@@ -674,7 +674,7 @@ var/list/admin_verbs_mentor = list(
 	else
 		air_processing_killed = 1
 		usr << "<b>Disabled air processing.</b>"
-	log_admin("[key_name(usr)] used 'kill air'.")
+	log_admin("[usr.key] used 'kill air'.")
 
 /client/proc/readmin_self()
 	set name = "Re-Admin self"
@@ -683,7 +683,6 @@ var/list/admin_verbs_mentor = list(
 	if(deadmin_holder)
 		deadmin_holder.reassociate()
 		log_admin("[src] re-admined themself.")
-		message_admins("[src] re-admined themself.", 1)
 		src << "<span class='interface'>You now have the keys to control the planet, or atleast a small space station</span>"
 		verbs -= /client/proc/readmin_self
 
@@ -694,7 +693,6 @@ var/list/admin_verbs_mentor = list(
 	if(holder)
 		if(alert("Confirm self-deadmin for the round? You can't re-admin yourself without someont promoting you.",,"Yes","No") == "Yes")
 			log_admin("[src] deadmined themself.")
-			message_admins("[src] deadmined themself.", 1)
 			deadmin()
 			src << "<span class='interface'>You are now a normal player.</span>"
 			verbs |= /client/proc/readmin_self
@@ -728,7 +726,7 @@ var/list/admin_verbs_mentor = list(
 
 	var/new_name = sanitizeSafe(input(src, "Enter new name. Leave blank or as is to cancel.", "[S.real_name] - Enter new silicon name", S.real_name))
 	if(new_name && new_name != S.real_name)
-		log_and_message_admins("has renamed the silicon '[S.real_name]' to '[new_name]'")
+		log_admin("[usr.ckey] has renamed the silicon '[S.real_name]' to '[new_name]'")
 		S.SetName(new_name)
 
 /client/proc/manage_silicon_laws()
@@ -788,7 +786,7 @@ var/list/admin_verbs_mentor = list(
 	var sec_level = input(usr, "It's currently code [get_security_level()].", "Select Security Level")  as null|anything in (list("green","blue","red","delta")-get_security_level())
 	if(alert("Switch from code [get_security_level()] to code [sec_level]?","Change security level?","Yes","No") == "Yes")
 		set_security_level(sec_level)
-		log_admin("[key_name(usr)] changed the security level to code [sec_level].")
+		log_admin("[usr.key] changed the security level to code [sec_level].")
 
 
 //---- bs12 verbs ----
@@ -1011,7 +1009,7 @@ var/list/admin_verbs_mentor = list(
 	else
 		supply_controller.supply_packs[name] = CP
 		usr << "Supply pack [name] successfully created!"
-		log_admin("[key_name(usr)] has add custom supply pack [name]", null, 0)
+		log_admin("[usr.key] has add custom supply pack [name]", null, 0)
 
 
 /client/proc/man_up(mob/T as mob in mob_list)
@@ -1023,7 +1021,7 @@ var/list/admin_verbs_mentor = list(
 	T << "<span class='notice'>Move on.</span>"
 	T << 'sound/voice/ManUp1.ogg'
 
-	log_admin("[key_name(usr)] told [key_name(T)] to man up and deal with it.", T)
+	log_admin("[usr.key] told [key_name(T)] to man up and deal with it.", T)
 
 /client/proc/global_man_up()
 	set category = "Fun"
@@ -1034,7 +1032,7 @@ var/list/admin_verbs_mentor = list(
 		T << "<br><center><span class='notice'><b><font size=4>Man up.<br> Deal with it.</font></b><br>Move on.</span></center><br>"
 		T << 'sound/voice/ManUp1.ogg'
 
-	log_admin("[key_name(usr)] told everyone to man up and deal with it.", usr)
+	log_admin("[usr.key] told everyone to man up and deal with it.", usr)
 
 /client/proc/give_spell(mob/T as mob in mob_list) // -- Urist
 	set category = "Fun"
@@ -1043,7 +1041,7 @@ var/list/admin_verbs_mentor = list(
 	var/spell/S = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in spells
 	if(!S) return
 	T.spell_list += new S
-	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].", T)
+	log_admin("[usr.key] gave [key_name(T)] the spell [S].", T)
 
 
 
@@ -1052,15 +1050,11 @@ var/list/admin_verbs_mentor = list(
 	set name = "Toggle Paralyze"
 	set desc = "Paralyzes a player. Or unparalyses them."
 
-	var/msg
-
 	if(check_rights(R_ADMIN|R_MOD))
 		if (H.paralysis == 0)
 			H.paralysis = 1000
-			msg = " has paralyzed [key_name(H)]."
+			log_admin("[usr.key] has paralyzed [key_name(H)].", H)
 		else
 			H.paralysis = 0
-			msg = " has unparalyzed [key_name(H)]."
-		message_admins(key_name_admin(usr) + msg)
-		log_admin(key_name(usr) + msg, H)
+			log_admin("[usr.key] has unparalyzed [key_name(H)].", H)
 
