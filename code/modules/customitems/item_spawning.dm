@@ -89,16 +89,6 @@
 	L |= current_data
 
 	custom_items["gremy4uu"] = L
-///PhoeniX Vito///
-
-	L = list()
-
-	current_data = new()
-	current_data.character_name = "Vikro Box"
-	current_data.item_path = /obj/item/device/radio/headset/moonphones
-	L |= current_data
-
-	custom_items["PhoeniX Vito"] = L
 
 ///PhoeniX Vito///
 
@@ -207,8 +197,6 @@
 
 	L = list()
 
-
-
 	current_data = new()
 	current_data.character_name = "Aiden McMurray"
 	current_data.item_path = /obj/item/clothing/accessory/purple_heart/solar
@@ -231,7 +219,6 @@
 	current_data.character_name = "Aiden McMurray"
 	current_data.item_path = /obj/item/clothing/head/helmet/pmcsolar
 	L |= current_data
-
 
 	custom_items["solareclipse84"] = L
 
@@ -315,10 +302,26 @@
 
 	custom_items["nikiss2000"] = L
 
+////NearBird////
+
+	L = list()
+	current_data = new()
+	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
+	current_data.item_path = /obj/item/clothing/suit/storage/vest/solar
+	L |= current_data
+
+	custom_items["nearbird"] = L
 
 
 ///Nikiton///
+
 	L = list()
+	current_data = new()
+	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
+	current_data.character_name = "Leroy Woodward"
+	current_data.item_path = /obj/item/clothing/accessory/purple_heart/nikiton
+	L |= current_data
+
 	current_data = new()
 	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
 	current_data.character_name = "Leroy Woodward"
@@ -333,6 +336,7 @@
 	L = list()
 	current_data = new()
 	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
+	current_data.character_name = "Megan Abbott"
 	current_data.item_path = /obj/item/clothing/accessory/purple_heart/madman
 	L |= current_data
 
@@ -379,35 +383,6 @@
 	custom_items["subber"] = L
 
 ///Joody///
-
-
-	L = list()
-
-	current_data = new()
-	current_data.character_name = "Aliah Shak'hanara"
-	current_data.item_path = /obj/item/clothing/suit/storage/toggleable_hood/cloak
-	L |= current_data
-
-	current_data = new()
-	current_data.character_name = "Aliah Shak'hanara"
-	current_data.item_path = /obj/item/clothing/under/dbodywraps
-	L |= current_data
-
-	current_data = new()
-	current_data.character_name = "Aliah Shak'hanara"
-	current_data.item_path = /obj/item/clothing/shoes/leatherboots
-	L |= current_data
-
-	current_data = new()
-	current_data.character_name = "Aliah Shak'hanara"
-	current_data.item_path = /obj/item/clothing/accessory/locket/Evans
-	L |= current_data
-
-	custom_items["joody"] = L
-
-///MarcusAga///
-
-
 
 	L = list()
 
