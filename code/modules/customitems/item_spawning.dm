@@ -171,12 +171,12 @@
 	L = list()
 
 	current_data = new()
-	current_data.character_name = "Delain Veber-Bezo"
+	current_data.character_name = "Charlotte View"
 	current_data.item_path = /obj/item/weapon/flame/lighter/zippo/black
 	L |= current_data
 
 	current_data = new()
-	current_data.character_name = "Delain Veber-Bezo"
+	current_data.character_name = "Charlotte View"
 	current_data.item_path = /obj/item/clothing/suit/storage/deverezzer
 	L |= current_data
 
