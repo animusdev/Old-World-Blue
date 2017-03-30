@@ -354,9 +354,9 @@
 mob/proc/MayRespawn()
 	return 0
 
-client/proc/MayRespawn()
+client/proc/MayRespawn(feed, delay)
 	if(mob)
-		return mob.MayRespawn()
+		return mob.MayRespawn(feed, delay)
 
 	// Something went wrong, client is usually kicked or transfered to a new mob at this point
 	return 0

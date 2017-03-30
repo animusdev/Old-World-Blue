@@ -42,7 +42,7 @@ client/verb/JoinResponseTeam()
 	set name = "Join Response Team"
 	set category = "IC"
 
-	if(!MayRespawn(1))
+	if(!MayRespawn(1,5))
 		usr << "<span class='warning'>You cannot join the response team at this time.</span>"
 		return
 

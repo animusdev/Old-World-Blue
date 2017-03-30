@@ -26,7 +26,7 @@
 
 /obj/item/device/mmi/digital/posibrain/proc/request_player()
 	for(var/mob/observer/dead/O in player_list)
-		if(!O.MayRespawn())
+		if(!O.MayRespawn(0, 1))
 			continue
 		if(jobban_isbanned(O, "AI") && jobban_isbanned(O, "Cyborg"))
 			continue

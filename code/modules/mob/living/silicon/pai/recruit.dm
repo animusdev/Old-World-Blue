@@ -234,7 +234,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		if(c.ready)
 			var/found = 0
 			for(var/mob/observer/dead/o in player_list)
-				if(o.key == c.key && o.MayRespawn())
+				if(o.key == c.key && o.MayRespawn(0, 1))
 					found = 1
 			if(found)
 				available.Add(c)
@@ -347,7 +347,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 /datum/paiController/proc/requestRecruits(var/mob/user)
 	inquirer = user
 	for(var/mob/observer/dead/O in player_list)
-		if(!O.MayRespawn())
+		if(!O.MayRespawn(0, 1))
 			continue
 		if(jobban_isbanned(O, "pAI"))
 			continue

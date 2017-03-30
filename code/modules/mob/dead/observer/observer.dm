@@ -146,7 +146,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	if (ticker.mode.deny_respawn) //BS12 EDIT
 		usr << "<span class='notice'>Respawn is disabled for this roundtype.</span>"
 		return
-	else if(!MayRespawn())
+	else if(!MayRespawn(1))
 		return
 
 	log_game("[usr.name]/[usr.key] used abandon mob.", src, 0)
@@ -561,19 +561,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		src << "<span class='warning'>You can't play as mouse (banned).</span>"
 		return
 
-	if(!MayRespawn(1))
+	if(!MayRespawn(1, config.respawn_time_mouse))
 		return
 
 	var/turf/T = get_turf(src)
 	if(!T || (T.z in config.admin_levels))
 		src << "<span class='warning'>You may not spawn as a mouse on this Z-level.</span>"
-		return
-
-	var/timedifference = world.time - client.time_died_as_mouse
-	if(client.time_died_as_mouse && timedifference <= config.respawn_time_mouse * 600)
-		var/timedifference_text
-		timedifference_text = time2text(config.respawn_time_mouse * 600 - timedifference,"mm:ss")
-		src << "<span class='warning'>You may only spawn again as a mouse more than [config.respawn_time_mouse] minutes after your death. You have [timedifference_text] left.</span>"
 		return
 
 	var/response = alert(src, "Are you -sure- you want to become a mouse?","Are you sure you want to squeek?","Squeek!","Nope!")
@@ -812,7 +805,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if (ghostimage)
 			client.images -= ghostimage //remove ourself
 
-mob/observer/dead/MayRespawn(var/feedback = 0)
+/mob/observer/dead/MayRespawn(var/feedback = 0, var/delay = config.respawn_time)
 	if(!client)
 		return 0
 	if(mind && mind.current && mind.current.stat != DEAD && can_reenter_corpse)
@@ -844,13 +837,13 @@ mob/observer/dead/MayRespawn(var/feedback = 0)
 		var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10,1)
 		usr << "You have been dead for[pluralcheck] [deathtimeseconds] seconds."
 
-	if (deathtime < config.respawn_time*600)
+	if (deathtime < delay*600)
 		if(is_admin)
-			if(alert("Normal players must wait at least [config.respawn_time] minutes to respawn! Continue?","Warning", "Respawn", "Cancel") == "Cancel")
+			if(alert("Normal players must wait at least [delay] minutes to respawn! Continue?","Warning", "Respawn", "Cancel") == "Cancel")
 				return 0
 		else
 			if(feedback)
-				usr << "You must wait [config.respawn_time] minutes to respawn!"
+				usr << "You must wait [delay] minutes to respawn!"
 			return 0
 
 	if(feedback)

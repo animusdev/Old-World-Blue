@@ -112,29 +112,7 @@
 		usr << "<span class='danger'>You are banned from playing synthetics and cannot spawn as a drone.</span>"
 		return
 
-	if(!MayRespawn(1))
-		return
-
-	var/deathtime = world.time - src.timeofdeath
-	if(isobserver(src))
-		var/mob/observer/dead/G = src
-		if(G.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
-			usr << "<span class='notice'>Upon using the antagHUD you forfeighted the ability to join the round.</span>"
-			return
-
-	var/deathtimeminutes = round(deathtime / 600)
-	var/pluralcheck = "minute"
-	if(deathtimeminutes == 0)
-		pluralcheck = ""
-	else if(deathtimeminutes == 1)
-		pluralcheck = " [deathtimeminutes] minute and"
-	else if(deathtimeminutes > 1)
-		pluralcheck = " [deathtimeminutes] minutes and"
-	var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10,1)
-
-	if (deathtime < 6000)
-		usr << "You have been dead for[pluralcheck] [deathtimeseconds] seconds."
-		usr << "You must wait 10 minutes to respawn as a drone!"
+	if(!MayRespawn(1, 10))
 		return
 
 	var/list/all_fabricators = list()

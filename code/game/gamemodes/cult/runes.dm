@@ -453,8 +453,7 @@ var/list/sacrificed = list()
 			var/mob/observer/dead/ghost
 			for(var/mob/observer/dead/O in this_rune.loc)
 				if(!O.client)	continue
-				if(!O.MayRespawn()) continue
-				if(O.mind && O.mind.current && O.mind.current.stat != DEAD)	continue
+				if(!O.MayRespawn(1, 5)) continue
 				ghost = O
 				break
 			if(!ghost)
