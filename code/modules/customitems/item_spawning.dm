@@ -315,13 +315,6 @@
 
 ///Nikiton///
 
-	L = list()
-	current_data = new()
-	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
-	current_data.character_name = "Leroy Woodward"
-	current_data.item_path = /obj/item/clothing/accessory/purple_heart/nikiton
-	L |= current_data
-
 	current_data = new()
 	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
 	current_data.character_name = "Leroy Woodward"
