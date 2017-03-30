@@ -36,7 +36,6 @@
 	var/accuracy = 0
 	var/dispersion = 0.0
 
-	var/can_destroy_window = 0
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE, HALLOSS are the only things that should be in here
 	var/nodamage = 0 //Determines if the projectile will skip any damage inflictions
