@@ -146,7 +146,7 @@ datum/nano_item_lists
 	if(UI && UI.cost <= uses)
 		uses -= UI.cost
 		used_TC += UI.cost
-		log_and_message_admins("used \the [src.loc] uplink to buy \a [UI].")
+		log_mode("used \the [src.loc] uplink to buy \a [UI].",src)
 
 		var/list/L = UI.generate_item(get_turf(usr))
 		if(ishuman(usr))

@@ -47,7 +47,11 @@
 			if(user && M && (get_turf(M) == T1) && src && src.imp)
 				M.visible_message("<span class='warning'>[M] has been implanted by [user].</span>")
 
-				admin_attack_log(user, M, "Implanted using \the [src.name] ([src.imp.name])", "Implanted with \the [src.name] ([src.imp.name])", "used an implanter, [src.name] ([src.imp.name]), on")
+				admin_attack_log(user, M,
+					"Implanted using \the [src.name] ([src.imp.name])",
+					"Implanted with \the [src.name] ([src.imp.name])",
+					"used an implanter, [src.name] ([src.imp.name]), on"
+				)
 
 				user.show_message("\red You implanted the implant into [M].")
 				if(src.imp.implanted(M))

@@ -209,6 +209,8 @@
 	M.lastattacker = user
 
 	if(inserted_battery.battery_effect)
-		user.attack_log += "\[[time_stamp()]\]<font color='red'> Tapped [key_name(M)] with [name] (EFFECT: [inserted_battery.battery_effect.effecttype])</font>"
-		M.attack_log += "\[[time_stamp()]\]<font color='orange'> Tapped by [key_name(user)] with [name] (EFFECT: [inserted_battery.battery_effect.effecttype])</font>"
-		msg_admin_attack("[key_name(user)] tapped [key_name(M)] with [name] (EFFECT: [inserted_battery.battery_effect.effecttype])", M)
+		admin_attack_log(user, M,
+			"Tapped [key_name(M)] with [name] (EFFECT: [inserted_battery.battery_effect.effecttype])",
+			"Tapped by [key_name(user)] with [name] (EFFECT: [inserted_battery.battery_effect.effecttype])",
+			"used [name] (EFFECT: [inserted_battery.battery_effect.effecttype]) to tapped"
+		)

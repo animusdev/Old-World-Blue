@@ -17,8 +17,7 @@
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/T = W
 		if(T.welding & prob(50))
-			message_admins("[key_name_admin(user)] triggered a fueltank explosion.")
-			log_game("[key_name(user)] triggered a fueltank explosion.")
+			log_game("[key_name(user)] triggered a fueltank explosion.", src)
 			user << "\red That was stupid of you."
 			explosion(get_turf(src),-1,0,2)
 			if(src)

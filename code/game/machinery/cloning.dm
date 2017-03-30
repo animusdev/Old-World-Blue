@@ -156,7 +156,7 @@
 				log += "Occupant is suiciding."
 			if(!occupant.key)
 				log += "Occupant key is missed."
-			log_debug(log)
+			log_debug(log, src)
 			locked = 0
 			go_out()
 			connected_message("Clone Rejected: Deceased.")

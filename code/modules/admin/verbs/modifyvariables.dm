@@ -125,8 +125,7 @@ var/list/VVckey_edit = list("key", "ckey")
 		if("No")
 			L += var_value
 	world.log << "### ListVarEdit by [src]: [O.type] [objectvar]: ADDED=[var_value]"
-	log_admin("[key_name(src)] modified [original_name]'s [objectvar]: ADDED=[var_value]")
-	message_admins("[key_name_admin(src)] modified [original_name]'s [objectvar]: ADDED=[var_value]")
+	log_admin("[key_name(src)] modified [original_name]'s [objectvar]: ADDED=[var_value]", objectvar)
 
 /client/proc/mod_list(var/list/L, atom/O, original_name, objectvar)
 	if(!check_rights(R_VAREDIT))	return
@@ -277,8 +276,7 @@ var/list/VVckey_edit = list("key", "ckey")
 
 		if("DELETE FROM LIST")
 			world.log << "### ListVarEdit by [src]: [O.type] [objectvar]: REMOVED=[html_encode("[variable]")]"
-			log_admin("[key_name(src)] modified [original_name]'s [objectvar]: REMOVED=[variable]")
-			message_admins("[key_name_admin(src)] modified [original_name]'s [objectvar]: REMOVED=[variable]")
+			log_admin("[key_name(src)] modified [original_name]'s [objectvar]: REMOVED=[variable]", objectvar)
 			L -= variable
 			return
 
@@ -339,8 +337,7 @@ var/list/VVckey_edit = list("key", "ckey")
 				L[L.Find(variable)] = new_var
 
 	world.log << "### ListVarEdit by [src]: [O.type] [objectvar]: [original_var]=[new_var]"
-	log_admin("[key_name(src)] modified [original_name]'s [objectvar]: [original_var]=[new_var]")
-	message_admins("[key_name_admin(src)] modified [original_name]'s varlist [objectvar]: [original_var]=[new_var]")
+	log_admin("[key_name(src)] modified [original_name]'s [objectvar]: [original_var]=[new_var]", objectvar)
 
 /client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
 	if(!check_rights(R_VAREDIT))	return
@@ -583,5 +580,4 @@ var/list/VVckey_edit = list("key", "ckey")
 			O.vars[variable] = holder.marked_datum
 
 	world.log << "### VarEdit by [src]: [O.type] [variable]=[rhtml_encode("[O.vars[variable]]")]"
-	log_admin("[key_name(src)] modified [original_name]'s [variable] to [O.vars[variable]]")
-	message_admins("[key_name_admin(src)] modified [original_name]'s [variable] to [O.vars[variable]]")
+	log_admin("[key_name(src)] modified [original_name]'s [variable] to [O.vars[variable]]", O)

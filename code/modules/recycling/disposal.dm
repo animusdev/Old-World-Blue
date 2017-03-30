@@ -120,9 +120,11 @@
 				for (var/mob/C in viewers(src))
 					C.show_message("\red [GM.name] has been placed in the [src] by [user].", 3)
 				qdel(G)
-				usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Has placed [key_name(GM)] in disposals.</font>")
-				GM.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [key_name(usr)]</font>")
-				msg_admin_attack("[usr] ([key_name(usr)]) placed [key_name(GM)] in a disposals unit.", usr)
+				admin_attack_log(usr, GM,
+					"Has placed [key_name(GM)] in disposals",
+					"Has been placed in disposals by [key_name(usr)]",
+					"placed in a disposals unit"
+				)
 		return
 
 	if(!I || !user.unEquip(I, src))
@@ -163,9 +165,11 @@
 		msg = "[user.name] stuffs [target.name] into the [src]!"
 		user << "You stuff [target.name] into the [src]!"
 
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has placed [key_name(target)] in disposals.</font>")
-		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [key_name(user)]</font>")
-		msg_admin_attack("[key_name(user)] placed [key_name(target)] in a disposals unit.", user)
+		admin_attack_log(user, target,
+			"Has placed [key_name(target)] in disposals.",
+			"Has been placed in disposals by [key_name(user)].",
+			"placed in a disposals unit "
+		)
 	else
 		return
 	if (target.client)

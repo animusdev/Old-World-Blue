@@ -510,7 +510,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	if(lit == 1)
 		M.IgniteMob()
-		msg_admin_attack("[key_name(user)] attacked [key_name(M)] with [src.name] and lit them on fire (INTENT: [uppertext(user.a_intent)])", user)
+		self_attack_log(user, "attacked [key_name(M)] with [src.name] and lit them on fire")
 
 	if(istype(M.wear_mask, /obj/item/clothing/mask/smokable/cigarette) && user.zone_sel.selecting == O_MOUTH && lit)
 		var/obj/item/clothing/mask/smokable/cigarette/cig = M.wear_mask

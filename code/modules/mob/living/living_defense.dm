@@ -128,10 +128,11 @@
 			var/mob/M = O.thrower
 			var/client/assailant = M.client
 			if(assailant)
-				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been hit with a [O], thrown by [M.name] ([assailant.ckey])</font>")
-				M.attack_log += text("\[[time_stamp()]\] <font color='red'>Hit [src.name] ([src.ckey]) with a thrown [O]</font>")
-				if(!istype(src,/mob/living/simple_animal/mouse))
-					msg_admin_attack("[key_name(src)] was hit by a [O], thrown by [M.name] ([assailant.ckey])", src)
+				admin_attack_log(M,src,
+					"Hit [src.name] ([src.ckey]) with a thrown [O]",
+					"Has been hit with a [O], thrown by [M.name] ([assailant.ckey])",
+					"throw [O] to"
+				)
 
 		// Begin BS12 momentum-transfer code.
 		var/mass = 1.5
@@ -191,8 +192,11 @@
 		return
 
 	adjustBruteLoss(damage)
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
-	src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [user.name] ([user.ckey])</font>")
+	admin_attack_log(user, src,
+		"attacked [key_name(src)]",
+		"was attacked by [key_name(user)]",
+		"attacked"
+	)
 	src.visible_message("<span class='danger'>[user] has [attack_message] [src]!</span>")
 	user.do_attack_animation(src)
 	spawn(1) updatehealth()

@@ -12,8 +12,7 @@
 	for(var/obj/item/W in M)
 		M.drop_from_inventory(W)
 
-	log_admin("[key_name(usr)] made [key_name(M)] drop everything!")
-	message_admins("[key_name_admin(usr)] made [key_name_admin(M)] drop everything!", 1)
+	log_admin("[key_name(usr)] made [key_name(M)] drop everything!", M)
 
 /client/proc/cmd_admin_prison(mob/M as mob in mob_list)
 	set category = "Admin"
@@ -38,8 +37,7 @@
 			prisoner.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(prisoner), slot_shoes)
 		spawn(50)
 			M << "\red You have been sent to the prison station!"
-		log_admin("[key_name(usr)] sent [key_name(M)] to the prison station.")
-		message_admins("\blue [key_name_admin(usr)] sent [key_name_admin(M)] to the prison station.", 1)
+		log_admin("[key_name(usr)] sent [key_name(M)] to the prison station.", M)
 
 /client/proc/cmd_admin_subtle_message(mob/M as mob in mob_list)
 	set category = "Special Verbs"
@@ -59,8 +57,7 @@
 			if(usr.client.holder)
 				M << "\bold You hear a voice in your head... \italic [msg]"
 
-	log_admin("SubtlePM: [key_name(usr)] -> [key_name(M)] : [msg]")
-	message_admins("\blue \bold SubtleMessage: [key_name_admin(usr)] -> [key_name_admin(M)] : [msg]", 1)
+	log_admin("SubtlePM: [key_name(usr)] -> [key_name(M)] : [msg]", M)
 
 /client/proc/cmd_mentor_check_new_players()	//Allows mentors / admins to determine who the newer players are.
 	set category = "Admin"
@@ -112,7 +109,6 @@
 		return
 	world << "[msg]"
 	log_admin("GlobalNarrate: [key_name(usr)] : [msg]")
-	message_admins("\blue \bold GlobalNarrate: [key_name_admin(usr)] : [msg]<BR>", 1)
 
 /client/proc/cmd_admin_direct_narrate(var/mob/M)	// Targetted narrate -- TLE
 	set category = "Special Verbs"
@@ -134,8 +130,7 @@
 		return
 
 	M << msg
-	log_admin("DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]")
-	message_admins("\blue \bold DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]<BR>", 1)
+	log_admin("DirectNarrate: [key_name(usr)] to [key_name(M)]: [msg]", M)
 
 /client/proc/cmd_admin_godmode(mob/M as mob in mob_list)
 	set category = "Special Verbs"
@@ -146,8 +141,7 @@
 	M.status_flags ^= GODMODE
 	usr << "\blue Toggled [(M.status_flags & GODMODE) ? "ON" : "OFF"]"
 
-	log_admin("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]")
-	message_admins("[key_name_admin(usr)] has toggled [key_name_admin(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]", 1)
+	log_admin("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]", M)
 
 
 proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
@@ -182,8 +176,7 @@ proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
 	if(automute)
 		muteunmute = "auto-muted"
 		M.client.prefs.muted |= mute_type
-		log_admin("SPAM AUTOMUTE: [muteunmute] [key_name(M)] from [mute_string]")
-		message_admins("SPAM AUTOMUTE: [muteunmute] [key_name_admin(M)] from [mute_string].", 1)
+		log_admin("SPAM AUTOMUTE: [muteunmute] [key_name(M)] from [mute_string]", M)
 		M << "<span class='alert'>You have been [muteunmute] from [mute_string] by the SPAM AUTOMUTE system. Contact an admin.</span>"
 		return
 
@@ -194,8 +187,7 @@ proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
 		muteunmute = "muted"
 		M.client.prefs.muted |= mute_type
 
-	log_admin("[key_name(usr)] has [muteunmute] [key_name(M)] from [mute_string]")
-	message_admins("[key_name_admin(usr)] has [muteunmute] [key_name_admin(M)] from [mute_string].", 1)
+	log_admin("[key_name(usr)] has [muteunmute] [key_name(M)] from [mute_string]", M)
 	M << "<span class = 'alert'>You have been [muteunmute] from [mute_string].</span>"
 
 /client/proc/cmd_admin_add_random_ai_law()
@@ -207,7 +199,6 @@ proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
 	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
 	if(confirm != "Yes") return
 	log_admin("[key_name(src)] has added a random AI law.")
-	message_admins("[key_name_admin(src)] has added a random AI law.", 1)
 
 	var/show_log = alert(src, "Show ion message?", "Message", "Yes", "No")
 	if(show_log == "Yes")
@@ -269,9 +260,8 @@ Ccomp's first proc.
 	G.has_enabled_antagHUD = 2
 	G.can_reenter_corpse = 1
 
-	G:show_message(text("\blue <B>You may now respawn.  You should roleplay as if you learned nothing about the round during your time with the dead.</B>"), 1)
+	G.show_message(text("\blue <B>You may now respawn.  You should roleplay as if you learned nothing about the round during your time with the dead.</B>"), 1)
 	log_admin("[key_name(usr)] allowed [key_name(G)] to bypass the [config.respawn_time] minute respawn limit")
-	message_admins("Admin [key_name_admin(usr)] allowed [key_name_admin(G)] to bypass the [config.respawn_time] minute respawn limit", 1)
 
 
 /client/proc/toggle_antagHUD_use()
@@ -304,7 +294,6 @@ Ccomp's first proc.
 
 
 	log_admin("[key_name(usr)] has [action] antagHUD usage for observers")
-	message_admins("Admin [key_name_admin(usr)] has [action] antagHUD usage for observers", 1)
 
 
 
@@ -332,7 +321,6 @@ Ccomp's first proc.
 		src << "\red <B>AntagHUD restrictions have been enabled</B>"
 
 	log_admin("[key_name(usr)] has [action] on joining the round if they use AntagHUD")
-	message_admins("Admin [key_name_admin(usr)] has [action] on joining the round if they use AntagHUD", 1)
 
 /*
 If a guy was gibbed and you want to revive him, this is a good way to do so.
@@ -441,8 +429,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			if(alert(new_character,"Would you like an active AI to announce this character?",,"No","Yes")=="Yes")
 				call(/mob/new_player/proc/AnnounceArrival)(new_character, new_character.mind.assigned_role)
 
-	log_admin("[admin] has spawned [player_key]'s character [new_character.real_name].")
-	message_admins("[admin] has spawned [player_key]'s character [new_character.real_name].", 1)
+	log_admin("[admin] has spawned [player_key]'s character [new_character.real_name].", new_character)
 
 	new_character << "You have been fully spawned. Enjoy the game."
 
@@ -470,7 +457,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				O.show_laws()
 
 	log_admin("Admin [key_name(usr)] has added a new AI law - [input]")
-	message_admins("Admin [key_name_admin(usr)] has added a new AI law - [input]", 1)
 
 	var/show_log = alert(src, "Show ion message?", "Message", "Yes", "No")
 	if(show_log == "Yes")
@@ -490,8 +476,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(config.allow_admin_rev)
 		M.revive()
 
-		log_admin("[key_name(usr)] healed / revived [key_name(M)]")
-		message_admins("\red Admin [key_name_admin(usr)] healed / revived [key_name_admin(M)]!", 1)
+		log_admin("[key_name(usr)] healed / revived [key_name(M)]", M)
 	else
 		alert("Admin revive disabled")
 
@@ -526,7 +511,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			world << sound('sound/AI/commandreport.ogg')
 
 	log_admin("[key_name(src)] has created a command report: [input]")
-	message_admins("[key_name_admin(src)] has created a command report", 1)
 
 /client/proc/cmd_admin_delete(atom/O as obj|mob|turf in view())
 	set category = null
@@ -537,8 +521,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	if (alert(src, "Are you sure you want to delete:\n[O]\nat ([O.x], [O.y], [O.z])?", "Confirmation", "Yes", "No") == "Yes")
-		log_admin("[key_name(usr)] deleted [O] at ([O.x],[O.y],[O.z])")
-		message_admins("[key_name_admin(usr)] deleted [O] at ([O.x],[O.y],[O.z])", 1)
+		log_admin("[key_name(usr)] deleted [O].", O)
 		qdel(O)
 
 /client/proc/cmd_admin_list_open_jobs()
@@ -573,11 +556,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				return
 
 		explosion(O, devastation, heavy, light, flash)
-		log_admin("[key_name(usr)] created an explosion ([devastation],[heavy],[light],[flash]) at ([O.x],[O.y],[O.z])")
-		message_admins("[key_name_admin(usr)] created an explosion ([devastation],[heavy],[light],[flash]) at ([O.x],[O.y],[O.z])", 1)
-		return
-	else
-		return
+		log_admin("[key_name(usr)] created an explosion ([devastation],[heavy],[light],[flash]).", O)
 
 /client/proc/cmd_admin_emp(atom/O as obj|mob|turf in world)
 	set category = "Special Verbs"
@@ -593,12 +572,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if (heavy || light)
 
 		empulse(O, heavy, light)
-		log_admin("[key_name(usr)] created an EM Pulse ([heavy],[light]) at ([O.x],[O.y],[O.z])")
-		message_admins("[key_name_admin(usr)] created an EM PUlse ([heavy],[light]) at ([O.x],[O.y],[O.z])", 1)
-
-		return
-	else
-		return
+		log_admin("[key_name(usr)] created an EM Pulse ([heavy],[light]).", O)
 
 /client/proc/cmd_admin_gib(mob/M as mob in mob_list)
 	set category = "Special Verbs"
@@ -611,8 +585,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	//Due to the delay here its easy for something to have happened to the mob
 	if(!M)	return
 
-	log_admin("[key_name(usr)] has gibbed [key_name(M)]")
-	message_admins("[key_name_admin(usr)] has gibbed [key_name_admin(M)]", 1)
+	log_admin("[key_name(usr)] has gibbed [key_name(M)]", M)
 
 	if(isobserver(M))
 		gibs(M.loc)
@@ -631,69 +604,12 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		else
 			mob.gib()
 
-		log_admin("[key_name(usr)] used gibself.")
-		message_admins("\blue [key_name_admin(usr)] used gibself.", 1)
-/*
-/client/proc/cmd_manual_ban()
-	set name = "Manual Ban"
-	set category = "Special Verbs"
-	if(!authenticated || !holder)
-		src << "Only administrators may use this command."
-		return
-	var/mob/M = null
-	switch(alert("How would you like to ban someone today?", "Manual Ban", "Key List", "Enter Manually", "Cancel"))
-		if("Key List")
-			var/list/keys = list()
-			for(var/mob/M in world)
-				keys += M.client
-			var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in keys
-			if(!selection)
-				return
-			M = selection:mob
-			if ((M.client && M.client.holder && (M.client.holder.level >= holder.level)))
-				alert("You cannot perform this action. You must be of a higher administrative rank!")
-				return
-
-	switch(alert("Temporary Ban?",,"Yes","No"))
-	if("Yes")
-		var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num
-		if(!mins)
-			return
-		if(mins >= 525600) mins = 525599
-		var/reason = input(usr,"Reason?","reason","Griefer") as text
-		if(!reason)
-			return
-		if(M)
-			AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
-			M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>"
-			M << "\red This is a temporary ban, it will be removed in [mins] minutes."
-			M << "\red To try to resolve this matter head to http://ss13.donglabs.com/forum/"
-			log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
-			message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
-			world.Export("http://216.38.134.132/adminlog.php?type=ban&key=[usr.client.key]&key2=[M.key]&msg=[rhtml_decode(reason)]&time=[mins]&server=[replacetext(config.server_name, "#", "")]")
-			del(M.client)
-			qdel(M)
-		else
-
-	if("No")
-		var/reason = input(usr,"Reason?","reason","Griefer") as text
-		if(!reason)
-			return
-		AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
-		M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>"
-		M << "\red This is a permanent ban."
-		M << "\red To try to resolve this matter head to http://ss13.donglabs.com/forum/"
-		log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
-		message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
-		world.Export("http://216.38.134.132/adminlog.php?type=ban&key=[usr.client.key]&key2=[M.key]&msg=[rhtml_decode(reason)]&time=perma&server=[replacetext(config.server_name, "#", "")]")
-		del(M.client)
-		qdel(M)
-*/
+		log_admin("[key_name(usr)] used gibself.", usr)
 
 /client/proc/update_world()
 	// If I see anyone granting powers to specific keys like the code that was here,
 	// I will both remove their SVN access and permanently ban them from my servers.
-	return
+
 
 /client/proc/cmd_admin_check_contents(mob/living/M as mob in mob_list)
 	set category = "Special Verbs"
@@ -703,35 +619,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	for(var/t in L)
 		usr << "[t]"
 
-/* This proc is DEFERRED. Does not do anything.
-/client/proc/cmd_admin_remove_phoron()
-	set category = "Debug"
-	set name = "Stabilize Atmos."
-	if(!holder)
-		src << "Only administrators may use this command."
-		return
-// DEFERRED
-	spawn(0)
-		for(var/turf/T in view())
-			T.poison = 0
-			T.oldpoison = 0
-			T.tmppoison = 0
-			T.oxygen = 755985
-			T.oldoxy = 755985
-			T.tmpoxy = 755985
-			T.co2 = 14.8176
-			T.oldco2 = 14.8176
-			T.tmpco2 = 14.8176
-			T.n2 = 2.844e+006
-			T.on2 = 2.844e+006
-			T.tn2 = 2.844e+006
-			T.tsl_gas = 0
-			T.osl_gas = 0
-			T.sl_gas = 0
-			T.temp = 293.15
-			T.otemp = 293.15
-			T.ttemp = 293.15
-*/
 
 /client/proc/toggle_view_range()
 	set category = "Special Verbs"
@@ -743,8 +630,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	else
 		view = world.view
 
-	log_admin("[key_name(usr)] changed their view range to [view].")
-	//message_admins("\blue [key_name_admin(usr)] changed their view range to [view].", 1)	//why? removed by order of XSI
+	log_admin("[key_name(usr)] changed their view range to [view].", usr, 0)
 
 
 /client/proc/admin_call_shuttle()
@@ -774,10 +660,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	else
 		emergency_shuttle.call_transfer()
 
-
 	log_admin("[key_name(usr)] admin-called the emergency shuttle.")
-	message_admins("\blue [key_name_admin(usr)] admin-called the emergency shuttle.", 1)
-	return
+
 
 /client/proc/admin_cancel_shuttle()
 	set category = "Admin"
@@ -792,9 +676,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	emergency_shuttle.recall()
 	log_admin("[key_name(usr)] admin-recalled the emergency shuttle.")
-	message_admins("\blue [key_name_admin(usr)] admin-recalled the emergency shuttle.", 1)
 
-	return
 
 /client/proc/admin_deny_shuttle()
 	set category = "Admin"
@@ -808,11 +690,12 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	emergency_shuttle.deny_shuttle = !emergency_shuttle.deny_shuttle
 
 	log_admin("[key_name(src)] has [emergency_shuttle.deny_shuttle ? "denied" : "allowed"] the shuttle to be called.")
-	message_admins("[key_name_admin(usr)] has [emergency_shuttle.deny_shuttle ? "denied" : "allowed"] the shuttle to be called.")
 
 /client/proc/cmd_admin_attack_log(mob/M as mob in mob_list)
 	set category = "Special Verbs"
 	set name = "Attack Log"
+
+	if(!check_rights())	return
 
 	usr << text("\red <b>Attack Log for []</b>", mob)
 	for(var/t in M.attack_log)
@@ -842,7 +725,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	log_admin("Admin [key_name(src)] has forced the players to have random appearances.")
-	message_admins("Admin [key_name_admin(usr)] has forced the players to have random appearances.", 1)
 
 	if(notifyplayers == "Yes")
 		world << "\blue <b>Admin [usr.key] has forced the players to have completely random identities!</b>"
@@ -863,11 +745,12 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!config.allow_random_events)
 		config.allow_random_events = 1
 		usr << "Random events enabled"
-		message_admins("Admin [key_name_admin(usr)] has enabled random events.", 1)
+		log_admin("Admin [key_name_admin(usr)] has enabled random events.")
 	else
 		config.allow_random_events = 0
 		usr << "Random events disabled"
-		message_admins("Admin [key_name_admin(usr)] has disabled random events.", 1)
+		log_admin("Admin [key_name_admin(usr)] has disabled random events.")
+
 
 /client/proc/spawn_special()
 	set category = "Debug"

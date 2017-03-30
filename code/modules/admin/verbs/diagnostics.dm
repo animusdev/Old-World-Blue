@@ -63,7 +63,7 @@
 				largest_click_time = M.client.next_click - world.time
 			else
 				largest_click_time = 0
-		log_admin("DEBUG: [key_name(M)]  next_move = [M.next_move]  next_click = [M.client.next_click]  world.time = [world.time]")
+		log_debug("[key_name(M)]  next_move = [M.next_move]  next_click = [M.client.next_click]  world.time = [world.time]", M)
 		M.next_move = 1
 		M.client.next_click = 0
 	message_admins("[key_name_admin(largest_move_mob)] had the largest move delay with [largest_move_time] frames / [largest_move_time/10] seconds!", 1)

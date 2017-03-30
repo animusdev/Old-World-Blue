@@ -8,14 +8,16 @@
 /*
 	How to tweak the SM
 
-	POWER_FACTOR		directly controls how much power the SM puts out at a given level of excitation (power var). Making this lower means you have to work the SM harder to get the same amount of power.
+	POWER_FACTOR		directly controls how much power the SM puts out at a given level of excitation (power var).
+						Making this lower means you have to work the SM harder to get the same amount of power.
 	CRITICAL_TEMPERATURE	The temperature at which the SM starts taking damage.
 
 	CHARGING_FACTOR		Controls how much emitter shots excite the SM.
 	DAMAGE_RATE_LIMIT	Controls the maximum rate at which the SM will take damage due to high temperatures.
 */
 
-//Controls how much power is produced by each collector in range - this is the main parameter for tweaking SM balance, as it basically controls how the power variable relates to the rest of the game.
+//Controls how much power is produced by each collector in range - this is the main parameter for tweaking SM balance,
+// as it basically controls how the power variable relates to the rest of the game.
 #define POWER_FACTOR 1.0
 #define DECAY_FACTOR 700			//Affects how fast the supermatter power decays
 #define CRITICAL_TEMPERATURE 5000	//K
@@ -97,8 +99,7 @@
 	. = ..()
 
 /obj/machinery/power/supermatter/proc/explode()
-	message_admins("Supermatter exploded at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-	log_game("Supermatter exploded at ([x],[y],[z])")
+	log_game("Supermatter exploded.", src)
 	anchored = 1
 	grav_pulling = 1
 	exploded = 1
@@ -277,9 +278,11 @@
 	ui_interact(user)
 
 /obj/machinery/power/supermatter/attack_hand(mob/user as mob)
-	user.visible_message("<span class=\"warning\">\The [user] reaches out and touches \the [src], inducing a resonance... \his body starts to glow and bursts into flames before flashing into ash.</span>",\
-		"<span class=\"danger\">You reach out and touch \the [src]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"</span>",\
-		"<span class=\"warning\">You hear an uneartly ringing, then what sounds like a shrilling kettle as you are washed with a wave of heat.</span>")
+	user.visible_message(
+		"<span class=\"warning\">\The [user] reaches out and touches \the [src], inducing a resonance... \his body starts to glow and bursts into flames before flashing into ash.</span>",
+		"<span class=\"danger\">You reach out and touch \the [src]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"</span>",
+		"<span class=\"warning\">You hear an uneartly ringing, then what sounds like a shrilling kettle as you are washed with a wave of heat.</span>"
+	)
 
 	Consume(user)
 
@@ -294,8 +297,10 @@
 */
 
 /obj/machinery/power/supermatter/attackby(obj/item/weapon/W as obj, mob/living/user as mob)
-	user.visible_message("<span class=\"warning\">\The [user] touches \a [W] to \the [src] as a silence fills the room...</span>",\
-		"<span class=\"danger\">You touch \the [W] to \the [src] when everything suddenly goes silent.\"</span>\n<span class=\"notice\">\The [W] flashes into dust as you flinch away from \the [src].</span>",\
+	user.visible_message(
+		"<span class=\"warning\">\The [user] touches \a [W] to \the [src] as a silence fills the room...</span>",
+		"<span class=\"danger\">You touch \the [W] to \the [src] when everything suddenly goes silent.\"</span>\n\
+			<span class=\"notice\">\The [W] flashes into dust as you flinch away from \the [src].</span>",
 		"<span class=\"warning\">Everything suddenly goes silent.</span>")
 
 	user.drop_from_inventory(W)
@@ -308,12 +313,16 @@
 	if(istype(AM, /obj/effect))
 		return
 	if(istype(AM, /mob/living))
-		AM.visible_message("<span class=\"warning\">\The [AM] slams into \the [src] inducing a resonance... \his body starts to glow and catch flame before flashing into ash.</span>",\
-		"<span class=\"danger\">You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
-		"<span class=\"warning\">You hear an uneartly ringing, then what sounds like a shrilling kettle as you are washed with a wave of heat.</span>")
+		AM.visible_message(
+			"<span class=\"warning\">\The [AM] slams into \the [src] inducing a resonance... \his body starts to glow and catch flame before flashing into ash.</span>",
+			"<span class=\"danger\">You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",
+			"<span class=\"warning\">You hear an uneartly ringing, then what sounds like a shrilling kettle as you are washed with a wave of heat.</span>"
+		)
 	else if(!grav_pulling) //To prevent spam, detonating supermatter does not indicate non-mobs being destroyed
-		AM.visible_message("<span class=\"warning\">\The [AM] smacks into \the [src] and rapidly flashes to ash.</span>",\
-		"<span class=\"warning\">You hear a loud crack as you are washed with a wave of heat.</span>")
+		AM.visible_message(
+			"<span class=\"warning\">\The [AM] smacks into \the [src] and rapidly flashes to ash.</span>",
+			"<span class=\"warning\">You hear a loud crack as you are washed with a wave of heat.</span>"
+		)
 
 	Consume(AM)
 

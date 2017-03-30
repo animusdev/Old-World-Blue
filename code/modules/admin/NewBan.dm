@@ -64,12 +64,12 @@ var/savefile/Banlist
 /proc/LoadBans()
 
 	Banlist = new("data/banlist.bdb")
-	log_admin("Loading Banlist")
+	log_game("Loading Banlist")
 
-	if (!length(Banlist.dir)) log_admin("Banlist is empty.")
+	if (!length(Banlist.dir)) log_game("Banlist is empty.")
 
 	if (!Banlist.dir.Find("base"))
-		log_admin("Banlist missing base dir.")
+		log_game("Banlist missing base dir.")
 		Banlist.dir.Add("base")
 		Banlist.cd = "/base"
 	else if (Banlist.dir.Find("base"))
@@ -86,7 +86,7 @@ var/savefile/Banlist
 		Banlist.cd = "/base/[A]"
 		if (!Banlist["key"] || !Banlist["id"])
 			RemoveBan(A)
-			log_admin("Invalid Ban.")
+			log_game("Invalid Ban.")
 			message_admins("Invalid Ban.")
 			continue
 
@@ -133,8 +133,7 @@ var/savefile/Banlist
 	if (!Banlist.dir.Remove(foldername)) return 0
 
 	if(!usr)
-		log_admin("Ban Expired: [key]")
-		message_admins("Ban Expired: [key]")
+		log_game("Ban Expired: [key]", null, 0)
 	else
 		ban_unban_log_save("[key_name_admin(usr)] unbanned [key]")
 		log_admin("[key_name_admin(usr)] unbanned [key]")

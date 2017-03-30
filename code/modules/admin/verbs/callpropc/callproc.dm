@@ -138,13 +138,13 @@
 		if(!target)
 			usr << "Your callproc target no longer exists."
 			return
-		log_admin("[key_name(src)] called [target]'s [procname]() with [arguments.len ? "the arguments [list2params(arguments)]" : "no arguments"].")
+		log_admin("[key_name(src)] called [target]'s [procname]() with [arguments.len ? "the arguments [list2params(arguments)]" : "no arguments"].", target, 0)
 		if(arguments.len)
 			returnval = call(target, procname)(arglist(arguments))
 		else
 			returnval = call(target, procname)()
 	else
-		log_admin("[key_name(src)] called [procname]() with [arguments.len ? "the arguments [list2params(arguments)]" : "no arguments"].")
+		log_admin("[key_name(src)] called [procname]() with [arguments.len ? "the arguments [list2params(arguments)]" : "no arguments"].", null, 0)
 		returnval = call(procname)(arglist(arguments))
 
 	usr << "<span class='info'>[procname]() returned: [isnull(returnval) ? "null" : returnval]</span>"

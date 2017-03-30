@@ -34,13 +34,7 @@
 		else
 			user.take_organ_damage(2*force)
 		return
-/*this is already called in ..()
-	src.add_fingerprint(user)
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
 
-	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
-*/
 	if (user.a_intent == I_HURT)
 		if(!..()) return
 		//playsound(src.loc, "swing_hit", 50, 1, -1)
@@ -54,9 +48,11 @@
 		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1, -1)
 		M.Stun(5)
 		M.Weaken(5)
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [key_name(user)]</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [key_name(M)]</font>")
-		msg_admin_attack("[key_name(user)] attacked [key_name(user)] with [src.name] (INTENT: [uppertext(user.a_intent)])", user)
+		admin_attack_log(user, M,
+			"Used the [src.name] to attack [key_name(M)]",
+			"Has been attacked with [src.name] by [key_name(user)]",
+			"used [src.name] to attack"
+		)
 		src.add_fingerprint(user)
 
 		for(var/mob/O in viewers(M))

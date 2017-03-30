@@ -73,9 +73,11 @@
 			else O.show_message(text("\red <B>[target] has attacked \himself with a bottle of [src.name]!</B>"), 1)
 
 	//Attack logs
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has attacked [key_name(target)] with a bottle!</font>")
-	target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been smashed with a bottle by [key_name(user)]</font>")
-	msg_admin_attack("[key_name(user)] attacked [key_name(target)] with a bottle. (INTENT: [uppertext(user.a_intent)])", user)
+	admin_attack_log(user, target,
+		"Has attacked [key_name(target)] with a bottle!",
+		"Has been smashed with a bottle by [key_name(user)]",
+		"used [src] to attack"
+	)
 
 	//The reagents in the bottle splash all over the target, thanks for the idea Nodrak
 	if(reagents)

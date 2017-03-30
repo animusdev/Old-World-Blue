@@ -69,11 +69,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 
 //Attemptes to infect mob M with virus. Set forced to 1 to ignore protective clothnig
 /proc/infect_virus2(var/mob/living/carbon/M,var/datum/disease2/disease/disease,var/forced = 0)
-	if(!istype(disease))
-//		log_debug("Bad virus")
-		return
-	if(!istype(M))
-//		log_debug("Bad mob")
+	if(!istype(disease) || !istype(M))
 		return
 	if ("[disease.uniqueID]" in M.virus2)
 		return
@@ -93,12 +89,9 @@ proc/airborne_can_reach(turf/source, turf/target)
 		else
 			return //not compatible with this species
 
-//	log_debug("Infecting [M]")
-
 	if(forced || (infection_check(M, disease.spreadtype) && prob(disease.infectionchance)))
 		var/datum/disease2/disease/D = disease.getcopy()
 		D.minormutate()
-//		log_debug("Adding virus")
 		M.virus2["[D.uniqueID]"] = D
 		BITSET(M.hud_updateflag, STATUS_HUD)
 
@@ -130,10 +123,8 @@ proc/airborne_can_reach(turf/source, turf/target)
 	if (src == victim)
 		return "retardation"
 
-//	log_debug("Spreading [vector] diseases from [src] to [victim]")
 	if (virus2.len > 0)
 		for (var/ID in virus2)
-//			log_debug("Attempting virus [ID]")
 			var/datum/disease2/disease/V = virus2[ID]
 			if(V.spreadtype != vector) continue
 
@@ -142,19 +133,14 @@ proc/airborne_can_reach(turf/source, turf/target)
 
 			if (vector == "Airborne")
 				if(airborne_can_reach(get_turf(src), get_turf(victim)))
-//					log_debug("In range, infecting")
 					infect_virus2(victim,V)
-//				else
-//					log_debug("Could not reach target")
 
 			if (vector == "Contact")
 				if (Adjacent(victim))
-//					log_debug("In range, infecting")
 					infect_virus2(victim,V)
 
 	//contact goes both ways
 	if (victim.virus2.len > 0 && vector == "Contact" && Adjacent(victim))
-//		log_debug("Spreading [vector] diseases from [victim] to [src]")
 		var/nudity = 1
 
 		if (ishuman(victim))

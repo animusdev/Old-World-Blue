@@ -34,8 +34,7 @@
 			var/new_host = input("Select new host for meme ([player]).", "New host", null) as null|anything in allowed_mob
 			if (new_host)
 				player.switch_host(new_host)
-				message_admins("[key_name(player)] (meme) moved to [key_name(player.host)]")
-				log_admin("[key_name(player)] (meme) moved to [key_name(player.host)]")
+				log_admin("[key_name(usr)] moved [key_name(player)] (meme) into [key_name(player.host)]", player.host)
 
 /datum/antagonist/meme/create_objectives(var/datum/mind/meme)
 	if(!..())
@@ -85,9 +84,8 @@
 			return 0
 		else
 			var/mob/living/parasite/meme/M = new(pick(allowed_mob))
+			log_admin("[key_name_admin(usr)] transform [key_name(player.current)] into meme.")
 			player.transfer_to(M)
-	log_admin("[key_name_admin(usr)] has make [player.current] meme.")
-	message_admins("[key_name_admin(usr)] has make [player.current] meme.")
 
 
 //OBJECTIVES

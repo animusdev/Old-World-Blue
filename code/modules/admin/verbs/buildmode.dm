@@ -3,11 +3,11 @@
 	set category = "Special Verbs"
 	if(M.client)
 		if(M.client.buildmode)
-			log_admin("[key_name(usr)] has left build mode.")
+			log_admin("[key_name(usr)] has left build mode.", null, 0)
 			qdel(M.client.buildmode)
 			M.client.buildmode = null
 		else
-			log_admin("[key_name(usr)] has entered build mode.")
+			log_admin("[key_name(usr)] has entered build mode.", null, 0)
 			M.client.buildmode = PoolOrNew(/datum/buildmode, M.client)
 
 /obj/screen/bmode//Cleaning up the tree a bit
@@ -313,13 +313,13 @@
 		if(3) // Edit
 			if(pa.Find("left")) //I cant believe this shit actually compiles.
 				if(object.vars.Find(varholder))
-					log_admin("[key_name(usr)] modified [object.name]'s [varholder] to [valueholder]")
+					log_admin("[key_name(usr)] modified [object.name]'s [varholder] to [valueholder]", valueholder, 0)
 					object.vars[varholder] = valueholder
 				else
 					user << "<span class='danger'>[initial(object.name)] does not have a var called '[varholder]'</span>"
 			else if(pa.Find("right"))
 				if(object.vars.Find(varholder))
-					log_admin("[key_name(usr)] modified [object.name]'s [varholder] to [valueholder]")
+					log_admin("[key_name(usr)] modified [object.name]'s [varholder] to [valueholder]", valueholder, 0)
 					object.vars[varholder] = initial(object.vars[varholder])
 				else
 					user << "<span class='danger'>[initial(object.name)] does not have a var called '[varholder]'</span>"
@@ -335,7 +335,7 @@
 			if(pa.Find("right"))
 				if(throw_atom)
 					throw_atom.throw_at(object, 10, 1)
-					log_admin("[key_name(usr)] threw [throw_atom] at [object]")
+					log_admin("[key_name(usr)] threw [throw_atom] at [object]", object, 0)
 		if(5) // Room build
 			if(pa.Find("left"))
 				coordA = get_turf(object)
@@ -376,7 +376,7 @@
 			if(pa.Find("right"))
 				if(throw_atom && istype(object, /atom/movable))
 					object.forceMove(throw_atom)
-					log_admin("[key_name(usr)] moved [object] into [throw_atom].")
+					log_admin("[key_name(usr)] moved [object] into [throw_atom].", throw_atom, 0)
 		if(8) // Lights
 			if(pa.Find("left"))
 				if(object)

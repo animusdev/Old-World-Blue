@@ -214,9 +214,11 @@
 		if(src.occupant.reagents)
 			src.occupant.reagents.trans_to_obj(new_meat, round(occupant.reagents.total_volume/slab_count,1))
 
-	src.occupant.attack_log += "\[[time_stamp()]\] Was gibbed by <b>[key_name(user)]</b>" //One shall not simply gib a mob unnoticed!
-	user.attack_log += "\[[time_stamp()]\] Gibbed <b>[key_name(src.occupant)]</b>"
-	msg_admin_attack("[key_name(user)] gibbed [key_name(src.occupant)]", user)
+	admin_attack_log(user, occupant,
+		"Gibbed <b>[key_name(src.occupant)]</b>",
+		"Was gibbed by <b>[key_name(user)]</b>",
+		"gibbed"
+	)
 
 	src.occupant.ghostize()
 

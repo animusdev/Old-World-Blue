@@ -30,7 +30,6 @@
 			world.SetConfig("ban",ckey,list2params(ban))
 
 			log_admin("[key_name(usr)] has stickybanned [ckey].\nReason: [ban["message"]]")
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has stickybanned [ckey].\nReason: [ban["message"]]</span>")
 
 		if ("remove")
 			if (!data["ckey"])
@@ -50,7 +49,6 @@
 			world.SetConfig("ban",ckey, null)
 
 			log_admin("[key_name(usr)] removed [ckey]'s stickyban")
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] removed [ckey]'s stickyban</span>")
 
 		if ("remove_alt")
 			if (!data["ckey"])
@@ -87,7 +85,7 @@
 			world.SetConfig("ban",ckey,list2params(ban))
 
 			log_admin("[key_name(usr)] has disassociated [alt] from [ckey]'s sticky ban")
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has disassociated [alt] from [ckey]'s sticky ban</span>")
+
 		if ("edit")
 			if (!data["ckey"])
 				return
@@ -111,7 +109,6 @@
 			world.SetConfig("ban",ckey,list2params(ban))
 
 			log_admin("[key_name(usr)] has edited [ckey]'s sticky ban reason from [oldreason] to [reason]")
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has edited [ckey]'s sticky ban reason from [oldreason] to [reason]</span>")
 
 /datum/admins/proc/stickyban_gethtml(ckey, ban)
 	. = "<a href='?_src_=holder;stickyban=remove&ckey=[ckey]'>\[-\]</a><b>[ckey]</b><br />"

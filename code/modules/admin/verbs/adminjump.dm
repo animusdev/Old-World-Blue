@@ -15,8 +15,7 @@
 		usr.on_mob_jump()
 		usr.loc = pick(get_area_turfs(A))
 
-		log_admin("[key_name(usr)] jumped to [A]")
-		message_admins("[key_name_admin(usr)] jumped to [A]", 1)
+		log_admin("[key_name(usr)] jumped to [A]", A, 0)
 	else
 		alert("Admin jumping disabled")
 
@@ -26,8 +25,7 @@
 	if(!check_rights(R_ADMIN|R_MOD|R_DEBUG))
 		return
 	if(config.allow_admin_jump)
-		log_admin("[key_name(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]")
-		message_admins("[key_name_admin(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]", 1)
+		log_admin("[key_name(usr)] jumped to [T].", T, 0)
 		usr.on_mob_jump()
 		usr.loc = T
 	else
@@ -42,8 +40,7 @@
 		return
 
 	if(config.allow_admin_jump)
-		log_admin("[key_name(usr)] jumped to [key_name(M)]")
-		message_admins("[key_name_admin(usr)] jumped to [key_name_admin(M)]", 1)
+		log_admin("[key_name(usr)] jumped to [key_name(M)]", M, 0)
 		if(src.mob)
 			var/mob/A = src.mob
 			var/turf/T = get_turf(M)
@@ -59,20 +56,8 @@
 	set category = "Admin"
 	set name = "Jump to Coordinate"
 
-	if(!check_rights(R_ADMIN|R_MOD|R_DEBUG))
-		return
+	jumptoturf(locate(tx,ty,tz))
 
-	if (config.allow_admin_jump)
-		if(src.mob)
-			var/mob/A = src.mob
-			A.on_mob_jump()
-			A.x = tx
-			A.y = ty
-			A.z = tz
-		message_admins("[key_name_admin(usr)] jumped to coordinates [tx], [ty], [tz]")
-
-	else
-		alert("Admin jumping disabled")
 
 /client/proc/jumptokey()
 	set category = "Admin"
@@ -90,8 +75,7 @@
 			src << "No keys found."
 			return
 		var/mob/M = selection:mob
-		log_admin("[key_name(usr)] jumped to [key_name(M)]")
-		message_admins("[key_name_admin(usr)] jumped to [key_name_admin(M)]", 1)
+		log_admin("[key_name(usr)] jumped to [key_name(M)]", M, 0)
 		usr.on_mob_jump()
 		usr.loc = M.loc
 	else
@@ -104,8 +88,7 @@
 	if(!check_rights(R_ADMIN|R_MOD|R_DEBUG))
 		return
 	if(config.allow_admin_jump)
-		log_admin("[key_name(usr)] teleported [key_name(M)]")
-		message_admins("[key_name_admin(usr)] teleported [key_name_admin(M)]", 1)
+		log_admin("[key_name(usr)] teleported [key_name(M)]", M)
 		M.on_mob_jump()
 		M.loc = get_turf(usr)
 	else
@@ -130,8 +113,7 @@
 
 		if(!M)
 			return
-		log_admin("[key_name(usr)] teleported [key_name(M)]")
-		message_admins("[key_name_admin(usr)] teleported [key_name(M)]", 1)
+		log_admin("[key_name(usr)] teleported [key_name(M)]", M)
 		if(M)
 			M.on_mob_jump()
 			M.loc = get_turf(usr)
@@ -149,7 +131,6 @@
 			M.on_mob_jump()
 			M.loc = pick(get_area_turfs(A))
 
-			log_admin("[key_name(usr)] teleported [key_name(M)] to [A]")
-			message_admins("[key_name_admin(usr)] teleported [key_name_admin(M)] to [A]", 1)
+			log_admin("[key_name(usr)] teleported [key_name(M)] to [A]", A)
 		else
 			alert("Admin jumping disabled")

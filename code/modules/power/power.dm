@@ -336,7 +336,7 @@
 	else if (!power_source)
 		return 0
 	else
-		log_admin("ERROR: /proc/electrocute_mob([M], [power_source], [source]): wrong power_source")
+		log_debug("ERROR: /proc/electrocute_mob([M], [power_source], [source]): wrong power_source", M)
 		return 0
 	//Triggers powernet warning, but only for 5 ticks (if applicable)
 	//If following checks determine user is protected we won't alarm for long.

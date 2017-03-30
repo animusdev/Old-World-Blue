@@ -7,7 +7,6 @@
 		return
 
 	message = sanitize(message)
-	log_whisper("[src.name]/[src.key] : [message]")
 
 	if (src.client)
 		if (src.client.prefs.muted & MUTE_IC)
@@ -17,7 +16,7 @@
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
 
-	if (src.stat == 2)
+	if (src.stat == DEAD)
 		return src.say_dead(message)
 
 	if (src.stat)
@@ -74,6 +73,8 @@
 
 	if(!message || message=="")
 		return
+
+	log_whisper("[src.name]/[src.key] : [message]")
 
 	//looks like this only appears in whisper. Should it be elsewhere as well? Maybe handle_speech_problems?
 	var/voice_sub

@@ -12,18 +12,18 @@
 
 /obj/effect/effect/smoke/chem/New(var/newloc, smoke_duration, turf/dest_turf = null, icon/cached_icon = null)
 	time_to_live = smoke_duration
-	
+
 	..()
-	
+
 	create_reagents(500)
-	
+
 	if(cached_icon)
 		icon = cached_icon
-	
+
 	set_dir(pick(cardinal))
 	pixel_x = -32 + rand(-8, 8)
 	pixel_y = -32 + rand(-8, 8)
-	
+
 	//switching opacity on after the smoke has spawned, and then turning it off before it is deleted results in cleaner
 	//lighting and view range updates (Is this still true with the new lighting system?)
 	opacity = 1
@@ -64,7 +64,7 @@
 // Fades out the smoke smoothly using it's alpha variable.
 /obj/effect/effect/smoke/chem/proc/fadeOut(var/frames = 16)
 	if(!alpha) return //already transparent
-	
+
 	frames = max(frames, 1) //We will just assume that by 0 frames, the coder meant "during one frame".
 	var/alpha_step = round(alpha / frames)
 	while(alpha > 0)
@@ -134,20 +134,16 @@
 	var/contained = carry.get_reagents()
 	var/area/A = get_area(location)
 
-	var/where = "[A.name] | [location.x], [location.y]"
-	var/whereLink = "<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[location.x];Y=[location.y];Z=[location.z]'>[where]</a>"
-
 	if(show_log)
 		if(carry.my_atom.fingerprintslast)
 			var/mob/M = get_mob_by_key(carry.my_atom.fingerprintslast)
 			var/more = ""
 			if(M)
 				more = "(<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</a>)"
-			message_admins("A chemical smoke reaction has taken place in ([whereLink])[contained]. Last associated key is [carry.my_atom.fingerprintslast][more].", 0, 1)
-			log_game("A chemical smoke reaction has taken place in ([where])[contained]. Last associated key is [carry.my_atom.fingerprintslast].")
+			message_admins("A chemical smoke reaction has taken place in ([A.name])[contained]. Last associated key is [carry.my_atom.fingerprintslast][more].", location)
+			log_game("A chemical smoke reaction has taken place in ([A.name])[contained]. Last associated key is [carry.my_atom.fingerprintslast].", location, 0)
 		else
-			message_admins("A chemical smoke reaction has taken place in ([whereLink]). No associated key.", 0, 1)
-			log_game("A chemical smoke reaction has taken place in ([where])[contained]. No associated key.")
+			log_game("A chemical smoke reaction has taken place in ([A.name])[contained]. No associated key.", location)
 
 //Runs the chem smoke effect
 // Spawns damage over time loop for each reagent held in the cloud.

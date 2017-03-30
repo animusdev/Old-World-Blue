@@ -195,5 +195,4 @@
 			gases += ", [gas]"
 		else
 			gases = gas
-	log_admin("[usr] ([usr.ckey]) opened '[src.name]' containing [gases].")
-	message_admins("[usr] ([usr.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>) opened '[src.name]' containing [gases] .")
+	log_game("[key_name(usr)] opened '[src.name]' containing [gases].", src)

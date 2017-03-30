@@ -213,9 +213,26 @@
 				H.visible_message("<span class='danger'>[attack_message]</span>")
 
 			playsound(loc, ((miss_type) ? (miss_type == 1 ? attack.miss_sound : 'sound/weapons/thudswoosh.ogg') : attack.attack_sound), 25, 1, -1)
-			H.attack_log += text("\[[time_stamp()]\] <font color='red'>[miss_type ? (miss_type == 1 ? "Missed" : "Blocked") : "attacked"] [src.name] ([src.ckey])</font>")
-			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>[miss_type ? (miss_type == 1 ? "Was missed by" : "Has blocked") : "Has Been attacked"] by [H.name] ([H.ckey])</font>")
-			msg_admin_attack("[key_name(H)] [miss_type ? (miss_type == 1 ? "has missed" : "was blocked by") : "has attacked"] [key_name(src)]", src)
+
+			switch(miss_type)
+				if(null)
+					admin_attack_log(H, src,
+						"attacked [key_name(src)]",
+						"Has Been attacked by [key_name(src)]",
+						"has attacked"
+					)
+				if(1)
+					admin_attack_log(H, src,
+						"Missed [key_name(src)]",
+						"Was missed by [key_name(src)]",
+						"has missed"
+					)
+				else
+					admin_attack_log(H, src,
+						"Blocked [key_name(src)]",
+						"Has blocked by [key_name(src)]",
+						"was blocked by"
+					)
 
 			if(miss_type)
 				return 0
@@ -237,10 +254,11 @@
 			apply_damage(real_damage, BRUTE, affecting, armour, sharp=attack.sharp, edge=attack.edge)
 
 		if(I_DISARM)
-			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
-			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [M.name] ([M.ckey])</font>")
-
-			msg_admin_attack("[key_name(M)] disarmed [src.name] ([src.ckey])", src)
+			admin_attack_log(M, src,
+				"Disarmed [key_name(src)]",
+				"Has been disarmed by [key_name(M)]",
+				"disarmed"
+			)
 			M.do_attack_animation(src)
 
 			if(w_uniform)
@@ -297,8 +315,11 @@
 	if(!damage)
 		return
 
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
-	src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [user.name] ([user.ckey])</font>")
+	admin_attack_log(usr, src,
+		"attacked [key_name(src)]",
+		"was attacked by [key_name(user)]",
+		"attacked"
+	)
 	src.visible_message("<span class='danger'>[user] has [attack_message] [src]!</span>")
 	user.do_attack_animation(src)
 

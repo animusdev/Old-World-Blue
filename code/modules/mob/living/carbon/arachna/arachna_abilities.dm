@@ -28,7 +28,7 @@ mob/living/carbon/human/proc/try_bite(atom/A)
 		src << "<span class='alium'>You need to be closer.</span>"
 		return 0
 
-	msg_admin_attack("[key_name_admin(src)] bite and poison [key_name_admin(A)] with [I.reagents.get_reagents()]", src)
+	log_attack("bite and poison [key_name_admin(A)] with [I.reagents.get_reagents()]", A)
 	I.reagents.trans_to_mob(A, I.reagents.total_volume, CHEM_BLOOD)
 	visible_message("<span class='warning'>[src] bite [A]!</span>", "<span class='alium'>You bite a [A].</span>")
 //	src.client.CH = null

@@ -1,9 +1,10 @@
 //print an error message to world.log
 
 
-// On Linux/Unix systems the line endings are LF, on windows it's CRLF, admins that don't use notepad++
-// will get logs that are one big line if the system is Linux and they are using notepad.  This solves it by adding CR to every line ending
-// in the logs.  ascii character 13 = CR
+// On Linux/Unix systems the line endings are LF, on windows it's CRLF,
+// admins that don't use notepad++ will get logs that are one big line if the system is Linux
+// and they are using notepad.  This solves it by adding CR to every line ending in the logs.
+// ascii character 13 = CR
 
 /var/global/log_end= world.system_type == UNIX ? ascii2text(13) : ""
 
@@ -20,77 +21,78 @@
 /proc/testing(msg)
 	world.log << "## TESTING: [msg][log_end]"
 
-/proc/log_admin(text)
-	admin_log.Add(text)
-	if (config.log_admin)
-		diary << "\[[time_stamp()]]ADMIN: [text][log_end]"
+/proc/log_generic(var/type, var/message, var/location, var/log_to_diary = 1, var/notify_admin = 1, var/req_toggles = 0)
+	var/turf/T = get_turf(location)
+	if(location && T)
+		if(log_to_diary)
+			diary << "\[[time_stamp()]][type]: [message] ([T.x],[T.y],[T.z])[log_end]"
+		if(notify_admin)
+			message += " (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)"
+	else if(log_to_diary)
+		diary << "\[[time_stamp()]][type]: [message][log_end]"
+
+	var/rendered = "<span class=\"log_message\"><span class=\"prefix\">[type]:</span> <span class=\"message\">[message]</span></span>"
+	if(notify_admin)
+		for(var/client/C in admins)
+			if(!req_toggles || (C.prefs.chat_toggles & req_toggles))
+				C << rendered
 
 
-/proc/log_debug(text)
-	if (config.log_debug)
-		diary << "\[[time_stamp()]]DEBUG: [text][log_end]"
 
-	for(var/client/C in admins)
-		if(C.prefs.chat_toggles & CHAT_DEBUGLOGS)
-			C << "DEBUG: [text]"
+/proc/log_admin(text, location, notify_admin)
+	log_generic("ADMIN", text, location, config.log_admin, notify_admin)
 
+/proc/log_debug(text, location)
+	log_generic("DEBUG", text, location, config.log_debug, 1, CHAT_DEBUGLOGS)
 
-/proc/log_game(text)
-	if (config.log_game)
-		diary << "\[[time_stamp()]]GAME: [text][log_end]"
+/proc/log_game(text, location, notify_admin = 1)
+	log_generic("GAME", text, location, config.log_game, notify_admin)
+
+/proc/log_mode(text, location, notify_admin)
+	log_generic("GAMEMODE", text, location, config.log_game, notify_admin, CHAT_GAMEMODELOGS)
 
 /proc/log_vote(text)
-	if (config.log_vote)
-		diary << "\[[time_stamp()]]VOTE: [text][log_end]"
+	log_generic("VOTE", text, null, config.log_vote, 0)
 
-/proc/log_access(text)
-	if (config.log_access)
-		diary << "\[[time_stamp()]]ACCESS: [text][log_end]"
+/proc/log_access(text, notify_admin = 0)
+	log_generic("ACCESS", text, null, config.log_vote, notify_admin)
 
 /proc/log_say(text)
-	if (config.log_say)
-		diary << "\[[time_stamp()]]SAY: [text][log_end]"
+	log_generic("SAY", text, null, config.log_say, 0)
 
 /proc/log_ooc(text)
-	if (config.log_ooc)
-		diary << "\[[time_stamp()]]OOC: [text][log_end]"
+	log_generic("OOC", text, null, config.log_ooc, 0)
 
 /proc/log_whisper(text)
-	if (config.log_whisper)
-		diary << "\[[time_stamp()]]WHISPER: [text][log_end]"
+	log_generic("WHISPER", text, null, config.log_whisper, 0)
 
 /proc/log_emote(text)
-	if (config.log_emote)
-		diary << "\[[time_stamp()]]EMOTE: [text][log_end]"
+	log_generic("EMOTE", text, null, config.log_emote, 0)
 
-/proc/log_attack(text)
-	if (config.log_attack)
-		diary << "\[[time_stamp()]]ATTACK: [text][log_end]" //Seperate attack logs? Why?  FOR THE GLORY OF SATAN!
+/proc/log_attack(text, location, notify_admin)
+	log_generic("ATTACK", text, location, config.log_attack, notify_admin, CHAT_ATTACKLOGS)
 
 /proc/log_adminsay(text)
-	if (config.log_adminchat)
-		diary << "\[[time_stamp()]]ADMINSAY: [text][log_end]"
+	log_generic("ADMINSAY", text, null, config.log_adminchat, 0)
 
-/proc/log_adminwarn(text)
-	if (config.log_adminwarn)
-		diary << "\[[time_stamp()]]ADMINWARN: [text][log_end]"
+/proc/log_adminwarn(text, location, notify_admin = 0)
+	log_generic("ADMINWARN", text, location, config.log_adminwarn, notify_admin)
 
 /proc/log_pda(text)
-	if (config.log_pda)
-		diary << "\[[time_stamp()]]PDA: [text][log_end]"
+	log_generic("PDA", text, null, config.log_pda, 0)
 
-/proc/log_misc(text)
-	diary << "\[[time_stamp()]]MISC: [text][log_end]"
+/proc/log_misc(text) //Replace with log_game ?
+	log_generic("MISC", text, null, 1, 0)
 
 //pretty print a direction bitflag, can be useful for debugging.
 /proc/print_dir(var/dir)
 	var/list/comps = list()
 	if(dir & NORTH) comps += "NORTH"
 	if(dir & SOUTH) comps += "SOUTH"
-	if(dir & EAST) comps += "EAST"
-	if(dir & WEST) comps += "WEST"
-	if(dir & UP) comps += "UP"
-	if(dir & DOWN) comps += "DOWN"
+	if(dir & EAST)  comps += "EAST"
+	if(dir & WEST)  comps += "WEST"
+	if(dir & UP)    comps += "UP"
+	if(dir & DOWN)  comps += "DOWN"
 
 	return english_list(comps, nothing_text="0", and_text="|", comma_text="|")
 
@@ -145,7 +147,6 @@
 			name = M.real_name
 		else if(M.name)
 			name = M.name
-
 
 		if(include_link && is_special_character(M) && highlight_special_characters)
 			. += "/(<font color='#FFA500'>[name]</font>)" //Orange

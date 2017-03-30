@@ -30,8 +30,7 @@
 		return
 
 	src << "<span class='danger'>You are attempting to convert \the [player.current]...</span>"
-	log_admin("[src]([src.ckey]) attempted to convert [player.current].")
-	message_admins("<span class='danger'>[src]([src.ckey]) attempted to convert [player.current].</span>")
+	log_mode("[key_name(src)] attempted to convert [key_name(player.current)].", player.current)
 
 	player.rev_cooldown = world.time+100
 	var/choice = alert(player.current,"Asked by [src]: Do you want to join the [faction.faction_descriptor]?","Join the [faction.faction_descriptor]?","No!","Yes!")

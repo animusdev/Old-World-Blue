@@ -27,7 +27,10 @@
 		if(standard_dispenser_refill(user, A))
 			return
 
-	if(istype(A, /obj/item/weapon/storage) || istype(A, /obj/structure/table) || istype(A, /obj/structure/closet) || istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart))
+	if(!src in user)
+		return ..()
+
+	if(istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink))
 		return ..()
 
 	if(istype(A, /spell))
@@ -42,14 +45,11 @@
 	user.setClickCooldown(4)
 
 	if(reagents.has_reagent("sacid"))
-		message_admins("[key_name_admin(user)] fired sulphuric acid from \a [src].")
-		log_game("[key_name(user)] fired sulphuric acid from \a [src].")
+		log_game("[key_name(user)] fired sulphuric acid from \a [src].", src)
 	if(reagents.has_reagent("pacid"))
-		message_admins("[key_name_admin(user)] fired Polyacid from \a [src].")
-		log_game("[key_name(user)] fired Polyacid from \a [src].")
+		log_game("[key_name(user)] fired Polyacid from \a [src].", src)
 	if(reagents.has_reagent("lube"))
-		message_admins("[key_name_admin(user)] fired Space lube from \a [src].")
-		log_game("[key_name(user)] fired Space lube from \a [src].")
+		log_game("[key_name(user)] fired Space lube from \a [src].", src)
 	return
 
 /obj/item/weapon/reagent_containers/spray/proc/Spray_at(atom/A as mob|obj, mob/user as mob, proximity)

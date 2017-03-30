@@ -77,9 +77,11 @@ var/list/organ_cache = list()
 
 	if(owner && vital)
 		if(user)
-			user.attack_log += "\[[time_stamp()]\]<font color='red'> removed a vital organ ([src]) from [key_name(owner)] (INTENT: [uppertext(user.a_intent)])</font>"
-			owner.attack_log += "\[[time_stamp()]\]<font color='orange'> had a vital organ ([src]) removed by [key_name(user)] (INTENT: [uppertext(user.a_intent)])</font>"
-			msg_admin_attack("[key_name(user)] removed a vital organ ([src]) from [key_name(owner)] (INTENT: [uppertext(user.a_intent)])", user)
+			admin_attack_log(user, owner,
+				"removed a vital organ ([src]) from [key_name(owner)]",
+				"had a vital organ ([src]) removed by [key_name(user)]",
+				"removed a vital organ ([src]) from"
+			)
 		owner.death()
 
 	parent = null

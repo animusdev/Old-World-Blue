@@ -340,9 +340,11 @@ var/global/list/rnwords = list("ire","ego","nahlizet","certum","veri","jatkaa","
 
 	attack(mob/living/M as mob, mob/living/user as mob)
 
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had the [name] used on them by [key_name(user)]</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used [name] on [key_name(M)]</font>")
-		msg_admin_attack("[key_name(user)] used [name] on [key_name(M)]", user)
+		admin_attack_log(user, M,
+			"Used [name] on [key_name(M)]",
+			"Has had the [name] used on them by [key_name(user)]",
+			"used [name] on [key_name(M)]"
+		)
 
 		if(isobserver(M))
 			var/mob/observer/dead/D = M
@@ -472,7 +474,7 @@ var/global/list/rnwords = list("ire","ego","nahlizet","certum","veri","jatkaa","
 			user.take_overall_damage((rand(9)+1)/10) // 0.1 to 1.0 damage
 			if(do_after(user, 50))
 				var/area/A = get_area(user)
-				log_and_message_admins("created \an [chosen_rune] rune at \the [A.name] - [user.loc.x]-[user.loc.y]-[user.loc.z].")
+				log_mode("created \an [chosen_rune] rune at \the [A.name].", user)
 				if(usr.get_active_hand() != src)
 					return
 				var/mob/living/carbon/human/H = user

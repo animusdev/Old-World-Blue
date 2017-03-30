@@ -232,8 +232,7 @@
 	if(mind)
 		mind.transfer_to(S)
 
-	message_admins("\The [src] has split into nymphs; player now controls [key_name_admin(S)]")
-	log_admin("\The [src] has split into nymphs; player now controls [key_name(S)]")
+	log_game("\The [src] has split into nymphs; player now controls [key_name(S)]", src, 0)
 
 	var/nymphs = 1
 

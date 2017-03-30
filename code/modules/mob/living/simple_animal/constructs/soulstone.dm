@@ -27,9 +27,11 @@
 		user << "<span class='warning'>This being is corrupted by an alien intelligence and cannot be soul trapped.</span>"
 		return..()
 
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their soul captured with [src.name] by [key_name(user)]</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to capture the soul of [key_name(M)]</font>")
-	msg_admin_attack("[key_name(user)] used the [src.name] to capture the soul of [key_name(M)]", user)
+	admin_attack_log(user, M,
+		"Used the [src.name] to capture the soul of [key_name(M)]",
+		"Has had their soul captured with [src.name] by [key_name(user)]",
+		"used the [src.name] to capture the soul of"
+	)
 
 	transfer_soul("VICTIM", M, user)
 	return

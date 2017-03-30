@@ -119,8 +119,7 @@
 	if(confirmed)
 		confirmed = 0
 		trigger_event(event)
-		log_game("[key_name(event_triggered_by)] triggered and [key_name(event_confirmed_by)] confirmed event [event]")
-		message_admins("[key_name(event_triggered_by)] triggered and [key_name(event_confirmed_by)] confirmed event [event]", 1)
+		log_game("[key_name(event_triggered_by)] triggered and [key_name(event_confirmed_by)] confirmed event [event]", src, 0)
 	reset()
 
 /obj/machinery/keycard_auth/proc/receive_request(var/obj/machinery/keycard_auth/source)

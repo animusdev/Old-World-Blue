@@ -35,9 +35,11 @@
 /obj/item/device/flash/attack(mob/living/M as mob, mob/user as mob)
 	if(!user || !M)	return	//sanity
 
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been flashed (attempt) with [src.name]  by [key_name(user)]</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to flash [key_name(M)]</font>")
-	msg_admin_attack("[key_name(user)] Used the [src.name] to flash [key_name(M)]", user)
+	admin_attack_log(
+		"Used the [src.name] to flash [key_name(M)]",
+		"Has been flashed (attempt) with [src.name]  by [key_name(user)]",
+		"used the [src.name] to flash"
+	)
 
 	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	user.do_attack_animation(M)

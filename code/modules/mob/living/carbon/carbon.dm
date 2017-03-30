@@ -310,9 +310,11 @@
 				var/start_T_descriptor = "<font color='#6b5d00'>tile at [start_T.x], [start_T.y], [start_T.z] in area [get_area(start_T)]</font>"
 				var/end_T_descriptor = "<font color='#6b4400'>tile at [end_T.x], [end_T.y], [end_T.z] in area [get_area(end_T)]</font>"
 
-				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been thrown by [usr.name] ([usr.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]</font>")
-				usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]</font>")
-				msg_admin_attack("[usr.name] ([usr.ckey]) has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]", usr)
+				admin_attack_log(usr, M,
+					"Has thrown [M.name] ([M.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]",
+					"Has been thrown by [usr.name] ([usr.ckey]) from [start_T_descriptor] with the target [end_T_descriptor]",
+					"[key_name(usr)] has thrown [key_name(M)] from ([start_T.x],[start_T.y],[start_T.z]) to [end_T.x], [end_T.y], [end_T.z]"
+				)
 
 				M.Weaken(1)
 				qdel(G)

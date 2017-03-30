@@ -96,8 +96,7 @@
 					set_security_level(tmp_alertlevel)
 					if(security_level != old_level)
 						//Only notify the admins if an actual change happened
-						log_game("[key_name(usr)] has changed the security level to [get_security_level()].")
-						message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()].")
+						log_game("[key_name(usr)] has changed the security level to [get_security_level()].", src)
 					tmp_alertlevel = 0
 				else
 					usr << "You are not authorized to do this."
@@ -192,7 +191,7 @@
 					return
 				Centcomm_announce(input, usr)
 				usr << "Message transmitted."
-				log_say("[key_name(usr)] has made a Centcomm announcement: [input]")
+				log_game("[key_name(usr)] has made a Centcomm announcement: [input]", null, 0)
 				centcomm_message_cooldown = 1
 				spawn(600)//10 minute cooldown
 					centcomm_message_cooldown = 0
@@ -209,7 +208,7 @@
 					return
 				Syndicate_announce(input, usr)
 				usr << "Message transmitted."
-				log_say("[key_name(usr)] has made an illegal announcement: [input]")
+				log_game("[key_name(usr)] has made an illegal announcement: [input]", null, 0)
 				centcomm_message_cooldown = 1
 				spawn(600)//10 minute cooldown
 					centcomm_message_cooldown = 0

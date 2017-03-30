@@ -31,7 +31,6 @@
 		log_game("SQL ERROR during adding new watch entry. Error : \[[err]\]\n")
 		return
 	log_admin("[key_name(usr)] has added [target_ckey] to the watchlist - Reason: [reason]")
-	message_admins("[key_name_admin(usr)] has added [target_ckey] to the watchlist - Reason: [reason]", 1)
 	if(browse)
 		watchlist_show(target_sql_ckey)
 
@@ -43,7 +42,6 @@
 		log_game("SQL ERROR during removing watch entry. Error : \[[err]\]\n")
 		return
 	log_admin("[key_name(usr)] has removed [target_ckey] from the watchlist")
-	message_admins("[key_name_admin(usr)] has removed [target_ckey] from the watchlist", 1)
 	if(browse)
 		watchlist_show()
 
@@ -69,7 +67,6 @@
 			log_game("SQL ERROR editing watchlist reason. Error : \[[err]\]\n")
 			return
 		log_admin("[key_name(usr)] has edited [target_ckey]'s watchlist reason from [watch_reason] to [new_reason]")
-		message_admins("[key_name_admin(usr)] has edited [target_ckey]'s watchlist reason from<br>[watch_reason]<br>to<br>[new_reason]")
 		if(browse)
 			watchlist_show(target_sql_ckey)
 

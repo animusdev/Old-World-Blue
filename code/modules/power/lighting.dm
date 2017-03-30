@@ -238,8 +238,7 @@
 			if(rigged)
 				if(status == LIGHT_OK && trigger)
 
-					log_admin("LOG: Rigged light explosion, last touched by [fingerprintslast]")
-					message_admins("LOG: Rigged light explosion, last touched by [fingerprintslast]")
+					log_game("Rigged light explosion, last touched by [fingerprintslast]", src)
 
 					explode()
 			else if( prob( min(60, switchcount*switchcount*0.01) ) )
@@ -329,8 +328,7 @@
 
 				if(on && rigged)
 
-					log_admin("LOG: Rigged light explosion, last touched by [fingerprintslast]")
-					message_admins("LOG: Rigged light explosion, last touched by [fingerprintslast]")
+					self_attack_log(user, "Rigged light explosion, last touched by [fingerprintslast]", 1)
 
 					explode()
 			else
@@ -682,8 +680,7 @@
 
 		if(S.reagents.has_reagent("phoron", 5))
 
-			log_admin("LOG: [user.name] ([user.ckey]) injected a light with phoron, rigging it to explode.")
-			message_admins("LOG: [user.name] ([user.ckey]) injected a light with phoron, rigging it to explode.")
+			self_attack_log(user, "injected a light with phoron, rigging it to explode.", 1)
 
 			rigged = 1
 

@@ -96,9 +96,7 @@
 		if(S.reagents.has_reagent("phoron", 5))
 
 			rigged = 1
-
-			log_admin("LOG: [user.name] ([user.ckey]) injected a power cell with phoron, rigging it to explode.")
-			message_admins("LOG: [user.name] ([user.ckey]) injected a power cell with phoron, rigging it to explode.")
+			self_attack_log(user, "injected a power cell with phoron, rigging it to explode.", 1)
 
 		S.reagents.clear_reagents()
 
@@ -123,8 +121,7 @@
 		return
 	//explosion(T, 0, 1, 2, 2)
 
-	log_admin("LOG: Rigged power cell explosion, last touched by [fingerprintslast]")
-	message_admins("LOG: Rigged power cell explosion, last touched by [fingerprintslast]")
+	self_attack_log(usr, "Rigged power cell explosion, last touched by [fingerprintslast]", 1)
 
 	explosion(T, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 

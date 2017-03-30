@@ -242,8 +242,7 @@
 	var/pressure = air_contents.return_pressure()
 	if(pressure > TANK_FRAGMENT_PRESSURE)
 		if(!istype(src.loc,/obj/item/device/transfer_valve))
-			message_admins("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
-			log_game("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
+			log_game("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].", src)
 
 		//Give the gas a chance to build up more pressure through reacting
 		air_contents.react()
@@ -264,7 +263,7 @@
 
 	else if(pressure > TANK_RUPTURE_PRESSURE)
 		#ifdef FIREDBG
-		log_debug("\blue[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]")
+		log_debug("[src] is rupturing: [pressure] kPa, integrity [integrity]", src)
 		#endif
 
 		if(integrity <= 0)
@@ -279,7 +278,7 @@
 
 	else if(pressure > TANK_LEAK_PRESSURE)
 		#ifdef FIREDBG
-		log_debug("\blue[x],[y] tank is leaking: [pressure] kPa, integrity [integrity]")
+		log_debug("[src] is leaking: [pressure] kPa, integrity [integrity]", src)
 		#endif
 
 		if(integrity <= 0)

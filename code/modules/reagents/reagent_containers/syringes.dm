@@ -254,9 +254,11 @@
 			user.remove_from_mob(src)
 			qdel(src)
 
-			user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [key_name(target)] with \the [src] (INTENT: HARM).</font>"
-			target.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [key_name(user)] with [src.name] (INTENT: HARM).</font>"
-			msg_admin_attack("[key_name_admin(user)] attacked [key_name_admin(target)] with [src.name] (INTENT: HARM)", user)
+			admin_attack_log(user, target,
+				"Attacked [key_name(target)] with \the [src].",
+				"Attacked by [key_name(user)] with [src.name].",
+				"used [src.name] to attack"
+			)
 
 			return
 

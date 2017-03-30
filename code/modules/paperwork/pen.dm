@@ -64,9 +64,11 @@
 		return
 	user << "<span class='warning'>You stab [M] with the pen.</span>"
 //	M << "\red You feel a tiny prick!" //That's a whole lot of meta!
-	M.attack_log += text("\[[time_stamp()]] <font color='orange'>Has been stabbed with [name]  by [key_name(user)]</font>")
-	user.attack_log += text("\[[time_stamp()]] <font color='red'>Used the [name] to stab [key_name(M)]</font>")
-	msg_admin_attack("[key_name(user)] Used the [name] to stab [key_name(M)]", user)
+	admin_attack_log(user, M,
+		"Used the [name] to stab [key_name(M)]",
+		"Has been stabbed with [name]  by [key_name(user)]",
+		"Used the [name] to stab"
+	)
 	return
 
 /*

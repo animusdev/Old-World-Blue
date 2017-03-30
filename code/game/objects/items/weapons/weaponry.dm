@@ -36,10 +36,11 @@
 
 /obj/item/weapon/nullrod/attack(mob/M as mob, mob/living/user as mob) //Paste from old-code to decult with a null rod.
 
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [key_name(user)]</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [key_name(M)]</font>")
-
-	msg_admin_attack("[key_name(user)] attacked [key_name(M)] with [src.name] (INTENT: [uppertext(user.a_intent)])", user)
+	admin_attack_log(
+		"Used the [src.name] to attack [key_name(M)]",
+		"Has been attacked with [src.name] by [key_name(user)]",
+		"used [src.name] to attack"
+	)
 
 	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	user.do_attack_animation(M)

@@ -269,7 +269,6 @@
 
 	hibernate = 0
 
-	//log_admin("DEBUG \[[world.timeofday]\]: /obj/machinery/atmospherics/unary/vent_pump/receive_signal([signal.debug_print()])")
 	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 		return 0
 
@@ -344,7 +343,6 @@
 			broadcast_status()
 		return //do not update_icon
 
-		//log_admin("DEBUG \[[world.timeofday]\]: vent_pump/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
 	spawn(2)
 		broadcast_status()
 	update_icon()

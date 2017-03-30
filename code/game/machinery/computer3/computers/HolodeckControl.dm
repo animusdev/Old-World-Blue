@@ -106,11 +106,9 @@
 			if(!issilicon(usr))	return
 			emagged = !emagged
 			if(emagged)
-				message_admins("[key_name_admin(usr)] overrode the holodeck's safeties")
-				log_game("[key_name(usr)] overrided the holodeck's safeties")
+				log_game("[key_name(usr)] overrided the holodeck's safeties", src)
 			else
-				message_admins("[key_name_admin(usr)] restored the holodeck's safeties")
-				log_game("[key_name(usr)] restored the holodeck's safeties")
+				log_game("[key_name(usr)] restored the holodeck's safeties", src)
 
 		interact()
 		return

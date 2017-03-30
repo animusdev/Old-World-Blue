@@ -73,6 +73,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_rejuvenate,
 	/client/proc/toggleattacklogs,
 	/client/proc/toggledebuglogs,
+	/client/proc/togglemodelogs,
 	/client/proc/toggleghostwriters,
 	/client/proc/toggledrones,
 	/client/proc/check_customitem_activity,
@@ -287,6 +288,7 @@ var/list/admin_verbs_mod = list(
 	/client/proc/cmd_admin_pm_panel,	/*admin-pm list*/
 	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game.*/
 	/client/proc/toggledebuglogs,
+	/client/proc/togglemodelogs,
 	/datum/admins/proc/PlayerNotes,
 	/client/proc/admin_ghost,			/*allows us to ghost/reenter body at will*/
 	/datum/admins/proc/show_player_info,
@@ -436,13 +438,11 @@ var/list/admin_verbs_mentor = list(
 			if (temp >= 0)
 				config.respawn_time = temp
 				log_admin("[key_name(usr)] edit humans respawn time to [config.respawn_time]")
-				message_admins("[key_name(usr)] edit humans respawn time to [config.respawn_time]", 1)
 		if ("Mouse")
 			temp = input(usr,"Set time (in minutes)?","Time to respawn",initial(config.respawn_time_mouse)) as num|null
 			if (temp >= 0)
 				config.respawn_time_mouse = temp
 				log_admin("[key_name(usr)] edit mice respawn time to [config.respawn_time_mouse]")
-				message_admins("[key_name(usr)] edit mice respawn time to [config.respawn_time_mouse]", 1)
 		if ("Cancel")
 			return
 
@@ -472,7 +472,7 @@ var/list/admin_verbs_mentor = list(
 	set category = "Admin"
 	if(holder)
 		holder.check_antagonists()
-		log_admin("[key_name(usr)] checked antagonists.")	//for tsar~
+		log_admin("[key_name(usr)] checked antagonists.", null, 0)
 	return
 /*
 /client/proc/jobbans()
@@ -538,8 +538,7 @@ var/list/admin_verbs_mentor = list(
 			holder.fakekey = new_key
 			if(istype(mob, /mob/new_player))
 				mob.name = new_key
-		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
-		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]", 1)
+		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]", null, 0)
 
 #define MAX_WARNS 3
 #define AUTOBANTIME 30
@@ -634,8 +633,7 @@ var/list/admin_verbs_mentor = list(
 				D.affected_species |= H.species.greater_form
 	infect_virus2(T,D,1)
 
-	log_admin("[key_name(usr)] gave [key_name(T)] a [greater] disease2 with infection chance [D.infectionchance].")
-	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] a [greater] disease2 with infection chance [D.infectionchance].", 1)
+	log_admin("[key_name(usr)] gave [key_name(T)] a [greater] disease2 with infection chance [D.infectionchance].", T)
 
 /client/proc/make_sound(var/obj/O in world) // -- TLE
 	set category = "Special Verbs"
@@ -647,8 +645,7 @@ var/list/admin_verbs_mentor = list(
 			return
 		for (var/mob/V in hearers(O))
 			V.show_message(message, 2)
-		log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound")
-		message_admins("\blue [key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound", 1)
+		log_admin("[key_name(usr)] made [O] make a sound \"[message]\".", O, 0)
 
 
 /client/proc/togglebuildmodeself()
@@ -678,7 +675,6 @@ var/list/admin_verbs_mentor = list(
 		air_processing_killed = 1
 		usr << "<b>Disabled air processing.</b>"
 	log_admin("[key_name(usr)] used 'kill air'.")
-	message_admins("\blue [key_name_admin(usr)] used 'kill air'.", 1)
 
 /client/proc/readmin_self()
 	set name = "Re-Admin self"
@@ -938,6 +934,17 @@ var/list/admin_verbs_mentor = list(
 	else
 		usr << "You now won't get debug log messages"
 
+/client/proc/togglemodelogs()
+	set name = "Toggle GameMode Log Messages"
+	set category = "Preferences"
+
+	prefs.chat_toggles ^= CHAT_GAMEMODELOGS
+	if (prefs.chat_toggles & CHAT_GAMEMODELOGS)
+		usr << "You now will get game mode log messages"
+	else
+		usr << "You now won't get game mode log messages"
+
+
 /client/proc/add_supply_pack()
 	set category = "Fun"
 	set name = "Add supply pack"
@@ -999,11 +1006,12 @@ var/list/admin_verbs_mentor = list(
 		name, cost, access, containername, \
 		containertype, group, hide, contains )
 
-	if( supply_controller.supply_packs.Find(name) ) log_debug("Supply pack [name] already exist!")
+	if( supply_controller.supply_packs.Find(name) )
+		log_debug("Supply pack [name] already exist!")
 	else
 		supply_controller.supply_packs[name] = CP
 		usr << "Supply pack [name] successfully created!"
-		log_admin("[key_name(usr)] has add custom supply pack [name]")
+		log_admin("[key_name(usr)] has add custom supply pack [name]", null, 0)
 
 
 /client/proc/man_up(mob/T as mob in mob_list)
@@ -1015,8 +1023,7 @@ var/list/admin_verbs_mentor = list(
 	T << "<span class='notice'>Move on.</span>"
 	T << 'sound/voice/ManUp1.ogg'
 
-	log_admin("[key_name(usr)] told [key_name(T)] to man up and deal with it.")
-	message_admins("\blue [key_name_admin(usr)] told [key_name(T)] to man up and deal with it.", 1)
+	log_admin("[key_name(usr)] told [key_name(T)] to man up and deal with it.", T)
 
 /client/proc/global_man_up()
 	set category = "Fun"
@@ -1027,8 +1034,7 @@ var/list/admin_verbs_mentor = list(
 		T << "<br><center><span class='notice'><b><font size=4>Man up.<br> Deal with it.</font></b><br>Move on.</span></center><br>"
 		T << 'sound/voice/ManUp1.ogg'
 
-	log_admin("[key_name(usr)] told everyone to man up and deal with it.")
-	message_admins("\blue [key_name_admin(usr)] told everyone to man up and deal with it.", 1)
+	log_admin("[key_name(usr)] told everyone to man up and deal with it.", usr)
 
 /client/proc/give_spell(mob/T as mob in mob_list) // -- Urist
 	set category = "Fun"
@@ -1037,8 +1043,7 @@ var/list/admin_verbs_mentor = list(
 	var/spell/S = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in spells
 	if(!S) return
 	T.spell_list += new S
-	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].")
-	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the spell [S].", 1)
+	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].", T)
 
 
 
@@ -1057,5 +1062,5 @@ var/list/admin_verbs_mentor = list(
 			H.paralysis = 0
 			msg = " has unparalyzed [key_name(H)]."
 		message_admins(key_name_admin(usr) + msg)
-		log_admin(key_name(usr) + msg)
+		log_admin(key_name(usr) + msg, H)
 

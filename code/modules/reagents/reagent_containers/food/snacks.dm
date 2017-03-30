@@ -96,9 +96,11 @@
 			user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 			if(!do_mob(user, M, 15)) return
 
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [key_name(user)] Reagents: [reagentlist(src)]</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [key_name(M)] Reagents: [reagentlist(src)]</font>")
-			msg_admin_attack("[key_name(user)] fed [key_name(M)] with [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])", M)
+			admin_attack_log(user, M,
+				"Fed [src.name] by [key_name(M)] Reagents: [reagentlist(src)]",
+				"Has been fed [src.name] by [key_name(user)] Reagents: [reagentlist(src)]",
+				"used [src.name] Reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)]) to fed"
+			)
 
 			user.visible_message("<span class='danger'>[user] feeds [M] [src].</span>")
 

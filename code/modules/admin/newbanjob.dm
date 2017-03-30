@@ -23,12 +23,12 @@ var/savefile/Banlistjob
 /proc/LoadBansjob()
 
 	Banlistjob = new("data/job_fullnew.bdb")
-	log_admin("Loading Banlistjob")
+	log_game("Loading Banlistjob")
 
-	if (!length(Banlistjob.dir)) log_admin("Banlistjob is empty.")
+	if (!length(Banlistjob.dir)) log_game("Banlistjob is empty.")
 
 	if (!Banlistjob.dir.Find("base"))
-		log_admin("Banlistjob missing base dir.")
+		log_game("Banlistjob missing base dir.")
 		Banlistjob.dir.Add("base")
 		Banlistjob.cd = "/base"
 	else if (Banlistjob.dir.Find("base"))
@@ -45,7 +45,7 @@ var/savefile/Banlistjob
 		Banlistjob.cd = "/base/[A]"
 		//if (!Banlistjob["key"] || !Banlistjob["id"])
 		//	RemoveBanjob(A, "full")
-		//	log_admin("Invalid Ban.")
+		//	log_game("Invalid Ban.")
 		//	message_admins("Invalid Ban.")
 		//	continue
 
@@ -170,11 +170,9 @@ var/savefile/Banlistjob
 	if (!Banlistjob.dir.Remove(foldername)) return 0
 
 	if(!usr)
-		log_admin("Banjob Expired: [key]")
-		message_admins("Banjob Expired: [key]")
+		log_game("Banjob Expired: [key]")
 	else
-		log_admin("[key_name_admin(usr)] unjobbanned [key] from [rank]")
-		message_admins("[key_name_admin(usr)] unjobbanned:[key] from [rank]")
+		log_game("[key_name_admin(usr)] unjobbanned [key] from [rank]")
 		ban_unban_log_save("[key_name_admin(usr)] unjobbanned [key] from [rank]")
 
 	for (var/A in Banlistjob.dir)
@@ -215,7 +213,8 @@ var/savefile/Banlistjob
 	dat = "<HR><B>Bans:</B> <FONT COLOR=blue>(U) = Unban , </FONT> - <FONT COLOR=green>([count] Bans)</FONT><HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >[dat]"
 	usr << browse(dat, "window=unbanp;size=875x400")
 
-/*/datum/admins/proc/permjobban(ckey, computerid, reason, bannedby, temp, minutes, rank)
+/*
+/datum/admins/proc/permjobban(ckey, computerid, reason, bannedby, temp, minutes, rank)
 	if(AddBanjob(ckey, computerid, reason, usr.ckey, 0, 0, job))
 		M << "\red<BIG><B>You have been banned from [job] by [usr.client.ckey].\nReason: [reason].</B></BIG>"
 		M << "\red This is a permanent ban."
@@ -224,7 +223,6 @@ var/savefile/Banlistjob
 		else
 			M << "\red No ban appeals URL has been set."
 		log_admin("[usr.client.ckey] has banned from [job] [ckey].\nReason: [reason]\nThis is a permanent ban.")
-		message_admins("\blue[usr.client.ckey] has banned from [job] [ckey].\nReason: [reason]\nThis is a permanent ban.")
 /datum/admins/proc/timejobban(ckey, computerid, reason, bannedby, temp, minutes, rank)
 	if(AddBanjob(ckey, computerid, reason, usr.ckey, 1, mins, job))
 		M << "\red<BIG><B>You have been jobbanned from [job] by [usr.client.ckey].\nReason: [reason].</B></BIG>"
@@ -234,7 +232,7 @@ var/savefile/Banlistjob
 		else
 			M << "\red No ban appeals URL has been set."
 		log_admin("[usr.client.ckey] has jobbanned from [job] [ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
-		message_admins("\blue[usr.client.ckey] has banned from [job] [ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")*/
+*/
 //////////////////////////////////// DEBUG ////////////////////////////////////
 
 /proc/CreateBansjob()

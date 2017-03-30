@@ -364,7 +364,7 @@ be able to influence the host through various commands.
 	if(!target) return
 	if(!use_points(300)) return
 
-	target:hallucination += 100
+	target.hallucination += 100
 
 	usr << "<b>You make [target] hallucinate.</b>"
 
@@ -403,8 +403,7 @@ be able to influence the host through various commands.
 	src.switch_host(target)
 
 	usr << "<b>You successfully jumped to [target]."
-	log_admin("[src.key] has jumped (meme) to [target]")
-//	message_admins("[src.key] has jumped (meme) to [target]")
+	log_mode("[src.key] has jumped (meme) to [target]", target)
 
 // Jump to a distant target through a shout
 /mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob in view(host) - usr - usr:host)
@@ -441,8 +440,7 @@ be able to influence the host through various commands.
 	src.switch_host(target)
 
 	usr << "<b>You successfully jumped to [target]."
-	log_admin("[src.key] has jumped (meme) to [target]")
-//	message_admins("[src.key] has jumped (meme) to [target]")
+	log_mode("[src.key] has jumped (meme) to [target]", target)
 
 // Jump to an attuned mob for free
 /mob/living/parasite/meme/verb/AttunedJump(mob/living/carbon/human/target as mob in view(host)&indoctrinated)
@@ -468,8 +466,7 @@ be able to influence the host through various commands.
 
 	usr << "<b>You successfully jumped to [target]."
 
-	log_admin("[src.key] has jumped (meme) to [target]")
-//	message_admins("[src.key] has jumped (meme) to [target]")
+	log_mode("[src.key] has jumped (meme) to [target]", target)
 
 // ATTUNE a mob, adding it to the indoctrinated list
 /mob/living/parasite/meme/verb/Attune()
@@ -489,8 +486,7 @@ be able to influence the host through various commands.
 	usr << "<b>You successfully indoctrinated [host]."
 	host << "\red Your head feels a bit roomier.."
 
-	log_admin("[src.key] has attuned [host]")
-//	message_admins("[src.key] has attuned [host]")
+	log_mode("[src.key] has attuned [host]", host)
 
 // Enables the mob to take a lot more damage
 /mob/living/parasite/meme/verb/Analgesic()
@@ -531,6 +527,8 @@ be able to influence the host through various commands.
 	host << "\red Everything goes black.."
 
 	spawn
+		log_mode("[key_name(src)] has taken possession (meme) of [key_name(host)]", host)
+
 		var/mob/dummy = new()
 		dummy.loc = 0
 		dummy.sight = BLIND
@@ -545,13 +543,7 @@ be able to influence the host through various commands.
 
 		dummy << "\blue You feel very drowsy.. Your eyelids become heavy..."
 
-		log_admin("[meme_mind.key] has taken possession of [host]([host_mind.key])")
-//		message_admins("[meme_mind.key] has taken possession of [host]([host_mind.key])")
-
 		sleep(600)
-
-		log_admin("[meme_mind.key] has lost possession of [host]([host_mind.key])")
-//		message_admins("[meme_mind.key] has lost possession of [host]([host_mind.key])")
 
 		meme_mind.transfer_to(src)
 		host_mind.transfer_to(host)
@@ -560,6 +552,8 @@ be able to influence the host through various commands.
 		src << "\red You lose control.."
 
 		del dummy
+
+		log_mode("[key_name(src)] has lost possession of [key_name(host)]", host)
 
 // Enter dormant mode, increases meme point gain
 /mob/living/parasite/meme/verb/Dormant()

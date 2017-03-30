@@ -200,16 +200,6 @@
 
 	src << "You will [(prefs.toggles & HIDE_MOTD) ? "no longer" : "now"] see MOTD at join game."
 
-/client/verb/toggle_stetup_pref()
-	set name = "Toggle new/old setup usage"
-	set category = "Preferences"
-	set desc = "Select new/old style loadout and so on"
-
-	prefs.toggles ^= PREFER_NEWSETUP
-	prefs.save_preferences()
-
-	src << "You will now use preference from [(prefs.toggles & PREFER_NEWSETUP) ? "new" : "old"] setup menu."
-
 /client/verb/toggle_progressbar()
 	set name = "Toggle Progressbar"
 	set category = "Preferences"

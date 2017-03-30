@@ -113,11 +113,9 @@
 			safety_disabled = !safety_disabled
 			update_projections()
 			if(safety_disabled)
-				message_admins("[key_name_admin(usr)] overrode the holodeck's safeties")
-				log_game("[key_name(usr)] overrided the holodeck's safeties")
+				log_game("[key_name(usr)] overrided the holodeck's safeties", src)
 			else
-				message_admins("[key_name_admin(usr)] restored the holodeck's safeties")
-				log_game("[key_name(usr)] restored the holodeck's safeties")
+				log_game("[key_name(usr)] restored the holodeck's safeties", src)
 
 		else if(href_list["gravity"])
 			toggleGravity(linkedholodeck)
@@ -135,7 +133,7 @@
 		update_projections()
 		user << "<span class='notice'>You vastly increase projector power and override the safety and security protocols.</span>"
 		user << "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator."
-		log_game("[key_name(usr)] emagged the Holodeck Control Computer")
+		log_game("[key_name(usr)] emagged the Holodeck Control Computer", src)
 		return 1
 	return
 

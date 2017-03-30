@@ -180,7 +180,6 @@
 					usr << "No objects of this type exist"
 					return
 				log_admin("[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted)")
-				message_admins("<span class='notice'>[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted)</span>")
 			if("Type and subtypes")
 				var/i = 0
 				for(var/obj/Obj in world)
@@ -191,7 +190,6 @@
 					usr << "No objects of this type exist"
 					return
 				log_admin("[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted)")
-				message_admins("<span class='notice'>[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted)</span>")
 
 	else if(href_list["explode"])
 		if(!check_rights(R_DEBUG|R_FUN))	return
@@ -481,7 +479,7 @@
 		usr << "Resource files sent"
 		H << "Your NanoUI Resource files have been refreshed"
 
-		log_admin("[key_name(usr)] resent the NanoUI resource files to [key_name(H)] ")
+		log_admin("[key_name(usr)] resent the NanoUI resource files to [key_name(H)].", null, 0)
 
 	else if(href_list["regenerateicons"])
 		if(!check_rights(0))	return
@@ -518,8 +516,7 @@
 				return
 
 		if(amount != 0)
-			log_admin("[key_name(usr)] dealt [amount] amount of [Text] damage to [L]")
-			message_admins("<span class='notice'>[key_name(usr)] dealt [amount] amount of [Text] damage to [L]</span>")
+			log_admin("[key_name(usr)] dealt [amount] amount of [Text] damage to [L]", L)
 			href_list["datumrefresh"] = href_list["mobToDamage"]
 
 	else if(href_list["call_proc"])
@@ -531,5 +528,3 @@
 		var/datum/DAT = locate(href_list["datumrefresh"])
 		if(istype(DAT, /datum) || istype(DAT, /client))
 			debug_variables(DAT)
-
-	return

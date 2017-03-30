@@ -71,7 +71,7 @@
 		return
 
 	if(user)
-		msg_admin_attack("[key_name(user)] primed \a [src]", user)
+		self_attack_log(user, "primed \a [src]", 1)
 
 	icon_state = initial(icon_state) + "_active"
 	active = 1

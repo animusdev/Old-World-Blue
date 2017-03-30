@@ -356,7 +356,8 @@
 		else
 			use_power(360)
 	else
-		log_admin("[usr]([usr.ckey]) has forced open an emergency shutter.")
+		log_game("[key_name(usr)] has forced open an emergency shutter.", src, 0)
+
 	latetoggle()
 	return ..()
 

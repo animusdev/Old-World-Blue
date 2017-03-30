@@ -18,7 +18,7 @@
 		if (!message)
 			return
 		log_say("[key_name(src)] : [message]")
-		if (stat == 2)
+		if (stat == DEAD)
 			return say_dead(message)
 
 		var/mob/living/simple_animal/borer/B = src.loc
@@ -28,7 +28,7 @@
 		for (var/mob/M in player_list)
 			if (istype(M, /mob/new_player))
 				continue
-			else if(M.stat == 2 &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
+			else if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 				M << "The captive mind of [src] whispers, \"[message]\""
 
 /mob/living/captive_brain/emote(var/message)

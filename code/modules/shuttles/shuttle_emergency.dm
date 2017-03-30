@@ -65,8 +65,7 @@
 			world << "<span class='notice'><b>Alert: The shuttle autopilot has been overridden. Launch sequence initiated!</b></span>"
 
 	if(usr)
-		log_admin("[key_name(usr)] has overridden the shuttle autopilot and activated launch sequence")
-		message_admins("[key_name_admin(usr)] has overridden the shuttle autopilot and activated launch sequence")
+		log_game("[key_name(usr)] has overridden the shuttle autopilot and activated launch sequence", usr)
 
 	..(user)
 
@@ -79,8 +78,7 @@
 			world << "<span class='notice'><b>Alert: The shuttle autopilot has been overridden. Bluespace drive engaged!</b></span>"
 
 	if(usr)
-		log_admin("[key_name(usr)] has overridden the shuttle autopilot and forced immediate launch")
-		message_admins("[key_name_admin(usr)] has overridden the shuttle autopilot and forced immediate launch")
+		log_game("[key_name(usr)] has overridden the shuttle autopilot and forced immediate launch", usr)
 
 	..(user)
 
@@ -93,8 +91,7 @@
 			world << "<span class='notice'><b>Alert: The shuttle autopilot has been overridden. Launch sequence aborted!</b></span>"
 
 	if(usr)
-		log_admin("[key_name(usr)] has overridden the shuttle autopilot and cancelled launch sequence")
-		message_admins("[key_name_admin(usr)] has overridden the shuttle autopilot and cancelled launch sequence")
+		log_game("[key_name(usr)] has overridden the shuttle autopilot and cancelled launch sequence", usr)
 
 	..(user)
 
@@ -150,8 +147,7 @@
 		world << "<span class='notice'><b>Alert: [req_authorizations - authorized.len] authorization\s needed to override the shuttle autopilot.</b></span>"
 
 	if(usr)
-		log_admin("[key_name(usr)] has inserted [ID] into the shuttle control computer - [req_authorizations - authorized.len] authorisation\s needed")
-		message_admins("[key_name_admin(usr)] has inserted [ID] into the shuttle control computer - [req_authorizations - authorized.len] authorisation\s needed")
+		log_game("[key_name(usr)] has inserted [ID] into the shuttle control computer - [req_authorizations - authorized.len] authorisation\s needed", usr)
 
 	return 1
 

@@ -52,8 +52,7 @@
 			return
 		user << "<span class='notice'>You dissolve \the [src] in [target].</span>"
 
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Spiked \a [key_name(target)] with a pill. Reagents: [reagentlist()]</font>")
-		msg_admin_attack("[key_name(user)] spiked \a [target] with a pill. Reagents: [reagentlist()] (INTENT: [uppertext(user.a_intent)])", user)
+		self_attack_log(user, "Spiked \a [key_name(target)] with a pill. Reagents: [reagentlist()]", 1)
 
 		reagents.trans_to(target, reagents.total_volume)
 		for(var/mob/O in viewers(2, user))

@@ -191,8 +191,7 @@
 	//admin logs
 	if(!no_attack_log)
 		if(!firer)
-			target_mob.attack_log += "\[[time_stamp()]] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[key_name(target_mob)]</b> with <b>\a [src]</b>"
-			msg_admin_attack("UNKNOWN shot [key_name(target_mob)] with \a [src]", target_mob)
+			self_attack_log(target_mob, "UNKNOWN SUBJECT (No longer exists) shot [key_name(target_mob)] with \a [src]", 1)
 
 		if(istype(firer, /mob))
 			var/attacker_message = "shot with \a [src.type]"
@@ -202,8 +201,7 @@
 			admin_attack_log(firer, target_mob, attacker_message, victim_message, admin_message)
 
 		else
-			target_mob.attack_log += "\[[time_stamp()]\] <b>[firer]</b> shot <b>[key_name(target_mob)]</b> with <b>\a [src]</b>"
-			msg_admin_attack("[firer] shot [key_name(target_mob)] with \a [src]", target_mob)
+			self_attack_log(target_mob, "[firer] shot [key_name(target_mob)] with \a [src]", 1)
 
 	//sometimes bullet_act() will want the projectile to continue flying
 	if (result == PROJECTILE_CONTINUE)

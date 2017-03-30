@@ -5,11 +5,9 @@
 
 	if(Debug2)
 		Debug2 = 0
-		message_admins("[key_name(src)] toggled debugging off.")
 		log_admin("[key_name(src)] toggled debugging off.")
 	else
 		Debug2 = 1
-		message_admins("[key_name(src)] toggled debugging on.")
 		log_admin("[key_name(src)] toggled debugging on.")
 
 
@@ -174,7 +172,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
-		log_admin("[key_name(src)] has robotized [M.key].")
+		log_admin("[key_name(src)] has robotized [key_name(M)].", M, 0)
 		spawn(10)
 			M:Robotize()
 
@@ -197,7 +195,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		alert("The mob must not be a new_player.")
 		return
 
-	log_admin("[key_name(src)] has animalized [M.key].")
+	log_admin("[key_name(src)] has animalized [key_name(M)].", M, 0)
 	spawn(10)
 		M.Animalize()
 
@@ -236,11 +234,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
-		log_admin("[key_name(src)] has alienized [M.key].")
+		log_admin("[key_name(src)] has alienized [key_name(M)].", M, 0)
 		spawn(10)
 			M:Alienize()
-		log_admin("[key_name(usr)] made [key_name(M)] into an alien.")
-		message_admins("\blue [key_name_admin(usr)] made [key_name(M)] into an alien.", 1)
+		log_admin("[key_name(usr)] made [key_name(M)] into an alien.", M, 0)
 	else
 		alert("Invalid mob")
 
@@ -252,105 +249,15 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
-		log_admin("[key_name(src)] has slimeized [M.key].")
+		log_admin("[key_name(src)] has slimeized [M.key].", M, 0)
 		spawn(10)
 			M:slimeize()
-		log_admin("[key_name(usr)] made [key_name(M)] into a slime.")
+		log_admin("[key_name(usr)] made [key_name(M)] into a slime.", M, 0)
 		message_admins("\blue [key_name_admin(usr)] made [key_name(M)] into a slime.", 1)
 	else
 		alert("Invalid mob")
 
-/*
-/client/proc/cmd_admin_monkeyize(var/mob/living/carbon/human/H in world)
-	set category = "Fun"
-	set name = "Make Monkey"
 
-	if(!ticker)
-		alert("Wait until the game starts")
-		return
-	if(istype(H))
-		alert("Invalid mob")
-		return
-
-	log_admin("[key_name(src)] is attempting to monkeyize [H.key].")
-	spawn(10)
-		H.monkeyize()
-
-/client/proc/cmd_admin_changelinginize(var/mob/living/carbon/human/H in world)
-	set category = "Fun"
-	set name = "Make Changeling"
-
-	if(!ticker)
-		alert("Wait until the game starts")
-		return
-	if(istype(H))
-		alert("Invalid mob")
-		return
-
-	log_admin("[key_name(src)] has made [H.key] a changeling.")
-	spawn(10)
-		H.absorbed_dna[H.real_name] = H.dna.Clone()
-		H.make_changeling()
-		if(H.mind)
-			H.mind.special_role = "Changeling"
-*/
-/*
-/client/proc/cmd_admin_abominize(var/mob/living/carbon/human/H in world)
-	set category = null
-	set name = "Make Abomination"
-
-	usr << "Ruby Mode disabled. Command aborted."
-	return
-	if(!ticker)
-		alert("Wait until the game starts.")
-		return
-	if(istype(H))
-		log_admin("[key_name(src)] has made [H.key] an abomination.")
-
-	//	spawn(10)
-	//		H.make_abomination()
-
-*/
-/*
-/client/proc/make_cultist(var/mob/living/carbon/human/H in world) // -- TLE, modified by Urist
-	set category = "Fun"
-	set name = "Make Cultist"
-	set desc = "Makes target a cultist"
-	if(!cultwords["travel"])
-		runerandom()
-	if(H)
-		if(H.mind in ticker.mode.cult)
-			return
-		else
-			if(alert("Spawn that person a tome?",,"Yes","No")=="Yes")
-				H << "\red You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie. A tome, a message from your new master, appears on the ground."
-				new /obj/item/weapon/book/tome(M.loc)
-			else
-				M << "\red You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie."
-			var/glimpse=pick("1","2","3","4","5","6","7","8")
-			switch(glimpse)
-				if("1")
-					H << "\red You remembered one thing from the glimpse... [cultwords["travel"]] is travel..."
-				if("2")
-					H << "\red You remembered one thing from the glimpse... [cultwords["blood"]] is blood..."
-				if("3")
-					H << "\red You remembered one thing from the glimpse... [cultwords["join"]] is join..."
-				if("4")
-					H << "\red You remembered one thing from the glimpse... [cultwords["hell"]] is Hell..."
-				if("5")
-					H << "\red You remembered one thing from the glimpse... [cultwords["destroy"]] is destroy..."
-				if("6")
-					H << "\red You remembered one thing from the glimpse... [cultwords["technology"]] is technology..."
-				if("7")
-					H << "\red You remembered one thing from the glimpse... [cultwords["self"]] is self..."
-				if("8")
-					H << "\red You remembered one thing from the glimpse... [cultwords["see"]] is see..."
-
-			if(H.mind)
-				H.mind.special_role = "Cultist"
-				ticker.mode.cult += M.mind
-			src << "Made [H] a cultist."
-*/
 
 //TODO: merge the vievars version into this or something maybe mayhaps
 /client/proc/cmd_debug_del_all()
@@ -365,22 +272,19 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			if(istype(O, hsbitem))
 				qdel(O)
 		log_admin("[key_name(src)] has deleted all instances of [hsbitem].")
-		message_admins("[key_name_admin(src)] has deleted all instances of [hsbitem].", 0)
 
 /client/proc/cmd_debug_make_powernets()
 	set category = "Debug"
 	set name = "Make Powernets"
 	makepowernets()
 	log_admin("[key_name(src)] has remade the powernet. makepowernets() called.")
-	message_admins("[key_name_admin(src)] has remade the powernets. makepowernets() called.", 0)
 
 /client/proc/cmd_debug_tog_aliens()
 	set category = "Server"
 	set name = "Toggle Aliens"
 
 	config.aliens_allowed = !config.aliens_allowed
-	log_admin("[key_name(src)] has turned aliens [config.aliens_allowed ? "on" : "off"].")
-	message_admins("[key_name_admin(src)] has turned aliens [config.aliens_allowed ? "on" : "off"].", 0)
+	log_admin("[key_name(src)] has turned aliens [config.aliens_allowed ? "ON" : "OFF"].")
 
 /client/proc/cmd_admin_grantfullaccess(var/mob/living/carbon/human/H in mob_list)
 	set category = "Admin"
@@ -410,8 +314,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		H.equip_to_slot_or_del(id, slot_wear_id)
 		H.update_inv_wear_id()
 
-	log_admin("[key_name(src)] has granted [H.key] full access.")
-	message_admins("\blue [key_name_admin(usr)] has granted [H.key] full access.", 1)
+	src << SPAN_NOTE("You grant full access to [key_name(H)].")
+	log_admin("[key_name(src)] has granted [key_name(H)] full access.", H, 0)
 
 /client/proc/cmd_assume_direct_control(var/mob/M in mob_list)
 	set category = "Admin"
@@ -425,14 +329,11 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		else
 			var/mob/observer/dead/ghost = new (M,1)
 			ghost.ckey = M.ckey
-	message_admins("\blue [key_name_admin(usr)] assumed direct control of [M].", 1)
-	log_admin("[key_name(usr)] assumed direct control of [M].")
+	log_admin("[key_name(usr)] assumed direct control of [M].", M, 0)
 	var/mob/adminmob = src.mob
 	M.ckey = src.ckey
 	if( isobserver(adminmob) )
 		qdel(adminmob)
-
-
 
 
 
@@ -532,7 +433,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/mob/living/carbon/human/M = input("Select mob.", "Select equipment.") as null|anything in human_mob_list
 	if(!M) return
 
-	//log_admin("[key_name(src)] has alienized [M.key].")
 	var/list/dresspacks = list(
 		"strip",
 		"job",
@@ -1018,8 +918,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(P) P.toff = 1
 	M.regenerate_icons()
 
-	log_admin("[key_name(usr)] changed the equipment of [key_name(M)] to [dresscode].")
-	message_admins("\blue [key_name_admin(usr)] changed the equipment of [key_name_admin(M)] to [dresscode]..", 1)
+	log_admin("[key_name(usr)] changed the equipment of [key_name(M)] to [dresscode].", M, 0)
 	return
 
 /client/proc/startSinglo()
@@ -1150,8 +1049,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		T.zone.air.update_values()
 
 
-	log_admin("[key_name(usr)] setup the supermatter engine [response == "Setup except coolant" ? "without coolant" : ""]")
-	message_admins("\blue [key_name_admin(usr)] setup the supermatter engine  [response == "Setup except coolant" ? "without coolant": ""]", 1)
+	log_admin("[key_name(usr)] setup the supermatter engine [response == "Setup except coolant" ? "without coolant" : ""]", SM)
 	return
 
 
@@ -1186,7 +1084,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		M.update_mutations()
 		var/state="[M.dna.GetSEState(block)?"on":"off"]"
 		var/blockname=assigned_blocks[block]
-		message_admins("[key_name_admin(src)] has toggled [M.key]'s [blockname] block [state]!")
-		log_admin("[key_name(src)] has toggled [M.key]'s [blockname] block [state]!")
+		log_admin("[key_name(src)] has toggled [key_name(M)]'s [blockname] block [state]!", M)
 	else
 		alert("Invalid mob")

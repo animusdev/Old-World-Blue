@@ -257,7 +257,6 @@ proc/n_inrange(var/num, var/min=-1, var/max=1)
 		var/list/dat = list()
 		while (i < lenh)
 			var/found = findtext(haystack, a, i, 0)
-			//log_misc("findtext([haystack], [a], [i], 0)=[found]")
 			if (found == 0) // Not found
 				break
 			else
@@ -265,9 +264,7 @@ proc/n_inrange(var/num, var/min=-1, var/max=1)
 					dat+=found
 					count+=1
 				else
-					//log_misc("Script found [a] [count] times, aborted")
 					break
-			//log_misc("Found [a] at [found]! Moving up...")
 			i = found + lena
 		if (count == 0)
 			return haystack

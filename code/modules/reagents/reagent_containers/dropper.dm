@@ -62,9 +62,11 @@
 
 			var/mob/living/M = target
 			var/contained = reagentlist()
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been squirted with [name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [name] to squirt [M.name] ([M.key]). Reagents: [contained]</font>")
-			msg_admin_attack("[key_name(user)] squirted [key_name(M)] with [name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)])", user)
+			admin_attack_log(user, M,
+				"Used the [name] to squirt [M.name] ([M.key]). Reagents: [contained]",
+				"Has been squirted with [name] by [user.name] ([user.ckey]). Reagents: [contained]",
+				"used [name] (reagents: [contained]) for  squirted"
+			)
 			trans = reagents.trans_to_mob(target, reagents.total_volume, CHEM_INGEST)
 			user.visible_message("<span class='warning'>[user] squirts something into [target]'s eyes!</span>", "<span class='notice'>You transfer [trans] units of the solution.</span>")
 			return

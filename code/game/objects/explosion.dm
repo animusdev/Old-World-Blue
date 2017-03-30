@@ -74,8 +74,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 				M << 'sound/effects/explosionfar.ogg'
 		explosions_log += new/datum/log/explosion(epicenter.loc.type, devastation_range, heavy_impact_range, light_impact_range)
 		if(adminlog)
-			message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ([epicenter.x],[epicenter.y],[epicenter.z]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>JMP</a>)")
-			log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ")
+			log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name].", epicenter)
 
 //		var/lighting_controller_was_processing = lighting_controller.processing	//Pause the lighting updates for a bit
 //		lighting_controller.processing = 0

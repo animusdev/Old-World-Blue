@@ -64,9 +64,11 @@
 		return 1
 
 	var/contained = reagentlist()
-	target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been splashed with [name] by [key_name(user)]. Reagents: [contained]</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [name] to splash [key_name(target)]. Reagents: [contained]</font>")
-	msg_admin_attack("[key_name(user)] splashed [key_name(target)] with [name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)])", user)
+	admin_attack_log(user, target,
+		"Used the [name] to splash [key_name(target)]. Reagents: [contained]",
+		"Has been splashed with [name] by [key_name(user)]. Reagents: [contained]",
+		"used [name] (reagents: [contained]) for splash"
+	)
 
 	user.visible_message("<span class='danger'>[target] has been splashed with something by [user]!</span>", "<span class = 'notice'>You splash the solution onto [target].</span>")
 	reagents.splash(target, reagents.total_volume*0.5)
@@ -128,9 +130,11 @@
 		other_feed_message_finish(user, target)
 
 		var/contained = reagentlist()
-		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [name] by [key_name(user)]. Reagents: [contained]</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [name] by [key_name(target)]. Reagents: [contained]</font>")
-		msg_admin_attack("[key_name(user)] fed [key_name(target)] with [name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)])", user)
+		admin_attack_log(user, target,
+			"Fed [name] by [key_name(target)]. Reagents: [contained]",
+			"Has been fed [name] by [key_name(user)]. Reagents: [contained]",
+			"used [name] (reagents: [contained]) to fed"
+		)
 
 		reagents.trans_to_mob(target, amount_per_transfer_from_this, CHEM_INGEST)
 		feed_sound(user)

@@ -39,7 +39,6 @@
 		if(findtext(msg, "byond://"))
 			src << "<B>Advertising other servers is not allowed.</B>"
 			log_admin("[key_name(src)] has attempted to advertise in OOC: [msg]")
-			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
 
 	log_ooc("[key]/[mob.name] : [msg]")
@@ -124,7 +123,6 @@
 		if(findtext(msg, "byond://"))
 			src << "<B>Advertising other servers is not allowed.</B>"
 			log_admin("[key_name(src)] has attempted to advertise in OOC: [msg]")
-			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
 
 	log_ooc("(LOCAL) [mob.name]/[key] : [msg]")

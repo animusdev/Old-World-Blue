@@ -55,7 +55,7 @@
 
 	new_character.key = user.key
 
-	log_admin("[key_name(new_character)] have been spawned with [name] at ([x], [y], [z])")
+	log_game("[key_name(new_character)] have been spawned with [name]", src, 0)
 	equip_character(new_character, is_admin)
 
 

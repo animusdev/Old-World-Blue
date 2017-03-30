@@ -22,6 +22,5 @@
 			ticker.station_explosion_cinematic(parameter,override)
 
 	log_admin("[key_name(src)] launched cinematic \"[cinematic]\"")
-	message_admins("[key_name_admin(src)] launched cinematic \"[cinematic]\"", 1)
 
 	return

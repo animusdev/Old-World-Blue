@@ -251,8 +251,7 @@
 
 	// Don't send messages unless we *need* the computer, and less than five minutes have passed since last time we messaged
 	if(!control_computer && urgent && last_no_computer_message + 5*60*10 < world.time)
-		log_admin("Cryopod in [src.loc.loc] could not find control computer!")
-		message_admins("Cryopod in [src.loc.loc] could not find control computer!")
+		warning("Cryopod ([src]) could not find control computer!", src)
 		last_no_computer_message = world.time
 
 	return control_computer != null
@@ -424,17 +423,15 @@
 			visible_message("[user] starts putting [G:affecting:name] into \the [src].", 3)
 
 			if(do_after(user, 20))
-				if(!M || !G || !G.affecting) return
-				if( !Adjacent(M) ) return
+				if(!M || !Adjacent(M)) return
+				if(!G || !G.affecting || !Adjacent(G.affecting)) return
 
 			set_occupant(M)
 			M << "<span class='notice'>[on_enter_occupant_message]</span>"
 			M << "<span class='notice'><b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b></span>"
 
 			// Book keeping!
-			var/turf/location = get_turf(src)
-			log_admin("[key_name_admin(user)] put [key_name_admin(M)] in stasis pod. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[location.x];Y=[location.y];Z=[location.z]'>JMP</a>)")
-			message_admins("<span class='notice'>[key_name_admin(user)] put [key_name_admin(M)] in stasis pod.</span>")
+			log_game("[key_name_admin(user)] put [key_name_admin(M)] in stasis pod.", src)
 
 			//Despawning occurs when process() is called with an occupant without a client.
 			src.add_fingerprint(M)

@@ -13,8 +13,7 @@ var/list/sounds_cache = list()
 	if(alert("Do you ready?\nSong: [S]\nNow you can also play this sound using \"Play Server Sound\".", "Confirmation request" ,"Play", "Cancel") == "Cancel")
 		return
 
-	log_admin("[key_name(src)] played sound [S]")
-	message_admins("[key_name_admin(src)] played sound [S]", 1)
+	log_admin("[key_name(src)] played sound [S] (GLOBAL)")
 	for(var/mob/M in player_list)
 		if(M.client.prefs.toggles & SOUND_MIDI)
 			M << uploaded_sound
@@ -25,7 +24,7 @@ var/list/sounds_cache = list()
 	set name = "Play Local Sound"
 	if(!check_rights(R_SOUNDS))	return
 
-	log_admin("[key_name(src)] played a local sound [S]")
+	log_admin("[key_name(src)] played a local sound [S]", src)
 	message_admins("[key_name_admin(src)] played a local sound [S]", 1)
 	playsound(get_turf(src.mob), S, 50, 0, 0)
 
@@ -52,7 +51,6 @@ var/list/sounds_cache = list()
 		return
 
 	log_admin("[key_name(src)] stopped all currently playing sounds.")
-	message_admins("[key_name_admin(src)] stopped all currently playing sounds.")
 	for(var/mob/M in player_list)
 		if(M.client)
 			M << sound(null)

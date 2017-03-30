@@ -58,12 +58,12 @@ DEBUG
 	if(config.ban_legacy_system)
 		var/savefile/S=new("data/job_full.ban")
 		S["keys[0]"] >> jobban_keylist
-		log_admin("Loading jobban_rank")
+		log_game("Loading jobban_rank")
 		S["runonce"] >> jobban_runonce
 
 		if (!length(jobban_keylist))
 			jobban_keylist=list()
-			log_admin("jobban_keylist was empty")
+			log_game("jobban_keylist was empty")
 	else
 		if(!establish_db_connection())
 			error("Database connection failed. Reverting to the legacy ban system.")

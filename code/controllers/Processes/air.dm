@@ -12,11 +12,10 @@
 			air_master.failed_ticks++
 
 			if(air_master.failed_ticks > 5)
-				world << "<SPAN CLASS='danger'>RUNTIMES IN ATMOS TICKER.  Killing air simulation!</SPAN>"
+//				world << "<SPAN CLASS='danger'>RUNTIMES IN ATMOS TICKER.  Killing air simulation!</SPAN>"
 				world.log << "### ZAS SHUTDOWN"
 
-				message_admins("ZASALERT: Shutting down! status: [air_master.tick_progress]")
-				log_admin("ZASALERT: Shutting down! status: [air_master.tick_progress]")
+				log_game("ZASALERT: Shutting down! status: [air_master.tick_progress]")
 
 				air_processing_killed = TRUE
 				air_master.failed_ticks = 0
