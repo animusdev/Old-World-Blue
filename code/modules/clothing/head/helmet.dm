@@ -99,7 +99,11 @@
 	icon_state = "dermal"
 	item_state = "dermal"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
-	siemens_coefficient = 0.6
+	siemens_coefficient = 0.6 
+	 
+/obj/item/clothing/head/helmet/dermal/New()
+	flags_inv -=BLOCKHEADHAIR 
+	..()
 
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
