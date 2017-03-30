@@ -1683,7 +1683,7 @@
 									var/mob/M = O
 									M.real_name = obj_name
 
-		log_and_message_admins("created [number] [english_list(paths)]")
+		log_admin("[key_name(usr)] created [number] [english_list(paths)]", null, 0)
 		return
 
 
