@@ -164,7 +164,7 @@
 /*****************Deverezzer*****************/
 /***************************************/
 /obj/item/weapon/flame/lighter/zippo/black
-	name = "\improper The Last Flame"
+	name = "\improper View family's lighter"
 	desc = "A black zippo lighter, which holds some form of sentimental value."
 	icon_state = "blackzippo"
 	item_state = "zippo"
