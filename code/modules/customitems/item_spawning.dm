@@ -330,7 +330,7 @@
 
 
 ///Nikiton///
-
+	L = list()
 	current_data = new()
 	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
 	current_data.character_name = "Leroy Woodward"
