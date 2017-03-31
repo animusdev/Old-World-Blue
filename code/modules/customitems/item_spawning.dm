@@ -99,7 +99,7 @@
 	current_data.item_path = /obj/item/device/radio/headset/moonphones
 	L |= current_data
 
-	custom_items["PhoeniX Vito"] = L
+	custom_items["phoenixvito"] = L
 
 ///Fox231///
 
