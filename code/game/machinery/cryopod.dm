@@ -413,7 +413,7 @@
 
 		if(M.client)
 			if(alert(M,"Would you like to enter long-term storage?",,"Yes","No") == "Yes")
-				if(!M || !G || !G:affecting) return
+				if(!M || !G || !G.affecting) return
 				willing = 1
 		else
 			willing = 1
@@ -422,20 +422,20 @@
 
 			visible_message("[user] starts putting [G:affecting:name] into \the [src].", 3)
 
-			if(do_after(user, 20))
+			if(!do_after(user, 20, src))
 				if(!M || !Adjacent(M)) return
 				if(!G || !G.affecting || !Adjacent(G.affecting)) return
 
-			set_occupant(M)
-			M << "<span class='notice'>[on_enter_occupant_message]</span>"
-			M << "<span class='notice'><b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b></span>"
+				set_occupant(M)
+				M << "<span class='notice'>[on_enter_occupant_message]</span>"
+				M << "<span class='notice'><b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b></span>"
 
-			// Book keeping!
-			log_game("[key_name_admin(user)] put [key_name_admin(M)] in stasis pod.", src)
+				// Book keeping!
+				log_game("[key_name_admin(user)] put [key_name_admin(M)] in stasis pod.", src, 0)
 
-			//Despawning occurs when process() is called with an occupant without a client.
-			src.add_fingerprint(M)
-			src.add_fingerprint(user)
+				//Despawning occurs when process() is called with an occupant without a client.
+				src.add_fingerprint(M)
+				src.add_fingerprint(user)
 
 /obj/machinery/cryopod/verb/eject()
 	set name = "Eject Pod"
