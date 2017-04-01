@@ -60,8 +60,10 @@
 /obj/item/organ/external/robotic/proc/can_activate()
 	return 1
 
+/*
 /obj/item/organ/external/robotic/proc/activate()
 	return 1
+*/
 
 /obj/item/organ/external/robotic/proc/deactivate(var/emergency = 1)
 	return 1

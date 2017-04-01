@@ -584,6 +584,7 @@
 #include "code\game\objects\items\devices\megaphone.dm"
 #include "code\game\objects\items\devices\modkit.dm"
 #include "code\game\objects\items\devices\multitool.dm"
+#include "code\game\objects\items\devices\organ_module.dm"
 #include "code\game\objects\items\devices\paicard.dm"
 #include "code\game\objects\items\devices\pipe_painter.dm"
 #include "code\game\objects\items\devices\player.dm"
