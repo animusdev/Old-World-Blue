@@ -27,7 +27,7 @@
 		if(standard_dispenser_refill(user, A))
 			return
 
-	if(!src in user)
+	if(loc != user)
 		return ..()
 
 	if(istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink))
