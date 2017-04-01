@@ -51,6 +51,8 @@
 	var/datum/unarmed_attack/attack = null
 	var/list/drop_on_remove = null
 
+	var/obj/item/organ_module/active/module = null
+
 	// Joint/state stuff.
 	var/can_grasp			// It would be more appropriate if these two were named "affects_grasp" and "affects_stand" at this point
 	var/can_stand			// Modifies stance tally/ability to stand.
@@ -184,6 +186,14 @@
 	..()
 
 	if(redraw_mob) victim.update_body()
+
+/obj/item/organ/external/proc/activate()
+	set name = "Activate module"
+	set category = "Organs"
+	set src in usr
+
+	if(module)
+		module.activate(owner, src)
 
 /obj/item/organ/external/attack_self(var/mob/user)
 	if(!contents.len)
