@@ -218,7 +218,7 @@ var/global/list/chameleons_categories = list(
 //******************
 
 /obj/item/chameleon/suit
-	default_type = /obj/item/clothing/suit/armor
+	default_type = /obj/item/clothing/suit/armor/vest
 	desc = "It appears to be a vest of standard armor, except this is embedded with a hidden holographic cloaker, \
 			allowing it to change it's appearance, but offering no protection.. It seems to have a small dial inside."
 	category = "suit"
