@@ -23,45 +23,6 @@
 	joint = "structural ligament"
 	dislocated = -1
 
-/obj/item/organ/external/diona/chest
-	name = "core trunk"
-	organ_tag = BP_CHEST
-	health = 200
-	min_broken_damage = 50
-	body_part = UPPER_TORSO
-	vital = 1
-	cannot_amputate = 1
-	parent_organ = null
-	gendered = 1
-
-/obj/item/organ/external/diona/head
-	organ_tag = BP_HEAD
-	name = "head"
-	health = 50
-	min_broken_damage = 25
-	body_part = HEAD
-	parent_organ = BP_CHEST
-
-/obj/item/organ/external/diona/groin
-	name = "fork"
-	organ_tag = BP_GROIN
-	health = 100
-	min_broken_damage = 50
-	w_class = 4
-	body_part = LOWER_TORSO
-	parent_organ = BP_CHEST
-	gendered = 1
-
-/obj/item/organ/external/diona/limb
-	health = 35
-	min_broken_damage = 20
-	w_class = 3
-
-/obj/item/organ/external/diona/tiny
-	max_damage = 20
-	min_broken_damage = 10
-	w_class = 2
-
 //DIONA ORGANS.
 /obj/item/organ/external/diona/removed()
 	if(robotic >= ORGAN_ROBOT)
@@ -72,6 +33,69 @@
 		H.death()
 	if(prob(50) && spawn_diona_nymph(get_turf(src)))
 		qdel(src)
+
+
+////DIONA////
+/datum/organ_description/chest/diona
+	name = "core trunk"
+	amputation_point = "branch"
+	joint = "structural ligament"
+	min_broken_damage = 50
+	default_type = /obj/item/organ/external/diona
+
+/datum/organ_description/groin/diona
+	vital = 0
+	name = "fork"
+	min_broken_damage = 50
+	default_type = /obj/item/organ/external/diona
+
+/datum/organ_description/head/diona
+	vital = 0
+	default_type = /obj/item/organ/external/diona
+	min_broken_damage = 25
+
+/datum/organ_description/arm/left/diona
+	name = "left upper tendril"
+	min_broken_damage = 20
+	default_type = /obj/item/organ/external/diona
+
+/datum/organ_description/arm/right/diona
+	name = "right upper tendril"
+	min_broken_damage = 20
+	default_type = /obj/item/organ/external/diona
+
+/datum/organ_description/leg/left/diona
+	name = "left lower tendril"
+	min_broken_damage = 20
+	default_type = /obj/item/organ/external/diona
+
+/datum/organ_description/leg/right/diona
+	name = "right lower tendril"
+	min_broken_damage = 20
+	default_type = /obj/item/organ/external/diona
+
+/datum/organ_description/hand/left/diona
+	name = "left grasper"
+	min_broken_damage = 10
+	w_class = 2
+	default_type = /obj/item/organ/external/diona
+
+/datum/organ_description/hand/right/diona
+	name = "right grasper"
+	min_broken_damage = 10
+	w_class = 2
+	default_type = /obj/item/organ/external/diona
+
+/datum/organ_description/foot/left/diona
+	min_broken_damage = 10
+	w_class = 2
+	default_type = /obj/item/organ/external/diona
+
+/datum/organ_description/foot/right/diona
+	min_broken_damage = 10
+	w_class = 2
+	default_type = /obj/item/organ/external/diona
+
 
 /obj/item/organ/internal/diona
 	name = "diona nymph"

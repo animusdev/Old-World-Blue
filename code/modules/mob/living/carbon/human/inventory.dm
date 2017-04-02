@@ -13,13 +13,13 @@ This saves us from having to call add_fingerprint() any time something is put in
 
 
 /mob/living/carbon/human/proc/put_in_l_hand(var/obj/item/W)
-	var/obj/item/organ/external/tiny/hand = organs_by_name[BP_L_HAND]
+	var/obj/item/organ/external/hand = organs_by_name[BP_L_HAND]
 	if(!hand || !hand.is_usable()) return 0
 	. = equip_to_slot_if_possible(W, slot_l_hand, 0, 1)
 	if(.) W.add_fingerprint(src)
 
 /mob/living/carbon/human/proc/put_in_r_hand(var/obj/item/W)
-	var/obj/item/organ/external/tiny/hand = organs_by_name[BP_R_HAND]
+	var/obj/item/organ/external/hand = organs_by_name[BP_R_HAND]
 	if(!hand || !hand.is_usable()) return 0
 	. = equip_to_slot_if_possible(W, slot_r_hand, 0, 1)
 	if(.) W.add_fingerprint(src)

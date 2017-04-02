@@ -2,17 +2,22 @@
 			   ORGAN DEFINES
 ****************************************************/
 
-/obj/item/organ/external/chest
-	vital = 1
-	gendered = 1
-	dislocated = -1
-	cannot_amputate = 1
-	encased = "ribcage"
+/obj/item/organ/external/organic
 
-/obj/item/organ/external/groin
-	vital = 1
-	gendered = 1
-	dislocated = -1
+/obj/item/organ/external/organic/set_description(var/datum/organ_description/desc)
+	..()
+	switch(organ_tag)
+		if(BP_CHEST)
+			encased = "ribcage"
+			dislocated = -1
+			gendered = 1
+		if(BP_HEAD)
+			encased = "skull"
+			dislocated = -1
+			gendered = 1
+		if(BP_GROIN)
+			dislocated = -1
+			gendered = 1
 
 /obj/item/organ/external/head
 	vital = 1
@@ -41,12 +46,3 @@
 	if(real_name)
 		owner.real_name = real_name
 	owner.update_body()
-
-/obj/item/organ/external/head/take_damage(brute, burn, sharp, edge, used_weapon = null, list/forbidden_limbs = list())
-	..(brute, burn, sharp, edge, used_weapon, forbidden_limbs)
-	if (!disfigured)
-		if (brute_dam > 40)
-			if (prob(50))
-				disfigure("brute")
-		if (burn_dam > 40)
-			disfigure("burn")

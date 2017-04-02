@@ -74,12 +74,13 @@
 		// Mandatory part
 		src.organ_tag = desc.organ_tag
 		src.body_part = desc.body_part
+		src.vital = desc.vital
+		src.cannot_amputate = desc.cannot_amputate
 		src.parent_organ = desc.parent_organ
 		src.icon_position = desc.icon_position
 		src.can_grasp = desc.can_grasp
 		src.can_stand = desc.can_stand
 		src.drop_on_remove = desc.drop_on_remove
-
 		// Decorative part (depend on organ type)
 		set_description(desc)
 

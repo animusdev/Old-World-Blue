@@ -58,14 +58,14 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/obj/item/organ/external/chest/affected = target.get_organ(target_zone)
+		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
 			SPAN_NOTE("[user] makes some space inside [target]'s [get_cavity(affected)] cavity with \the [tool]."),
 			SPAN_NOTE("You make some space inside [target]'s [get_cavity(affected)] cavity with \the [tool].")
 		)
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/obj/item/organ/external/chest/affected = target.get_organ(target_zone)
+		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
 			SPAN_WARN("[user]'s hand slips, scraping tissue inside [target]'s [affected.name] with \the [tool]!"),
 			SPAN_WARN("Your hand slips, scraping tissue inside [target]'s [affected.name] with \the [tool]!")
@@ -100,14 +100,14 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/obj/item/organ/external/chest/affected = target.get_organ(target_zone)
+		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
 			SPAN_NOTE("[user] mends [target]'s [get_cavity(affected)] cavity walls with \the [tool]."),
 			SPAN_NOTE("You mend [target]'s [get_cavity(affected)] cavity walls with \the [tool].")
 		)
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/obj/item/organ/external/chest/affected = target.get_organ(target_zone)
+		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
 			SPAN_WARN("[user]'s hand slips, scraping tissue inside [target]'s [affected.name] with \the [tool]!"),
 			SPAN_WARN("Your hand slips, scraping tissue inside [target]'s [affected.name] with \the [tool]!")
@@ -145,7 +145,7 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/obj/item/organ/external/chest/affected = target.get_organ(target_zone)
+		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 
 		if(user.unEquip(tool, affected))
 			user.visible_message(
@@ -161,7 +161,7 @@
 		affected.cavity = 0
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/obj/item/organ/external/chest/affected = target.get_organ(target_zone)
+		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
 			SPAN_WARN("[user]'s hand slips, scraping tissue inside [target]'s [affected.name] with \the [tool]!"),
 			SPAN_WARN("Your hand slips, scraping tissue inside [target]'s [affected.name] with \the [tool]!")
@@ -196,7 +196,7 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/obj/item/organ/external/chest/affected = target.get_organ(target_zone)
+		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 
 		var/find_prob = 0
 
@@ -250,7 +250,7 @@
 			)
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		var/obj/item/organ/external/chest/affected = target.get_organ(target_zone)
+		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message(
 			SPAN_WARN("[user]'s hand slips, scraping tissue inside [target]'s [affected.name] with \the [tool]!"),
 			SPAN_WARN("Your hand slips, scraping tissue inside [target]'s [affected.name] with \the [tool]!")

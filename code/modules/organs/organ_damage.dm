@@ -11,7 +11,6 @@
 	if((brute <= 0) && (burn <= 0))
 		return 0
 
-
 	// High brute damage or sharp objects may damage internal organs
 	if(internal_organs && (brute_dam >= max_damage || (((sharp && brute >= 5) || brute >= 10) && prob(15))))
 		// Damage an internal organ
@@ -79,6 +78,13 @@
 	// sync the organ's damage with its wounds
 	src.update_damages()
 	owner.updatehealth() //droplimb will call updatehealth() again if it does end up being called
+
+	if (organ_tag == BP_HEAD && !disfigured)
+		if (brute_dam > 40)
+			if (prob(50))
+				disfigure("brute")
+		if (burn_dam > 40)
+			disfigure("burn")
 
 	//If limb took enough damage, try to cut or tear it off
 	if(owner && loc == owner && !is_stump())
