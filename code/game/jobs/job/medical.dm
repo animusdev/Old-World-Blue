@@ -138,8 +138,8 @@
 /datum/job/medical/geneticist
 	title = "Geneticist"
 	flag = GENETICIST
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the chief medical officer and research director"
 	economic_modifier = 7
 	addcional_access = list(access_surgery, access_chemistry, access_virology)
