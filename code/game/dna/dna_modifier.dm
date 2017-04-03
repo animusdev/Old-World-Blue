@@ -410,8 +410,6 @@
 		occupantData["uniqueIdentity"] = connected.occupant.dna.uni_identity
 		occupantData["radiationLevel"] = connected.occupant.radiation
 
-	world << "isViableSubject [occupantData["isViableSubject"]]"
-	world << "uniqueIdentity [occupantData["uniqueIdentity"]]"
 	data["occupant"] = occupantData;
 
 	data["isBeakerLoaded"] = connected.beaker ? 1 : 0
