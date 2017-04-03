@@ -96,11 +96,17 @@
 	if(!user.IsAdvancedToolUser())
 		return 0
 
+
+	//TODO: DNA3 hulk
+	/*
 	var/mob/living/M = user
 
 	if(HULK in M.mutations)
 		M << "<span class='danger'>Your fingers are much too large for the trigger guard!</span>"
 		return 0
+	*/
+	//TODO: DNA3 clown_block
+	/*
 	if((CLUMSY in M.mutations) && prob(40)) //Clumsy handling
 		var/obj/P = consume_next_projectile()
 		if(P)
@@ -114,6 +120,7 @@
 		else
 			handle_click_empty(user)
 		return 0
+	*/
 	return 1
 
 /obj/item/weapon/gun/emp_act(severity)

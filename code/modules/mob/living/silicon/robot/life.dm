@@ -145,7 +145,8 @@
 
 /mob/living/silicon/robot/handle_regular_hud_updates()
 
-	if (src.stat == DEAD || XRAY in mutations || src.sight_mode & BORGXRAY)
+	//TODO: DNA3 XRAY
+	if (src.stat == DEAD || src.sight_mode & BORGXRAY)
 		src.sight |= SEE_TURFS
 		src.sight |= SEE_MOBS
 		src.sight |= SEE_OBJS

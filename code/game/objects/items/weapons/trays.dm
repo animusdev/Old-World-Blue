@@ -29,6 +29,8 @@
 						sleep(rand(2,4))
 
 
+	//TODO: DNA3 clown_block
+	/*
 	if((CLUMSY in user.mutations) && prob(50))              //What if he's a clown?
 		M << "<span class='warning'>You accidentally slam yourself with the [src]!</span>"
 		M.Weaken(1)
@@ -39,6 +41,7 @@
 		else
 			playsound(M, 'sound/items/trayhit2.ogg', 50, 1) //sound playin'
 			return //it always returns, but I feel like adding an extra return just for safety's sakes. EDIT; Oh well I won't :3
+	*/
 
 	if(!(user.zone_sel.selecting in list(O_EYES, BP_HEAD))) //hitting anything else other than the eyes
 		if(prob(33))

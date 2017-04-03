@@ -25,6 +25,8 @@
 	force = 10
 
 /obj/item/weapon/melee/classic_baton/attack(mob/M as mob, mob/living/user as mob)
+	//TODO: DNA3 clown_block
+/*
 	if ((CLUMSY in user.mutations) && prob(50))
 		user << "\red You club yourself over the head."
 		user.Weaken(3 * force)
@@ -34,11 +36,12 @@
 		else
 			user.take_organ_damage(2*force)
 		return
-
+*/
 	if (user.a_intent == I_HURT)
 		if(!..()) return
 		//playsound(src.loc, "swing_hit", 50, 1, -1)
-		if (M.stuttering < 8 && (!(HULK in M.mutations))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+
+		if (M.stuttering < 8)
 			M.stuttering = 8
 		M.Stun(8)
 		M.Weaken(8)
@@ -114,6 +117,8 @@
 
 /obj/item/weapon/melee/telebaton/attack(mob/target as mob, mob/living/user as mob)
 	if(on)
+		//TODO: DNA3 clown_block
+/*
 		if ((CLUMSY in user.mutations) && prob(50))
 			user << "\red You club yourself over the head."
 			user.Weaken(3 * force)
@@ -123,6 +128,7 @@
 			else
 				user.take_organ_damage(2*force)
 			return
+*/
 		if(..())
 			//playsound(src.loc, "swing_hit", 50, 1, -1)
 			return

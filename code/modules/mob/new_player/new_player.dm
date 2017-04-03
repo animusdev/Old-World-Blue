@@ -380,7 +380,7 @@
 
 		if(client.prefs.disabilities)
 			// Set defer to 1 if you add more crap here so it only recalculates struc_enzymes once. - N3X
-			new_character.dna.SetSEState(GLASSESBLOCK,1,0)
+			//TODO: DNA3 glasses_block
 			new_character.disabilities |= NEARSIGHTED
 
 		// And uncomment this, too.

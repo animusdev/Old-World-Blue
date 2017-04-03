@@ -196,12 +196,15 @@
 	new /obj/item/stack/material/steel(get_turf(src))
 	qdel(src)
 
+//TODO: DNA3 hulk
+/*
 /obj/structure/girder/attack_hand(mob/user as mob)
 	if (HULK in user.mutations)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		dismantle()
 		return
 	return ..()
+*/
 
 /obj/structure/girder/blob_act()
 	if(prob(40))

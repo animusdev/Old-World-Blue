@@ -19,7 +19,7 @@ Used In File(s): D:\Development\SS13-BS12\code\game\dna\dna_modifier.dm
 			{{/if}}
 		</div>
 		
-		{{if !data.occupant.isViableSubject || !data.occupant.uniqueIdentity || !data.occupant.structuralEnzymes}}
+		{{if !data.occupant.isViableSubject || !data.occupant.uniqueIdentity}}
 			<div class="notice">
 				The occupant's DNA structure is ruined beyond recognition, please insert a subject with an intact DNA structure.
 			</div>
@@ -62,7 +62,6 @@ Used In File(s): D:\Development\SS13-BS12\code\game\dna\dna_modifier.dm
 <h3>Operations</h3>
 <div class="item">
 	{{:helper.link('Modify U.I.', 'link', {'selectMenuKey' : 'ui'}, data.selectedMenuKey == 'ui' ? 'selected' : null)}}
-	{{:helper.link('Modify S.E.', 'link', {'selectMenuKey' : 'se'}, data.selectedMenuKey == 'se' ? 'selected' : null)}}
 	{{:helper.link('Transfer Buffers', 'disk', {'selectMenuKey' : 'buffer'}, data.selectedMenuKey == 'buffer' ? 'selected' : null)}}
 	{{:helper.link('Rejuvenators', 'plusthick', {'selectMenuKey' : 'rejuvenators'}, data.selectedMenuKey == 'rejuvenators' ? 'selected' : null)}}
 </div>
@@ -88,15 +87,6 @@ Used In File(s): D:\Development\SS13-BS12\code\game\dna\dna_modifier.dm
 			{{:helper.link('Irradiate Block', 'radiation', {'pulseUIRadiation' : 1}, !data.occupant.isViableSubject ? 'disabled' : null)}}
 		</div>
 	</div>    
-{{else data.selectedMenuKey == 'se'}}
-	<h3>Modify Structural Enzymes</h3>
-    {{:helper.displayDNABlocks(data.occupant.structuralEnzymes, data.selectedSEBlock, data.selectedSESubBlock, data.dnaBlockSize, 'SE')}}
-    <div class="clearBoth"></div>
-    <div class="item">
-		<div class="itemContentWide">
-			{{:helper.link('Irradiate Block', 'radiation', {'pulseSERadiation' : 1}, !data.occupant.isViableSubject ? 'disabled' : null)}}
-		</div>
-	</div> 
 {{else data.selectedMenuKey == 'buffer'}}
 	<h3>Transfer Buffers</h3>
 	{{for data.buffers}}
@@ -109,7 +99,6 @@ Used In File(s): D:\Development\SS13-BS12\code\game\dna\dna_modifier.dm
 				<div class="itemContentWide">
 					{{:helper.link('Subject U.I.', 'link', {'bufferOption' : 'saveUI', 'bufferId' : (index + 1)}, !data.hasOccupant ? 'disabled' : null)}}
 					{{:helper.link('Subject U.I. + U.E.', 'link', {'bufferOption' : 'saveUIAndUE', 'bufferId' : (index + 1)}, !data.hasOccupant ? 'disabled' : null)}}
-					{{:helper.link('Subject S.E.', 'link', {'bufferOption' : 'saveSE', 'bufferId' : (index + 1)}, !data.hasOccupant ? 'disabled' : null)}}
 					{{:helper.link('From Disk', 'disk', {'bufferOption' : 'loadDisk', 'bufferId' : (index + 1)}, (!data.hasDisk || !data.disk.data) ? 'disabled' : null)}}
 				</div>
 			</div>
@@ -253,7 +242,7 @@ Used In File(s): D:\Development\SS13-BS12\code\game\dna\dna_modifier.dm
 
 <div class="item">&nbsp;</div>
 
-{{if !data.selectedMenuKey || data.selectedMenuKey == 'ui' || data.selectedMenuKey == 'se'}}
+{{if !data.selectedMenuKey || data.selectedMenuKey == 'ui'}}
 	<h3>Radiation Emitter Settings</h3>
 	<div class="item">
 		<div class="itemLabelNarrow">

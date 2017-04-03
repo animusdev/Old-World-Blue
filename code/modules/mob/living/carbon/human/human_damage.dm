@@ -117,6 +117,8 @@
 
 	BITSET(hud_updateflag, HEALTH_HUD)
 
+//TODO: DNA3 hulk
+/*
 /mob/living/carbon/human/Stun(amount)
 	if(HULK in mutations)	return
 	..()
@@ -128,7 +130,7 @@
 /mob/living/carbon/human/Paralyse(amount)
 	if(HULK in mutations)	return
 	..()
-
+*/
 /mob/living/carbon/human/getCloneLoss()
 	if((species.flags & NO_SCAN) || isSynthetic())
 		cloneloss = 0

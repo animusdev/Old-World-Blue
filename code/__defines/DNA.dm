@@ -3,17 +3,15 @@
 #define   UNIDNASIZE 13
 
 // Generic mutations:
+/*
 #define TK              1
 #define COLD_RESISTANCE 2
 #define XRAY            3
 #define HULK            4
 #define CLUMSY          5
-#define HUSK            6
-#define NOCLONE         7
 #define LASER           8  // Harm intent - click anywhere to shoot lasers from eyes.
 #define HEAL            9  // Healing people with hands.
 
-#define SKELETON      29
 #define PLANT         30
 
 // Other Mutations:
@@ -28,7 +26,7 @@
 #define mFingerprints  108 // No fingerprints.
 #define mShock         109 // Insulated hands.
 #define mSmallsize     110 // Table climbing.
-
+*/
 // disabilities
 #define NEARSIGHTED 1
 #define EPILEPSY    2

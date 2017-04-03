@@ -11,8 +11,9 @@
 	slot_flags = SLOT_BELT
 	var/active = 0
 	var/det_time = 50
-
 /obj/item/weapon/grenade/proc/clown_check(var/mob/living/user)
+	//TODO: DNA3 clown_block
+/*
 	if((CLUMSY in user.mutations) && prob(50))
 		user << "<span class='warning'>Huh? How does this thing work?</span>"
 
@@ -22,7 +23,7 @@
 			prime()
 		return 0
 	return 1
-
+*/
 
 /*/obj/item/weapon/grenade/afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 	if (istype(target, /obj/item/weapon/storage)) return ..() // Trying to put it in a full container

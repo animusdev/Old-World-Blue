@@ -103,29 +103,31 @@
 	return
 
 /obj/effect/alien/resin/attack_hand()
-	if (HULK in usr.mutations)
+	//TODO: DNA3 hulk
+	/*
+	if(HULK in usr.mutations)
 		usr << "\blue You easily destroy the [name]."
 		for(var/mob/O in oviewers(src))
 			O.show_message("\red [usr] destroys the [name]!", 1)
 		health = 0
-	else
+		return
+	*/
 
-		// Aliens can get straight through these.
-		if(istype(usr,/mob/living/carbon))
-			var/mob/living/carbon/M = usr
-			if(locate(/obj/item/organ/internal/xenos/hivenode) in M.internal_organs)
-				for(var/mob/O in oviewers(src))
-					O.show_message("\red [usr] strokes the [name] and it melts away!", 1)
-				health = 0
-				healthcheck()
-				return
+	// Aliens can get straight through these.
+	if(istype(usr,/mob/living/carbon))
+		var/mob/living/carbon/M = usr
+		if(locate(/obj/item/organ/internal/xenos/hivenode) in M.internal_organs)
+			for(var/mob/O in oviewers(src))
+				O.show_message("\red [usr] strokes the [name] and it melts away!", 1)
+			health = 0
+			healthcheck()
+			return
 
-		usr << "\blue You claw at the [name]."
-		for(var/mob/O in oviewers(src))
-			O.show_message("\red [usr] claws at the [name]!", 1)
-		health -= rand(5,10)
+	usr << "\blue You claw at the [name]."
+	for(var/mob/O in oviewers(src))
+		O.show_message("\red [usr] claws at the [name]!", 1)
+	health -= rand(5,10)
 	healthcheck()
-	return
 
 /obj/effect/alien/resin/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
@@ -134,7 +136,6 @@
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 	healthcheck()
 	..()
-	return
 
 /obj/effect/alien/resin/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group) return 0

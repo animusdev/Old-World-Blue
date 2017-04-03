@@ -70,8 +70,11 @@
 		return
 
 	if(user.a_intent == I_HURT && ismob(target))
+		//TODO: DNA3 clown_block
+		/*
 		if((CLUMSY in user.mutations) && prob(50))
 			target = user
+		*/
 		syringestab(target, user)
 		return
 
@@ -96,7 +99,7 @@
 					if(!T.dna)
 						user << "<span class='warning'>You are unable to locate any blood. (To be specific, your target seems to be missing their DNA datum).</span>"
 						return
-					if(NOCLONE in T.mutations) //target done been et, no more blood in him
+					if(NOCLONE & T.status_flags) //target done been et, no more blood in him
 						user << "<span class='warning'>You are unable to locate any blood.</span>"
 						return
 

@@ -168,10 +168,6 @@ default behaviour is:
 	return 0
 
 /mob/living/carbon/human/burn_skin(burn_amount)
-	if(mShock in src.mutations) //shockproof
-		return 0
-	if (COLD_RESISTANCE in src.mutations) //fireproof
-		return 0
 	//make this damage method divide the damage to be done among all the body parts, then burn each body part for that much damage. will have better effect then just randomly picking a body part
 	var/mob/living/carbon/human/H = src
 	var/divided_damage = (burn_amount)/(H.organs.len)

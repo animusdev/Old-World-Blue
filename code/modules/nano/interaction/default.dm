@@ -100,5 +100,6 @@
 	. = shared_nano_interaction(src_object)
 	if(. != STATUS_CLOSE)
 		. = min(., shared_living_nano_distance(src_object))
-		if(. == STATUS_UPDATE && (TK in mutations))	// If we have telekinesis and remain close enough, allow interaction.
+		//TODO: DNA3 TK_mutation
+		if(. == STATUS_UPDATE)	// If we have telekinesis and remain close enough, allow interaction.
 			return STATUS_INTERACTIVE

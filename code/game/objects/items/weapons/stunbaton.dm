@@ -99,12 +99,14 @@
 
 
 /obj/item/weapon/melee/baton/attack(mob/M, mob/user)
+	//TODO: DNA3 clown_block
+/*
 	if(status && (CLUMSY in user.mutations) && prob(50))
 		user << "span class='danger'>You accidentally hit yourself with the [src]!</span>"
 		user.Weaken(30)
 		deductcharge(hitcost)
 		return
-
+*/
 	if(isrobot(M))
 		..()
 		return

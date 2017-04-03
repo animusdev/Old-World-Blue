@@ -307,7 +307,7 @@
 		occupant.client.perspective = MOB_PERSPECTIVE
 	occupant.loc = loc
 	eject_wait = 0 //If it's still set somehow.
-	domutcheck(occupant) //Waiting until they're out before possible transforming.
+	//TODO: DNA3 update_mutations
 	occupant = null
 
 	biomass -= CLONE_BIOMASS
@@ -416,6 +416,9 @@
 		//buf.dna.UI=list(0x0C8,0x0C8,0x0C8,0x0C8,0x0C8,0x0C8,0x000,0x000,0x000,0x000,0x161,0xFBD,0xDEF) // Farmer Jeff
 		buf.dna.UpdateUI()
 
+/*
+TODO: DNA3 monkey disk
+
 /obj/item/weapon/disk/data/monkey
 	name = "data disk - 'Mr. Muggles'"
 	read_only = 1
@@ -429,6 +432,7 @@
 			new_SE += rand(1,1024)
 		buf.dna.SE=new_SE
 		buf.dna.SetSEValueRange(MONKEYBLOCK,0xDAC, 0xFFF)
+*/
 
 /obj/item/weapon/disk/data/New()
 	..()

@@ -87,8 +87,11 @@
 		return ..()
 	if(user.zone_sel.selecting != O_EYES && user.zone_sel.selecting != BP_HEAD)
 		return ..()
+	//TODO: DNA3 clown_block
+	/*
 	if((CLUMSY in user.mutations) && prob(50))
 		M = user
+	*/
 	return eyestab(M,user)
 
 /*

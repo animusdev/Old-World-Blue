@@ -178,14 +178,17 @@
 
 /obj/structure/window/attack_hand(mob/user as mob)
 	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
+	//TODO: DNA3 hulk
+	/*
 	if(HULK in user.mutations)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
 		user.visible_message("<span class='danger'>[user] smashes through [src]!</span>")
 		user.do_attack_animation(src)
 		shatter()
+		return
+	*/
 
-	else if (usr.a_intent == I_HURT)
-
+	if(usr.a_intent == I_HURT)
 		if (ishuman(usr))
 			var/mob/living/carbon/human/H = usr
 			if(H.can_shred())
@@ -201,10 +204,11 @@
 		)
 	else
 		playsound(src.loc, 'sound/effects/glassknock.ogg', 80, 1)
-		usr.visible_message("[usr.name] knocks on the [src.name].",
-							"You knock on the [src.name].",
-							"You hear a knocking sound.")
-	return
+		usr.visible_message(
+			"[usr.name] knocks on the [src.name].",
+			"You knock on the [src.name].",
+			"You hear a knocking sound."
+		)
 
 /obj/structure/window/attack_generic(var/mob/user, var/damage)
 	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)

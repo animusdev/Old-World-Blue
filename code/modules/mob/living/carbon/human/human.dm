@@ -326,7 +326,7 @@
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name()
 	var/obj/item/organ/external/head = get_organ(BP_HEAD)
-	if(!head || head.disfigured || head.is_stump() || !real_name || (HUSK in mutations) )	//disfigured. use id-name if possible
+	if(!head || head.disfigured || head.is_stump() || !real_name || (HUSK & status_flags) )	//disfigured. use id-name if possible
 		return "Unknown"
 	return real_name
 
@@ -778,10 +778,6 @@
 		remoteview_target = null
 		return
 
-	if(!(mMorph in mutations))
-		src.verbs -= /mob/living/carbon/human/proc/morph
-		return
-
 	var/new_facial = input("Please select facial hair color.", "Character Generation", facial_color) as color
 	if(new_facial)
 		facial_color = new_facial
@@ -856,9 +852,6 @@
 		remoteview_target = null
 		return
 
-	if(!(mRemotetalk in src.mutations))
-		src.verbs -= /mob/living/carbon/human/proc/remotesay
-		return
 	var/list/creatures = list()
 	for(var/mob/living/carbon/h in world)
 		creatures += h
@@ -867,7 +860,7 @@
 		return
 
 	var/say = sanitize(input("What do you wish to say"))
-	if(mRemotetalk in target.mutations)
+	if(/mob/living/carbon/human/proc/remotesay in target.verbs)
 		target.show_message("\blue You hear [src.real_name]'s voice: [say]")
 	else
 		target.show_message("\blue You hear a voice that seems to echo around the room: [say]")
@@ -883,12 +876,6 @@
 	if(stat!=CONSCIOUS)
 		remoteview_target = null
 		reset_view(0)
-		return
-
-	if(!(mRemote in src.mutations))
-		remoteview_target = null
-		reset_view(0)
-		src.verbs -= /mob/living/carbon/human/proc/remoteobserve
 		return
 
 	if(client.eye != client.mob)

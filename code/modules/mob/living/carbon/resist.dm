@@ -100,8 +100,11 @@
 		update_inv_legcuffed()
 
 /mob/living/carbon/proc/can_break_cuffs()
+	//TODO: DNA3 hulk
+	/*
 	if(HULK in mutations)
 		return 1
+	*/
 
 /mob/living/carbon/proc/break_handcuffs()
 	visible_message(

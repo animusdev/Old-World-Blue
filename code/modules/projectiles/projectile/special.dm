@@ -93,10 +93,8 @@
 				//		V.show_message("\red [M] is mutated by the radiation beam.", 3, "\red You hear the snapping of twigs.", 2)
 					if(prob(80))
 						randmutb(M)
-						domutcheck(M,null)
 					else
 						randmutg(M)
-						domutcheck(M,null)
 				else
 					M.adjustFireLoss(rand(5,15))
 					M.show_message("\red The radiation beam singes you!")

@@ -1072,18 +1072,3 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			usr << jointext(dead_mob_list,",")
 		if("Clients")
 			usr << jointext(clients,",")
-
-// DNA2 - Admin Hax
-/client/proc/cmd_admin_toggle_block(var/mob/M,var/block)
-	if(!ticker)
-		alert("Wait until the game starts")
-		return
-	if(istype(M, /mob/living/carbon))
-		M.dna.SetSEState(block,!M.dna.GetSEState(block))
-		domutcheck(M,null,MUTCHK_FORCED)
-		M.update_mutations()
-		var/state="[M.dna.GetSEState(block)?"on":"off"]"
-		var/blockname=assigned_blocks[block]
-		log_admin("[key_name(src)] has toggled [key_name(M)]'s [blockname] block [state]!", M)
-	else
-		alert("Invalid mob")

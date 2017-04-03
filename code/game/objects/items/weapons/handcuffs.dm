@@ -34,10 +34,13 @@
 	if(!user.IsAdvancedToolUser())
 		return
 
+	//TODO: DNA3 clown_block
+	/*
 	if ((CLUMSY in user.mutations) && prob(50))
 		user << "<span class='warning'>Uh ... how do those things work?!</span>"
 		place_handcuffs(user, user)
 		return
+	*/
 
 	if(!C.handcuffed)
 		if (C == user)

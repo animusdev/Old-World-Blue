@@ -9,7 +9,7 @@
 	return "Human"
 
 /datum/species/human/cursed/handle_environment_special(var/mob/living/carbon/human/H)
-	var/is_skeleton = (SKELETON in H.mutations)
+	var/is_skeleton = (SKELETON & H.status_flags)
 	var/light_amount = 0
 	if(isturf(H.loc))
 		var/turf/T = H.loc
@@ -20,14 +20,15 @@
 			light_amount =  10
 	if(light_amount > 0.9)
 		if(is_skeleton)
-			H.mutations -= SKELETON
+			H.status_flags ^= SKELETON
 			H.update_hair(0)
 			H.update_body()
 	else
 		if(!is_skeleton)
-			H.mutations |= SKELETON
+			H.status_flags ^= SKELETON
 			H.update_hair(0)
 			H.update_body()
+
 
 /datum/species/human/vampire
 	name = "Vampire"
@@ -70,7 +71,8 @@
 		return
 
 	var/mob/living/carbon/human/H = G.affecting
-	if(!istype(H) || H.isSynthetic() || HUSK in H.mutations)
+
+	if(!istype(H) || H.isSynthetic() || HUSK & status_flags)
 		src << "<span class='warning'>\The [H] is not compatible with our biology.</span>"
 		return
 

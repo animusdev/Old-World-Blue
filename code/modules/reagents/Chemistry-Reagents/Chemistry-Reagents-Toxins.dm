@@ -272,7 +272,6 @@
 				randmutb(M)
 			else
 				randmutg(M)
-			domutcheck(M, null)
 			M.UpdateAppearance()
 	M.apply_effect(10 * removed, IRRADIATE, 0)
 

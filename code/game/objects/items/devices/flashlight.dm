@@ -61,8 +61,12 @@
 				if(H.stat == DEAD || H.blinded)	//mob is dead or fully blind
 					user << "<span class='warning'>\The [H]'s pupils do not react to the light!</span>"
 					return
+				//TODO: DNA3 xray
+				//TODO: move to organ code
+				/*
 				if(XRAY in H.mutations)
 					user << "<span class='notice'>\The [H] pupils give an eerie glow!</span>"
+				*/
 				if(vision.is_bruised())
 					user << "<span class='warning'>There's visible damage to [H]'s [vision.name]!</span>"
 				else if(M.eye_blurry)

@@ -98,7 +98,7 @@
 			if(!istype(T)) return
 			if(!T.dna)
 				return
-			if(NOCLONE in T.mutations)
+			if(NOCLONE & T.status_flags)
 				return
 
 			if(!T.should_have_organ(O_HEART))

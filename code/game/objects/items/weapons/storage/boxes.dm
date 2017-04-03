@@ -114,18 +114,11 @@
 	..()
 	for(var/i = 1 to 7)
 		new /obj/item/weapon/reagent_containers/glass/beaker(src)
-
+/*
 /obj/item/weapon/storage/box/injectors
 	name = "box of DNA injectors"
 	desc = "This box contains injectors it seems."
-
-/obj/item/weapon/storage/box/injectors/New()
-	..()
-	for(var/i = 1 to 3)
-		new /obj/item/weapon/dnainjector/h2m(src)
-	for(var/i = 1 to 3)
-		new /obj/item/weapon/dnainjector/m2h(src)
-
+*/
 /obj/item/weapon/storage/box/blanks
 	name = "box of blank shells"
 	desc = "It has a picture of a gun and several warning symbols on the front."

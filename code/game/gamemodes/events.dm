@@ -64,10 +64,8 @@
 			if (prob(25))
 				if (prob(75))
 					randmutb(H)
-					domutcheck(H,null,MUTCHK_FORCED)
 				else
 					randmutg(H)
-					domutcheck(H,null,MUTCHK_FORCED)
 	sleep(100)
 	command_announcement.Announce(
 		"High levels of radiation detected near the station. \

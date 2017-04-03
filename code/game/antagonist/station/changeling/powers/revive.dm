@@ -31,8 +31,7 @@
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = src
 		H.restore_blood()
-		H.mutations.Remove(HUSK)
-		H.status_flags -= DISFIGURED
+		H.status_flags &= ~(DISFIGURED|HUSK)
 		H.update_body(1)
 		for(var/limb in H.organs_by_name)
 			var/obj/item/organ/external/current_limb = H.organs_by_name[limb]

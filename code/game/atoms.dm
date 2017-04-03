@@ -281,11 +281,14 @@ its easier to just keep the beam vertical.
 		add_fibers(M)
 
 		//He has no prints!
+		//TODO: DNA3
+		/*
 		if (mFingerprints in M.mutations)
 			if(fingerprintslast != M.key)
 				fingerprintshidden += "(Has no fingerprints) Real name: [M.real_name], Key: [M.key]"
 				fingerprintslast = M.key
 			return 0		//Now, lets get to the dirty work.
+		*/
 		//First, make sure their DNA makes sense.
 		var/mob/living/carbon/human/H = M
 		var/obj/item/clothing/gloves/Gloves = (H.gloves != src) ? H.gloves : null

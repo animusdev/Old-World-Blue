@@ -28,6 +28,8 @@
 	do_scan(M, user)
 
 /obj/item/device/robotanalyzer/proc/do_scan(mob/living/M as mob, mob/living/user as mob)
+	//TODO: DNA3 clown_block
+	/*
 	if((CLUMSY in user.mutations) && prob(50))
 		user << text("\red You try to analyze the floor's vitals!")
 		for(var/mob/O in viewers(M, null))
@@ -37,6 +39,7 @@
 		user.show_message("\blue Key: Suffocation/Toxin/Burns/Brute", 1)
 		user.show_message("\blue Body Temperature: ???", 1)
 		return
+	*/
 
 	var/scan_type
 	if(istype(M, /mob/living/silicon/robot))

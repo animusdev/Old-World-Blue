@@ -64,7 +64,7 @@
 	return ..(gibbed,get_death_message())
 
 /mob/living/carbon/human/proc/ChangeToHusk()
-	if(HUSK in mutations)	return
+	if(HUSK & status_flags)	return
 
 	if(f_style)
 		f_style = "Shaved"		//we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
@@ -72,18 +72,16 @@
 		h_style = "Bald"
 	update_hair(0)
 
-	mutations.Add(HUSK)
-	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
+	status_flags |= DISFIGURED|HUSK	//makes them unknown without fucking up other stuff like admintools
 	update_body(1)
 	return
 
 /mob/living/carbon/human/proc/Drain()
 	ChangeToHusk()
-	mutations |= HUSK
 	return
 
 /mob/living/carbon/human/proc/ChangeToSkeleton()
-	if(SKELETON in src.mutations)	return
+	if(SKELETON & status_flags)	return
 
 	if(f_style)
 		f_style = "Shaved"
@@ -91,7 +89,6 @@
 		h_style = "Bald"
 	update_hair(0)
 
-	mutations.Add(SKELETON)
-	status_flags |= DISFIGURED
+	status_flags |= DISFIGURED|SKELETON
 	update_body(0)
 	return

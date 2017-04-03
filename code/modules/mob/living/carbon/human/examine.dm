@@ -254,9 +254,6 @@
 	if(suiciding)
 		msg += "<span class='warning'>[T.He] appears to have commited suicide... there is no hope of recovery.</span>\n"
 
-	if(mSmallsize in mutations)
-		msg += "[T.He] [T.is] small halfling!\n"
-
 	var/distance = get_dist(user,src)
 	if(isobserver(user) || usr.stat == DEAD) // ghosts can see anything
 		distance = 1

@@ -46,11 +46,14 @@
 		qdel(src)
 
 /obj/machinery/optable/attack_hand(mob/user as mob)
+	//TODO: DNA3 hulk
+	/*
 	if (HULK in usr.mutations)
 		usr << text("\blue You destroy the table.")
 		visible_message("\red [usr] destroys the operating table!")
 		src.density = 0
 		qdel(src)
+	*/
 	return
 
 /obj/machinery/optable/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)

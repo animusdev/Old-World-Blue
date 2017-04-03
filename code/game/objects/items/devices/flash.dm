@@ -15,10 +15,13 @@
 	var/last_used = 0 //last world.time it was used.
 
 /obj/item/device/flash/proc/clown_check(var/mob/user)
+	//TODO: DNA3 clown_block
+	/*
 	if(user && (CLUMSY in user.mutations) && prob(50))
 		user << "<span class='warning'>\The [src] slips out of your hand.</span>"
 		user.unEquip(src)
 		return 0
+	*/
 	return 1
 
 /obj/item/device/flash/proc/flash_recharge()
