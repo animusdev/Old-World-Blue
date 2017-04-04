@@ -12,6 +12,7 @@
 	var/active = 0
 	var/det_time = 50
 /obj/item/weapon/grenade/proc/clown_check(var/mob/living/user)
+	return 1 // Allows to use grenades at all
 	//TODO: DNA3 clown_block
 /*
 	if((CLUMSY in user.mutations) && prob(50))
@@ -22,7 +23,7 @@
 		spawn(5)
 			prime()
 		return 0
-	return 1
+
 */
 
 /*/obj/item/weapon/grenade/afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
