@@ -1095,7 +1095,8 @@ other types of metals and chemistry for reagents).
 	id = "pacman"
 	req_tech = list("programming" = 3, "phorontech" = 3, "powerstorage" = 3, "engineering" = 3)
 	reliability_base = 79
-	materials = list("glass" = 2000, "sacid" = 20)
+	materials = list("glass" = 2000)
+	chemicals = list("sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/pacman
 
 /datum/design/circuit/superpacman
