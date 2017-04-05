@@ -159,7 +159,7 @@
 	return ..()
 
 /obj/item/weapon/tray/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/material/kitchen/rollingpin))
+	if(user.get_inactive_hand() == src && istype(W, /obj/item/weapon/material/kitchen/rollingpin))
 		if(cooldown < world.time - 25)
 			user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
 			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
@@ -191,6 +191,11 @@
 		/obj/item/projectile
 	)
 
+/obj/item/weapon/tray/MouseDrop(mob/living/carbon/human/H) //Drag'n'drop for pass object grabbing.
+	if(!H || usr!=H) return
+	if(!isturf(loc) || !Adjacent(H)) return
+	H.put_in_active_hand(src)
+
 /obj/item/weapon/tray/update_icon()
 	overlays.Cut()
 	for(var/item in src)
@@ -210,10 +215,11 @@
 		return 0
 	if(ismob(I.loc))
 		var/mob/M = I.loc
-		if(!M.unEquip(I))
+		if(!M.unEquip(I, src))
 			return 0
+	else
+		I.forceMove(src)
 	carry += I.w_class
-	I.forceMove(src)
 	update_icon()
 	return 1
 

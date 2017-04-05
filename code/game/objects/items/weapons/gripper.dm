@@ -171,16 +171,16 @@
 		//There's some weirdness with items being lost inside the arm. Trying to fix all cases. ~Z
 		for(var/obj/item/thing in src.contents)
 			thing.forceMove(target)
-		return
+		return TRUE
 
 	if(wrapped.loc != src)
 		wrapped = null
-		return
+		return FALSE
 
-	src.loc << "<span class='danger'>You drop \the [wrapped].</span>"
+	src.loc << "<span class='notice'>You drop \the [wrapped].</span>"
 	wrapped.forceMove(target)
 	wrapped = null
-
+	return TRUE
 
 /obj/item/weapon/gripper/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(wrapped) 	//The force of the wrapped obj gets set to zero during the attack() and afterattack().
