@@ -203,7 +203,7 @@
 			if(cut_delay<0)
 				cut_delay = 0
 
-			if(!do_after(user,cut_delay))
+			if(!do_after(user,cut_delay, src))
 				return
 
 			user << "<span class='notice'>You remove the outer plating.</span>"
