@@ -121,10 +121,12 @@
 	..()
 
 /obj/item/weapon/wirecutters/attack(mob/living/carbon/C as mob, mob/user as mob)
-	if(user.a_intent == I_HELP && (C.handcuffed) && (istype(C.handcuffed, /obj/item/weapon/handcuffs/cable)))
-		usr.visible_message("\The [usr] cuts \the [C]'s restraints with \the [src]!",\
-		"You cut \the [C]'s restraints with \the [src]!",\
-		"You hear cable being cut.")
+	if(user.a_intent == I_HELP && istype(C) && istype(C.handcuffed, /obj/item/weapon/handcuffs/cable))
+		usr.visible_message(
+			"\The [usr] cuts \the [C]'s restraints with \the [src]!",
+			"You cut \the [C]'s restraints with \the [src]!",
+			"You hear cable being cut."
+		)
 		C.handcuffed = null
 		if(C.buckled && C.buckled.buckle_require_restraints)
 			C.buckled.unbuckle_mob()
