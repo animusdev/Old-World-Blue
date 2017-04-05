@@ -113,10 +113,13 @@
 	..()
 	var/gear = /obj/item/clothing/shoes/sandal
 
-	if(J && ispath(J.shoes, /obj/item/clothing/shoes/jackboots))
-		gear = /obj/item/clothing/shoes/jackboots/unathi
+	if(J)
+		if(ispath(J.shoes, /obj/item/clothing/shoes/jackboots))
+			gear = /obj/item/clothing/shoes/jackboots/unathi
+		else if(ispath(J.shoes, /obj/item/clothing/shoes/workboots))
+			gear = /obj/item/clothing/shoes/workboots/toeless
 
-	if(H.shoes)
+	if(H.shoes && H.shoes.type == J.shoes) // Do not delete loadout items.
 		var/obj/item/shoes = H.shoes
 		if(H.unEquip(shoes))
 			qdel(shoes)
@@ -205,10 +208,13 @@
 	..()
 	var/gear = /obj/item/clothing/shoes/sandal
 
-	if(J && ispath(J.shoes, /obj/item/clothing/shoes/jackboots))
-		gear = /obj/item/clothing/shoes/jackboots/unathi
+	if(J)
+		if(ispath(J.shoes, /obj/item/clothing/shoes/jackboots))
+			gear = /obj/item/clothing/shoes/jackboots/unathi
+		else if(ispath(J.shoes, /obj/item/clothing/shoes/workboots))
+			gear = /obj/item/clothing/shoes/workboots/toeless
 
-	if(H.shoes)
+	if(H.shoes && H.shoes.type == J.shoes) // Do not delete loadout items.
 		var/obj/item/shoes = H.shoes
 		if(H.unEquip(shoes))
 			qdel(shoes)
