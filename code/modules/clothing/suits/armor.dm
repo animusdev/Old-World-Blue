@@ -243,10 +243,13 @@
 	desc = "A simple kevlar plate carrier."
 	icon_state = "kvest"
 	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
-	allowed = list( /obj/item/weapon/gun, /obj/item/weapon/reagent_containers/spray/pepper, /obj/item/ammo_magazine,\
-					/obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/handcuffs, \
-					/obj/item/device/flashlight, /obj/item/weapon/melee/telebaton, \
-					/obj/item/clothing/head/helmet/security, /obj/item/clothing/mask/gas)
+	body_parts_covered = UPPER_TORSO
+	allowed = list(
+		/obj/item/weapon/gun, /obj/item/weapon/reagent_containers/spray/pepper, /obj/item/ammo_magazine,
+		/obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/handcuffs,
+		/obj/item/device/flashlight, /obj/item/weapon/melee/telebaton,
+		/obj/item/clothing/head/helmet/security, /obj/item/clothing/mask/gas
+	)
 
 /obj/item/clothing/suit/storage/vest/warden
 	name = "Warden's jacket"
@@ -293,12 +296,14 @@
 	name = "EMS armor vest"
 	desc = "That's a light plate carrier with additional pouches and EMS sign."
 	icon_state = "emsarmorvest_nobadge"
-	icon_badge = "emsarmorvest_badge"
-	icon_nobadge = "emsarmorvest_nobadge"
-	allowed = list( /obj/item/device/analyzer, /obj/item/stack/medical, /obj/item/weapon/dnainjector,\
-					/obj/item/weapon/reagent_containers/dropper, /obj/item/weapon/reagent_containers/syringe, \
-					/obj/item/weapon/reagent_containers/hypospray, /obj/item/device/healthanalyzer, \
-					/obj/item/device/flashlight/pen, /obj/item/weapon/tank/emergency_oxygen, /obj/item/device/radio, /obj/item/clothing/mask/gas)
+	armor = list(melee = 40, bullet = 10, laser = 10, energy = 15, bomb = 20, bio = 0, rad = 0)
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+	allowed = list(
+		/obj/item/device/analyzer, /obj/item/stack/medical, /obj/item/weapon/dnainjector,
+		/obj/item/weapon/reagent_containers/dropper, /obj/item/weapon/reagent_containers/syringe,
+		/obj/item/weapon/reagent_containers/hypospray, /obj/item/device/healthanalyzer, /obj/item/clothing/mask/gas,
+		/obj/item/device/flashlight/pen, /obj/item/weapon/tank/emergency_oxygen, /obj/item/device/radio
+	)
 
 /obj/item/clothing/suit/storage/vest/officer
 	name = "officer armor vest"
@@ -421,8 +426,10 @@
 	item_state = "centcom"
 	w_class = 4//bulky item
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	allowed = list( /obj/item/weapon/gun/energy, /obj/item/weapon/melee/baton, /obj/item/weapon/handcuffs,\
-					/obj/item/weapon/tank/emergency_oxygen)
+	allowed = list(
+		/obj/item/weapon/gun/energy, /obj/item/weapon/melee/baton, /obj/item/weapon/handcuffs,
+		/obj/item/weapon/tank/emergency_oxygen
+	)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
