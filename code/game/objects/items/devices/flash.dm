@@ -38,7 +38,7 @@
 /obj/item/device/flash/attack(mob/living/M as mob, mob/user as mob)
 	if(!user || !M)	return	//sanity
 
-	admin_attack_log(
+	admin_attack_log(user, M,
 		"Used the [src.name] to flash [key_name(M)]",
 		"Has been flashed (attempt) with [src.name]  by [key_name(user)]",
 		"used the [src.name] to flash"
