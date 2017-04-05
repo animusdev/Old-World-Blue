@@ -111,7 +111,7 @@
 		feed_sound(user)
 		return 1
 	else
-		if(ishuman(user))
+		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(!H.check_has_mouth())
 				user << "Where do you intend to put \the [src]? \The [H] doesn't have a mouth!"
