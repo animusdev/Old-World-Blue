@@ -144,7 +144,7 @@
 							if(amount>0 ? D.money >= amount : detailed_account_view.money >= -amount)
 								D.money -= amount
 								D.transaction_log.Add(create_transation(held_card.registered_name, purpose, amount>0 ? "([amount])" : -amount))
-								detailed_account_view.money = amount
+								detailed_account_view.money = +amount
 								detailed_account_view.transaction_log.Add(create_transation(held_card.registered_name, purpose, amount>0 ? amount : "([-amount])"))
 								alert("Transaction is successful.")
 								ui.update()
