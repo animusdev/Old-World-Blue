@@ -12,19 +12,9 @@
 /proc/is_on_same_plane_or_station(var/z1, var/z2)
 	if(z1 == z2)
 		return 1
-	if((z1 in config.station_levels) &&	(z2 in config.station_levels))
+	if(isStationLevel(z1) && isStationLevel(z2))
 		return 1
 	return 0
-
-/proc/max_default_z_level()
-	var/max_z = 0
-	for(var/z in config.station_levels)
-		max_z = max(z, max_z)
-	for(var/z in config.admin_levels)
-		max_z = max(z, max_z)
-	for(var/z in config.player_levels)
-		max_z = max(z, max_z)
-	return max_z
 
 /proc/get_area(O)
 	var/turf/loc = get_turf(O)
@@ -60,21 +50,6 @@
 	source.luminosity = lum
 
 	return heard
-
-/proc/isStationLevel(var/level)
-	return level in config.station_levels
-
-/proc/isNotStationLevel(var/level)
-	return !isStationLevel(level)
-
-/proc/isPlayerLevel(var/level)
-	return level in config.player_levels
-
-/proc/isAdminLevel(var/level)
-	return level in config.admin_levels
-
-/proc/isNotAdminLevel(var/level)
-	return !isAdminLevel(level)
 
 /proc/circlerange(center=usr,radius=3)
 

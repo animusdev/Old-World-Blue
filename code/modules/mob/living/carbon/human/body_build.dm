@@ -123,7 +123,19 @@ var/datum/body_build/default_body_build = new
 	mask_icon	= 'icons/inv_slots/masks/mob_unathi.dmi'
 	hat_icon	= 'icons/inv_slots/hats/mob_unathi.dmi'
 	hidden_icon = 'icons/inv_slots/hidden/mob_unathi.dmi'
+/*
+/datum/body_build/unathi/fat
+	name		= "Unathi Fat"
 
+	index		= "_fat"
+	genders		= list(MALE)
+	uniform_icon= 'icons/inv_slots/uniforms/mob_lizard.dmi'
+	suit_icon	= 'icons/inv_slots/suits/mob_lizard.dmi'
+	glasses_icon= 'icons/inv_slots/glasses/mob_lizard.dmi'
+	mask_icon	= 'icons/inv_slots/masks/mob_lizard.dmi'
+	hat_icon	= 'icons/inv_slots/hats/mob_lizard.dmi'
+	shoes_icon	= 'icons/inv_slots/shoes/mob_lizard.dmi'
+*/
 /datum/body_build/vox
 	name		= "Vox"
 

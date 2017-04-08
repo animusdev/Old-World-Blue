@@ -123,6 +123,9 @@
 			qdel(W)
 		parent.update_damages()
 
+	if(module)
+		module.organ_installed(src, owner)
+
 	update_icon()
 	if(redraw_mob)
 		owner.update_body()
@@ -143,6 +146,10 @@
 		for(var/obj/item/organ/O in internal_organs)
 			qdel(O)
 
+	if(module)
+		qdel(module)
+		module = null
+
 	if(owner)
 		//drop_items()
 		owner.organs -= src
@@ -158,6 +165,9 @@
 	owner.organs -= src
 	owner.organs_by_name[organ_tag] = null // Remove from owner's vars.
 	owner.bad_external_organs -= src
+
+	if(module)
+		module.organ_removed(src, owner)
 
 	drop_items()
 

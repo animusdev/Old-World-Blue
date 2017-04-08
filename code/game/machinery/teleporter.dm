@@ -114,9 +114,7 @@
 			if (M.stat == 2)
 				if (M.timeofdeath + 6000 < world.time)
 					continue
-			var/turf/T = get_turf(M)
-			if(T)	continue
-			if(T.z == 2)	continue
+			if(isOnAdminLevel(M))	continue
 			var/tmpname = M.real_name
 			if(areaindex[tmpname])
 				tmpname = "[tmpname] ([++areaindex[tmpname]])"

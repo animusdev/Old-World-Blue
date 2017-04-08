@@ -26,7 +26,7 @@
 				security_announcement_down.Announce("[config.alert_desc_green]", "Attention! Security level lowered to green")
 				security_level = SEC_LEVEL_GREEN
 				for(var/obj/machinery/firealarm/FA in machines)
-					if(FA.z in config.contact_levels)
+					if(isOnStationLevel(FA))
 						FA.overlays = list()
 						FA.overlays += image('icons/obj/monitors.dmi', "overlay_green")
 			if(SEC_LEVEL_BLUE)
@@ -36,7 +36,7 @@
 					security_announcement_down.Announce("[config.alert_desc_blue_downto]", "Attention! Security level lowered to blue")
 				security_level = SEC_LEVEL_BLUE
 				for(var/obj/machinery/firealarm/FA in machines)
-					if(FA.z in config.contact_levels)
+					if(isOnStationLevel(FA))
 						FA.overlays = list()
 						FA.overlays += image('icons/obj/monitors.dmi', "overlay_blue")
 			if(SEC_LEVEL_RED)
@@ -51,7 +51,7 @@
 					CC.post_status("alert", "redalert")*/
 
 				for(var/obj/machinery/firealarm/FA in machines)
-					if(FA.z in config.contact_levels)
+					if(isOnStationLevel(FA))
 						FA.overlays = list()
 						FA.overlays += image('icons/obj/monitors.dmi', "overlay_red")
 
@@ -59,7 +59,7 @@
 				security_announcement_up.Announce("[config.alert_desc_delta]", "Attention! Delta security level reached!", new_sound = 'sound/effects/siren.ogg')
 				security_level = SEC_LEVEL_DELTA
 				for(var/obj/machinery/firealarm/FA in machines)
-					if(FA.z in config.contact_levels)
+					if(isOnStationLevel(FA))
 						FA.overlays = list()
 						FA.overlays += image('icons/obj/monitors.dmi', "overlay_delta")
 	else

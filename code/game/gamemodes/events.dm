@@ -14,7 +14,7 @@
 	//world << sound('sound/AI/aliens.ogg')
 	var/list/vents = list()
 	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in machines)
-		if(!temp_vent.welded && temp_vent.network && temp_vent.loc.z in config.station_levels)
+		if(!temp_vent.welded && temp_vent.network && isOnStationLevel(temp_vent))
 			// Stops Aliens getting stuck in small networks. See: Security, Virology
 			if(temp_vent.network.normal_members.len > 50)
 				vents += temp_vent
@@ -316,49 +316,3 @@ where x = a number, and _____ is something that may redefine a law, (Won't be ai
 		for(var/obj/machinery/bot/bot in machines)
 			if(prob(botEmagChance))
 				bot.Emag()
-
-	/*
-
-	var/apcnum = 0
-	var/smesnum = 0
-	var/airlocknum = 0
-	var/firedoornum = 0
-
-	world << "Ion Storm Main Started"
-
-	spawn(0)
-		world << "Started processing APCs"
-		for (var/obj/machinery/power/apc/APC in world)
-			if(APC.z in station_levels)
-				APC.ion_act()
-				apcnum++
-		world << "Finished processing APCs. Processed: [apcnum]"
-	spawn(0)
-		world << "Started processing SMES"
-		for (var/obj/machinery/power/smes/SMES in world)
-			if(SMES.z in station_levels)
-				SMES.ion_act()
-				smesnum++
-		world << "Finished processing SMES. Processed: [smesnum]"
-	spawn(0)
-		world << "Started processing AIRLOCKS"
-		for (var/obj/machinery/door/airlock/D in world)
-			if(D.z in station_levels)
-				//not counting general access and maintenance airlocks
-				//if(length(D.req_access) > 0 && !(12 in D.req_access))
-				airlocknum++
-				spawn(0)
-					D.ion_act()
-		world << "Finished processing AIRLOCKS. Processed: [airlocknum]"
-	spawn(0)
-		world << "Started processing FIREDOORS"
-		for (var/obj/machinery/door/firedoor/D in world)
-			if(D.z in station_levels)
-				firedoornum++;
-				spawn(0)
-					D.ion_act()
-		world << "Finished processing FIREDOORS. Processed: [firedoornum]"
-
-	world << "Ion Storm Main Done"
-
-	*/

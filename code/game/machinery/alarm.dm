@@ -1120,7 +1120,7 @@ FIRE ALARM
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 
 /obj/machinery/firealarm/initialize()
-	if(z in config.contact_levels)
+	if(isStationLevel(z))
 		if(security_level)
 			src.overlays += image('icons/obj/monitors.dmi', "overlay_[get_security_level()]")
 		else

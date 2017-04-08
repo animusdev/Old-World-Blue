@@ -145,8 +145,6 @@
 		return
 	var/list/remaining_apcs = list()
 	for(var/obj/machinery/power/apc/A in machines)
-//		if(!(A.z in config.station_levels)) 		// Only station APCs
-//			continue
 		if(A.hacker == user || A.aidisabled) 		// This one is already hacked, or AI control is disabled on it.
 			continue
 		remaining_apcs += A
@@ -191,7 +189,7 @@
 	sleep(300)
 	// Hack all APCs, including those built during hack sequence.
 	for(var/obj/machinery/power/apc/A in machines)
-		if((!A.hacker || A.hacker != src) && !A.aidisabled && A.z in config.station_levels)
+		if((!A.hacker || A.hacker != src) && !A.aidisabled && isOnStationLevel(A))
 			A.ai_hack(src)
 
 

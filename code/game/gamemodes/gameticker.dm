@@ -193,15 +193,9 @@ var/list/donator_icons
 				if(M.client)
 					M.client.screen += cinematic
 
-				switch(M.z)
-					if(0)	//inside a crate or something
-						var/turf/T = get_turf(M)
-						if(T && T.z in config.station_levels)				//we don't use M.death(0) because it calls a for(/mob) loop and
-							M.health = 0
-							M.stat = DEAD
-					if(1)	//on a z-level 1 turf.
-						M.health = 0
-						M.stat = DEAD
+				if(isOnStationLevel(M)) //we don't use M.death(0) because it calls a for(/mob) loop and
+					M.health = 0
+					M.stat = DEAD
 
 		//Now animate the cinematic
 		switch(station_missed)
@@ -256,7 +250,7 @@ var/list/donator_icons
 						world << sound('sound/effects/explosionfar.ogg')
 						cinematic.icon_state = "summary_selfdes"
 				for(var/mob/living/M in living_mob_list)
-					if(M.loc.z in config.station_levels)
+					if(isOnStationLevel(M))
 						M.death()//No mercy
 		//If its actually the end of the round, wait for it to end.
 		//Otherwise if its a verb it will continue on afterwards.

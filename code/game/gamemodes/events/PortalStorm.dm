@@ -4,15 +4,15 @@
 		command_alert("Subspace disruption detected around the vessel", "Anomaly Alert")
 		LongTerm()
 
-		var/list/turfs = list(	)
+		var/list/turfs = new
 		var/turf/picked
 
 		for(var/turf/T in world)
-			if(T.z < 5 && istype(T,/turf/simulated/floor))
+			if(isStationLevel(T.z) && istype(T,/turf/simulated/floor))
 				turfs += T
 
-		for(var/turf/T in world)
-			if(prob(10) && T.z < 5 && istype(T,/turf/simulated/floor))
+		for(var/turf/T in turfs)
+			if(prob(10))
 				spawn(50+rand(0,3000))
 					picked = pick(turfs)
 					var/obj/portal/P = new /obj/portal( T )

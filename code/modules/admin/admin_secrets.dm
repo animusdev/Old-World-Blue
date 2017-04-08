@@ -435,9 +435,8 @@ var/datum/admin_secrets/admin_secrets = new()
 	if(!.)
 		return
 	for(var/mob/living/carbon/human/H in mob_list)
-		var/turf/T = get_turf(H)
 		var/security = 0
-		if((T && T in config.admin_levels) || prisonwarped.Find(H))
+		if(isOnAdminLevel(H) || prisonwarped.Find(H))
 		//don't warp them if they aren't ready or are already there
 			continue
 		H.Paralyse(5)

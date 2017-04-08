@@ -35,7 +35,7 @@
 	if(. != STATUS_INTERACTIVE)
 		return
 
-	if(z in config.admin_levels)						// Syndicate borgs can interact with everything on the admin level
+	if(isOnAdminLevel(src))								// Syndicate borgs can interact with everything on the admin level
 		return STATUS_INTERACTIVE
 	if(istype(get_area(src), /area/syndicate_station))	// If elsewhere, they can interact with everything on the syndicate shuttle
 		return STATUS_INTERACTIVE

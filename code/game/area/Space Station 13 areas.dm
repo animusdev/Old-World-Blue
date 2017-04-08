@@ -68,7 +68,7 @@ var/list/teleportlocs = list()
 		if(is_type_in_list(AR, list(/area/shuttle, /area/syndicate_station, /area/wizard_station))) continue
 		if(teleportlocs.Find(AR.name)) continue
 		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (picked.z in config.station_levels)
+		if(isStationLevel(picked.z))
 			teleportlocs += AR.name
 			teleportlocs[AR.name] = AR
 
