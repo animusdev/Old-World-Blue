@@ -308,8 +308,12 @@
 		icon_state = "halfbang_alt"
 
 	halfshaved
-		name = "Half-Shaved Emo"
+		name = "Half-Shaved"
 		icon_state = "halfshaved"
+
+	halfshavedemo
+		name = "Half-Shaved Emo"
+		icon_state = "halfshaved_emo"
 
 	hamasaki
 		name = "Hamaski Hair"
