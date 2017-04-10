@@ -10,13 +10,14 @@
 	var/datum/species/species = null
 	var/body_build = null
 
-/obj/item/organ/internal/eyes/install(mob/living/carbon/human/H)
+/obj/item/organ/internal/eyes/install(mob/living/carbon/human/H, redraw_mob = 1)
 	if(..()) return 1
 	// Apply our eye color to the target.
 	if(eye_color)
 		owner.eyes_color = eye_color
 	sync_to_owner()
-	owner.update_eyes()
+	if(redraw_mob)
+		owner.update_body()
 
 /obj/item/organ/internal/eyes/sync_to_owner()
 	if(!owner)

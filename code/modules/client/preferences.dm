@@ -167,6 +167,15 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	character.personal_faction = faction
 	character.religion = religion
 
+
+	if(disabilities)
+		// Set defer to 1 if you add more crap here so it only recalculates struc_enzymes once. - N3X
+		//TODO: DNA3 glasses_block
+		character.disabilities |= NEARSIGHTED
+
+	// And uncomment this, too.
+	// character.dna.UpdateSE()
+
 	character.rebuild_organs(src)
 
 	if(backbag > backbaglist.len || backbag < 1)
@@ -178,5 +187,4 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		if(isliving(src)) //Ghosts get neuter by default
 			message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
 			character.gender = MALE
-
-	character.force_update_limbs()
+			character.force_update_limbs()

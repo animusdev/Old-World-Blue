@@ -37,12 +37,12 @@
 				last_owner.update_hair()
 	return ..()
 
-/obj/item/organ/external/head/install()
-	if(..()) return 1
+/obj/item/organ/external/head/install(mob/living/carbon/human/H, redraw_mob = 1)
+	if(..(H, 0)) return 1
 
 	name = "head"
 	if(hairstyle)
 		owner.h_style = hairstyle
 	if(real_name)
 		owner.real_name = real_name
-	owner.update_body()
+	owner.update_hair(redraw_mob)

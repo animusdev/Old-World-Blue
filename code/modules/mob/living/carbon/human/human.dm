@@ -1169,19 +1169,22 @@
 			BM = Pref.get_modification(tag)
 			Organ = BM.create_organ(species.has_organ[tag], Pref.modifications_colors[tag])
 			if(Organ)
-				Organ.install(src, 0) // Not update icon
+				Organ.install(src, 0)
 
 	else
 		var/organ_type = null
+		var/obj/item/organ/Organ = null
 
 		for(var/limb_tag in species.has_limbs)
 			var/datum/organ_description/OD = species.has_limbs[limb_tag]
 			organ_type = OD.default_type
-			new organ_type(src, OD)
+			Organ = new organ_type(null, OD)
+			Organ.install(src, 0) // Not update icon
 
 		for(var/organ_tag in species.has_organ)
 			organ_type = species.has_organ[organ_tag]
-			new organ_type(src)
+			Organ = new organ_type(null)
+			Organ.install(src, 0)
 
 	species.organs_spawned(src)
 	update_body()

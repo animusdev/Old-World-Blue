@@ -378,19 +378,6 @@
 		new_character.dna.ready_dna(new_character)
 		new_character.dna.b_type = client.prefs.b_type
 
-		if(client.prefs.disabilities)
-			// Set defer to 1 if you add more crap here so it only recalculates struc_enzymes once. - N3X
-			//TODO: DNA3 glasses_block
-			new_character.disabilities |= NEARSIGHTED
-
-		// And uncomment this, too.
-		//new_character.dna.UpdateSE()
-
-		// Do the initial caching of the player's body icons.
-		new_character.force_update_limbs()
-		new_character.update_eyes()
-		new_character.regenerate_icons()
-
 		new_character.key = key		//Manually transfer the key to log them in
 
 		return new_character

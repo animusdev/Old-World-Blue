@@ -247,19 +247,15 @@ var/global/list/damage_icon_parts = list()
 
 	icon_key += "[husk ? 1 : 0][skeleton ? 1 : 0]"
 
-	var/force_update_body = 0
-
 	for(var/organ_tag in species.has_limbs)
 		var/obj/item/organ/external/part = organs_by_name[organ_tag]
 		if(isnull(part))
 			icon_key += "[organ_tag]missed"
 		else
-			force_update_body |= !(part.icon)
 			icon_key += "[organ_tag][part.get_icon_key()]"
 
-
 	var/icon/base_icon
-	if(!force_update_body && human_icon_cache[icon_key])
+	if(human_icon_cache[icon_key])
 		base_icon = human_icon_cache[icon_key]
 	else
 		//BEGIN CACHED ICON GENERATION.

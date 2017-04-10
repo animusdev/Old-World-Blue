@@ -29,18 +29,11 @@ var/global/list/limb_icon_cache = list()
 
 /obj/item/organ/external/update_icon(var/skeletal)
 
-/*
-	if(owner)
-		if(gendered)
-			gendered = (owner.gender == MALE)? "_m": "_f"
-		body_build = owner.body_build.index
-*/
-	icon = null
-	mob_icon = get_icon(skeletal)
+	get_icon(skeletal)
 	apply_colors()
 	draw_internals()
-	dir  = EAST
 	icon = mob_icon
+	dir  = SOUTH
 	return icon
 
 /obj/item/organ/external/get_icon(var/skeletal)
@@ -51,10 +44,11 @@ var/global/list/limb_icon_cache = list()
 		tmp_icon = new /icon(default_icon, icon_state)
 	else if(skeletal)
 		tmp_icon = new /icon('icons/mob/human_races/skeleton.dmi', icon_state)
-	else if (status & ORGAN_MUTATED)
+	else if(status & ORGAN_MUTATED)
 		tmp_icon = new /icon(owner.species.deform, icon_state)
 	else
 		tmp_icon = new /icon(owner.species.icobase, icon_state)
+	mob_icon = tmp_icon
 	return tmp_icon
 
 /obj/item/organ/external/proc/apply_colors()

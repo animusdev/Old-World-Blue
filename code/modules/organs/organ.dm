@@ -47,7 +47,7 @@ var/list/organ_cache = list()
 	return ..()
 
 // Move organ inside new owner and attach it.
-/obj/item/organ/proc/install(mob/living/carbon/human/H)
+/obj/item/organ/proc/install(mob/living/carbon/human/H, var/redraw_mob = 1)
 	if(!istype(H))
 		return 1
 
@@ -61,6 +61,7 @@ var/list/organ_cache = list()
 			blood_DNA = list()
 		blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
 	processing_objects -= src
+	sync_to_owner()
 
 /obj/item/organ/proc/removed(var/mob/living/user)
 	if(!istype(owner))

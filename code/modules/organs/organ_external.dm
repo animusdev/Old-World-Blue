@@ -85,12 +85,6 @@
 		set_description(desc)
 
 	..(holder)
-	if(owner)
-		sync_to_owner()
-/*
-	spawn(1)
-		get_icon()
-*/
 
 /obj/item/organ/external/proc/set_description(var/datum/organ_description/desc)
 	src.name = desc.name
@@ -182,12 +176,12 @@
 
 	if(children)
 		for(var/obj/item/organ/external/child in children)
-			child.removed()
+			child.removed(null, 0)
 			child.loc = src
 
 	if(internal_organs)
 		for(var/obj/item/organ/internal/organ in internal_organs)
-			organ.removed()
+			organ.removed(null, 0)
 			organ.loc = src
 
 	// Remove parent references
