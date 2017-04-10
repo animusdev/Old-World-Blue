@@ -92,7 +92,7 @@ var/list/gamemode_cache = list()
 	var/debugparanoid = 0
 
 	var/serverurl
-	var/server = "ss13.ru:2507"
+	var/server
 	var/banappeals
 	var/wikiurl
 	var/forumurl
@@ -388,10 +388,10 @@ var/list/gamemode_cache = list()
 
 				if ("serverurl")
 					config.serverurl = value
-/*
+
 				if ("server")
 					config.server = value
-*/
+
 				if ("banappeals")
 					config.banappeals = value
 
