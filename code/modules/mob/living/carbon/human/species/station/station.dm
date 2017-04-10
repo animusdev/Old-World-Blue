@@ -63,7 +63,7 @@
 	heat_level_2 = 480  //Default 400
 	heat_level_3 = 1100 //Default 1000
 
-	flags = CAN_JOIN | IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_SKIN_COLOR | HAS_EYE_COLOR
+	flags = CAN_JOIN | IS_WHITELISTED | HAS_UNDERWEAR | HAS_SKIN_COLOR | HAS_EYE_COLOR
 
 	flesh_color = "#34AF10"
 

@@ -5,9 +5,6 @@
 /mob/living/silicon/ai/var/max_locations = 10
 /mob/living/silicon/ai/var/stored_locations[0]
 
-/proc/InvalidPlayerTurf(turf/T as turf)
-	return !(T && T.z in config.player_levels)
-
 /mob/living/silicon/ai/proc/get_camera_list()
 	if(src.stat == 2)
 		return
@@ -59,7 +56,7 @@
 		return
 
 	var/L = src.eyeobj.getLoc()
-	if (InvalidPlayerTurf(get_turf(L)))
+	if(!isOnPlayerLevel(L))
 		src << "<span class='warning'>Unable to store this location</span>"
 		return
 
@@ -218,7 +215,7 @@ mob/living/proc/near_camera()
 /mob/living/proc/tracking_status()
 	// Easy checks first.
 	// Don't detect mobs on Centcom. Since the wizard den is on Centcomm, we only need this.
-	if(InvalidPlayerTurf(get_turf(src)))
+	if(!isOnPlayerLevel(src))
 		return TRACKING_TERMINATE
 	if(invisibility >= INVISIBILITY_LEVEL_ONE) //cloaked
 		return TRACKING_TERMINATE

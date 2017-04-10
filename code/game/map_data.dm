@@ -13,7 +13,11 @@ var/datum/maps_data/maps_data = new
 	return T && isStationLevel(T.z)
 
 /proc/isPlayerLevel(var/level)
-	return level in config.player_levels
+	return level in maps_data.player_levels
+
+/proc/isOnPlayerLevel(var/atom/A)
+	var/turf/T = get_turf(A)
+	return T && isPlayerLevel(T.z)
 
 /proc/isAdminLevel(var/level)
 	if(isnum(level))
@@ -34,14 +38,28 @@ var/datum/maps_data/maps_data = new
 		max_z = max(z, max_z)
 
 	return max_z
+/*
+/mob/verb/TEST_MAP()
+	set name = "test map markers"
+	set category = "Debug"
 
+	src << "isStationLevel: [isStationLevel(z)]"
+	src << "isNotStationLevel: [isNotStationLevel(z)]"
+	src << "isOnStationLevel: [isOnStationLevel(src)]"
 
+	src << "isPlayerLevel: [isPlayerLevel(z)]"
+	src << "isOnPlayerLevel: [isOnPlayerLevel(src)]"
 
+	src << "isAdminLevel: [isAdminLevel(z)]"
+	src << "isNotAdminLevel: [isNotAdminLevel(z)]"
+	src << "isOnAdminLevel: [isOnAdminLevel(src)]"
+*/
 
 /datum/maps_data
 	var/list/all_levels     = new
 	var/list/station_levels = new
 	var/list/admin_levels   = new
+	var/list/player_levels  = new
 	var/list/overmap_levels = new
 	var/list/overmap_finds  = new
 
@@ -61,6 +79,9 @@ var/datum/maps_data/maps_data = new
 	if(MD.is_admin_level)
 		admin_levels[level]  = MD
 
+	if(MD.is_player_level)
+		player_levels[level] = MD
+
 	if(MD.is_overmap_level)
 		overmap_levels[level]= MD
 
@@ -71,8 +92,9 @@ var/datum/maps_data/maps_data = new
 
 /obj/map_data
 	name = "Map data"
-	var/is_admin_level   = 0
-	var/is_station_level = 0
+	var/is_admin_level   = 0 // Defines which Z-levels which are for admin functionality, for example including such areas as Central Command and the Syndicate Shuttle
+	var/is_station_level = 0 // Defines Z-levels on which the station exists.
+	var/is_player_level  = 0 // Defines Z-levels a character can typically reach
 	var/is_overmap_level = 0
 	var/is_overmap_finds = 0
 	var/generate_asteroid= 0
@@ -80,6 +102,7 @@ var/datum/maps_data/maps_data = new
 /obj/map_data/station
 	name = "Station Level"
 	is_station_level = 1
+	is_player_level = 1
 
 /obj/map_data/admin
 	name = "Admin Level"
@@ -87,11 +110,13 @@ var/datum/maps_data/maps_data = new
 
 /obj/map_data/asteroid
 	name = "Asteroid Level"
+	is_player_level = 1
 	generate_asteroid = 1
 
 /obj/map_data/finds
 	name = "Overmap finds Level"
 	is_overmap_finds = 1
+	is_player_level = 1
 
 /obj/map_data/New()
 	..()
