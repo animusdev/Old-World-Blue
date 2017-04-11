@@ -50,6 +50,10 @@
 /turf/ex_act(severity)
 	return 0
 
+/turf/attack_robot(mob/living/silicon/user)
+	if(Adjacent(user))
+		attack_hand(user)
+
 /turf/attack_hand(mob/user)
 	if(!(user.canmove) || user.restrained() || !(user.pulling))
 		return 0
