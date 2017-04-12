@@ -243,7 +243,6 @@
 
 	New()
 		..()
-		new /obj/item/clothing/under/rank/det/jeans(src)
 		new /obj/item/clothing/suit/storage/toggle/investigator(src)
 		new /obj/item/clothing/suit/storage/toggle/investigator/alt(src)
 		if(prob(50))
