@@ -1,11 +1,9 @@
 proc/random_hair_style(gender, species = "Human")
-	var/h_style = "Bald"
-	h_style = pick(get_hair_styles_list(species, gender))
+	var/h_style = pick(get_hair_styles_list(species, gender))
 	return h_style
 
 proc/random_facial_hair_style(gender, species = "Human")
-	var/f_style = "Shaved"
-	f_style = pick(get_facial_styles_list(species, gender))
+	var/f_style = pick(get_facial_styles_list(species, gender))
 	return f_style
 
 proc/sanitize_name(name, species = "Human")

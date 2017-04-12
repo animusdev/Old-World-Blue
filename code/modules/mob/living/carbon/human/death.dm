@@ -67,9 +67,9 @@
 	if(HUSK & status_flags)	return
 
 	if(f_style)
-		f_style = "Shaved"		//we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
+		f_style = species.default_f_style
 	if(h_style)
-		h_style = "Bald"
+		h_style = species.default_h_style
 	update_hair(0)
 
 	status_flags |= DISFIGURED|HUSK	//makes them unknown without fucking up other stuff like admintools
@@ -84,9 +84,9 @@
 	if(SKELETON & status_flags)	return
 
 	if(f_style)
-		f_style = "Shaved"
+		f_style = species.default_f_style
 	if(h_style)
-		h_style = "Bald"
+		h_style = species.default_h_style
 	update_hair(0)
 
 	status_flags |= DISFIGURED|SKELETON

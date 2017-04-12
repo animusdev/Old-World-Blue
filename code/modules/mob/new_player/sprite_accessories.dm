@@ -20,7 +20,8 @@
 /proc/get_hair_styles_list(var/species, var/gender)
 	var/list/species_list = hair_styles_by_species[species]
 	if(!species_list || !species_list.len)
-		return list("Bald")
+		var/datum/species/S = all_species[species]
+		return list(S.default_h_style)
 
 	var/list/valid_hairstyles = list()
 	for(var/style in species_list)
@@ -33,7 +34,8 @@
 /proc/get_facial_styles_list(var/species, var/gender)
 	var/list/species_list = facial_hair_styles_by_species[species]
 	if(!species_list || !species_list.len)
-		return list("Shaved")
+		var/datum/species/S = all_species[species]
+		return list(S.default_f_style)
 
 	var/list/valid_hairstyles = list()
 	for(var/style in species_list)

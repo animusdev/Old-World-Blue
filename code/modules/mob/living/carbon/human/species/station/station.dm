@@ -135,6 +135,7 @@
 	language = "Siik'tajr"
 	tail = "tajtail"
 	tail_animation = 'icons/mob/human_races/tajaran_tail.dmi'
+	default_h_style = "Tajaran Ears"
 	unarmed_attacks = list(
 		new /datum/unarmed_attack/stomp,
 		new /datum/unarmed_attack/kick,

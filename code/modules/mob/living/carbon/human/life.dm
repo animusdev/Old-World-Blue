@@ -255,10 +255,10 @@
 					if(!lying)
 						emote("collapse")
 				if(prob(5) && prob(100 * RADIATION_SPEED_COEFFICIENT) && species.get_bodytype() == "Human") //apes go bald
-					if((h_style != "Bald" || f_style != "Shaved" ))
+					if(h_style != species.default_h_style || f_style != species.default_f_style)
 						src << "<span class='warning'>Your hair falls out.</span>"
-						h_style = "Bald"
-						f_style = "Shaved"
+						h_style = species.default_h_style
+						f_style = species.default_f_style
 						update_hair()
 
 		if (radiation > 75)
