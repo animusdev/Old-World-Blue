@@ -44,7 +44,7 @@
 
 	examine(mob/user, return_dist = 0)
 		. = ..()
-		for(var/obj/machinery/nuclearbomb/bomb in world)
+		for(var/obj/machinery/nuclearbomb/bomb in machines)
 			if(bomb.timing)
 				user << "Extreme danger.  Arming signal detected.   Time remaining: [bomb.timeleft]"
 

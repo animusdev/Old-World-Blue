@@ -135,10 +135,11 @@
 						dat += "<center><b>Medical Robot Monitor</b></center>"
 						dat += "<a href='?src=\ref[src];screen=1'>Back</a>"
 						dat += "<br><b>Medical Robots:</b>"
-						var/bdat = null
-						for(var/mob/living/bot/medbot/M in world)
 
-							if(M.z != computer.z)	continue	//only find medibots on the same z-level as the computer
+						var/bdat = null
+						for(var/mob/living/bot/medbot/M in mob_list)
+							if(M.z != computer.z)
+								continue	//only find medibots on the same z-level as the computer
 							var/turf/bl = get_turf(M)
 							if(bl)	//if it can't find a turf for the medibot, then it probably shouldn't be showing up
 								bdat += "[M.name] - <b>\[[bl.x],[bl.y]\]</b> - [M.on ? "Online" : "Offline"]<br>"

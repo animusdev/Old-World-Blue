@@ -26,7 +26,7 @@
 	var/dat
 	dat += "<B>Maintenance Units</B><BR>"
 
-	for(var/mob/living/silicon/robot/drone/D in world)
+	for(var/mob/living/silicon/robot/drone/D in mob_list)
 		if(D.z != src.z)
 			continue
 		dat += "<BR>[D.real_name] ([D.stat == DEAD ? "<font color='red'>INACTIVE" : "<font color='green'>ACTIVE"]</FONT>)"
@@ -68,7 +68,7 @@
 	else if (href_list["ping"])
 
 		usr << "<span class='notice'>You issue a maintenance request for all active drones, highlighting [drone_call_area].</span>"
-		for(var/mob/living/silicon/robot/drone/D in world)
+		for(var/mob/living/silicon/robot/drone/D in mob_list)
 			if(D.client && D.stat == DEAD)
 				D << "-- Maintenance drone presence requested in: [drone_call_area]."
 

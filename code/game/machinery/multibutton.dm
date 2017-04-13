@@ -116,7 +116,7 @@
 #define SAFE   0x10
 
 /obj/machinery/button/remote/multibutton/proc/airlock(var/cid, var/mode = 1)
-	for(var/obj/machinery/door/airlock/D in world)
+	for(var/obj/machinery/door/airlock/D in machines)
 		if(D.id_tag == cid)
 			if(mode & OPEN)
 				if(D.density)
@@ -157,7 +157,7 @@
 //	Blast door remote control
 
 /obj/machinery/button/remote/multibutton/proc/blastdoor(var/cid)
-	for(var/obj/machinery/door/blast/M in world)
+	for(var/obj/machinery/door/blast/M in machines)
 		if(M.id == cid)
 			if(M.density)
 				spawn(0)
@@ -172,7 +172,7 @@
 //	Emitter remote control
 
 /obj/machinery/button/remote/multibutton/proc/emitter(var/cid)
-	for(var/obj/machinery/power/emitter/E in world)
+	for(var/obj/machinery/power/emitter/E in machines)
 		if(E.id == cid)
 			spawn(0)
 				if(E.active)

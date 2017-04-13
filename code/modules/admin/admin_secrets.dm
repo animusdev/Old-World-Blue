@@ -115,7 +115,7 @@ var/datum/admin_secrets/admin_secrets = new()
 		return
 
 	gravity_is_on = !gravity_is_on
-	for(var/area/A in world)
+	for(var/area/A in all_areas)
 		A.gravitychange(gravity_is_on,A)
 
 	if(gravity_is_on)
@@ -313,15 +313,15 @@ var/datum/admin_secrets/admin_secrets = new()
 
 	var/datum/shuttle/S = shuttle_controller.shuttles[shuttle_tag]
 
-	var/origin_area = input(user, "Which area is the shuttle at now? (MAKE SURE THIS IS CORRECT OR THINGS WILL BREAK)") as null|area in world
+	var/origin_area = input(user, "Which area is the shuttle at now? (MAKE SURE THIS IS CORRECT OR THINGS WILL BREAK)") as null|area in all_areas
 	if (!origin_area) return
 
-	var/destination_area = input(user, "Which area is the shuttle at now? (MAKE SURE THIS IS CORRECT OR THINGS WILL BREAK)") as null|area in world
+	var/destination_area = input(user, "Which area is the shuttle at now? (MAKE SURE THIS IS CORRECT OR THINGS WILL BREAK)") as null|area in all_areas
 	if (!destination_area) return
 
 	var/long_jump = alert(user, "Is there a transition area for this jump?","", "Yes", "No")
 	if (long_jump == "Yes")
-		var/transition_area = input(user, "Which area is the transition area? (MAKE SURE THIS IS CORRECT OR THINGS WILL BREAK)") as null|area in world
+		var/transition_area = input(user, "Which area is the transition area? (MAKE SURE THIS IS CORRECT OR THINGS WILL BREAK)") as null|area in all_areas
 		if (!transition_area) return
 
 		var/move_duration = input(user, "How many seconds will this jump take?") as num
@@ -413,10 +413,10 @@ var/datum/admin_secrets/admin_secrets = new()
 
 	var/datum/shuttle/S = shuttle_controller.shuttles[shuttle_tag]
 
-	var/origin_area = input("Which area is the shuttle at now? (MAKE SURE THIS IS CORRECT OR THINGS WILL BREAK)") as null|area in world
+	var/origin_area = input("Which area is the shuttle at now? (MAKE SURE THIS IS CORRECT OR THINGS WILL BREAK)") as null|area in all_areas
 	if (!origin_area) return
 
-	var/destination_area = input("Which area is the shuttle at now? (MAKE SURE THIS IS CORRECT OR THINGS WILL BREAK)") as null|area in world
+	var/destination_area = input("Which area is the shuttle at now? (MAKE SURE THIS IS CORRECT OR THINGS WILL BREAK)") as null|area in all_areas
 	if (!destination_area) return
 
 	S.move(origin_area, destination_area)
@@ -488,7 +488,7 @@ var/datum/admin_secrets/admin_secrets = new()
 	if(!.)
 		return
 
-	for(var/obj/machinery/light/L in world)
+	for(var/obj/machinery/light/L in machines)
 		L.fix()
 
 

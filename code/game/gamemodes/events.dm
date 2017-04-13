@@ -45,7 +45,7 @@
 /proc/high_radiation_event()
 
 /* // Haha, this is way too laggy. I'll keep the prison break though.
-	for(var/obj/machinery/light/L in world)
+	for(var/obj/machinery/light/L in machines)
 		if(isNotStationLevel(L.z)) continue
 		L.flicker(50)
 
@@ -79,9 +79,8 @@
 //Changing this to affect the main station. Blame Urist. --Pete
 /proc/prison_break() // -- Callagan
 
-
 	var/list/area/areas = list()
-	for(var/area/A in world)
+	for(var/area/A in all_areas)
 		if(istype(A, /area/security/prison) || istype(A, /area/security/brig))
 			areas += A
 

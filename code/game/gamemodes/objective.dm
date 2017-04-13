@@ -536,7 +536,7 @@ datum/objective/steal
 						if(isAI(M) && M.stat != DEAD)
 							return 1
 
-				for(var/mob/living/silicon/ai/ai in world)
+				for(var/mob/living/silicon/ai/ai in mob_list)
 					var/area/check_area = get_area(ai)
 					if(check_area.is_escape_location)
 						return 1
