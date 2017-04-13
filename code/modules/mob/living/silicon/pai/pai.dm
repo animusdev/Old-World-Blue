@@ -190,7 +190,7 @@
 		src.unset_machine()
 		src.reset_view(null)
 		return 0
-	if (stat == 2 || !C.status || !(src.network in C.network)) return 0
+	if (stat == DEAD || !C.status || !(src.network in C.network)) return 0
 
 	// ok, we're alive, camera is good and in our network...
 
@@ -229,7 +229,7 @@
 	src.cameraFollow = null
 	var/cameralist[0]
 
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		usr << "You can't change your camera network because you are dead!"
 		return
 

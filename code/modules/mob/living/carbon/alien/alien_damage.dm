@@ -35,13 +35,11 @@
 
 
 /mob/living/carbon/alien/blob_act()
-	if (stat == 2)
+	if (stat == DEAD)
 		return
 	var/shielded = 0
 
-	var/damage = null
-	if (stat != 2)
-		damage = rand(10,30)
+	var/damage = rand(10,30)
 
 	if(shielded)
 		damage /= 4

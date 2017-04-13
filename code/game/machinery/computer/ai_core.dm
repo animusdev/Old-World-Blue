@@ -127,7 +127,7 @@
 				if(!M.brainmob)
 					user << "\red Sticking an empty [P] into the frame would sort of defeat the purpose."
 					return
-				if(M.brainmob.stat == 2)
+				if(M.brainmob.stat == DEAD)
 					user << "\red Sticking a dead [P] into the frame would sort of defeat the purpose."
 					return
 

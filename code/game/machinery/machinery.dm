@@ -142,7 +142,7 @@ Class Procs:
 	return
 
 /obj/machinery/emp_act(severity)
-	if(use_power && stat == 0)
+	if(use_power && !stat)
 		use_power(7500/severity)
 
 		var/obj/effect/overlay/pulse2 = PoolOrNew(/obj/effect/overlay, src.loc)

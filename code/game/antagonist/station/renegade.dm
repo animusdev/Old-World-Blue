@@ -57,6 +57,8 @@ var/datum/antagonist/renegade/renegades
 	usr << "<B>You summoned guns!</B>"
 	message_admins("[key_name_admin(usr, 1)] summoned guns!")
 	for(var/mob/living/carbon/human/H in player_list)
-		if(H.stat == 2 || !(H.client)) continue
-		if(is_special_character(H)) continue
+		if(H.stat == DEAD || !H.client)
+			continue
+		if(is_special_character(H))
+			continue
 		renegades.add_antagonist(H.mind)

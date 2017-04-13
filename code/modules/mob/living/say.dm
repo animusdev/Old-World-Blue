@@ -295,7 +295,7 @@ proc/get_radio_key_from_channel(var/channel)
 			italics = 1
 			sound_vol *= 0.5 //muffle the sound a bit, so it's like we're actually talking through contact
 
-	if(sleeping || stat == 1)
+	if(sleeping || stat == UNCONSCIOUS)
 		hear_sleep(message)
 		return
 
@@ -327,7 +327,7 @@ proc/get_radio_key_from_channel(var/channel)
 			src << "<span class='warning'>You feel your headset vibrate but can hear nothing from it!</span>"
 		return
 
-	if(sleeping || stat==1) //If unconscious or sleeping
+	if(sleeping || stat == UNCONSCIOUS) //If unconscious or sleeping
 		hear_sleep(message)
 		return
 

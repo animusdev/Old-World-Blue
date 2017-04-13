@@ -10,7 +10,6 @@
 	if (!ticker)
 		src << "You can't commit suicide before the game starts!"
 		return
-//Бэекодеры сосут хуй с их нерфами.-,,,,,,,,,
 	if (suiciding)
 		src << "You're already committing suicide! Be patient!"
 		return
@@ -77,7 +76,7 @@
 /mob/living/carbon/brain/verb/suicide()
 	set hidden = 1
 
-	if (stat == 2)
+	if (stat == DEAD)
 		src << "You're already dead!"
 		return
 
@@ -101,7 +100,7 @@
 /mob/living/silicon/ai/verb/suicide()
 	set hidden = 1
 
-	if (stat == 2)
+	if (stat == DEAD)
 		src << "You're already dead!"
 		return
 
@@ -121,7 +120,7 @@
 /mob/living/silicon/robot/verb/suicide()
 	set hidden = 1
 
-	if (stat == 2)
+	if (stat == DEAD)
 		src << "You're already dead!"
 		return
 
@@ -155,7 +154,7 @@
 
 /mob/living/carbon/slime/verb/suicide()
 	set hidden = 1
-	if (stat == 2)
+	if (stat == DEAD)
 		src << "You're already dead!"
 		return
 

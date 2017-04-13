@@ -500,7 +500,7 @@
 
 
 /proc/cancel_call_proc(var/mob/user)
-	if (!( ticker ) || !emergency_shuttle.can_recall())
+	if (!ticker || !emergency_shuttle.can_recall())
 		return
 	if((ticker.mode.name == "blob")||(ticker.mode.name == "Meteor"))
 		return
@@ -512,7 +512,7 @@
 
 /proc/is_relay_online()
 	for(var/obj/machinery/bluespacerelay/M in world)
-		if(M.stat == 0)
+		if(!M.stat)
 			return 1
 	return 0
 

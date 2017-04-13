@@ -111,8 +111,8 @@
 			continue
 		else
 			var/mob/M = I.loc
-			if (M.stat == 2)
-				if (M.timeofdeath + 6000 < world.time)
+			if(M.stat == DEAD)
+				if(M.timeofdeath + 6000 < world.time)
 					continue
 			if(isOnAdminLevel(M))	continue
 			var/tmpname = M.real_name

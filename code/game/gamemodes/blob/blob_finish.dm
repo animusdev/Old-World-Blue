@@ -55,7 +55,7 @@
 	for (var/mob/living/silicon/ai/aiPlayer in mob_list)
 		for(var/mob/living/carbon/human/M in mob_list)
 			if ((M != aiPlayer && M.client))
-				if (M.stat == 2)
+				if (M.stat == DEAD)
 					numDead += 1
 				else
 					var/T = M.loc

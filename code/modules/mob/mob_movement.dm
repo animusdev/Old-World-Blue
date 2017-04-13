@@ -237,11 +237,10 @@
 		return O.relaymove(mob, direct)
 
 	if(isturf(mob.loc))
-
 		if(mob.restrained())//Why being pulled while cuffed prevents you from moving
 			for(var/mob/M in range(mob, 1))
 				if(M.pulling == mob)
-					if(!M.restrained() && M.stat == 0 && M.canmove && mob.Adjacent(M))
+					if(!M.restrained() && !M.stat && M.canmove && mob.Adjacent(M))
 						src << "\blue You're restrained! You can't move!"
 						return 0
 					else

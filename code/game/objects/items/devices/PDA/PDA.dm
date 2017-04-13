@@ -247,7 +247,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "AI IM"
 	set name = "Send Message"
 	set src in usr
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		usr << "You can't send PDA messages because you are dead!"
 		return
 	var/list/plist = available_pdas()
@@ -263,7 +263,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "AI IM"
 	set name = "Toggle Sender/Receiver"
 	set src in usr
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		usr << "You can't do that because you are dead!"
 		return
 	toff = !toff
@@ -274,7 +274,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "AI IM"
 	set name = "Toggle Ringer"
 	set src in usr
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		usr << "You can't do that because you are dead!"
 		return
 	message_silent=!message_silent
@@ -285,7 +285,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "AI IM"
 	set name = "Show Message Log"
 	set src in usr
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		usr << "You can't do that because you are dead!"
 		return
 	var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>"

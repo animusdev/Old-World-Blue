@@ -74,7 +74,7 @@ datum/objective/assassinate
 				target.current.stat == DEAD || \
 				issilicon(target.current) || \
 				isbrain(target.current) || \
-				target.current.z > 8 || \
+				isOnPlayerLevel(target.current.z) || \
 				!target.current.ckey
 			) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 				return 1
@@ -347,7 +347,7 @@ datum/objective/escape
 			return 0
 		if(!emergency_shuttle.returned())
 			return 0
-		if(!owner.current || owner.current.stat ==2)
+		if(!owner.current || owner.current.stat == DEAD)
 			return 0
 		var/turf/location = get_turf(owner.current.loc)
 		if(!location)
@@ -558,7 +558,7 @@ datum/objective/download
 	check_completion()
 		if(!ishuman(owner.current))
 			return 0
-		if(!owner.current || owner.current.stat == 2)
+		if(!owner.current || owner.current.stat == DEAD)
 			return 0
 
 		var/current_amount
@@ -665,7 +665,7 @@ datum/objective/heist/kidnap
 		if(!target)//If it's a free objective.
 			return 1
 		if(target && target.current)
-			if (target.current.stat == 2)
+			if (target.current.stat == DEAD)
 				return 0 // They're dead. Fail.
 			//if (!target.current.restrained())
 			//	return 0 // They're loose. Close but no cigar.

@@ -207,7 +207,7 @@
 	if(air_contents.total_moles < 10)
 		return
 	if(occupant)
-		if(occupant.stat == 2)
+		if(occupant.stat == DEAD)
 			return
 		occupant.bodytemperature += 2*(air_contents.temperature - occupant.bodytemperature)*current_heat_capacity/(current_heat_capacity + air_contents.heat_capacity())
 		occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
@@ -319,7 +319,7 @@
 	set category = "Object"
 	set src in oview(1)
 	if(usr == occupant)//If the user is inside the tube...
-		if (usr.stat == 2)//and he's not dead....
+		if(usr.stat == DEAD)//and he's not dead....
 			return
 		usr << "\blue Release sequence activated. This will take two minutes."
 		sleep(1200)
@@ -327,7 +327,7 @@
 			return
 		go_out()//and release him from the eternal prison.
 	else
-		if (usr.stat != 0)
+		if(usr.stat)
 			return
 		go_out()
 	add_fingerprint(usr)

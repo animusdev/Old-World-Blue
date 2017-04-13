@@ -155,7 +155,8 @@
 
 
 /mob/living/carbon/human/blob_act()
-	if(stat == 2)	return
+	if(stat == DEAD)
+		return
 	show_message("\red The blob attacks you!")
 	var/dam_zone = pick(BP_CHEST, BP_L_HAND, BP_R_HAND, BP_L_LEG, BP_R_LEG)
 	var/obj/item/organ/external/affecting = get_organ(ran_zone(dam_zone))

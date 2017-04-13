@@ -48,20 +48,20 @@ default behaviour is:
 
 /mob/living/Bump(atom/movable/AM, yes)
 	spawn(0)
-		if ((!( yes ) || now_pushing) || !loc)
+		if(!yes || now_pushing || !loc)
 			return
 		now_pushing = 1
 		if (istype(AM, /mob/living))
 			var/mob/living/tmob = AM
 
 			for(var/mob/living/M in range(tmob, 1))
-				if(tmob.pinned.len ||  ((M.pulling == tmob && ( tmob.restrained() && !( M.restrained() ) && M.stat == 0)) || locate(/obj/item/weapon/grab, tmob.grabbed_by.len)) )
+				if(tmob.pinned.len || (M.pulling == tmob && (tmob.restrained() && !M.restrained() && !M.stat)) || tmob.grabbed_by.len)
 					if ( !(world.time % 5) )
 						src << "<span class='warning'>[tmob] is restrained, you cannot push past</span>"
 					now_pushing = 0
 					return
-				if( tmob.pulling == M && ( M.restrained() && !( tmob.restrained() ) && tmob.stat == 0) )
-					if ( !(world.time % 5) )
+				if(tmob.pulling == M && (M.restrained() && !tmob.restrained() && !tmob.stat))
+					if( !(world.time % 5) )
 						src << "<span class='warning'>[tmob] is restraining [M], you cannot push past</span>"
 					now_pushing = 0
 					return

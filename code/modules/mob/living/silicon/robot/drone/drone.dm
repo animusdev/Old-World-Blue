@@ -81,7 +81,7 @@
 /mob/living/silicon/robot/drone/updateicon()
 
 	overlays.Cut()
-	if(stat == 0)
+	if(!stat)
 		overlays += "[icon_state]-eyes"
 	else
 		overlays -= "eyes"
@@ -105,7 +105,7 @@
 
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 
-		if(stat == 2)
+		if(stat == DEAD)
 
 			if(!config.allow_drone_spawn || emagged || health < -35) //It's dead, Dave.
 				user << "<span class='danger'>The interface is fried, and a distressing burned smell wafts from the robot's interior. You're not rebooting this one.</span>"

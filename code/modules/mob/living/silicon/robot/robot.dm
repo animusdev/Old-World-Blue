@@ -707,7 +707,7 @@
 
 /mob/living/silicon/robot/updateicon()
 	overlays.Cut()
-	if(stat == 0)
+	if(!stat)
 		var/image/eyes = image(icon, sprite_data.eyes)
 		eyes.color = sprite_data.eyes_color
 		overlays += eyes

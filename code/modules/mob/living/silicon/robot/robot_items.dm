@@ -245,9 +245,9 @@
 		return
 
 	//n_name = copytext(n_name, 1, 32)
-	if(( get_dist(user,paper) <= 1  && user.stat == 0))
+	if(get_dist(user,paper) <= 1  && !user.stat)
+		add_fingerprint(user)
 		paper.name = "paper[(n_name ? text("- '[n_name]'") : null)]"
-	add_fingerprint(user)
 	return
 
 //TODO: Add prewritten forms to dispense when you work out a good way to store the strings.

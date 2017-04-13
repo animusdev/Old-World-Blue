@@ -76,7 +76,7 @@
 
 		dat += "Laws:<br>[laws]<br>"
 
-		if (src.occupant.stat == 2)
+		if (src.occupant.stat == DEAD)
 			dat += "<b>AI nonfunctional</b>"
 		else
 			dat += "<b>AI functional</b>"
