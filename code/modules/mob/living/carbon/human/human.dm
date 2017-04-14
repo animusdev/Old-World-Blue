@@ -646,6 +646,10 @@
 		src.examinate(M)
 
 	if (href_list["flavor_change"])
+		if(usr != src)
+			usr << "No."
+			return
+
 		switch(href_list["flavor_change"])
 			if("done")
 				src << browse(null, "window=flavor_changes")
