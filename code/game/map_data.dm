@@ -1,8 +1,6 @@
 var/datum/maps_data/maps_data = new
 
 /proc/isStationLevel(var/level)
-	if(isnum(level))
-		level = num2text(level)
 	return level in maps_data.station_levels
 
 /proc/isNotStationLevel(var/level)
@@ -20,8 +18,6 @@ var/datum/maps_data/maps_data = new
 	return T && isPlayerLevel(T.z)
 
 /proc/isAdminLevel(var/level)
-	if(isnum(level))
-		level = num2text(level)
 	return level in maps_data.admin_levels
 
 /proc/isNotAdminLevel(var/level)
@@ -32,13 +28,8 @@ var/datum/maps_data/maps_data = new
 	return T && isAdminLevel(T.z)
 
 /proc/max_default_z_level()
-	var/max_z = 0
-	for(var/level in maps_data.all_levels)
-		var/z = text2num(level)
-		max_z = max(z, max_z)
+	return maps_data.all_levels.len
 
-	return max_z
-/*
 /mob/verb/TEST_MAP()
 	set name = "test map markers"
 	set category = "Debug"
@@ -53,7 +44,6 @@ var/datum/maps_data/maps_data = new
 	src << "isAdminLevel: [isAdminLevel(z)]"
 	src << "isNotAdminLevel: [isNotAdminLevel(z)]"
 	src << "isOnAdminLevel: [isOnAdminLevel(src)]"
-*/
 
 /datum/maps_data
 	var/list/all_levels     = new
@@ -64,29 +54,31 @@ var/datum/maps_data/maps_data = new
 	var/list/overmap_finds  = new
 
 /datum/maps_data/proc/registrate(var/obj/map_data/MD)
-	var/level = "[MD.z]"
+	var/level = MD.z
 	if(level in all_levels)
 		WARNING("[level] is already in all_levels list!")
 		qdel(MD)
 		return
 
 	MD.loc = null
+	if(all_levels.len < level)
+		all_levels.len = level
 	all_levels[level] = MD
 
 	if(MD.is_station_level)
-		station_levels[level]= MD
+		station_levels += level
 
 	if(MD.is_admin_level)
-		admin_levels[level]  = MD
+		admin_levels += level
 
 	if(MD.is_player_level)
-		player_levels[level] = MD
+		player_levels += level
 
 	if(MD.is_overmap_level)
-		overmap_levels[level]= MD
+		overmap_levels += level
 
 	if(MD.is_overmap_finds)
-		overmap_finds[level] = MD
+		overmap_finds += level
 
 
 
