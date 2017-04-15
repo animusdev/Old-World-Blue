@@ -219,9 +219,9 @@ mob/living/proc/near_camera()
 		return TRACKING_TERMINATE
 	if(invisibility >= INVISIBILITY_LEVEL_ONE) //cloaked
 		return TRACKING_TERMINATE
-	if(digitalcamo)
-		return TRACKING_TERMINATE
 	if(istype(loc,/obj/effect/dummy))
+		return TRACKING_TERMINATE
+	if(digitalcamo)
 		return TRACKING_TERMINATE
 
 	 // Now, are they viewable by a camera? (This is last because it's the most intensive check)

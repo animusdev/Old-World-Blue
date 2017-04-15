@@ -46,7 +46,7 @@ var/global/list/modifications_types = list(
 
 	proc/is_allowed(var/organ = "", datum/preferences/P)
 		if(!organ || !(organ in body_parts))
-			usr << "[name] isn't useable for [organ_tag_to_name[organ]]"
+			usr << "[name] isn't useable for [P.get_organ_name(organ)]"
 			return 0
 		if(allowed_species && !(P.species in allowed_species))
 			usr << "[name] isn't allowed for [P.species]"

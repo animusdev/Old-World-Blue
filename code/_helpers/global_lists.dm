@@ -68,16 +68,7 @@ var/global/list/organ_structure = list(
 	l_hand= list(name= "Left hand", parent=BP_L_ARM, children=list()),
 	r_foot= list(name= "Right foot",parent=BP_R_LEG, children=list()),
 	l_foot= list(name= "Left foot", parent=BP_L_LEG, children=list()),
-	)
-
-var/global/list/organ_tag_to_name = list(
-	head  = "Head", r_arm = "Right arm",r_hand = "Right hand",
-	chest = "Body", r_leg = "Right Leg",r_foot = "Right foot",
-	eyes  = "Eyes", l_arm = "Left arm", l_hand = "Left hand",
-	groin = "Groin",l_leg = "Left Leg", l_foot = "Left foot",
-	chest2= "Back", heart = "Heart",    lungs  = "Lungs",
-	liver = "Liver"
-	)
+)
 
 // Visual nets
 var/list/datum/visualnet/visual_nets = list()

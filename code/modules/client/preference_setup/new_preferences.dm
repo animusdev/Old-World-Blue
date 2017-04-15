@@ -555,9 +555,9 @@
 		var/datum/body_modification/mod = get_modification(organ)
 		var/disp_name = mod ? mod.short_name : "Nothing"
 		if(organ == current_organ)
-			dat += "<div><b><span style='background-color:pink'>[organ_tag_to_name[organ]]</span></b> "
+			dat += "<div><b><span style='background-color:pink'>[get_organ_name(organ)]</span></b> "
 		else
-			dat += "<div><b>[organ_tag_to_name[organ]]</b> "
+			dat += "<div><b>[get_organ_name(organ)]</b> "
 		dat += "<a href='?src=\ref[src];color=[organ]'><span class='box' style='background-color:[modifications_colors[organ]]'></span></a>"
 		dat += "<br><a href='?src=\ref[src];organ=[organ]'>[disp_name]</a></div>"
 
@@ -570,9 +570,9 @@
 		var/disp_name = mod ? mod.short_name : "Nothing"
 		dat += "<div><a href='?src=\ref[src];color=[organ]'><span class='box' style='background-color:[modifications_colors[organ]]'></span></a>"
 		if(organ == current_organ)
-			dat += " <b><span style='background-color:pink'>[organ_tag_to_name[organ]]</span></b>"
+			dat += " <b><span style='background-color:pink'>[get_organ_name(organ)]</span></b>"
 		else
-			dat += " <b>[organ_tag_to_name[organ]]</b>"
+			dat += " <b>[get_organ_name(organ)]</b>"
 		dat += "<br><a href='?src=\ref[src];organ=[organ]'>[disp_name]</a></div>"
 
 	dat += "</td></tr></table><hr>"
@@ -583,12 +583,13 @@
 	for(var/organ in internal_organs)
 		if(!organ in body_modifications) continue
 
+		var/obj/item/organ/internal/organ_type = current_species.has_organ[organ]
 		var/datum/body_modification/mod = get_modification(organ)
 		var/disp_name = mod.short_name
 		if(organ == current_organ)
-			dat += "<td width='33%'><b><span style='background-color:pink'>[organ_tag_to_name[organ]]</span></b>"
+			dat += "<td width='33%'><b><span style='background-color:pink'>[initial(organ_type.name)]</span></b>"
 		else
-			dat += "<td width='33%'><b>[organ_tag_to_name[organ]]</b>"
+			dat += "<td width='33%'><b>[initial(organ_type.name)]</b>"
 		dat += "<br><a href='?src=\ref[src];organ=[organ]'>[disp_name]</a></td>"
 
 		if(++counter >= 3)
@@ -603,6 +604,20 @@
 	if(!organ || !modifications_data[organ])
 		return body_modifications["nothing"]
 	return modifications_data[organ]
+
+/datum/preferences/proc/get_organ_name(var/organ)
+	switch(organ)
+		if("back")
+			return "back"
+		if("eyes")
+			return "eyes"
+	if(organ in current_species.has_organ)
+		var/obj/item/organ/internal/organ_type = current_species.has_organ[organ]
+		return initial(organ_type.name)
+	else
+		var/datum/organ_description/OD = current_species.has_limbs[organ]
+		return OD.name
+
 
 /datum/preferences/proc/check_child_modifications(var/organ = BP_CHEST)
 	var/list/organ_data = organ_structure[organ]
@@ -624,8 +639,9 @@
 
 	else if(href_list["color"])
 		var/organ = href_list["color"]
-		if(!modifications_colors[organ]) modifications_colors[organ] = "#FFFFFF"
-		var/new_color = input(user, "Choose color for [organ_tag_to_name[organ]]: ", "Character Preference", modifications_colors[organ]) as color|null
+		if(!modifications_colors[organ])
+			modifications_colors[organ] = "#FFFFFF"
+		var/new_color = input(user, "Choose color for [get_organ_name(organ)]: ", "Character Preference", modifications_colors[organ]) as color|null
 		if(new_color && modifications_colors[organ]!=new_color)
 			req_update_icon = 1
 			modifications_colors[organ] = new_color
