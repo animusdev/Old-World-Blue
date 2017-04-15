@@ -27,3 +27,5 @@
 
 #define QUANTIZE(variable) (round(variable,0.0001))
 
+#define SIMPLE_SIGN(X) ((X) < 0 ? -1 : 1)
+#define SIGN(X)        ((X) ? SIMPLE_SIGN(X) : 0)
