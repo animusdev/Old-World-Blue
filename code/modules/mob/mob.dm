@@ -272,20 +272,6 @@
 	else
 		src << "The game appears to have misplaced your mind datum, so we can't show you your notes."
 
-/mob/proc/store_memory(msg as message, popup, sane = 1)
-	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
-
-	if (sane)
-		msg = sanitize(msg)
-
-	if (length(memory) == 0)
-		memory += msg
-	else
-		memory += "<BR>[msg]"
-
-	if (popup)
-		memory()
-
 /mob/proc/update_flavor_text()
 	set src in usr
 	if(usr != src)
@@ -661,13 +647,7 @@
 			canmove = 0
 			break
 
-	//Temporarily moved here from the various life() procs
-	//I'm fixing stuff incrementally so this will likely find a better home.
-	//It just makes sense for now. ~Carn
-	if(update_icon)	//forces a full overlay update
-		update_icon = 0
-		regenerate_icons()
-	else if(lying != lying_prev)
+	if(lying != lying_prev)
 		update_icons()
 
 	return canmove
