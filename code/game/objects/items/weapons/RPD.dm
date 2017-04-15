@@ -47,7 +47,7 @@ RPD
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	//matter = list(DEFAULT_WALL_MATERIAL = 50000)
 	origin_tech = list(TECH_ENGINEERING = 4, TECH_MATERIAL = 2)
 	var/datum/effect/effect/system/spark_spread/spark_system
@@ -380,7 +380,7 @@ RPD
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "rpd"
 	item_state = "rpdammo"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	origin_tech = list(TECH_MATERIAL = 2)
 	matter = list(DEFAULT_WALL_MATERIAL = 30000,"glass" = 15000)
 */

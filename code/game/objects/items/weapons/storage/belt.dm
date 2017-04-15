@@ -3,12 +3,10 @@
 	desc = "Can hold various things."
 	icon = 'icons/inv_slots/belts/icon.dmi'
 	icon_state = "utility"
-	storage_slots = 0
-	max_storage_space = 28 //This should ensure belts always have enough room to store whatever.
-	max_w_class = 3
+	storage_slots = 9
+	max_w_class = ITEM_SIZE_NORMAL
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
-
 	var/show_above_suit = 0
 
 /obj/item/weapon/storage/belt/verb/toggle_layer()
@@ -116,7 +114,6 @@
 	name = "security belt"
 	desc = "Can hold security gear like handcuffs and flashes."
 	icon_state = "security"
-	max_w_class = 3
 	can_hold = list(
 		/obj/item/weapon/grenade,
 		/obj/item/weapon/reagent_containers/spray/pepper,
@@ -125,7 +122,7 @@
 		/obj/item/clothing/glasses,
 		/obj/item/ammo_casing/shotgun,
 		/obj/item/ammo_magazine,
-		/obj/item/weapon/reagent_containers/food/snacks/donut/,
+		/obj/item/weapon/reagent_containers/food/snacks/donut,
 		/obj/item/weapon/melee/baton,
 		/obj/item/weapon/gun/energy/taser,
 		/obj/item/weapon/flame/lighter,
@@ -146,7 +143,6 @@
 	desc = "A belt for holding forensics equipment."
 	icon_state = "security"
 	storage_slots = 7
-	max_w_class = 3
 	can_hold = list(
 		/obj/item/device/taperecorder,
 		/obj/item/clothing/glasses,
@@ -186,9 +182,7 @@
 	desc = "Designed for ease of access to the shards during a fight, as to not let a single enemy spirit slip away"
 	icon_state = "soulstone"
 	storage_slots = 6
-	can_hold = list(
-		/obj/item/device/soulstone
-		)
+	can_hold = list(/obj/item/device/soulstone)
 
 /obj/item/weapon/storage/belt/soulstone/full/New()
 	..()
@@ -214,7 +208,6 @@
 	desc = "Can hold security gear like handcuffs and flashes, with more pouches for more storage."
 	icon_state = "swatbelt"
 	storage_slots = 9
-	max_w_class = 3
 	max_storage_space = 28
 
 /obj/item/weapon/storage/belt/security/batman
@@ -222,7 +215,6 @@
 	desc = "For all your crime-fighting bat needs."
 	icon_state = "bmbelt"
 	storage_slots = 7
-	max_w_class = 3
 	max_storage_space = 28
 	can_hold = list(
 		/obj/item/weapon/grenade,
@@ -252,7 +244,7 @@
 	desc = "A dorky fannypack for keeping small items in."
 	icon_state = "fannypack_leather"
 	storage_slots = 3
-	max_w_class = 2
+	max_w_class = ITEM_SIZE_SMALL
 
 /obj/item/weapon/storage/belt/fannypack/black
 	name = "black fannypack"
@@ -271,7 +263,7 @@
 	desc = "A belt used to hold most janitorial supplies."
 	icon_state = "janibelt"
 	storage_slots = 7
-	max_w_class = 3
+	max_w_class = ITEM_SIZE_NORMAL
 	can_hold = list(
 		/obj/item/clothing/glasses,
 		/obj/item/device/flashlight,

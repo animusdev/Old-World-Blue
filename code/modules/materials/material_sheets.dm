@@ -11,7 +11,7 @@
 /obj/item/stack/material
 	force = 5.0
 	throwforce = 5
-	w_class = 3.0
+	w_class = ITEM_SIZE_LARGE
 	randpixel = 4
 	throw_speed = 3
 	throw_range = 3

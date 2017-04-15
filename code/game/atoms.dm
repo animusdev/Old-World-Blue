@@ -18,9 +18,6 @@
 	///Chemistry.
 	var/datum/reagents/reagents = null
 
-	//Detective Work, used for the duplicate data points kept in the scanners
-	var/list/original_atom
-
 /atom/proc/reveal_blood()
 	return
 

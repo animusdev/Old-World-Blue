@@ -69,7 +69,7 @@
 	icon_state = "telebaton_0"
 	item_state = "telebaton_0"
 	slot_flags = SLOT_BELT
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	force = 3
 	var/on = 0
 
@@ -77,28 +77,29 @@
 /obj/item/weapon/melee/telebaton/attack_self(mob/user as mob)
 	on = !on
 	if(on)
-		user.visible_message("\red With a flick of their wrist, [user] extends their telescopic baton.",\
-		"\red You extend the baton.",\
-		"You hear an ominous click.")
+		user.visible_message(
+			"<span class='warning'>With a flick of their wrist, [user] extends their telescopic baton.</span>",
+			"<span class='warning'>You extend the baton.</span>",
+			"You hear an ominous click."
+		)
 		icon_state = "telebaton_1"
 		item_state = "telebaton_1"
-		w_class = 3
+		w_class = ITEM_SIZE_NORMAL
 		force = 15//quite robust
 		attack_verb = list("smacked", "struck", "slapped")
 	else
-		user.visible_message("\blue [user] collapses their telescopic baton.",\
-		"\blue You collapse the baton.",\
-		"You hear a click.")
+		user.visible_message(
+			"<span class='notice'>\The [user] collapses their telescopic baton.</span>",\
+			"<span class='notice'>You collapse the baton.</span>",\
+			"You hear a click."
+		)
 		icon_state = "telebaton_0"
 		item_state = "telebaton_0"
-		w_class = 2
+		w_class = ITEM_SIZE_SMALL
 		force = 3//not so robust now
 		attack_verb = list("hit", "punched")
 
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
+	update_held_icon()
 
 	playsound(src.loc, 'sound/weapons/empty.ogg', 50, 1)
 	add_fingerprint(user)

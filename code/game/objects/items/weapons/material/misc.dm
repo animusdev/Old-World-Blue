@@ -15,7 +15,7 @@
 	icon_state = "hatchet"
 	force_divisor = 0.2 // 12 with hardness 60 (steel)
 	thrown_force_divisor = 0.75 // 15 with weight 20 (steel)
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	sharp = 1
 	edge = 1
 	origin_tech = list(TECH_MATERIAL = 2, TECH_COMBAT = 1)
@@ -51,7 +51,7 @@
 	flags = CONDUCT | NOBLUDGEON
 	force_divisor = 0.25 // 5 with weight 20 (steel)
 	thrown_force_divisor = 0.25 // as above
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	attack_verb = list("slashed", "sliced", "cut", "clawed")
 
 /obj/item/weapon/material/scythe
@@ -64,7 +64,7 @@
 	edge = 1
 	throw_speed = 1
 	throw_range = 3
-	w_class = 4
+	w_class = ITEM_SIZE_HUGE
 	slot_flags = SLOT_BACK
 	origin_tech = list(TECH_MATERIAL = 2, TECH_COMBAT = 2)
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
@@ -76,5 +76,5 @@
 	hitsound = 'sound/weapons/genhit3.ogg'
 	force_divisor = 0.15
 	thrown_force_divisor = 0.1
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	attack_verb = list("smashed", "bashed", "slammed")

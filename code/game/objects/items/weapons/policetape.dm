@@ -4,7 +4,7 @@
 	desc = "A roll of police tape used to block off crime scenes from the public."
 	icon_state = "police"
 	icon = 'icons/policetape.dmi'
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	var/turf/start
 	var/turf/end
 	var/tape_type = /obj/item/tape

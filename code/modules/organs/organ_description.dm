@@ -7,7 +7,7 @@
 	var/max_damage = 0
 	var/vital = 0
 	var/cannot_amputate = 0
-	var/w_class = 3
+	var/w_class = ITEM_SIZE_NORMAL
 
 	var/body_part = null
 	var/amputation_point = "spine"
@@ -27,7 +27,7 @@
 	max_damage = 100
 	vital = 1
 	cannot_amputate = 1
-	w_class = 5
+	w_class = ITEM_SIZE_HUGE
 
 	body_part = UPPER_TORSO
 	amputation_point = "spine"
@@ -40,7 +40,7 @@
 	min_broken_damage = 35
 	max_damage = 100
 	vital = 1
-	w_class = 4
+	w_class = ITEM_SIZE_LARGE
 
 	body_part = LOWER_TORSO
 	joint = "hip"
@@ -55,7 +55,7 @@
 	max_damage = 75
 	min_broken_damage = 35
 	vital = 1
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 
 	body_part = HEAD
 	joint = "jaw"
@@ -66,7 +66,7 @@
 /datum/organ_description/arm
 	max_damage = 50
 	min_broken_damage = 30
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	parent_organ = BP_CHEST
 	can_grasp = 1
 
@@ -87,7 +87,7 @@
 /datum/organ_description/leg
 	max_damage = 50
 	min_broken_damage = 30
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	parent_organ = BP_GROIN
 	can_stand = 1
 
@@ -109,7 +109,7 @@
 
 /datum/organ_description/hand
 	min_broken_damage = 15
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	can_grasp = 1
 	drop_on_remove = list(slot_gloves, slot_handcuffed)
 
@@ -132,6 +132,7 @@
 /datum/organ_description/foot
 	default_type = /obj/item/organ/external
 	min_broken_damage = 15
+	w_class = ITEM_SIZE_SMALL
 	can_stand = 1
 	drop_on_remove = list(slot_shoes, slot_legcuffed)
 

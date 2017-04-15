@@ -6,7 +6,7 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "evidenceobj"
 	item_state = ""
-	w_class = 1
+	w_class = ITEM_SIZE_SMALL
 	var/obj/item/stored_item = null
 
 /obj/item/weapon/evidencebag/resolve_attackby(obj/item/I, mob/user)
@@ -21,7 +21,7 @@
 		user << "<span class='notice'>[src] already has something inside it.</span>"
 		return ..()
 
-	if(I.w_class > 3)
+	if(I.w_class > ITEM_SIZE_NORMAL)
 		user << "<span class='notice'>[I] won't fit in [src].</span>"
 		return ..()
 

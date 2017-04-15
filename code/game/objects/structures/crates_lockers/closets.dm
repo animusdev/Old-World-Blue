@@ -4,6 +4,7 @@
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "closed"
 	density = 1
+	w_class = ITEM_SIZE_NO_CONTAINER
 	var/icon_opened = "open"
 	var/icon_closed = ""
 	var/opened = 0

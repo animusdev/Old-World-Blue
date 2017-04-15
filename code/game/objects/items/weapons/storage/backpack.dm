@@ -7,10 +7,10 @@
 	desc = "You wear this on your back and put items into it."
 	icon = 'icons/inv_slots/back/icon.dmi'
 	icon_state = "backpack"
-	w_class = 4
+	w_class = ITEM_SIZE_HUGE
 	slot_flags = SLOT_BACK
-	max_w_class = 3
-	max_storage_space = 28
+	max_w_class = ITEM_SIZE_LARGE
+	max_storage_space = DEFAULT_BACKPACK_STORAGE
 	storage_slots = 0
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -39,7 +39,7 @@
 	desc = "A backpack that opens into a localized pocket of Blue Space."
 	origin_tech = list(TECH_BLUESPACE = 4)
 	icon_state = "holdingpack"
-	max_w_class = 4
+	max_w_class = ITEM_SIZE_NORMAL
 	max_storage_space = 56
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -60,8 +60,8 @@
 	desc = "Space Santa uses this to deliver toys to all the nice children in space in Christmas! Wow, it's pretty big!"
 	icon_state = "giftbag0"
 	item_state = "giftbag"
-	w_class = 4.0
-	max_w_class = 3
+	w_class = ITEM_SIZE_HUGE
+	max_w_class = ITEM_SIZE_NORMAL
 	max_storage_space = 400 // can store a ton of shit!
 	item_state_slots = null
 
@@ -140,7 +140,8 @@
 	name = "dufflebag"
 	desc = "A large dufflebag for holding extra things."
 	icon_state = "duffle"
-	max_storage_space = 34
+	w_class = ITEM_SIZE_HUGE
+	max_storage_space = DEFAULT_BACKPACK_STORAGE + 6
 	slowdown = 1
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie

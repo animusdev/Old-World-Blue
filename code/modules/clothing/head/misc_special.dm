@@ -23,7 +23,7 @@
 	body_parts_covered = HEAD|FACE|EYES
 	icon_action_button = "action_welding"
 	siemens_coefficient = 0.9
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/clothing/head/welding/attack_self()
 	toggle()
@@ -140,7 +140,7 @@ obj/item/clothing/head/welding/blue
 	body_parts_covered = HEAD|FACE|EYES
 	brightness_on = 2
 	light_overlay = "helmet_light"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 
 /*
  * Kitty ears

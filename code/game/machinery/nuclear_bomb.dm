@@ -30,7 +30,7 @@ var/bomb_set
 	desc = "Better keep this safe."
 	icon_state = "nucleardisk"
 	item_state = "card-id"
-	w_class = 2.0
+	w_class = ITEM_SIZE_TINY
 
 
 /obj/machinery/nuclearbomb/New()

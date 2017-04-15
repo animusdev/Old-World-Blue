@@ -11,7 +11,7 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30,60)
 	volume = 60
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	randpixel = 6
 	flags = OPENCONTAINER
 	center_of_mass = list("x"=16, "y"=16)

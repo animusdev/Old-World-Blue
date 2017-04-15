@@ -69,6 +69,7 @@ It's not your time
 	desc = "A Collectable Welding Helmet. Now with 80% less lead! Not for actual welding. Any welding done while wearing this Helmet is done so at the owner's own risk!"
 	icon_state = "welding"
 	item_state = "welding"
+	w_class = ITEM_SIZE_NORMAL
 	body_parts_covered = HEAD|FACE|EYES
 
 /obj/item/clothing/head/collectable/slime2
@@ -114,6 +115,7 @@ It's not your time
 	desc = "WARNING! Offers no real protection, or luminosity, but it is damn fancy!"
 	icon_state = "hardhat0_yellow"
 	item_state = "hardhat0_yellow"
+	w_class = ITEM_SIZE_NORMAL
 	body_parts_covered = 0
 
 /obj/item/clothing/head/collectable/HoS

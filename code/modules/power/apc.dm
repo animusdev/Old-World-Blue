@@ -469,8 +469,8 @@
 		if (stat & MAINT)
 			user << "<span class='warning'>There is no connector for your power cell.</span>"
 			return
-		if(W.w_class != 3)
-			user << "\The [W] is too [W.w_class < 3? "small" : "large"] to fit here."
+		if(W.w_class != ITEM_SIZE_NORMAL)
+			user << "\The [W] is too [W.w_class < ITEM_SIZE_NORMAL? "small" : "large"] to fit here."
 			return
 
 		user.unEquip(W, src)
@@ -1290,7 +1290,7 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 	icon_state = "power_mod"
 	item_state = "electronic"
 	matter = list(DEFAULT_WALL_MATERIAL = 50, "glass" = 50)
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	flags = CONDUCT
 
 /obj/item/weapon/power_control/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)

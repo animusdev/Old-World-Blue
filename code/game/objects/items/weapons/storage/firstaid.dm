@@ -15,7 +15,8 @@
 	throw_range = 8
 	var/empty = 0
 	storage_slots = 0
-	max_storage_space = 14
+	max_w_class = ITEM_SIZE_SMALL
+	max_storage_space = DEFAULT_BOX_STORAGE
 
 
 /obj/item/weapon/storage/firstaid/fire
@@ -134,7 +135,7 @@
 	name = "surgery kit"
 	desc = "Contains tools for surgery."
 	max_storage_space = 21
-	max_w_class = 3
+	max_w_class = ITEM_SIZE_NORMAL
 
 /obj/item/weapon/storage/firstaid/surgery/New()
 	..()
@@ -160,14 +161,13 @@
 	icon_state = "pill_canister"
 	icon = 'icons/obj/chemical.dmi'
 	item_state = "contsolid"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
+	max_w_class = ITEM_SIZE_TINY
+	max_storage_space = 14
 	can_hold = list(/obj/item/weapon/reagent_containers/pill,/obj/item/weapon/dice,/obj/item/weapon/paper)
 	allow_quick_gather = 1
 	use_to_pickup = 1
 	use_sound = null
-	storage_slots = 0
-	max_storage_space = 14
-	max_w_class = 1
 
 /obj/item/weapon/storage/pill_bottle/antitox
 	name = "bottle of Dylovene pills"

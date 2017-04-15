@@ -1,7 +1,7 @@
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
 	var/tmp/image/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
@@ -141,15 +141,17 @@
 /obj/item/examine(mob/user, var/return_dist = 0)
 	var/size
 	switch(src.w_class)
-		if(1.0)
+		if(ITEM_SIZE_TINY)
 			size = "tiny"
-		if(2.0)
+		if(ITEM_SIZE_SMALL)
 			size = "small"
-		if(3.0)
+		if(ITEM_SIZE_NORMAL)
 			size = "normal-sized"
-		if(4.0)
+		if(ITEM_SIZE_LARGE)
+			size = "large"
+		if(ITEM_SIZE_HUGE)
 			size = "bulky"
-		if(5.0)
+		if(ITEM_SIZE_HUGE + 1 to INFINITY)
 			size = "huge"
 	return ..(user, return_dist, "", "It is a [size] item.")
 
@@ -314,7 +316,7 @@ var/list/global/slot_flags_enumeration = list(
 	//Lastly, check special rules for the desired slot.
 	switch(slot)
 		if(slot_l_ear, slot_r_ear)
-			if( (w_class > 1) && !(slot_flags & SLOT_EARS) )
+			if((w_class > ITEM_SIZE_TINY) && !(slot_flags & SLOT_EARS))
 				return 0
 		if(slot_wear_id)
 			if(!H.w_uniform && (slot_w_uniform in mob_equip))
@@ -328,8 +330,10 @@ var/list/global/slot_flags_enumeration = list(
 				return 0
 			if(slot_flags & SLOT_DENYPOCKET)
 				return 0
-			if( w_class > 2 && !(slot_flags & SLOT_POCKET) )
+			if(w_class > ITEM_SIZE_SMALL && !(slot_flags & SLOT_POCKET))
 				return 0
+			if(get_storage_cost() == ITEM_SIZE_NO_CONTAINER)
+				return 0 //pockets act like storage and should respect ITEM_SIZE_NO_CONTAINER. Suit storage might be fine as is
 		if(slot_s_store)
 			if(!H.wear_suit && (slot_wear_suit in mob_equip))
 				if(!disable_warning)

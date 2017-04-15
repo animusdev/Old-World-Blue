@@ -7,6 +7,8 @@
 	matter = list(DEFAULT_WALL_MATERIAL = 75)
 	subspace_transmission = 1
 	canhear_range = 0 // can't hear headsets from very far away
+
+	w_class = ITEM_SIZE_TINY
 	slot_flags = SLOT_EARS
 	var/translate_binary = 0
 	var/translate_hive = 0

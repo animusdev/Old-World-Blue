@@ -37,7 +37,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
-	w_class = 5.0
+	w_class = ITEM_SIZE_NO_CONTAINER
 	force = 40
 	sharp = 1
 	edge = 1

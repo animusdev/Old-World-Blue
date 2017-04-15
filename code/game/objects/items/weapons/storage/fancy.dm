@@ -46,6 +46,9 @@
 	icon_type = "egg"
 	name = "egg box"
 	storage_slots = 12
+	max_w_class = ITEM_SIZE_SMALL
+	w_class = ITEM_SIZE_NORMAL
+
 	can_hold = list(
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/boiledegg
@@ -70,6 +73,9 @@
 	item_state = "candlebox5"
 	storage_slots = 5
 	throwforce = 2
+	w_class = ITEM_SIZE_SMALL
+	max_w_class = ITEM_SIZE_TINY
+	max_storage_space = 5
 	slot_flags = SLOT_BELT
 
 
@@ -88,7 +94,9 @@
 	desc = "A box of crayons for all your rune drawing needs."
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonbox"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
+	max_w_class = ITEM_SIZE_TINY
+	max_storage_space = 6
 	storage_slots = 6
 	icon_type = "crayon"
 	can_hold = list(
@@ -131,10 +139,11 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigpacket"
 	item_state = "cigpacket"
-	w_class = 1
+	w_class = ITEM_SIZE_SMALL
+	max_w_class = ITEM_SIZE_TINY
+	max_storage_space = 6
 	throwforce = 2
 	slot_flags = SLOT_BELT
-	max_storage_space = 6
 	storage_slots = 6
 	can_hold = list(/obj/item/clothing/mask/smokable/cigarette, /obj/item/weapon/flame/lighter)
 	icon_type = "cigarette"
@@ -183,7 +192,8 @@
 	icon_state = "cigarcase"
 	item_state = "cigarcase"
 	icon = 'icons/obj/cigarettes.dmi'
-	w_class = 1
+	w_class = ITEM_SIZE_SMALL
+	max_w_class = ITEM_SIZE_TINY
 	throwforce = 2
 	slot_flags = SLOT_BELT
 	max_storage_space = 7
@@ -232,6 +242,8 @@
 	icon_state = "vialbox6"
 	icon_type = "vial"
 	name = "vial storage box"
+	w_class = ITEM_SIZE_NORMAL
+	max_w_class = ITEM_SIZE_TINY
 	storage_slots = 6
 	can_hold = list(/obj/item/weapon/reagent_containers/glass/beaker/vial)
 
@@ -248,7 +260,8 @@
 	icon = 'icons/obj/vialbox.dmi'
 	icon_state = "vialbox0"
 	item_state = "syringe_kit"
-	max_w_class = 2
+	w_class = ITEM_SIZE_NORMAL
+	max_w_class = ITEM_SIZE_TINY
 	can_hold = list(/obj/item/weapon/reagent_containers/glass/beaker/vial)
 	max_storage_space = 12 //The sum of the w_classes of all the items in this storage item.
 	storage_slots = 6

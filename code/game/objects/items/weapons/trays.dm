@@ -10,13 +10,13 @@
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	flags = CONDUCT
 	matter = list(DEFAULT_WALL_MATERIAL = 3000)
 	var/max_carry = 8
 
 /obj/item/weapon/tray/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-
+	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	// Drop all the things. All of them.
 	overlays.Cut()
 	for(var/obj/item/I in src)
@@ -51,9 +51,9 @@
 				location.add_blood(M)     ///Plik plik, the sound of blood
 
 		admin_attack_log(user, M,
-			"Used the [src.name] to attack [key_name(M)]",
-			"Has been attacked with [src.name] by [key_name(user)]",
-			"used the [src.name] to attack"
+			"Used \the [src.name] to attack [key_name(M)]",
+			"Was attacked with \a [src] by [key_name(user)]",
+			"used \a [src] to attack"
 		)
 
 		if(prob(15))

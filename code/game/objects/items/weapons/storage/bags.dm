@@ -32,8 +32,9 @@
 	icon_state = "trashbag0"
 	item_state = "trashbag"
 
-	w_class = 4
-	max_w_class = 2
+	w_class = ITEM_SIZE_SMALL
+	max_w_class = ITEM_SIZE_HUGE //can fit a backpack inside a trash bag, seems right
+	max_storage_space = DEFAULT_BACKPACK_STORAGE
 	storage_slots = 21
 	can_hold = list() // any
 	cant_hold = list(/obj/item/weapon/disk/nuclear)
@@ -59,8 +60,9 @@
 	icon_state = "plasticbag"
 	item_state = "plasticbag"
 
-	w_class = 4
-	max_w_class = 2
+	w_class = ITEM_SIZE_TINY
+	max_w_class = ITEM_SIZE_NORMAL
+	max_storage_space = DEFAULT_BOX_STORAGE
 	storage_slots = 21
 	can_hold = list() // any
 	cant_hold = list(/obj/item/weapon/disk/nuclear)
@@ -75,10 +77,10 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "satchel"
 	slot_flags = SLOT_BELT | SLOT_POCKET
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	storage_slots = 50
 	max_storage_space = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * ore.w_class
-	max_w_class = 3
+	max_w_class = ITEM_SIZE_NORMAL
 	can_hold = list(/obj/item/weapon/ore)
 
 
@@ -92,8 +94,8 @@
 	icon_state = "plantbag"
 	storage_slots = 50; //the number of plant pieces it can carry.
 	max_storage_space = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
-	max_w_class = 3
-	w_class = 2
+	max_w_class = ITEM_SIZE_NORMAL
+	w_class = ITEM_SIZE_SMALL
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/grown,/obj/item/seeds,/obj/item/weapon/grown)
 
 
@@ -110,7 +112,7 @@
 	desc = "A patented Nanotrasen storage system designed for any kind of mineral sheet."
 
 	var/capacity = 300; //the number of sheets it can carry.
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 
 	allow_quick_empty = 1 // this function is superceded
 	New()
@@ -249,7 +251,7 @@
 	icon_state = "cashbag"
 	desc = "A bag for carrying lots of cash. It's got a big dollar sign printed on the front."
 	storage_slots = 50; //the number of cash pieces it can carry.
-	max_storage_space = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * cash.w_class
-	max_w_class = 3
-	w_class = 2
+	max_storage_space = 100
+	max_w_class = ITEM_SIZE_HUGE
+	w_class = ITEM_SIZE_SMALL
 	can_hold = list(/obj/item/weapon/coin,/obj/item/weapon/spacecash)

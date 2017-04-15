@@ -305,7 +305,7 @@
 	desc = "Small device which allows rapid deployment and removal of inflatables."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "inf_box"
-	w_class = 3
+	w_class = ITEM_SIZE_LARGE
 
 	// By default stores up to 10 walls and 5 doors. May be changed.
 	var/stored_walls = 10

@@ -50,7 +50,7 @@
 	desc = "A suit that protects against low pressure environments. \"NSS EXODUS\" is written in large block letters on the back."
 	icon_state = "space"
 	item_state = "s_suit"
-	w_class = 5 // So you can't fit this in your bag and be prepared at all times.
+	w_class = ITEM_SIZE_LARGE//large item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
 	flags = PHORONGUARD

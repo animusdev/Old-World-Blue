@@ -3,7 +3,7 @@
 	desc = "Used by obese officers to save their breath for running."
 	icon_state = "voice0"
 	item_state = "flashbang"	//looks exactly like a flash (and nothing like a flashbang)
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	flags = CONDUCT
 	slot_flags = SLOT_EARS
 	icon_action_button = "action_hailer"

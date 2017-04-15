@@ -3,13 +3,16 @@
 	desc = "Talk through this."
 	icon_state = "intercom"
 	anchored = 1
-	w_class = 4.0
+	w_class = ITEM_SIZE_HUGE
 	canhear_range = 2
 	flags = CONDUCT | NOBLOODY
 	var/number = 0
 	var/anyai = 1
 	var/mob/living/silicon/ai/ai = list()
 	var/last_tick //used to delay the powercheck
+
+/obj/item/device/radio/intercom/get_storage_cost()
+	return ITEM_SIZE_NO_CONTAINER
 
 /obj/item/device/radio/intercom/New()
 	..()

@@ -17,7 +17,7 @@
  * Twohanded
  */
 /obj/item/weapon/material/twohanded
-	w_class = 4
+	w_class = ITEM_SIZE_HUGE
 	var/wielded = 0
 	var/force_wielded = 0
 	var/force_unwielded
@@ -119,7 +119,7 @@
 
 ///////////OFFHAND///////////////
 /obj/item/weapon/material/twohanded/offhand
-	w_class = 5
+	w_class = ITEM_SIZE_HUGE
 	icon_state = "offhand"
 	name = "offhand"
 	default_material = "placeholder"
@@ -146,7 +146,7 @@
 	sharp = 1
 	edge = 1
 	pry = 1
-	w_class = 4.0
+	w_class = ITEM_SIZE_HUGE
 	slot_flags = SLOT_BACK
 	force_wielded = 30
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
@@ -165,9 +165,6 @@
 			var/obj/effect/plant/P = A
 			P.die_off()
 
-
-
-
 //spears, bay edition
 /obj/item/weapon/material/twohanded/spear
 	icon_state = "spearglass0"
@@ -175,7 +172,7 @@
 	name = "spear"
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	force = 10
-	w_class = 4.0
+	w_class = ITEM_SIZE_HUGE
 	slot_flags = SLOT_BACK
 	force_wielded = 0.35           // 22 when wielded with hardness 15 (glass)
 	unwielded_force_divisor = 0.25 // 14 when unwielded based on above
@@ -194,7 +191,7 @@
 	name = "bo staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts. Can be wielded to both kill and incapacitate."
 	force = 10
-	w_class = 4
+	w_class = ITEM_SIZE_LARGE
 	slot_flags = SLOT_BACK
 	hitsound = 'sound/weapons/genhit3.ogg'
 	force_unwielded = 0.80

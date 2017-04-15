@@ -9,11 +9,11 @@
 	name = "storage"
 	icon = 'icons/obj/storage.dmi'
 	sprite_group = SPRITE_STORAGE
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	var/list/can_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
 	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_hold isn't set)
 	var/list/is_seeing = new/list() //List of mobs which are currently seeing the contents of this item's storage
-	var/max_w_class = 2 //Max size of objects that this object can store (in effect only if can_hold isn't set)
+	var/max_w_class = ITEM_SIZE_SMALL //Max size of objects that this object can store (in effect only if can_hold isn't set)
 	var/max_storage_space = 14 //The sum of the storage costs of all the items in this storage item.
 	var/storage_slots = 7 //The number of storage slots in this container.
 	var/obj/screen/storage/boxes = null
@@ -218,11 +218,14 @@
 
 //This proc return 1 if the item can be picked up and 0 if it can't.
 //Set the stop_messages to stop it from printing messages
-/obj/item/weapon/storage/proc/can_be_inserted(obj/item/W as obj, stop_messages = 0)
+/obj/item/weapon/storage/proc/can_be_inserted(obj/item/W, stop_messages = 0)
 	if(!istype(W)) return //Not an item
 
 	if(src.loc == W)
 		return 0 //Means the item is already in the storage item
+
+	if(W.anchored)
+		return 0
 
 	if(can_hold.len)
 		if(!is_type_in_list(W, can_hold))
@@ -251,6 +254,11 @@
 		return 0
 
 	var/total_storage_space = W.get_storage_cost()
+	if(total_storage_space == ITEM_SIZE_NO_CONTAINER)
+		if(!stop_messages)
+			usr << "<span class='notice'>\The [W] cannot be placed in [src].</span>"
+		return 0
+
 	for(var/obj/item/I in contents)
 		total_storage_space += I.get_storage_cost() //Adds up the combined w_classes which will be in the storage item if the item is added to it.
 
@@ -291,7 +299,7 @@
 					usr << "<span class='notice'>You put \the [W] into [src].</span>"
 				else if (M in range(1)) //If someone is standing close enough, they can tell what it is...
 					M.show_message("<span class='notice'>\The [usr] puts [W] into [src].</span>")
-				else if (W && W.w_class >= 3) //Otherwise they can only see large or normal items from a distance...
+				else if (W && W.w_class >= ITEM_SIZE_NORMAL) //Otherwise they can only see large or normal items from a distance...
 					M.show_message("<span class='notice'>\The [usr] puts [W] into [src].</span>")
 
 		src.orient2hud(usr)
@@ -406,7 +414,7 @@
 		remove_from_storage(I, T)
 
 /obj/item/weapon/storage/New()
-
+	..()
 	if(allow_quick_empty)
 		verbs += /obj/item/weapon/storage/verb/quick_empty
 	else
@@ -455,6 +463,17 @@
 			var/obj/O = A
 			O.hear_talk(M, text, verb, speaking)
 
+/obj/item/weapon/storage/proc/make_exact_fit()
+	storage_slots = contents.len
+
+	can_hold.Cut()
+	max_w_class = 0
+	max_storage_space = 0
+	for(var/obj/item/I in src)
+		can_hold[I.type]++
+		max_w_class = max(I.w_class, max_w_class)
+		max_storage_space += I.get_storage_cost()
+
 //Returns the storage depth of an atom. This is the number of storage items the atom is contained in before reaching toplevel (the area).
 //Returns -1 if the atom was not found on container.
 /atom/proc/storage_depth(atom/container)
@@ -492,15 +511,5 @@
 	return depth
 
 /obj/item/proc/get_storage_cost()
-	return 2**(w_class-1) //1,2,4,8,16,...
-
-/obj/item/weapon/storage/proc/make_exact_fit()
-	storage_slots = contents.len
-
-	can_hold.Cut()
-	max_w_class = 0
-	max_storage_space = 0
-	for(var/obj/item/I in src)
-		can_hold[I.type]++
-		max_w_class = max(I.w_class, max_w_class)
-		max_storage_space += I.get_storage_cost()
+	//If you want to prevent stuff above a certain w_class from being stored, use max_w_class
+	return base_storage_cost(w_class)

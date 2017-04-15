@@ -4,9 +4,9 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
 	item_state = "paper"
-	throwforce = 0
-	w_class = 2
 	randpixel = 8
+	throwforce = 0
+	w_class = ITEM_SIZE_SMALL
 	throw_range = 2
 	throw_speed = 1
 	layer = 4

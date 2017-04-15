@@ -329,7 +329,7 @@ var/global/list/chameleons_categories = list(
 	name = "desert eagle"
 	desc = "A fake Desert Eagle with a dial on the side to change the gun's disguise."
 	icon_state = "deagle"
-	w_class = 3.0
+	w_class = ITEM_SIZE_SMALL
 	max_shells = 7
 	caliber = ".45"
 	origin_tech = list(TECH_COMBAT = 2, TECH_MATERIAL = 2, TECH_ILLEGAL = 3)

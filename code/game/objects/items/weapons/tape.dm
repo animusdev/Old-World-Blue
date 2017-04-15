@@ -3,7 +3,7 @@
 	desc = "A roll of sticky tape. Possibly for taping ducks... or was that ducts?"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "taperoll"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	var/in_action = 0
 
 /* -- Disabled for now until it has a use --
@@ -79,7 +79,7 @@
 	desc = "A piece of sticky tape."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "tape"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	layer = 4
 	anchored = 1 //it's sticky, no you cant move it
 
