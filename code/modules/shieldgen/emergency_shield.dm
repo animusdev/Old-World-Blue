@@ -172,7 +172,7 @@
 	update_use_power(0)
 
 /obj/machinery/shieldgen/proc/create_shields()
-	for(var/turf/target_tile in range(2, src))
+	for(var/turf/target_tile in RANGE_TURFS(2, src))
 		if (istype(target_tile,/turf/space) && !(locate(/obj/machinery/shield) in target_tile))
 			if (malfunction && prob(33) || !malfunction)
 				var/obj/machinery/shield/S = new/obj/machinery/shield(target_tile)
@@ -281,7 +281,7 @@
 		else
 			user << "The device must first be secured to the floor."
 	return
-	
+
 /obj/machinery/shieldgen/emag_act(var/remaining_charges, var/mob/user)
 	if(!malfunction)
 		malfunction = 1

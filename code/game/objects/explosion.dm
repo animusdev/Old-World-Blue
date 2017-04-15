@@ -97,7 +97,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 		var/y0 = epicenter.y
 		var/z0 = epicenter.z
 
-		for(var/turf/T in trange(max_range, epicenter))
+		for(var/turf/T in RANGE_TURFS(max_range, epicenter))
 			var/dist = sqrt((T.x - x0)**2 + (T.y - y0)**2)
 
 			if(dist < devastation_range)		dist = 1
@@ -133,7 +133,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 
 
 proc/secondaryexplosion(turf/epicenter, range)
-	for(var/turf/tile in range(range, epicenter))
+	for(var/turf/tile in RANGE_TURFS(range, epicenter))
 		tile.ex_act(2)
 
 ///// Z-Level Stuff

@@ -207,7 +207,7 @@ var/list/rune_animation = list(
 	o.icon = get_rune(rand(1, 1023), 1)
 
 /mob/verb/runes_15x15()
-	for(var/turf/t in range(7))
+	for(var/turf/t in RANGE_TURFS(7, src))
 		var/obj/o = new /obj(t)
 		o.icon = get_rune(rand(1, 1023), 1)
 

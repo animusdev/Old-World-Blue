@@ -24,7 +24,7 @@
 		set_light(1)
 
 	if(air_master)
-		for(var/turf/simulated/turf in range(1))
+		for(var/turf/simulated/turf in RANGE_TURFS(1, src))
 			air_master.mark_for_update(turf)
 
 	sleep(15)
