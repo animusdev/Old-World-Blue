@@ -25,7 +25,13 @@ var/list/slot_equipment_priority = list(
 //This proc is called whenever someone clicks an inventory ui slot.
 /mob/proc/attack_ui(slot)
 	var/obj/item/W = get_active_hand()
-	if(istype(W))
+	var/obj/item/E = get_equipped_item(slot)
+	if (istype(E))
+		if(istype(W))
+			E.attackby(W,src)
+		else
+			E.attack_hand(src)
+	else
 		equip_to_slot_if_possible(W, slot)
 
 /mob/proc/put_in_any_hand_if_possible(obj/item/W as obj, del_on_fail = 0, disable_warning = 1, redraw_mob = 1)
@@ -83,14 +89,13 @@ var/list/slot_equipment_priority = list(
 		var/obj/item/weapon/storage/backpack = src.back
 		if(backpack.can_be_inserted(newitem))
 			newitem.forceMove(src.back)
-			return 1
+			return backpack
 
 	// Try to place it in any item that can store stuff, on the mob.
 	for(var/obj/item/weapon/storage/S in src.contents)
-		if (S.contents.len < S.storage_slots)
+		if(S.can_be_inserted(newitem))
 			newitem.forceMove(S)
-			return 1
-	return 0
+			return S
 
 //These procs handle putting s tuff in your hand. It's probably best to use these rather than setting l_hand = ...etc
 //as they handle all relevant stuff like adding it to the player's screen and updating their overlays.
