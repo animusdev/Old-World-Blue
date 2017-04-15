@@ -258,7 +258,7 @@
 		var/pain = 0
 		if(prob(50))
 			pain = 1
-		for(var/mob/living/M in range(src, 200))
+		for(var/mob/living/M in range(200, src))
 			M << "<font color='red'><b>[pick("A high pitched [pick("keening","wailing","whistle")]","A rumbling noise like [pick("thunder","heavy machinery")]")] somehow penetrates your mind before fading away!</b></font>"
 			if(pain)
 				flick("pain",M.pain)

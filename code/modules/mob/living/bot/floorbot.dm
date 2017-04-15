@@ -124,7 +124,7 @@
 	if(!target && amount && !emagged)
 		if(targetdirection) // Building a bridge
 			var/turf/T = get_step(src, targetdirection)
-			while(T in range(src))
+			while(T in range(src)) //TODO: Check that
 				if(istype(T, /turf/space))
 					target = T
 					break

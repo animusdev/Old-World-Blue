@@ -30,7 +30,7 @@
 		return
 
 	var/epicentre = pick(possibleEpicentres)
-	for(var/obj/machinery/power/apc/apc in range(epicentre,apcSelectionRange))
+	for(var/obj/machinery/power/apc/apc in range(apcSelectionRange, epicentre))
 		if(is_valid_apc(apc))
 			apcs += apc
 			// Greatly increase the chance for APCs in maintenance areas to be selected

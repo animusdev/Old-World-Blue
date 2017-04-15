@@ -106,7 +106,7 @@
 					if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
 						var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 						if(ore_box)
-							for(var/obj/item/weapon/ore/ore in range(chassis,1))
+							for(var/obj/item/weapon/ore/ore in range(1,chassis))
 								if(get_dir(chassis,ore)&chassis.dir)
 									ore.Move(ore_box)
 				else if(istype(target, /turf/simulated/floor/plating/airless/asteroid))
@@ -117,7 +117,7 @@
 					if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
 						var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 						if(ore_box)
-							for(var/obj/item/weapon/ore/ore in range(chassis,1))
+							for(var/obj/item/weapon/ore/ore in range(1,chassis))
 								if(get_dir(chassis,ore)&chassis.dir)
 									ore.Move(ore_box)
 				else if(target.loc == C)
@@ -475,9 +475,9 @@
 				if(!action_checks(target)) return
 				var/list/atoms = list()
 				if(isturf(target))
-					atoms = range(target,3)
+					atoms = range(3,target)
 				else
-					atoms = orange(target,3)
+					atoms = orange(3,target)
 				for(var/atom/movable/A in atoms)
 					if(A.anchored) continue
 					spawn(0)
