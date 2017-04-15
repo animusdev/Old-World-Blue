@@ -325,7 +325,8 @@
 /datum/reagent/ryetalyn/affect_blood(var/mob/living/carbon/M, var/alien, var/removed)
 	//var/needs_update = M.mutations.len > 0
 
-	M.mutations = list()
+	//TODO: DNA3 drop mutations
+	//M.mutations = list()
 	M.disabilities = 0
 	M.sdisabilities = 0
 
