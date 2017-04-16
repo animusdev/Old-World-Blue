@@ -550,8 +550,9 @@
 /datum/chemical_reaction/napalm/on_reaction(var/datum/reagents/holder, var/created_volume)
 	var/turf/simulated/florr/location = get_turf(holder.my_atom.loc)
 	if(location)
-		target_tile.assume_gas("phoron", created_volume, 400+T0C)
-		spawn (0) target_tile.hotspot_expose(700, 400)
+		location.assume_gas("phoron", created_volume, 400+T0C)
+		spawn (0)
+			location.hotspot_expose(700, 400)
 	holder.del_reagent("napalm")
 	return
 
@@ -1026,9 +1027,9 @@
 	sleep(50)
 	var/turf/simuldated/floor/location = get_turf(holder.my_atom.loc)
 	if(location)
-		target_tile.assume_gas("phoron", 25, 1400)
+		location.assume_gas("phoron", 25, 1400)
 		spawn (0)
-			target_tile.hotspot_expose(700, 400)
+			location.hotspot_expose(700, 400)
 
 //Yellow
 /datum/chemical_reaction/slime/overload
