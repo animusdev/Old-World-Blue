@@ -279,7 +279,7 @@
 		if(air_master)
 			air_master.mark_for_update(src)
 
-		for(var/turf/space/S in RANGE_TURFS(W,1))
+		for(var/turf/space/S in RANGE_TURFS(1,W))
 			S.update_starlight()
 
 		W.levelupdate()

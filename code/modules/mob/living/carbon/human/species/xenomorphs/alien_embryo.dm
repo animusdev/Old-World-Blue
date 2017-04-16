@@ -168,7 +168,7 @@
 		affected_mob.stat = DEAD
 		src.protect = 1
 
-		for(var/mob/L in range(src, 10))
+		for(var/mob/L in range(10,src))
 			L << "\red <b>[new_xeno] crawls out of [affected_mob]!</b>"
 		affected_mob.overlays += image('icons/mob/alien.dmi', loc = affected_mob, icon_state = "bursted_stand")
 	//	if(gib_on_success)

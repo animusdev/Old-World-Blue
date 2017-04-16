@@ -216,7 +216,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		if(5)
 			dat += "<H3>Upload a New Title</H3>"
 			if(!scanner)
-				for(var/obj/machinery/libraryscanner/S in range(9))
+				for(var/obj/machinery/libraryscanner/S in range(9, src))
 					scanner = S
 					break
 			if(!scanner)

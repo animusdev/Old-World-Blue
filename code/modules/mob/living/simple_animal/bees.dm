@@ -64,7 +64,7 @@
 				target_turf = null
 			if(strength > 5)
 				//calm down and spread out a little
-				var/mob/living/simple_animal/bee/B = new(get_turf(pick(orange(src,1))))
+				var/mob/living/simple_animal/bee/B = new(pick(RANGE_TURFS(1,src)))
 				B.strength = rand(1,5)
 				src.strength -= B.strength
 				if(src.strength <= 5)

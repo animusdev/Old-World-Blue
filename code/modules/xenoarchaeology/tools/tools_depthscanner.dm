@@ -45,7 +45,7 @@
 
 			positive_locations.Add(D)
 
-			for(var/mob/L in range(src, 1))
+			for(var/mob/L in range(1,src))
 				L << "\blue \icon[src] [src] pings."
 
 	else if(istype(A,/obj/structure/boulder))
@@ -64,7 +64,7 @@
 
 			positive_locations.Add(D)
 
-			for(var/mob/L in range(src, 1))
+			for(var/mob/L in range(1,src))
 				L << "\blue \icon[src] [src] pings [pick("madly","wildly","excitedly","crazily")]!"
 
 /obj/item/device/depth_scanner/attack_self(var/mob/user as mob)

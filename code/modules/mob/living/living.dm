@@ -54,7 +54,7 @@ default behaviour is:
 		if (istype(AM, /mob/living))
 			var/mob/living/tmob = AM
 
-			for(var/mob/living/M in range(tmob, 1))
+			for(var/mob/living/M in range(1,tmob))
 				if(tmob.pinned.len || (M.pulling == tmob && (tmob.restrained() && !M.restrained() && !M.stat)) || tmob.grabbed_by.len)
 					if ( !(world.time % 5) )
 						src << "<span class='warning'>[tmob] is restrained, you cannot push past</span>"
@@ -456,7 +456,7 @@ default behaviour is:
 
 	var/t7 = 1
 	if (restrained())
-		for(var/mob/living/M in range(src, 1))
+		for(var/mob/living/M in range(1,src))
 			if (M.pulling == src && !M.stat && !M.restrained())
 				t7 = null
 	if (t7 && pulling && (get_dist(src, pulling) <= 1) && client && client.moving)
