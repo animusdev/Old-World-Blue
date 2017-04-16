@@ -191,7 +191,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/jumptomob,
 	/client/proc/jumptocoord,
 	/client/proc/dsay,
-	/client/proc/beacon_move
+	/client/proc/beacon_move,
+	/client/proc/test_MD
 	)
 
 var/list/admin_verbs_paranoid_debug = list(

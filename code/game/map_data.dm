@@ -30,20 +30,20 @@ var/datum/maps_data/maps_data = new
 /proc/max_default_z_level()
 	return maps_data.all_levels.len
 
-/mob/verb/TEST_MAP()
-	set name = "test map markers"
+/client/proc/test_MD()
+	set name = "Test Map Markers"
 	set category = "Debug"
 
-	src << "isStationLevel: [isStationLevel(z)]"
-	src << "isNotStationLevel: [isNotStationLevel(z)]"
-	src << "isOnStationLevel: [isOnStationLevel(src)]"
+	mob << "isStationLevel: [isStationLevel(mob.z)]"
+	mob << "isNotStationLevel: [isNotStationLevel(mob.z)]"
+	mob << "isOnStationLevel: [isOnStationLevel(mob)]"
 
-	src << "isPlayerLevel: [isPlayerLevel(z)]"
-	src << "isOnPlayerLevel: [isOnPlayerLevel(src)]"
+	mob << "isPlayerLevel: [isPlayerLevel(mob.z)]"
+	mob << "isOnPlayerLevel: [isOnPlayerLevel(mob)]"
 
-	src << "isAdminLevel: [isAdminLevel(z)]"
-	src << "isNotAdminLevel: [isNotAdminLevel(z)]"
-	src << "isOnAdminLevel: [isOnAdminLevel(src)]"
+	mob << "isAdminLevel: [isAdminLevel(mob.z)]"
+	mob << "isNotAdminLevel: [isNotAdminLevel(mob.z)]"
+	mob << "isOnAdminLevel: [isOnAdminLevel(mob)]"
 
 /datum/maps_data
 	var/list/all_levels     = new
