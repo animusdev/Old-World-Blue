@@ -47,8 +47,6 @@ using metal and glass, it uses glass and reagents (usually sulphuric acid).
 	return
 
 /obj/machinery/r_n_d/circuit_imprinter/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(shocked)
-		shock(user, 50)
 	if(default_deconstruction_screwdriver(user, O))
 		if(linked_console)
 			linked_console.linked_imprinter = null
@@ -61,9 +59,6 @@ using metal and glass, it uses glass and reagents (usually sulphuric acid).
 	if(panel_open)
 		user << "<span class='notice'>You can't load \the [src] while it's opened.</span>"
 		return 1
-	if(disabled)
-		user << "\The [src] appears to not be working!"
-		return
 	if(!linked_console)
 		user << "\The [src] must be linked to an R&D console first!"
 		return 1
@@ -121,8 +116,6 @@ using metal and glass, it uses glass and reagents (usually sulphuric acid).
 
 	var/obj/new_item = new D.build_path(src.loc)
 	new_item.reliability = D.reliability
-	if(hacked)
-		new_item.reliability = max((reliability / 2), 0)
 
 	busy = 0
 

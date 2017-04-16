@@ -8,7 +8,7 @@ Note: Must be placed west/left of and R&D console to function.
 
 */
 /obj/machinery/r_n_d/protolathe
-	name = "Protolathe"
+	name = "\improper Protolathe"
 	icon_state = "protolathe"
 	flags = OPENCONTAINER
 	circuit = /obj/item/weapon/circuitboard/protolathe
@@ -32,13 +32,10 @@ Note: Must be placed west/left of and R&D console to function.
 	var/T = 0
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 		T += G.reagents.maximum_volume
-	var/datum/reagents/R = new/datum/reagents(T)		//Holder for the reagents used as materials.
-	reagents = R
-	R.my_atom = src
-	T = 0
+	create_reagents(T)
+	max_material_storage = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
-		T += M.rating
-	max_material_storage = T * 75000
+		max_material_storage += M.rating * 75000
 	T = 0
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		T += M.rating
@@ -51,8 +48,6 @@ Note: Must be placed west/left of and R&D console to function.
 		icon_state = "protolathe"
 
 /obj/machinery/r_n_d/protolathe/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(shocked)
-		shock(user, 50)
 	if(default_deconstruction_screwdriver(user, O))
 		if(linked_console)
 			linked_console.linked_lathe = null
@@ -67,8 +62,6 @@ Note: Must be placed west/left of and R&D console to function.
 	if(panel_open)
 		user << "<span class='notice'>You can't load \the [src] while it's opened.</span>"
 		return 1
-	if(disabled)
-		return
 	if(!linked_console)
 		user << "<span class='notice'>\The [src] must be linked to an R&D console first!</span>"
 		return 1
@@ -133,14 +126,8 @@ Note: Must be placed west/left of and R&D console to function.
 			new_item.investigate_log("built by [key]","singulo")
 
 		new_item.reliability = D.reliability
-		if(hacked)
-			D.reliability = max((reliability / 2), 0)
 		if(mat_efficiency != 1) // No matter out of nowhere
 			if(new_item.matter && new_item.matter.len > 0)
 				for(var/i in new_item.matter)
 					new_item.matter[i] = new_item.matter[i] * mat_efficiency
 	busy = 0
-
-//This is to stop these machines being hackable via clicking.
-/obj/machinery/r_n_d/protolathe/attack_hand(mob/user as mob)
-	return

@@ -49,7 +49,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
 	for(var/obj/machinery/r_n_d/D in range(3, src))
-		if(D.linked_console != null || D.disabled || D.panel_open)
+		if(D.linked_console != null || D.panel_open)
 			continue
 		if(istype(D, /obj/machinery/r_n_d/destructive_analyzer))
 			if(linked_destroy == null)
@@ -93,8 +93,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			user << "A disk is already loaded into the machine."
 			return
 
-		if(istype(D, /obj/item/weapon/disk/tech_disk)) t_disk = D
-		else if (istype(D, /obj/item/weapon/disk/design_disk)) d_disk = D
+		if(istype(D, /obj/item/weapon/disk/tech_disk))
+			t_disk = D
+		else if (istype(D, /obj/item/weapon/disk/design_disk))
+			d_disk = D
 		else
 			user << "\red Machine cannot accept disks in that format."
 			return
@@ -254,8 +256,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				if(src)
 					for(var/obj/machinery/r_n_d/server/S in machines)
 						var/server_processed = 0
-						if(S.disabled)
-							continue
 						if((id in S.id_with_upload) || istype(S, /obj/machinery/r_n_d/server/centcom))
 							for(var/datum/tech/T in files.known_tech)
 								S.files.AddTech2Known(T)
@@ -263,7 +263,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								S.files.AddDesign2Known(D)
 							S.files.RefreshResearch()
 							server_processed = 1
-						if(((id in S.id_with_download) && !istype(S, /obj/machinery/r_n_d/server/centcom)) || S.hacked)
+						if((id in S.id_with_download) && !istype(S, /obj/machinery/r_n_d/server/centcom))
 							for(var/datum/tech/T in S.files.known_tech)
 								files.AddTech2Known(T)
 							for(var/datum/design/D in S.files.known_designs)
