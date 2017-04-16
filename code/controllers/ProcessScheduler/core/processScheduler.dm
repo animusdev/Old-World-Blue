@@ -57,7 +57,7 @@ var/global/datum/controller/processScheduler/processScheduler
 
 	var/process
 	// Add all the processes we can find, except for the ticker
-	for (process in typesof(/datum/controller/process) - /datum/controller/process)
+	for (process in subtypesof(/datum/controller/process))
 		if (!(process in deferredSetupList))
 			addProcess(new process(src))
 
@@ -92,7 +92,6 @@ var/global/datum/controller/processScheduler/processScheduler
 		// Check status changes
 		if(status != previousStatus)
 			//Status changed.
-
 			switch(status)
 				if(PROCESS_STATUS_MAYBE_HUNG)
 					message_admins("Process '[p.name]' is [p.getStatusText(status)].")
