@@ -77,9 +77,6 @@ var/global/datum/global_init/init = new ()
 	// Create autolathe recipes, as above.
 	populate_lathe_recipes()
 
-	// Create robolimbs for chargen.
-	populate_robolimb_list()
-
 	generate_body_modification_lists()
 
 	processScheduler = new

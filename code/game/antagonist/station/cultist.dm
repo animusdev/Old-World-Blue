@@ -111,10 +111,10 @@ var/datum/antagonist/cultist/cult
 
 /datum/antagonist/cultist/can_become_antag(var/datum/mind/player)
 	if(!..())
-		return 0
+		return FALSE
 	if(player.current.isSynthetic())
-		return 0
+		return FALSE
 	for(var/obj/item/weapon/implant/loyalty/L in player.current)
-		if(L && (L.imp_in == player.current))
-			return 0
-	return 1
+		if(L.imp_in == player.current)
+			return FALSE
+	return TRUE
