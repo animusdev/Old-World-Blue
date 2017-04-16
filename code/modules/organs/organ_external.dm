@@ -100,7 +100,7 @@
 	owner.organs |= src
 	var/obj/item/organ/external/outdated = H.organs_by_name[organ_tag]
 	if(outdated)
-		outdated.removed()
+		outdated.removed(H, 0)
 	owner.organs_by_name[organ_tag] = src
 
 	for(var/obj/item/organ/organ in src)
@@ -245,7 +245,6 @@
 			if(istype(W,/obj/item/weapon/hemostat))
 				if(contents.len)
 					var/obj/item/removing = pick(contents)
-					removing.forceMove(get_turf(user))
 					user.put_in_hands(removing)
 					user.visible_message("<span class='danger'><b>[user]</b> extracts [removing] from [src] with [W]!</span>")
 				else

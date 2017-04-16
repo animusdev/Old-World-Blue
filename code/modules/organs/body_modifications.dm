@@ -13,7 +13,8 @@ var/global/list/modifications_types = list(
 /proc/generate_body_modification_lists()
 	for(var/mod_type in typesof(/datum/body_modification))
 		var/datum/body_modification/BM = new mod_type()
-		if(!BM.id) continue
+		if(!BM.id)
+			continue
 		body_modifications[BM.id] = BM
 		var/class = ""
 		if(BM.allowed_species && BM.allowed_species.len)
@@ -23,9 +24,12 @@ var/global/list/modifications_types = list(
 
 /proc/get_default_modificaton(var/nature = MODIFICATION_ORGANIC)
 	switch(nature)
-		if(MODIFICATION_ORGANIC) return body_modifications["nothing"]
-		if(MODIFICATION_SILICON) return body_modifications["prosthesis_basic"]
-		if(MODIFICATION_REMOVED) return body_modifications["amputated"]
+		if(MODIFICATION_ORGANIC)
+			return body_modifications["nothing"]
+		if(MODIFICATION_SILICON)
+			return body_modifications["prosthesis_basic"]
+		if(MODIFICATION_REMOVED)
+			return body_modifications["amputated"]
 
 /datum/body_modification
 	var/name = ""
