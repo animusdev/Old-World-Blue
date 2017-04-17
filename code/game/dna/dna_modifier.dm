@@ -81,7 +81,7 @@
 
 	if (usr.stat)
 		return
-	if (!ishuman(usr) && !issmall(usr)) //Make sure they're a mob that has dna
+	if (!ishuman(usr)) //Make sure they're a mob that has dna
 		usr << "<span class='notice'>Try as you might, you can not climb up into the scanner.</span>"
 		return
 	if (src.occupant)
@@ -91,9 +91,7 @@
 		usr << "<span class='warning'>The subject cannot have abiotic items on.</span>"
 		return
 	usr.stop_pulling()
-	usr.client.perspective = EYE_PERSPECTIVE
-	usr.client.eye = src
-	usr.loc = src
+	usr.forceMove(src)
 	src.occupant = usr
 	src.icon_state = "scanner_1"
 	src.add_fingerprint(usr)
@@ -130,11 +128,8 @@
 		return ..()
 
 /obj/machinery/dna_scannernew/proc/put_in(var/mob/M)
-	if(M.client)
-		M.client.perspective = EYE_PERSPECTIVE
-		M.client.eye = src
-	M.loc = src
 	src.occupant = M
+	src.occupant.reset_view(src)
 	src.icon_state = "scanner_1"
 
 	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
@@ -173,12 +168,10 @@
 	return
 
 /obj/machinery/dna_scannernew/proc/go_out()
-	if ((!( src.occupant ) || src.locked))
+	if(!src.occupant || src.locked)
 		return
-	if (src.occupant.client)
-		src.occupant.client.eye = src.occupant.client.mob
-		src.occupant.client.perspective = MOB_PERSPECTIVE
-	src.occupant.loc = src.loc
+	src.occupant.forceMove(loc)
+	src.occupant.reset_view()
 	src.occupant = null
 	src.icon_state = "scanner_0"
 	return
@@ -187,28 +180,22 @@
 	switch(severity)
 		if(1.0)
 			for(var/atom/movable/A as mob|obj in src)
-				A.loc = src.loc
+				A.forceMove(loc)
 				ex_act(severity)
-				//Foreach goto(35)
-			//SN src = null
 			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
 				for(var/atom/movable/A as mob|obj in src)
-					A.loc = src.loc
+					A.forceMove(loc)
 					ex_act(severity)
-					//Foreach goto(108)
-				//SN src = null
 				qdel(src)
 				return
 		if(3.0)
 			if (prob(25))
 				for(var/atom/movable/A as mob|obj in src)
-					A.loc = src.loc
+					A.forceMove(loc)
 					ex_act(severity)
-					//Foreach goto(181)
-				//SN src = null
 				qdel(src)
 				return
 		else
@@ -217,8 +204,8 @@
 
 /obj/machinery/dna_scannernew/blob_act()
 	if(prob(75))
-		for(var/atom/movable/A as mob|obj in src)
-			A.loc = src.loc
+		for(var/atom/movable/A in src)
+			A.forceMove(loc)
 		qdel(src)
 
 /obj/machinery/computer/scan_consolenew
@@ -261,12 +248,10 @@
 
 	switch(severity)
 		if(1.0)
-			//SN src = null
 			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				//SN src = null
 				qdel(src)
 				return
 		else

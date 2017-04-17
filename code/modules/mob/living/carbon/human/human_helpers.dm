@@ -22,16 +22,15 @@
 	var/obj/item/organ/external/H = organs_by_name[BP_HEAD]
 	if(!head || !(head && (head.flags_inv & HIDEFACE)))
 		if(H && H.robotic == ORGAN_ROBOT) //Exactly robotic, not higher as lifelike is higher
-			return 1
+			return TRUE
 
 	//Look at their torso
 	var/obj/item/organ/external/T = organs_by_name[BP_CHEST]
 	if(!wear_suit || (wear_suit && !(wear_suit.flags_inv & HIDEJUMPSUIT)))
 		if(!w_uniform || (w_uniform && !(w_uniform.body_parts_covered & UPPER_TORSO)))
 			if(T && T.robotic == ORGAN_ROBOT)
-				return 1
-
-	return 0
+				return TRUE
+	return FALSE
 
 /mob/living/carbon/human/proc/should_have_organ(var/organ_check)
 

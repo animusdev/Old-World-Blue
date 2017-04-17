@@ -1,0 +1,3 @@
+/datum/mutation/power/regeneration
+
+
