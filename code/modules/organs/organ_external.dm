@@ -121,16 +121,15 @@
 		module.organ_installed(src, owner)
 
 	update_icon()
+	owner.updatehealth()
+	owner.UpdateDamageIcon(0)
 	if(redraw_mob)
 		owner.update_body()
-	owner.updatehealth()
-	owner.UpdateDamageIcon()
 
 
 /obj/item/organ/external/Destroy()
 	if(parent)
 		parent.children -= src
-		parent = null
 
 	if(children)
 		for(var/obj/item/organ/external/C in children)
@@ -176,12 +175,12 @@
 
 	if(children)
 		for(var/obj/item/organ/external/child in children)
-			child.removed(null, 0)
+			child.removed(user, 0)
 			child.loc = src
 
 	if(internal_organs)
 		for(var/obj/item/organ/internal/organ in internal_organs)
-			organ.removed(null, 0)
+			organ.removed(user, 0)
 			organ.loc = src
 
 	// Remove parent references
@@ -192,7 +191,7 @@
 
 	if(redraw_mob) victim.update_body()
 
-/obj/item/organ/external/proc/activate()
+/obj/item/organ/external/proc/activate_module()
 	set name = "Activate module"
 	set category = "Organs"
 	set src in usr

@@ -22,10 +22,10 @@
 	var/verb_desc = "activate embedded module"
 
 /obj/item/organ_module/active/install(var/obj/item/organ/external/E)
-	new /obj/item/organ/external/proc/activate(E, verb_name, verb_desc)
+	new /obj/item/organ/external/proc/activate_module(E, verb_name, verb_desc)
 
 /obj/item/organ_module/active/remove(var/obj/item/organ/external/E)
-	E.verbs -= /obj/item/organ/external/proc/activate
+	E.verbs -= /obj/item/organ/external/proc/activate_module
 
 /obj/item/organ_module/active/proc/activate(var/mob/living/carbon/human/H, var/obj/item/organ/external/E)
 
