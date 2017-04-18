@@ -10,6 +10,12 @@
 /obj/item/weapon/hand_labeler/attack()
 	return
 
+/obj/item/weapon/hand_labeler/get_storage_cost()
+	if(mode)
+		return ITEM_SIZE_NO_CONTAINER
+	else
+		return ..()
+
 /obj/item/weapon/hand_labeler/afterattack(atom/A, mob/user as mob, proximity)
 	if(!proximity)
 		return
