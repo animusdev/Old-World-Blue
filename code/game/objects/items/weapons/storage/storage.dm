@@ -74,7 +74,7 @@
 		L += S.return_inv()
 	for(var/obj/item/weapon/gift/G in src)
 		L += G.gift
-		if (istype(G.gift, /obj/item/weapon/storage))
+		if(istype(G.gift, /obj/item/weapon/storage))
 			L += G.gift:return_inv()
 	return L
 
@@ -272,9 +272,6 @@
 			usr << "<span class='notice'>[src] cannot hold [W] as it's a storage item of the same size.</span>"
 		return 0 //To prevent the stacking of same sized storage items.
 
-	if(istype(W, /obj/item/weapon/hand_labeler))
-		var/obj/item/weapon/hand_labeler/L = W
-		if(L.mode) return 0
 	return 1
 
 //This proc handles items being inserted. It does not perform any checks of whether an item can or can't be inserted. That's done by can_be_inserted()
@@ -342,9 +339,6 @@
 /obj/item/weapon/storage/attackby(obj/item/W as obj, mob/user as mob)
 	..()
 
-	if(isrobot(user))
-		return //Robots can't interact with storage items.
-
 	if(!can_be_inserted(W))
 		return
 
@@ -355,11 +349,8 @@
 				user << "<span class='warning'>The tray won't fit in [src].</span>"
 				return
 			else
-				W.forceMove(get_turf(user))
-				if ((user.client && user.s_active != src))
-					user.client.screen -= W
-				W.dropped(user)
-				user << "<span class='warning'>God damnit!</span>"
+				if(user.unEquip(W, get_turf(src)))
+					user << "<span class='warning'>God damnit!</span>"
 
 	W.add_fingerprint(user)
 	return handle_item_insertion(W)

@@ -237,9 +237,10 @@
 
 /obj/item/weapon/tray/dropped(mob/user)
 	spawn() //Allows the tray to udpate location, rather than just checking against mob's location
-		if(!isturf(src.loc))
+		if(ismob(src.loc))
 			return
-		var/Table = locate(/obj/structure/table) in src.loc
+		var/turf/new_loc = get_turf(src)
+		var/Table = locate(/obj/structure/table) in new_loc
 		if(!Table) //Put on the floor
 			Table = user && (user.loc==src.loc)
 

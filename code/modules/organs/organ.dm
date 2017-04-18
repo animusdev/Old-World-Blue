@@ -39,6 +39,7 @@ var/list/organ_cache = list()
 
 /obj/item/organ/Destroy()
 	if(owner)           owner = null
+	if(parent)          parent = null
 	if(transplant_data) transplant_data.Cut()
 	if(autopsy_data)    autopsy_data.Cut()
 	if(trace_chemicals) trace_chemicals.Cut()

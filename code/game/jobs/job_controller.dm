@@ -449,20 +449,21 @@ var/global/datum/controller/occupations/job_master
 			H.mind.assigned_role = rank
 			alt_title = H.mind.role_alt_title
 
-			//Deferred item spawning.
-			if(put_in_storage.len)
-				var/obj/item/weapon/storage/B
-				if(istype(H.back, /obj/item/weapon/storage))
-					B = H.back
-				else
-					B = locate(/obj/item/weapon/storage) in H.contents
+		//Deferred item spawning.
+		if(put_in_storage.len)
+			var/obj/item/weapon/storage/B
+			if(istype(H.back, /obj/item/weapon/storage))
+				B = H.back
+			else
+				B = locate(/obj/item/weapon/storage) in H.contents
 
-				if(isnull(B))
-					H << "<span class='danger'>Failed to locate a storage object on your mob, either you spawned with no arms and no backpack or this is a bug.</span>"
-				else
-					for(var/obj/item/I in put_in_storage)
-						H << "<span class='notice'>Placing \the [I] in your [B.name]!</span>"
-						I.forceMove(B)
+			if(isnull(B))
+				H << "<span class='danger'>Failed to locate a storage object on your mob, either you spawned with no arms and no backpack or this is a bug.</span>"
+			else
+				for(var/obj/item/I in put_in_storage)
+					H << "<span class='notice'>Placing \the [I] in your [B.name]!</span>"
+					B.handle_item_insertion(I, 1)
+					I.forceMove(B)
 
 		if(istype(H) && !H.buckled) //give humans wheelchairs, if they need them.
 			if(!H.get_organ(BP_L_FOOT) && !H.get_organ(BP_R_FOOT))
@@ -491,6 +492,8 @@ var/global/datum/controller/occupations/job_master
 			if(equipped != 1)
 				var/obj/item/clothing/glasses/G = H.glasses
 				G.prescription = 1
+
+		H.update_icons() //Draw PDA, ID, glasses, etc.
 
 		BITSET(H.hud_updateflag, ID_HUD)
 		BITSET(H.hud_updateflag, IMPLOYAL_HUD)

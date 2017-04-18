@@ -393,7 +393,7 @@ using /datum/datacore/proc/manifest_inject( ), or manifest_insert( )
 
 /proc/get_id_photo(var/mob/living/carbon/human/H, var/assigned_role)
 
-	var/icon/preview_icon = H.stand_icon
+	var/icon/preview_icon = new(H.stand_icon)
 	var/icon/temp
 
 	var/datum/sprite_accessory/hair_style = hair_styles_list[H.h_style ? H.h_style : H.species.default_h_style]
