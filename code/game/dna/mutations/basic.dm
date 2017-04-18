@@ -9,7 +9,8 @@ var/list/all_mutations = new
 
 	src << "Begin check"
 	src << "All mutations ammount = [all_mutations.len]"
-	for(var/datum/mutation/M in all_mutations)
+	for(var/block in all_mutations)
+		var/datum/mutation/M = all_mutations[block]
 		src << "\tMutation \"[M.id]\""
 	src << "============="
 	src << "Alt: [jointext(all_mutations, ", ")]"
