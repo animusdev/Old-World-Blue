@@ -129,7 +129,7 @@
 
 /obj/machinery/dna_scannernew/proc/put_in(var/mob/M)
 	src.occupant = M
-	src.occupant.reset_view(src)
+	src.occupant.forceMove(src)
 	src.icon_state = "scanner_1"
 
 	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
