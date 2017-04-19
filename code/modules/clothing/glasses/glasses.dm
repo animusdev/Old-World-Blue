@@ -32,6 +32,8 @@ BLIND     // can't see anything
 		var/mob/M = src.loc
 		M.update_inv_glasses()
 
+/obj/item/clothing/glasses/proc/on_examine(var/atom/target, var/mob/user)
+
 /obj/item/clothing/glasses/attack_self(mob/user)
 	if(toggleable)
 		if(active)
@@ -267,6 +269,9 @@ BLIND     // can't see anything
 		..()
 		src.hud = new/obj/item/clothing/glasses/hud/security(src)
 		return
+
+	on_examine(atom/A, mob/living/user)
+		hud.on_examine(A, user)
 
 /obj/item/clothing/glasses/sunglasses/sechud/tactical
 	name = "tactical HUD"

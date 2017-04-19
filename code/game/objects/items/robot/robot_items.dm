@@ -54,6 +54,8 @@
 	icon_state = "securearea"
 	var/sight_mode = null
 
+/obj/item/borg/sight/proc/on_examine(var/atom/A, var/mob/living/user)
+
 
 /obj/item/borg/sight/xray
 	name = "\proper x-ray vision"
@@ -77,6 +79,9 @@
 	name = "hud"
 	var/obj/item/clothing/glasses/hud/hud = null
 
+/obj/item/borg/sight/hud/on_examine(var/atom/A, var/mob/living/user)
+	if(hud)
+		hud.on_examine(A, user)
 
 /obj/item/borg/sight/hud/med
 	name = "medical hud"

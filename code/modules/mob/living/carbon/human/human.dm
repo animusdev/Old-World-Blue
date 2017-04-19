@@ -508,105 +508,6 @@
 									var/mob/living/silicon/robot/U = usr
 									R.fields[text("com_[counter]")] = text("Made by [U.name] ([U.modtype] [U.braintype]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [game_year]<BR>[t1]")
 
-	if (href_list["medical"])
-		if(hasHUD(usr,"medical"))
-			var/perpname = "wot"
-			var/modified = 0
-
-			if(wear_id)
-				if(istype(wear_id,/obj/item/weapon/card/id))
-					perpname = wear_id:registered_name
-				else if(istype(wear_id,/obj/item/device/pda))
-					var/obj/item/device/pda/tempPda = wear_id
-					perpname = tempPda.owner
-			else
-				perpname = src.name
-
-			for (var/datum/data/record/E in data_core.general)
-				if (E.fields["name"] == perpname)
-					for (var/datum/data/record/R in data_core.general)
-						if (R.fields["id"] == E.fields["id"])
-
-							var/setmedical = input(usr, "Specify a new medical status for this person.", "Medical HUD", R.fields["p_stat"]) in list("*SSD*", "*Deceased*", "Physically Unfit", "Active", "Disabled", "Cancel")
-
-							if(hasHUD(usr,"medical"))
-								if(setmedical != "Cancel")
-									R.fields["p_stat"] = setmedical
-									modified = 1
-									if(PDA_Manifest.len)
-										PDA_Manifest.Cut()
-
-									spawn()
-										if(ishuman(usr))
-											var/mob/living/carbon/human/U = usr
-											U.handle_regular_hud_updates()
-										if(istype(usr,/mob/living/silicon/robot))
-											var/mob/living/silicon/robot/U = usr
-											U.handle_regular_hud_updates()
-
-			if(!modified)
-				usr << "\red Unable to locate a data core entry for this person."
-
-	if (href_list["medrecord"])
-		if(hasHUD(usr,"medical"))
-			var/perpname = "wot"
-			var/read = 0
-
-			if(wear_id)
-				if(istype(wear_id,/obj/item/weapon/card/id))
-					perpname = wear_id:registered_name
-				else if(istype(wear_id,/obj/item/device/pda))
-					var/obj/item/device/pda/tempPda = wear_id
-					perpname = tempPda.owner
-			else
-				perpname = src.name
-			for (var/datum/data/record/E in data_core.general)
-				if (E.fields["name"] == perpname)
-					for (var/datum/data/record/R in data_core.medical)
-						if (R.fields["id"] == E.fields["id"])
-							if(hasHUD(usr,"medical"))
-								usr << "<b>Name:</b> [R.fields["name"]]	<b>Blood Type:</b> [R.fields["b_type"]]"
-								usr << "<b>DNA:</b> [R.fields["b_dna"]]"
-								usr << "<b>Minor Disabilities:</b> [R.fields["mi_dis"]]"
-								usr << "<b>Details:</b> [R.fields["mi_dis_d"]]"
-								usr << "<b>Major Disabilities:</b> [R.fields["ma_dis"]]"
-								usr << "<b>Details:</b> [R.fields["ma_dis_d"]]"
-								usr << "<b>Notes:</b> [R.fields["notes"]]"
-								usr << "<a href='?src=\ref[src];medrecordComment=`'>\[View Comment Log\]</a>"
-								read = 1
-
-			if(!read)
-				usr << "\red Unable to locate a data core entry for this person."
-
-	if (href_list["medrecordComment"])
-		if(hasHUD(usr,"medical"))
-			var/perpname = "wot"
-			var/read = 0
-
-			if(wear_id)
-				if(istype(wear_id,/obj/item/weapon/card/id))
-					perpname = wear_id:registered_name
-				else if(istype(wear_id,/obj/item/device/pda))
-					var/obj/item/device/pda/tempPda = wear_id
-					perpname = tempPda.owner
-			else
-				perpname = src.name
-			for (var/datum/data/record/E in data_core.general)
-				if (E.fields["name"] == perpname)
-					for (var/datum/data/record/R in data_core.medical)
-						if (R.fields["id"] == E.fields["id"])
-							if(hasHUD(usr,"medical"))
-								read = 1
-								var/counter = 1
-								while(R.fields[text("com_[]", counter)])
-									usr << text("[]", R.fields[text("com_[]", counter)])
-									counter++
-								if (counter == 1)
-									usr << "No comment found"
-								usr << "<a href='?src=\ref[src];medrecordadd=`'>\[Add comment\]</a>"
-
-			if(!read)
-				usr << "\red Unable to locate a data core entry for this person."
 
 	if (href_list["medrecordadd"])
 		if(hasHUD(usr,"medical"))
@@ -1439,6 +1340,12 @@
 	..()
 	if(update_hud)
 		handle_regular_hud_updates()
+
+/mob/living/carbon/human/examinate(atom/A as mob|obj|turf in view())
+	..()
+	if(istype(src.glasses, /obj/item/clothing/glasses))
+		var/obj/item/clothing/glasses/G = src.glasses
+		G.on_examine(A, src)
 
 /mob/living/carbon/human/Check_Shoegrip()
 	if(shoes && (shoes.item_flags & NOSLIP) && istype(shoes, /obj/item/clothing/shoes/magboots))  //magboots + dense_object = no floating

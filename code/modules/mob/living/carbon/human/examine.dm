@@ -347,55 +347,6 @@
 	if(digitalcamo)
 		msg += "[T.He] [T.is] repulsively uncanny!\n"
 
-	if(hasHUD(usr,"security"))
-		var/perpname = "wot"
-		var/criminal = "None"
-
-		if(wear_id)
-			var/obj/item/weapon/card/id/I = wear_id.GetID()
-			if(I)
-				perpname = I.registered_name
-			else
-				perpname = name
-		else
-			perpname = name
-
-		if(perpname)
-			for (var/datum/data/record/E in data_core.general)
-				if(E.fields["name"] == perpname)
-					for (var/datum/data/record/R in data_core.security)
-						if(R.fields["id"] == E.fields["id"])
-							criminal = R.fields["criminal"]
-
-			msg += "<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];criminal=1'>\[[criminal]\]</a>\n"
-			msg += "<span class = 'deptradio'>Security records:</span> <a href='?src=\ref[src];secrecord=`'>\[View\]</a>  <a href='?src=\ref[src];secrecordadd=`'>\[Add comment\]</a>\n"
-
-	if(hasHUD(usr,"medical"))
-		var/perpname = "wot"
-		var/medical = "None"
-
-		if(wear_id)
-			if(istype(wear_id,/obj/item/weapon/card/id))
-				perpname = wear_id:registered_name
-			else if(istype(wear_id,/obj/item/device/pda))
-				var/obj/item/device/pda/tempPda = wear_id
-				perpname = tempPda.owner
-		else
-			perpname = src.name
-
-		for (var/datum/data/record/E in data_core.general)
-			if (E.fields["name"] == perpname)
-				for (var/datum/data/record/R in data_core.general)
-					if (R.fields["id"] == E.fields["id"])
-						medical = R.fields["p_stat"]
-
-		msg += "<span class = 'deptradio'>Physical status:</span> <a href='?src=\ref[src];medical=1'>\[[medical]\]</a>\n"
-		msg += "<span class = 'deptradio'>Medical records:</span> <a href='?src=\ref[src];medrecord=`'>\[View\]</a> <a href='?src=\ref[src];medrecordadd=`'>\[Add comment\]</a>\n"
-
-		var/obj/item/clothing/under/U = w_uniform
-		if(U && istype(U) && U.sensor_mode >= 2)
-			msg += "<span class='deptradio'><b>Damage Specifics:</span> <span style=\"color:blue\">[round(src.getOxyLoss(), 1)]</span>-<span style=\"color:green\">[round(src.getToxLoss(), 1)]</span>-<span style=\"color:#FFA500\">[round(src.getFireLoss(), 1)]</span>-<span style=\"color:red\">[round(src.getBruteLoss(), 1)]</span></b>\n"
-
 	var/flavor = print_flavor_text()
 	if(flavor) msg += "[flavor]\n"
 

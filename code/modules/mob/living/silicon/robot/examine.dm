@@ -1,3 +1,9 @@
+/mob/living/silicon/robot/examinate(atom/A as mob|obj|turf in view())
+	..()
+	for(var/obj/item/borg/sight/hud/H in list(module_state_1, module_state_2, module_state_3))
+		H.on_examine(A, src)
+
+
 /mob/living/silicon/robot/examine(mob/user)
 	var/custom_infix = custom_name ? ", [modtype] [braintype]" : ""
 	. = ..(user, infix = custom_infix)
