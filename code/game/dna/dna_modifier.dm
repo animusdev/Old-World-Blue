@@ -23,10 +23,16 @@
 	var/list/ser=list("data" = null, "owner" = null, "label" = null, "type" = null, "ue" = 0)
 	if(dna)
 		ser["ue"] = (types & DNA2_BUF_UE) == DNA2_BUF_UE
-		ser["data"] = dna.UI
+		if(types & DNA2_BUF_SE)
+			ser["data"] = dna.SE
+		else
+			ser["data"] = dna.UI
 		ser["owner"] = src.dna.real_name
 		ser["label"] = name
-		ser["type"] = "ui"
+		if(types & DNA2_BUF_UI)
+			ser["type"] = "ui"
+		else
+			ser["type"] = "se"
 	return ser
 
 /////////////////////////// DNA MACHINES
@@ -230,6 +236,8 @@
 	circuit = /obj/item/weapon/circuitboard/scan_consolenew
 	var/selected_ui_block = 1.0
 	var/selected_ui_subblock = 1.0
+	var/selected_se_block = 1.0
+	var/selected_se_subblock = 1.0
 	var/selected_ui_target = 1
 	var/selected_ui_target_hex = 1
 	var/radiation_duration = 2.0
@@ -383,6 +391,8 @@
 	data["dnaBlockSize"] = DNA_BLOCK_SIZE
 	data["selectedUIBlock"] = selected_ui_block
 	data["selectedUISubBlock"] = selected_ui_subblock
+	data["selectedSEBlock"] = selected_se_block
+	data["selectedSESubBlock"] = selected_se_subblock
 	data["selectedUITarget"] = selected_ui_target
 	data["selectedUITargetHex"] = selected_ui_target_hex
 
@@ -396,6 +406,7 @@
 		occupantData["minHealth"] = null
 		occupantData["uniqueEnzymes"] = null
 		occupantData["uniqueIdentity"] = null
+		occupantData["structuralEnzymes"] = null
 		occupantData["radiationLevel"] = null
 	else
 		occupantData["name"] = connected.occupant.real_name
@@ -408,6 +419,7 @@
 		occupantData["minHealth"] = config.health_threshold_dead
 		occupantData["uniqueEnzymes"] = connected.occupant.dna.unique_enzymes
 		occupantData["uniqueIdentity"] = connected.occupant.dna.uni_identity
+		occupantData["structuralEnzymes"] = connected.occupant.dna.struc_enzymes
 		occupantData["radiationLevel"] = connected.occupant.radiation
 
 	data["occupant"] = occupantData;
@@ -600,6 +612,38 @@
 
 	////////////////////////////////////////////////////////
 
+	// This chunk of code updates selected block / sub-block based on click (se stands for strutural enzymes)
+	if (href_list["selectSEBlock"] && href_list["selectSESubblock"])
+		return 1 // return 1 forces an update to all Nano uis attached to src
+
+	if (href_list["pulseSERadiation"])
+		var/block = src.connected.occupant.dna.GetSESubBlock(src.selected_se_block,src.selected_se_subblock)
+
+		irradiating = src.radiation_duration
+		var/lock_state = src.connected.locked
+		src.connected.locked = 1 //lock it
+		nanomanager.update_uis(src) // update all UIs attached to src
+
+		sleep(10*src.radiation_duration) // sleep for radiation_duration seconds
+
+		irradiating = 0
+
+		if(src.connected.occupant)
+			if (prob(80 + (src.radiation_duration / 2)))
+				var/real_SE_block=selected_se_block
+				block = miniscramble(block, src.radiation_intensity, src.radiation_duration)
+
+				src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)
+			else
+				src.connected.occupant.radiation += ((src.radiation_intensity*2)+src.radiation_duration)
+				if	(prob(80-src.radiation_duration))
+					randmutb(src.connected.occupant)
+				else
+					randmuti(src.connected.occupant)
+					src.connected.occupant.UpdateAppearance()
+		src.connected.locked = lock_state
+		return 1 // return 1 forces an update to all Nano uis attached to src
+
 	if(href_list["ejectBeaker"])
 		if(connected.beaker)
 			var/obj/item/weapon/reagent_containers/glass/B = connected.beaker
@@ -663,6 +707,17 @@
 				src.buffers[bufferId] = databuf
 			return 1
 
+		if (bufferOption == "saveSE")
+			if(src.connected.occupant && src.connected.occupant.dna)
+				var/datum/dna2/record/databuf=new
+				databuf.types = DNA2_BUF_SE
+				databuf.dna = src.connected.occupant.dna.Clone()
+				if(ishuman(connected.occupant))
+					databuf.dna.real_name=connected.occupant.dna.real_name
+				databuf.name = "Structural Enzymes"
+				src.buffers[bufferId] = databuf
+			return 1
+
 		if (bufferOption == "clear")
 			src.buffers[bufferId]=new /datum/dna2/record()
 			return 1
@@ -695,6 +750,9 @@
 					src.connected.occupant.real_name = buf.dna.real_name
 					src.connected.occupant.name = buf.dna.real_name
 				src.connected.occupant.UpdateAppearance(buf.dna.UI.Copy())
+			else if (buf.types & DNA2_BUF_SE)
+				src.connected.occupant.dna.SE = buf.dna.SE
+				src.connected.occupant.dna.UpdateSE()
 			src.connected.occupant.radiation += rand(20,50)
 			return 1
 
@@ -707,7 +765,10 @@
 				src.injector_ready = 0
 				if(href_list["createBlockInjector"])
 					var/list/selectedbuf
-					selectedbuf=buf.dna.UI
+					if(buf.types & DNA2_BUF_SE)
+						selectedbuf=buf.dna.SE
+					else
+						selectedbuf=buf.dna.UI
 					var/blk = input(usr,"Select Block","Block") in all_dna_blocks(selectedbuf)
 					success = setInjectorBlock(I,blk,buf)
 				else
