@@ -27,6 +27,10 @@
 	slot_flags = SLOT_ID
 	var/obj/item/weapon/card/id/front_id = null
 
+/obj/item/weapon/storage/wallet/handle_item_insertion(obj/item/weapon/card/id/W, prevent_warning)
+	. = ..()
+	if(. && !front_id && istype(W))
+		front_id = W
 
 /obj/item/weapon/storage/wallet/remove_from_storage(obj/item/W as obj, atom/new_location)
 	. = ..(W, new_location)
