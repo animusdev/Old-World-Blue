@@ -146,18 +146,18 @@ obj/item/weapon/gun/energy/retro
 	charge_cost = 50
 	max_shots = 20
 	fire_delay = 2
-	self_recharge = 1
+	self_recharge = 0
 	slot_flags = null
 
 /obj/item/weapon/gun/energy/grumbler
 	name = "Grumbler-R"
-	desc = "A high-power energy gun capable of expelling concentrated plasma blasts."
+	desc = "A high-power energy gun capable of expelling concentrated plasma blast."
 	icon_state = "grumbler"
 	item_state = "pulse"
 	fire_sound = 'sound/weapons/pulse.ogg'
 	projectile_type = /obj/item/projectile/instagib
-	charge_cost = 500
-	max_shots = 3
+	charge_cost = 1500
+	max_shots = 1
 	fire_delay = 30
 	self_recharge = 1
 	slot_flags = null
