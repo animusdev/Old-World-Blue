@@ -12,7 +12,6 @@
 
 	// Role data.
 	var/id = "traitor"                      // Unique datum identifier.
-	var/role_type = BE_TRAITOR              // Preferences option for this role.
 	var/role_text = "Traitor"               // special_role text.
 	var/role_text_plural = "Traitors"       // As above but plural.
 
@@ -90,7 +89,7 @@
 
 	// Prune restricted status. Broke it up for readability.
 	// Note that this is done before jobs are handed out.
-	for(var/datum/mind/player in ticker.mode.get_players_for_role(role_type, id))
+	for(var/datum/mind/player in ticker.mode.get_players_for_role(id))
 		if(ghosts_only && !isobserver(player.current))
 			log_debug("[key_name(player)] is not eligible to become a [role_text]: \
 				Only ghosts may join as this role!")

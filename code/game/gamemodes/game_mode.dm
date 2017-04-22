@@ -460,7 +460,7 @@ var/global/list/additional_antag_types = list()
 			comm.messagetext.Add(intercepttext)
 	world << sound('sound/AI/commandreport.ogg')
 
-/datum/game_mode/proc/get_players_for_role(var/role, var/antag_id, var/ghosts_only)
+/datum/game_mode/proc/get_players_for_role(var/antag_id, var/ghosts_only)
 	var/list/players = list()
 	var/list/candidates = list()
 
@@ -477,7 +477,7 @@ var/global/list/additional_antag_types = list()
 				continue
 			if(isobserver(player) && !ghosts_only)
 				continue
-			if(!role || (player.client.prefs.be_special & role))
+			if(antag_id in player.client.prefs.special_toggles)
 				log_debug("[player.key] had [antag_id] enabled, so we are drafting them.")
 				candidates |= player.mind
 	else
@@ -488,7 +488,7 @@ var/global/list/additional_antag_types = list()
 
 		// Get a list of all the people who want to be the antagonist for this round
 		for(var/mob/new_player/player in players)
-			if(!role || (player.client.prefs.be_special & role))
+			if(antag_id in player.client.prefs.special_toggles)
 				log_debug("[player.key] had [antag_id] enabled, so we are drafting them.")
 				candidates += player.mind
 				players -= player

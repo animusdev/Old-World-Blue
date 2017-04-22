@@ -2,23 +2,10 @@
 
 var/list/preferences_datums = list()
 
-var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm --rastaf
-//some autodetection here.
-// TODO: Update to new antagonist system.
-	"traitor" = IS_MODE_COMPILED("traitor"),             // 0
-	"operative" = IS_MODE_COMPILED("nuclear"),           // 1
-	"changeling" = IS_MODE_COMPILED("changeling"),       // 2
-	"wizard" = IS_MODE_COMPILED("wizard"),               // 3
-	"malf AI" = IS_MODE_COMPILED("malfunction"),         // 4
-	"revolutionary" = IS_MODE_COMPILED("revolution"),    // 5
-	"alien candidate" = 1, //always show                 // 6
-	"positronic brain" = 1,                              // 7
-	"cultist" = IS_MODE_COMPILED("cult"),                // 8
-	"ninja" = "true",                                    // 9
-	"raider" = IS_MODE_COMPILED("heist"),                // 10
-	"diona" = 1,                                         // 11
-	"loyalist" = IS_MODE_COMPILED("revolution"),         // 12
-	"pAI candidate" = 1, // -- TLE                       // 13
+var/global/list/special_roles = list(
+	ROLE_DIONA,
+	ROLE_POSIBRAIN,
+	ROLE_PAI
 )
 
 //used for alternate_option
@@ -41,7 +28,6 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/ooccolor = "#010000"			//Whatever this is set to acts as 'reset' color and is thus unusable as an actual custom color
-	var/be_special = 0					//Special role selection
 	var/UI_style = "Midnight"
 	var/toggles = TOGGLES_DEFAULT
 	var/chat_toggles = CHAT_TOGGLES_DEFAULT

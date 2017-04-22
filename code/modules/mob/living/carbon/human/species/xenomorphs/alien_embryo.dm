@@ -128,7 +128,7 @@
 		for(var/mob/observer/dead/G in player_list)
 			if(G)
 				if(G.client)
-					if(G.client.prefs.be_special & BE_ALIEN)
+					if(ROLE_ALIEN in G.client.prefs.special_toggles)
 						candidates += G.key
 
 		// To stop clientless larva, we will check that our host has a client

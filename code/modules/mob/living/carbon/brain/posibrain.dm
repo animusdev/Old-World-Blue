@@ -31,7 +31,7 @@
 		if(jobban_isbanned(O, "AI") && jobban_isbanned(O, "Cyborg"))
 			continue
 		if(O.client)
-			if(O.client.prefs.be_special & BE_AI)
+			if(ROLE_POSIBRAIN in O.client.prefs.special_toggles)
 				question(O.client)
 
 /obj/item/device/mmi/digital/posibrain/proc/question(var/client/C)
@@ -40,11 +40,12 @@
 		var/response = alert(C, "Someone is requesting a personality for a positronic brain. Would you like to play as one?", "Positronic brain request", "Yes", "No", "Never for this round")
 		if(response == "Yes")
 			response = alert(C, "Are you sure you want to play as a positronic brain?", "Positronic brain request", "Yes", "No")
-		if(!C || brainmob.key || 0 == searching)	return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
+		if(!C || brainmob.key || 0 == searching)
+			return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
 		if(response == "Yes")
 			transfer_personality(C.mob)
 		else if(response == "Never for this round")
-			C.prefs.be_special ^= BE_AI
+			C.prefs.special_toggles -= ROLE_POSIBRAIN
 
 /obj/item/device/mmi/digital/posibrain/update_icon()
 	if(searching)

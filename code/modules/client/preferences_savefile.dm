@@ -55,7 +55,7 @@
 	S["ooccolor"]			>> ooccolor
 	S["lastchangelog"]		>> lastchangelog
 	S["UI_style"]			>> UI_style
-	S["be_special"]			>> be_special
+	S["special_toggles"]	>> special_toggles
 	S["default_slot"]		>> default_slot
 	S["toggles"]			>> toggles
 	S["chat_toggles"]		>> chat_toggles
@@ -66,12 +66,14 @@
 	ooccolor		= sanitize_hexcolor(ooccolor, initial(ooccolor))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, list("White", "Midnight","Orange","old"), initial(UI_style))
-	be_special		= sanitize_integer(be_special, 0, 65535, initial(be_special))
 	default_slot	= sanitize_integer(default_slot, 1, config.character_slots, initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
 	chat_toggles	= sanitize_integer(chat_toggles, 0, 65535, initial(chat_toggles))
 	UI_style_color	= sanitize_hexcolor(UI_style_color, initial(UI_style_color))
 	UI_style_alpha	= sanitize_integer(UI_style_alpha, 0, 255, initial(UI_style_alpha))
+	if(!islist(special_toggles))
+		special_toggles = list()
+	//TODO: sanitize.
 
 	return 1
 
@@ -87,7 +89,7 @@
 	S["ooccolor"]		<< ooccolor
 	S["lastchangelog"]	<< lastchangelog
 	S["UI_style"]		<< UI_style
-	S["be_special"]		<< be_special
+	S["special_toggles"]<< special_toggles
 	S["default_slot"]	<< default_slot
 	S["toggles"]		<< toggles
 	S["chat_toggles"]	<< chat_toggles
@@ -172,7 +174,7 @@
 	S["med_record"]			>> med_record
 	S["sec_record"]			>> sec_record
 	S["gen_record"]			>> gen_record
-	S["be_special"]			>> be_special
+	S["special_toggles"]	>> special_toggles
 	S["disabilities"]		>> disabilities
 	S["player_alt_titles"]	>> player_alt_titles
 	S["gear"]				>> gear
@@ -233,6 +235,8 @@
 	if(!player_alt_titles) player_alt_titles = new()
 	if(!modifications_data) src.modifications_data = list()
 	if(!modifications_colors) src.modifications_colors = list()
+	if(!islist(special_toggles))
+		special_toggles = list()
 	if(!gear) src.gear = list()
 	if(!relations) src.relations = list()
 	if(!relations_info) src.relations_info = list()
@@ -313,7 +317,7 @@
 	S["sec_record"]			<< sec_record
 	S["gen_record"]			<< gen_record
 	S["player_alt_titles"]	<< player_alt_titles
-	S["be_special"]			<< be_special
+	S["special_toggles"]	<< special_toggles
 	S["disabilities"]		<< disabilities
 	S["gear"]				<< gear
 	S["home_system"] 		<< home_system

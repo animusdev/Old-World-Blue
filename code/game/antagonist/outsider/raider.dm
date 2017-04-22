@@ -1,8 +1,7 @@
 var/datum/antagonist/raider/raiders
 
 /datum/antagonist/raider
-	id = MODE_RAIDER
-	role_type = BE_RAIDER
+	id = ROLE_RAIDER
 	role_text = "Raider"
 	role_text_plural = "Raiders"
 	bantype = "raider"

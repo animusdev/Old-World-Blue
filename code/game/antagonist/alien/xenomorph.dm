@@ -1,8 +1,7 @@
 var/datum/antagonist/xenos/xenomorphs
 
 /datum/antagonist/xenos
-	id = MODE_XENOMORPH
-	role_type = BE_ALIEN
+	id = ROLE_ALIEN
 	role_text = "Xenomorph"
 	role_text_plural = "Xenomorphs"
 	mob_path = /mob/living/carbon/alien/larva

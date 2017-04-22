@@ -6,4 +6,4 @@
 	required_players = 6
 	required_enemies = 2
 	end_on_antag_death = 1
-	antag_tags = list(MODE_MEME)
+	antag_tags = list(ROLE_MEME)

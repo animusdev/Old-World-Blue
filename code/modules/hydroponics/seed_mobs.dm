@@ -28,7 +28,7 @@
 		if(jobban_isbanned(O, "Dionaea"))
 			continue
 		if(O.client && O.MayRespawn(1, 0))
-			if(O.client.prefs.be_special & BE_PLANT && !(O.client in currently_querying))
+			if((ROLE_DIONA in O.client.prefs.special_toggles) && !(O.client in currently_querying))
 				currently_querying |= O.client
 				question(O.client,host)
 
@@ -44,7 +44,7 @@
 		if(response == "Yes")
 			transfer_personality(C,host)
 		else if (response == "Never for this round")
-			C.prefs.be_special ^= BE_PLANT
+			C.prefs.special_toggles -= ROLE_DIONA
 
 		currently_querying -= C
 

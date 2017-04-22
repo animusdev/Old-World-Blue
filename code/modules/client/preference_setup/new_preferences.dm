@@ -29,6 +29,8 @@
 	var/eyes_color   = "#000000"
 	var/skin_color   = "#000000"
 
+	var/list/special_toggles = list()
+
 	var/email = ""					//Character email adress.
 	var/email_is_public = 1			//Add or not to email-list at round join.
 
@@ -681,18 +683,20 @@
 		<b>ANTAGONISTS:</b><br>
 	"}
 
+	for(var/role in special_roles)
+		if(jobban_isbanned(user, role) || (role == "positronic brain" && jobban_isbanned(user, "AI") && jobban_isbanned(user, "Cyborg")) || (role == "pAI candidate" && jobban_isbanned(user, "pAI")))
+			dat += "Be [role]: <font color=red><b> \[BANNED]</b></font><br>"
+		else
+			dat += "Be [role]: <a href='?src=\ref[src];be_special=[role]'><b>[(role in special_toggles) ? "Yes" : "No"]</b></a><br>"
+
 	if(jobban_isbanned(user, "Syndicate"))
 		dat += "<b>You are banned from antagonist roles.</b>"
-		src.be_special = 0
 	else
-		var/n = 0
-		for (var/i in special_roles)
-			if(special_roles[i]) //if mode is available on the server
-				if(jobban_isbanned(user, i) || (i == "positronic brain" && jobban_isbanned(user, "AI") && jobban_isbanned(user, "Cyborg")) || (i == "pAI candidate" && jobban_isbanned(user, "pAI")))
-					dat += "Be [i]: <font color=red><b> \[BANNED]</b></font><br>"
-				else
-					dat += "Be [i]: <a href='?src=\ref[src];be_special=[n]'><b>[src.be_special&(1<<n) ? "Yes" : "No"]</b></a><br>"
-			n++
+		for (var/role in all_antag_types)
+			if(jobban_isbanned(user, role))
+				dat += "Be [role]: <font color=red><b> \[BANNED]</b></font><br>"
+			else
+				dat += "Be [role]: <a href='?src=\ref[src];be_special=[role]'><b>[(role in special_toggles) ? "Yes" : "No"]</b></a><br>"
 	dat += "</span>"
 
 	return dat
@@ -746,8 +750,8 @@
 		if("show_motd")
 			toggles ^= HIDE_MOTD
 	else if(href_list["be_special"])
-		var/num = text2num(href_list["be_special"])
-		be_special ^= (1<<num)
+		var/role = href_list["be_special"]
+		special_toggles ^= role
 
 /datum/preferences/proc/GetSpeciesPage(mob/user)
 	if(!species_preview || !(species_preview in all_species))
