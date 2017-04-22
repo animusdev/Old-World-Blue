@@ -171,7 +171,9 @@
 
 // This is not needed short of simple_animal and carbon/alien / carbon/human, who reimplement it.
 /mob/proc/show_inv(mob/user as mob)
-	return
+
+// hook that allow to bypass copy-pasting examinate proc in mob subtypes
+/mob/proc/on_examine(atom/A)
 
 // mob verbs are faster than object verbs.
 // See http://www.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
@@ -184,6 +186,7 @@
 		return 1
 
 	face_atom(A)
+	on_examine(A)
 	A.examine(src)
 
 /mob/verb/pointed(atom/A as mob|obj|turf in view())
