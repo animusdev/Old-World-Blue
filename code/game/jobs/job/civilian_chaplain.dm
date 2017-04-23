@@ -75,62 +75,48 @@
 				switch(new_book_style)
 					if("Koran")
 						B.icon_state = "koran"
-						B.item_state = "koran"
 						for(var/area/chapel/main/A in all_areas)
 							for(var/turf/T in A.contents)
 								if(T.icon_state == "carpetsymbol")
 									T.set_dir(4)
 					if("Scrapbook")
 						B.icon_state = "scrapbook"
-						B.item_state = "scrapbook"
 					if("Creeper")
 						B.icon_state = "creeper"
-						B.item_state = "syringe_kit"
 					if("White Bible")
 						B.icon_state = "white"
-						B.item_state = "syringe_kit"
 					if("Holy Light")
 						B.icon_state = "holylight"
-						B.item_state = "syringe_kit"
 					if("Athiest")
 						B.icon_state = "athiest"
-						B.item_state = "syringe_kit"
 						for(var/area/chapel/main/A in all_areas)
 							for(var/turf/T in A.contents)
 								if(T.icon_state == "carpetsymbol")
 									T.set_dir(10)
 					if("Tome")
 						B.icon_state = "tome"
-						B.item_state = "tome"
 					if("The King in Yellow")
 						B.icon_state = "kingyellow"
-						B.item_state = "kingyellow"
 					if("Ithaqua")
 						B.icon_state = "ithaqua"
-						B.item_state = "ithaqua"
 					if("Scientology")
 						B.icon_state = "scientology"
-						B.item_state = "scientology"
 						for(var/area/chapel/main/A in all_areas)
 							for(var/turf/T in A.contents)
 								if(T.icon_state == "carpetsymbol")
 									T.set_dir(8)
 					if("the bible melts")
 						B.icon_state = "melted"
-						B.item_state = "melted"
 					if("Necronomicon")
 						B.icon_state = "necronomicon"
-						B.item_state = "necronomicon"
 					if("Imperial Cult")
 						B.icon_state = "imperial_cult"
-						B.item_state = "imperial_cult"
 						new /obj/item/clothing/accessory/amulet/aquila(B)
 						new /obj/item/clothing/accessory/amulet/aquila(B)
 						new /obj/item/clothing/accessory/amulet/aquila(B)
 					else
 						// if christian bible, revert to default
 						B.icon_state = "bible"
-						B.item_state = "bible"
 						for(var/area/chapel/main/A in all_areas)
 							for(var/turf/T in A.contents)
 								if(T.icon_state == "carpetsymbol")

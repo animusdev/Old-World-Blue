@@ -341,9 +341,9 @@
 	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "sword0"
-	item_state = "sword0"
 	var/active = 0.0
 	w_class = ITEM_SIZE_SMALL
+	sprite_group = SPRITE_MELEE
 	attack_verb = list("attacked", "struck", "hit")
 
 	attack_self(mob/user as mob)
@@ -352,19 +352,14 @@
 			user << "\blue You extend the plastic blade with a quick flick of your wrist."
 			playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
 			src.icon_state = "swordblue"
-			src.item_state = "swordblue"
 			src.w_class = ITEM_SIZE_HUGE
 		else
 			user << "\blue You push the plastic blade back down into the handle."
 			playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
 			src.icon_state = "sword0"
-			src.item_state = "sword0"
 			src.w_class = ITEM_SIZE_TINY
 
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			H.update_inv_l_hand()
-			H.update_inv_r_hand()
+		update_held_icon()
 
 		src.add_fingerprint(user)
 		return
@@ -980,6 +975,7 @@
 	icon_state = "cultblade"
 	item_state = "cultblade"
 	w_class = ITEM_SIZE_HUGE
+	sprite_group = SPRITE_MELEE
 	attack_verb = list("attacked", "slashed", "stabbed", "poked")
 
 /* NYET.

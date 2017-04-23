@@ -83,6 +83,8 @@
 // Subtypes
 /obj/item/weapon/material/hatchet/tacknife/claws
 	icon_state = "wolverine"
+	item_state = null
+	sprite_group = SPRITE_MELEE
 	name = "claws"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "wolverine"

@@ -5,7 +5,6 @@
 	desc = "Scans living beings for antibodies in their blood."
 	icon_state = "health"
 	w_class = ITEM_SIZE_SMALL
-	item_state = "electronic"
 	flags = CONDUCT
 
 /obj/item/device/antibody_scanner/attack(mob/living/carbon/C as mob, mob/user as mob)
