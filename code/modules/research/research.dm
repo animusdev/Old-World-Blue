@@ -50,6 +50,10 @@ research holder datum.
 	var/list/possible_designs = list()		//List of all designs (at base reliability).
 	var/list/known_designs = list()			//List of available designs (at base reliability).
 
+	var/list/protolathe_categories = list("None")
+	var/list/circuit_categories = list("None")
+	var/list/fabricator_categories = list("None")
+
 /datum/research/New()		//Insert techs into possible_tech here. Known_tech automatically updated.
 	for(var/T in typesof(/datum/tech) - /datum/tech)
 		possible_tech += new T(src)
@@ -132,6 +136,13 @@ research holder datum.
 				known.reliability_mod = D.reliability_mod
 			return
 	known_designs += D
+	if(D.build_type & PROTOLATHE)
+		protolathe_categories |= D.category
+	if(D.build_type & IMPRINTER)
+		circuit_categories |= D.category
+	if(D.build_type & MECHFAB)
+		fabricator_categories |= D.category
+
 	return
 
 //Refreshes known_tech and known_designs list. Then updates the reliability vars of the designs in the known_designs list.

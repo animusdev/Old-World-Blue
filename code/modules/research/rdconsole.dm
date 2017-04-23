@@ -45,6 +45,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/sync = 1		//If sync = 0, it doesn't show up on Server Control Console
 	var/errored = 0		//Errored during item construction.
 
+	var/protolathe_category = null
+	var/circuit_category = null
+
 	req_access = list(access_research)	//Data and setting manipulation requires scientist access.
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
@@ -278,6 +281,16 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else if(href_list["togglesync"]) //Prevents the console from being synced by other consoles. Can still send data.
 		sync = !sync
 
+	else if(href_list["build_categeory"])
+		if(linked_lathe)
+			var/new_pc = input("Select category for displaying") as null|anything in files.protolathe_categories
+			if(Adjacent(usr) && !usr.stat)
+				if(new_pc == "None")
+					protolathe_category = null
+				else
+					protolathe_category = new_pc
+				updateUsrDialog()
+
 	else if(href_list["build"]) //Causes the Protolathe to build something.
 		if(linked_lathe && !linked_lathe.busy)
 			var/datum/design/being_built = null
@@ -293,6 +306,16 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					errored = 0
 					screen = 3.1
 					updateUsrDialog()
+
+	else if(href_list["imprint_categeory"])
+		if(linked_imprinter)
+			var/new_cc = input("Select category for displaying") as null|anything in files.circuit_categories
+			if(Adjacent(usr) && !usr.stat)
+				if(new_cc == "None")
+					circuit_category = null
+				else
+					circuit_category = new_cc
+				updateUsrDialog()
 
 	else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
 		if(linked_imprinter && !linked_imprinter.busy)
@@ -482,7 +505,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "</UL>"
 
 		if(1.2) //Technology Disk Menu
-
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>"
 			dat += "Disk Contents: (Technology Data Disk)<BR><BR>"
 			if(t_disk.stored == null)
@@ -539,6 +561,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				if(D.build_path)
 					dat += "<LI>[D.name] "
 					dat += "<A href='?src=\ref[src];copy_design=1;copy_design_ID=[D.id]'>\[copy to disk\]</A>"
+					dat += "</LI>"
 			dat += "</UL>"
 
 		if(1.6) //R&D console settings
@@ -546,13 +569,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "R&D Console Setting:<HR>"
 			dat += "<UL>"
 			if(sync)
-				dat += "<LI><A href='?src=\ref[src];sync=1'>Sync Database with Network</A><BR>"
-				dat += "<LI><A href='?src=\ref[src];togglesync=1'>Disconnect from Research Network</A><BR>"
+				dat += "<LI><A href='?src=\ref[src];sync=1'>Sync Database with Network</A></LI>"
+				dat += "<LI><A href='?src=\ref[src];togglesync=1'>Disconnect from Research Network</A></LI>"
 			else
-				dat += "<LI><A href='?src=\ref[src];togglesync=1'>Connect to Research Network</A><BR>"
-			dat += "<LI><A href='?src=\ref[src];menu=1.7'>Device Linkage Menu</A><BR>"
-			dat += "<LI><A href='?src=\ref[src];lock=0.2'>Lock Console</A><BR>"
-			dat += "<LI><A href='?src=\ref[src];reset=1'>Reset R&D Database</A><BR>"
+				dat += "<LI><A href='?src=\ref[src];togglesync=1'>Connect to Research Network</A></LI>"
+			dat += "<LI><A href='?src=\ref[src];menu=1.7'>Device Linkage Menu</A></LI>"
+			dat += "<LI><A href='?src=\ref[src];lock=0.2'>Lock Console</A></LI>"
+			dat += "<LI><A href='?src=\ref[src];reset=1'>Reset R&D Database</A></LI>"
 			dat += "<UL>"
 
 		if(1.7) //R&D device linkage
@@ -563,17 +586,17 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "Linked Devices:"
 			dat += "<UL>"
 			if(linked_destroy)
-				dat += "<LI>Destructive Analyzer <A href='?src=\ref[src];disconnect=destroy'>(Disconnect)</A>"
+				dat += "<LI>Destructive Analyzer <A href='?src=\ref[src];disconnect=destroy'>(Disconnect)</A></LI>"
 			else
-				dat += "<LI>(No Destructive Analyzer Linked)"
+				dat += "<LI>(No Destructive Analyzer Linked)</LI>"
 			if(linked_lathe)
-				dat += "<LI>Protolathe <A href='?src=\ref[src];disconnect=lathe'>(Disconnect)</A>"
+				dat += "<LI>Protolathe <A href='?src=\ref[src];disconnect=lathe'>(Disconnect)</A></LI>"
 			else
-				dat += "<LI>(No Protolathe Linked)"
+				dat += "<LI>(No Protolathe Linked)</LI>"
 			if(linked_imprinter)
-				dat += "<LI>Circuit Imprinter <A href='?src=\ref[src];disconnect=imprinter'>(Disconnect)</A>"
+				dat += "<LI>Circuit Imprinter <A href='?src=\ref[src];disconnect=imprinter'>(Disconnect)</A></LI>"
 			else
-				dat += "<LI>(No Circuit Imprinter Linked)"
+				dat += "<LI>(No Circuit Imprinter Linked)</LI>"
 			dat += "</UL>"
 
 		////////////////////DESTRUCTIVE ANALYZER SCREENS////////////////////////////
@@ -610,13 +633,15 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
 			dat += "<A href='?src=\ref[src];menu=3.2'>Material Storage</A> || "
 			dat += "<A href='?src=\ref[src];menu=3.3'>Chemical Storage</A><HR>"
-			dat += "Protolathe Menu:<BR><BR>"
+			dat += "Protolathe Menu:<BR>"
+			dat += "Current category: <a href='?src=\ref[src];build_categeory=1'>[protolathe_category ? protolathe_category : "None"]</a><BR>"
 			dat += "<B>Material Amount:</B> [linked_lathe.TotalMaterials()] cm<sup>3</sup> (MAX: [linked_lathe.max_material_storage])<BR>"
 			dat += "<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] (MAX: [linked_lathe.reagents.maximum_volume])<HR>"
 
-
 			dat += "<UL>"
 			for(var/datum/design/D in files.known_designs)
+				if(protolathe_category && protolathe_category != D.category)
+					continue
 				if(!D.build_path || !(D.build_type & PROTOLATHE))
 					continue
 				var/material_string = linked_lathe.get_requirements(D)
@@ -626,6 +651,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					dat += "<LI><B>[D.name]</B> [material_string]"
 				if(D.reliability < 100)
 					dat += " (Reliability: [D.reliability])"
+				dat += "</LI>"
 			dat += "</UL>"
 
 		if(3.2) //Protolathe Material Storage Sub-menu
@@ -664,11 +690,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
 			dat += "<A href='?src=\ref[src];menu=4.3'>Material Storage</A> || "
 			dat += "<A href='?src=\ref[src];menu=4.2'>Chemical Storage</A><HR>"
-			dat += "Circuit Imprinter Menu:<BR><BR>"
+			dat += "Circuit Imprinter Menu:<BR>"
+			dat += "Current category: <a href='?src=\ref[src];imprint_categeory=1'>[circuit_category ? circuit_category : "None"]</a><BR>"
 			dat += "Material Amount: [linked_imprinter.TotalMaterials()] cm<sup>3</sup><BR>"
 			dat += "Chemical Volume: [linked_imprinter.reagents.total_volume]<HR>"
 			dat += "<UL>"
 			for(var/datum/design/D in files.known_designs)
+				if(circuit_category && circuit_category != D.category)
+					continue
 				if(!D.build_path || !(D.build_type & IMPRINTER))
 					continue
 				var/material_string = linked_imprinter.get_requirements(D)

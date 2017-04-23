@@ -284,6 +284,15 @@ AI MODULES
 	origin_tech = list(TECH_DATA = 3, TECH_MATERIAL = 4)
 	laws = new/datum/ai_laws/asimov
 
+
+/******************** Asimov ********************/
+
+/obj/item/weapon/aiModule/asimov_turing // -- TLE
+	name = "\improper 'Asimov-Turing' core AI module"
+	desc = "An 'Asimov-Turing' Core AI Module: 'Reconfigures the AI's core laws.'"
+	origin_tech = list(TECH_DATA = 3, TECH_MATERIAL = 4)
+	laws = new/datum/ai_laws/asimov_turing
+
 /******************** NanoTrasen ********************/
 
 /obj/item/weapon/aiModule/nanotrasen // -- TLE
