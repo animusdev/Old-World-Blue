@@ -43,7 +43,7 @@
 
 /obj/item/organ_module/active/simple/proc/deploy(mob/living/carbon/human/H, obj/item/organ/external/E)
 	var/slot = null
-	if(E.icon_position == LEFT)
+	if(E.organ_tag in list(BP_L_ARM, BP_L_HAND))
 		slot = slot_l_hand
 	else if(E.icon_position == RIGHT)
 		slot = slot_r_hand
@@ -84,9 +84,15 @@
 /obj/item/weapon/material/hatchet/tacknife/claws
 	icon_state = "wolverine"
 	name = "claws"
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "wolverine"
+	applies_material_colour = 0
 
 /obj/item/organ_module/active/simple/wolverine
 	name = "embed claws"
+	verb_name = "Deploy embed claws"
+	icon_state = "wolverine"
+	allowed_organs = list(BP_R_HAND, BP_L_HAND)
 	holding_type = /obj/item/weapon/material/hatchet/tacknife/claws
 
 

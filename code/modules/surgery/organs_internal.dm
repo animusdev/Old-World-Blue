@@ -52,7 +52,7 @@
 		)
 
 		for(var/obj/item/alien_embryo/A in target)
-			A.loc = A.loc.loc
+			A.forceMove(get_turf(A))
 
 
 //////////////////////////////////////////////////////////////////
