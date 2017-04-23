@@ -237,3 +237,12 @@
 	containertype = /obj/structure/closet/crate/secure
 	containername = "Automatic weapon ammunition crate"
 	access = access_armory
+	
+/datum/supply_packs/security/detective
+	name = "Forensics kit"
+	contains = list(
+		/obj/item/weapon/storage/briefcase/crimekit
+	)
+	cost = 20
+	containertype = /obj/structure/closet/crate/secure
+	containername = "Forensics kit crate"
