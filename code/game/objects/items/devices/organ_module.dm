@@ -88,10 +88,10 @@
 	icon_state = "armor-chest"
 
 /obj/item/organ_module/armor/install(var/obj/item/organ/external/E)
-	E.brute_mob -= 0.3
+	E.brute_mod -= 0.3
 
 /obj/item/organ_module/armor/remove(var/obj/item/organ/external/E)
-	E.brute_mob += 0.3
+	E.brute_mod += 0.3
 
 
 // Subtypes active

@@ -179,6 +179,22 @@ other types of metals and chemistry for reagents).
 	req_tech = list("programming" = 4, "syndicate" = 2, "materials" = 6)
 	build_path = /obj/item/weapon/aiModule/tyrant
 
+/datum/design/organ_module
+	build_type = MECHFAB
+	category = "Prosthesis"
+
+/datum/design/organ_module/armblade
+	name = "Biotech prototype (steel armblade)"
+	desc = "Combat organ module steel armblade."
+	req_tech = list("materials" = 3, "combat" = 4, "biotech" = 4)
+
+/datum/design/organ_module/armor
+	name = "Biotech prototype (subdermal armor - chest)"
+	desc = "Combat subdermal armor."
+	id = "OM-armor"
+	build_path = /obj/item/organ_module/armor
+	req_tech = list("materials" = 4, "combat" = 2, "biotech" = 4)
+
 /////////////////////////////////////
 ////////////PROSTHESIS////////////////
 /////////////////////////////////////
