@@ -84,6 +84,12 @@
 /mob/living/silicon/IsAdvancedToolUser()
 	return 1
 
+/mob/living/silicon/put_in_hands(var/obj/item/W)
+	W.forceMove(get_turf(W))
+	W.layer = initial(W.layer)
+	W.dropped()
+	return 0
+
 /mob/living/silicon/blob_act()
 	if (src.stat != 2)
 		src.adjustBruteLoss(60)
