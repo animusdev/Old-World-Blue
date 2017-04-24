@@ -39,7 +39,7 @@ var/global/list/modifications_types = list(
 	var/list/body_parts = list(				// For sorting'n'selection optimization.
 		BP_CHEST, "chest2", BP_HEAD, BP_GROIN, BP_L_ARM, BP_R_ARM, BP_L_HAND, BP_R_HAND, BP_L_LEG, BP_R_LEG,\
 		BP_L_FOOT, BP_R_FOOT, O_HEART, O_LUNGS, O_LIVER, O_BRAIN, O_EYES)
-	var/list/allowed_species = list("Human")// Species restriction.
+	var/list/allowed_species = list(SPECIES_HUMAN)// Species restriction.
 	var/replace_limb = null					// To draw usual limb or not.
 	var/mob_icon = ""
 	var/icon/icon = 'icons/mob/human_races/body_modification.dmi'
@@ -105,7 +105,7 @@ var/global/list/modifications_types = list(
 	name = "Abstract"
 	desc = "Simple tattoo (use flavor)."
 	id = "abstract"
-	allowed_species = list("Human", "Skrell", "Tajara", "Unathi", "Vox")
+	allowed_species = list(SPECIES_HUMAN, SPECIES_SKRELL, SPECIES_TAJARA, SPECIES_UNATHI, SPECIES_VOX)
 	body_parts = list(
 		BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_R_ARM,
 		BP_L_HAND, BP_R_HAND, BP_L_LEG, BP_R_LEG, BP_L_FOOT, BP_R_FOOT
@@ -179,7 +179,7 @@ var/global/list/modifications_types = list(
 	id = "stripes"
 	body_parts = list(BP_HEAD, BP_CHEST)
 	mob_icon = "tajara"
-	allowed_species = list("Tajara")
+	allowed_species = list(SPECIES_TAJARA)
 
 /datum/body_modification/limb/tattoo/tribal_markings
 	name = "Unathi Tribal Markings"
@@ -188,7 +188,7 @@ var/global/list/modifications_types = list(
 	id = "tribal"
 	body_parts = list(BP_HEAD, BP_CHEST)
 	mob_icon = "unathi"
-	allowed_species = list("Unathi")
+	allowed_species = list(SPECIES_UNATHI)
 
 /datum/body_modification/limb/prosthesis
 	name = "Unbranded"
@@ -198,7 +198,7 @@ var/global/list/modifications_types = list(
 		BP_L_LEG, BP_R_LEG, BP_L_FOOT, BP_R_FOOT)
 	replace_limb = /obj/item/organ/external/robotic
 	icon = 'icons/mob/human_races/cyberlimbs/robotic.dmi'
-	allowed_species = list("Human","Tajaran","Unathi","Skrell")
+	allowed_species = list(SPECIES_HUMAN,SPECIES_TAJARA,SPECIES_UNATHI,SPECIES_SKRELL)
 	nature = MODIFICATION_SILICON
 
 	New()
@@ -263,7 +263,7 @@ var/global/list/modifications_types = list(
 ////Internals////
 
 /datum/body_modification/organ
-	allowed_species = list("Human", "Skrell", "Tajara", "Unathi", "Vox")
+	allowed_species = list(SPECIES_HUMAN, SPECIES_SKRELL, SPECIES_TAJARA, SPECIES_UNATHI, SPECIES_VOX)
 	create_organ(var/organ_type, var/color)
 		if(replace_limb)
 			return new replace_limb(null)
@@ -307,7 +307,7 @@ var/global/list/modifications_types = list(
 	id = "prosthesis_eye_cam"
 	desc = "One of your eyes replaced with portable cam. Do not lose it."
 	body_parts = list(O_EYES)
-	allowed_species = list("Human")
+	allowed_species = list(SPECIES_HUMAN)
 
 	get_mob_icon(organ, body_build, color, gender, species)
 		var/datum/species/S = all_species[species]

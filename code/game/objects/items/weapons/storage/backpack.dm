@@ -6,6 +6,7 @@
 	name = "backpack"
 	desc = "You wear this on your back and put items into it."
 	icon = 'icons/inv_slots/back/icon.dmi'
+	sprite_group = SPRITE_BACKPACK
 	icon_state = "backpack"
 	w_class = ITEM_SIZE_HUGE
 	slot_flags = SLOT_BACK

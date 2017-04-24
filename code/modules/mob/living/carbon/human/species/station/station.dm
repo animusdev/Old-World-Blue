@@ -1,5 +1,5 @@
 /datum/species/human
-	name = "Human"
+	name = SPECIES_HUMAN
 	name_plural = "Humans"
 	language = "Sol Common"
 	primitive_form = "Monkey"
@@ -26,7 +26,7 @@
 	flags = CAN_JOIN | HAS_SKIN_TONE | HAS_LIPS | HAS_UNDERWEAR | HAS_EYE_COLOR
 
 /datum/species/unathi
-	name = "Unathi"
+	name = SPECIES_UNATHI
 	name_plural = "Unathi"
 	icobase = 'icons/mob/human_races/unathi.dmi'
 	deform = 'icons/mob/human_races/unathi_def.dmi'
@@ -128,7 +128,7 @@
 		H.equip_to_slot_or_del(new gear (H),slot_shoes)
 
 /datum/species/tajaran
-	name = "Tajara"
+	name = SPECIES_TAJARA
 	name_plural = "Tajaran"
 	icobase = 'icons/mob/human_races/tajaran.dmi'
 	deform = 'icons/mob/human_races/tajaran_def.dmi'
@@ -225,7 +225,7 @@
 
 
 /datum/species/skrell
-	name = "Skrell"
+	name = SPECIES_SKRELL
 	name_plural = "Skrell"
 	icobase = 'icons/mob/human_races/skrell.dmi'
 	deform = 'icons/mob/human_races/skrell_def.dmi'
@@ -262,7 +262,7 @@
 	)
 
 /datum/species/diona
-	name = "Diona"
+	name = SPECIES_DIONA
 	name_plural = "Dionaea"
 	icobase = 'icons/mob/human_races/diona.dmi'
 	deform = 'icons/mob/human_races/diona_def.dmi'
@@ -380,7 +380,7 @@
 	H.visible_message("<span class='danger'>\The [H] splits apart with a wet slithering noise!</span>")
 
 /datum/species/machine
-	name = "Machine"
+	name = SPECIES_IPC
 	name_plural = "machines"
 
 	icobase = 'icons/mob/human_races/machine.dmi'

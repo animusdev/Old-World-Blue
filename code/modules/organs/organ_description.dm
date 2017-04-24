@@ -74,6 +74,7 @@
 	name = "left arm"
 	organ_tag = BP_L_ARM
 	body_part = ARM_LEFT
+	icon_position = LEFT
 	joint = "left elbow"
 	amputation_point = "left shoulder"
 
@@ -81,6 +82,7 @@
 	name = "right arm"
 	organ_tag = BP_R_ARM
 	body_part = ARM_RIGHT
+	icon_position = RIGHT
 	joint = "right elbow"
 	amputation_point = "right shoulder"
 
@@ -118,6 +120,7 @@
 	name = "left hand"
 	body_part = HAND_LEFT
 	parent_organ = BP_L_ARM
+	icon_position = LEFT
 	joint = "left wrist"
 	amputation_point = "left wrist"
 
@@ -126,6 +129,7 @@
 	name = "right hand"
 	body_part = HAND_RIGHT
 	parent_organ = BP_R_ARM
+	icon_position = RIGHT
 	joint = "right wrist"
 	amputation_point = "right wrist"
 

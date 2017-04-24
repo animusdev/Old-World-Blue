@@ -69,22 +69,6 @@
 	name = T_BOARD_MECHA("Phazon central control")
 	icon_state = "mainboard"
 
-/obj/item/weapon/circuitboard/mecha/honker
-	origin_tech = list(TECH_DATA = 4)
-
-/obj/item/weapon/circuitboard/mecha/honker/peripherals
-	name = T_BOARD_MECHA("H.O.N.K peripherals control")
-	icon_state = "mcontroller"
-
-/obj/item/weapon/circuitboard/mecha/honker/targeting
-	name = T_BOARD_MECHA("H.O.N.K weapon control and targeting")
-	icon_state = "mcontroller"
-
-/obj/item/weapon/circuitboard/mecha/honker/main
-	name = T_BOARD_MECHA("H.O.N.K central control")
-	icon_state = "mainboard"
-
-
 /obj/item/weapon/circuitboard/mecha/odysseus
 	origin_tech = list(TECH_DATA = 3)
 

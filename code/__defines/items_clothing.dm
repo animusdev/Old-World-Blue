@@ -183,8 +183,10 @@
 // In-hand overlay
 #define SPRITE_STORAGE  "storage"
 #define SPRITE_UNIFORMS "uniform"
+#define SPRITE_BACKPACK "backpack"
 #define SPRITE_GLOVES   "gloves"
 #define SPRITE_SUITS    "suits"
 #define SPRITE_MASKS    "masks"
 #define SPRITE_HATS     "hats"
+#define SPRITE_MELEE    "melee"
 #define SPRITE_GUNS     "gun"

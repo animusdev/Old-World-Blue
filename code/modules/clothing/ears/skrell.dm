@@ -8,7 +8,7 @@
 	icon = 'icons/inv_slots/ears/icon.dmi'
 	w_class = 1
 	slot_flags = SLOT_EARS
-	species_restricted = list("Skrell")
+	species_restricted = list(SPECIES_SKRELL)
 
 /obj/item/clothing/ears/skrell/chain
 	name = "skrell headtail chains"

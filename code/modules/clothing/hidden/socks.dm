@@ -2,7 +2,7 @@
 	icon = 'icons/inv_slots/hidden/icon.dmi'
 	wear_slot = slot_socks
 	slot_name = "socks"
-	species_restricted = list("Human", "Skrell")
+	species_restricted = list(SPECIES_HUMAN, SPECIES_SKRELL)
 	var/clipped = 0
 
 /obj/item/clothing/hidden/socks/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -13,7 +13,7 @@
 		clipped = 1
 		name = "modified [name]"
 		desc = "[desc]<br>They have had the fingertips cut off of them."
-		species_restricted = list("Unathi","Tajara")
+		species_restricted = list(SPECIES_UNATHI,SPECIES_TAJARA)
 		return
 	..()
 

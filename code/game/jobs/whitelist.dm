@@ -34,7 +34,7 @@ var/list/whitelist = list()
 /proc/is_alien_whitelisted(mob/M, var/species)
 	if(!config.usealienwhitelist)
 		return 1
-	if(species == "human" || species == "Human")
+	if(species == SPECIES_HUMAN)
 		return 1
 	if(check_rights(R_ADMIN, 0))
 		return 1

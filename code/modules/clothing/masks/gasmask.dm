@@ -51,7 +51,7 @@
 	name = "\improper alien mask"
 	desc = "Clearly not designed for a human face."
 	item_flags = BLOCK_GAS_SMOKE_EFFECT | AIRTIGHT | FLEXIBLEMATERIAL
-	species_restricted = list("Vox")
+	species_restricted = list(SPECIES_VOX)
 
 /obj/item/clothing/mask/gas/syndicate
 	name = "tactical mask"

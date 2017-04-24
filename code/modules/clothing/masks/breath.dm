@@ -13,7 +13,7 @@
 /obj/item/clothing/mask/vox_breath
 	icon_state = "breath_vox"
 	item_state = "breath"
-	species_restricted = list("Vox")
+	species_restricted = list(SPECIES_VOX)
 	item_flags = AIRTIGHT|FLEXIBLEMATERIAL
 	body_parts_covered = 0
 	gas_transfer_coefficient = 0.10

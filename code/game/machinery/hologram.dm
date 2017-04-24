@@ -168,6 +168,24 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	return 1
 
 
+/obj/machinery/hologram/holopad/proc/face_hologram_to(atom/A, mob/living/user)
+	if(!masters[user] || !A || !x || !y || !A.x || !A.y) return
+
+	var/obj/effect/overlay/hologram = masters[user]
+	var/dx = A.x - hologram.x
+	var/dy = A.y - hologram.y
+	if(!dx && !dy) return
+
+	var/direction
+	if(abs(dx) < abs(dy))
+		if(dy > 0)	direction = NORTH
+		else		direction = SOUTH
+	else
+		if(dx > 0)	direction = EAST
+		else		direction = WEST
+	set_dir_hologram(direction, user)
+
+
 /obj/machinery/hologram/holopad/proc/set_dir_hologram(new_dir, mob/living/silicon/ai/user)
 	if(masters[user])
 		var/obj/effect/overlay/hologram = masters[user]

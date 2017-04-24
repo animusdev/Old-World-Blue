@@ -13,7 +13,7 @@
 /mob/living/carbon/alien/diona/New()
 
 	..()
-	species = all_species["Diona"]
+	species = all_species[SPECIES_DIONA]
 	verbs += /mob/living/carbon/alien/diona/proc/merge
 
 /mob/living/carbon/alien/diona/start_pulling(var/atom/movable/AM)

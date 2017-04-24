@@ -427,8 +427,9 @@
 		src << browse(null, t1)
 
 	if(href_list["flavor_more"])
+		var/dat = cp1251_to_utf8(replacetext(flavor_text, "\n", "<BR>"))
 		if(src in view(usr))
-			usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, cp1251_to_utf8(replacetext(flavor_text, "\n", "<BR>"))), text("window=[];size=500x200", name))
+			usr << browse("<html><body><tt>[dat]</tt></body></html>", "window=[name];size=500x200")
 			onclose(usr, "[name]")
 	if(href_list["flavor_change"])
 		update_flavor_text()
@@ -511,15 +512,10 @@
 	return
 
 /mob/proc/is_active()
-	return (0 >= usr.stat)
+	return (usr.stat <= 0)
 
 /mob/proc/is_dead()
 	return stat == DEAD
-
-/mob/proc/is_mechanical()
-	if(mind && (mind.assigned_role == "Cyborg" || mind.assigned_role == "AI"))
-		return 1
-	return issilicon(src) || get_species() == "Machine"
 
 /mob/proc/is_ready()
 	return client && !!mind

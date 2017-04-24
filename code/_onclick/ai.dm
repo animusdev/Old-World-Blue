@@ -47,12 +47,8 @@
 		aiCamera.captureimage(A, usr)
 		return
 
-	/*
-		AI restrained() currently does nothing
-	if(restrained())
-		RestrainedClickOn(A)
-	else
-	*/
+	face_atom(A)
+
 	A.add_hiddenprint(src)
 	A.attack_ai(src)
 
@@ -168,7 +164,3 @@
 
 /mob/living/silicon/ai/TurfAdjacent(var/turf/T)
 	return (cameranet && cameranet.checkTurfVis(T))
-
-/mob/living/silicon/ai/face_atom(var/atom/A)
-	if(eyeobj)
-		eyeobj.face_atom(A)

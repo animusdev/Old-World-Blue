@@ -84,13 +84,10 @@
 	if(!skipjumpsuit || !skipface)
 
 		var/t_appeal = "<b><font color='[get_flesh_colour()]'>[species.name]</font></b>"
-		switch(gender)
-			if(MALE)
-				if(species.name == "Human") t_appeal = "man"
-			if(FEMALE)
-				if(species.name == "Human") t_appeal = "woman"
+		if(species.name == SPECIES_HUMAN)
+			t_appeal = (gender == FEMALE) ? "woman" : "man"
 
-		if (species.name == "Machine")
+		if (species.name == SPECIES_IPC)
 			msg += ", a [t_appeal]"
 		else switch(age)
 			if(1 to 25)

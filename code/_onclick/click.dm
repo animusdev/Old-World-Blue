@@ -366,3 +366,7 @@
 		else		direction = WEST
 	if(direction != dir)
 		facedir(direction)
+
+/mob/living/silicon/ai/face_atom(var/atom/A)
+	if(holo)
+		holo.face_hologram_to(A, src)

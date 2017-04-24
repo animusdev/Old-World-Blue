@@ -755,7 +755,7 @@
 
 /datum/preferences/proc/GetSpeciesPage(mob/user)
 	if(!species_preview || !(species_preview in all_species))
-		species_preview = "Human"
+		species_preview = SPECIES_HUMAN
 	var/datum/species/show_species = all_species[species_preview]
 	var/dat = list()
 	dat += "<select onchange=\"set('preview', this.options\[this.selectedIndex\].text)\">"

@@ -157,7 +157,7 @@
 					usr << "<span class='notice'>You have been added to the queue to join the game. Your position in queue is [ticker.queued_players.len].</span>"
 				return
 
-			if(client.prefs.species != "Human" && !check_rights(R_ADMIN, 0))
+			if(client.prefs.species != SPECIES_HUMAN && !check_rights(R_ADMIN, 0))
 				if(jobban_isbanned(src, client.prefs.species))
 					src << alert("You are currently banned from play [client.prefs.species].")
 					return 0
@@ -184,7 +184,7 @@
 				usr << "<span class='danger'>The station is currently exploding. Joining would go poorly.</span>"
 				return
 
-			if(client.prefs.species != "Human")
+			if(client.prefs.species != SPECIES_HUMAN)
 				if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
 					src << alert("You are currently not whitelisted to play [client.prefs.species].")
 					return 0
@@ -430,12 +430,12 @@
 		chosen_species = all_species[client.prefs.species]
 
 	if(!chosen_species)
-		return "Human"
+		return SPECIES_HUMAN
 
 	if(is_species_whitelisted(chosen_species) || has_admin_rights())
 		return chosen_species.name
 
-	return "Human"
+	return SPECIES_HUMAN
 
 /mob/new_player/get_gender()
 	if(!client || !client.prefs) ..()
