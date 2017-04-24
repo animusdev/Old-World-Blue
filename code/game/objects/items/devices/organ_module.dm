@@ -80,21 +80,47 @@
 /obj/item/organ_module/active/simple/organ_removed(var/obj/item/organ/external/E, var/mob/living/carbon/human/H)
 	retract(H, E)
 
-// Subtypes
-/obj/item/weapon/material/hatchet/tacknife/claws
-	icon_state = "wolverine"
+// Subtypes passive
+
+/obj/item/organ_module/armor
+	name = "subdermal armor"
+	allowed_organs = list(BP_CHEST)
+	icon_state = "armor-chest"
+
+/obj/item/organ_module/armor/install(var/obj/item/organ/external/E)
+	E.brute_mob -= 0.3
+
+/obj/item/organ_module/armor/remove(var/obj/item/organ/external/E)
+	E.brute_mob += 0.3
+
+
+// Subtypes active
+
+/obj/item/weapon/material/hatchet/tacknife/armblade
+	icon_state = "armblade"
 	item_state = null
 	sprite_group = SPRITE_MELEE
-	name = "claws"
+	name = "armblade"
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "wolverine"
+	icon_state = "armblade"
 	applies_material_colour = 0
+
+/obj/item/weapon/material/hatchet/tacknife/armblade/claws
+	icon_state = "wolverine"
+	name = "claws"
+	icon_state = "wolverine"
 
 /obj/item/organ_module/active/simple/wolverine
 	name = "embed claws"
 	verb_name = "Deploy embed claws"
 	icon_state = "wolverine"
 	allowed_organs = list(BP_R_HAND, BP_L_HAND)
-	holding_type = /obj/item/weapon/material/hatchet/tacknife/claws
+	holding_type = /obj/item/weapon/material/hatchet/tacknife/armblade/claws
 
+/obj/item/organ_module/active/simple/armblade
+	name = "embed blade"
+	verb_name = "Deploy embed blade"
+	icon_state = "armblade"
+	allowed_organs = list(BP_R_HAND, BP_L_HAND)
+	holding_type = /obj/item/weapon/material/hatchet/tacknife/armblade
 
