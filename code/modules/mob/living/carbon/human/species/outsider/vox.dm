@@ -1,5 +1,5 @@
 /datum/species/vox
-	name = "Vox"
+	name = SPECIES_VOX
 	name_plural = "Vox"
 	icobase = 'icons/mob/human_races/vox.dmi'
 	deform = 'icons/mob/human_races/vox_def.dmi'
@@ -87,11 +87,11 @@
 	H.internals.icon_state = "internal1"
 
 /datum/species/vox/get_station_variant()
-	return "Vox Pariah"
+	return SPECIES_VOXPARIAH
 
 // Joining as a station vox will give you this template, hence IS_RESTRICTED flag.
 /datum/species/vox/pariah
-	name = "Vox Pariah"
+	name = SPECIES_VOXPARIAH
 	rarity_value = 0.1
 	speech_chance = 60        // No volume control.
 	siemens_coefficient = 0.5 // Ragged scaleless patches.
@@ -140,4 +140,4 @@
 			M << "<span class='danger'>A terrible stench emanates from \the [H].</span>"
 
 /datum/species/vox/pariah/get_bodytype()
-	return "Vox"
+	return SPECIES_VOX

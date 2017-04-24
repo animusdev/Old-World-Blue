@@ -6,7 +6,7 @@
 	flags = HAS_SKIN_TONE | HAS_LIPS | HAS_UNDERWEAR | HAS_EYE_COLOR | IS_RESTRICTED
 
 /datum/species/human/cursed/get_bodytype()
-	return "Human"
+	return SPECIES_HUMAN
 
 /datum/species/human/cursed/handle_environment_special(var/mob/living/carbon/human/H)
 	var/is_skeleton = (SKELETON & H.status_flags)
@@ -44,7 +44,7 @@
 	)
 
 /datum/species/human/vampire/get_bodytype()
-	return "Human"
+	return SPECIES_HUMAN
 
 /datum/species/human/vampire/equip_survival_gear(mob/living/carbon/human/H)
 	var/pack_type = pick(

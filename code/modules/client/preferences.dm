@@ -48,7 +48,7 @@ var/global/list/special_roles = list(
 	var/h_style = "Bald"				//Hair type
 	var/f_style = "Shaved"				//Face hair type
 	var/s_tone = 0						//Skin tone
-	var/species = "Human"				//Species name for save file
+	var/species = SPECIES_HUMAN			//Species name for save file
 	var/datum/species/current_species	//Species datum to use
 	var/body = "Default"
 	var/species_preview                 //Used for the species selection window.
@@ -81,7 +81,7 @@ var/global/list/special_roles = list(
 					return
 	gender = pick(MALE, FEMALE)
 	real_name = random_name(gender,species)
-	current_species = all_species["Human"]
+	current_species = all_species[species]
 	sanitize_body_build()
 	h_style = random_hair_style(gender, species)
 	gear = list()

@@ -118,7 +118,7 @@ var/datum/body_build/default_body_build = new
 	hidden_icon = 'icons/inv_slots/hidden/mob_tajaran.dmi'
 
 /datum/body_build/unathi
-	name		= "Unathi"
+	name		= SPECIES_UNATHI
 
 	suit_icon	= 'icons/inv_slots/suits/mob_unathi.dmi'
 	mask_icon	= 'icons/inv_slots/masks/mob_unathi.dmi'

@@ -35,16 +35,16 @@
 	armor = list(melee = 50, bullet = 5, laser = 20,energy = 5, bomb = 55, bio = 100, rad = 20)
 	light_overlay = "helmet_light_dual"
 	sprite_sheets_refit = list(
-		"Unathi" = 'icons/inv_slots/hats/mob_unathi.dmi',
-		"Tajara" = 'icons/inv_slots/hats/mob_tajaran.dmi',
-		"Skrell" = 'icons/inv_slots/hats/mob_skrell.dmi',
-		"Vox"    = 'icons/inv_slots/hats/mob_vox.dmi'
+		SPECIES_UNATHI = 'icons/inv_slots/hats/mob_unathi.dmi',
+		SPECIES_TAJARA = 'icons/inv_slots/hats/mob_tajaran.dmi',
+		SPECIES_SKRELL = 'icons/inv_slots/hats/mob_skrell.dmi',
+		SPECIES_VOX    = 'icons/inv_slots/hats/mob_vox.dmi'
 	)
 	sprite_sheets_obj = list(
-		"Unathi" = 'icons/inv_slots/hats/icon_unathi.dmi',
-		"Tajara" = 'icons/inv_slots/hats/icon_tajaran.dmi',
-		"Skrell" = 'icons/inv_slots/hats/icon_skrell.dmi',
-		"Vox"    = 'icons/inv_slots/hats/icon_vox.dmi'
+		SPECIES_UNATHI = 'icons/inv_slots/hats/icon_unathi.dmi',
+		SPECIES_TAJARA = 'icons/inv_slots/hats/icon_tajaran.dmi',
+		SPECIES_SKRELL = 'icons/inv_slots/hats/icon_skrell.dmi',
+		SPECIES_VOX    = 'icons/inv_slots/hats/icon_vox.dmi'
 	)
 
 /obj/item/clothing/suit/space/void/mining
@@ -54,16 +54,16 @@
 	item_state = "mining_voidsuit"
 	armor = list(melee = 50, bullet = 5, laser = 20,energy = 5, bomb = 55, bio = 100, rad = 20)
 	sprite_sheets_refit = list(
-		"Unathi" = 'icons/inv_slots/suits/mob_unathi.dmi',
-		"Tajara" = 'icons/inv_slots/suits/mob_tajaran.dmi',
-		"Skrell" = 'icons/inv_slots/suits/mob_skrell.dmi',
-		"Vox"    = 'icons/inv_slots/suits/mob_vox.dmi'
+		SPECIES_UNATHI = 'icons/inv_slots/suits/mob_unathi.dmi',
+		SPECIES_TAJARA = 'icons/inv_slots/suits/mob_tajaran.dmi',
+		SPECIES_SKRELL = 'icons/inv_slots/suits/mob_skrell.dmi',
+		SPECIES_VOX    = 'icons/inv_slots/suits/mob_vox.dmi'
 	)
 	sprite_sheets_obj = list(
-		"Unathi" = 'icons/inv_slots/suits/icon_unathi.dmi',
-		"Tajara" = 'icons/inv_slots/suits/icon_tajaran.dmi',
-		"Skrell" = 'icons/inv_slots/suits/icon_skrell.dmi',
-		"Vox"    = 'icons/inv_slots/suits/icon_vox.dmi'
+		SPECIES_UNATHI = 'icons/inv_slots/suits/icon_unathi.dmi',
+		SPECIES_TAJARA = 'icons/inv_slots/suits/icon_tajaran.dmi',
+		SPECIES_SKRELL = 'icons/inv_slots/suits/icon_skrell.dmi',
+		SPECIES_VOX    = 'icons/inv_slots/suits/icon_vox.dmi'
 	)
 
 /obj/item/clothing/suit/space/void/mining/prepared/New()

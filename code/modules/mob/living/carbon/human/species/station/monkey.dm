@@ -1,5 +1,5 @@
 /datum/species/monkey
-	name = "Monkey"
+	name = SPECIES_MONKEY
 	name_plural = "Monkeys"
 	blurb = "Ook."
 
@@ -10,7 +10,7 @@
 	blood_mask = 'icons/mob/human_races/masks/blood_monkey.dmi'
 	language = null
 	default_language = "Chimpanzee"
-	greater_form = "Human"
+	greater_form = SPECIES_HUMAN
 	is_small = 1
 	has_fine_manipulation = 0
 	show_ssd = null
@@ -52,13 +52,13 @@
 	return "[lowertext(name)] ([rand(100,999)])"
 
 /datum/species/monkey/tajaran
-	name = "Farwa"
+	name = SPECIES_FARWA
 	name_plural = "Farwa"
 
 	icobase = 'icons/mob/human_races/monkeys/farwa.dmi'
 	deform = 'icons/mob/human_races/monkeys/farwa.dmi'
 
-	greater_form = "Tajaran"
+	greater_form = SPECIES_TAJARA
 	default_language = "Farwa"
 	flesh_color = "#AFA59E"
 	base_color = "#333333"
@@ -66,13 +66,13 @@
 	holder_type = /obj/item/weapon/holder/monkey/farwa
 
 /datum/species/monkey/skrell
-	name = "Neaera"
+	name = SPECIES_NEAERA
 	name_plural = "Neaera"
 
 	icobase = 'icons/mob/human_races/monkeys/neaera.dmi'
 	deform = 'icons/mob/human_races/monkeys/neaera.dmi'
 
-	greater_form = "Skrell"
+	greater_form = SPECIES_SKRELL
 	default_language = "Neaera"
 	flesh_color = "#8CD7A3"
 	blood_color = "#1D2CBF"
@@ -81,14 +81,14 @@
 	holder_type = /obj/item/weapon/holder/monkey/neaera
 
 /datum/species/monkey/unathi
-	name = "Stok"
+	name = SPECIES_STOK
 	name_plural = "Stok"
 
 	icobase = 'icons/mob/human_races/monkeys/stok.dmi'
 	deform = 'icons/mob/human_races/monkeys/stok.dmi'
 
 	tail = "stoktail"
-	greater_form = "Unathi"
+	greater_form = SPECIES_UNATHI
 	default_language = "Stok"
 	flesh_color = "#34AF10"
 	base_color = "#066000"

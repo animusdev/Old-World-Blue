@@ -70,8 +70,8 @@
 
 	//Set species_restricted list
 	switch(target_species)
-		if("Human", "Skrell")	//humanoid bodytypes
-			species_restricted = list("Human", "Skrell") //skrell/humans can wear each other's suits
+		if(SPECIES_HUMAN, SPECIES_SKRELL)	//humanoid bodytypes
+			species_restricted = list(SPECIES_HUMAN, SPECIES_SKRELL) //skrell/humans can wear each other's suits
 		else
 			species_restricted = list(target_species)
 
@@ -92,13 +92,13 @@
 
 	//Set species_restricted list
 	switch(target_species)
-		if("Skrell")
-			species_restricted = list("Human", "Skrell") //skrell helmets fit humans too
+		if(SPECIES_SKRELL)
+			species_restricted = list(SPECIES_HUMAN, SPECIES_SKRELL) //skrell helmets fit humans too
 
 		else
 			species_restricted = list(target_species)
 
-	if(target_species == "Vox")
+	if(target_species == SPECIES_VOX)
 		flags_inv &= ~BLOCKHAIR
 		flags_inv &= ~BLOCKHEADHAIR
 	else
@@ -148,7 +148,7 @@
 	body_parts_covered = HANDS
 	slot_flags = SLOT_GLOVES
 	attack_verb = list("challenged")
-	species_restricted = list("exclude","Unathi","Tajara")
+	species_restricted = list("exclude",SPECIES_UNATHI,SPECIES_TAJARA)
 
 /obj/item/clothing/gloves/update_clothing_icon()
 	if (ismob(src.loc))
@@ -182,8 +182,8 @@
 	name = "fingerless [name]"
 	desc = "[desc]<br>They have had the fingertips cut off of them."
 	if("exclude" in species_restricted)
-		species_restricted -= "Unathi"
-		species_restricted -= "Tajara"
+		species_restricted -= SPECIES_UNATHI
+		species_restricted -= SPECIES_TAJARA
 	return
 
 
@@ -285,7 +285,7 @@
 	permeability_coefficient = 0.50
 	force = 2
 	var/overshoes = 0
-	species_restricted = list("exclude","Unathi","Tajara")
+	species_restricted = list("exclude",SPECIES_UNATHI,SPECIES_TAJARA)
 
 /obj/item/clothing/shoes/proc/handle_movement(var/turf/walking, var/running)
 	return

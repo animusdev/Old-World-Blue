@@ -217,7 +217,7 @@ var/global/ManifestJSON
 	G.fields["fingerprint"] = H ? md5(H.dna.uni_identity) : "Unknown"
 	G.fields["p_stat"] = "Active"
 	G.fields["m_stat"] = "Stable"
-	G.fields["species"] = H ? H.get_species() : "Human"
+	G.fields["species"] = H ? H.get_species() : SPECIES_HUMAN
 	G.fields["home_system"]	= H ? H.home_system : "Unknown"
 	G.fields["citizenship"]	= H ? H.citizenship : "Unknown"
 	G.fields["faction"]		= H ? H.personal_faction : "Unknown"

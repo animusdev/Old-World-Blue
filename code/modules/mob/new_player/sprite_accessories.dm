@@ -57,7 +57,7 @@
 	var/gender = NEUTER
 
 	// Restrict some styles to specific species
-	var/list/species_allowed = list("Human")
+	var/list/species_allowed = list(SPECIES_HUMAN)
 
 	// Whether or not the accessory can be affected by colouration
 	var/do_colouration = 1
@@ -79,7 +79,7 @@
 		name = "Bald"
 		icon_state = "bald"
 		gender = MALE
-		species_allowed = list("Human","Unathi")
+		species_allowed = list(SPECIES_HUMAN,SPECIES_UNATHI)
 
 
 	afro
@@ -143,13 +143,13 @@
 		name = "Bob"
 		icon_state = "bobcut"
 		gender = FEMALE
-		species_allowed = list("Human","Unathi")
+		species_allowed = list(SPECIES_HUMAN,SPECIES_UNATHI)
 
 	bobcurl
 		name = "Bobcurl"
 		icon_state = "bobcurl"
 		gender = FEMALE
-		species_allowed = list("Human","Unathi")
+		species_allowed = list(SPECIES_HUMAN,SPECIES_UNATHI)
 
 	bowl
 		name = "Bowl"
@@ -202,7 +202,7 @@
 		name = "Buzzcut"
 		icon_state = "buzzcut"
 		gender = MALE
-		species_allowed = list("Human","Unathi")
+		species_allowed = list(SPECIES_HUMAN,SPECIES_UNATHI)
 
 	chop
 		name = "Chop"
@@ -435,7 +435,7 @@
 	mohawk
 		name = "Mohawk"
 		icon_state = "mohawk"
-		species_allowed = list("Human","Unathi")
+		species_allowed = list(SPECIES_HUMAN,SPECIES_UNATHI)
 
 	mulder
 		name = "Mulder"
@@ -611,7 +611,7 @@
 	spiky
 		name = "Spiky"
 		icon_state = "spikey"
-		species_allowed = list("Human","Unathi")
+		species_allowed = list(SPECIES_HUMAN,SPECIES_UNATHI)
 
 	stylo
 		name = "Stylo"
@@ -663,7 +663,7 @@
 
 
 	ipc
-		species_allowed = list("Machine")
+		species_allowed = list(SPECIES_IPC)
 		icon = 'icons/mob/hair_alien.dmi'
 
 		icp_pc_console
@@ -768,7 +768,7 @@
 		name = "Shaved"
 		icon_state = "shaved"
 		gender = NEUTER
-		species_allowed = list("Human","Unathi","Tajara","Skrell","Vox","Machine")
+		species_allowed = list(SPECIES_HUMAN,SPECIES_UNATHI,SPECIES_TAJARA,SPECIES_SKRELL,SPECIES_VOX,SPECIES_IPC)
 
 		New()
 			..()
@@ -795,7 +795,7 @@
 	elvis
 		name = "Elvis Sideburns"
 		icon_state = "elvis"
-		species_allowed = list("Human","Unathi")
+		species_allowed = list(SPECIES_HUMAN,SPECIES_UNATHI)
 
 	fiveoclock
 		name = "Five o Clock Shadow"
@@ -861,7 +861,7 @@
 /datum/sprite_accessory/hair
 	skrell
 		icon = 'icons/mob/hair_alien.dmi'
-		species_allowed = list("Skrell")
+		species_allowed = list(SPECIES_SKRELL)
 
 		tentacle_f
 			name = "Skrell Female Tentacles"
@@ -890,7 +890,7 @@
 
 	tajara
 		icon = 'icons/mob/hair_alien.dmi'
-		species_allowed = list("Tajara")
+		species_allowed = list(SPECIES_TAJARA)
 		ears
 			name = "Tajaran Ears"
 			icon_state = "ears_plain"
@@ -972,7 +972,7 @@
 
 	unathi
 		icon = 'icons/mob/hair_alien.dmi'
-		species_allowed = list("Unathi")
+		species_allowed = list(SPECIES_UNATHI)
 
 		frills_long
 			name = "Long Unathi Frills"
@@ -1006,14 +1006,14 @@
 		name = "Short Vox Quills"
 		icon = 'icons/mob/hair_alien.dmi'
 		icon_state = "vox_shortquills"
-		species_allowed = list("Vox")
+		species_allowed = list(SPECIES_VOX)
 
 
 
 /datum/sprite_accessory/facial_hair
 	tajara
 		icon = 'icons/mob/hair_alien.dmi'
-		species_allowed = list("Tajara")
+		species_allowed = list(SPECIES_TAJARA)
 
 		goatee
 			name = "Tajara Goatee"

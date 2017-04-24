@@ -177,4 +177,4 @@ obj/item/clothing/head/welding/blue
 	desc = "KHAAAAK!"
 	icon_state = "vox-captain_hat"
 	item_state = "vox-captain_hat"
-	species_restricted = list("Vox")
+	species_restricted = list(SPECIES_VOX)

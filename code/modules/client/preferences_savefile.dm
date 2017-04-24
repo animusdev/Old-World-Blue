@@ -191,7 +191,7 @@
 
 	//Sanitize
 	if(isnull(species) || !(species in playable_species))
-		species = "Human"
+		species = SPECIES_HUMAN
 	current_species = all_species[species]
 
 	real_name		= current_species.sanitize_name(real_name)
