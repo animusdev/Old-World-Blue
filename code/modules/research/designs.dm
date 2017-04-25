@@ -314,7 +314,7 @@ other types of metals and chemistry for reagents).
 	id = "rped"
 	req_tech = list("engineering" = 3, "materials" = 3)
 	materials = list(DEFAULT_WALL_MATERIAL = 15000, "glass" = 5000)
-	build_path = /obj/item/weapon/storage/part_replacer
+	build_path = /obj/item/storage/part_replacer
 
 /datum/design/item/stock_part/basic_capacitor
 	build_type = PROTOLATHE
@@ -857,7 +857,7 @@ other types of metals and chemistry for reagents).
 	req_tech = list("bluespace" = 4, "materials" = 6)
 	materials = list("gold" = 3000, "diamond" = 1500, "uranium" = 250)
 	reliability_base = 80
-	build_path = /obj/item/weapon/storage/backpack/holding
+	build_path = /obj/item/storage/backpack/holding
 
 /*
 /datum/design/bluespace_crystal
@@ -1025,7 +1025,7 @@ other types of metals and chemistry for reagents).
 	id = "chameleon_backpack"
 	req_tech = list("syndicate" = 2, "materials" = 2)
 	materials = list(DEFAULT_WALL_MATERIAL = 400, "glass" = 150)
-	build_path = /obj/item/weapon/storage/backpack/chameleon
+	build_path = /obj/item/storage/backpack/chameleon
 
 /datum/design/item/chameleon_gun
 	name = "Holographic gun"

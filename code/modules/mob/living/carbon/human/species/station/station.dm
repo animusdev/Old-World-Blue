@@ -351,7 +351,7 @@
 	return 0
 
 /datum/species/diona/equip_survival_gear(var/mob/living/carbon/human/H)
-	if(H.back && istype(H.back, /obj/item/weapon/storage))
+	if(H.back && istype(H.back, /obj/item/storage))
 		H.equip_to_slot_or_del(new /obj/item/device/flashlight/flare(H.back), slot_in_backpack)
 	else
 		H.equip_to_slot_or_del(new /obj/item/device/flashlight/flare(H), slot_r_hand)

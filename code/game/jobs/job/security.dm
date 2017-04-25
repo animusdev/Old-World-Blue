@@ -11,10 +11,10 @@
 	gloves = /obj/item/clothing/gloves/black
 	ear = /obj/item/device/radio/headset/sec
 
-	backpack  = /obj/item/weapon/storage/backpack/security
-	satchel_j = /obj/item/weapon/storage/backpack/satchel/sec
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
-	messenger = /obj/item/weapon/storage/backpack/messenger/sec
+	backpack  = /obj/item/storage/backpack/security
+	satchel_j = /obj/item/storage/backpack/satchel/sec
+	dufflebag = /obj/item/storage/backpack/dufflebag/sec
+	messenger = /obj/item/storage/backpack/messenger/sec
 
 
 /datum/job/security/hos
@@ -90,13 +90,13 @@
 
 	put_in_backpack = list(
 		/obj/item/weapon/flame/lighter/zippo,
-		/obj/item/weapon/storage/box/evidence,
+		/obj/item/storage/box/evidence,
 	)
 
-	backpack  = /obj/item/weapon/storage/backpack
-	satchel_j = /obj/item/weapon/storage/backpack/satchel/norm
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag
-	messenger = /obj/item/weapon/storage/backpack/messenger
+	backpack  = /obj/item/storage/backpack
+	satchel_j = /obj/item/storage/backpack/satchel/norm
+	dufflebag = /obj/item/storage/backpack/dufflebag
+	messenger = /obj/item/storage/backpack/messenger
 
 
 /datum/job/security/detective/forentech

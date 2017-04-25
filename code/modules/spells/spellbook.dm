@@ -188,7 +188,7 @@
 							temp = "An artefact that channels the will of the user into destructive bolts of force."
 							max_uses--
 						if("soulstone")
-							new /obj/item/weapon/storage/belt/soulstone/full(get_turf(H))
+							new /obj/item/storage/belt/soulstone/full(get_turf(H))
 							H.add_spell(new/spell/aoe_turf/conjure/construct)
 							temp = "You have purchased a belt full of soulstones and have learned the artificer spell."
 							max_uses--

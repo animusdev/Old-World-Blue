@@ -47,7 +47,7 @@
 	name = "Safecode hint spawner"
 
 /obj/effect/landmark/sc_bible_spawner/New()
-	var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible/booze(src.loc)
+	var/obj/item/storage/bible/B = new /obj/item/storage/bible/booze(src.loc)
 	B.name = "The Holy book of the Geometer"
 	B.deity_name = "Narsie"
 	B.icon_state = "melted"
@@ -149,10 +149,10 @@ var/sc_safecode5 = "[rand(0,9)]"
 /*
  * Captain's safe
  */
-/obj/item/weapon/storage/secure/safe/sc_ssafe
+/obj/item/storage/secure/safe/sc_ssafe
 	name = "Captain's secure safe"
 
-/obj/item/weapon/storage/secure/safe/sc_ssafe/New()
+/obj/item/storage/secure/safe/sc_ssafe/New()
 	..()
 	l_code = "[sc_safecode1][sc_safecode2][sc_safecode3][sc_safecode4][sc_safecode5]"
 	l_set = 1

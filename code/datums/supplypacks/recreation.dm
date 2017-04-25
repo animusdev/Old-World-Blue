@@ -14,10 +14,10 @@
 /datum/supply_packs/recreation/artscrafts
 	name = "Arts and Crafts supplies"
 	contains = list(
-		/obj/item/weapon/storage/fancy/crayons,
+		/obj/item/storage/fancy/crayons,
 		/obj/item/device/camera,
 		/obj/item/device/camera_film = 2,
-		/obj/item/weapon/storage/photo_album,
+		/obj/item/storage/photo_album,
 		/obj/item/weapon/packageWrap,
 		/obj/item/weapon/reagent_containers/glass/paint/red,
 		/obj/item/weapon/reagent_containers/glass/paint/green,

@@ -69,7 +69,7 @@ var/datum/antagonist/cultist/cult
 		player.equip_to_slot(T, slot)
 		if(T.loc == player)
 			break
-	var/obj/item/weapon/storage/S = locate() in player.contents
+	var/obj/item/storage/S = locate() in player.contents
 	if(S && istype(S))
 		T.loc = S
 

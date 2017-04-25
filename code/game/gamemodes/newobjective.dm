@@ -862,7 +862,7 @@ datum
 					return 2
 
 			boh
-				steal_target = /obj/item/weapon/storage/backpack/holding
+				steal_target = /obj/item/storage/backpack/holding
 				explanation_text = "Steal a \"bag of holding.\""
 				weight = 20
 

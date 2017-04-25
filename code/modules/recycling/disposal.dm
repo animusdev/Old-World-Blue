@@ -97,8 +97,8 @@
 		user << "You can't place that item inside the disposal unit."
 		return
 
-	if(istype(I, /obj/item/weapon/storage/bag/trash))
-		var/obj/item/weapon/storage/bag/trash/T = I
+	if(istype(I, /obj/item/storage/bag/trash))
+		var/obj/item/storage/bag/trash/T = I
 		user << "\blue You empty the bag."
 		for(var/obj/item/O in T.contents)
 			T.remove_from_storage(O,src)

@@ -9,9 +9,9 @@
 	shoes = /obj/item/clothing/shoes/white
 	suit = /obj/item/clothing/suit/storage/toggle/labcoat/science
 
-	backpack  = /obj/item/weapon/storage/backpack/toxins
-	satchel_j = /obj/item/weapon/storage/backpack/satchel/tox
-	messenger = /obj/item/weapon/storage/backpack/messenger/tox
+	backpack  = /obj/item/storage/backpack/toxins
+	satchel_j = /obj/item/storage/backpack/satchel/tox
+	messenger = /obj/item/storage/backpack/messenger/tox
 
 
 /datum/job/science/rd
@@ -108,13 +108,13 @@
 	uniform = /obj/item/clothing/under/rank/roboticist
 	ear = /obj/item/device/radio/headset/rob
 	pda = /obj/item/device/pda/roboticist
-	hand = /obj/item/weapon/storage/toolbox/mechanical
+	hand = /obj/item/storage/toolbox/mechanical
 	shoes = /obj/item/clothing/shoes/black
 
-	backpack  = /obj/item/weapon/storage/backpack
-	satchel_j = /obj/item/weapon/storage/backpack/satchel/norm
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag
-	messenger = /obj/item/weapon/storage/backpack/messenger/black
+	backpack  = /obj/item/storage/backpack
+	satchel_j = /obj/item/storage/backpack/satchel/norm
+	dufflebag = /obj/item/storage/backpack/dufflebag
+	messenger = /obj/item/storage/backpack/messenger/black
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0

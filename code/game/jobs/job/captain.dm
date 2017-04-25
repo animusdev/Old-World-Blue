@@ -27,12 +27,12 @@ var/datum/announcement/minor/captain_announcement = new(do_newscast = 1)
 	ear = /obj/item/device/radio/headset/heads/captain
 	glasses = /obj/item/clothing/glasses/sunglasses
 
-	backpack  = /obj/item/weapon/storage/backpack/captain
-	satchel_j = /obj/item/weapon/storage/backpack/satchel/cap
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/cap
+	backpack  = /obj/item/storage/backpack/captain
+	satchel_j = /obj/item/storage/backpack/satchel/cap
+	dufflebag = /obj/item/storage/backpack/dufflebag/cap
 
 	put_in_backpack = list(
-		/obj/item/weapon/storage/box/ids \
+		/obj/item/storage/box/ids \
 		)
 
 	equip(var/mob/living/carbon/human/H)
@@ -76,7 +76,7 @@ var/datum/announcement/minor/captain_announcement = new(do_newscast = 1)
 
 
 	put_in_backpack = list(
-		/obj/item/weapon/storage/box/ids
+		/obj/item/storage/box/ids
 	)
 
 	minimal_access = list(

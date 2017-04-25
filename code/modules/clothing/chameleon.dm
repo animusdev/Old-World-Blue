@@ -27,8 +27,8 @@ var/global/list/chameleons_categories = list(
 	initialize_chameleon_list("gloves", /obj/item/clothing/gloves)
 	initialize_chameleon_list("mask", /obj/item/clothing/mask, list(/obj/item/clothing/mask/scarf))
 	initialize_chameleon_list("glasses", /obj/item/clothing/glasses)
-	initialize_chameleon_list("backpack", /obj/item/weapon/storage/backpack)
-	initialize_chameleon_list("belt", /obj/item/weapon/storage/belt)
+	initialize_chameleon_list("backpack", /obj/item/storage/backpack)
+	initialize_chameleon_list("belt", /obj/item/storage/belt)
 	initialize_chameleon_list("gun", /obj/item/weapon/gun/projectile)
 	return 1
 
@@ -295,20 +295,20 @@ var/global/list/chameleons_categories = list(
 //**Chameleon Backpack**
 //**********************
 
-/obj/item/weapon/storage/backpack/chameleon
+/obj/item/storage/backpack/chameleon
 	name = "backpack"
 	icon_state = "backpack"
 	item_state = "backpack"
 	desc = "A backpack outfitted with cloaking tech. It seems to have a small dial inside, kept away from the storage."
 
-/obj/item/weapon/storage/backpack/chameleon/emp_act(severity)
+/obj/item/storage/backpack/chameleon/emp_act(severity)
 	name = "backpack"
 	desc = "You wear this on your back and put items into it."
 	icon_state = "backpack"
 	item_state = "backpack"
 	update_icon()
 
-/obj/item/weapon/storage/backpack/chameleon/verb/change()
+/obj/item/storage/backpack/chameleon/verb/change()
 	set name = "Change Backpack Appearance"
 	set category = "Object"
 	set src in usr

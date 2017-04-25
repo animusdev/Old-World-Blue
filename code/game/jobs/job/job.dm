@@ -42,11 +42,11 @@
 	var/glasses = null
 	var/suit_store = null
 
-	var/backpack  = /obj/item/weapon/storage/backpack
-	var/satchel   = /obj/item/weapon/storage/backpack/satchel
-	var/satchel_j = /obj/item/weapon/storage/backpack/satchel/norm
-	var/dufflebag = /obj/item/weapon/storage/backpack/dufflebag
-	var/messenger = /obj/item/weapon/storage/backpack/messenger
+	var/backpack  = /obj/item/storage/backpack
+	var/satchel   = /obj/item/storage/backpack/satchel
+	var/satchel_j = /obj/item/storage/backpack/satchel/norm
+	var/dufflebag = /obj/item/storage/backpack/dufflebag
+	var/messenger = /obj/item/storage/backpack/messenger
 
 	//This will be put in backpack. List ordered by priority!
 	var/list/put_in_backpack = list()
@@ -96,7 +96,7 @@ For copy-pasting:
 			if("Dufflebag")		backpack_type = dufflebag
 			if("Messenger")		backpack_type = messenger
 
-		var/obj/item/weapon/storage/backpack/BPK = new backpack_type(H)
+		var/obj/item/storage/backpack/BPK = new backpack_type(H)
 		if(H.equip_to_slot_or_del(BPK, slot_back,1))
 			for( var/path in put_in_backpack )
 				new path(BPK)
@@ -126,7 +126,7 @@ For copy-pasting:
 		else
 			H.equip_to_slot_or_del(new pda (H), slot_belt)
 
-	if(!H.back || !istype(H.back, /obj/item/weapon/storage/backpack))
+	if(!H.back || !istype(H.back, /obj/item/storage/backpack))
 		var/list/slots = list( slot_belt, slot_r_store, slot_l_store, slot_r_hand, slot_l_hand, slot_s_store )
 		for( var/path in put_in_backpack )
 			if( !slots.len ) break
@@ -135,9 +135,9 @@ For copy-pasting:
 				if( H.equip_to_slot_if_possible(I, slot, 0, 1, 0) )
 					slots -= slot
 					break
-			if(istype(H.r_hand,/obj/item/weapon/storage))
+			if(istype(H.r_hand,/obj/item/storage))
 				new path(H.r_hand)
-			else if(istype(H.l_hand, /obj/item/weapon/storage))
+			else if(istype(H.l_hand, /obj/item/storage))
 				new path(H.l_hand)
 
 	//Survival equipment

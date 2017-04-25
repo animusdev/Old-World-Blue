@@ -10,7 +10,7 @@
 	var/obj/item/stored_item = null
 
 /obj/item/weapon/evidencebag/resolve_attackby(obj/item/I, mob/user)
-	if(!istype(I) || I.anchored || istype(I, /obj/item/weapon/storage))
+	if(!istype(I) || I.anchored || istype(I, /obj/item/storage))
 		return ..()
 
 	if(istype(I, /obj/item/weapon/evidencebag))
@@ -29,10 +29,10 @@
 		var/mob/M = I.loc
 		if(!M.unEquip(I)) return
 	else if(isobj(I.loc))
-		if(!istype(I.loc, /obj/item/weapon/storage))
+		if(!istype(I.loc, /obj/item/storage))
 			return
 		else
-			var/obj/item/weapon/storage/S = I.loc
+			var/obj/item/storage/S = I.loc
 			if(!S.remove_from_storage(I))
 				return
 

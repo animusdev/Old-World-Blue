@@ -1,4 +1,4 @@
-/obj/item/weapon/storage/toolbox
+/obj/item/storage/toolbox
 	name = "toolbox"
 	desc = "Danger. Very robust."
 	icon = 'icons/obj/storage.dmi'
@@ -16,12 +16,12 @@
 	origin_tech = list(TECH_COMBAT = 1)
 	attack_verb = list("robusted")
 
-/obj/item/weapon/storage/toolbox/emergency
+/obj/item/storage/toolbox/emergency
 	name = "emergency toolbox"
 	icon_state = "red"
 	item_state = "toolbox_red"
 
-/obj/item/weapon/storage/toolbox/emergency/New()
+/obj/item/storage/toolbox/emergency/New()
 	..()
 	new /obj/item/weapon/crowbar/red(src)
 	new /obj/item/weapon/extinguisher/mini(src)
@@ -31,12 +31,12 @@
 		new /obj/item/device/flashlight/flare(src)
 	new /obj/item/device/radio(src)
 
-/obj/item/weapon/storage/toolbox/mechanical
+/obj/item/storage/toolbox/mechanical
 	name = "mechanical toolbox"
 	icon_state = "blue"
 	item_state = "toolbox_blue"
 
-/obj/item/weapon/storage/toolbox/mechanical/New()
+/obj/item/storage/toolbox/mechanical/New()
 	..()
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
@@ -45,12 +45,12 @@
 	new /obj/item/device/analyzer(src)
 	new /obj/item/weapon/wirecutters(src)
 
-/obj/item/weapon/storage/toolbox/electrical
+/obj/item/storage/toolbox/electrical
 	name = "electrical toolbox"
 	icon_state = "yellow"
 	item_state = "toolbox_yellow"
 
-/obj/item/weapon/storage/toolbox/electrical/New()
+/obj/item/storage/toolbox/electrical/New()
 	..()
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wirecutters(src)
@@ -63,14 +63,14 @@
 	else
 		new /obj/item/stack/cable_coil/random(src,30)
 
-/obj/item/weapon/storage/toolbox/syndicate
+/obj/item/storage/toolbox/syndicate
 	name = "black and red toolbox"
 	icon_state = "syndicate"
 	item_state = "toolbox_syndi"
 	origin_tech = list(TECH_COMBAT = 1, TECH_ILLEGAL = 1)
 	force = 14
 
-/obj/item/weapon/storage/toolbox/syndicate/New()
+/obj/item/storage/toolbox/syndicate/New()
 	..()
 	new /obj/item/clothing/gloves/yellow(src)
 	new /obj/item/weapon/screwdriver(src)

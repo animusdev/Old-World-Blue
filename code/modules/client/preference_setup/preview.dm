@@ -135,7 +135,7 @@ datum/preferences
 				t_state = initial(GL.icon_state)
 				if(GL) clothes.Blend(new /icon(body_build.get_mob_icon("gloves", t_state), t_state), ICON_UNDERLAY)
 
-				var/obj/item/weapon/storage/belt/BT = J.belt
+				var/obj/item/storage/belt/BT = J.belt
 				t_state = initial(BT.icon_state)
 				if(BT) clothes.Blend(new /icon(body_build.get_mob_icon("belt", t_state), t_state), ICON_OVERLAY)
 
@@ -148,7 +148,7 @@ datum/preferences
 				if(HT) clothes.Blend(new /icon(body_build.get_mob_icon("head", t_state), t_state), ICON_OVERLAY)
 
 				if( backbag > 1 )
-					var/obj/item/weapon/storage/backpack/BP = J.backpack
+					var/obj/item/storage/backpack/BP = J.backpack
 					switch(backbaglist[backbag])
 						if("Backpack")		BP = J.backpack
 						if("Satchel")		BP = J.satchel

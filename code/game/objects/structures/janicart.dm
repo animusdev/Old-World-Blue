@@ -8,7 +8,7 @@
 	flags = OPENCONTAINER
 	//copypaste sorry
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
-	var/obj/item/weapon/storage/bag/trash/mybag	= null
+	var/obj/item/storage/bag/trash/mybag	= null
 	var/obj/item/weapon/mop/mymop = null
 	var/obj/item/weapon/reagent_containers/spray/myspray = null
 	var/obj/item/device/lightreplacer/myreplacer = null
@@ -27,7 +27,7 @@
 
 
 /obj/structure/janitorialcart/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/storage/bag/trash) && !mybag)
+	if(istype(I, /obj/item/storage/bag/trash) && !mybag)
 		user.drop_from_inventory(I, src)
 		mybag = I
 		update_icon()
@@ -165,7 +165,7 @@
 	flags = OPENCONTAINER
 	//copypaste sorry
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
-	var/obj/item/weapon/storage/bag/trash/mybag	= null
+	var/obj/item/storage/bag/trash/mybag	= null
 	var/callme = "pimpin' ride"	//how do people refer to it?
 
 
@@ -194,7 +194,7 @@
 			user << "<span class='notice'>This [callme] is out of water!</span>"
 	else if(istype(I, /obj/item/key))
 		user << "Hold [I] in one of your hands while you drive this [callme]."
-	else if(istype(I, /obj/item/weapon/storage/bag/trash))
+	else if(istype(I, /obj/item/storage/bag/trash))
 		user << "<span class='notice'>You hook the trashbag onto the [callme].</span>"
 		user.drop_from_inventory(I, src)
 		mybag = I

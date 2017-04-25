@@ -1,4 +1,4 @@
-/obj/item/weapon/storage/wallet
+/obj/item/storage/wallet
 	name = "wallet"
 	desc = "It can hold a few small and personal things."
 	icon_state = "wallet"
@@ -27,12 +27,12 @@
 	slot_flags = SLOT_ID
 	var/obj/item/weapon/card/id/front_id = null
 
-/obj/item/weapon/storage/wallet/handle_item_insertion(obj/item/weapon/card/id/W, prevent_warning)
+/obj/item/storage/wallet/handle_item_insertion(obj/item/weapon/card/id/W, prevent_warning)
 	. = ..()
 	if(. && !front_id && istype(W))
 		front_id = W
 
-/obj/item/weapon/storage/wallet/remove_from_storage(obj/item/W as obj, atom/new_location)
+/obj/item/storage/wallet/remove_from_storage(obj/item/W as obj, atom/new_location)
 	. = ..(W, new_location)
 	if(.)
 		if(istype(W, /obj/item/weapon/card/id))
@@ -40,7 +40,7 @@
 				front_id = null
 			update_icon()
 
-/obj/item/weapon/storage/wallet/update_icon()
+/obj/item/storage/wallet/update_icon()
 
 	if(front_id)
 		switch(front_id.icon_state)
@@ -59,13 +59,13 @@
 	icon_state = "wallet"
 
 
-/obj/item/weapon/storage/wallet/GetID()
+/obj/item/storage/wallet/GetID()
 	return front_id
 
-/obj/item/weapon/storage/wallet/GetAccess()
+/obj/item/storage/wallet/GetAccess()
 	return front_id && front_id.access
 
-/obj/item/weapon/storage/wallet/random/New()
+/obj/item/storage/wallet/random/New()
 	..()
 	var/item1_type = pick(\
 		/obj/item/weapon/spacecash/c10,

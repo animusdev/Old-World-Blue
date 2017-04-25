@@ -122,7 +122,7 @@ Note: Must be placed west/left of and R&D console to function.
 	if(D.build_path)
 		var/obj/new_item = new D.build_path(loc)
 
-		if( new_item.type == /obj/item/weapon/storage/backpack/holding )
+		if( new_item.type == /obj/item/storage/backpack/holding )
 			new_item.investigate_log("built by [key]","singulo")
 
 		new_item.reliability = D.reliability

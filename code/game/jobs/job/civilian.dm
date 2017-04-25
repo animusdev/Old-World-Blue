@@ -19,7 +19,7 @@
 
 	equip(var/mob/living/carbon/human/H)
 		if(!..())	return 0
-		var/obj/item/weapon/storage/box/survival/Barpack = null
+		var/obj/item/storage/box/survival/Barpack = null
 		if(H.back)
 			Barpack = locate() in H.back
 			if(!Barpack)
@@ -28,9 +28,9 @@
 
 		if(!Barpack)
 			if(!H.r_hand)
-				Barpack = new /obj/item/weapon/storage/box/survival(H)
+				Barpack = new /obj/item/storage/box/survival(H)
 				H.equip_to_slot_or_del(Barpack, slot_r_hand)
-			else if(istype(H.r_hand, /obj/item/weapon/storage/box))
+			else if(istype(H.r_hand, /obj/item/storage/box))
 				Barpack = H.r_hand
 
 		if(Barpack)
@@ -84,9 +84,9 @@
 	gloves = /obj/item/clothing/gloves/botanic_leather
 	ear = /obj/item/device/radio/headset/service
 
-	backpack  = /obj/item/weapon/storage/backpack/hydroponics
-	satchel_j = /obj/item/weapon/storage/backpack/satchel/hyd
-	messenger = /obj/item/weapon/storage/backpack/messenger/hyd
+	backpack  = /obj/item/storage/backpack/hydroponics
+	satchel_j = /obj/item/storage/backpack/satchel/hyd
+	messenger = /obj/item/storage/backpack/messenger/hyd
 
 	put_in_backpack = list(
 		/obj/item/device/analyzer/plant_analyzer
@@ -157,7 +157,7 @@
 
 	put_in_backpack = list(
 		/obj/item/weapon/crowbar,
-		/obj/item/weapon/storage/bag/ore
+		/obj/item/storage/bag/ore
 	)
 
 /datum/job/janitor
@@ -220,5 +220,5 @@
 	pda = /obj/item/device/pda/lawyer
 	suit = /obj/item/clothing/suit/storage/toggle/internalaffairs
 	ear = /obj/item/device/radio/headset/ia
-	hand = /obj/item/weapon/storage/briefcase
+	hand = /obj/item/storage/briefcase
 	glasses = /obj/item/clothing/glasses/sunglasses/big

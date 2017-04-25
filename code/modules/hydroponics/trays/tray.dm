@@ -483,11 +483,11 @@
 		else
 			user << "<span class='danger'>This plot is completely devoid of weeds. It doesn't need uprooting.</span>"
 
-	else if (istype(O, /obj/item/weapon/storage/bag/plants))
+	else if (istype(O, /obj/item/storage/bag/plants))
 
 		attack_hand(user)
 
-		var/obj/item/weapon/storage/bag/plants/S = O
+		var/obj/item/storage/bag/plants/S = O
 		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in locate(user.x,user.y,user.z))
 			if(!S.can_be_inserted(G))
 				return

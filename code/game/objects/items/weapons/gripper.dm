@@ -62,7 +62,7 @@
 		/obj/item/weapon/stock_parts,
 		/obj/item/device/mmi,
 		/obj/item/robot_parts,
-		/obj/item/weapon/storage/firstaid,
+		/obj/item/storage/firstaid,
 		/obj/item/device/assembly,
 		/obj/item/borg/upgrade,
 		/obj/item/mecha_parts/,
@@ -87,7 +87,7 @@
 		/obj/item/weapon/reagent_containers/food,
 		/obj/item/seeds,
 		/obj/item/weapon/grown,
-		/obj/item/weapon/storage/fancy,
+		/obj/item/storage/fancy,
 		/obj/item/weapon/reagent_containers/condiment //робот сможет носить соусы,муку, универсальные энзимы и т.д.
 		)
 

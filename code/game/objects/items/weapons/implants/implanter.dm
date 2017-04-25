@@ -137,8 +137,8 @@
 		if(ishuman(A.loc))
 			var/mob/living/carbon/human/H = A.loc
 			H.remove_from_mob(A)
-		else if(istype(A.loc,/obj/item/weapon/storage))
-			var/obj/item/weapon/storage/S = A.loc
+		else if(istype(A.loc,/obj/item/storage))
+			var/obj/item/storage/S = A.loc
 			S.remove_from_storage(A)
 		A.loc.contents.Remove(A)
 		update_icon()

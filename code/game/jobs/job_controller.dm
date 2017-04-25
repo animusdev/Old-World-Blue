@@ -451,11 +451,11 @@ var/global/datum/controller/occupations/job_master
 
 		//Deferred item spawning.
 		if(put_in_storage.len)
-			var/obj/item/weapon/storage/B
-			if(istype(H.back, /obj/item/weapon/storage))
+			var/obj/item/storage/B
+			if(istype(H.back, /obj/item/storage))
 				B = H.back
 			else
-				B = locate(/obj/item/weapon/storage) in H.contents
+				B = locate(/obj/item/storage) in H.contents
 
 			if(isnull(B))
 				H << "<span class='danger'>Failed to locate a storage object on your mob, either you spawned with no arms and no backpack or this is a bug.</span>"

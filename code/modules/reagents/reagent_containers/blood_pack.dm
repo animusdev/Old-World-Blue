@@ -1,9 +1,9 @@
-/obj/item/weapon/storage/box/bloodpacks
+/obj/item/storage/box/bloodpacks
 	name = "blood packs bags"
 	desc = "This box contains blood packs."
 	icon_state = "sterile"
 
-/obj/item/weapon/storage/box/bloodpacks/New()
+/obj/item/storage/box/bloodpacks/New()
 		..()
 		new /obj/item/weapon/reagent_containers/blood/empty(src)
 		new /obj/item/weapon/reagent_containers/blood/empty(src)

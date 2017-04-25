@@ -15,7 +15,7 @@
 	name = "Robotics assembly crate"
 	contains = list(
 		/obj/item/device/assembly/prox_sensor = 3,
-		/obj/item/weapon/storage/toolbox/electrical,
+		/obj/item/storage/toolbox/electrical,
 		/obj/item/device/flash = 4,
 		/obj/item/weapon/cell/high = 2
 	)

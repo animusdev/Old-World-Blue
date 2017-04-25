@@ -127,9 +127,9 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "red"
 	item_to_spawn()
-		return pick(prob(3);/obj/item/weapon/storage/toolbox/mechanical,
-					prob(2);/obj/item/weapon/storage/toolbox/electrical,
-					prob(1);/obj/item/weapon/storage/toolbox/emergency)
+		return pick(prob(3);/obj/item/storage/toolbox/mechanical,
+					prob(2);/obj/item/storage/toolbox/electrical,
+					prob(1);/obj/item/storage/toolbox/emergency)
 
 
 /obj/random/tech_supply
@@ -147,7 +147,7 @@
 					prob(1);/obj/item/clothing/gloves/fyellow,
 					prob(3);/obj/item/stack/cable_coil,
 					prob(2);/obj/random/toolbox,
-					prob(2);/obj/item/weapon/storage/belt/utility,
+					prob(2);/obj/item/storage/belt/utility,
 					prob(5);/obj/random/tool,
 					prob(2);/obj/item/weapon/tape_roll)
 
@@ -165,9 +165,9 @@
 					prob(1);/obj/item/stack/medical/splint,
 					prob(2);/obj/item/bodybag,
 					prob(1);/obj/item/bodybag/cryobag,
-					prob(2);/obj/item/weapon/storage/pill_bottle/kelotane,
-					prob(2);/obj/item/weapon/storage/pill_bottle/antitox,
-					prob(2);/obj/item/weapon/storage/pill_bottle/tramadol,
+					prob(2);/obj/item/storage/pill_bottle/kelotane,
+					prob(2);/obj/item/storage/pill_bottle/antitox,
+					prob(2);/obj/item/storage/pill_bottle/tramadol,
 					prob(2);/obj/item/weapon/reagent_containers/syringe/antitoxin,
 					prob(1);/obj/item/weapon/reagent_containers/syringe/antiviral,
 					prob(2);/obj/item/weapon/reagent_containers/syringe/inaprovaline,
@@ -180,11 +180,11 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid"
 	item_to_spawn()
-		return pick(prob(3);/obj/item/weapon/storage/firstaid/regular,
-					prob(2);/obj/item/weapon/storage/firstaid/toxin,
-					prob(2);/obj/item/weapon/storage/firstaid/o2,
-					prob(1);/obj/item/weapon/storage/firstaid/adv,
-					prob(2);/obj/item/weapon/storage/firstaid/fire)
+		return pick(prob(3);/obj/item/storage/firstaid/regular,
+					prob(2);/obj/item/storage/firstaid/toxin,
+					prob(2);/obj/item/storage/firstaid/o2,
+					prob(1);/obj/item/storage/firstaid/adv,
+					prob(2);/obj/item/storage/firstaid/fire)
 
 
 /obj/random/contraband
@@ -194,10 +194,10 @@
 	icon_state = "purplecomb"
 	spawn_nothing_percentage = 50
 	item_to_spawn()
-		return pick(prob(3);/obj/item/weapon/storage/pill_bottle/tramadol,
+		return pick(prob(3);/obj/item/storage/pill_bottle/tramadol,
 					prob(4);/obj/item/weapon/haircomb,
-					prob(2);/obj/item/weapon/storage/pill_bottle/happy,
-					prob(2);/obj/item/weapon/storage/pill_bottle/zoom,
+					prob(2);/obj/item/storage/pill_bottle/happy,
+					prob(2);/obj/item/storage/pill_bottle/zoom,
 					prob(5);/obj/item/weapon/contraband/poster,
 					prob(2);/obj/item/weapon/material/butterfly,
 					prob(3);/obj/item/weapon/material/butterflyblade,
@@ -254,10 +254,10 @@
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "45-10"
 	item_to_spawn()
-		return pick(prob(6);/obj/item/weapon/storage/box/beanbags,
-					prob(2);/obj/item/weapon/storage/box/shotgunammo,
-					prob(4);/obj/item/weapon/storage/box/shotgunshells,
-					prob(1);/obj/item/weapon/storage/box/stunshells,
+		return pick(prob(6);/obj/item/storage/box/beanbags,
+					prob(2);/obj/item/storage/box/shotgunammo,
+					prob(4);/obj/item/storage/box/shotgunshells,
+					prob(1);/obj/item/storage/box/stunshells,
 					prob(2);/obj/item/ammo_magazine/c45m,
 					prob(4);/obj/item/ammo_magazine/c45m/rubber,
 					prob(4);/obj/item/ammo_magazine/c45m/flash,

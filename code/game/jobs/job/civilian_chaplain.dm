@@ -19,7 +19,7 @@
 	equip(var/mob/living/carbon/human/H)
 		if(!..())	return 0
 
-		var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible(H) //BS12 EDIT
+		var/obj/item/storage/bible/B = new /obj/item/storage/bible(H) //BS12 EDIT
 		H.equip_to_slot_or_del(B, slot_l_hand)
 		spawn(0)
 			var/religion_name = "Christianity"

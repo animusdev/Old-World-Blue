@@ -15,7 +15,7 @@
  */
 
 //  Generic non-item
-/obj/item/weapon/storage/bag
+/obj/item/storage/bag
 	allow_quick_gather = 1
 	allow_quick_empty = 1
 	display_contents_with_number = 0 // UNStABLE AS FuCK, turn on when it stops crashing clients
@@ -25,7 +25,7 @@
 // -----------------------------
 //          Trash bag
 // -----------------------------
-/obj/item/weapon/storage/bag/trash
+/obj/item/storage/bag/trash
 	name = "trash bag"
 	desc = "It's the heavy-duty black polymer kind. Time to take out the trash!"
 	icon = 'icons/obj/janitor.dmi'
@@ -39,7 +39,7 @@
 	can_hold = list() // any
 	cant_hold = list(/obj/item/weapon/disk/nuclear)
 
-/obj/item/weapon/storage/bag/trash/update_icon()
+/obj/item/storage/bag/trash/update_icon()
 	if(contents.len == 0)
 		icon_state = "trashbag0"
 	else if(contents.len < 12)
@@ -53,7 +53,7 @@
 //        Plastic Bag
 // -----------------------------
 
-/obj/item/weapon/storage/bag/plasticbag
+/obj/item/storage/bag/plasticbag
 	name = "plastic bag"
 	desc = "It's a very flimsy, very noisy alternative to a bag."
 	icon = 'icons/obj/trash.dmi'
@@ -70,7 +70,7 @@
 //        Mining Satchel
 // -----------------------------
 
-/obj/item/weapon/storage/bag/ore
+/obj/item/storage/bag/ore
 	name = "mining satchel"
 	desc = "This little bugger can be used to store and transport ores."
 	icon = 'icons/obj/mining.dmi'
@@ -87,7 +87,7 @@
 //          Plant bag
 // -----------------------------
 
-/obj/item/weapon/storage/bag/plants
+/obj/item/storage/bag/plants
 	name = "plant bag"
 	icon = 'icons/obj/hydroponics_machines.dmi'
 	icon_state = "plantbag"
@@ -104,7 +104,7 @@
 // Because it stacks stacks, this doesn't operate normally.
 // However, making it a storage/bag allows us to reuse existing code in some places. -Sayu
 
-/obj/item/weapon/storage/bag/sheetsnatcher
+/obj/item/storage/bag/sheetsnatcher
 	name = "sheet snatcher"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "sheetsnatcher"
@@ -116,8 +116,8 @@
 	allow_quick_empty = 1 // this function is superceded
 	New()
 		..()
-		//verbs -= /obj/item/weapon/storage/verb/quick_empty
-		//verbs += /obj/item/weapon/storage/bag/sheetsnatcher/quick_empty
+		//verbs -= /obj/item/storage/verb/quick_empty
+		//verbs += /obj/item/storage/bag/sheetsnatcher/quick_empty
 
 	can_be_inserted(obj/item/W as obj, stop_messages = 0)
 		if(!istype(W,/obj/item/stack/material))
@@ -235,7 +235,7 @@
 //    Sheet Snatcher (Cyborg)
 // -----------------------------
 
-/obj/item/weapon/storage/bag/sheetsnatcher/borg
+/obj/item/storage/bag/sheetsnatcher/borg
 	name = "sheet snatcher 9000"
 	desc = ""
 	capacity = 500//Borgs get more because >specialization
@@ -244,7 +244,7 @@
 //           Cash Bag
 // -----------------------------
 
-/obj/item/weapon/storage/bag/cash
+/obj/item/storage/bag/cash
 	name = "cash bag"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "cashbag"

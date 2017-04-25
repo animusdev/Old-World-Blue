@@ -11,10 +11,10 @@
 	ear = /obj/item/device/radio/headset/eng
 	adv_survival_gear = 1
 
-	backpack  = /obj/item/weapon/storage/backpack/industrial
-	satchel_j = /obj/item/weapon/storage/backpack/satchel/eng
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/eng
-	messenger = /obj/item/weapon/storage/backpack/messenger/eng
+	backpack  = /obj/item/storage/backpack/industrial
+	satchel_j = /obj/item/storage/backpack/satchel/eng
+	dufflebag = /obj/item/storage/backpack/dufflebag/eng
+	messenger = /obj/item/storage/backpack/messenger/eng
 
 
 
@@ -45,7 +45,7 @@
 	pda = /obj/item/device/pda/heads/ce
 	hat = /obj/item/clothing/head/hardhat/white
 	gloves = /obj/item/clothing/gloves/black
-	belt = /obj/item/weapon/storage/belt/utility/full
+	belt = /obj/item/storage/belt/utility/full
 	ear = /obj/item/device/radio/headset/heads/ce
 
 
@@ -67,7 +67,7 @@
 	shoes = /obj/item/clothing/shoes/workboots
 	pda = /obj/item/device/pda/engineering
 	hat = /obj/item/clothing/head/hardhat
-	belt = /obj/item/weapon/storage/belt/utility/full
+	belt = /obj/item/storage/belt/utility/full
 
 	put_in_backpack = list(
 		/obj/item/device/t_scanner
@@ -104,4 +104,4 @@
 
 	uniform = /obj/item/clothing/under/rank/atmospheric_technician
 	pda = /obj/item/device/pda/atmos
-	belt = /obj/item/weapon/storage/belt/utility/atmostech
+	belt = /obj/item/storage/belt/utility/atmostech

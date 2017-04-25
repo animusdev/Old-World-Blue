@@ -55,7 +55,7 @@
 		/obj/item/weapon/reagent_containers/blood/OPlus,
 		/obj/item/weapon/reagent_containers/blood/OMinus)
 
-	if(H.back && istype(H.back,/obj/item/weapon/storage))
+	if(H.back && istype(H.back,/obj/item/storage))
 		H.equip_to_slot_or_del(new pack_type(H.back), slot_in_backpack)
 	else
 		H.equip_to_slot_or_del(new pack_type(H), slot_r_hand)

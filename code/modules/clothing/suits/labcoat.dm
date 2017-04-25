@@ -12,7 +12,7 @@
 		/obj/item/weapon/reagent_containers/hypospray,/obj/item/device/healthanalyzer,
 		/obj/item/device/flashlight/pen,/obj/item/weapon/reagent_containers/glass/beaker/bottle,
 		/obj/item/weapon/reagent_containers/glass/beaker,/obj/item/weapon/reagent_containers/pill,
-		/obj/item/weapon/storage/pill_bottle,/obj/item/weapon/paper,/obj/item/device/radio
+		/obj/item/storage/pill_bottle,/obj/item/weapon/paper,/obj/item/device/radio
 	)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 50, rad = 0)
 
@@ -77,7 +77,7 @@
 		/obj/item/weapon/reagent_containers/hypospray,/obj/item/device/healthanalyzer,
 		/obj/item/device/flashlight/pen,/obj/item/weapon/reagent_containers/glass/beaker/bottle,
 		/obj/item/weapon/reagent_containers/glass/beaker,/obj/item/weapon/reagent_containers/pill,
-		/obj/item/weapon/storage/pill_bottle,/obj/item/weapon/reagent_containers/spray/pepper,
+		/obj/item/storage/pill_bottle,/obj/item/weapon/reagent_containers/spray/pepper,
 		/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/device/taperecorder
 	)
 
@@ -105,7 +105,7 @@
 		/obj/item/weapon/reagent_containers/hypospray,/obj/item/device/healthanalyzer,
 		/obj/item/device/flashlight/pen,/obj/item/weapon/reagent_containers/glass/beaker/bottle,
 		/obj/item/weapon/reagent_containers/glass/beaker,/obj/item/weapon/reagent_containers/pill,
-		/obj/item/weapon/storage/pill_bottle,/obj/item/weapon/paper,/obj/item/device/radio
+		/obj/item/storage/pill_bottle,/obj/item/weapon/paper,/obj/item/device/radio
 	)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 50, rad = 0)
 
@@ -128,6 +128,6 @@
 	allowed = list(
 		/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,
 		/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,
-		/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,
+		/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/storage/fancy/cigarettes,
 		/obj/item/weapon/flame/lighter,/obj/item/device/taperecorder,/obj/item/device/uv_light
 	)

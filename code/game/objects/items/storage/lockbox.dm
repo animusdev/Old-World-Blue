@@ -1,6 +1,6 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
-/obj/item/weapon/storage/lockbox
+/obj/item/storage/lockbox
 	name = "lockbox"
 	desc = "A locked box."
 	icon_state = "lockbox+l"
@@ -56,7 +56,7 @@
 			..()
 		return
 
-/obj/item/weapon/storage/lockbox/emag_act(var/remaining_charges, var/mob/user, var/emag_source, var/visual_feedback = "", var/audible_feedback = "")
+/obj/item/storage/lockbox/emag_act(var/remaining_charges, var/mob/user, var/emag_source, var/visual_feedback = "", var/audible_feedback = "")
 	if(!broken)
 		if(visual_feedback)
 			visual_feedback = "<span class='warning'>[visual_feedback]</span>"
@@ -74,7 +74,7 @@
 		visible_message(visual_feedback, audible_feedback)
 		return 1
 
-/obj/item/weapon/storage/lockbox/loyalty
+/obj/item/storage/lockbox/loyalty
 	name = "lockbox of loyalty implants"
 	req_access = list(access_security)
 
@@ -86,7 +86,7 @@
 		new /obj/item/weapon/implanter/loyalty(src)
 
 
-/obj/item/weapon/storage/lockbox/clusterbang
+/obj/item/storage/lockbox/clusterbang
 	name = "lockbox of clusterbangs"
 	desc = "You have a bad feeling about opening this."
 	req_access = list(access_security)
@@ -95,7 +95,7 @@
 		..()
 		new /obj/item/weapon/grenade/flashbang/clusterbang(src)
 
-/obj/item/weapon/storage/lockbox/medal
+/obj/item/storage/lockbox/medal
 	name = "lockbox of medals"
 	desc = "A lockbox filled with commemorative medals, it has the NanoTrasen logo stamped on it."
 	req_access = list(access_heads)

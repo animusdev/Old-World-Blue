@@ -309,12 +309,12 @@ var/list/donators = list()
 
 /datum/donat_stuff/personal/cigarette
 	name = "Cigarette Packet"
-	path = /obj/item/weapon/storage/fancy/cigarettes
+	path = /obj/item/storage/fancy/cigarettes
 	cost = 20
 
 /datum/donat_stuff/personal/cigarette_alt
 	name = "DromedaryCo Packet"
-	path = /obj/item/weapon/storage/fancy/cigarettes/dromedaryco
+	path = /obj/item/storage/fancy/cigarettes/dromedaryco
 	cost = 50
 
 /datum/donat_stuff/personal/cigar
@@ -344,17 +344,17 @@ var/list/donators = list()
 
 /datum/donat_stuff/personal/leather_satchel
 	name = "Leather Satchel"
-	path = /obj/item/weapon/storage/backpack/satchel
+	path = /obj/item/storage/backpack/satchel
 	cost = 190
 
 /datum/donat_stuff/personal/wallet
 	name = "Wallet"
-	path = /obj/item/weapon/storage/wallet
+	path = /obj/item/storage/wallet
 	cost = 90
 
 /datum/donat_stuff/personal/briefcase
 	name = "Briefcase"
-	path = /obj/item/weapon/storage/briefcase
+	path = /obj/item/storage/briefcase
 	cost = 120
 
 /datum/donat_stuff/shoes
@@ -588,7 +588,7 @@ var/list/donators = list()
 
 /datum/donat_stuff/toy/belt
 	name = "Champion Belt"
-	path = /obj/item/weapon/storage/belt/champion
+	path = /obj/item/storage/belt/champion
 	cost = 200
 
 /datum/donat_stuff/toy/sword
@@ -613,7 +613,7 @@ var/list/donators = list()
 
 /datum/donat_stuff/toy/donut
 	name = "Donut Box"
-	path = /obj/item/weapon/storage/box/donut
+	path = /obj/item/storage/box/donut
 	cost = 450
 
 /datum/donat_stuff/toy/cola
@@ -631,5 +631,5 @@ var/list/donators = list()
 
 /datum/donat_stuff/special/
 	name = "Santabag"
-	path = /obj/item/weapon/storage/backpack/santabag
+	path = /obj/item/storage/backpack/santabag
 	cost = 600

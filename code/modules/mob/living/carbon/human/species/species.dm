@@ -215,11 +215,11 @@
 				H << "<span class='danger'>[pick(heat_discomfort_strings)]</span>"
 
 /datum/species/proc/equip_survival_gear(var/mob/living/carbon/human/H, var/datum/job/J)
-	var/gear = /obj/item/weapon/storage/box/survival
+	var/gear = /obj/item/storage/box/survival
 	if(J && J.adv_survival_gear)
-		gear = /obj/item/weapon/storage/box/engineer
+		gear = /obj/item/storage/box/engineer
 
-	if(H.back && istype(H.back,/obj/item/weapon/storage))
+	if(H.back && istype(H.back,/obj/item/storage))
 		H.equip_to_slot_or_del(new gear(H.back), slot_in_backpack)
 	else
 		H.equip_to_slot_or_del(new gear(H), slot_r_hand)

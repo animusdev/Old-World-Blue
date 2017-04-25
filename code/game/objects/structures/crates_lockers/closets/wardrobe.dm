@@ -28,10 +28,10 @@
 	..()
 	for(var/i in 1 to 3)
 		switch(rand(4))
-			if(1) new /obj/item/weapon/storage/backpack/security(src)
-			if(2) new /obj/item/weapon/storage/backpack/satchel/sec(src)
-			if(3) new /obj/item/weapon/storage/backpack/dufflebag/sec(src)
-			if(4) new /obj/item/weapon/storage/backpack/messenger/sec(src)
+			if(1) new /obj/item/storage/backpack/security(src)
+			if(2) new /obj/item/storage/backpack/satchel/sec(src)
+			if(3) new /obj/item/storage/backpack/dufflebag/sec(src)
+			if(4) new /obj/item/storage/backpack/messenger/sec(src)
 	new /obj/item/clothing/under/rank/security(src)
 	new /obj/item/clothing/under/rank/security(src)
 	new /obj/item/clothing/under/rank/security(src)
@@ -112,7 +112,7 @@
 	new /obj/item/clothing/mask/bandana(src)
 	new /obj/item/clothing/mask/bandana(src)
 	new /obj/item/clothing/mask/bandana(src)
-	new /obj/item/weapon/storage/backpack/messenger/black(src)
+	new /obj/item/storage/backpack/messenger/black(src)
 	return
 
 
@@ -131,9 +131,9 @@
 	new /obj/item/clothing/head/chaplain_hood(src)
 	new /obj/item/clothing/suit/holidaypriest(src)
 	new /obj/item/clothing/under/wedding/bride_white(src)
-	new /obj/item/weapon/storage/backpack/cultpack (src)
-	new /obj/item/weapon/storage/fancy/candle_box(src)
-	new /obj/item/weapon/storage/fancy/candle_box(src)
+	new /obj/item/storage/backpack/cultpack (src)
+	new /obj/item/storage/fancy/candle_box(src)
+	new /obj/item/storage/fancy/candle_box(src)
 	return
 
 
@@ -314,9 +314,9 @@
 	new /obj/item/clothing/shoes/white(src)
 	for(var/i in 1 to 2)
 		switch(rand(3))
-			if(1) new /obj/item/weapon/storage/backpack/toxins(src)
-			if(2) new /obj/item/weapon/storage/backpack/satchel/tox(src)
-			if(3) new /obj/item/weapon/storage/backpack/messenger/tox(src)
+			if(1) new /obj/item/storage/backpack/toxins(src)
+			if(2) new /obj/item/storage/backpack/satchel/tox(src)
+			if(3) new /obj/item/storage/backpack/messenger/tox(src)
 	return
 
 /obj/structure/closet/wardrobe/robotics_black
@@ -327,9 +327,9 @@
 	..()
 	for(var/i in 1 to 2)
 		switch(rand(3))
-			if(1) new /obj/item/weapon/storage/backpack/toxins(src)
-			if(2) new /obj/item/weapon/storage/backpack/satchel/tox(src)
-			if(4) new /obj/item/weapon/storage/backpack/messenger/tox(src)
+			if(1) new /obj/item/storage/backpack/toxins(src)
+			if(2) new /obj/item/storage/backpack/satchel/tox(src)
+			if(4) new /obj/item/storage/backpack/messenger/tox(src)
 	new /obj/item/clothing/under/rank/roboticist(src)
 	new /obj/item/clothing/under/rank/roboticist/skirt(src)
 	new /obj/item/clothing/under/rank/biomechanical(src)
@@ -360,10 +360,10 @@
 	new /obj/item/clothing/suit/storage/toggle/labcoat/chemist(src)
 	for(var/i in 1 to 2)
 		switch(rand(4))
-			if(1) new /obj/item/weapon/storage/backpack/chemistry(src)
-			if(2) new /obj/item/weapon/storage/backpack/satchel/chem(src)
-			if(3) new /obj/item/weapon/storage/backpack/dufflebag/med(src)
-			if(4) new /obj/item/weapon/storage/backpack/messenger/chem(src)
+			if(1) new /obj/item/storage/backpack/chemistry(src)
+			if(2) new /obj/item/storage/backpack/satchel/chem(src)
+			if(3) new /obj/item/storage/backpack/dufflebag/med(src)
+			if(4) new /obj/item/storage/backpack/messenger/chem(src)
 	return
 
 
@@ -381,10 +381,10 @@
 	new /obj/item/clothing/suit/storage/toggle/labcoat/genetics(src)
 	for(var/i in 1 to 2)
 		switch(rand(4))
-			if(1) new /obj/item/weapon/storage/backpack/genetics(src)
-			if(2) new /obj/item/weapon/storage/backpack/satchel/gen(src)
-			if(3) new /obj/item/weapon/storage/backpack/dufflebag/med(src)
-			if(4) new /obj/item/weapon/storage/backpack/messenger/med(src)
+			if(1) new /obj/item/storage/backpack/genetics(src)
+			if(2) new /obj/item/storage/backpack/satchel/gen(src)
+			if(3) new /obj/item/storage/backpack/dufflebag/med(src)
+			if(4) new /obj/item/storage/backpack/messenger/med(src)
 	return
 
 
@@ -404,10 +404,10 @@
 	new /obj/item/clothing/mask/surgical(src)
 	for(var/i in 1 to 2)
 		switch(rand(4))
-			if(1) new /obj/item/weapon/storage/backpack/virology(src)
-			if(2) new /obj/item/weapon/storage/backpack/satchel/vir(src)
-			if(3) new /obj/item/weapon/storage/backpack/dufflebag/med(src)
-			if(4) new /obj/item/weapon/storage/backpack/messenger/vir(src)
+			if(1) new /obj/item/storage/backpack/virology(src)
+			if(2) new /obj/item/storage/backpack/satchel/vir(src)
+			if(3) new /obj/item/storage/backpack/dufflebag/med(src)
+			if(4) new /obj/item/storage/backpack/messenger/vir(src)
 	return
 
 
@@ -488,7 +488,7 @@
 	new /obj/item/clothing/mask/balaclava/tactical(src)
 	new /obj/item/clothing/mask/balaclava(src)
 	new /obj/item/clothing/glasses/sunglasses/sechud/tactical(src)
-	new /obj/item/weapon/storage/belt/security/tactical(src)
+	new /obj/item/storage/belt/security/tactical(src)
 	if(prob(10))
 		new /obj/item/clothing/mask/bandana/skull(src)
 	new /obj/item/clothing/shoes/jackboots(src)
@@ -533,8 +533,8 @@
 	new /obj/item/clothing/under/suit_jacket/really_black(src)
 	new /obj/item/clothing/under/suit_jacket/red(src)
 	new /obj/item/clothing/under/scratch(src)
-	new /obj/item/weapon/storage/backpack/satchel(src)
-	new /obj/item/weapon/storage/backpack/satchel(src)
+	new /obj/item/storage/backpack/satchel(src)
+	new /obj/item/storage/backpack/satchel(src)
 	return
 
 /obj/structure/closet/cabinet/captain
@@ -544,9 +544,9 @@
 	..()
 	for(var/i in 1 to 2)
 		switch(rand(3))
-			if(1) new /obj/item/weapon/storage/backpack/captain(src)
-			if(2) new /obj/item/weapon/storage/backpack/satchel/cap(src)
-			if(3) new /obj/item/weapon/storage/backpack/dufflebag/cap(src)
+			if(1) new /obj/item/storage/backpack/captain(src)
+			if(2) new /obj/item/storage/backpack/satchel/cap(src)
+			if(3) new /obj/item/storage/backpack/dufflebag/cap(src)
 	new /obj/item/clothing/suit/captunic(src)
 	new /obj/item/clothing/suit/captunic/capjacket(src)
 	new /obj/item/clothing/under/rank/captain(src)

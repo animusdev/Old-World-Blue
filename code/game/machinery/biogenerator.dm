@@ -50,7 +50,7 @@
 			updateUsrDialog()
 	else if(processing)
 		user << "<span class='notice'>\The [src] is currently processing.</span>"
-	else if(istype(O, /obj/item/weapon/storage/bag/plants))
+	else if(istype(O, /obj/item/storage/bag/plants))
 		var/i = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
 			i++
@@ -200,15 +200,15 @@
 			new/obj/item/weapon/reagent_containers/glass/fertilizer/rh(loc)
 			new/obj/item/weapon/reagent_containers/glass/fertilizer/rh(loc)
 		if("wallet")
-			new/obj/item/weapon/storage/wallet(loc)
+			new/obj/item/storage/wallet(loc)
 		if("gloves")
 			new/obj/item/clothing/gloves/botanic_leather(loc)
 		if("tbelt")
-			new/obj/item/weapon/storage/belt/utility(loc)
+			new/obj/item/storage/belt/utility(loc)
 		if("satchel")
-			new/obj/item/weapon/storage/backpack/satchel(loc)
+			new/obj/item/storage/backpack/satchel(loc)
 		if("cashbag")
-			new/obj/item/weapon/storage/bag/cash(loc)
+			new/obj/item/storage/bag/cash(loc)
 		if("monkey")
 			new/mob/living/carbon/human/monkey(loc)
 		if("gauze")

@@ -316,9 +316,9 @@
 			return
 	var/disky = 0
 	for (var/atom/O in M.contents) //I'm pretty sure this accounts for the maximum amount of container in container stacking. --NeoFite
-		if (istype(O, /obj/item/weapon/storage) || istype(O, /obj/item/weapon/gift))
+		if (istype(O, /obj/item/storage) || istype(O, /obj/item/weapon/gift))
 			for (var/obj/OO in O.contents)
-				if (istype(OO, /obj/item/weapon/storage) || istype(OO, /obj/item/weapon/gift))
+				if (istype(OO, /obj/item/storage) || istype(OO, /obj/item/weapon/gift))
 					for (var/obj/OOO in OO.contents)
 						if (istype(OOO, /obj/item/weapon/disk/nuclear))
 							disky = 1
@@ -338,25 +338,25 @@
 //Bags of Holding cause bluespace teleportation to go funky. --NeoFite
 	if (istype(M, /mob/living))
 		var/mob/living/MM = M
-		if(MM.check_contents_for(/obj/item/weapon/storage/backpack/holding))
+		if(MM.check_contents_for(/obj/item/storage/backpack/holding))
 			MM << "\red The Bluespace interface on your Bag of Holding interferes with the teleport!"
 			precision = rand(1,100)
-	if (istype(M, /obj/item/weapon/storage/backpack/holding))
+	if (istype(M, /obj/item/storage/backpack/holding))
 		precision = rand(1,100)
 	for (var/atom/O in M.contents) //I'm pretty sure this accounts for the maximum amount of container in container stacking. --NeoFite
-		if (istype(O, /obj/item/weapon/storage) || istype(O, /obj/item/weapon/gift))
+		if (istype(O, /obj/item/storage) || istype(O, /obj/item/weapon/gift))
 			for (var/obj/OO in O.contents)
-				if (istype(OO, /obj/item/weapon/storage) || istype(OO, /obj/item/weapon/gift))
+				if (istype(OO, /obj/item/storage) || istype(OO, /obj/item/weapon/gift))
 					for (var/obj/OOO in OO.contents)
-						if (istype(OOO, /obj/item/weapon/storage/backpack/holding))
+						if (istype(OOO, /obj/item/storage/backpack/holding))
 							precision = rand(1,100)
-				if (istype(OO, /obj/item/weapon/storage/backpack/holding))
+				if (istype(OO, /obj/item/storage/backpack/holding))
 					precision = rand(1,100)
-		if (istype(O, /obj/item/weapon/storage/backpack/holding))
+		if (istype(O, /obj/item/storage/backpack/holding))
 			precision = rand(1,100)
 		if (istype(O, /mob/living))
 			var/mob/living/MM = O
-			if(MM.check_contents_for(/obj/item/weapon/storage/backpack/holding))
+			if(MM.check_contents_for(/obj/item/storage/backpack/holding))
 				precision = rand(1,100)
 
 

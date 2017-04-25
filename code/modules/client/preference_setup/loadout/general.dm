@@ -68,7 +68,7 @@
 
 /datum/gear/matchbook
 	display_name = "matchbook"
-	path = /obj/item/weapon/storage/box/matches
+	path = /obj/item/storage/box/matches
 
 /datum/gear/zippo
 	display_name = "zippo"
@@ -78,12 +78,12 @@
 
 /datum/gear/fannypack
 	display_name = "fannypack"
-	path = /obj/item/weapon/storage/belt/fannypack
+	path = /obj/item/storage/belt/fannypack
 	slot = slot_belt
 	cost = 2
 	options = list(
-		"leather"= /obj/item/weapon/storage/belt/fannypack,
-		"red"    = /obj/item/weapon/storage/belt/fannypack/red,
-		"white"  = /obj/item/weapon/storage/belt/fannypack/white,
-		"black"  = /obj/item/weapon/storage/belt/fannypack/black
+		"leather"= /obj/item/storage/belt/fannypack,
+		"red"    = /obj/item/storage/belt/fannypack/red,
+		"white"  = /obj/item/storage/belt/fannypack/white,
+		"black"  = /obj/item/storage/belt/fannypack/black
 	)

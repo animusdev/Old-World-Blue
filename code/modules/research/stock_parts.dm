@@ -1,6 +1,6 @@
 ///////////////////////////////////////Stock Parts /////////////////////////////////
 
-/obj/item/weapon/storage/part_replacer
+/obj/item/storage/part_replacer
 	name = "rapid part exchange device"
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	icon_state = "RPED"

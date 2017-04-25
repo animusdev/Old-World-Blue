@@ -101,7 +101,7 @@ var/global/photo_count = 0
 /**************
 * photo album *
 **************/
-/obj/item/weapon/storage/photo_album
+/obj/item/storage/photo_album
 	name = "Photo album"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "album"
@@ -110,7 +110,7 @@ var/global/photo_count = 0
 	storage_slots = DEFAULT_BOX_STORAGE //yes, that's storage_slots. Photos are w_class 1 so this has as many slots equal to the number of photos you could put in a box
 	can_hold = list(/obj/item/weapon/photo)
 
-/obj/item/weapon/storage/photo_album/MouseDrop(obj/over_object as obj)
+/obj/item/storage/photo_album/MouseDrop(obj/over_object as obj)
 
 	if(!ishuman(usr))
 		return

@@ -22,7 +22,7 @@ obj/item/weapon/reagent_containers/glass/solution_tray/attackby(obj/item/weapon/
 	else
 		..(W, user)
 
-/obj/item/weapon/storage/box/solution_trays
+/obj/item/storage/box/solution_trays
 	name = "solution tray box"
 	icon_state = "solution_trays"
 

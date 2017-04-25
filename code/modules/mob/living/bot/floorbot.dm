@@ -277,7 +277,7 @@
 	visible_message("<span class='danger'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
-	var/obj/item/weapon/storage/toolbox/mechanical/N = new /obj/item/weapon/storage/toolbox/mechanical(Tsec)
+	var/obj/item/storage/toolbox/mechanical/N = new /obj/item/storage/toolbox/mechanical(Tsec)
 	N.contents = list()
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 	if(prob(50))
@@ -298,7 +298,7 @@
 
 /* Assembly */
 
-/obj/item/weapon/storage/toolbox/mechanical/attackby(var/obj/item/stack/tile/steel/T, mob/user as mob)
+/obj/item/storage/toolbox/mechanical/attackby(var/obj/item/stack/tile/steel/T, mob/user as mob)
 	if(!istype(T, /obj/item/stack/tile/steel))
 		..()
 		return

@@ -86,7 +86,7 @@
 		return
 	..()
 
-/obj/item/weapon/storage/box/holobadge
+/obj/item/storage/box/holobadge
 	name = "holobadge box"
 	desc = "A box claiming to contain holobadges."
 	New()
@@ -123,7 +123,7 @@
 	icon_state = "marshalbadge"
 	slot_flags = SLOT_TIE | SLOT_BELT
 
-/obj/item/weapon/storage/box/holobadge/hos
+/obj/item/storage/box/holobadge/hos
 	name = "holobadge box"
 	desc = "A box claiming to contain holobadges."
 	New()

@@ -116,7 +116,7 @@
 		return M.get_log_html()
 
 
-/obj/item/weapon/storage/box/mechabeacons
+/obj/item/storage/box/mechabeacons
 	name = "Exosuit Tracking Beacons"
 	New()
 		..()

@@ -8,7 +8,7 @@
 
 /datum/supply_packs/supply/lightbulbs
 	name = "Replacement lights"
-	contains = list(/obj/item/weapon/storage/box/lights/mixed = 3)
+	contains = list(/obj/item/storage/box/lights/mixed = 3)
 	cost = 10
 	containertype = /obj/structure/closet/crate
 	containername = "Replacement lights"
@@ -19,7 +19,7 @@
 		/obj/item/weapon/reagent_containers/condiment/flour = 6,
 		/obj/item/weapon/reagent_containers/glass/drinks/milk = 3,
 		/obj/item/weapon/reagent_containers/glass/drinks/soymilk = 2,
-		/obj/item/weapon/storage/fancy/egg_box = 2,
+		/obj/item/storage/fancy/egg_box = 2,
 		/obj/item/weapon/reagent_containers/food/snacks/tofu = 3,
 		/obj/item/weapon/reagent_containers/food/snacks/meat = 3
 	)
@@ -40,7 +40,7 @@
 		/obj/item/weapon/reagent_containers/glass/beaker/bucket = 3,
 		/obj/item/weapon/mop,
 		/obj/item/weapon/caution = 4,
-		/obj/item/weapon/storage/bag/trash,
+		/obj/item/storage/bag/trash,
 		/obj/item/device/lightreplacer,
 		/obj/item/weapon/reagent_containers/spray/cleaner,
 		/obj/item/weapon/reagent_containers/rag,
@@ -53,7 +53,7 @@
 
 /datum/supply_packs/supply/boxes
 	name = "Empty boxes"
-	contains = list(/obj/item/weapon/storage/box = 10)
+	contains = list(/obj/item/storage/box = 10)
 	cost = 10
 	containertype = /obj/structure/closet/crate
 	containername = "Empty box crate"

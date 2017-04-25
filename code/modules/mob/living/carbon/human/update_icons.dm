@@ -585,14 +585,14 @@ var/global/list/damage_icon_parts = list()
 		standing.color = belt.color
 
 		var/belt_layer = BELT_LAYER
-		if(istype(belt, /obj/item/weapon/storage/belt))
-			var/obj/item/weapon/storage/belt/ubelt = belt
+		if(istype(belt, /obj/item/storage/belt))
+			var/obj/item/storage/belt/ubelt = belt
 			if(ubelt.show_above_suit)
 				overlays_standing[BELT_LAYER] = null
 				belt_layer = BELT_LAYER_ALT
 			else
 				overlays_standing[BELT_LAYER_ALT] = null
-			if(belt.contents.len && istype(belt, /obj/item/weapon/storage/belt))
+			if(belt.contents.len && istype(belt, /obj/item/storage/belt))
 				for(var/obj/item/i in belt.contents)
 					var/i_state = i.item_state
 					if(!i_state) i_state = i.icon_state

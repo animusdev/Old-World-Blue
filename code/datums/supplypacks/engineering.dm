@@ -17,7 +17,7 @@
 /datum/supply_packs/eng/electrical
 	name = "Electrical maintenance crate"
 	contains = list(
-		/obj/item/weapon/storage/toolbox/electrical = 2,
+		/obj/item/storage/toolbox/electrical = 2,
 		/obj/item/clothing/gloves/yellow = 2,
 		/obj/item/weapon/cell = 2,
 		/obj/item/weapon/cell/high = 2
@@ -29,7 +29,7 @@
 /datum/supply_packs/eng/mechanical
 	name = "Mechanical maintenance crate"
 	contains = list(
-		/obj/item/weapon/storage/belt/utility/full = 3,
+		/obj/item/storage/belt/utility/full = 3,
 		/obj/item/clothing/suit/storage/hazardvest = 3,
 		/obj/item/clothing/head/welding = 2,
 		/obj/item/clothing/head/hardhat
@@ -194,6 +194,6 @@
 		/obj/item/weapon/stock_parts/manipulator = 2,
 		/obj/item/weapon/stock_parts/subspace/filter,
 		/obj/item/weapon/stock_parts/subspace/crystal,
-		/obj/item/weapon/storage/toolbox/electrical
+		/obj/item/storage/toolbox/electrical
 	)
 

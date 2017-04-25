@@ -10,10 +10,10 @@
 	ear = /obj/item/device/radio/headset/med
 	pda = /obj/item/device/pda/medical
 
-	backpack  = /obj/item/weapon/storage/backpack/medic
-	satchel_j = /obj/item/weapon/storage/backpack/satchel/med
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
-	messenger = /obj/item/weapon/storage/backpack/messenger/med
+	backpack  = /obj/item/storage/backpack/medic
+	satchel_j = /obj/item/storage/backpack/satchel/med
+	dufflebag = /obj/item/storage/backpack/dufflebag/med
+	messenger = /obj/item/storage/backpack/messenger/med
 
 
 /datum/job/medical/cmo
@@ -43,7 +43,7 @@
 	suit = /obj/item/clothing/suit/storage/toggle/labcoat/cmo
 	suit_store = /obj/item/device/flashlight/pen
 	ear = /obj/item/device/radio/headset/heads/cmo
-	hand = /obj/item/weapon/storage/firstaid/adv
+	hand = /obj/item/storage/firstaid/adv
 
 
 /datum/job/medical/doctor
@@ -61,7 +61,7 @@
 
 	suit = /obj/item/clothing/suit/storage/toggle/labcoat
 	suit_store = /obj/item/device/flashlight/pen
-	hand = /obj/item/weapon/storage/firstaid/adv
+	hand = /obj/item/storage/firstaid/adv
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -83,11 +83,11 @@
 					H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/toggle/labcoat/virologist(H), slot_wear_suit)
 					H.equip_to_slot_or_del(new /obj/item/clothing/mask/surgical(H), slot_wear_mask)
 					switch(H.backbag)
-						if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/virology(H), slot_back)
-						if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/vir(H), slot_back)
-						if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
-						if(5) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/dufflebag/med(H), slot_back)
-						if(6) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/messenger/vir(H), slot_back)
+						if(2) H.equip_to_slot_or_del(new /obj/item/storage/backpack/virology(H), slot_back)
+						if(3) H.equip_to_slot_or_del(new /obj/item/storage/backpack/satchel/vir(H), slot_back)
+						if(4) H.equip_to_slot_or_del(new /obj/item/storage/backpack/satchel(H), slot_back)
+						if(5) H.equip_to_slot_or_del(new /obj/item/storage/backpack/dufflebag/med(H), slot_back)
+						if(6) H.equip_to_slot_or_del(new /obj/item/storage/backpack/messenger/vir(H), slot_back)
 				if("Medical Doctor")
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
 					H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/toggle/labcoat(H), slot_wear_suit)
@@ -121,10 +121,10 @@
 	pda = /obj/item/device/pda/chemist
 	suit = /obj/item/clothing/suit/storage/toggle/labcoat/chemist
 
-	backpack  = /obj/item/weapon/storage/backpack/chemistry
-	satchel_j = /obj/item/weapon/storage/backpack/satchel/chem
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
-	messenger = /obj/item/weapon/storage/backpack/messenger/chem
+	backpack  = /obj/item/storage/backpack/chemistry
+	satchel_j = /obj/item/storage/backpack/satchel/chem
+	dufflebag = /obj/item/storage/backpack/dufflebag/med
+	messenger = /obj/item/storage/backpack/messenger/chem
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
@@ -151,10 +151,10 @@
 	suit = /obj/item/clothing/suit/storage/toggle/labcoat/genetics
 	suit_store = /obj/item/device/flashlight/pen
 
-	backpack  = /obj/item/weapon/storage/backpack/genetics
-	satchel_j = /obj/item/weapon/storage/backpack/satchel/gen
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
-	messenger = /obj/item/weapon/storage/backpack/messenger/med
+	backpack  = /obj/item/storage/backpack/genetics
+	satchel_j = /obj/item/storage/backpack/satchel/gen
+	dufflebag = /obj/item/storage/backpack/dufflebag/med
+	messenger = /obj/item/storage/backpack/messenger/med
 
 
 /datum/job/medical/psychiatrist
@@ -201,14 +201,14 @@
 	hat = /obj/item/clothing/head/soft/emt
 	shoes = /obj/item/clothing/shoes/jackboots
 	pda = /obj/item/device/pda/emt
-	belt = /obj/item/weapon/storage/belt/medical/emt
-	hand = /obj/item/weapon/storage/firstaid/adv
+	belt = /obj/item/storage/belt/medical/emt
+	hand = /obj/item/storage/firstaid/adv
 	adv_survival_gear = 1
 
-	backpack  = /obj/item/weapon/storage/backpack/emt
-	satchel_j = /obj/item/weapon/storage/backpack/satchel/emt
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/emt
-	messenger = /obj/item/weapon/storage/backpack/messenger/emt
+	backpack  = /obj/item/storage/backpack/emt
+	satchel_j = /obj/item/storage/backpack/satchel/emt
+	dufflebag = /obj/item/storage/backpack/dufflebag/emt
+	messenger = /obj/item/storage/backpack/messenger/emt
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
