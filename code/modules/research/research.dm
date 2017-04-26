@@ -136,14 +136,6 @@ research holder datum.
 				known.reliability_mod = D.reliability_mod
 			return
 	known_designs += D
-	if(D.build_type & PROTOLATHE)
-		protolathe_categories |= D.category
-	if(D.build_type & IMPRINTER)
-		circuit_categories |= D.category
-	if(D.build_type & MECHFAB)
-		fabricator_categories |= D.category
-
-	return
 
 //Refreshes known_tech and known_designs list. Then updates the reliability vars of the designs in the known_designs list.
 //Input/Output: n/a

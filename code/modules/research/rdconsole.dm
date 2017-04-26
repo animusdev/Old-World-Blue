@@ -45,9 +45,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/sync = 1		//If sync = 0, it doesn't show up on Server Control Console
 	var/errored = 0		//Errored during item construction.
 
-	var/protolathe_category = null
-	var/circuit_category = null
-
 	req_access = list(access_research)	//Data and setting manipulation requires scientist access.
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
@@ -67,6 +64,20 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				linked_imprinter = D
 				D.linked_console = src
 	return
+
+/obj/machinery/computer/rdconsole/proc/update_categories()
+	linked_imprinter.categories = list("None")
+	linked_lathe.categories = list("None")
+	for(var/datum/design/D in files.known_designs)
+		if(D.build_type & IMPRINTER)
+			linked_imprinter.categories |= D.category
+		if(D.build_type & PROTOLATHE)
+			linked_lathe.categories |= D.category
+
+	if(!(linked_imprinter.category in linked_imprinter.categories))
+		linked_imprinter.category = null
+	if(!(linked_lathe.category in linked_lathe.categories))
+		linked_lathe.category = null
 
 //Have it automatically push research to the centcomm server so wild griffins can't fuck up R&D's work
 /obj/machinery/computer/rdconsole/proc/griefProtection()
@@ -239,6 +250,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 									qdel(I)
 									linked_destroy.icon_state = "d_analyzer"
 
+						files.RefreshResearch()
+						update_categories()
 						use_power(linked_destroy.active_power_usage)
 						screen = 1.0
 						updateUsrDialog()
@@ -275,6 +288,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							server_processed = 1
 						if(!istype(S, /obj/machinery/r_n_d/server/centcom) && server_processed)
 							S.produce_heat()
+					update_categories()
 					screen = 1.6
 					updateUsrDialog()
 
@@ -283,12 +297,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	else if(href_list["build_categeory"])
 		if(linked_lathe)
-			var/new_pc = input("Select category for displaying") as null|anything in files.protolathe_categories
+			var/new_pc = input("Select category for displaying") as null|anything in linked_lathe.categories
 			if(Adjacent(usr) && !usr.stat)
 				if(new_pc == "None")
-					protolathe_category = null
+					linked_lathe.category = null
 				else
-					protolathe_category = new_pc
+					linked_lathe.category = new_pc
 				updateUsrDialog()
 
 	else if(href_list["build"]) //Causes the Protolathe to build something.
@@ -309,12 +323,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	else if(href_list["imprint_categeory"])
 		if(linked_imprinter)
-			var/new_cc = input("Select category for displaying") as null|anything in files.circuit_categories
+			var/new_cc = input("Select category for displaying") as null|anything in linked_imprinter.categories
 			if(Adjacent(usr) && !usr.stat)
 				if(new_cc == "None")
-					circuit_category = null
+					linked_imprinter.category = null
 				else
-					circuit_category = new_cc
+					linked_imprinter.category = new_cc
 				updateUsrDialog()
 
 	else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
@@ -369,7 +383,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				linked_imprinter.linked_console = null
 				linked_imprinter = null
 
-	else if(href_list["reset"]) //Reset the R&D console's database.
+	else if(href_list["reset_base"]) //Reset the R&D console's database.
 		griefProtection()
 		var/choice = alert("R&D Console Database Reset", "Are you sure you want to reset the R&D console's database? Data lost cannot be recovered.", "Continue", "Cancel")
 		if(choice == "Continue")
@@ -432,7 +446,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	user.set_machine(src)
 	var/dat = "<style>span.requirements{padding-left: 20px; font-size: 90%}\
 					  span.deficiency{color: red}</style>"
-	files.RefreshResearch()
 	switch(screen) //A quick check to make sure you get the right screen when a device is disconnected.
 		if(2 to 2.9)
 			if(linked_destroy == null)
@@ -575,7 +588,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				dat += "<LI><A href='?src=\ref[src];togglesync=1'>Connect to Research Network</A></LI>"
 			dat += "<LI><A href='?src=\ref[src];menu=1.7'>Device Linkage Menu</A></LI>"
 			dat += "<LI><A href='?src=\ref[src];lock=0.2'>Lock Console</A></LI>"
-			dat += "<LI><A href='?src=\ref[src];reset=1'>Reset R&D Database</A></LI>"
+			dat += "<LI><A href='?src=\ref[src];reset_base=1'>Reset R&D Database</A></LI>"
 			dat += "<UL>"
 
 		if(1.7) //R&D device linkage
@@ -634,13 +647,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<A href='?src=\ref[src];menu=3.2'>Material Storage</A> || "
 			dat += "<A href='?src=\ref[src];menu=3.3'>Chemical Storage</A><HR>"
 			dat += "Protolathe Menu:<BR>"
-			dat += "Current category: <a href='?src=\ref[src];build_categeory=1'>[protolathe_category ? protolathe_category : "None"]</a><BR>"
+			dat += "Current category: <a href='?src=\ref[src];build_categeory=1'>[linked_lathe.category ? linked_lathe.category : "None"]</a><BR>"
 			dat += "<B>Material Amount:</B> [linked_lathe.TotalMaterials()] cm<sup>3</sup> (MAX: [linked_lathe.max_material_storage])<BR>"
 			dat += "<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] (MAX: [linked_lathe.reagents.maximum_volume])<HR>"
 
 			dat += "<UL>"
 			for(var/datum/design/D in files.known_designs)
-				if(protolathe_category && protolathe_category != D.category)
+				if(linked_lathe.category && linked_lathe.category != D.category)
 					continue
 				if(!D.build_path || !(D.build_type & PROTOLATHE))
 					continue
@@ -691,12 +704,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<A href='?src=\ref[src];menu=4.3'>Material Storage</A> || "
 			dat += "<A href='?src=\ref[src];menu=4.2'>Chemical Storage</A><HR>"
 			dat += "Circuit Imprinter Menu:<BR>"
-			dat += "Current category: <a href='?src=\ref[src];imprint_categeory=1'>[circuit_category ? circuit_category : "None"]</a><BR>"
+			dat += "Current category: <a href='?src=\ref[src];imprint_categeory=1'>[linked_imprinter.category ? linked_imprinter.category : "None"]</a><BR>"
 			dat += "Material Amount: [linked_imprinter.TotalMaterials()] cm<sup>3</sup><BR>"
 			dat += "Chemical Volume: [linked_imprinter.reagents.total_volume]<HR>"
 			dat += "<UL>"
 			for(var/datum/design/D in files.known_designs)
-				if(circuit_category && circuit_category != D.category)
+				if(linked_imprinter.category && linked_imprinter.category != D.category)
 					continue
 				if(!D.build_path || !(D.build_type & IMPRINTER))
 					continue

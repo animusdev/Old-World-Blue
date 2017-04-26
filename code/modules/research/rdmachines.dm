@@ -11,6 +11,9 @@
 	var/busy = 0
 	var/obj/machinery/computer/rdconsole/linked_console
 
+	var/category = ""
+	var/list/categories = list()
+
 	var/list/materials
 	var/max_material_storage = 0
 	var/mat_efficiency = 1
