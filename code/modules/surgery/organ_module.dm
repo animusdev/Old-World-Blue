@@ -17,7 +17,7 @@
 		if(!affected.organ_tag in OM.allowed_organs)
 			user << SPAN_WARN("[OM] isn't created for [affected].")
 			return 0
-		return affected && !affected.module && affected.open == (affected.encased ? 3 : 2)
+		return affected && !affected.module && affected.open >= 2
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		if (!hasorgans(target))
