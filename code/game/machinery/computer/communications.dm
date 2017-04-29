@@ -531,7 +531,7 @@
 		if("message")
 			status_signal.data["msg1"] = data1
 			status_signal.data["msg2"] = data2
-			log_game("STATUS: [src.fingerprintslast] set status screen message with [src]: [data1] [data2]")
+			log_game("STATUS: [key_name(usr)] set status screen message with [src]: [data1] [data2]")
 			//message_admins("STATUS: [user] set status screen with [PDA]. Message: [data1] [data2]")
 		if("alert")
 			status_signal.data["picture_state"] = data1

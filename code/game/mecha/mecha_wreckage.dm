@@ -83,8 +83,8 @@
 	New()
 		..()
 		var/list/parts = list(
-			/obj/item/mecha_parts/part/gygax_torso,
-			/obj/item/mecha_parts/part/gygax_head,
+			/obj/item/mecha_parts/part/gygax/torso,
+			/obj/item/mecha_parts/part/gygax/head,
 			/obj/item/mecha_parts/part/gygax/left_arm,
 			/obj/item/mecha_parts/part/gygax/right_arm,
 			/obj/item/mecha_parts/part/gygax/left_leg,
@@ -120,7 +120,7 @@
 	New()
 		..()
 		var/list/parts = list(
-			/obj/item/mecha_parts/part/ripley_torso,
+			/obj/item/mecha_parts/part/ripley/torso,
 			/obj/item/mecha_parts/part/ripley/left_arm,
 			/obj/item/mecha_parts/part/ripley/right_arm,
 			/obj/item/mecha_parts/part/ripley/left_leg,
@@ -139,7 +139,7 @@
 	New()
 		..()
 		var/list/parts = list(
-			/obj/item/mecha_parts/part/ripley_torso,
+			/obj/item/mecha_parts/part/ripley/torso,
 			/obj/item/mecha_parts/part/ripley/left_arm,
 			/obj/item/mecha_parts/part/ripley/right_arm,
 			/obj/item/mecha_parts/part/ripley/left_leg,
@@ -167,8 +167,8 @@
 	New()
 		..()
 		var/list/parts = list(
-			/obj/item/mecha_parts/part/durand_torso,
-			/obj/item/mecha_parts/part/durand_head,
+			/obj/item/mecha_parts/part/durand/torso,
+			/obj/item/mecha_parts/part/durand/head,
 			/obj/item/mecha_parts/part/durand/left_arm,
 			/obj/item/mecha_parts/part/durand/right_arm,
 			/obj/item/mecha_parts/part/durand/left_leg,
@@ -192,8 +192,8 @@
 	New()
 		..()
 		var/list/parts = list(
-			/obj/item/mecha_parts/part/odysseus_torso,
-			/obj/item/mecha_parts/part/odysseus_head,
+			/obj/item/mecha_parts/part/odysseus/torso,
+			/obj/item/mecha_parts/part/odysseus/head,
 			/obj/item/mecha_parts/part/odysseus/left_arm,
 			/obj/item/mecha_parts/part/odysseus/right_arm,
 			/obj/item/mecha_parts/part/odysseus/left_leg,

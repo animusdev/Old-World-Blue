@@ -69,7 +69,7 @@
 
 /datum/construction/mecha/ripley_chassis
 	steps = list(
-		list("key"=/obj/item/mecha_parts/part/ripley_torso),//1
+		list("key"=/obj/item/mecha_parts/part/ripley/torso),//1
 		list("key"=/obj/item/mecha_parts/part/ripley/left_arm),//2
 		list("key"=/obj/item/mecha_parts/part/ripley/right_arm),//3
 		list("key"=/obj/item/mecha_parts/part/ripley/left_leg),//4
@@ -77,7 +77,10 @@
 	)
 
 	custom_action(step, atom/used_atom, mob/user)
-		user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
+		user.visible_message(
+			"[user] has connected [used_atom] to [holder].",
+			"You connect [used_atom] to [holder]"
+		)
 		holder.overlays += used_atom.icon_state+"+o"
 		qdel(used_atom)
 		return 1
@@ -356,16 +359,19 @@
 
 /datum/construction/mecha/gygax_chassis
 	steps = list(
-		list("key"=/obj/item/mecha_parts/part/gygax_torso),//1
+		list("key"=/obj/item/mecha_parts/part/gygax/torso),//1
 		list("key"=/obj/item/mecha_parts/part/gygax/left_arm),//2
 		list("key"=/obj/item/mecha_parts/part/gygax/right_arm),//3
 		list("key"=/obj/item/mecha_parts/part/gygax/left_leg),//4
 		list("key"=/obj/item/mecha_parts/part/gygax/right_leg),//5
-		list("key"=/obj/item/mecha_parts/part/gygax_head)
+		list("key"=/obj/item/mecha_parts/part/gygax/head)
 	)
 
 	custom_action(step, atom/used_atom, mob/user)
-		user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
+		user.visible_message(
+			"[user] has connected [used_atom] to [holder].",
+			"You connect [used_atom] to [holder]"
+		)
 		holder.overlays += used_atom.icon_state+"+o"
 		qdel(used_atom)
 		return 1
@@ -396,7 +402,7 @@
 			 "backkey"=/obj/item/weapon/crowbar,
 			 "desc"="External armor is installed."),
 		//3
-		list("key"=/obj/item/mecha_parts/part/gygax_armour,
+		list("key"=/obj/item/mecha_parts/part/gygax/armour,
 			 "backkey"=/obj/item/weapon/weldingtool,
 			 "desc"="Internal armor is welded."),
 		//4
@@ -731,7 +737,7 @@
 						"[user] pries Gygax Armour Plates from [holder].",
 						"You prie Gygax Armour Plates from [holder]."
 					)
-					new /obj/item/mecha_parts/part/gygax_armour(get_turf(holder))
+					new /obj/item/mecha_parts/part/gygax/armour(get_turf(holder))
 					holder.icon_state = "gygax17"
 			if(1)
 				if(diff==FORWARD)
@@ -750,7 +756,7 @@
 
 /datum/construction/mecha/firefighter_chassis
 	steps = list(
-		list("key"=/obj/item/mecha_parts/part/ripley_torso),//1
+		list("key"=/obj/item/mecha_parts/part/ripley/torso),//1
 		list("key"=/obj/item/mecha_parts/part/ripley/left_arm),//2
 		list("key"=/obj/item/mecha_parts/part/ripley/right_arm),//3
 		list("key"=/obj/item/mecha_parts/part/ripley/left_leg),//4
@@ -759,7 +765,10 @@
 	)
 
 	custom_action(step, atom/used_atom, mob/user)
-		user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
+		user.visible_message(
+			"[user] has connected [used_atom] to [holder].",
+			"You connect [used_atom] to [holder]"
+		)
 		holder.overlays += used_atom.icon_state+"+o"
 		user.drop_from_inventory(used_atom)
 		qdel(used_atom)
@@ -1054,22 +1063,21 @@
 					holder.icon_state = "fireripley13"
 		return 1
 
-	spawn_result()
-		..()
-		return
-
 /datum/construction/mecha/durand_chassis
 	steps = list(
-		list("key"=/obj/item/mecha_parts/part/durand_torso),//1
+		list("key"=/obj/item/mecha_parts/part/durand/torso),//1
 		list("key"=/obj/item/mecha_parts/part/durand/left_arm),//2
 		list("key"=/obj/item/mecha_parts/part/durand/right_arm),//3
 		list("key"=/obj/item/mecha_parts/part/durand/left_leg),//4
 		list("key"=/obj/item/mecha_parts/part/durand/right_leg),//5
-		list("key"=/obj/item/mecha_parts/part/durand_head)
+		list("key"=/obj/item/mecha_parts/part/durand/head)
 	)
 
 	custom_action(step, atom/used_atom, mob/user)
-		user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
+		user.visible_message(
+			"[user] has connected [used_atom] to [holder].",
+			"You connect [used_atom] to [holder]"
+		)
 		holder.overlays += used_atom.icon_state+"+o"
 		qdel(used_atom)
 		return 1
@@ -1099,7 +1107,7 @@
 			 "backkey"=/obj/item/weapon/crowbar,
 			 "desc"="External armor is installed."),
 		//3
-		list("key"=/obj/item/mecha_parts/part/durand_armour,
+		list("key"=/obj/item/mecha_parts/part/durand/armour,
 			 "backkey"=/obj/item/weapon/weldingtool,
 			 "desc"="Internal armor is welded."),
 		//4
@@ -1393,7 +1401,7 @@
 						"[user] pries internal armor layer from [holder].",
 						"You prie internal armor layer from [holder]."
 					)
-					var/obj/item/stack/material/steel/MS = new /obj/item/stack/material/steel(get_turf(holder))
+					var/obj/item/stack/material/steel/MS = new (get_turf(holder))
 					MS.amount = 5
 					holder.icon_state = "durand14"
 			if(4)
@@ -1435,7 +1443,7 @@
 						"[user] pries Durand Armour Plates from [holder].",
 						"You prie Durand Armour Plates from [holder]."
 					)
-					new /obj/item/mecha_parts/part/durand_armour(get_turf(holder))
+					new /obj/item/mecha_parts/part/durand/armour(get_turf(holder))
 					holder.icon_state = "durand17"
 			if(1)
 				if(diff==FORWARD)
@@ -1451,28 +1459,26 @@
 					holder.icon_state = "durand18"
 		return 1
 
-	spawn_result()
-		..()
-		return
-
-
-//PHAZON ============================================================================================================
+//PHAZON
 
 /datum/construction/mecha/phazon_chassis
 	steps = list(
-		list("key"=/obj/item/mecha_parts/part/phazon_torso),//1
+		list("key"=/obj/item/mecha_parts/part/phazon/torso),//1
 		list("key"=/obj/item/mecha_parts/part/phazon/left_arm),//2
 		list("key"=/obj/item/mecha_parts/part/phazon/right_arm),//3
 		list("key"=/obj/item/mecha_parts/part/phazon/left_leg),//4
 		list("key"=/obj/item/mecha_parts/part/phazon/right_leg),//5
-		list("key"=/obj/item/mecha_parts/part/phazon_head)
+		list("key"=/obj/item/mecha_parts/part/phazon/head)
 	)
 
 	action(atom/used_atom,mob/user as mob)
 		return check_all_steps(used_atom,user)
 
 	custom_action(step, atom/used_atom, mob/user)
-		user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
+		user.visible_message(
+			"[user] has connected [used_atom] to [holder].",
+			"You connect [used_atom] to [holder]"
+		)
 		holder.overlays += used_atom.icon_state+"+o"
 		qdel(used_atom)
 		return 1
@@ -1505,7 +1511,7 @@
 			 "backkey"=/obj/item/weapon/crowbar,
 			 "desc"="External armor is installed."),
 		//4
-		list("key"=/obj/item/mecha_parts/part/phazon_armor,
+		list("key"=/obj/item/mecha_parts/part/phazon/armor,
 			 "backkey"=/obj/item/weapon/weldingtool,
 			 "desc"="Phase armor is welded."),
 		//5
@@ -1602,75 +1608,75 @@
 			if(24)
 				user.visible_message(
 					"[user] connects the [holder] hydraulic systems",
-					"<span class='notice'>You connect the [holder] hydraulic systems.</span>"
+					SPAN_NOTE("You connect the [holder] hydraulic systems.")
 				)
 				holder.icon_state = "phazon1"
 			if(23)
 				if(diff==FORWARD)
 					user.visible_message(
 						"[user] activates the [holder] hydraulic systems.",
-						"<span class='notice'>You activate the [holder] hydraulic systems.</span>"
+						SPAN_NOTE("You activate the [holder] hydraulic systems.")
 					)
 					holder.icon_state = "phazon2"
 				else
 					user.visible_message(
 						"[user] disconnects the [holder] hydraulic systems",
-						"<span class='notice'>You disconnect the [holder] hydraulic systems.</span>"
+						SPAN_NOTE("You disconnect the [holder] hydraulic systems.")
 					)
 					holder.icon_state = "phazon0"
 			if(22)
 				if(diff==FORWARD)
 					user.visible_message(
 						"[user] adds the wiring to the [holder].",
-						"<span class='notice'>You add the wiring to the [holder].</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					holder.icon_state = "phazon3"
 				else
 					user.visible_message(
 						"[user] deactivates the [holder] hydraulic systems.",
-						"<span class='notice'>You deactivate the [holder] hydraulic systems.</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					holder.icon_state = "phazon1"
 			if(21)
 				if(diff==FORWARD)
 					user.visible_message(
 						"[user] adjusts the wiring of the [holder].",
-						"<span class='notice'>You adjust the wiring of the [holder].</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					holder.icon_state = "phazon4"
 				else
 					user.visible_message(
 						"[user] removes the wiring from the [holder].",
-						"<span class='notice'>You remove the wiring from the [holder].</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
-					var/obj/item/stack/cable_coil/coil = new /obj/item/stack/cable_coil(get_turf(holder))
+					var/obj/item/stack/cable_coil/coil = new (get_turf(holder))
 					coil.amount = 4
 					holder.icon_state = "phazon2"
 			if(20)
 				if(diff==FORWARD)
 					user.visible_message(
 						"[user] installs the central control module into the [holder].",
-						"<span class='notice'>You install the central computer mainboard into the [holder].</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					qdel(used_atom)
 					holder.icon_state = "phazon5"
 				else
 					user.visible_message(
 						"[user] disconnects the wiring of the [holder].",
-						"<span class='notice'>You disconnect the wiring of the [holder].</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					holder.icon_state = "phazon3"
 			if(19)
 				if(diff==FORWARD)
 					user.visible_message(
 						"[user] secures the mainboard.",
-						"<span class='notice'>You secure the mainboard.</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					holder.icon_state = "phazon6"
 				else
 					user.visible_message(
 						"[user] removes the central control module from the [holder].",
-						"<span class='notice'>You remove the central computer mainboard from the [holder].</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					new /obj/item/weapon/circuitboard/mecha/phazon/main(get_turf(holder))
 					holder.icon_state = "phazon4"
@@ -1678,27 +1684,27 @@
 				if(diff==FORWARD)
 					user.visible_message(
 						"[user] installs the peripherals control module into the [holder].",
-						"<span class='notice'>You install the peripherals control module into the [holder].</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					qdel(used_atom)
 					holder.icon_state = "phazon7"
 				else
 					user.visible_message(
 						"[user] unfastens the mainboard.",
-						"<span class='notice'>You unfasten the mainboard.</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					holder.icon_state = "phazon5"
 			if(17)
 				if(diff==FORWARD)
 					user.visible_message(
 						"[user] secures the peripherals control module.",
-						"<span class='notice'>You secure the peripherals control module.</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					holder.icon_state = "phazon8"
 				else
 					user.visible_message(
 						"[user] removes the peripherals control module from the [holder].",
-						"<span class='notice'>You remove the peripherals control module from the [holder].</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					new /obj/item/weapon/circuitboard/mecha/phazon/peripherals(get_turf(holder))
 					holder.icon_state = "phazon6"
@@ -1706,27 +1712,27 @@
 				if(diff==FORWARD)
 					user.visible_message(
 						"[user] installs the weapon control module into the [holder].",
-						"<span class='notice'>You install the weapon control module into the [holder].</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					qdel(used_atom)
 					holder.icon_state = "phazon9"
 				else
 					user.visible_message(
 						"[user] unfastens the peripherals control module.",
-						"<span class='notice'>You unfasten the peripherals control module.</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					holder.icon_state = "phazon7"
 			if(15)
 				if(diff==FORWARD)
 					user.visible_message(
 						"[user] secures the weapon control module.",
-						"<span class='notice'>You secure the weapon control module.</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					holder.icon_state = "phazon10"
 				else
 					user.visible_message(
 						"[user] removes the weapon control module from the [holder].",
-						"<span class='notice'>You remove the weapon control module from the [holder].</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					new /obj/item/weapon/circuitboard/mecha/phazon/targeting(get_turf(holder))
 					holder.icon_state = "phazon8"
@@ -1734,27 +1740,27 @@
 				if(diff==FORWARD)
 					user.visible_message(
 						"[user] installs phasic scanner module to the [holder].",
-						"<span class='notice'>You install phasic scanner module to the [holder].</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					qdel(used_atom)
 					holder.icon_state = "phazon11"
 				else
 					user.visible_message(
 						"[user] unfastens the weapon control module.",
-						"<span class='notice'>You unfasten the weapon control module.</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					holder.icon_state = "phazon9"
 			if(13)
 				if(diff==FORWARD)
 					user.visible_message(
 						"[user] secures the phasic scanner module.",
-						"<span class='notice'>You secure the phasic scanner module.</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					holder.icon_state = "phazon12"
 				else
 					user.visible_message(
 						"[user] removes the phasic scanner module from the [holder].",
-						"<span class='notice'>You remove the phasic scanner module from the [holder].</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					new /obj/item/weapon/stock_parts/scanning_module/phasic(get_turf(holder))
 					holder.icon_state = "phazon10"
@@ -1762,27 +1768,27 @@
 				if(diff==FORWARD)
 					user.visible_message(
 						"[user] installs super capacitor to the [holder].",
-						"<span class='notice'>You install super capacitor to the [holder].</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					qdel(used_atom)
 					holder.icon_state = "phazon13"
 				else
 					user.visible_message(
 						"[user] unfastens the phasic scanner module.",
-						"<span class='notice'>You unfasten the phasic scanner module.</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					holder.icon_state = "phazon11"
 			if(11)
 				if(diff==FORWARD)
 					user.visible_message(
 						"[user] secures the super capacitor.",
-						"<span class='notice'>You secure the super capacitor.</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					holder.icon_state = "phazon14"
 				else
 					user.visible_message(
 						"[user] removes the super capacitor from the [holder].",
-						"<span class='notice'>You remove the super capacitor from the [holder].</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					new /obj/item/weapon/stock_parts/capacitor/super(get_turf(holder))
 					holder.icon_state = "phazon12"
@@ -1790,27 +1796,27 @@
 				if(diff==FORWARD)
 					user.visible_message(
 						"[user] installs the bluespace crystal.",
-						"<span class='notice'>You install the bluespace crystal.</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					qdel(used_atom)
 					holder.icon_state = "phazon15"
 				else
 					user.visible_message(
 						"[user] unsecures the super capacitor from the [holder].",
-						"<span class='notice'>You unsecure the super capacitor from the [holder].</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					holder.icon_state = "phazon13"
 			if(9)
 				if(diff==FORWARD)
 					user.visible_message(
 						"[user] connects the bluespace crystal.",
-						"<span class='notice'>You connect the bluespace crystal.</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					holder.icon_state = "phazon16"
 				else
 					user.visible_message(
 						"[user] removes the bluespace crystal from the [holder].",
-						"<span class='notice'>You remove the bluespace crystal from the [holder].</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					new /obj/item/weapon/stock_parts/subspace/crystal(get_turf(holder))
 					holder.icon_state = "phazon14"
@@ -1818,39 +1824,39 @@
 				if(diff==FORWARD)
 					user.visible_message(
 						"[user] engages the bluespace crystal.",
-						"<span class='notice'>You engage the bluespace crystal.</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					holder.icon_state = "phazon17"
 				else
 					user.visible_message(
 						"[user] disconnects the bluespace crystal from the [holder].",
-						"<span class='notice'>You disconnect the bluespace crystal from the [holder].</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					holder.icon_state = "phazon15"
 			if(7)
 				if(diff==FORWARD)
 					user.visible_message(
 						"[user] installs the phase armor layer to the [holder].",
-						"<span class='notice'>You install the phase armor layer to the [holder].</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					holder.icon_state = "phazon18"
 				else
 					user.visible_message(
 						"[user] disengages the bluespace crystal.",
-						"<span class='notice'>You disengage the bluespace crystal.</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					holder.icon_state = "phazon16"
 			if(6)
 				if(diff==FORWARD)
 					user.visible_message(
 						"[user] secures the phase armor layer.",
-						"<span class='notice'>You secure the phase armor layer.</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					holder.icon_state = "phazon19"
 				else
 					user.visible_message(
 						"[user] pries the phase armor layer from the [holder].",
-						"<span class='notice'>You pry the phase armor layer from the [holder].</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					var/obj/item/stack/material/plasteel/MS = new (get_turf(holder))
 					MS.amount = 5
@@ -1859,71 +1865,71 @@
 				if(diff==FORWARD)
 					user.visible_message(
 						"[user] welds the phase armor layer to the [holder].",
-						"<span class='notice'>You weld the phase armor layer to the [holder].</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					holder.icon_state = "phazon20"
 				else
 					user.visible_message(
 						"[user] unfastens the phase armor layer.",
-						"<span class='notice'>You unfasten the phase armor layer.</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					holder.icon_state = "phazon18"
 			if(4)
 				if(diff==FORWARD)
 					user.visible_message(
 						"[user] installs Phazon Armor Plates to the [holder].",
-						"<span class='notice'>You install Phazon Armor Plates to the [holder].</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					qdel(used_atom)
 					holder.icon_state = "phazon21"
 				else
 					user.visible_message(
 						"[user] cuts phase armor layer from the [holder].",
-						"<span class='notice'>You cut the phase armor layer from the [holder].</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					holder.icon_state = "phazon19"
 			if(3)
 				if(diff==FORWARD)
 					user.visible_message(
 						"[user] secures Phazon Armor Plates.",
-						"<span class='notice'>You secure Phazon Armor Plates.</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					holder.icon_state = "phazon22"
 				else
 					user.visible_message(
 						"[user] pries Phazon Armor Plates from the [holder].",
-						"<span class='notice'>You pry Phazon Armor Plates from the [holder].</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
-					new /obj/item/mecha_parts/part/phazon_armor(get_turf(holder))
+					new /obj/item/mecha_parts/part/phazon/armor(get_turf(holder))
 					holder.icon_state = "phazon20"
 			if(2)
 				if(diff==FORWARD)
 					user.visible_message(
 						"[user] welds Phazon Armor Plates to the [holder].",
-						"<span class='notice'>You weld Phazon Armor Plates to the [holder].</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 				else
 					user.visible_message(
 						"[user] unfastens Phazon Armor Plates.",
-						"<span class='notice'>You unfasten Phazon Armor Plates.</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					holder.icon_state = "phazon21"
 			if(1)
 				if(diff==FORWARD)
 					user.visible_message(
 						"[user] carefully inserts the anomaly core into \the [holder] and secures it.",
-						"<span class='notice'>You slowly place the anomaly core into its socket.</span>"
+						SPAN_NOTE("You add the wiring to the [holder].")
 					)
 					qdel(used_atom)
 		return 1
 
 
-//ODYSSEUS =======================================================================================================
+//ODYSSEUS
 
 /datum/construction/mecha/odysseus_chassis
 	steps = list(
-		list("key"=/obj/item/mecha_parts/part/odysseus_torso),//1
-		list("key"=/obj/item/mecha_parts/part/odysseus_head),//2
+		list("key"=/obj/item/mecha_parts/part/odysseus/torso),//1
+		list("key"=/obj/item/mecha_parts/part/odysseus/head),//2
 		list("key"=/obj/item/mecha_parts/part/odysseus/left_arm),//3
 		list("key"=/obj/item/mecha_parts/part/odysseus/right_arm),//4
 		list("key"=/obj/item/mecha_parts/part/odysseus/left_leg),//5
@@ -1931,7 +1937,10 @@
 	)
 
 	custom_action(step, atom/used_atom, mob/user)
-		user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
+		user.visible_message(
+			"[user] has connected [used_atom] to [holder].",
+			"You connect [used_atom] to [holder]"
+		)
 		holder.overlays += used_atom.icon_state+"+o"
 		qdel(used_atom)
 		return 1
@@ -2206,7 +2215,3 @@
 					)
 					holder.icon_state = "odysseus12"
 		return 1
-
-	spawn_result()
-		..()
-		return
