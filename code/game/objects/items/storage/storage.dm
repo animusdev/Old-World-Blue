@@ -262,7 +262,7 @@
 	for(var/obj/item/I in contents)
 		total_storage_space += I.get_storage_cost() //Adds up the combined w_classes which will be in the storage item if the item is added to it.
 
-	if(total_storage_space > max_storage_space)
+	if(max_storage_space > 0 && total_storage_space > max_storage_space)
 		if(!stop_messages)
 			usr << "<span class='notice'>[src] is full, make some space.</span>"
 		return 0
