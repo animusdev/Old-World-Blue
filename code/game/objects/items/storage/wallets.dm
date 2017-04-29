@@ -4,7 +4,7 @@
 	icon_state = "wallet"
 	w_class = ITEM_SIZE_SMALL
 	max_w_class = ITEM_SIZE_SMALL //Don't worry, see can_hold[]
-	storage_slots = 10
+	max_storage_space = 8
 	can_hold = list(
 		/obj/item/weapon/spacecash,
 		/obj/item/weapon/card,
