@@ -42,6 +42,7 @@
 	..()
 	if(holding_type)
 		holding = new holding_type(src)
+		holding.canremove = 0
 
 /obj/item/organ_module/active/simple/proc/deploy(mob/living/carbon/human/H, obj/item/organ/external/E)
 	var/slot = null

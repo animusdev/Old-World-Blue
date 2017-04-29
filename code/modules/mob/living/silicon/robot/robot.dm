@@ -525,12 +525,7 @@
 				user << "You jam the crowbar into the robot and begin levering [mmi]."
 				sleep(30)
 				user << "You damage some parts of the chassis, but eventually manage to rip out [mmi]!"
-				var/obj/item/robot_parts/robot_suit/C = new(loc)
-				C.l_leg = new (C)
-				C.r_leg = new (C)
-				C.l_arm = new (C)
-				C.r_arm = new (C)
-				C.update_icon()
+				new/obj/item/robot_parts/robot_suit/with_limbs(loc)
 				new/obj/item/robot_parts/chest(loc)
 				qdel(src)
 			else
