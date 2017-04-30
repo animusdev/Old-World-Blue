@@ -490,27 +490,27 @@ datum/design/item/mechfab
 
 /datum/design/item/mechfab/phazon/left_arm
 	name = "Durand left arm"
-	id = "durand_left_arm"
+	id = "phazon_left_arm"
 	build_path = /obj/item/mecha_parts/part/phazon/left_arm
 
 /datum/design/item/mechfab/phazon/right_arm
 	name = "Durand right arm"
-	id = "durand_right_arm"
+	id = "phazon_right_arm"
 	build_path = /obj/item/mecha_parts/part/phazon/right_arm
 
 /datum/design/item/mechfab/phazon/left_leg
 	name = "Durand left leg"
-	id = "durand_left_leg"
+	id = "phazon_left_leg"
 	build_path = /obj/item/mecha_parts/part/phazon/left_leg
 
 /datum/design/item/mechfab/phazon/right_leg
 	name = "Durand right leg"
-	id = "durand_right_leg"
+	id = "phazon_right_leg"
 	build_path = /obj/item/mecha_parts/part/phazon/right_leg
 
 /datum/design/item/mechfab/phazon/armour
 	name = "Durand armour plates"
-	id = "durand_armour"
+	id = "phazon_armour"
 	build_path = /obj/item/mecha_parts/part/phazon/armor
 	time = 60
 	materials = list(DEFAULT_WALL_MATERIAL=20000,"phoron"=10000,"uranium"=10000,"silver"=3000,"diamond"=1000)

@@ -73,7 +73,6 @@
 		time_coeff = diff
 
 /obj/machinery/mecha_part_fabricator/proc/update_categories()
-	categories = list()
 	for(var/datum/design/D in files.known_designs)
 		if(!D.build_path || !(D.build_type & MECHFAB))
 			continue
