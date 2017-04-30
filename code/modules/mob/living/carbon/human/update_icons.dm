@@ -901,7 +901,7 @@ var/global/list/damage_icon_parts = list()
 /mob/living/carbon/human/update_fire(var/update_icons=1)
 	overlays_standing[FIRE_LAYER] = null
 	if(on_fire)
-		overlays_standing[FIRE_LAYER] = image('icons/mob/OnFire.dmi', "Standing", FIRE_LAYER)
+		overlays_standing[FIRE_LAYER] = image('icons/mob/OnFire.dmi', "Standing[body_build.index]", FIRE_LAYER)
 
 	if(update_icons)   update_icons()
 
@@ -910,7 +910,7 @@ var/global/list/damage_icon_parts = list()
 	var/image/total = new
 	for(var/obj/item/organ/external/E in organs)
 		if(E.open)
-			var/image/I = image('icons/mob/surgery.dmi', "[E.name][round(E.open)]", -SURGERY_LEVEL)
+			var/image/I = image('icons/mob/surgery.dmi', "[E.organ_tag][round(E.open)][body_build.index]")
 			total.overlays += I
 	overlays_standing[SURGERY_LEVEL] = total
 	if(update_icons)   update_icons()
