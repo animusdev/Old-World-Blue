@@ -25,7 +25,7 @@
 		new /obj/item/weapon/gun/energy/gun(src)
 		new /obj/item/weapon/melee/baton/shocker/loaded(src)
 		new /obj/item/weapon/melee/telebaton(src)
-		new /obj/item/clothing/under/dress/dress_cap(src)
+		new /obj/item/clothing/under/rank/captain/dress(src)
 		new /obj/item/clothing/head/captain/formal(src)
 		new /obj/item/clothing/under/captainformal(src)
 		return
@@ -64,8 +64,8 @@
 	New()
 		..()
 		new /obj/item/clothing/under/rank/hop(src)
-		new /obj/item/clothing/under/dress/dress_hop(src)
-		new /obj/item/clothing/under/dress/dress_hr(src)
+		new /obj/item/clothing/under/rank/hop/dress(src)
+		new /obj/item/clothing/under/dress/hr(src)
 		new /obj/item/clothing/under/lawyer/female(src)
 		new /obj/item/clothing/under/lawyer/black(src)
 		new /obj/item/clothing/under/lawyer/red(src)
@@ -76,7 +76,6 @@
 		new /obj/item/clothing/shoes/white(src)
 		new /obj/item/clothing/under/rank/hop/whimsy(src)
 		new /obj/item/clothing/under/rank/hop/dark(src)
-		new /obj/item/clothing/under/rank/hop/doctor(src)
 		new /obj/item/clothing/suit/storage/toggle/hop(src)
 		new /obj/item/clothing/head/hop(src)
 		return

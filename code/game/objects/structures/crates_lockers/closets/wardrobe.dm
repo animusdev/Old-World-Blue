@@ -552,10 +552,10 @@
 	new /obj/item/clothing/under/rank/captain(src)
 	new /obj/item/clothing/shoes/brown(src)
 	new /obj/item/clothing/gloves/captain(src)
-	new /obj/item/clothing/under/dress/dress_cap(src)
+	new /obj/item/clothing/under/rank/captain/dress(src)
 	new /obj/item/clothing/under/captainformal(src)
 	new /obj/item/clothing/head/beret/centcom/captain(src)
-	new /obj/item/clothing/under/gimmick/rank/captain/suit(src)
+	new /obj/item/clothing/under/rank/captain/green(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	return
 

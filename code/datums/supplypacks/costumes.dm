@@ -62,11 +62,11 @@
 		/obj/item/clothing/suit/nun,
 		/obj/item/clothing/suit/imperium_monk,
 		/obj/item/clothing/suit/ianshirt,
-		/obj/item/clothing/under/gimmick/rank/captain/suit,
-		/obj/item/clothing/under/gimmick/rank/head_of_personnel/suit,
+		/obj/item/clothing/under/rank/captain/green,
+		/obj/item/clothing/under/rank/hop/teal,
 		/obj/item/clothing/under/lawyer/purpsuit,
 		/obj/item/clothing/under/rank/mailman,
-		/obj/item/clothing/under/dress/dress_saloon,
+		/obj/item/clothing/under/dress/saloon,
 		/obj/item/clothing/accessory/suspenders,
 		/obj/item/clothing/suit/bio_suit/plaguedoctorsuit,
 		/obj/item/clothing/under/schoolgirl,
@@ -154,11 +154,11 @@ datum/supply_packs/costumes/witch
 		/obj/item/clothing/under/wedding/bride_red,
 		/obj/item/clothing/under/wedding/bride_white,
 		/obj/item/clothing/under/sundress,
-		/obj/item/clothing/under/dress/dress_green,
-		/obj/item/clothing/under/dress/dress_pink,
-		/obj/item/clothing/under/dress/dress_orange,
-		/obj/item/clothing/under/dress/dress_yellow,
-		/obj/item/clothing/under/dress/dress_saloon
+		/obj/item/clothing/under/dress/green,
+		/obj/item/clothing/under/dress/pink,
+		/obj/item/clothing/under/dress/orange,
+		/obj/item/clothing/under/dress/yellow,
+		/obj/item/clothing/under/dress/saloon
 	)
 
 /datum/supply_packs/costumes/knight

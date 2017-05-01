@@ -49,6 +49,10 @@
 	name = "white jumpsuit"
 	icon_state = "white"
 
+/obj/item/clothing/under/color/maroon
+	name = "maroon jumpsuit"
+	icon_state = "maroon"
+
 /obj/item/clothing/under/color/yellow
 	name = "yellow jumpsuit"
 	icon_state = "yellow"

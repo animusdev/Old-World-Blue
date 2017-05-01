@@ -13,7 +13,7 @@ var/global/list/chameleons_categories = list(
 )
 
 /hook/startup/proc/populate_chameleons_lists()
-	initialize_chameleon_list("uniform", /obj/item/clothing/under, list(/obj/item/clothing/under/gimmick))
+	initialize_chameleon_list("uniform", /obj/item/clothing/under)
 	initialize_chameleon_list("hat", /obj/item/clothing/head)
 	initialize_chameleon_list("suit", /obj/item/clothing/suit,list(
 		/obj/item/clothing/suit/cyborg_suit,

@@ -77,7 +77,7 @@
 "by" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/turf/unsimulated/wall{icon_state = "iron3"},/area/space)
 "bz" = (/obj/structure/flora/ausbushes/fullgrass,/turf/simulated/floor/holofloor/grass,/area/holodeck/source_picnicarea)
 "bA" = (/obj/structure/flora/ausbushes/sparsegrass,/turf/simulated/floor/holofloor/grass,/area/holodeck/source_picnicarea)
-"bB" = (/obj/structure/table/rack/holorack,/obj/item/clothing/under/dress/dress_saloon,/obj/item/clothing/head/hairflower,/turf/simulated/floor/holofloor{icon_state = "cult"; dir = 2},/area/holodeck/source_theatre)
+"bB" = (/obj/structure/table/rack/holorack,/obj/item/clothing/under/dress/saloon,/obj/item/clothing/head/hairflower,/turf/simulated/floor/holofloor{icon_state = "cult"; dir = 2},/area/holodeck/source_theatre)
 "bC" = (/obj/effect/landmark/costume,/obj/structure/table/rack/holorack,/turf/simulated/floor/holofloor{icon_state = "cult"; dir = 2},/area/holodeck/source_theatre)
 "bD" = (/turf/simulated/floor/holofloor{icon_state = "grimy"; dir = 2},/area/holodeck/source_courtroom)
 "bE" = (/obj/structure/window/reinforced/holowindow{dir = 4},/obj/structure/flora/pottedplant{tag = "icon-plant-10"; icon_state = "plant-10"},/turf/simulated/floor/holofloor{icon_state = "grimy"; dir = 2},/area/holodeck/source_courtroom)
