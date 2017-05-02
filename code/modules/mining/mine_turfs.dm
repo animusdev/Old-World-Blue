@@ -398,7 +398,7 @@
 	has_resources = 1
 
 /turf/simulated/floor/plating/airless/asteroid/New()
-
+	..()
 	if(prob(20))
 		overlay_detail = "asteroid[rand(0,9)]"
 
