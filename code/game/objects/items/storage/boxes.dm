@@ -271,6 +271,18 @@
 	new /obj/item/weapon/implanter(src)
 	new /obj/item/weapon/implantpad(src)
 
+/obj/item/storage/box/inhibitionimp
+	name = "boxed prosthesis inhibition implant kit"
+	desc = "Box of stuff used to deactivate and lock human prosthesis or embed modules."
+	icon_state = "implant"
+
+/obj/item/storage/box/inhibitionimp/New()
+	..()
+	for(var/i = 1 to 5)
+		new /obj/item/weapon/implant/prosthesis_inhibition(src)
+	new /obj/item/weapon/implanter(src)
+	new /obj/item/weapon/implantpad(src)
+
 /obj/item/storage/box/rxglasses
 	name = "box of prescription glasses"
 	desc = "This box contains nerd glasses."

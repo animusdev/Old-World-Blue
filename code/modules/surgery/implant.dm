@@ -213,7 +213,7 @@
 			else
 				find_prob +=50
 
-			if (prob(find_prob))
+			if(prob(find_prob))
 				user.visible_message(
 					SPAN_NOTE("[user] takes something out of incision on [target]'s [affected.name] with \the [tool]."),
 					SPAN_NOTE("You take [obj] out of incision on [target]'s [affected.name]s with \the [tool].")

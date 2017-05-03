@@ -29,7 +29,26 @@
 /obj/item/organ_module/active/remove(var/obj/item/organ/external/E)
 	E.verbs -= /obj/item/organ/external/proc/activate_module
 
+/obj/item/organ_module/active/organ_removed(obj/item/organ/external/E, mob/living/carbon/human/H)
+	remove(E)
+
+/obj/item/organ_module/active/organ_installed(obj/item/organ/external/E, mob/living/carbon/human/H)
+	install(E)
+
+/obj/item/organ_module/active/proc/can_activate(var/mob/living/carbon/human/H, var/obj/item/organ/external/E)
+	if(H.sleeping || H.stunned || H.restrained())
+		H << SPAN_WARN("You can't do that now!")
+		return
+
+	for(var/obj/item/weapon/implant/prosthesis_inhibition/I in H)
+		if(I.malfunction)
+			continue
+		H << SPAN_WARN("[I] in your [I.part] prevent [src] activation!")
+		return FALSE
+	return TRUE
+
 /obj/item/organ_module/active/proc/activate(var/mob/living/carbon/human/H, var/obj/item/organ/external/E)
+/obj/item/organ_module/active/proc/deactivate(var/mob/living/carbon/human/H, var/obj/item/organ/external/E)
 
 
 //Simple toggleabse module. Just put holding in hands or get it back
@@ -64,21 +83,23 @@
 		var/mob/M = holding.loc
 		M.drop_from_inventory(holding)
 		M.visible_message(
-			SPAN_WARN("[M] retract /his [holding.name] into [E]."),
+			SPAN_WARN("[M] retract \his [holding.name] into [E]."),
 			SPAN_NOTE("You retract your [holding.name] into [E].")
 		)
 	holding.forceMove(src)
 
 
 /obj/item/organ_module/active/simple/activate(mob/living/carbon/human/H, obj/item/organ/external/E)
-	if(H.sleeping || H.stunned || H.restrained())
-		H << SPAN_WARN("You can't do that now!")
+	if(!can_activate(H, E))
 		return
 
 	if(holding.loc == src) //item not in hands
 		deploy(H, E)
 	else //retract item
 		retract(H, E)
+
+/obj/item/organ_module/active/simple/deactivate(mob/living/carbon/human/H, obj/item/organ/external/E)
+	retract(H, E)
 
 /obj/item/organ_module/active/simple/organ_removed(var/obj/item/organ/external/E, var/mob/living/carbon/human/H)
 	retract(H, E)
@@ -90,10 +111,10 @@
 	allowed_organs = list(BP_CHEST)
 	icon_state = "armor-chest"
 
-/obj/item/organ_module/armor/install(var/obj/item/organ/external/E)
+/obj/item/organ_module/armor/install(obj/item/organ/external/E)
 	E.brute_mod -= 0.3
 
-/obj/item/organ_module/armor/remove(var/obj/item/organ/external/E)
+/obj/item/organ_module/armor/remove(obj/item/organ/external/E)
 	E.brute_mod += 0.3
 
 

@@ -182,13 +182,8 @@
 /mob/living/carbon/human/proc/implant_loyalty(override = FALSE) // Won't override by default.
 	if(!config.use_loyalty_implants && !override) return // Nuh-uh.
 
-	var/obj/item/weapon/implant/loyalty/L = new (src)
-	L.imp_in = src
-	L.implanted = 1
-	var/obj/item/organ/external/affected = src.organs_by_name[BP_HEAD]
-	affected.implants += L
-	L.part = affected
-	L.implanted(src)
+	var/obj/item/weapon/implant/loyalty/L = new()
+	L.implanted(src, get_organ(BP_HEAD))
 
 /mob/living/carbon/human/proc/is_loyalty_implanted()
 	for(var/L in src.contents)

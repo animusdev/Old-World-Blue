@@ -14,29 +14,35 @@
 	var/allow_reagents = 0
 	var/malfunction = 0
 
-	proc/trigger(emote, source as mob)
-		return
-
+	proc/trigger(emote, mob/living/source)
 	proc/activate()
-		return
 
 	// What does the implant do upon injection?
-	// return 0 if the implant fails (ex. Revhead and loyalty implant.)
-	// return 1 if the implant succeeds (ex. Nonrevhead and loyalty implant.)
-	proc/implanted(var/mob/source)
-		return 1
+	// return FALSE if the implant fails (ex. Revhead and loyalty implant.)
+	// return TRUE  if the implant succeeds (ex. Nonrevhead and loyalty implant.)
+	proc/implanted(var/mob/living/source, var/obj/item/organ/external/affected)
+		forceMove(source)
+		imp_in = source
+		implanted = TRUE
+		if(affected)
+			affected.implants += src
+			part = affected
+			BITSET(source.hud_updateflag, IMPLOYAL_HUD)
+		on_implanted(source, affected)
+		return TRUE
+
+	proc/on_implanted(var/mob/living/source, var/obj/item/organ/external/E)
 
 	proc/get_data()
 		return "No information available"
 
-	proc/hear(message, source as mob)
-		return
+	proc/hear(message, mob/living/source)
 
 	proc/islegal()
-		return 0
+		return FALSE
 
 	proc/meltdown()	//breaks it down, making implant unrecongizible
-		imp_in << "\red You feel something melting inside [part ? "your [part.name]" : "you"]!"
+		imp_in << SPAN_WARN("You feel something melting inside [part ? "your [part.name]" : "you"]!")
 		if (part)
 			part.take_damage(burn = 15, used_weapon = "Electronics meltdown")
 		else
@@ -60,23 +66,23 @@
 
 	get_data()
 		var/dat = {"<b>Implant Specifications:</b><BR>
-<b>Name:</b> Tracking Beacon<BR>
-<b>Life:</b> 10 minutes after death of host<BR>
-<b>Important Notes:</b> None<BR>
-<HR>
-<b>Implant Details:</b> <BR>
-<b>Function:</b> Continuously transmits low power signal. Useful for tracking.<BR>
-<b>Special Features:</b><BR>
-<i>Neuro-Safe</i>- Specialized shell absorbs excess voltages self-destructing the chip if
-a malfunction occurs thereby securing safety of subject. The implant will melt and
-disintegrate into bio-safe elements.<BR>
-<b>Integrity:</b> Gradient creates slight risk of being overcharged and frying the
-circuitry. As a result neurotoxins can cause massive damage.<HR>
-Implant Specifics:<BR>"}
+			<b>Name:</b> Tracking Beacon<BR>
+			<b>Life:</b> 10 minutes after death of host<BR>
+			<b>Important Notes:</b> None<BR>
+			<HR>
+			<b>Implant Details:</b> <BR>
+			<b>Function:</b> Continuously transmits low power signal. Useful for tracking.<BR>
+			<b>Special Features:</b><BR>
+			<i>Neuro-Safe</i>- Specialized shell absorbs excess voltages self-destructing the chip if
+			a malfunction occurs thereby securing safety of subject. The implant will melt and
+			disintegrate into bio-safe elements.<BR>
+			<b>Integrity:</b> Gradient creates slight risk of being overcharged and frying the
+			circuitry. As a result neurotoxins can cause massive damage.<HR>
+			Implant Specifics:<BR>"}
 		return dat
 
 	emp_act(severity)
-		if (malfunction)	//no, dawg, you can't malfunction while you are malfunctioning
+		if(malfunction) //no, dawg, you can't malfunction while you are malfunctioning
 			return
 		malfunction = MALFUNCTION_TEMPORARY
 
@@ -99,32 +105,33 @@ Implant Specifics:<BR>"}
 
 	get_data()
 		var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> Robust Corp RX-78 Employee Management Implant<BR>
-<b>Life:</b> Activates upon death.<BR>
-<b>Important Notes:</b> Explodes<BR>
-<HR>
-<b>Implant Details:</b><BR>
-<b>Function:</b> Contains a compact, electrically detonated explosive that detonates upon receiving a specially encoded signal or upon host death.<BR>
-<b>Special Features:</b> Explodes<BR>
-<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+			<b>Implant Specifications:</b><BR>
+			<b>Name:</b> Robust Corp RX-78 Employee Management Implant<BR>
+			<b>Life:</b> Activates upon death.<BR>
+			<b>Important Notes:</b> Explodes<BR>
+			<HR>
+			<b>Implant Details:</b><BR>
+			<b>Function:</b> Contains a compact, electrically detonated explosive that detonates upon receiving a specially encoded signal or upon host death.<BR>
+			<b>Special Features:</b> Explodes<BR>
+			<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
 		return dat
 
 
-	trigger(emote, source as mob)
+	trigger(emote, mob/living/source)
 		if(emote == "deathgasp")
 			src.activate("death")
 		return
 
 
 	activate(var/cause)
-		if((!cause) || (!src.imp_in))	return 0
+		if(!cause || !src.imp_in)
+			return
 		explosion(src, -1, 0, 2, 3, 0)//This might be a bit much, dono will have to see.
 		if(src.imp_in)
 			src.imp_in.gib()
 
 	islegal()
-		return 0
+		return FALSE
 
 //BS12 Explosive
 /obj/item/weapon/implant/explosive
@@ -136,18 +143,18 @@ Implant Specifics:<BR>"}
 
 	get_data()
 		var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> Robust Corp RX-78 Intimidation Class Implant<BR>
-<b>Life:</b> Activates upon codephrase.<BR>
-<b>Important Notes:</b> Explodes<BR>
-<HR>
-<b>Implant Details:</b><BR>
-<b>Function:</b> Contains a compact, electrically detonated explosive that detonates upon receiving a specially encoded signal or upon host death.<BR>
-<b>Special Features:</b> Explodes<BR>
-<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+			<b>Implant Specifications:</b><BR>
+			<b>Name:</b> Robust Corp RX-78 Intimidation Class Implant<BR>
+			<b>Life:</b> Activates upon codephrase.<BR>
+			<b>Important Notes:</b> Explodes<BR>
+			<HR>
+			<b>Implant Details:</b><BR>
+			<b>Function:</b> Contains a compact, electrically detonated explosive that detonates upon receiving a specially encoded signal or upon host death.<BR>
+			<b>Special Features:</b> Explodes<BR>
+			<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
 		return dat
 
-	hear_talk(mob/M as mob, msg)
+	hear_talk(mob/M, msg)
 		hear(msg)
 		return
 
@@ -200,14 +207,13 @@ Implant Specifics:<BR>"}
 		if(t)
 			t.hotspot_expose(3500,125)
 
-	implanted(mob/source as mob)
+	on_implanted(mob/living/source)
 		elevel = alert("What sort of explosion would you prefer?", "Implant Intent", "Localized Limb", "Destroy Body", "Full Explosion")
 		phrase = input("Choose activation phrase:") as text
 		var/list/replacechars = list("'" = "","\"" = "",">" = "","<" = "","(" = "",")" = "")
 		phrase = replace_characters(phrase, replacechars)
 		usr.mind.store_memory("Explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate.", 0, 0)
 		usr << "The implanted explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate."
-		return 1
 
 	emp_act(severity)
 		if (malfunction)
@@ -230,7 +236,7 @@ Implant Specifics:<BR>"}
 			malfunction--
 
 	islegal()
-		return 0
+		return FALSE
 
 	proc/small_boom()
 		if (ishuman(imp_in) && part)
@@ -254,38 +260,36 @@ Implant Specifics:<BR>"}
 
 	get_data()
 		var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> Robust Corp MJ-420 Prisoner Management Implant<BR>
-<b>Life:</b> Deactivates upon death but remains within the body.<BR>
-<b>Important Notes: Due to the system functioning off of nutrients in the implanted subject's body, the subject<BR>
-will suffer from an increased appetite.</B><BR>
-<HR>
-<b>Implant Details:</b><BR>
-<b>Function:</b> Contains a small capsule that can contain various chemicals. Upon receiving a specially encoded signal<BR>
-the implant releases the chemicals directly into the blood stream.<BR>
-<b>Special Features:</b>
-<i>Micro-Capsule</i>- Can be loaded with any sort of chemical agent via the common syringe and can hold 50 units.<BR>
-Can only be loaded while still in its original case.<BR>
-<b>Integrity:</b> Implant will last so long as the subject is alive. However, if the subject suffers from malnutrition,<BR>
-the implant may become unstable and either pre-maturely inject the subject or simply break."}
+			<b>Implant Specifications:</b><BR>
+			<b>Name:</b> Robust Corp MJ-420 Prisoner Management Implant<BR>
+			<b>Life:</b> Deactivates upon death but remains within the body.<BR>
+			<b>Important Notes: Due to the system functioning off of nutrients in the implanted subject's body, the subject<BR>
+			will suffer from an increased appetite.</B><BR>
+			<HR>
+			<b>Implant Details:</b><BR>
+			<b>Function:</b> Contains a small capsule that can contain various chemicals. Upon receiving a specially encoded signal<BR>
+			the implant releases the chemicals directly into the blood stream.<BR>
+			<b>Special Features:</b>
+			<i>Micro-Capsule</i>- Can be loaded with any sort of chemical agent via the common syringe and can hold 50 units.<BR>
+			Can only be loaded while still in its original case.<BR>
+			<b>Integrity:</b> Implant will last so long as the subject is alive. However, if the subject suffers from malnutrition,<BR>
+			the implant may become unstable and either pre-maturely inject the subject or simply break."}
 		return dat
 
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
+		create_reagents(50)
 
-
-	trigger(emote, source as mob)
+	trigger(emote, mob/living/source)
 		if(emote == "deathgasp")
 			src.activate(src.reagents.total_volume)
 		return
 
 
 	activate(var/cause)
-		if((!cause) || (!src.imp_in))	return 0
+		if(!cause || !src.imp_in)
+			return
 		var/mob/living/carbon/R = src.imp_in
 		src.reagents.trans_to_mob(R, cause, CHEM_BLOOD)
 		R << "You hear a faint *beep*."
@@ -293,7 +297,6 @@ the implant may become unstable and either pre-maturely inject the subject or si
 			R << "You hear a faint click from your chest."
 			spawn(0)
 				qdel(src)
-		return
 
 	emp_act(severity)
 		if (malfunction)
@@ -317,29 +320,32 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 	get_data()
 		var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> Nanotrasen Employee Management Implant<BR>
-<b>Life:</b> Ten years.<BR>
-<b>Important Notes:</b> Personnel injected with this device tend to be much more loyal to the company.<BR>
-<HR>
-<b>Implant Details:</b><BR>
-<b>Function:</b> Contains a small pod of nanobots that manipulate the host's mental functions.<BR>
-<b>Special Features:</b> Will prevent and cure most forms of brainwashing.<BR>
-<b>Integrity:</b> Implant will last so long as the nanobots are inside the bloodstream."}
+			<b>Implant Specifications:</b><BR>
+			<b>Name:</b> Nanotrasen Employee Management Implant<BR>
+			<b>Life:</b> Ten years.<BR>
+			<b>Important Notes:</b> Personnel injected with this device tend to be much more loyal to the company.<BR>
+			<HR>
+			<b>Implant Details:</b><BR>
+			<b>Function:</b> Contains a small pod of nanobots that manipulate the host's mental functions.<BR>
+			<b>Special Features:</b> Will prevent and cure most forms of brainwashing.<BR>
+			<b>Integrity:</b> Implant will last so long as the nanobots are inside the bloodstream."}
 		return dat
 
-
-	implanted(mob/M)
-		if(!ishuman(M))	return 0
-		var/mob/living/carbon/human/H = M
+	implanted(var/mob/living/carbon/human/H, var/obj/item/organ/external/affected)
+		if(!istype(H))
+			return FALSE
 		var/datum/antagonist/antag_data = get_antag_data(H.mind.special_role)
 		if(antag_data && (antag_data.flags & ANTAG_IMPLANT_IMMUNE))
-			H.visible_message("[H] seems to resist the implant!", "You feel the corporate tendrils of Nanotrasen try to invade your mind!")
-			return 0
-		else
-			clear_antag_roles(H.mind, 1)
-			H << "<span class='notice'>You feel a surge of loyalty towards Nanotrasen.</span>"
-		return 1
+			H.visible_message(
+				"[H] seems to resist the implant!",
+				"You feel the corporate tendrils of Nanotrasen try to invade your mind!"
+			)
+			return FALSE
+		return ..()
+
+	on_implanted(var/mob/living/carbon/human/H)
+		clear_antag_roles(H.mind, 1)
+		H << "<span class='notice'>You feel a surge of loyalty towards Nanotrasen.</span>"
 
 
 /obj/item/weapon/implant/adrenalin
@@ -349,34 +355,31 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 	get_data()
 		var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> Cybersun Industries Adrenalin Implant<BR>
-<b>Life:</b> Five days.<BR>
-<b>Important Notes:</b> <font color='red'>Illegal</font><BR>
-<HR>
-<b>Implant Details:</b> Subjects injected with implant can activate a massive injection of adrenalin.<BR>
-<b>Function:</b> Contains nanobots to stimulate body to mass-produce Adrenalin.<BR>
-<b>Special Features:</b> Will prevent and cure most forms of brainwashing.<BR>
-<b>Integrity:</b> Implant can only be used three times before the nanobots are depleted."}
+			<b>Implant Specifications:</b><BR>
+			<b>Name:</b> Cybersun Industries Adrenalin Implant<BR>
+			<b>Life:</b> Five days.<BR>
+			<b>Important Notes:</b> <font color='red'>Illegal</font><BR>
+			<HR>
+			<b>Implant Details:</b>.<BR>
+			<b>Function:</b> Contains nanobots to stimulate body to mass-produce Adrenalin.<BR>
+			<b>Special Features:</b> Subjects injected with implant can activate a massive injection of adrenalin<BR>
+			<b>Integrity:</b> Implant can only be used three times before the nanobots are depleted."}
 		return dat
 
 
-	trigger(emote, mob/source as mob)
-		if (src.uses < 1)	return 0
+	trigger(emote, mob/living/source)
+		if (src.uses < 1)
+			return
 		if (emote == "pale")
 			src.uses--
-			source << "\blue You feel a sudden surge of energy!"
+			source << SPAN_NOTE("You feel a sudden surge of energy!")
 			source.SetStunned(0)
 			source.SetWeakened(0)
 			source.SetParalysis(0)
 
-		return
-
-
-	implanted(mob/source)
+	on_implanted(mob/living/source)
 		source.mind.store_memory("A implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.", 0, 0)
 		source << "The implanted freedom implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate."
-		return 1
 
 
 /obj/item/weapon/implant/death_alarm
@@ -386,15 +389,15 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 	get_data()
 		var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> NanoTrasen \"Profit Margin\" Class Employee Lifesign Sensor<BR>
-<b>Life:</b> Activates upon death.<BR>
-<b>Important Notes:</b> Alerts crew to crewmember death.<BR>
-<HR>
-<b>Implant Details:</b><BR>
-<b>Function:</b> Contains a compact radio signaler that triggers when the host's lifesigns cease.<BR>
-<b>Special Features:</b> Alerts crew to crewmember death.<BR>
-<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+			<b>Implant Specifications:</b><BR>
+			<b>Name:</b> NanoTrasen \"Profit Margin\" Class Employee Lifesign Sensor<BR>
+			<b>Life:</b> Activates upon death.<BR>
+			<b>Important Notes:</b> Alerts crew to crewmember death.<BR>
+			<HR>
+			<b>Implant Details:</b><BR>
+			<b>Function:</b> Contains a compact radio signaler that triggers when the host's lifesigns cease.<BR>
+			<b>Special Features:</b> Alerts crew to crewmember death.<BR>
+			<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
 		return dat
 
 	process()
@@ -446,10 +449,9 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		spawn(20)
 			malfunction--
 
-	implanted(mob/source as mob)
+	on_implanted(mob/living/source)
 		mobname = source.real_name
 		processing_objects.Add(src)
-		return 1
 
 /obj/item/weapon/implant/compressed
 	name = "compressed matter implant"
@@ -460,39 +462,56 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 	get_data()
 		var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> NanoTrasen \"Profit Margin\" Class Employee Lifesign Sensor<BR>
-<b>Life:</b> Activates upon death.<BR>
-<b>Important Notes:</b> Alerts crew to crewmember death.<BR>
-<HR>
-<b>Implant Details:</b><BR>
-<b>Function:</b> Contains a compact radio signaler that triggers when the host's lifesigns cease.<BR>
-<b>Special Features:</b> Alerts crew to crewmember death.<BR>
-<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+			<b>Implant Specifications:</b><BR>
+			<b>Name:</b> NanoTrasen \"Profit Margin\" Class Employee Lifesign Sensor<BR>
+			<b>Life:</b> Activates upon death.<BR>
+			<b>Important Notes:</b> Alerts crew to crewmember death.<BR>
+			<HR>
+			<b>Implant Details:</b><BR>
+			<b>Function:</b> Contains a compact radio signaler that triggers when the host's lifesigns cease.<BR>
+			<b>Special Features:</b> Alerts crew to crewmember death.<BR>
+			<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
 		return dat
 
-	trigger(emote, mob/source as mob)
+	trigger(emote, mob/living/source)
 		if (src.scanned == null)
-			return 0
+			return
 
 		if (emote == src.activation_emote)
 			source << "The air glows as \the [src.scanned.name] uncompresses."
 			activate()
 
 	activate()
-		var/turf/t = get_turf(src)
 		if (imp_in)
 			imp_in.put_in_hands(scanned)
 		else
-			scanned.loc = t
+			scanned.forceMove(get_turf(src))
 		qdel(src)
 
-	implanted(mob/source as mob)
+	on_implanted(mob/living/source)
 		src.activation_emote = input("Choose activation emote:") in list("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
 		if (source.mind)
 			source.mind.store_memory("Compressed matter implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
 		source << "The implanted compressed matter implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
-		return 1
 
 	islegal()
-		return 0
+		return FALSE
+
+/obj/item/weapon/implant/prosthesis_inhibition
+	name = "prosthesis inhibition implant"
+	desc = "Prevent embed electronics from being activated."
+
+	on_implanted(mob/living/carbon/human/source)
+		if(malfunction)
+			return
+
+		for(var/obj/item/organ/external/E in source.organs)
+			if(istype(E, /obj/item/organ/external/robotic))
+				var/obj/item/organ/external/robotic/R = E
+				R.deactivate()
+				source << SPAN_WARN("Your [E] automaticly deactivated and locked!")
+			if(istype(E.module, /obj/item/organ_module/active))
+				var/obj/item/organ_module/active/M = E.module
+				M.deactivate(source, E)
+				source << SPAN_WARN("[M] in your [E] automaticly deactivated and locked!")
+
