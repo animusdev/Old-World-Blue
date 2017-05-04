@@ -1,4 +1,19 @@
 /mob/living/carbon/verb/give()
+	set category = null
+	set name = "Give to"
+	set src in oview(1)
+
+	if(istype(usr, /mob/living) && src != usr)
+		var/mob/living/L = usr
+		L.handle_give(src)
+
+/mob/living/verb/handle_give(var/mob/target)
+	set category = "IC"
+	set name = "Give"
+
+	return
+
+/mob/living/carbon/handle_give(var/mob/target)
 	set category = "IC"
 	set name = "Give"
 
@@ -10,13 +25,15 @@
 		src << SPAN_WARN("You don't have anything in your active hand!")
 		return
 
-	var/list/target_list = list()
-	for(var/mob/living/carbon/C in view(1,src))
-		if((C == usr) || (C.loc == usr))
-			continue
-		target_list += C
+	if(!target)
+		var/list/target_list = list()
+		for(var/mob/living/carbon/C in view(1,src))
+			if((C == usr) || (C.loc == usr))
+				continue
+			target_list += C
 
-	var/mob/living/carbon/target = input(src, "Select whom you wanna give [I]") as anything in target_list
+		target = input(src, "Select whom you wanna give [I]") as anything in target_list
+
 	if(!istype(target) || target.stat || target.client == null)
 		return
 
