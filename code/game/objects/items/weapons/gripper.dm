@@ -177,7 +177,7 @@
 		wrapped = null
 		return FALSE
 
-	src.loc << "<span class='notice'>You drop \the [wrapped].</span>"
+	src.loc << SPAN_NOTE("You drop \the [wrapped].")
 	wrapped.forceMove(target)
 	wrapped = null
 	return TRUE
@@ -189,13 +189,14 @@
 		wrapped.attack(M,user)
 		if(deleted(wrapped))
 			wrapped = null
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/weapon/gripper/afterattack(var/atom/target, var/mob/living/user, proximity, params)
 
+	//Prevent using guns at range.
 	if(!proximity)
-		return // This will prevent them using guns at range but adminbuse can add them directly to modules, so eh.
+		return
 
 	//There's some weirdness with items being lost inside the arm. Trying to fix all cases. ~Z
 	if(!wrapped)
