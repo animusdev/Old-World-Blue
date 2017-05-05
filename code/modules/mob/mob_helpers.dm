@@ -173,7 +173,8 @@ var/list/global/nearest_part = list(
 			miss_chance -= 20
 
 	if (zone in base_miss_chance)
-		miss_chance = base_miss_chance[zone]
+		miss_chance += base_miss_chance[zone]
+
 	miss_chance = max(miss_chance + miss_chance_mod, 0)
 	if(prob(miss_chance))
 		if(prob(70))
