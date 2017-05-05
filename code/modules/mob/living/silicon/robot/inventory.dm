@@ -8,17 +8,18 @@
 /mob/living/silicon/robot/unEquip(obj/item/I, var/atom/Target)
 	if(istype(module_active, /obj/item/weapon/gripper))
 		var/obj/item/weapon/gripper/G = module_active
-		return G.drop_to(Target)
-	usr << "<span class='warning'>You can't unequip [I]!</span>"
-	return 0
+		if(I == G || G.wrapped == I)
+			return G.drop_to(Target)
+	usr << SPAN_WARN("You can't unequip [I]!")
+	return FALSE
 
 /mob/living/silicon/robot/drop_active_hand(var/atom/target)
 	if(istype(module_active, /obj/item/weapon/gripper))
-		if(!target) target = get_turf(src)
+		if(!target)
+			target = get_turf(src)
 		if(unEquip(get_active_hand(), target))
-			return 1
-	else
-		uneq_active()
+			return TRUE
+	uneq_active()
 
 /*-------TODOOOOOOOOOO--------*/
 
