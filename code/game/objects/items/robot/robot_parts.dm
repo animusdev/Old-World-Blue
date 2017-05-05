@@ -108,10 +108,8 @@
 			overlays += "[part]+o"
 
 /obj/item/robot_parts/robot_suit/is_ready()
-	for(var/part in req_parts)
-		if(!part in parts)
-			return FALSE
-	return TRUE
+	var/list/missed = req_parts - parts
+	return !missed.len
 
 /obj/item/robot_parts/robot_suit/attackby(obj/item/W as obj, mob/user as mob)
 	..()
@@ -155,7 +153,7 @@
 
 	if(istype(W, /obj/item/robot_parts))
 		var/obj/item/robot_parts/RP = W
-		if(req_parts.Find(RP.body_part))
+		if(!req_parts.Find(RP.body_part))
 			user << SPAN_WARN("You can't attach that here!")
 			return
 		if(parts[RP.body_part])
