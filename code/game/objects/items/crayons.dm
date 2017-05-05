@@ -71,7 +71,6 @@
 		var/drawtype = input("Choose what you'd like to draw.", "Crayon scribbles") in list("graffiti","rune","letter")
 		if(drawtype =="letter")
 			drawtype = input("Choose the letter.", "Crayon scribbles") in list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
-			drawtype = "a letter"
 		if(!target.Adjacent(user))
 			user << SPAN_WARN("You move too far from [target.name]!")
 			return
