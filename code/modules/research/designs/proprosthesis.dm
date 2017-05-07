@@ -6,6 +6,7 @@
 	name = "Biotech prototype (steel armblade)"
 	desc = "Combat organ module steel armblade."
 	id = "armblade"
+	build_path = /obj/item/weapon/material/hatchet/tacknife/armblade
 	req_tech = list("materials" = 3, "combat" = 4, "biotech" = 4)
 
 /datum/design/organ_module/armor
