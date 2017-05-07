@@ -155,16 +155,51 @@
 			size = "huge"
 	return ..(user, return_dist, "", "It is a [size] item.")
 
+/obj/item/proc/on_mob_description(var/mob/living/carbon/human/H, var/datum/gender/T, var/slot, var/slot_name)
+	var/msg = "[T.He] [T.is] wearing \icon[src]"
+	var/end_part = " on [T.his] [slot_name]"
+
+	switch(slot)
+		if(slot_w_uniform, slot_wear_suit)
+			end_part = ""
+		if(slot_back, slot_gloves)
+			msg = "[T.He] [T.has] \icon[src]"
+		if(slot_belt)
+			msg = "[T.He] [T.has] \icon[src]"
+			end_part = " about [T.his] waist"
+		if(slot_s_store)
+			msg = "[T.He] [T.is] carring \icon[src]"
+		if(slot_glasses)
+			msg = "[T.He] [T.has] \icon[src]"
+			end_part = " covering [T.his] eyes."
+		if(slot_l_hand, slot_r_hand)
+			msg = "[T.He] [T.is] holding \icon[src]"
+			end_part = " in [T.his] [slot_name]"
+		if(slot_l_ear, slot_r_ear)
+			return "[T.He] [T.has] \icon[src] \a [src] on [T.his] left ear."
+		if(slot_wear_id)
+			return "[T.He] [T.is] wearing \icon[src] \a [src]."
+
+	if(blood_DNA)
+		msg = SPAN_WARN("[msg] [gender==PLURAL?"some":"a"] [(blood_color != SYNTH_BLOOD_COLOUR) ? "blood" : "oil"]-stained [src][end_part]!")
+	else
+		msg += " \a [src][end_part]."
+	return msg
+
+
+
+
+
 /obj/item/attack_hand(mob/living/user as mob)
 	if (!user) return
 	if (hasorgans(user))
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/external/temp = H.get_organ(user.hand ? BP_L_HAND : BP_R_HAND)
 		if(!temp)
-			user << "<span class='notice'>You try to use your hand, but realize it is no longer attached!</span>"
+			user << SPAN_NOTE("You try to use your hand, but realize it is no longer attached!")
 			return
 		if(!temp.is_usable())
-			user << "<span class='notice'>You try to move your [temp.name], but cannot!</span>"
+			user << SPAN_NOTE("You try to move your [temp.name], but cannot!")
 			return
 	src.pickup(user)
 	if (istype(src.loc, /obj/item/storage))

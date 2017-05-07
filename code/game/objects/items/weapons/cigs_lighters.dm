@@ -133,6 +133,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			else
 				user << "[src] is nearly burnt out!"
 
+/obj/item/clothing/mask/smokable/on_mob_description(mob/living/carbon/human/H, datum/gender/T, slot, slot_name)
+	if(slot == slot_wear_mask)
+		if(lit)
+			return "[T.He] smokes \icon[src] \a [src]."
+		else
+			return "[T.He] holding \icon[src] \a [src] in [T.his] mounth."
+	else
+		return ..()
 
 /obj/item/clothing/mask/smokable/proc/light(var/flavor_text = "[usr] lights the [name].")
 	if(!src.lit)

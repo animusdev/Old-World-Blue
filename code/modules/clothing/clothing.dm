@@ -268,6 +268,13 @@
 		var/mob/M = src.loc
 		M.update_inv_wear_mask()
 
+/obj/item/clothing/mask/on_mob_description(mob/living/carbon/human/H, datum/gender/T, slot, slot_name)
+	if(slot == slot_wear_mask)
+		slot_name = "neck"
+		if(body_parts_covered&FACE)
+			slot_name = "face"
+	return ..(H, T, slot, slot_name)
+
 /obj/item/clothing/mask/proc/filter_air(datum/gas_mixture/air)
 	return
 
@@ -354,6 +361,12 @@
 
 /obj/item/clothing/under/equipped(mob/user, slot)
 	update_status()
+
+/obj/item/clothing/under/on_mob_description(mob/living/carbon/human/H, datum/gender/T, slot)
+	var/msg = ..()
+	if(slot == slot_w_uniform && accessories.len)
+		msg += " Attached to it is [lowertext(english_list(accessories))]."
+	return msg
 
 /obj/item/clothing/under/proc/update_status()
 	if(!ishuman(loc)) return

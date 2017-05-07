@@ -29,6 +29,12 @@
 	origin_tech = list(TECH_MATERIAL = 1)
 	var/breakouttime = 300	//Deciseconds = 30s = 0.5 minute
 
+/obj/item/weapon/handcuffs/on_mob_description(mob/living/carbon/human/H, datum/gender/T, slot)
+	if(slot == "handcuffs")
+		return SPAN_WARN("[T.He] [T.is] \icon[src] handcuffed!")
+	else
+		return ..()
+
 /obj/item/weapon/handcuffs/attack(var/mob/living/carbon/C, var/mob/living/user)
 
 	if(!user.IsAdvancedToolUser())
@@ -137,6 +143,12 @@
 	cuff_sound = 'sound/weapons/cablecuff.ogg'
 	cuff_type = "cable restraints"
 
+/obj/item/weapon/handcuffs/cable/on_mob_description(mob/living/carbon/human/H, datum/gender/T, slot)
+	if(slot == "handcuffs")
+		return SPAN_WARN("[T.He] [T.is] \icon[src] restrained with cable!")
+	else
+		return ..()
+
 /obj/item/weapon/handcuffs/cable/red
 	color = "#DD0000"
 
@@ -168,7 +180,7 @@
 		if (R.use(1))
 			var/obj/item/weapon/material/wirerod/W = new(get_turf(user))
 			user.put_in_hands(W)
-			user << "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>"
+			user << SPAN_NOTE("You wrap the cable restraint around the top of the rod.")
 			qdel(src)
 			update_icon(user)
 
@@ -177,6 +189,12 @@
 	desc = "A few pieces of tape glued together. It looks unreliable."
 	icon_state = "tapecuffs"
 	breakouttime = 300
+
+/obj/item/weapon/handcuffs/tape/on_mob_description(mob/living/carbon/human/H, datum/gender/T, slot)
+	if(slot == "handcuffs")
+		return SPAN_WARN("[T.He] [T.is] \icon[src] restrained with lenght of tape!")
+	else
+		return ..()
 
 /obj/item/weapon/handcuffs/tape/dropped()
 	new/obj/item/weapon/tape_piece(src.loc)

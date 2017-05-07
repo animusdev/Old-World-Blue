@@ -169,7 +169,7 @@
 	if(istype(W, /obj/item/device/mmi))
 		var/obj/item/device/mmi/M = W
 		if(!is_ready(user))
-			user << "<span class='warning'>The MMI must go in after everything else!</span>"
+			user << SPAN_WARN("The MMI must go in after everything else!")
 			return
 
 		if(!istype(loc,/turf))
