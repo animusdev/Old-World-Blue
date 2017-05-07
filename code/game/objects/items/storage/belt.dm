@@ -21,10 +21,11 @@
 	update_icon()
 
 /obj/item/storage/update_icon()
-	if (ismob(src.loc))
+	if(ismob(src.loc))
 		var/mob/M = src.loc
 		M.update_inv_belt()
-
+	for(var/obj/item/I in src)
+		overlays += I.item_state
 
 /obj/item/storage/belt/utility
 	name = "tool-belt" //Carn: utility belt is nicer, but it bamboozles the text parsing.

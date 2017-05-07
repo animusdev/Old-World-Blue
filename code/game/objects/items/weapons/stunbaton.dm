@@ -3,7 +3,7 @@
 	name = "stunbaton"
 	desc = "A stun baton for incapacitating people with."
 	icon_state = "stunbaton"
-	item_state = "baton"
+	item_state = "stunbaton"
 	slot_flags = SLOT_BELT
 	force = 15
 	sharp = 0
