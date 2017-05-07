@@ -66,17 +66,19 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	return
 
 /obj/machinery/computer/rdconsole/proc/update_categories()
-	linked_imprinter.categories = list("None")
-	linked_lathe.categories = list("None")
+	if(linked_imprinter)
+		linked_imprinter.categories = list("None")
+	if(linked_lathe)
+		linked_lathe.categories = list("None")
 	for(var/datum/design/D in files.known_designs)
-		if(D.build_type & IMPRINTER)
+		if(linked_imprinter && D.build_type & IMPRINTER)
 			linked_imprinter.categories |= D.category
-		if(D.build_type & PROTOLATHE)
+		if(linked_lathe && D.build_type & PROTOLATHE)
 			linked_lathe.categories |= D.category
 
-	if(!(linked_imprinter.category in linked_imprinter.categories))
+	if(linked_imprinter && !(linked_imprinter.category in linked_imprinter.categories))
 		linked_imprinter.category = null
-	if(!(linked_lathe.category in linked_lathe.categories))
+	if(linked_lathe && !(linked_lathe.category in linked_lathe.categories))
 		linked_lathe.category = null
 
 //Have it automatically push research to the centcomm server so wild griffins can't fuck up R&D's work
