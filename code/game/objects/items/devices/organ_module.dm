@@ -129,10 +129,29 @@
 	icon_state = "armblade"
 	applies_material_colour = 0
 
+/*
+There's an armblade instead of his hand.
+There's an Armblade sticking out from his hand.
+From his hand sticks out an armblade.
+Instead of his hand there's an armblade.
+*/
+
+/obj/item/weapon/material/hatchet/tacknife/armblade/on_mob_description(mob/living/carbon/human/H, datum/gender/T, slot, slot_name)
+	if(!slot in list(slot_l_hand, slot_r_hand))
+		return ..()
+
+	var/msg = "There's "
+	var/end_part = "\a \icon[src] [src] sticking out from [T.his] [slot_name]"
+
+	if(blood_DNA)
+		msg = SPAN_WARN("[msg] [gender==PLURAL?"some":"a"] [(blood_color != SYNTH_BLOOD_COLOUR) ? "blood" : "oil"]-stained [end_part]!")
+	else
+		msg += "[end_part]."
+	return msg
+
 /obj/item/weapon/material/hatchet/tacknife/armblade/claws
 	icon_state = "wolverine"
 	name = "claws"
-	icon_state = "wolverine"
 
 /obj/item/organ_module/active/simple/wolverine
 	name = "embed claws"

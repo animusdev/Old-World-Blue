@@ -138,7 +138,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(lit)
 			return "[T.He] smokes \icon[src] \a [src]."
 		else
-			return "[T.He] holding \icon[src] \a [src] in [T.his] mounth."
+			return "[T.He] holding \icon[src] \a [src] in [T.his] mouth."
 	else
 		return ..()
 
