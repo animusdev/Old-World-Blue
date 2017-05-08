@@ -929,7 +929,7 @@ other types of metals and chemistry for reagents).
 ///////////////Misc Stuff////////////////
 /////////////////////////////////////////
 /datum/design/item/holising
-	name = "Janitor holosign"
+	name = "Janitor holosign controller"
 	desc = "Used for creating short time holographic markers"
 	id = "holosing_janitor"
 	req_tech = list("materials" = 2, "magnets" = 3)

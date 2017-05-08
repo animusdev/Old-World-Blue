@@ -1,5 +1,6 @@
 /obj/item/device/janiholo
 	icon = 'icons/obj/janitor.dmi'
+	name = "Holosign controller"
 	icon_state = "janiholo"
 	desc = "Up to date way for marking wet floor."
 	slot_flags = SLOT_BELT
@@ -51,6 +52,9 @@
 	anchored = 1
 	var/lifetime = 500
 	var/obj/item/device/janiholo/creator = null
+
+/obj/effect/overlay/janiholo/attackby()
+	return
 
 /obj/effect/overlay/janiholo/New(var/turf/location, var/obj/item/device/janiholo/JH)
 	..(location)
