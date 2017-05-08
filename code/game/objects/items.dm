@@ -296,18 +296,6 @@
 
 //Defines which slots correspond to which slot flags
 var/list/global/slot_flags_enumeration = list(
-	"[slot_wear_mask]" = SLOT_MASK,
-	"[slot_back]" = SLOT_BACK,
-	"[slot_wear_suit]" = SLOT_OCLOTHING,
-	"[slot_gloves]" = SLOT_GLOVES,
-	"[slot_shoes]" = SLOT_FEET,
-	"[slot_belt]" = SLOT_BELT,
-	"[slot_glasses]" = SLOT_EYES,
-	"[slot_head]" = SLOT_HEAD,
-	"[slot_l_ear]" = SLOT_EARS|SLOT_TWOEARS,
-	"[slot_r_ear]" = SLOT_EARS|SLOT_TWOEARS,
-	"[slot_w_uniform]" = SLOT_ICLOTHING,
-	"[slot_wear_id]" = SLOT_ID,
 	"[slot_tie]" = SLOT_TIE,
 	)
 
@@ -317,8 +305,6 @@ var/list/global/slot_flags_enumeration = list(
 //Should probably move the bulk of this into mob code some time, as most of it is related to the definition of slots and not item-specific
 /obj/item/proc/mob_can_equip(M as mob, slot, disable_warning = 0)
 	if(!slot) return 0
-	if(!M) return 0
-
 	if(!ishuman(M)) return 0
 
 	var/mob/living/carbon/human/H = M
@@ -330,14 +316,6 @@ var/list/global/slot_flags_enumeration = list(
 
 	//Lastly, check special rules for the desired slot.
 	switch(slot)
-		if(slot_l_ear, slot_r_ear)
-			if((w_class > ITEM_SIZE_TINY) && !(slot_flags & SLOT_EARS))
-				return 0
-		if(slot_wear_id)
-			if(!H.w_uniform && (slot_w_uniform in mob_equip))
-				if(!disable_warning)
-					H << "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>"
-				return 0
 		if(slot_l_store, slot_r_store)
 			if(!H.w_uniform && (slot_w_uniform in mob_equip))
 				if(!disable_warning)
@@ -349,17 +327,6 @@ var/list/global/slot_flags_enumeration = list(
 				return 0
 			if(get_storage_cost() == ITEM_SIZE_NO_CONTAINER)
 				return 0 //pockets act like storage and should respect ITEM_SIZE_NO_CONTAINER. Suit storage might be fine as is
-		if(slot_s_store)
-			if(!H.wear_suit && (slot_wear_suit in mob_equip))
-				if(!disable_warning)
-					H << "<span class='warning'>You need a suit before you can attach this [name].</span>"
-				return 0
-			if(!H.wear_suit.allowed)
-				if(!disable_warning)
-					usr << "<span class='warning'>You somehow have a suit with no defined allowed items for suit storage, stop that.</span>"
-				return 0
-			if( !(istype(src, /obj/item/device/pda) || istype(src, /obj/item/weapon/pen) || is_type_in_list(src, H.wear_suit.allowed)) )
-				return 0
 		if(slot_handcuffed)
 			if(!istype(src, /obj/item/weapon/handcuffs))
 				return 0
