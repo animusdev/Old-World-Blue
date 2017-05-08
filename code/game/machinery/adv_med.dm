@@ -7,6 +7,7 @@
 	name = "Body Scanner"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "body_scanner_0"
+	dir = WEST
 	density = 1
 	anchored = 1
 
@@ -206,16 +207,18 @@
 	name = "Body Scanner Console"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "body_scannerconsole"
+	dir = WEST
 	density = 1
 	anchored = 1
 
 
 /obj/machinery/body_scanconsole/New()
 	..()
-	spawn( 5 )
-		src.connected = locate(/obj/machinery/bodyscanner, get_step(src, WEST))
-		return
-	return
+	spawn(5)
+		for(var/dir in cardinal)
+			connected = locate(/obj/machinery/bodyscanner) in get_step(src, dir)
+			if(connected)
+				return
 
 /*
 

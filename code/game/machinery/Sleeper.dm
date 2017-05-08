@@ -9,7 +9,7 @@
 	var/obj/machinery/sleeper/connected = null
 	anchored = 1 //About time someone fixed this.
 	density = 1
-	var/orient = "LEFT" // "RIGHT" changes the dir suffix to "-r"
+	dir = WEST
 
 	use_power = 1
 	idle_power_usage = 40
@@ -37,15 +37,12 @@
 
 /obj/machinery/sleep_console/New()
 	..()
-	spawn( 5 )
-		if(orient == "RIGHT")
-			icon_state = "sleeperconsole-r"
-			src.connected = locate(/obj/machinery/sleeper, get_step(src, EAST))
-		else
-			src.connected = locate(/obj/machinery/sleeper, get_step(src, WEST))
+	spawn(5)
+		for(var/dir in cardinal)
+			connected = locate(/obj/machinery/sleeper) in get_step(src, dir)
+			if(connected)
+				return
 
-		return
-	return
 
 /obj/machinery/sleep_console/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
@@ -157,7 +154,7 @@
 	icon_state = "sleeper_0"
 	density = 1
 	anchored = 1
-	var/orient = "LEFT" // "RIGHT" changes the dir suffix to "-r"
+	dir = WEST
 	var/mob/living/carbon/human/occupant = null
 	var/available_chemicals = list("inaprovaline" = "Inaprovaline", "stoxin" = "Soporific", "paracetamol" = "Paracetamol", "anti_toxin" = "Dylovene", "dexalin" = "Dexalin")
 	var/amounts = list(5, 10)
@@ -171,11 +168,6 @@
 	New()
 		..()
 		beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
-		spawn( 5 )
-			if(orient == "RIGHT")
-				icon_state = "sleeper_0-r"
-			return
-		return
 
 	process()
 		if (stat & (NOPOWER|BROKEN))
@@ -243,8 +235,6 @@
 				update_use_power(2)
 				src.occupant = M
 				src.icon_state = "sleeper_1"
-				if(orient == "RIGHT")
-					icon_state = "sleeper_1-r"
 
 				src.add_fingerprint(user)
 				qdel(G)
@@ -324,8 +314,6 @@
 		src.occupant.loc = src.loc
 		src.occupant = null
 		update_use_power(1)
-		if(orient == "RIGHT")
-			icon_state = "sleeper_0-r"
 		return
 
 
@@ -378,8 +366,6 @@
 		set src in oview(1)
 		if(usr.stat != 0)
 			return
-		if(orient == "RIGHT")
-			icon_state = "sleeper_0-r"
 		src.icon_state = "sleeper_0"
 		src.go_out()
 		add_fingerprint(usr)
@@ -426,8 +412,6 @@
 			update_use_power(2)
 			src.occupant = usr
 			src.icon_state = "sleeper_1"
-			if(orient == "RIGHT")
-				icon_state = "sleeper_1-r"
 
 			for(var/obj/O in src)
 				if(O!=beaker) O.forceMove(loc)
