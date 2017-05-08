@@ -40,8 +40,21 @@
 /obj/item/organ/internal/eyes/take_damage(amount, var/silent=0)
 	var/oldbroken = is_broken()
 	..()
+
+	if(damage > 10)
+		if(!silent)
+			owner << SPAN_WARN("Your eyes are really starting to hurt. This can't be good for you!")
+
+	if(damage >= min_bruised_damage)
+		if(!owner.disabilities & NEARSIGHTED)
+			if(!silent)
+				owner << SPAN_DANG("It's become harder to see!")
+			owner.disabilities |= NEARSIGHTED
+			spawn(100)
+				owner.disabilities &= ~NEARSIGHTED
+
 	if(is_broken() && !oldbroken && owner && !owner.stat)
-		owner << "<span class='danger'>You go blind!</span>"
+		owner << SPAN_DANG("You go blind!")
 
 /obj/item/organ/internal/eyes/process() //Eye damage replaces the old eye_stat var.
 	..()
