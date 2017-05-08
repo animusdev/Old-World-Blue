@@ -519,7 +519,8 @@
 		if(src.resources[material] < res_max_amount)
 			if(stack && stack.amount >= 1)
 				src.overlays += "fab-load-[material]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
-				do_after(user, src, 10)
+				if(!do_after(user, 10, src))
+					return
 				var/free_space = res_max_amount - resources[material]
 				var/transfer_amount = min(stack.amount, round(free_space/SHEET_MATERIAL_AMOUNT))
 				stack.use(transfer_amount)

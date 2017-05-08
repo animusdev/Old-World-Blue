@@ -124,6 +124,8 @@
 datum/design/item/mechfab
 	build_type = MECHFAB
 	category = "Misc"
+	time = 10
+	materials = list(DEFAULT_WALL_MATERIAL = 10000)
 	req_tech = list(TECH_MATERIAL = 1)
 
 /datum/design/item/mechfab/equipment
