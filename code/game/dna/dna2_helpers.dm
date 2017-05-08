@@ -12,14 +12,6 @@
 		temp1 = copytext(t,2,u+1)
 	return temp1
 
-// DNA Gene activation boundaries, see dna2.dm.
-// Returns a list object with 4 numbers.
-/proc/GetDNABounds(var/block)
-	var/list/BOUNDS=dna_activity_bounds[block]
-	if(!istype(BOUNDS))
-		return DNA_DEFAULT_BOUNDS
-	return BOUNDS
-
 // Give Random Bad Mutation to M
 /proc/randmutb(var/mob/living/M)
 	if(!M) return
@@ -51,14 +43,14 @@
 	if(UI)
 		for(var/i = 1, i <= DNA_UI_LENGTH-1, i++)
 			if(prob(prob))
-				M.dna.SetUIValue(i,rand(1,4095),1)
+				M.dna.SetUIValue(i,rand(1,MAX_SE_VALUE),1)
 		M.dna.UpdateUI()
 		M.UpdateAppearance()
 
 	else
-		for(var/i = 1, i <= DNA_SE_LENGTH-1, i++)
+		for(var/block in M.dna.SE)
 			if(prob(prob))
-				M.dna.SetSEValue(i,rand(1,4095),1)
+				M.dna.SetSEValue(block,rand(1,MAX_SE_VALUE),1)
 		M.dna.UpdateSE()
 	return
 

@@ -222,7 +222,8 @@
 		if(prob(1))
 			heal_organ_damage(0,1)
 
-	//TODO: DNA3 on_mob_life()
+	for(var/datum/mutation/M in mutations)
+		M.on_mob_life(src)
 
 	radiation = Clamp(radiation,0,100)
 
@@ -1268,7 +1269,8 @@
 			if(blinded)		blind.alpha = 255
 			else			blind.alpha = 0
 
-		if(disabilities & NEARSIGHTED)	//this looks meh but saves a lot of memory by not requiring to add var/prescription
+		var/obj/item/organ/internal/eyes/E = internal_organs_by_name[O_EYES]
+		if(disabilities & NEARSIGHTED || (E && E.nearsighted))
 			if(glasses)					//to every /obj/item
 				var/obj/item/clothing/glasses/G = glasses
 				if(!G.prescription)

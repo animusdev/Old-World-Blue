@@ -153,16 +153,15 @@ var/global/list/special_roles = list(
 	character.personal_faction = faction
 	character.religion = religion
 
+	character.rebuild_organs(src)
 
 	if(disabilities)
 		// Set defer to 1 if you add more crap here so it only recalculates struc_enzymes once. - N3X
-		//TODO: DNA3 glasses_block
-		character.disabilities |= NEARSIGHTED
-
-	// And uncomment this, too.
-	// character.dna.UpdateSE()
-
-	character.rebuild_organs(src)
+		var/datum/mutation/M = all_mutations[MUTATION_NEARSIGHTED]
+		if(M)
+			M.forced_activate(character)
+		else
+			log_debug("Can't find nearsighted mutation. ID: [MUTATION_NEARSIGHTED].")
 
 	if(backbag > backbaglist.len || backbag < 1)
 		backbag = pick(backbaglist.len)
