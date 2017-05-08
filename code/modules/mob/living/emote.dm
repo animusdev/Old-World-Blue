@@ -10,7 +10,7 @@
 	if(!message)
 		return 0
 
-	if(src == usr)
+	if(!usr || src == usr)
 		log_emote("[name]/[key] : [message]")
 	else
 		log_emote("[name]/[key] forced by ([key_name(usr)]) : [message]")

@@ -254,7 +254,7 @@ proc/get_radio_key_from_channel(var/channel)
 			if(O) //It's possible that it could be deleted in the meantime.
 				O.hear_talk(src, message, verb, speaking)
 
-	if(usr == src)
+	if(!usr || usr == src)
 		log_say("[key]/[name] : [message]")
 	else
 		log_say("[key]/[name] (forced by [key_name(usr)]) : [message]")
