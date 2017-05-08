@@ -164,7 +164,7 @@ Frequency:
 	for(var/obj/effect/portal/PO in world)
 		if(PO.creator == src)	count++
 	if(count >= 3)
-		user.show_message(SPAN_NOTE("\The [src] is recharging!"))
+		user << SPAN_NOTE("\The [src] is recharging!")
 		return
 	var/atom/T = L[t1]
 	for(var/mob/O in hearers(user, null))

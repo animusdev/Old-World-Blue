@@ -843,12 +843,14 @@ other types of metals and chemistry for reagents).
 	name = "PDA design"
 	desc = "Cheaper than whiny non-digital assistants."
 	id = "pda"
+	category = "PDA stuff"
 	req_tech = list("engineering" = 2, "powerstorage" = 3)
 	materials = list(DEFAULT_WALL_MATERIAL = 50, "glass" = 50)
 	build_path = /obj/item/device/pda
 
 // *** Cartridges
 /datum/design/item/pda_cartridge
+	category = "PDA stuff"
 	req_tech = list("engineering" = 2, "powerstorage" = 3)
 	materials = list(DEFAULT_WALL_MATERIAL = 50, "glass" = 50)
 
@@ -926,6 +928,14 @@ other types of metals and chemistry for reagents).
 /////////////////////////////////////////
 ///////////////Misc Stuff////////////////
 /////////////////////////////////////////
+/datum/design/item/holising
+	name = "Janitor holosign"
+	desc = "Used for creating short time holographic markers"
+	id = "holosing_janitor"
+	req_tech = list("materials" = 2, "magnets" = 3)
+	materials = list(DEFAULT_WALL_MATERIAL = 300, "glass" = 300)
+	build_path = /obj/item/device/janiholo
+
 /datum/design/item/borg_syndicate_module
 	name = "Cyborg lethal weapons upgrade"
 	desc = "Allows for the construction of lethal upgrades for cyborgs."
