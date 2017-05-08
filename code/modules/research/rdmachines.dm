@@ -32,7 +32,7 @@
 	if(!M in materials || amount <= 0)
 		return
 	var/eject_amount = min(round(amount)*SHEET_MATERIAL_AMOUNT, materials[M])
-	if(eject_amount > SHEET_MATERIAL_AMOUNT)
+	if(eject_amount >= SHEET_MATERIAL_AMOUNT)
 		materials[M] = materials[M] - eject_amount
 		create_material_stack(M, eject_amount, src.loc)
 

@@ -456,16 +456,16 @@
 		src.sync()
 		return update_queue_on_page()
 	if(href_list["part_desc"])
-		var/obj/part = filter.getObj("part_desc")
+		var/design_id = href_list["part_desc"]
+		var/datum/design/D = null
+		for(D in files.known_designs)
+			if(D.id == design_id)
+				break
 
-		// critical exploit prevention, do not remove unless you replace it -walter0o
-		if(src.exploit_prevention(part, usr, 1))
-			return
-
-		if(part)
+		if(D)
 			temp = {"
-				<h1>[part] description:</h1>
-				[part.desc]<br>
+				<h1>[D.name] description:</h1>
+				[D.desc]<br>
 				<a href='?src=\ref[src];clear_temp=1'>Return</a>
 			"}
 	if(href_list["remove_mat"] && href_list["material"])
@@ -473,29 +473,15 @@
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/mecha_part_fabricator/proc/remove_material(var/mat_string, var/amount)
-	var/type
-	var/material/M = get_material_by_name(mat_string)
-	if(!M) return
 
-	type = M.stack_type
-
-	var/result = 0
-	var/obj/item/stack/material/res = new type(src)
-
-	// amount available to take out
-	var/total_amount = round(resources[mat_string]/SHEET_MATERIAL_AMOUNT)
-
-	// number of stacks we're going to take out
-	res.amount = round(min(total_amount,amount))
-
-	if(res.amount>0)
-		resources[mat_string] -= res.amount*SHEET_MATERIAL_AMOUNT
-		res.Move(src.loc)
-		result = res.amount
-	else
-		qdel(res)
-	return result
+/obj/machinery/mecha_part_fabricator/proc/remove_material(var/M, var/amount)
+	if(!M in resources || amount <= 0)
+		return
+	var/eject_amount = min(round(amount)*SHEET_MATERIAL_AMOUNT, resources[M])
+	if(eject_amount >= SHEET_MATERIAL_AMOUNT)
+		resources[M] = resources[M] - eject_amount
+		create_material_stack(M, eject_amount, src.loc)
+	return eject_amount
 
 
 /obj/machinery/mecha_part_fabricator/update_icon()
@@ -532,16 +518,14 @@
 		var/sname = stack.name
 		if(src.resources[material] < res_max_amount)
 			if(stack && stack.amount >= 1)
-				var/count = 0
 				src.overlays += "fab-load-[material]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
-				sleep(10)
-
-				while(src.resources[material] < res_max_amount && stack.amount >= 1)
-					src.resources[material] += SHEET_MATERIAL_AMOUNT
-					stack.use(1)
-					count++
+				do_after(user, src, 10)
+				var/free_space = res_max_amount - resources[material]
+				var/transfer_amount = min(stack.amount, round(free_space/SHEET_MATERIAL_AMOUNT))
+				stack.use(transfer_amount)
+				src.resources[material] += transfer_amount * SHEET_MATERIAL_AMOUNT
 				src.overlays -= "fab-load-[material]"
-				user << "You insert [count] [sname] into the fabricator."
+				user << "You insert [transfer_amount] [sname] into the fabricator."
 				src.updateUsrDialog()
 			else
 				user << "The fabricator can only accept full sheets of [sname]."
