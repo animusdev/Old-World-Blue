@@ -592,7 +592,8 @@
 			pixel_y = V.mob_offset_y - 5
 			downed = 1
 		else
-			if(buckled.buckle_lying != -1) lying = buckled.buckle_lying
+			if(buckled.buckle_lying != -1)
+				lying = buckled.buckle_lying
 			pixel_y = V.mob_offset_y
 	else if(buckled)
 		anchored = 1
@@ -606,7 +607,7 @@
 
 	else
 		if(stat || paralysis || sleeping || (status_flags & FAKEDEATH))
-			lying = 1
+			lying = 3
 			canmove = 0
 			downed = 1
 		else if(captured)
@@ -614,18 +615,26 @@
 			canmove = 0
 			downed = 1
 		else if(weakened)
-			lying = 1
+			lying = 3
 			canmove = 0
 			if(prob(25))
 				downed = 1
 		else if(resting)
-			lying = 1
+			lying = 3
 			canmove = 0
 		else if(stunned)
 			if(src.lying)
-				lying = 1
+				lying = src.lying
 			canmove = 0
 
+	if(lying == 3)
+		var/check_dir = dir
+		if(l_move_time + 15 < world.time)
+			check_dir = last_move
+		if(check_dir in list(NORTH, EAST))
+			lying = RIGHT
+		else
+			lying = LEFT
 	src.lying = lying
 	src.canmove = canmove
 
