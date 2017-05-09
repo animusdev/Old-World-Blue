@@ -171,7 +171,7 @@
 			msg = "[T.He] [T.is] carring \icon[src]"
 		if(slot_glasses)
 			msg = "[T.He] [T.has] \icon[src]"
-			end_part = " covering [T.his] eyes."
+			end_part = " covering [T.his] eyes"
 		if(slot_l_hand, slot_r_hand)
 			msg = "[T.He] [T.is] holding \icon[src]"
 			end_part = " in [T.his] [slot_name]"
