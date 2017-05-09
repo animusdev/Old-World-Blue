@@ -299,7 +299,7 @@
 "fM" = (/obj/machinery/bodyscanner,/turf/simulated/floor/airless{tag = "icon-white"; icon_state = "white"},/area/derelict/medical)
 "fN" = (/obj/machinery/body_scanconsole,/turf/simulated/floor/airless{tag = "icon-white"; icon_state = "white"},/area/derelict/medical)
 "fO" = (/obj/structure/cable,/obj/machinery/power/apc/disalarmed{name = "South bump"; pixel_y = -24},/turf/simulated/floor/airless{tag = "icon-white"; icon_state = "white"},/area/derelict/medical)
-"fP" = (/obj/machinery/sleeper,/turf/simulated/floor/airless{tag = "icon-white"; icon_state = "white"},/area/derelict/medical)
+"fP" = (/obj/machinery/sleeper/old{tag = "icon-sleeper_old"; icon_state = "sleeper_old"; dir = 2},/turf/simulated/floor/airless{tag = "icon-white"; icon_state = "white"},/area/derelict/medical)
 "fQ" = (/obj/machinery/sleep_console,/turf/simulated/floor/airless{tag = "icon-white"; icon_state = "white"},/area/derelict/medical)
 "fR" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/airless{tag = "icon-white"; icon_state = "white"},/area/derelict/medical)
 "fS" = (/turf/simulated/floor/airless{tag = "icon-floorscorched1"; icon_state = "floorscorched1"},/area/derelict/medical)
