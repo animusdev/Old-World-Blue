@@ -132,7 +132,7 @@
 	//gloves
 	if(!skipgloves)
 		if(gloves)
-			msg += gloves.on_mob_description(src, T, slot_gloves, "gloves")
+			msg += gloves.on_mob_description(src, T, slot_gloves, "hands")
 		else if(blood_DNA)
 			msg += SPAN_WARN("[T.He] [T.has] [(hand_blood_color != SYNTH_BLOOD_COLOUR) ? "blood" : "oil"]-stained hands!")
 
