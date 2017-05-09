@@ -187,6 +187,11 @@
 			qdel(src)
 			update_icon(user)
 
+/obj/item/weapon/handcuffs/pink
+	name = "pink handcuffs"
+	icon_state = "handcuffpink"
+	breakouttime = 600
+
 /obj/item/weapon/handcuffs/tape
 	name = "tape restraints"
 	desc = "A few pieces of tape glued together. It looks unreliable."

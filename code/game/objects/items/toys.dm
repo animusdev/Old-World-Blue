@@ -940,7 +940,38 @@
 /obj/item/toy/plushie/kitten
 	name = "kitten plush"
 	desc = "A plushie of a cute kitten! Watch as it purrs it's way right into your heart."
-	icon_state = "kittenplushie"
+	icon_state = "cat_black"
+
+/obj/item/toy/plushie/kitten/New()
+	icon_state = pick(list(
+		"cat_black",
+		"cat_grey",
+		"cat_white",
+		"cat_orange",
+		"cat_siamese",
+		"cat_tabby",
+		"cat_tuxedo"
+	))
+	..()
+
+/obj/item/toy/plushie/animal
+	name = "puppy plush"
+	desc = "A very cute plushie toy! Watch as it purrs it! Isn't they stick in your heart?"
+	icon_state = "corgi_plushie"
+
+/obj/item/toy/plushie/animal/New()
+	var/variants = list(
+		"plush corgy" = "corgi_plushie",
+		"plush girl corgy" = "girlycorgi_plushie",
+		"plush robocorgy" = "robotcorgi_plushie",
+		"deer plushie" = "deer_plushie",
+		"loveable plushie" = "loveable_plushie",
+		"huggable plushie" = "huggable_plushie"
+	)
+	name = pick(variants)
+	icon_state = variants[name]
+	..()
+
 
 /obj/item/toy/plushie/lizard
 	name = "lizard plush"
