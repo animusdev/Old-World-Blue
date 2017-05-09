@@ -65,11 +65,11 @@
 	var/slot = null
 	if(E.organ_tag in list(BP_L_ARM, BP_L_HAND))
 		slot = slot_l_hand
-	else if(E.icon_position == RIGHT)
+	else if(E.organ_tag in list(BP_R_ARM, BP_R_HAND))
 		slot = slot_r_hand
 	if(H.equip_to_slot_if_possible(holding, slot))
 		H.visible_message(
-			SPAN_WARN("[H] extend /his [holding.name] from [E]."),
+			SPAN_WARN("[H] extend \his [holding.name] from [E]."),
 			SPAN_NOTE("You extend your [holding.name] from [E].")
 		)
 

@@ -80,7 +80,8 @@
 	if(close_door_at && world.time >= close_door_at)
 		if(autoclose)
 			close_door_at = next_close_time()
-			close()
+			spawn()
+				close()
 		else
 			close_door_at = 0
 

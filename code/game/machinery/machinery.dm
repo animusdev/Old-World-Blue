@@ -358,5 +358,6 @@ Class Procs:
 		I.forceMove(loc)
 		component_parts -= I
 	circuit.forceMove(loc)
+	circuit.deconstruct(src)
 	qdel(src)
 	return 1

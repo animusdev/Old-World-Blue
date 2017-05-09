@@ -270,6 +270,13 @@
 	category = "Biotech"
 	build_path = /obj/item/weapon/circuitboard/clonescanner
 
+/datum/design/circuit/bioprinter
+	name = "bioprinter"
+	id = "bioprinter"
+	req_tech = list("programming" = 4, "biotech" = 5)
+	category = "Biotech"
+	build_path = /obj/item/weapon/circuitboard/bioprinter
+
 ///////////////////////////////////
 ////////Telecomms Machinery////////
 ///////////////////////////////////

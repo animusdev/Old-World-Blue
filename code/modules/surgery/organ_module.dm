@@ -72,13 +72,17 @@
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 
 		if (!..())
-			return 0
+			return FALSE
 
-		for(var/obj/item/organ/internal/I in target.internal_organs)
-			if(I && (I.status & ORGAN_CUT_AWAY) && I.parent_organ == target_zone)
-				return 0
+		var/obj/item/organ/external/affected = target.get_organ(target_zone)
+		if(!affected || !affected.module)
+			return FALSE
 
-		return ..()
+		for(var/obj/item/organ/internal/I in affected.internal_organs)
+			if(I.status & ORGAN_CUT_AWAY)
+				return FALSE
+
+		return TRUE
 
 	begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)

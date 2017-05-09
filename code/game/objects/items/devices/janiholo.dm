@@ -5,7 +5,7 @@
 	desc = "Up to date way for marking wet floor."
 	slot_flags = SLOT_BELT
 	w_class = ITEM_SIZE_SMALL
-	var/life_time = 500
+	var/life_time = 300
 	var/on = FALSE
 	var/max_holos = 8
 	var/list/holos = list()
@@ -27,7 +27,7 @@
 	if(!isliving(usr))
 		return
 
-	var/list/values = list("Short" = 300, "Medium" = 500, "Long" = 800)
+	var/list/values = list("Short" = 100, "Medium" = 300, "Long" = 500)
 	var/NLT = input("Select new lifetime for holos") in values
 	if(NLT && (usr.get_active_hand() == src || usr.get_inactive_hand() == src))
 		life_time = values[NLT]
@@ -46,7 +46,7 @@
 	PoolOrNew(/obj/effect/overlay/janiholo, list(get_turf(A), src))
 
 /obj/effect/overlay/janiholo
-	name = "Holographitc sign"
+	name = "Holographic sign"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "janihologram"
 	anchored = 1

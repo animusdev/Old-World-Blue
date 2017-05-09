@@ -30,8 +30,11 @@
 	var/breakouttime = 300	//Deciseconds = 30s = 0.5 minute
 
 /obj/item/weapon/handcuffs/on_mob_description(mob/living/carbon/human/H, datum/gender/T, slot)
-	if(slot == "handcuffs")
-		return SPAN_WARN("[T.He] [T.is] \icon[src] handcuffed!")
+	if(slot == slot_handcuffed)
+		if(name == "handcuffs")
+			return SPAN_WARN("[T.He] [T.is] \icon[src] handcuffed!")
+		else
+			return SPAN_WARN("[T.He] [T.is] restrained with \icon[src] [src]!")
 	else
 		return ..()
 
@@ -144,7 +147,7 @@
 	cuff_type = "cable restraints"
 
 /obj/item/weapon/handcuffs/cable/on_mob_description(mob/living/carbon/human/H, datum/gender/T, slot)
-	if(slot == "handcuffs")
+	if(slot == slot_handcuffed)
 		return SPAN_WARN("[T.He] [T.is] \icon[src] restrained with cable!")
 	else
 		return ..()
@@ -184,6 +187,11 @@
 			qdel(src)
 			update_icon(user)
 
+/obj/item/weapon/handcuffs/pink
+	name = "pink handcuffs"
+	icon_state = "handcuffpink"
+	breakouttime = 600
+
 /obj/item/weapon/handcuffs/tape
 	name = "tape restraints"
 	desc = "A few pieces of tape glued together. It looks unreliable."
@@ -191,7 +199,7 @@
 	breakouttime = 300
 
 /obj/item/weapon/handcuffs/tape/on_mob_description(mob/living/carbon/human/H, datum/gender/T, slot)
-	if(slot == "handcuffs")
+	if(slot == slot_handcuffed)
 		return SPAN_WARN("[T.He] [T.is] \icon[src] restrained with lenght of tape!")
 	else
 		return ..()

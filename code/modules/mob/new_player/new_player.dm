@@ -219,6 +219,9 @@
 		if(!config.enter_allowed)
 			usr << "<span class='notice'>There is an administrative lock on entering the game!</span>"
 			return 0
+		if(!check_rights(show_msg=0) && find_general_record("name", client.prefs.real_name))
+			src << SPAN_WARN("You can't have same name as any other player!")
+			return 0
 		if(!IsJobAvailable(rank))
 			src << alert("[rank] is not available. Please try another.")
 			return 0

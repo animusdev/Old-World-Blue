@@ -21,6 +21,58 @@
 /obj/machinery/r_n_d/attack_hand(mob/user as mob)
 	return
 
+/obj/machinery/r_n_d/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if(default_deconstruction_screwdriver(user, O))
+		if(linked_console)
+			linked_console.linked_lathe = null
+			linked_console = null
+		return
+	if(default_deconstruction_crowbar(user, O))
+		return
+	if(default_part_replacement(user, O))
+		return
+	if(O.is_open_container())
+		return 0
+	if(panel_open)
+		user << "<span class='notice'>You can't load \the [src] while it's opened.</span>"
+		return 1
+	if(!linked_console)
+		user << "<span class='notice'>\The [src] must be linked to an R&D console first!</span>"
+		return 1
+	if(stat)
+		return 1
+	if(busy)
+		user << "<span class='notice'>\The [src] is busy. Please wait for completion of previous operation.</span>"
+		return 1
+
+	if(istype(O, /obj/item/stack/material) && O.get_material_name() in materials)
+
+		var/obj/item/stack/material/stack = O
+		var/free_space = (max_material_storage - TotalMaterials())/SHEET_MATERIAL_AMOUNT
+		if(free_space < 1)
+			user << "<span class='notice'>\The [src] is full. Please remove some material from \the [src] in order to insert more.</span>"
+			return 1
+
+		var/amount = round(input("How many sheets do you want to add?") as num)
+		amount = min(amount, stack.amount, round(free_space))
+		if(amount <= 0 || busy)
+			return
+
+		busy = 1
+
+		overlays += "[icon_state]_[stack.name]"
+		sleep(10)
+		overlays -= "[icon_state]_[stack.name]"
+
+		var/material = stack.get_material_name()
+		if(do_after(usr, 16) && stack.use(amount))
+			user << "<span class='notice'>You add [amount] sheets to \the [src].</span>"
+			use_power(max(1000, (SHEET_MATERIAL_AMOUNT * amount / 10)))
+			materials[material] += amount * SHEET_MATERIAL_AMOUNT
+		busy = 0
+		updateUsrDialog()
+		return
+
 /obj/machinery/r_n_d/dismantle()
 	for(var/obj/item/weapon/reagent_containers/glass/beaker/I in component_parts)
 		reagents.trans_to_obj(I, reagents.total_volume)

@@ -48,7 +48,8 @@
 	owner = "Weston Ludwig"
 
 /obj/item/clothing/suit/storage/toggle/leather_jacket/mil
-	name = "leather jacket"
+	name = "test pilot's Jacket"
+	desc = "On the left sleeve is a stripe of the star-striped flag and the emblem with the letters NASA."
 	wear_state = "mil_jacket"
 
 /***************************************/

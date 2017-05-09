@@ -1,12 +1,13 @@
 /datum/design/organ_module
 	build_type = MECHFAB
 	category = "Prosthesis"
+	materials = list(DEFAULT_WALL_MATERIAL=8000)
 
 /datum/design/organ_module/armblade
 	name = "Biotech prototype (steel armblade)"
 	desc = "Combat organ module steel armblade."
 	id = "armblade"
-	build_path = /obj/item/weapon/material/hatchet/tacknife/armblade
+	build_path = /obj/item/organ_module/active/simple/armblade
 	req_tech = list("materials" = 3, "combat" = 4, "biotech" = 4)
 
 /datum/design/organ_module/armor
@@ -22,9 +23,11 @@
 /datum/design/prosthesis
 	build_type = MECHFAB
 	category = "Prosthesis"
+	materials = list(DEFAULT_WALL_MATERIAL=18000)
 
 /datum/design/prosthesis/simple
 	desc = "Full/partial limb prosthesis."
+	materials = list(DEFAULT_WALL_MATERIAL=15000)
 
 /datum/design/prosthesis/simple/r_arm
 	name = "right arm"
@@ -50,6 +53,7 @@
 /datum/design/prosthesis/enforcer
 	req_tech = list("materials" = 3, "engineering" = 2, "combat" = 2, "biotech" = 3)
 	desc = "Fulllimb combat prosthesis with magboots and powerfists modules."
+	materials = list(DEFAULT_WALL_MATERIAL=25000)
 
 /datum/design/prosthesis/enforcer/AssembleDesignName()
 	name = "Prosthesis design of \"Enforcer Charge\" ([name])"
@@ -78,6 +82,7 @@
 /datum/design/prosthesis/runner
 	req_tech = list("materials" = 3, "engineering" = 2, "biotech" = 3)
 	desc = "Fulllimb runner prosthesis. Light and quick."
+	materials = list(DEFAULT_WALL_MATERIAL=15000)
 
 /datum/design/prosthesis/runner/AssembleDesignName()
 	name = "Prosthesis design of \"R.U.N.N.E.R.\" ([name])"
