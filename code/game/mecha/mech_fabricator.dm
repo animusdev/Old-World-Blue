@@ -511,26 +511,23 @@
 
 	if(istype(W, /obj/item/stack/material))
 		var/material = W.get_material_name()
-		if(!material in resources) return ..()
+		if(!material in resources)
+			return
 
 		var/obj/item/stack/material/stack = W
-
 		var/sname = stack.name
-		if(src.resources[material] < res_max_amount)
-			if(stack && stack.amount >= 1)
-				src.overlays += "fab-load-[material]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
-				if(!do_after(user, 10, src))
-					return
-				var/free_space = res_max_amount - resources[material]
-				var/transfer_amount = min(stack.amount, round(free_space/SHEET_MATERIAL_AMOUNT))
-				stack.use(transfer_amount)
-				src.resources[material] += transfer_amount * SHEET_MATERIAL_AMOUNT
-				src.overlays -= "fab-load-[material]"
-				user << "You insert [transfer_amount] [sname] into the fabricator."
-				src.updateUsrDialog()
-			else
-				user << "The fabricator can only accept full sheets of [sname]."
-				return
-		else
+		if(src.resources[material] >= res_max_amount)
 			user << "The fabricator cannot hold more [sname]."
-		return
+			return
+		if(!stack || stack.amount <= 1)
+			user << "The fabricator can only accept full sheets of [sname]."
+			return
+		src.overlays += "fab-load-[material]"
+		if(do_after(user, 10, src))
+			var/free_space = res_max_amount - resources[material]
+			var/transfer_amount = min(stack.amount, round(free_space/SHEET_MATERIAL_AMOUNT))
+			stack.use(transfer_amount)
+			src.resources[material] += transfer_amount * SHEET_MATERIAL_AMOUNT
+			user << "You insert [transfer_amount] [sname] into the fabricator."
+			src.updateUsrDialog()
+		src.overlays -= "fab-load-[material]"
