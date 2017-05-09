@@ -6,6 +6,8 @@
 #define SPAN_WARN(text) "<span class='warning'>[text]</span>"
 #define SPAN_DANG(text) "<span class='danger'>[text]</span>"
 
+#define T_BOARD(name)	"circuit board (" + (name) + ")"
+
 // Turf-only flags.
 #define NOJAUNT 1 // This is used in literally one place, turf.dm, to block ethereal jaunt.
 
