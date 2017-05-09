@@ -8,6 +8,14 @@
 		"purple" = /obj/item/weapon/lipstick/purple,
 	)
 
+/datum/gear/dice
+	display_name = "dice pack"
+	path = /obj/item/weapon/storage/pill_bottle/dice
+
+/datum/gear/dice/nerd
+	display_name = "dice pack (gaming)"
+	path = /obj/item/weapon/storage/pill_bottle/dice_nerd
+
 /datum/gear/cane
 	display_name = "cane"
 	path = /obj/item/weapon/cane
