@@ -194,7 +194,7 @@
 	)
 
 /datum/supply_packs/randomised/security/armor
-	num_contained = 5
+	num_contained = 7
 	contains = list(
 		/obj/item/clothing/suit/storage/vest,
 		/obj/item/clothing/suit/storage/vest/officer,
@@ -206,7 +206,12 @@
 		/obj/item/clothing/suit/storage/vest/heavy/officer,
 		/obj/item/clothing/suit/storage/vest/heavy/warden,
 		/obj/item/clothing/suit/storage/vest/heavy/hos,
-		/obj/item/clothing/suit/storage/vest/heavy/pcrc
+		/obj/item/clothing/suit/storage/vest/heavy/pcrc,
+		/obj/item/clothing/head/helmet/security,
+		/obj/item/clothing/head/helmet/security,
+		/obj/item/clothing/head/helmet/security,
+		/obj/item/clothing/head/helmet/heavy,
+		/obj/item/clothing/head/helmet/swat
 		)
 	name = "Armor crate"
 	cost = 40
@@ -246,3 +251,15 @@
 	cost = 20
 	containertype = /obj/structure/closet/crate/secure
 	containername = "Forensics kit crate"
+	
+/datum/supply_packs/security/implant
+	name = "Security implant kits crate"
+	contains = list(
+		/obj/item/storage/lockbox/loyalty,
+		/obj/item/storage/box/trackimp,
+		/obj/item/storage/box/chemimp
+	)
+	cost = 80
+	containertype = /obj/structure/closet/crate/secure
+	containername = "Security implant kits crate"
+	access = access_armory
