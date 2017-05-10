@@ -51,8 +51,20 @@
 		return FALSE
 	if(slot_flags & SLOT_DENYPOCKET)
 		return FALSE
+	//pockets act like storage and should respect ITEM_SIZE_NO_CONTAINER.
+	// Suit storage might be fine as is
+	if(get_storage_cost() == ITEM_SIZE_NO_CONTAINER)
+		return 0
 
+/obj/screen/slot/store/left
+	name = "left store"
+	id = slot_l_store
+	screen_loc = ui_storage1
 
+/obj/screen/slot/store/right
+	name = "right store"
+	id = slot_r_store
+	screen_loc = ui_storage2
 
 /obj/screen/slot/suit
 	name = "suit"
@@ -70,7 +82,8 @@
 	)
 
 /obj/screen/slot/s_store/can_equip(obj/item/I, disable_warning)
-	. = ..()
+	if(!..())
+		return FALSE
 	var/obj/item/suit = owner.get_equipped_item(slot_wear_suit)
 	if(!suit)
 		if(!disable_warning)

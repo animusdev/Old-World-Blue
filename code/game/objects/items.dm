@@ -316,17 +316,6 @@ var/list/global/slot_flags_enumeration = list(
 
 	//Lastly, check special rules for the desired slot.
 	switch(slot)
-		if(slot_l_store, slot_r_store)
-			if(!H.w_uniform && (slot_w_uniform in mob_equip))
-				if(!disable_warning)
-					H << "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>"
-				return 0
-			if(slot_flags & SLOT_DENYPOCKET)
-				return 0
-			if(w_class > ITEM_SIZE_SMALL && !(slot_flags & SLOT_POCKET))
-				return 0
-			if(get_storage_cost() == ITEM_SIZE_NO_CONTAINER)
-				return 0 //pockets act like storage and should respect ITEM_SIZE_NO_CONTAINER. Suit storage might be fine as is
 		if(slot_handcuffed)
 			if(!istype(src, /obj/item/weapon/handcuffs))
 				return 0
@@ -341,12 +330,12 @@ var/list/global/slot_flags_enumeration = list(
 		if(slot_tie)
 			if(!H.w_uniform && (slot_w_uniform in mob_equip))
 				if(!disable_warning)
-					H << "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>"
+					H << SPAN_WARN("You need a jumpsuit before you can attach this [name].")
 				return 0
 			var/obj/item/clothing/under/uniform = H.w_uniform
 			if(uniform.accessories.len && !uniform.can_attach_accessory(src))
 				if (!disable_warning)
-					H << "<span class='warning'>You already have an accessory of this type attached to your [uniform].</span>"
+					H << SPAN_WARN("You already have an accessory of this type attached to your [uniform].")
 				return 0
 	return 1
 
@@ -369,7 +358,8 @@ var/list/global/slot_flags_enumeration = list(
 		return
 	if(!usr.canmove || usr.stat || usr.restrained() || !Adjacent(usr))
 		return
-	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))//Is humanoid, and is not a brain
+	//Is humanoid, and is not a brain
+	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))
 		usr << "<span class='warning'>You can't pick things up!</span>"
 		return
 	var/mob/living/carbon/C = usr
@@ -390,9 +380,12 @@ var/list/global/slot_flags_enumeration = list(
 	return
 
 
-//This proc is executed when someone clicks the on-screen UI button. To make the UI button show, set the 'icon_action_button' to the icon_state of the image of the button in screen1_action.dmi
+//This proc is executed when someone clicks the on-screen UI button.
+//To make the UI button show, set the 'icon_action_button' to the icon_state \
+  of the image of the button in screen1_action.dmi
 //The default action is attack_self().
-//Checks before we get to here are: mob is alive, mob is not restrained, paralyzed, asleep, resting, laying, item is on the mob.
+//Checks before we get to here are: mob is alive, mob is not restrained, paralyzed, asleep,\
+  resting, laying, item is on the mob.
 /obj/item/proc/ui_action_click()
 	attack_self(usr)
 
