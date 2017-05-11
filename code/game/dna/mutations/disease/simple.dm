@@ -1,4 +1,5 @@
 /datum/mutation/disease
+	affect_primitive = TRUE
 	aligment = MUTATION_BAD
 
 /datum/mutation/disease/activate(mob/living/carbon/human/H)

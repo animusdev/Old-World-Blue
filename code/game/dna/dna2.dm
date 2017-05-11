@@ -7,8 +7,8 @@ var/global/list/datum/dna/gene/dna_genes[0]
 /datum/dna
 	// READ-ONLY, GETS OVERWRITTEN
 	// DO NOT FUCK WITH THESE OR BYOND WILL EAT YOUR FACE
-	var/uni_identity="" // Encoded UI
-	var/struc_enzymes="" // Encoded SE
+	var/uni_identity=""   // Encoded UI
+	var/struc_enzymes=""  // Encoded SE
 	var/unique_enzymes="" // MD5 of player name
 
 	// Internal dirtiness checks
@@ -58,7 +58,7 @@ var/global/list/datum/dna/gene/dna_genes[0]
 		if(UI.len != DNA_UI_LENGTH)
 			ResetUIFrom(character)
 
-		if(length(struc_enzymes)!= 3 * SE.len)
+		if(SE.len != character.species.mutations.len || length(struc_enzymes)!= 3 * SE.len)
 			ResetSE()
 
 		if(length(unique_enzymes) != 32)

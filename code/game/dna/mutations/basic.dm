@@ -25,18 +25,16 @@ var/list/all_mutations = new
 			continue
 
 		all_mutations[M.id] = M
-		if(!M.affected_species || !M.affected_species.len)
-			for(var/species in playable_species - M.restricted_species)
-				var/datum/species/S = all_species[species]
-				if(S.flags & NO_SCAN)
-					continue
-				S.mutations += M.id
-				S = all_species[S.primitive_form]
-				S.mutations += M.id
+		var/list/check_list = list()
+		if(M.affected_species && M.affected_species.len)
+			check_list = M.affected_species
 		else
-			for(var/species in M.affected_species)
-				var/datum/species/S = all_species[species]
-				S.mutations += M.id
+			check_list = playable_species - M.restricted_species
+
+		for(var/species in check_list)
+			var/datum/species/S = all_species[species]
+			S.mutations += M.id
+			if(S.primitive_form && M.affect_primitive)
 				S = all_species[S.primitive_form]
 				S.mutations += M.id
 	return TRUE
@@ -55,6 +53,7 @@ var/list/all_mutations = new
 /datum/mutation
 	var/id = ""
 	var/tier = 1
+	var/affect_primitive = FALSE
 	var/list/activation_messages
 	var/list/deactivation_messages
 	var/list/affected_species

@@ -403,7 +403,7 @@
 		occupantData["name"] = connected.occupant.real_name
 		occupantData["stat"] = connected.occupant.stat
 		occupantData["isViableSubject"] = 1
-		if((NOCLONE & connected.occupant.status_flags) || !src.connected.occupant.dna)
+		if(NOCLONE & connected.occupant.status_flags)
 			occupantData["isViableSubject"] = 0
 		occupantData["health"] = connected.occupant.health
 		occupantData["maxHealth"] = connected.occupant.maxHealth
@@ -608,7 +608,8 @@
 		return 1 // return 1 forces an update to all Nano uis attached to src
 
 	if (href_list["pulseSERadiation"])
-		var/block = src.connected.occupant.dna.GetSESubBlock(src.selected_se_block,src.selected_se_subblock)
+		var/mutation = src.connected.occupant.dna.SE[selected_se_block]
+		var/block = src.connected.occupant.dna.GetSESubBlock(mutation,src.selected_se_subblock)
 
 		irradiating = src.radiation_duration
 		var/lock_state = src.connected.locked
@@ -621,7 +622,6 @@
 
 		if(src.connected.occupant)
 			if (prob(80 + (src.radiation_duration / 2)))
-				var/real_SE_block=selected_se_block
 				block = miniscramble(block, src.radiation_intensity, src.radiation_duration)
 
 				src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)
