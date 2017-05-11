@@ -8,13 +8,17 @@
 		"purple" = /obj/item/weapon/lipstick/purple,
 	)
 
+/datum/gear/dice
+	display_name = "dice pack"
+	path = /obj/item/storage/pill_bottle/dice
+
+/datum/gear/dice/nerd
+	display_name = "dice pack (gaming)"
+	path = /obj/item/storage/pill_bottle/dice_nerd
+
 /datum/gear/cane
 	display_name = "cane"
 	path = /obj/item/weapon/cane
-
-/datum/gear/dice
-	display_name = "d20"
-	path = /obj/item/weapon/dice/d20
 
 /datum/gear/cards
 	display_name = "deck of cards"
