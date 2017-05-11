@@ -486,7 +486,8 @@ var/global/datum/controller/occupations/job_master
 				  If you have to disconnect, please notify the admins via adminhelp.</b>"
 
 		//Gives glasses to the vision impaired
-		if(H.disabilities & NEARSIGHTED)
+		var/obj/item/organ/internal/eyes/E = H.internal_organs_by_name[O_EYES]
+		if(E && E.nearsighted)
 			var/equipped = H.equip_to_slot_or_del(new /obj/item/clothing/glasses/regular(H), slot_glasses)
 			if(equipped != 1)
 				var/obj/item/clothing/glasses/G = H.glasses

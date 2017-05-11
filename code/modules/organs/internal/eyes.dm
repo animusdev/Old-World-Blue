@@ -6,6 +6,7 @@
 	parent_organ = BP_HEAD
 	var/eye_color = ""
 	var/robo_color = "#000000"
+	var/nearsighted = FALSE
 	var/icon/mob_icon = null
 	var/datum/species/species = null
 	var/body_build = null
