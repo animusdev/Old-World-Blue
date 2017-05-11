@@ -176,7 +176,6 @@
 	say_messages = list("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
 	say_verbs = list("whinnies", "neighs", "says")
 
-
 /obj/item/clothing/mask/tuskmask
 	name = "tuskmask"
 	desc = "Standart Boars mask."
