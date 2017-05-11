@@ -605,11 +605,16 @@
 
 	// This chunk of code updates selected block / sub-block based on click (se stands for strutural enzymes)
 	if (href_list["selectSEBlock"] && href_list["selectSESubblock"])
+		var/select_block = text2num(href_list["selectSEBlock"])
+		var/select_subblock = text2num(href_list["selectSESubblock"])
+		if ((select_block <= connected.occupant.dna.SE.len) && (select_block >= 1))
+			src.selected_se_block = select_block
+		if ((select_subblock <= DNA_BLOCK_SIZE) && (select_subblock >= 1))
+			src.selected_se_subblock = select_subblock
 		return 1 // return 1 forces an update to all Nano uis attached to src
 
 	if (href_list["pulseSERadiation"])
-		var/mutation = src.connected.occupant.dna.SE[selected_se_block]
-		var/block = src.connected.occupant.dna.GetSESubBlock(mutation,src.selected_se_subblock)
+		var/block = src.connected.occupant.dna.GetSESubBlock(selected_se_block, selected_se_subblock)
 
 		irradiating = src.radiation_duration
 		var/lock_state = src.connected.locked
@@ -624,6 +629,7 @@
 			if (prob(80 + (src.radiation_duration / 2)))
 				block = miniscramble(block, src.radiation_intensity, src.radiation_duration)
 
+				connected.occupant.dna.SetSESubBlock(selected_se_block,selected_se_subblock,block)
 				src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)
 			else
 				src.connected.occupant.radiation += ((src.radiation_intensity*2)+src.radiation_duration)

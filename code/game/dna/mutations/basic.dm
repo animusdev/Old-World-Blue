@@ -41,9 +41,9 @@ var/list/all_mutations = new
 
 /mob/living/carbon/human/proc/update_mutations()
 	var/datum/mutation/mutation = null
-	for(var/block in dna.SE)
-		mutation = all_mutations[block]
-		mutation.test(src, dna.SE[block], 0)
+	for(var/i = 1 to dna.SE.len)
+		mutation = all_mutations[species.mutations[i]]
+		mutation.test(src, dna.SE[i], 0)
 
 
 /////////////////////
@@ -58,7 +58,7 @@ var/list/all_mutations = new
 	var/list/deactivation_messages
 	var/list/affected_species
 	var/list/restricted_species
-	var/activation_level
+	var/activation_level = 2048
 	var/aligment = MUTATION_NEUTRAL
 
 /datum/mutation/proc/get_state(var/SE_level)

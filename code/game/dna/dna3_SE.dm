@@ -7,32 +7,33 @@
 	var/datum/mutation/M = null
 	var/datum/species/S = all_species[species]
 	SE.Cut()
-	for(var/block in S.mutations)
-		M = all_mutations[block]
-		SetSEValue(block,rand(1,M.activation_level),1)
+	SE.len = S.mutations.len
+	for(var/i = 1 to S.mutations.len)
+		M = all_mutations[S.mutations[i]]
+		SetSEValue(i, M.pick_state_value(0), 1)
 	UpdateSE()
 
 // Set a DNA SE block's raw value.
 /datum/dna/proc/SetSEValue(var/block,var/value,var/defer=0)
-	if(!block in SE)
+	if(block < 1 || block > SE.len)
 		return
 	ASSERT(value>=0)
 	ASSERT(value<=MAX_SE_VALUE)
-	SE[block]=value
+	SE[block] = value
 	dirtySE=1
 	if(!defer)
 		UpdateSE()
 
 // Get a DNA SE block's raw value.
 /datum/dna/proc/GetSEValue(var/block)
-	if(!block in SE)
-		return 0
+	if(block < 1 || block > SE.len)
+		return
 	return SE[block]
 
 // Set a DNA SE block's value, given a value and a max possible value.
 // Might be used for species?
 /datum/dna/proc/SetSEValueRange(var/block,var/value,var/maxvalue)
-	if(!block in SE)
+	if(block < 1 || block > SE.len)
 		return
 	ASSERT(maxvalue<=MAX_SE_VALUE)
 	var/range = round(MAX_SE_VALUE / maxvalue)
@@ -41,21 +42,21 @@
 
 // Getter version of above.
 /datum/dna/proc/GetSEValueRange(var/block,var/maxvalue)
-	if(!block in SE)
-		return 0
+	if(block < 1 || block > SE.len)
+		return
 	var/value = GetSEValue(block)
 	return round(1 +(value / 4096)*maxvalue)
 
 // Is the block "on" (1) or "off" (0).
 /datum/dna/proc/GetSEState(var/block)
-	if(!block in SE)
-		return 0
+	if(block < 1 || block > SE.len)
+		return
 	var/datum/mutation/M = all_mutations[block]
 	return M.get_state(SE[block])
 
 // Set a block "on" or "off".
 /datum/dna/proc/SetSEState(var/block,var/state,var/defer=0)
-	if(!block in SE)
+	if(block < 1 || block > SE.len)
 		return
 	var/datum/mutation/M = all_mutations[block]
 	var/value = M.pick_state_value(state)
@@ -69,7 +70,7 @@
 // Set a block from a hex string.  This is inefficient.  If you can, use SetUIValue().
 // Used in DNA modifiers.
 /datum/dna/proc/SetSEBlock(var/block,var/value,var/defer=0)
-	if(!block in SE)
+	if(block < 1 || block > SE.len)
 		return
 	var/nval=hex2num(value)
 	return SetSEValue(block, nval, defer)
@@ -81,7 +82,7 @@
 // Set a sub-block from a hex character.  This is inefficient.  If you can, use SetUIValue().
 // Used in DNA modifiers.
 /datum/dna/proc/SetSESubBlock(var/block,var/subBlock, var/newSubBlock, var/defer=0)
-	if(!block in SE)
+	if(block < 1 || block > SE.len)
 		return
 
 	var/oldBlock=GetSEBlock(block)
@@ -95,7 +96,7 @@
 
 /datum/dna/proc/UpdateSE()
 	struc_enzymes=""
-	for(var/block in SE)
-		struc_enzymes += EncodeDNABlock(SE[block])
+	for(var/i = 1 to SE.len)
+		struc_enzymes += EncodeDNABlock(SE[i])
 	dirtySE=0
 
