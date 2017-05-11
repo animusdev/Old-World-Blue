@@ -626,18 +626,20 @@
 		irradiating = 0
 
 		if(src.connected.occupant)
+			var/mob/living/carbon/human/H = connected.occupant
 			if (prob(80 + (src.radiation_duration / 2)))
 				block = miniscramble(block, src.radiation_intensity, src.radiation_duration)
 
-				connected.occupant.dna.SetSESubBlock(selected_se_block,selected_se_subblock,block)
-				src.connected.occupant.radiation += (src.radiation_intensity+src.radiation_duration)
+				H.dna.SetSESubBlock(selected_se_block,selected_se_subblock,block)
+				H.update_mutations(selected_se_block)
+				H.radiation += (src.radiation_intensity+src.radiation_duration)
 			else
-				src.connected.occupant.radiation += ((src.radiation_intensity*2)+src.radiation_duration)
+				H.radiation += ((src.radiation_intensity*2)+src.radiation_duration)
 				if	(prob(80-src.radiation_duration))
-					randmutb(src.connected.occupant)
+					randmutb(H)
 				else
-					randmuti(src.connected.occupant)
-					src.connected.occupant.UpdateAppearance()
+					randmuti(H)
+					H.UpdateAppearance()
 		src.connected.locked = lock_state
 		return 1 // return 1 forces an update to all Nano uis attached to src
 

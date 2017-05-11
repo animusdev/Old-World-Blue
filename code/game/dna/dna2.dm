@@ -57,7 +57,7 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	if(character)
 		if(UI.len != DNA_UI_LENGTH)
 			ResetUIFrom(character)
-		if(dirtyUI)
+		if(dirtyUI || !uni_identity)
 			UpdateUI()
 
 		if(SE.len != character.species.mutations.len || length(struc_enzymes)!= 3 * SE.len)

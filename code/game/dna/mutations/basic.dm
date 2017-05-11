@@ -39,11 +39,15 @@ var/list/all_mutations = new
 				S.mutations += M.id
 	return TRUE
 
-/mob/living/carbon/human/proc/update_mutations()
-	var/datum/mutation/mutation = null
-	for(var/i = 1 to dna.SE.len)
-		mutation = all_mutations[species.mutations[i]]
-		mutation.test(src, dna.SE[i], 0)
+/mob/living/carbon/human/proc/update_mutations(var/block = 0)
+	if(!block)
+		var/datum/mutation/mutation = null
+		for(var/i = 1 to dna.SE.len)
+			mutation = all_mutations[species.mutations[i]]
+			mutation.test(src, dna.SE[i], 0)
+	else
+		var/datum/mutation/mutation = all_mutations[species.mutations[block]]
+		mutation.test(src, dna.SE[block], 0)
 
 
 /////////////////////
@@ -68,10 +72,11 @@ var/list/all_mutations = new
 		return 0
 
 /datum/mutation/proc/pick_state_value(var/state)
-	if(!state)
-		return pick(1, activation_level-1)
-	else
-		return pick(activation_level, MAX_SE_VALUE)
+	switch(state)
+		if(1)
+			return pick(activation_level, MAX_SE_VALUE)
+		else
+			return pick(1, activation_level-1)
 
 /datum/mutation/proc/test(var/mob/living/carbon/human/H, var/SE_level, var/modif)
 	modif = SIGN(modif) * 0.5 * activation_level
