@@ -132,7 +132,7 @@
 	..()
 	src.updateUsrDialog()
 
-/obj/machinery/microwave/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
+/obj/machinery/microwave/affect_grab(var/mob/user, var/mob/target)
 	user << SPAN_WARN("This is ridiculous. You can not fit \the [target] in this [src].")
 	return FALSE
 

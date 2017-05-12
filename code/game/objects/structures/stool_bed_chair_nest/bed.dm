@@ -98,7 +98,7 @@
 
 /obj/structure/bed/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
 	user.visible_message(SPAN_NOTE("[user] attempts to buckle [affecting] into \the [src]!"))
-	if(do_after(user, 20, src))
+	if(do_after(user, 20, src) && Adjacetn(target))
 		if(!grab.confirm())
 			return
 		affecting.loc = loc
@@ -120,10 +120,10 @@
 		user.drop_from_inventory(W, src.loc)
 		if(buckled_mob)
 			W.layer = 5
-			src.visible_message("<span class='notice'>[user] covers [buckled_mob] with \the [W].")
+			src.visible_message(SPAN_NOTE("[user] covers [buckled_mob] with \the [W]."))
 		else
 			W.layer = initial(W.layer)
-			src.visible_message("<span class='notice'>[user] makes the bed with \the [W].")
+			src.visible_message(SPAN_NOTE("[user] makes the bed with \the [W]."))
 	else if(istype(W,/obj/item/stack))
 		if(padding_material)
 			user << "\The [src] is already padded."

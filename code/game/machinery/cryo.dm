@@ -171,21 +171,23 @@
 	return 1 // update UIs attached to this object
 
 /obj/machinery/atmospherics/unary/cryo_cell/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
-	for(var/mob/living/carbon/slime/M in range(1,affecting))
-		if(M.Victim == affecting)
-			usr << "[affecting] will not fit into the cryo because they have a slime latched onto their head."
+	for(var/mob/living/carbon/slime/M in range(1,target))
+		if(M.Victim == target)
+			user << "[target] will not fit into the cryo because they have a slime latched onto their head."
 			return
-	return put_mob(affecting)
+	return put_mob(target)
 
 /obj/machinery/atmospherics/unary/cryo_cell/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if(istype(W, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
 			user << "\red A beaker is already loaded into the machine."
 			return
-
-		beaker = W
-		user.unEquip(W, src)
-		user.visible_message("[user] adds \a [W] to \the [src]!", "You add \a [W] to \the [src]!")
+		if(user.unEquip(W, src))
+			beaker = W
+			user.visible_message(
+				"[user] adds \a [W] to \the [src]!",
+				"You add \a [W] to \the [src]!"
+			)
 	return
 
 /obj/machinery/atmospherics/unary/cryo_cell/update_icon()
@@ -264,21 +266,22 @@
 	update_use_power(1)
 	update_icon()
 	return
+
 /obj/machinery/atmospherics/unary/cryo_cell/proc/put_mob(mob/living/carbon/M as mob)
 	if (stat & (NOPOWER|BROKEN))
-		usr << "\red The cryo cell is not functioning."
+		usr << SPAN_WARN("The cryo cell is not functioning.")
 		return
 	if (!istype(M))
-		usr << "\red <B>The cryo cell cannot handle such a lifeform!</B>"
+		usr << SPAN_WARN("The cryo cell cannot handle such a lifeform!")
 		return
 	if (occupant)
-		usr << "\red <B>The cryo cell is already occupied!</B>"
+		usr << SPAN_WARN("The cryo cell is already occupied!")
 		return
 	if (M.abiotic())
-		usr << "\red Subject may not have abiotic items on."
+		usr << SPAN_WARN("Subject may not have abiotic items on.")
 		return
 	if(!node)
-		usr << "\red The cell is not correctly connected to its pipe network!"
+		usr << SPAN_WARN("The cell is not correctly connected to its pipe network!")
 		return
 	if (M.client)
 		M.client.perspective = EYE_PERSPECTIVE
@@ -300,10 +303,13 @@
 	if(!ismob(target))
 		return
 	if (target.buckled)
-		usr << "\red <B>Unbuckle the subject before attempting to move them</B>"
+		usr << SPAN_WARN("Unbuckle the subject before attempting to move them.")
 		return
-	user.visible_message("<span class='notice'>\The [user] begins placing \the [target] into \the [src].</span>", "<span class='notice'>You start placing \the [target] into \the [src].</span>")
-	if(!do_after(user, 30, src))
+	user.visible_message(
+		SPAN_NOTE("\The [user] begins placing \the [target] into \the [src]."),
+		SPAN_NOTE("You start placing \the [target] into \the [src].")
+	)
+	if(!do_after(user, 30, src) || !Adjacent(target))
 		return
 	put_mob(target)
 	return

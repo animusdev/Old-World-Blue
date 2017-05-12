@@ -77,7 +77,7 @@
 	if(panel)
 		overlays += "panel"
 
-/obj/machinery/washing_machine/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
+/obj/machinery/washing_machine/affect_grab(var/mob/user, var/mob/target)
 	if((state == 1) && hacked)
 		if(ishuman(user) && iscorgi(target))
 			target.forceMove(src)

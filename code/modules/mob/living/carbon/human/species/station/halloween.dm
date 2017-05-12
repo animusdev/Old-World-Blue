@@ -67,17 +67,17 @@
 
 	var/obj/item/weapon/grab/G = src.get_active_hand()
 	if(!istype(G))
-		src << "<span class='warning'>We must be grabbing a creature in our active hand to absorb them.</span>"
+		src << SPAN_WARN("We must be grabbing a creature in our active hand to absorb them.")
 		return
 
 	var/mob/living/carbon/human/H = G.affecting
 
 	if(!istype(H) || H.isSynthetic() || HUSK & status_flags)
-		src << "<span class='warning'>\The [H] is not compatible with our biology.</span>"
+		src << SPAN_WARN("\The [H] is not compatible with our biology.")
 		return
 
 	if(G.state < GRAB_NECK)
-		src << "<span class='warning'>We must have a tighter grip to drink this creature blood.</span>"
+		src << SPAN_WARN("We must have a tighter grip to drink this creature blood.")
 		return
 
 	var/list/applayable_organs = list()

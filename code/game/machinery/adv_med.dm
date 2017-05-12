@@ -74,13 +74,13 @@
 	if (src.occupant)
 		user << SPAN_NOTE("The scanner is already occupied!")
 		return
-	if(affecting.buckled)
+	if(target.buckled)
 		user << SPAN_NOTE("Unbuckle the subject before attempting to move them.")
 		return
-	if(affecting.abiotic())
+	if(target.abiotic())
 		user << SPAN_NOTE("Subject cannot have abiotic items on.")
 		return
-	occupant = affecting
+	occupant = target
 	update_use_power(2)
 	src.icon_state = "body_scanner_1"
 	for(var/obj/O in src)

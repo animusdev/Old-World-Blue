@@ -18,13 +18,17 @@
 
 /obj/structure/toilet/attack_hand(mob/living/user as mob)
 	if(swirlie)
-		usr.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie.name]'s head!</span>", "<span class='notice'>You slam the toilet seat onto [swirlie.name]'s head!</span>", "You hear reverberating porcelain.")
+		usr.visible_message(
+			SPAN_DANG("[user] slams the toilet seat onto [swirlie.name]'s head!"),
+			SPAN_NOTE("You slam the toilet seat onto [swirlie.name]'s head!"),
+			"You hear reverberating porcelain."
+		)
 		swirlie.adjustBruteLoss(8)
 		return
 
 	if(cistern && !open)
 		if(!contents.len)
-			user << "<span class='notice'>The cistern is empty.</span>"
+			user << SPAN_NOTE("The cistern is empty.")
 			return
 		else
 			var/obj/item/I = pick(contents)
@@ -179,7 +183,10 @@
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 50))
 			watertemp = newtemp
-			user.visible_message("<span class='notice'>[user] adjusts the shower with \the [I].</span>", "<span class='notice'>You adjust the shower with \the [I].</span>")
+			user.visible_message(
+				SPAN_NOTE("[user] adjusts the shower with \the [I]."),
+				SPAN_NOTE("You adjust the shower with \the [I].")
+			)
 			add_fingerprint(user)
 
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
@@ -408,7 +415,10 @@
 	var/obj/item/weapon/reagent_containers/RG = O
 	if (istype(RG) && RG.is_open_container())
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
-		user.visible_message("<span class='notice'>[user] fills \the [RG] using \the [src].</span>","<span class='notice'>You fill \the [RG] using \the [src].</span>")
+		user.visible_message(
+			SPAN_NOTE("[user] fills \the [RG] using \the [src]."),
+			SPAN_NOTE("You fill \the [RG] using \the [src]."
+		)
 		return 1
 
 	else if (istype(O, /obj/item/weapon/melee/baton))

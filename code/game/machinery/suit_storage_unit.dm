@@ -470,16 +470,16 @@
 
 /obj/machinery/suit_storage_unit/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
 	if(!isopen)
-		user << "<font color='red'>The unit's doors are shut.</font>"
+		user << SPAN_WARN("The unit's doors are shut.")
 		return
 	if(!ispowered || isbroken)
-		user << "<font color='red'>The unit is not operational.</font>"
+		user << SPAN_WARN("The unit is not operational.")
 		return
 	if(OCCUPANT || HELMET || SUIT) //Unit needs to be absolutely empty
-		user << "<font color='red'>The unit's storage area is too cluttered.</font>"
+		user << SPAN_WARN("The unit's storage area is too cluttered.")
 		return
 	visible_message("[user] starts putting [target] into the Suit Storage Unit.")
-	if(do_after(user, 20, src))
+	if(do_after(user, 20, src) && Adjacent(target))
 		if(!G || !G.confirm())
 			return //derpcheck
 		target.reset_view(src)
@@ -651,11 +651,11 @@
 
 	visible_message(SPAN_NOTE("[user] starts putting [target] into the suit cycler."))
 
-	if(do_after(user, 20))
+	if(do_after(user, 20) && Adjacent(target))
 		if(!G || !G.confirmed())
 			return
 		target.reset_view(src)
-		M.forceMove(src)
+		target.forceMove(src)
 		occupant = target
 
 		add_fingerprint(user)

@@ -203,14 +203,14 @@
 			user << SPAN_NOTE("The sleeper is already occupied!")
 			return
 
-		for(var/mob/living/carbon/slime/M in range(1,affecting))
-			if(M.Victim == affecting)
-				usr << "[affecting] will not fit into the sleeper because they have a slime latched onto their head."
+		for(var/mob/living/carbon/slime/M in range(1,target))
+			if(M.Victim == target)
+				usr << "[target] will not fit into the sleeper because they have a slime latched onto their head."
 				return
 
-		visible_message("[user] starts putting [affecting] into the sleeper.")
+		visible_message("[user] starts putting [target] into the sleeper.")
 
-		if(do_after(user, 20, src))
+		if(do_after(user, 20, src) && Adjacent(target))
 			if(!G || !G.confirm())
 				return
 			if(src.occupant)
@@ -230,7 +230,10 @@
 			if(!beaker)
 				beaker = W
 				user.drop_from_inventory(beaker, src)
-				user.visible_message("[user] adds \a [beaker] to \the [src]!", "You add \a [beaker] to \the [src]!")
+				user.visible_message(
+					"[user] adds \a [beaker] to \the [src]!",
+					"You add \a [beaker] to \the [src]!"
+				)
 				src.updateUsrDialog()
 			else
 				user << SPAN_WARN("The sleeper has a beaker already.")

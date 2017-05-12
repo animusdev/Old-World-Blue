@@ -135,7 +135,7 @@
 		return
 
 	var/obj/item/weapon/grab/G = locate() in src
-	if(!G || !istype(G))
+	if(!G)
 		src << "\red You are not grabbing anyone."
 		return
 
