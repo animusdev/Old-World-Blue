@@ -80,34 +80,34 @@
 		user << "You carefully place \the [I] into the cistern."
 		return
 
-/obj/structure/toilet/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
+/obj/structure/toilet/affect_grab(var/mob/user, var/mob/living/target, var/obj/item/weapon/grab/grab)
 	if(grab.state == GRAB_PASSIVE)
 		user << SPAN_NOTE("You need a tighter grip.")
 		return FALSE
-	if(!affected.loc == get_turf(src))
-		user << SPAN_NOTE("[affected] needs to be on the toilet.")
+	if(!target.loc == src.loc)
+		user << SPAN_NOTE("[target] needs to be on the toilet.")
 		return FALSE
 	if(open && !swirlie)
 		user.visible_message(
-			SPAN_DANG("[user] starts to give [affected] a swirlie!"),
-			SPAN_NOTE("You start to give [affected] a swirlie!")
+			SPAN_DANG("[user] starts to give [target] a swirlie!"),
+			SPAN_NOTE("You start to give [target] a swirlie!")
 		)
-		swirlie = affected
-		if (do_mob(user, affected, 30))
+		swirlie = target
+		if (do_after(user, target, 30) || !Adjacent(target))
 			user.visible_message(
-				SPAN_DANG("[user] gives [affected] a swirlie!"),
-				SPAN_NOTE("You give [GM.name] a swirlie!"),
+				SPAN_DANG("[user] gives [target] a swirlie!"),
+				SPAN_NOTE("You give [target] a swirlie!"),
 				"You hear a toilet flushing."
 			)
-			if(!affected.internal)
-				affected.adjustOxyLoss(5)
+			if(!target.internal)
+				target.adjustOxyLoss(5)
 		swirlie = null
 	else
 		user.visible_message(
-			SPAN_DANG("[user] slams [affected] into the [src]!"),
-			SPAN_NOTE("You slam [GM.name] into the [src]!")
+			SPAN_DANG("[user] slams [target] into the [src]!"),
+			SPAN_NOTE("You slam [target] into the [src]!")
 		)
-		affected.adjustBruteLoss(8)
+		target.adjustBruteLoss(8)
 	return TRUE
 
 
@@ -119,19 +119,19 @@
 	density = 0
 	anchored = 1
 
-/obj/structure/urinal/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
+/obj/structure/urinal/affect_grab(var/mob/living/user, var/mob/living/target, var/obj/item/weapon/grab/grab)
 	if(grab.state > GRAB_PASSIVE)
 		user << SPAN_NOTE("You need a tighter grip.")
-		return FASLE
+		return FALSE
 	else
-		if(!affected.loc == get_turf(src))
-			user << SPAN_NOTE("[affected] needs to be on the urinal.")
+		if(!target.loc == src.loc)
+			user << SPAN_NOTE("[target] needs to be on the urinal.")
 			return
 		user.visible_message(
-			SPAN_DANG("[user] slams [affected] into the [src]!"),
-			SPAN_NOTE("You slam [affected] into the [src]!")
+			SPAN_DANG("[user] slams [target] into the [src]!"),
+			SPAN_NOTE("You slam [target] into the [src]!")
 		)
-		affected.adjustBruteLoss(8)
+		target.adjustBruteLoss(8)
 		return TRUE
 
 
@@ -417,7 +417,7 @@
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 		user.visible_message(
 			SPAN_NOTE("[user] fills \the [RG] using \the [src]."),
-			SPAN_NOTE("You fill \the [RG] using \the [src]."
+			SPAN_NOTE("You fill \the [RG] using \the [src].")
 		)
 		return 1
 

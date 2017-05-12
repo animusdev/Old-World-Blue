@@ -216,9 +216,9 @@
 		src.dump_contents()
 		qdel(src)
 
-/obj/structure/closet/affect_grab(var/mob/living/user, var/mob/living/affected)
+/obj/structure/closet/affect_grab(var/mob/living/user, var/mob/living/target)
 	if(src.opened)
-		MouseDrop_T(affecting, user)      //act like they were dragged onto the closet
+		MouseDrop_T(target, user)      //act like they were dragged onto the closet
 		return TRUE
 	return FALSE
 

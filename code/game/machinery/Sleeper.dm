@@ -211,15 +211,15 @@
 		visible_message("[user] starts putting [target] into the sleeper.")
 
 		if(do_after(user, 20, src) && Adjacent(target))
-			if(!G || !G.confirm())
+			if(!grab || !grab.confirm())
 				return
 			if(src.occupant)
 				user << "\blue <B>The sleeper is already occupied!</B>"
 				return
-			M.reset_view(src)
-			M.forceMove(src)
+			target.reset_view(src)
+			target.forceMove(src)
 			update_use_power(2)
-			occupant = M
+			occupant = target
 			update_icon()
 
 			src.add_fingerprint(user)

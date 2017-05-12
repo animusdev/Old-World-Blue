@@ -480,7 +480,7 @@
 		return
 	visible_message("[user] starts putting [target] into the Suit Storage Unit.")
 	if(do_after(user, 20, src) && Adjacent(target))
-		if(!G || !G.confirm())
+		if(!grab || !grab.confirm())
 			return //derpcheck
 		target.reset_view(src)
 		target.forceMove(src)
@@ -652,7 +652,7 @@
 	visible_message(SPAN_NOTE("[user] starts putting [target] into the suit cycler."))
 
 	if(do_after(user, 20) && Adjacent(target))
-		if(!G || !G.confirmed())
+		if(!grab || !grab.confirm())
 			return
 		target.reset_view(src)
 		target.forceMove(src)

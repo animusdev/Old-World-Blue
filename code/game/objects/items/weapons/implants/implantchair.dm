@@ -74,12 +74,12 @@
 			return
 
 
-	affect_grab(var/mob/living/user, var/mob/living/affected)
-		for(var/mob/living/carbon/slime/M in range(1,affecting))
-			if(M.Victim == affecting)
-				usr << "[affecting] will not fit into the [src] because they have a slime latched onto their head."
+	affect_grab(var/mob/living/user, var/mob/living/target)
+		for(var/mob/living/carbon/slime/M in range(1,target))
+			if(M.Victim == target)
+				user << "[target] will not fit into the [src] because they have a slime latched onto their head."
 				return FALSE
-		if(put_mob(affecting))
+		if(put_mob(target))
 			return TRUE
 		src.updateUsrDialog()
 		return FALSE

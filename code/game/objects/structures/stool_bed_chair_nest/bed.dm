@@ -97,17 +97,17 @@
 		qdel(src)
 
 /obj/structure/bed/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
-	user.visible_message(SPAN_NOTE("[user] attempts to buckle [affecting] into \the [src]!"))
-	if(do_after(user, 20, src) && Adjacetn(target))
+	user.visible_message(SPAN_NOTE("[user] attempts to buckle [target] into \the [src]!"))
+	if(do_after(user, 20, src) && Adjacent(target))
 		if(!grab.confirm())
 			return
-		affecting.loc = loc
+		target.forceMove(loc)
 		spawn(0)
-			if(buckle_mob(affecting))
-				affecting.visible_message(
-					SPAN_DANG("[affecting] is buckled to [src] by [user]!"),
+			if(buckle_mob(target))
+				target.visible_message(
+					SPAN_DANG("[target] is buckled to [src] by [user]!"),
 					SPAN_DANG("You are buckled to [src] by [user]!"),
-					SPAN_NOTE("You hear metal clanking."
+					SPAN_NOTE("You hear metal clanking.")
 				)
 			return TRUE
 

@@ -33,10 +33,10 @@
 /obj/proc/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
 	return FALSE
 
-/obj/item/weapon/grab/resolve_attackby(atom/A, mob/user, var/click_params)
-	if(!confirm() || get_dist(A, affecting)>1)
+/obj/item/weapon/grab/resolve_attackby(obj/O, mob/user, var/click_params)
+	if(!istype(O) || !confirm() || get_dist(O, affecting)>1)
 		return TRUE
-	if(A.affect_grab(assailant, affecting, src))
+	if(O.affect_grab(assailant, affecting, src))
 		qdel(src)
 	return TRUE
 

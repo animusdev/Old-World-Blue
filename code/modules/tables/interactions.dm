@@ -71,7 +71,7 @@
 	if(occupied)
 		user << SPAN_DANG("There's \a [occupied] in the way.")
 		return
-	if(grab.state < GRAB_AGRESSIVE || target.loc==src.loc)
+	if(grab.state < GRAB_AGGRESSIVE || target.loc==src.loc)
 		if(user.a_intent == I_HURT)
 			if(prob(15))
 				target.Weaken(5)

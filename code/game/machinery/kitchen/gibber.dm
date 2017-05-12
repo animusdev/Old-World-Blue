@@ -90,7 +90,7 @@
 	return 1
 
 /obj/machinery/gibber/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
-	if(G.state < GRAB_NECK)
+	if(grab.state < GRAB_NECK)
 		user << SPAN_DANG("You need a better grip to do that!")
 		return FALSE
 	move_into_gibber(user, target)

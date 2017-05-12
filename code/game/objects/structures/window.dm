@@ -223,27 +223,27 @@
 	user.do_attack_animation(src)
 	return 1
 
-/obj/structure/window/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
+/obj/structure/window/affect_grab(var/mob/living/user, var/mob/living/target, var/obj/item/weapon/grab/grab)
 	switch(grab.state)
 		if(GRAB_PASSIVE)
-			M.visible_message(SPAN_WARN("[user] slams [M] against \the [src]!"))
-			M.apply_damage(7)
+			visible_message(SPAN_WARN("[user] slams [target] against \the [src]!"))
+			target.apply_damage(7)
 			hit(10)
-		if(GRAB_AGRESSIVE)
-			M.visible_message(SPAN_DANG("[user] bashes [M] against \the [src]!"))
-			if (prob(50))
-				M.Weaken(1)
-			M.apply_damage(10)
+		if(GRAB_AGGRESSIVE)
+			visible_message(SPAN_DANG("[user] bashes [target] against \the [src]!"))
+			if(prob(50))
+				target.Weaken(1)
+			target.apply_damage(10)
 			hit(25)
 		if(GRAB_NECK)
-			M.visible_message(SPAN_DANG("<big>[user] crushes [M] against \the [src]!</big>"))
-			M.Weaken(5)
-			M.apply_damage(20)
+			visible_message(SPAN_DANG("<big>[user] crushes [target] against \the [src]!</big>"))
+			target.Weaken(5)
+			target.apply_damage(20)
 			hit(50)
-	admin_attack_log(user, M,
-		"Smashed [key_name(M)] against \the [src]",
+	admin_attack_log(user, target,
+		"Smashed [key_name(target)] against \the [src]",
 		"Smashed against \the [src] by [key_name(user)]",
-		"smashed [key_name(M)] against \the [src]."
+		"smashed [key_name(target)] against \the [src]."
 	)
 	return TRUE
 

@@ -48,15 +48,13 @@
 		trunk.linked = null
 	return ..()
 
-/obj/machinery/disposal/affect_grab(var/mob/living/user, var/mob/living/affected, var/grab_state)
-	user.visible_message("[user] starts putting [GM.name] into the disposal.")
-	if(do_mob(user, affected, 20))
-		if(!src)
-			return FALSE
-		forceMove(src)
-		visible_message(SPAN_NOTE("[affected] has been placed in the [src] by [user]."))
-		admin_attack_log(usr, affected,
-			"Has placed [key_name(affected)] in disposals",
+/obj/machinery/disposal/affect_grab(var/mob/living/user, var/mob/living/target, var/grab_state)
+	user.visible_message("[user] starts putting [target] into the disposal.")
+	if(do_after(user, 20, src) && Adjacent(target))
+		target.forceMove(src)
+		visible_message(SPAN_NOTE("[target] has been placed in the [src] by [user]."))
+		admin_attack_log(user, target,
+			"Has placed [key_name(target)] in disposals",
 			"Has been placed in disposals by [key_name(user)]",
 			"placed in a disposals unit"
 		)

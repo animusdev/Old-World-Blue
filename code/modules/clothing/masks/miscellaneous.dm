@@ -139,7 +139,7 @@
 /obj/item/clothing/mask/scarf/flagmask
 	name = "flgmask"
 	desc = "A simple cloth rag that bears the flag of the first nations."
-	body_parts_covered = FASE
+	body_parts_covered = FACE
 	icon_state = "flagmask"
 
 /obj/item/clothing/mask/scarf/arafatka

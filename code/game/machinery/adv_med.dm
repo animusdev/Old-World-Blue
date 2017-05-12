@@ -104,9 +104,9 @@
 		SPAN_NOTE("\The [user] begins placing \the [target] into \the [src]."),
 		SPAN_NOTE("You start placing \the [target] into \the [src].")
 	)
-	if(!do_after(user, 30, src))
+	if(!do_after(user, 30, src) || !Adjacent(target))
 		return
-	M.forceMove(src)
+	target.forceMove(src)
 	src.occupant = target
 	update_use_power(2)
 	src.icon_state = "body_scanner_1"
@@ -131,7 +131,7 @@
 				for(var/atom/movable/A in src)
 					A.forceMove(loc)
 					A.ex_act(severity)
-		qdel(src)
+	qdel(src)
 
 /obj/machinery/bodyscanner/blob_act()
 	if(prob(50))

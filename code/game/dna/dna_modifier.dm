@@ -105,10 +105,10 @@
 	if (src.occupant)
 		user << SPAN_WARN("The scanner is already occupied!")
 		return
-	if (affecting.abiotic())
+	if (target.abiotic())
 		user << SPAN_WARN("The subject cannot have abiotic items on.")
 		return
-	put_in(affecting)
+	put_in(target)
 	src.add_fingerprint(user)
 	return TRUE
 
