@@ -52,37 +52,17 @@
 
 /obj/structure/toilet/attackby(obj/item/I as obj, mob/living/user as mob)
 	if(istype(I, /obj/item/weapon/crowbar))
-		user << "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>"
+		user << SPAN_NOTE("You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
 		if(do_after(user, 30))
-			user.visible_message("<span class='notice'>[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!</span>", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "You hear grinding porcelain.")
+			user.visible_message(
+				SPAN_NOTE("[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!"),
+				SPAN_NOTE("You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!"),
+				"You hear grinding porcelain."
+			)
 			cistern = !cistern
 			update_icon()
 			return
-
-	if(istype(I, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = I
-
-		if(isliving(G.affecting) && get_dist(src,G.affecting)<2)
-			var/mob/living/GM = G.affecting
-
-			if(G.state>1)
-				if(!GM.loc == get_turf(src))
-					user << "<span class='notice'>[GM.name] needs to be on the toilet.</span>"
-					return
-				if(open && !swirlie)
-					user.visible_message("<span class='danger'>[user] starts to give [GM.name] a swirlie!</span>", "<span class='notice'>You start to give [GM.name] a swirlie!</span>")
-					swirlie = GM
-					if (do_mob(user, GM, 30))
-						user.visible_message("<span class='danger'>[user] gives [GM.name] a swirlie!</span>", "<span class='notice'>You give [GM.name] a swirlie!</span>", "You hear a toilet flushing.")
-						if(!GM.internal)
-							GM.adjustOxyLoss(5)
-					swirlie = null
-				else
-					user.visible_message("<span class='danger'>[user] slams [GM.name] into the [src]!</span>", "<span class='notice'>You slam [GM.name] into the [src]!</span>")
-					GM.adjustBruteLoss(8)
-			else
-				user << "<span class='notice'>You need a tighter grip.</span>"
 
 	if(cistern && !istype(user,/mob/living/silicon/robot)) //STOP PUTTING YOUR MODULES IN THE TOILET.
 		if(I.w_class > ITEM_SIZE_NORMAL)
@@ -96,6 +76,35 @@
 		user << "You carefully place \the [I] into the cistern."
 		return
 
+/obj/structure/toilet/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
+	if(grab.state == GRAB_PASSIVE)
+		user << SPAN_NOTE("You need a tighter grip.")
+		return FALSE
+	if(!affected.loc == get_turf(src))
+		user << SPAN_NOTE("[affected] needs to be on the toilet.")
+		return FALSE
+	if(open && !swirlie)
+		user.visible_message(
+			SPAN_DANG("[user] starts to give [affected] a swirlie!"),
+			SPAN_NOTE("You start to give [affected] a swirlie!")
+		)
+		swirlie = affected
+		if (do_mob(user, affected, 30))
+			user.visible_message(
+				SPAN_DANG("[user] gives [affected] a swirlie!"),
+				SPAN_NOTE("You give [GM.name] a swirlie!"),
+				"You hear a toilet flushing."
+			)
+			if(!affected.internal)
+				affected.adjustOxyLoss(5)
+		swirlie = null
+	else
+		user.visible_message(
+			SPAN_DANG("[user] slams [affected] into the [src]!"),
+			SPAN_NOTE("You slam [GM.name] into the [src]!")
+		)
+		affected.adjustBruteLoss(8)
+	return TRUE
 
 
 /obj/structure/urinal
@@ -106,20 +115,20 @@
 	density = 0
 	anchored = 1
 
-/obj/structure/urinal/attackby(obj/item/I as obj, mob/user as mob)
-	if(istype(I, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = I
-		if(isliving(G.affecting) && get_dist(src,G.affecting)<2)
-			var/mob/living/GM = G.affecting
-			if(G.state>1)
-				if(!GM.loc == get_turf(src))
-					user << "<span class='notice'>[GM.name] needs to be on the urinal.</span>"
-					return
-				user.visible_message("<span class='danger'>[user] slams [GM.name] into the [src]!</span>", "<span class='notice'>You slam [GM.name] into the [src]!</span>")
-				GM.adjustBruteLoss(8)
-			else
-				user << "<span class='notice'>You need a tighter grip.</span>"
-
+/obj/structure/urinal/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
+	if(grab.state > GRAB_PASSIVE)
+		user << SPAN_NOTE("You need a tighter grip.")
+		return FASLE
+	else
+		if(!affected.loc == get_turf(src))
+			user << SPAN_NOTE("[affected] needs to be on the urinal.")
+			return
+		user.visible_message(
+			SPAN_DANG("[user] slams [affected] into the [src]!"),
+			SPAN_NOTE("You slam [affected] into the [src]!")
+		)
+		affected.adjustBruteLoss(8)
+		return TRUE
 
 
 /obj/machinery/shower

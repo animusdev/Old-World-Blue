@@ -468,6 +468,29 @@
 		OCCUPANT = null //Testing this as a backup sanity test
 	return
 
+/obj/machinery/suit_storage_unit/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
+	if(!isopen)
+		user << "<font color='red'>The unit's doors are shut.</font>"
+		return
+	if(!ispowered || isbroken)
+		user << "<font color='red'>The unit is not operational.</font>"
+		return
+	if(OCCUPANT || HELMET || SUIT) //Unit needs to be absolutely empty
+		user << "<font color='red'>The unit's storage area is too cluttered.</font>"
+		return
+	visible_message("[user] starts putting [target] into the Suit Storage Unit.")
+	if(do_after(user, 20, src))
+		if(!G || !G.confirm())
+			return //derpcheck
+		target.reset_view(src)
+		target.forceMove(src)
+		OCCUPANT = target
+		isopen = 0 //close ittt
+
+		add_fingerprint(user)
+		updateUsrDialog()
+		update_icon()
+		return TRUE
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I as obj, mob/user as mob)
 	if(!ispowered)
@@ -477,38 +500,6 @@
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		user << text("<font color='blue'>You [] the unit's maintenance panel.</font>",(panelopen ? "open up" : "close"))
 		updateUsrDialog()
-		return
-	if(istype(I, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = I
-		if( !(ismob(G.affecting) && get_dist(src,G.affecting)<2) )
-			return
-		if(!isopen)
-			usr << "<font color='red'>The unit's doors are shut.</font>"
-			return
-		if(!ispowered || isbroken)
-			usr << "<font color='red'>The unit is not operational.</font>"
-			return
-		if((OCCUPANT) || (HELMET) || (SUIT)) //Unit needs to be absolutely empty
-			user << "<font color='red'>The unit's storage area is too cluttered.</font>"
-			return
-		visible_message("[user] starts putting [G.affecting.name] into the Suit Storage Unit.", 3)
-		if(do_after(user, 20))
-			if(!G || !G.affecting) return //derpcheck
-			var/mob/M = G.affecting
-			if(M.client)
-				M.client.perspective = EYE_PERSPECTIVE
-				M.client.eye = src
-			M.loc = src
-			OCCUPANT = M
-			isopen = 0 //close ittt
-
-			//for(var/obj/O in src)
-			//	O.loc = src.loc
-			add_fingerprint(user)
-			qdel(G)
-			updateUsrDialog()
-			update_icon()
-			return
 		return
 	if(istype(I,/obj/item/clothing/suit/space))
 		if(!isopen)
@@ -649,6 +640,29 @@
 /obj/machinery/suit_cycler/attack_ai(mob/user as mob)
 	return attack_hand(user)
 
+/obj/machinery/suit_cycler/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
+	if(locked)
+		user << SPAN_DANG("The suit cycler is locked.")
+		return
+
+	if(contents.len)
+		user << SPAN_DANG("There is no room inside the cycler for [target].")
+		return
+
+	visible_message(SPAN_NOTE("[user] starts putting [target] into the suit cycler."))
+
+	if(do_after(user, 20))
+		if(!G || !G.confirmed())
+			return
+		target.reset_view(src)
+		M.forceMove(src)
+		occupant = target
+
+		add_fingerprint(user)
+		updateUsrDialog()
+		return TRUE
+
+
 /obj/machinery/suit_cycler/attackby(obj/item/I as obj, mob/user as mob)
 
 	if(electrified != 0)
@@ -660,38 +674,6 @@
 		if(panel_open)
 			attack_hand(user)
 		return
-	//Other interface stuff.
-	if(istype(I, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = I
-
-		if(!(ismob(G.affecting) && get_dist(src,G.affecting)<2))
-			return
-
-		if(locked)
-			user << "<span class='danger'>The suit cycler is locked.</span>"
-			return
-
-		if(contents.len > 0)
-			user << "<span class='danger'>There is no room inside the cycler for [G.affecting.name].</span>"
-			return
-
-		visible_message("<span class='notice'>[user] starts putting [G.affecting.name] into the suit cycler.</span>", 3)
-
-		if(do_after(user, 20))
-			if(!G || !G.affecting) return
-			var/mob/M = G.affecting
-			if(M.client)
-				M.client.perspective = EYE_PERSPECTIVE
-				M.client.eye = src
-			M.loc = src
-			occupant = M
-
-			add_fingerprint(user)
-			qdel(G)
-
-			updateUsrDialog()
-
-			return
 	else if(istype(I,/obj/item/weapon/screwdriver))
 
 		panel_open = !panel_open

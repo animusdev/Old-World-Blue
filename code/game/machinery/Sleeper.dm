@@ -198,6 +198,33 @@
 			qdel(src)
 		return
 
+	affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
+		if(src.occupant)
+			user << SPAN_NOTE("The sleeper is already occupied!")
+			return
+
+		for(var/mob/living/carbon/slime/M in range(1,affecting))
+			if(M.Victim == affecting)
+				usr << "[affecting] will not fit into the sleeper because they have a slime latched onto their head."
+				return
+
+		visible_message("[user] starts putting [affecting] into the sleeper.")
+
+		if(do_after(user, 20, src))
+			if(!G || !G.confirm())
+				return
+			if(src.occupant)
+				user << "\blue <B>The sleeper is already occupied!</B>"
+				return
+			M.reset_view(src)
+			M.forceMove(src)
+			update_use_power(2)
+			occupant = M
+			update_icon()
+
+			src.add_fingerprint(user)
+			return TRUE
+
 	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 		if(istype(W, /obj/item/weapon/reagent_containers/glass))
 			if(!beaker)
@@ -205,46 +232,8 @@
 				user.drop_from_inventory(beaker, src)
 				user.visible_message("[user] adds \a [beaker] to \the [src]!", "You add \a [beaker] to \the [src]!")
 				src.updateUsrDialog()
-				return
 			else
 				user << SPAN_WARN("The sleeper has a beaker already.")
-				return
-
-		else if(istype(W, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = W
-			if(!(ismob(G.affecting) && get_dist(src,G.affecting)<2))
-				return
-
-			if(src.occupant)
-				user << "\blue <B>The sleeper is already occupied!</B>"
-				return
-
-			for(var/mob/living/carbon/slime/M in range(1,G.affecting))
-				if(M.Victim == G.affecting)
-					usr << "[G.affecting.name] will not fit into the sleeper because they have a slime latched onto their head."
-					return
-
-			visible_message("[user] starts putting [G.affecting:name] into the sleeper.", 3)
-
-			if(do_after(user, 20))
-				if(src.occupant)
-					user << "\blue <B>The sleeper is already occupied!</B>"
-					return
-				if(!G || !G.affecting) return
-				var/mob/M = G.affecting
-				if(M.client)
-					M.client.perspective = EYE_PERSPECTIVE
-					M.client.eye = src
-				M.loc = src
-				update_use_power(2)
-				src.occupant = M
-				update_icon()
-
-				src.add_fingerprint(user)
-				qdel(G)
-			return
-		return
-
 
 	ex_act(severity)
 		if(filtering)

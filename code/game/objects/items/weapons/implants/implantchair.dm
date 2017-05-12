@@ -74,19 +74,15 @@
 			return
 
 
-	attackby(var/obj/item/weapon/grab/G as obj, var/mob/user as mob)
-		if(istype(G))
-			if(!(ismob(G.affecting)&& get_dist(src,G.affecting)<2))
-				return
-			for(var/mob/living/carbon/slime/M in range(1,G.affecting))
-				if(M.Victim == G.affecting)
-					usr << "[G.affecting:name] will not fit into the [src.name] because they have a slime latched onto their head."
-					return
-			var/mob/M = G.affecting
-			if(put_mob(M))
-				qdel(G)
+	affect_grab(var/mob/living/user, var/mob/living/affected)
+		for(var/mob/living/carbon/slime/M in range(1,affecting))
+			if(M.Victim == affecting)
+				usr << "[affecting] will not fit into the [src] because they have a slime latched onto their head."
+				return FALSE
+		if(put_mob(affecting))
+			return TRUE
 		src.updateUsrDialog()
-		return
+		return FALSE
 
 
 	go_out(var/mob/M)

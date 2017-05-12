@@ -96,6 +96,21 @@
 		material.place_sheet(get_turf(src))
 		qdel(src)
 
+/obj/structure/bed/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
+	user.visible_message(SPAN_NOTE("[user] attempts to buckle [affecting] into \the [src]!"))
+	if(do_after(user, 20, src))
+		if(!grab.confirm())
+			return
+		affecting.loc = loc
+		spawn(0)
+			if(buckle_mob(affecting))
+				affecting.visible_message(
+					SPAN_DANG("[affecting] is buckled to [src] by [user]!"),
+					SPAN_DANG("You are buckled to [src] by [user]!"),
+					SPAN_NOTE("You hear metal clanking."
+				)
+			return TRUE
+
 /obj/structure/bed/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -144,21 +159,6 @@
 		playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
 		remove_padding()
 
-	else if(istype(W, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = W
-		var/mob/living/affecting = G.affecting
-		if(!get_dist(src,affecting)<2)
-			return
-		user.visible_message("<span class='notice'>[user] attempts to buckle [affecting] into \the [src]!</span>")
-		if(do_after(user, 20))
-			affecting.loc = loc
-			spawn(0)
-				if(buckle_mob(affecting))
-					affecting.visible_message(\
-						"<span class='danger'>[affecting.name] is buckled to [src] by [user.name]!</span>",\
-						"<span class='danger'>You are buckled to [src] by [user.name]!</span>",\
-						"<span class='notice'>You hear metal clanking.</span>")
-			qdel(W)
 	else
 		..()
 
@@ -234,16 +234,16 @@
 	w_class = ITEM_SIZE_HUGE // Can't be put in backpacks. Oh well. For now.
 
 /obj/item/roller/attack_self(mob/user)
-		var/obj/structure/bed/roller/R = new /obj/structure/bed/roller(user.loc)
-		R.add_fingerprint(user)
-		qdel(src)
+	var/obj/structure/bed/roller/R = new /obj/structure/bed/roller(user.loc)
+	R.add_fingerprint(user)
+	qdel(src)
 
 /obj/item/roller/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if(istype(W,/obj/item/roller_holder))
 		var/obj/item/roller_holder/RH = W
 		if(!RH.held)
-			user << "\blue You collect the roller bed."
+			user << SPAN_NOTE("You collect the roller bed.")
 			src.loc = RH
 			RH.held = src
 			return
@@ -255,24 +255,18 @@
 	desc = "A rack for carrying a collapsed roller bed."
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "folded"
-	var/obj/item/roller/held
-
-/obj/item/roller_holder/New()
-	..()
-	held = new /obj/item/roller(src)
+	var/obj/item/roller/held = new
 
 /obj/item/roller_holder/attack_self(mob/user as mob)
 
 	if(!held)
-		user << "\blue The rack is empty."
+		user << SPAN_NOTE("The rack is empty.")
 		return
 
-	user << "\blue You deploy the roller bed."
-	var/obj/structure/bed/roller/R = new /obj/structure/bed/roller(user.loc)
-	R.add_fingerprint(user)
-	qdel(held)
+	user << SPAN_NOTE("You deploy the roller bed.")
+	held.add_fingerprint(user)
+	held.forceMove(user.loc)
 	held = null
-
 
 /obj/structure/bed/roller/Move()
 	..()
@@ -299,8 +293,8 @@
 /obj/structure/bed/roller/MouseDrop(over_object, src_location, over_location)
 	..()
 	if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
-		if(!ishuman(usr))	return
-		if(buckled_mob)	return 0
+		if(!ishuman(usr) || buckled_mob)
+			return 0
 		visible_message("[usr] collapses \the [src.name].")
 		new/obj/item/roller(get_turf(src))
 		spawn(0)

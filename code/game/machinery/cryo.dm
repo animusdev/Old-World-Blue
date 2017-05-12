@@ -170,6 +170,13 @@
 	add_fingerprint(usr)
 	return 1 // update UIs attached to this object
 
+/obj/machinery/atmospherics/unary/cryo_cell/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
+	for(var/mob/living/carbon/slime/M in range(1,affecting))
+		if(M.Victim == affecting)
+			usr << "[affecting] will not fit into the cryo because they have a slime latched onto their head."
+			return
+	return put_mob(affecting)
+
 /obj/machinery/atmospherics/unary/cryo_cell/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if(istype(W, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
@@ -179,18 +186,6 @@
 		beaker = W
 		user.unEquip(W, src)
 		user.visible_message("[user] adds \a [W] to \the [src]!", "You add \a [W] to \the [src]!")
-
-	else if(istype(W, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = W
-		if( !(ismob(G.affecting) && get_dist(src,G.affecting)<2) )
-			return
-		for(var/mob/living/carbon/slime/M in range(1,G.affecting))
-			if(M.Victim == G.affecting)
-				usr << "[G.affecting:name] will not fit into the cryo because they have a slime latched onto their head."
-				return
-		var/mob/M = G.affecting
-		if(put_mob(M))
-			qdel(G)
 	return
 
 /obj/machinery/atmospherics/unary/cryo_cell/update_icon()

@@ -167,17 +167,13 @@
 	*/
 	user << "<span class='notice'>You hit the metal foam but bounce off it.</span>"
 
-/obj/structure/foamedmetal/attackby(var/obj/item/I, var/mob/user)
-	if(istype(I, /obj/item/weapon/grab) )
-		var/obj/item/weapon/grab/G = I
-		if(get_dist(src,G.affecting)>=2)
-			return
-		G.affecting.loc = src.loc
-		visible_message("<span class='warning'>[G.assailant] smashes [G.affecting] through the foamed metal wall.</span>")
-		qdel(I)
-		qdel(src)
-		return
+/obj/structure/foamedmetal/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
+	target.forceMove(src)
+	visible_message(SPAN_WARN("[user] smashes [target] through the foamed metal wall."))
+	qdel(src)
+	return TRUE
 
+/obj/structure/foamedmetal/attackby(var/obj/item/I, var/mob/user)
 	if(prob(I.force * 20 - metal * 25))
 		user.visible_message("<span class='warning'>[user] smashes through the foamed metal.</span>", "<span class='notice'>You smash through the foamed metal with \the [I].</span>")
 		qdel(src)

@@ -93,9 +93,6 @@
 		user.visible_message("[user] climbs on the operating table.","You climb on the operating table.")
 	else
 		visible_message("\red [C] has been laid on the operating table by [user].", 3)
-	if (C.client)
-		C.client.perspective = EYE_PERSPECTIVE
-		C.client.eye = src
 	C.resting = 1
 	C.loc = src.loc
 	for(var/obj/O in src)
@@ -128,13 +125,12 @@
 
 	take_victim(usr,usr)
 
+/obj/machinery/optable/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
+	take_victim(affecting,user)
+	return TRUE
+
 /obj/machinery/optable/attackby(obj/item/weapon/W as obj, mob/living/carbon/user as mob)
-	if (istype(W, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = W
-		if(iscarbon(G.affecting) && get_dist(src,G.affecting)<2 && check_table(G.affecting))
-			take_victim(G.affecting,usr)
-			qdel(W)
-			return
+	return
 
 /obj/machinery/optable/proc/check_table(mob/living/carbon/patient as mob)
 	if(src.victim)

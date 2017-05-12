@@ -372,11 +372,8 @@
 	set_occupant(null)
 
 
-/obj/machinery/cryopod/attackby(var/obj/item/weapon/grab/G as obj, var/mob/user as mob)
-	if(istype(G))
-		put_inside(G.affecting, user)
-	else
-		return ..()
+/obj/machinery/cryopod/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
+	put_inside(affecting, user)
 
 /obj/machinery/cryopod/MouseDrop_T(var/mob/living/L, mob/living/user)
 	if(istype(L) && istype(user))
