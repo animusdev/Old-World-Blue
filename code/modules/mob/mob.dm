@@ -215,9 +215,8 @@
 	if (!L)
 		L = list(src)
 	for(var/obj/item/weapon/grab/G in list(l_hand,r_hand))
-		if (!G.affecting in L)
-			L += G.affecting
-			if(G.affecting)
+		if(G.affecting)
+			L |= G.affecting
 				G.affecting.ret_grab(L)
 	return L
 

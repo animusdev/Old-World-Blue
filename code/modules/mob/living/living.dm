@@ -139,8 +139,6 @@ default behaviour is:
 							step(G.assailant, get_dir(G.assailant, AM))
 							G.adjust_position()
 				now_pushing = 0
-			return
-	return
 
 /mob/living/verb/succumb()
 	set hidden = 1

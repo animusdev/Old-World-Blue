@@ -127,19 +127,16 @@
 		user << SPAN_DANG("The gibber safety guard is engaged!")
 		return
 
-
 	if(victim.abiotic(1))
 		user << SPAN_DANG("Subject may not have abiotic items on.")
 		return
 
 	user.visible_message(SPAN_WARN("[user] starts to put [victim] into the gibber!"))
 	src.add_fingerprint(user)
-	if(do_after(user, 30) && victim.Adjacent(src) && user.Adjacent(src) && victim.Adjacent(user) && !occupant)
+	if(do_after(user, 30, src) && victim.Adjacent(src) && user.Adjacent(src) && victim.Adjacent(user) && !occupant)
 		user.visible_message("\red [user] stuffs [victim] into the gibber!")
-		if(victim.client)
-			victim.client.perspective = EYE_PERSPECTIVE
-			victim.client.eye = src
-		victim.loc = src
+		victim.forceMove(src)
+		victim.reset_view(src)
 		src.occupant = victim
 		update_icon()
 

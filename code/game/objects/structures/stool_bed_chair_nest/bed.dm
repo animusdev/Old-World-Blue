@@ -99,8 +99,6 @@
 /obj/structure/bed/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
 	user.visible_message(SPAN_NOTE("[user] attempts to buckle [target] into \the [src]!"))
 	if(do_after(user, 20, src) && Adjacent(target))
-		if(!grab.confirm())
-			return
 		target.forceMove(loc)
 		spawn(0)
 			if(buckle_mob(target))
@@ -109,7 +107,7 @@
 					SPAN_DANG("You are buckled to [src] by [user]!"),
 					SPAN_NOTE("You hear metal clanking.")
 				)
-			return TRUE
+		return TRUE
 
 /obj/structure/bed/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/wrench))

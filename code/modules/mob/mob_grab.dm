@@ -34,7 +34,9 @@
 	return FALSE
 
 /obj/item/weapon/grab/resolve_attackby(obj/O, mob/user, var/click_params)
-	if(!istype(O) || !confirm() || get_dist(O, affecting)>1)
+	if(ismob(O))
+		return ..()
+	if(!istype(O) || get_dist(O, affecting)>1)
 		return TRUE
 	if(O.affect_grab(assailant, affecting, src))
 		qdel(src)
@@ -310,7 +312,7 @@
 		return 0
 
 	else
-		if( !isturf(assailant.loc) || !isturf(affecting.loc) || (get_dist(assailant, affecting) > 1) )
+		if(!isturf(assailant.loc) || !isturf(affecting.loc) || get_dist(assailant, affecting) > 1)
 			qdel(src)
 			return 0
 
@@ -386,4 +388,4 @@
 	qdel(hud)
 	hud = null
 	destroying = 1 // stops us calling qdel(src) on dropped()
-	..()
+	return ..()

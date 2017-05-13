@@ -211,8 +211,6 @@
 		visible_message("[user] starts putting [target] into the sleeper.")
 
 		if(do_after(user, 20, src) && Adjacent(target))
-			if(!grab || !grab.confirm())
-				return
 			if(src.occupant)
 				user << "\blue <B>The sleeper is already occupied!</B>"
 				return

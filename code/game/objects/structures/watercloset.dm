@@ -93,7 +93,7 @@
 			SPAN_NOTE("You start to give [target] a swirlie!")
 		)
 		swirlie = target
-		if (do_after(user, target, 30) || !Adjacent(target))
+		if (do_after(user, 30, src) || !Adjacent(target))
 			user.visible_message(
 				SPAN_DANG("[user] gives [target] a swirlie!"),
 				SPAN_NOTE("You give [target] a swirlie!"),

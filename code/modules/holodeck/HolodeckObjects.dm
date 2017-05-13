@@ -232,8 +232,8 @@
 	density = 1
 	throwpass = 1
 
-/obj/structure/holohoop/affect_grab(var/mob/living/user, var/mob/living/target, var/grab_state)
-	if(grab_state == GRAB_PASSIVE)
+/obj/structure/holohoop/affect_grab(var/mob/living/user, var/mob/living/target, var/obj/item/weapon/grab/grab)
+	if(grab.state == GRAB_PASSIVE)
 		user << SPAN_WARN("You need a better grip to do that!")
 		return FALSE
 	target.forceMove(src.loc)

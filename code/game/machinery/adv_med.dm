@@ -45,30 +45,29 @@
 	if (usr.abiotic())
 		usr << "\blue <B>Subject cannot have abiotic items on.</B>"
 		return
-	usr.pulling = null
-	usr.loc = src
-	src.occupant = usr
-	update_use_power(2)
-	src.icon_state = "body_scanner_1"
-	for(var/obj/O in src)
-		qdel(O)
+	set_occupant(usr)
 	src.add_fingerprint(usr)
 	return
 
 /obj/machinery/bodyscanner/proc/go_out()
-	if ((!( src.occupant ) || src.locked))
+	if (!occupant || locked)
 		return
 	for(var/obj/O in src)
-		O.loc = src.loc
-		//Foreach goto(30)
-	if (src.occupant.client)
-		src.occupant.client.eye = src.occupant.client.mob
-		src.occupant.client.perspective = MOB_PERSPECTIVE
-	src.occupant.loc = src.loc
+		O.forceMove(loc)
+	src.occupant.forceMove(loc)
+	src.occupant.reset_view()
 	src.occupant = null
 	update_use_power(1)
 	src.icon_state = "body_scanner_0"
 	return
+
+/obj/machinery/bodyscanner/proc/set_occupant(var/mob/living/L)
+	L.forceMove(src)
+	src.occupant = L
+	update_use_power(2)
+	src.icon_state = "body_scanner_1"
+	src.add_fingerprint(usr)
+
 
 /obj/machinery/bodyscanner/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
 	if (src.occupant)
@@ -80,11 +79,7 @@
 	if(target.abiotic())
 		user << SPAN_NOTE("Subject cannot have abiotic items on.")
 		return
-	occupant = target
-	update_use_power(2)
-	src.icon_state = "body_scanner_1"
-	for(var/obj/O in src)
-		O.forceMove(loc)
+	set_occupant(target)
 	src.add_fingerprint(user)
 	return TRUE
 
@@ -106,12 +101,7 @@
 	)
 	if(!do_after(user, 30, src) || !Adjacent(target))
 		return
-	target.forceMove(src)
-	src.occupant = target
-	update_use_power(2)
-	src.icon_state = "body_scanner_1"
-	for(var/obj/O in src)
-		O.forceMove(loc)
+	set_occupant(target)
 	src.add_fingerprint(user)
 	return
 
