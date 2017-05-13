@@ -97,11 +97,21 @@
 		usr << SPAN_WARN("The subject cannot have abiotic items on.")
 		return
 	usr.stop_pulling()
-	usr.forceMove(src)
-	src.occupant = usr
-	src.icon_state = "scanner_1"
+	put_in(usr)
 	src.add_fingerprint(usr)
 	return
+
+/obj/machinery/dna_scannernew/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
+	if (src.occupant)
+		user << SPAN_WARN("The scanner is already occupied!")
+		return
+	if (target.abiotic())
+		user << SPAN_WARN("The subject cannot have abiotic items on.")
+		return
+	put_in(target)
+	src.add_fingerprint(user)
+	return TRUE
+
 
 /obj/machinery/dna_scannernew/attackby(var/obj/item/weapon/item as obj, var/mob/user as mob)
 	if(istype(item, /obj/item/weapon/reagent_containers/glass))
@@ -115,20 +125,6 @@
 			"You add \a [item] to \the [src]!"
 		)
 		return
-	else if(istype(item, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = item
-		if (!ismob(G.affecting) || get_dist(src,G.affecting)>=2)
-			return
-		if (src.occupant)
-			user << SPAN_WARN("The scanner is already occupied!")
-			return
-		if (G.affecting.abiotic())
-			user << SPAN_WARN("The subject cannot have abiotic items on.")
-			return
-		put_in(G.affecting)
-		src.add_fingerprint(user)
-		qdel(G)
-		return 1
 	else if(default_deconstruction_screwdriver(user, item))
 		return 1
 	else if(default_deconstruction_crowbar(user, item))
@@ -180,12 +176,12 @@
 	return
 
 /obj/machinery/dna_scannernew/proc/go_out()
-	if(!src.occupant || src.locked)
+	if(!occupant || src.locked)
 		return
-	src.occupant.forceMove(loc)
-	src.occupant.reset_view()
-	src.occupant = null
-	src.icon_state = "scanner_0"
+	occupant.forceMove(loc)
+	occupant.reset_view()
+	occupant = null
+	icon_state = "scanner_0"
 	return
 
 /obj/machinery/dna_scannernew/ex_act(severity)

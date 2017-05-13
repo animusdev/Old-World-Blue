@@ -22,12 +22,44 @@
 	var/last_action = 0
 	var/last_hit_zone = 0
 	var/force_down //determines if the affecting mob will be pinned to the ground
-	var/dancing //determines if assailant and affecting keep looking at each other. Basically a wrestling position
+	var/dancing //determines if assailant and affecting keep looking at each other.
+				//Basically a wrestling position
 
 	layer = 21
 	abstract = 1
 	item_state = "nothing"
-	w_class = 5.0
+	w_class = ITEM_SIZE_NO_CONTAINER
+
+/obj/proc/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
+	return FALSE
+
+/obj/item/weapon/grab/resolve_attackby(obj/O, mob/user, var/click_params)
+	if(ismob(O))
+		return ..()
+	if(!istype(O) || get_dist(O, affecting)>1)
+		return TRUE
+	if(O.affect_grab(assailant, affecting, src))
+		qdel(src)
+	return TRUE
+
+/obj/item/weapon/grab/on_mob_description(var/mob/living/carbon/human/H, var/datum/gender/T, var/slot)
+	if(!slot in list(slot_l_hand, slot_r_hand) || H!=assailant)
+		return null
+
+	switch(state)
+		if(GRAB_PASSIVE)
+			return "[T.He] [T.is] holding [affecting] by the hand."
+		if(GRAB_AGGRESSIVE)
+			if(!affecting.lying)
+				return SPAN_WARN("[T.He] [T.is] grab [affecting] aggressively!")
+			else
+				return SPAN_WARN("[T.He] [T.is] pinning [affecting] down to the ground!")
+		if(GRAB_NECK)
+			return SPAN_WARN("[T.He] [T.is] grabbing [affecting] by neck!")
+		if(GRAB_KILL)
+			return SPAN_DANG("[T.He] [T.is] strangling [affecting]!")
+		else
+			return SPAN_WARN("[T.He] [T.is] holding [affecting] by the hand")
 
 
 /obj/item/weapon/grab/New(mob/user, mob/victim)
@@ -59,7 +91,8 @@
 /obj/item/weapon/grab/get_storage_cost()
 	return ITEM_SIZE_NO_CONTAINER
 
-//Used by throw code to hand over the mob, instead of throwing the grab. The grab is then deleted by the throw code.
+//Used by throw code to hand over the mob, instead of throwing the grab.
+// The grab is then deleted by the throw code.
 /obj/item/weapon/grab/proc/throw_held()
 	if(confirm())
 		if(affecting.buckled)
@@ -138,28 +171,27 @@
 			L.adjustOxyLoss(1)
 
 	if(state >= GRAB_KILL)
-		//affecting.apply_effect(STUTTER, 5) //would do this, but affecting isn't declared as mob/living for some stupid reason.
-		affecting.stuttering = max(affecting.stuttering, 5) //It will hamper your voice, being choked and all.
+		affecting.apply_effect(STUTTER, 5)
+//		affecting.stuttering = max(affecting.stuttering, 5) //It will hamper your voice, being choked and all.
 		affecting.Weaken(5)	//Should keep you down unless you get help.
 		affecting.losebreath = max(affecting.losebreath + 2, 3)
 
 	adjust_position()
 
 /obj/item/weapon/grab/proc/handle_eye_mouth_covering(mob/living/carbon/target, mob/user, var/target_zone)
-	var/announce = (target_zone != last_hit_zone) //only display messages when switching between different target zones
+	//only display messages when switching between different target zones
+	var/announce = (target_zone != last_hit_zone)
 	last_hit_zone = target_zone
 
 	switch(target_zone)
 		if(O_MOUTH)
 			if(announce)
-				user.visible_message("<span class='warning'>\The [user] covers [target]'s mouth!</span>")
-			if(target.silent < 3)
-				target.silent = 3
+				user.visible_message(SPAN_WARN("\The [user] covers [target]'s mouth!"))
+			target.silent = max(target.silent, 3)
 		if(O_EYES)
 			if(announce)
-				assailant.visible_message("<span class='warning'>[assailant] covers [affecting]'s eyes!</span>")
-			if(affecting.eye_blind < 3)
-				affecting.eye_blind = 3
+				assailant.visible_message(SPAN_WARN("[assailant] covers [affecting]'s eyes!"))
+			affecting.eye_blind = max(affecting.eye_blind, 3)
 
 /obj/item/weapon/grab/attack_self()
 	return s_click(hud)
@@ -229,9 +261,9 @@
 		if(!allow_upgrade)
 			return
 		if(!affecting.lying)
-			assailant.visible_message("<span class='warning'>[assailant] has grabbed [affecting] aggressively (now hands)!</span>")
+			assailant.visible_message(SPAN_WARN("[assailant] has grabbed [affecting] aggressively (now hands)!"))
 		else
-			assailant.visible_message("<span class='warning'>[assailant] pins [affecting] down to the ground (now hands)!</span>")
+			assailant.visible_message(SPAN_WARN("[assailant] pins [affecting] down to the ground (now hands)!"))
 			apply_pinning(affecting, assailant)
 
 		state = GRAB_AGGRESSIVE
@@ -240,10 +272,10 @@
 
 	else if(state < GRAB_NECK)
 		if(isslime(affecting))
-			assailant << "<span class='notice'>You squeeze [affecting], but nothing interesting happens.</span>"
+			assailant << SPAN_NOTE("You squeeze [affecting], but nothing interesting happens.")
 			return
 
-		assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")
+		assailant.visible_message(SPAN_WARN("[assailant] has reinforced \his grip on [affecting] (now neck)!"))
 		state = GRAB_NECK
 		icon_state = "grabbed+1"
 		assailant.set_dir(get_dir(assailant, affecting))
@@ -257,11 +289,11 @@
 		affecting.Stun(10) //10 ticks of ensured grab
 
 	else if(state < GRAB_UPGRADING)
-		assailant.visible_message("<span class='danger'>[assailant] starts to tighten \his grip on [affecting]'s neck!</span>")
+		assailant.visible_message(SPAN_DANG("[assailant] starts to tighten \his grip on [affecting]'s neck!"))
 		hud.icon_state = "kill1"
 
 		state = GRAB_KILL
-		assailant.visible_message("<span class='danger'>[assailant] has tightened \his grip on [affecting]'s neck!</span>")
+		assailant.visible_message(SPAN_DANG("[assailant] has tightened \his grip on [affecting]'s neck!"))
 		admin_attack_log(assailant, affecting,
 			"Strangled (kill intent) [affecting.name] ([affecting.ckey])",
 			"Has been strangled (kill intent) by [assailant.name] ([assailant.ckey])",
@@ -280,7 +312,7 @@
 		return 0
 
 	else
-		if( !isturf(assailant.loc) || !isturf(affecting.loc) || (get_dist(assailant, affecting) > 1) )
+		if(!isturf(assailant.loc) || !isturf(affecting.loc) || get_dist(assailant, affecting) > 1)
 			qdel(src)
 			return 0
 
@@ -306,7 +338,7 @@
 			switch(assailant.a_intent)
 				if(I_HELP)
 					if(force_down)
-						assailant << "<span class='warning'>You are no longer pinning [affecting] to the ground.</span>"
+						assailant << SPAN_WARN("You are no longer pinning [affecting] to the ground.")
 						force_down = 0
 						return
 					inspect_organ(affecting, assailant, hit_zone)
@@ -336,7 +368,7 @@
 
 /obj/item/weapon/grab/proc/reset_kill_state()
 	if(state == GRAB_KILL)
-		assailant.visible_message("<span class='warning'>[assailant] lost \his tight grip on [affecting]'s neck!</span>")
+		assailant.visible_message(SPAN_WARN("[assailant] lost \his tight grip on [affecting]'s neck!"))
 		hud.icon_state = "kill"
 		state = GRAB_NECK
 
@@ -356,4 +388,4 @@
 	qdel(hud)
 	hud = null
 	destroying = 1 // stops us calling qdel(src) on dropped()
-	..()
+	return ..()

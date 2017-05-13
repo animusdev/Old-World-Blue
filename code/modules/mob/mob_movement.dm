@@ -309,7 +309,7 @@
 					L -= mob
 					var/mob/M = L[1]
 					if(M)
-						if ((get_dist(mob, M) <= 1 || M.loc == mob.loc))
+						if(get_dist(mob, M) <= 1)
 							var/turf/T = mob.loc
 							. = ..()
 							if (isturf(M.loc))

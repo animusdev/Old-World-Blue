@@ -246,20 +246,19 @@ var/global/photo_count = 0
 	var/mob_detail
 	for(var/mob/living/carbon/A in the_turf)
 		if(A.invisibility) continue
-		var/holding = null
+		var/holding = ""
 		var/posenow = null
-		if(A.l_hand || A.r_hand)
-			if(A.l_hand) holding = "They are holding \a [A.l_hand]"
-			if(A.r_hand)
-				if(holding)
-					holding += " and \a [A.r_hand]"
-				else
-					holding = "They are holding \a [A.r_hand]"
-		if(ishuman(A))
-			if(A.pose) posenow = "They're appears to [A.pose] on this photo."
+		var/datum/gender/T = gender_datums[A.get_gender()]
+		if(A.r_hand)
+			holding = A.r_hand.on_mob_description(A, T, slot_r_hand, "right hand")
+		if(A.l_hand)
+			holding += " "
+			holding += A.l_hand.on_mob_description(A, T, slot_l_hand, "left hand")
+		if(ishuman(A) && A.pose)
+			posenow = "They're appears to [A.pose] on this photo."
 
 		if(!mob_detail)
-			mob_detail = "You can see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]. [posenow] "
+			mob_detail = "You can see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""]. [holding][posenow] "
 		else
 			mob_detail += "You can also see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."] [posenow]."
 	return mob_detail

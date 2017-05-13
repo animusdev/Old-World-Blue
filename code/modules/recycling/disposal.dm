@@ -48,6 +48,18 @@
 		trunk.linked = null
 	return ..()
 
+/obj/machinery/disposal/affect_grab(var/mob/living/user, var/mob/living/target, var/grab_state)
+	user.visible_message("[user] starts putting [target] into the disposal.")
+	if(do_after(user, 20, src) && Adjacent(target))
+		target.forceMove(src)
+		visible_message(SPAN_NOTE("[target] has been placed in the [src] by [user]."))
+		admin_attack_log(user, target,
+			"Has placed [key_name(target)] in disposals",
+			"Has been placed in disposals by [key_name(user)]",
+			"placed in a disposals unit"
+		)
+		return TRUE
+
 // attack by item places it in to disposal
 /obj/machinery/disposal/attackby(var/obj/item/I, var/mob/user)
 	if(stat & BROKEN || !I || !user)
@@ -104,27 +116,6 @@
 			T.remove_from_storage(O,src)
 		T.update_icon()
 		update()
-		return
-
-	var/obj/item/weapon/grab/G = I
-	if(istype(G))	// handle grabbed mob
-		if(ismob(G.affecting) && get_dist(src,G.affecting)<2)
-			var/mob/GM = G.affecting
-			for (var/mob/V in viewers(usr))
-				V.show_message("[usr] starts putting [GM.name] into the disposal.", 3)
-			if(do_after(usr, 20))
-				if (GM.client)
-					GM.client.perspective = EYE_PERSPECTIVE
-					GM.client.eye = src
-				GM.loc = src
-				for (var/mob/C in viewers(src))
-					C.show_message("\red [GM.name] has been placed in the [src] by [user].", 3)
-				qdel(G)
-				admin_attack_log(usr, GM,
-					"Has placed [key_name(GM)] in disposals",
-					"Has been placed in disposals by [key_name(usr)]",
-					"placed in a disposals unit"
-				)
 		return
 
 	if(!I || !user.unEquip(I, src))

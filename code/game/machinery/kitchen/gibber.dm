@@ -89,20 +89,15 @@
 	user << "<span class='danger'>You [emagged ? "disable" : "enable"] the gibber safety guard.</span>"
 	return 1
 
+/obj/machinery/gibber/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
+	if(grab.state < GRAB_NECK)
+		user << SPAN_DANG("You need a better grip to do that!")
+		return FALSE
+	move_into_gibber(user, target)
+	return TRUE
+
 /obj/machinery/gibber/attackby(var/obj/item/W, var/mob/user)
-	var/obj/item/weapon/grab/G = W
-
-	if(istype(G))
-		if(get_dist(src,G.affecting)>=2)
-			return
-
-		if(G.state < 2)
-			user << "<span class='danger'>You need a better grip to do that!</span>"
-			return
-
-		move_into_gibber(user,G.affecting)
-		// Grab() process should clean up the grab item, no need to del it.
-	else if(W.GetID())
+	if(W.GetID())
 		if(allowed(usr))
 			emagged = !emagged
 			usr << "The safety guard is [emagged ? "<span class='danger'>disabled</span>" : "enabled"]."
@@ -117,34 +112,31 @@
 /obj/machinery/gibber/proc/move_into_gibber(var/mob/user,var/mob/living/victim)
 
 	if(src.occupant)
-		user << "<span class='danger'>The gibber is full, empty it first!</span>"
+		user << SPAN_DANG("The gibber is full, empty it first!")
 		return
 
 	if(operating)
-		user << "<span class='danger'>The gibber is locked and running, wait for it to finish.</span>"
+		user << SPAN_DANG("The gibber is locked and running, wait for it to finish.")
 		return
 
 	if(!(istype(victim, /mob/living/carbon)) && !(istype(victim, /mob/living/simple_animal)) )
-		user << "<span class='danger'>This is not suitable for the gibber!</span>"
+		user << SPAN_DANG("This is not suitable for the gibber!")
 		return
 
 	if(ishuman(victim) && !emagged)
-		user << "<span class='danger'>The gibber safety guard is engaged!</span>"
+		user << SPAN_DANG("The gibber safety guard is engaged!")
 		return
-
 
 	if(victim.abiotic(1))
-		user << "<span class='danger'>Subject may not have abiotic items on.</span>"
+		user << SPAN_DANG("Subject may not have abiotic items on.")
 		return
 
-	user.visible_message("\red [user] starts to put [victim] into the gibber!")
+	user.visible_message(SPAN_WARN("[user] starts to put [victim] into the gibber!"))
 	src.add_fingerprint(user)
-	if(do_after(user, 30) && victim.Adjacent(src) && user.Adjacent(src) && victim.Adjacent(user) && !occupant)
+	if(do_after(user, 30, src) && victim.Adjacent(src) && user.Adjacent(src) && victim.Adjacent(user) && !occupant)
 		user.visible_message("\red [user] stuffs [victim] into the gibber!")
-		if(victim.client)
-			victim.client.perspective = EYE_PERSPECTIVE
-			victim.client.eye = src
-		victim.loc = src
+		victim.forceMove(src)
+		victim.reset_view(src)
 		src.occupant = victim
 		update_icon()
 
@@ -180,7 +172,7 @@
 		visible_message("<span class='danger'>You hear a loud metallic grinding sound.</span>")
 		return
 	use_power(1000)
-	visible_message("<span class='danger'>You hear a loud [occupant.isSynthetic() ? "metallic" : "squelchy"] grinding sound.</span>")
+	visible_message(SPAN_DANG("You hear a loud [occupant.isSynthetic() ? "metallic" : "squelchy"] grinding sound."))
 	src.operating = 1
 	update_icon()
 
