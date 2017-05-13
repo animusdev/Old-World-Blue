@@ -8,7 +8,7 @@
 	icon_state = "sleeperconsole"
 	var/obj/machinery/sleeper/connected = null
 	anchored = 1 //About time someone fixed this.
-	density = 1
+	density = 0
 	dir = WEST
 
 	use_power = 1
