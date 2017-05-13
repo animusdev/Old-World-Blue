@@ -127,14 +127,14 @@
 				user << "\red Your [O] contains components unsuitable for cookery."
 				return 1
 		return
-	else if(istype(O,/obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = O
-		user << "\red This is ridiculous. You can not fit \the [G.affecting] in this [src]."
-		return 1
 	else
 		user << "\red You have no idea what you can cook with this [O]."
 	..()
 	src.updateUsrDialog()
+
+/obj/machinery/microwave/affect_grab(var/mob/user, var/mob/target)
+	user << SPAN_WARN("This is ridiculous. You can not fit \the [target] in this [src].")
+	return FALSE
 
 /obj/machinery/microwave/attack_ai(mob/user as mob)
 	if(istype(user, /mob/living/silicon/robot) && Adjacent(user))

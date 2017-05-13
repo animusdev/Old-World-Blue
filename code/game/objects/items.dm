@@ -188,8 +188,6 @@
 
 
 
-
-
 /obj/item/attack_hand(mob/living/user as mob)
 	if (!user) return
 	if (hasorgans(user))

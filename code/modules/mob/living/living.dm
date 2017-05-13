@@ -133,13 +133,12 @@ default behaviour is:
 							now_pushing = 0
 							return
 					step(AM, t)
-					if(ishuman(AM) && AM:grabbed_by)
-						for(var/obj/item/weapon/grab/G in AM:grabbed_by)
-							step(G:assailant, get_dir(G:assailant, AM))
+					if(ishuman(AM))
+						var/mob/living/carbon/human/H = AM
+						for(var/obj/item/weapon/grab/G in H.grabbed_by)
+							step(G.assailant, get_dir(G.assailant, AM))
 							G.adjust_position()
 				now_pushing = 0
-			return
-	return
 
 /mob/living/verb/succumb()
 	set hidden = 1

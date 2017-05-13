@@ -299,7 +299,6 @@
 	items -= announce // or the autosay radio.
 
 	for(var/obj/item/W in items)
-
 		var/preserve = null
 		for(var/T in preserve_items)
 			if(istype(W,T))
@@ -372,11 +371,9 @@
 	set_occupant(null)
 
 
-/obj/machinery/cryopod/attackby(var/obj/item/weapon/grab/G as obj, var/mob/user as mob)
-	if(istype(G))
-		put_inside(G.affecting, user)
-	else
-		return ..()
+/obj/machinery/cryopod/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
+	put_inside(target, user)
+	return TRUE
 
 /obj/machinery/cryopod/MouseDrop_T(var/mob/living/L, mob/living/user)
 	if(istype(L) && istype(user))

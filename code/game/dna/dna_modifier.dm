@@ -97,37 +97,31 @@
 		usr << "<span class='warning'>The subject cannot have abiotic items on.</span>"
 		return
 	usr.stop_pulling()
-	usr.client.perspective = EYE_PERSPECTIVE
-	usr.client.eye = src
-	usr.loc = src
-	src.occupant = usr
-	src.icon_state = "scanner_1"
+	put_in(usr)
 	src.add_fingerprint(usr)
 	return
+
+/obj/machinery/dna_scannernew/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
+	if (src.occupant)
+		user << SPAN_WARN("The scanner is already occupied!")
+		return
+	if (target.abiotic())
+		user << SPAN_WARN("The subject cannot have abiotic items on.")
+		return
+	put_in(target)
+	src.add_fingerprint(user)
+	return TRUE
+
 
 /obj/machinery/dna_scannernew/attackby(var/obj/item/weapon/item as obj, var/mob/user as mob)
 	if(istype(item, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
-			user << "<span class='warning'>A beaker is already loaded into the machine.</span>"
+			user << SPAN_WARN("A beaker is already loaded into the machine.")
 			return
 		beaker = item
 		user.drop_from_inventory(item, src)
 		user.visible_message("\The [user] adds \a [item] to \the [src]!", "You add \a [item] to \the [src]!")
 		return
-	else if(istype(item, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = item
-		if (!ismob(G.affecting) || get_dist(src,G.affecting)>=2)
-			return
-		if (src.occupant)
-			user << "<span class='warning'>The scanner is already occupied!</span>"
-			return
-		if (G.affecting.abiotic())
-			user << "<span class='warning'>The subject cannot have abiotic items on.</span>"
-			return
-		put_in(G.affecting)
-		src.add_fingerprint(user)
-		qdel(G)
-		return 1
 	else if(default_deconstruction_screwdriver(user, item))
 		return 1
 	else if(default_deconstruction_crowbar(user, item))
@@ -136,9 +130,7 @@
 		return ..()
 
 /obj/machinery/dna_scannernew/proc/put_in(var/mob/M)
-	if(M.client)
-		M.client.perspective = EYE_PERSPECTIVE
-		M.client.eye = src
+	M.reset_view(src)
 	M.loc = src
 	src.occupant = M
 	src.icon_state = "scanner_1"
@@ -179,14 +171,12 @@
 	return
 
 /obj/machinery/dna_scannernew/proc/go_out()
-	if ((!( src.occupant ) || src.locked))
+	if(!occupant || src.locked)
 		return
-	if (src.occupant.client)
-		src.occupant.client.eye = src.occupant.client.mob
-		src.occupant.client.perspective = MOB_PERSPECTIVE
-	src.occupant.loc = src.loc
-	src.occupant = null
-	src.icon_state = "scanner_0"
+	occupant.forceMove(loc)
+	occupant.reset_view()
+	occupant = null
+	icon_state = "scanner_0"
 	return
 
 /obj/machinery/dna_scannernew/ex_act(severity)

@@ -214,13 +214,10 @@
 		return L
 	if (!L)
 		L = list(src)
-	for(var/A in list(l_hand,r_hand))
-		if (istype(A, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = A
-			if (!(G.affecting in L))
-				L += G.affecting
-				if (G.affecting)
-					G.affecting.ret_grab(L)
+	for(var/obj/item/weapon/grab/G in list(l_hand,r_hand))
+		if(G.affecting)
+			L |= G.affecting
+				G.affecting.ret_grab(L)
 	return L
 
 /mob/verb/mode()
