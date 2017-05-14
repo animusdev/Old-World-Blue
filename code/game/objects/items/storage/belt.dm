@@ -20,10 +20,12 @@
 	show_above_suit = !show_above_suit
 	update_icon()
 
-/obj/item/storage/update_icon()
+/obj/item/storage/belt/update_icon()
 	if(ismob(src.loc))
 		var/mob/M = src.loc
 		M.update_inv_belt()
+	overlays.Cut()
+	..()
 	for(var/obj/item/I in src)
 		overlays += I.item_state
 
