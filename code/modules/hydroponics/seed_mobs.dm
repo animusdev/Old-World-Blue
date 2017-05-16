@@ -61,7 +61,10 @@
 	if(player.mob && player.mob.mind)
 		player.mob.mind.transfer_to(host)
 
-	if(host.dna) host.dna.real_name = host.real_name
+	if(ishuman(host))
+		var/mob/living/carbon/human/H = host
+		if(H.dna)
+			H.dna.set_real_name(H.real_name)
 
 	// Update mode specific HUD icons.
 	callHook("harvest_podman", list(host))

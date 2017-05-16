@@ -32,17 +32,21 @@ var/global/list/datum/dna/gene/dna_genes[0]
 // USE THIS WHEN COPYING STUFF OR YOU'LL GET CORRUPTION!
 /datum/dna/proc/Clone()
 	var/datum/dna/new_dna = new()
-	new_dna.unique_enzymes=unique_enzymes
-	new_dna.b_type=b_type
+	new_dna.unique_enzymes = unique_enzymes
+	new_dna.b_type = b_type
 	new_dna.body_build = body_build
 	new_dna.age = age
-	new_dna.real_name=real_name
-	new_dna.species=species
+	new_dna.real_name = real_name
+	new_dna.species = species
 	new_dna.SE = SE.Copy()
 	new_dna.UI = UI.Copy()
 	new_dna.UpdateSE()
 	new_dna.UpdateUI()
 	return new_dna
+
+/datum/dna/proc/set_real_name(var/new_name)
+	unique_enzymes = md5(new_name)
+	reg_dna[unique_enzymes] = new_name
 
 ///////////////////////////////////////
 // STRUCTURAL ENZYMES
@@ -80,5 +84,4 @@ var/global/list/datum/dna/gene/dna_genes[0]
 
 	ResetSE()
 
-	unique_enzymes = md5(character.real_name)
-	reg_dna[unique_enzymes] = character.real_name
+	set_real_name(character.real_name)

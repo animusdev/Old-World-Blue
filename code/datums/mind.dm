@@ -81,8 +81,9 @@
 	current = new_character		//link ourself to our new body
 	new_character.mind = src	//and link our new body to ourself
 
-	if(changeling)
-		new_character.make_changeling()
+	if(changeling && ishuman(new_character))
+		var/mob/living/carbon/human/H = new_character
+		H.make_changeling()
 
 	if(active)
 		new_character.key = key		//now transfer the key to link the client to our new body

@@ -882,14 +882,12 @@
 		if(prob(src.deflect_chance))
 			user << "\red The [W] bounces off [src.name] armor."
 			src.log_append_to_last("Armor saved.")
-/*
-			for (var/mob/V in viewers(src))
-				if(V.client && !(V.blinded))
-					V.show_message("The [W] bounces off [src.name] armor.", 1)
-*/
 		else
-			src.occupant_message("<font color='red'><b>[user] hits [src] with [W].</b></font>")
-			user.visible_message("<font color='red'><b>[user] hits [src] with [W].</b></font>", "<font color='red'><b>You hit [src] with [W].</b></font>")
+			src.occupant_message(SPAN_DANG("[user] hits [src] with [W]."))
+			user.visible_message(
+				SPAN_DANG("[user] hits [src] with [W]."),
+				SPAN_DANG("You hit [src] with [W].")
+			)
 			src.take_damage(W.force,W.damtype)
 			src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 */
@@ -1064,55 +1062,51 @@
 
 	if (usr.stat || !ishuman(usr))
 		return
-	src.log_message("[usr] tries to move in.")
-	if(iscarbon(usr))
-		var/mob/living/carbon/C = usr
-		if(C.handcuffed)
-			usr << "\red Kinda hard to climb in while handcuffed don't you think?"
-			return
+	var/mob/living/carbon/human/H = usr
+	log_message("[usr] tries to move in.")
+
+	if(H.restrained())
+		usr << SPAN_WARN("Kinda hard to climb in while handcuffed don't you think?")
+		return
 	if (src.occupant)
-		usr << "\blue <B>The [src.name] is already occupied!</B>"
-		src.log_append_to_last("Permission denied.")
+		H << SPAN_NOTE("<B>The [src] is already occupied!</B>")
+		log_append_to_last("Permission denied.")
 		return
-/*
-	if (usr.abiotic())
-		usr << "\blue <B>Subject cannot have abiotic items on.</B>"
-		return
-*/
+
 	var/passed
 	if(src.dna)
-		if(usr.dna.unique_enzymes==src.dna)
+		if(H.dna.unique_enzymes==src.dna)
 			passed = 1
-	else if(src.operation_allowed(usr))
+	else if(src.operation_allowed(H))
 		passed = 1
+
 	if(!passed)
-		usr << "\red Access denied"
-		src.log_append_to_last("Permission denied.")
+		H << SPAN_WARN("Access denied")
+		log_append_to_last("Permission denied.")
 		return
-	for(var/mob/living/carbon/slime/M in range(1,usr))
-		if(M.Victim == usr)
-			usr << "You're too busy getting your life sucked out of you."
+
+	for(var/mob/living/carbon/slime/M in range(1,H))
+		if(M.Victim == H)
+			H << "You're too busy getting your life sucked out of you."
 			return
-//	usr << "You start climbing into [src.name]"
 
-	visible_message("\blue [usr] starts to climb into [src.name]")
+	visible_message(
+		SPAN_NOTE("[usr] starts to climb into [src.name]"),
+		SPAN_NOTE("You start climbing into [src.name]")
+	)
 
-	if(enter_after(40,usr))
+	if(enter_after(40,H))
 		if(!src.occupant)
-			moved_inside(usr)
-		else if(src.occupant!=usr)
-			usr << "[src.occupant] was faster. Try better next time, loser."
+			moved_inside(H)
+		else if(src.occupant!=H)
+			H << "[src.occupant] was faster. Try better next time, loser."
 	else
-		usr << "You stop entering the exosuit."
+		H << "You stop entering the exosuit."
 	return
 
 /obj/mecha/proc/moved_inside(var/mob/living/carbon/human/H as mob)
 	if(H && H.client && H in range(1))
 		H.reset_view(src)
-		/*
-		H.client.perspective = EYE_PERSPECTIVE
-		H.client.eye = src
-		*/
 		H.stop_pulling()
 		H.forceMove(src)
 		src.occupant = H

@@ -132,7 +132,10 @@
 	else
 		return ..()
 
-/obj/machinery/dna_scannernew/proc/put_in(var/mob/M)
+/obj/machinery/dna_scannernew/proc/put_in(var/mob/living/carbon/human/M)
+	if(!istype(M))
+		return
+	M.check_dna()
 	src.occupant = M
 	src.occupant.forceMove(src)
 	src.icon_state = "scanner_1"

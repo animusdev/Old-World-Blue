@@ -33,7 +33,7 @@
 		return
 	user.set_machine(src)
 	var/dat = {"
-		<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
+		<!DOCTYPE HTML>
 		<html>
 			<head>
 				<style>
@@ -218,7 +218,9 @@
 					</tr>
 				</table>
 				<br>
-				<p>Each time this button is pressed, a request will be sent out to any available personalities. Check back often give plenty of time for personalities to respond. This process could take anywhere from 15 seconds to several minutes, depending on the available personalities' timeliness.</p>
+				<p>Each time this button is pressed, a request will be sent out to any available personalities.
+				Check back often give plenty of time for personalities to respond.
+				This process could take anywhere from 15 seconds to several minutes, depending on the available personalities' timeliness.</p>
 			"}
 	user << browse(dat, "window=paicard")
 	onclose(user, "paicard")
@@ -226,26 +228,28 @@
 
 /obj/item/device/paicard/Topic(href, href_list)
 
-	if(!usr || usr.stat)
+	if(!usr || usr.stat || !Adjacent(usr))
 		return
 
 	if(href_list["setdna"])
 		if(pai.master_dna)
 			return
-		var/mob/M = usr
-		if(!istype(M, /mob/living/carbon))
-			usr << "<font color=blue>You don't have any DNA, or your DNA is incompatible with this device.</font>"
+		var/mob/living/carbon/human/H = usr
+		if(!istype(H) || H.isSynthetic() || H.status_flags & NOCLONE)
+			usr << SPAN_NOTE("You don't have any DNA, or your DNA is incompatible with this device.")
 		else
-			var/datum/dna/dna = usr.dna
-			pai.master = M.real_name
+			var/datum/dna/dna = H.dna
+			pai.master = H.real_name
 			pai.master_dna = dna.unique_enzymes
-			pai << "<font color = red><h3>You have been bound to a new master.</h3></font>"
+			pai << SPAN_WARN("<h3>You have been bound to a new master.</h3>")
 	if(href_list["request"])
 		src.looking_for_personality = 1
 		paiController.findPAI(src, usr)
 	if(href_list["wipe"])
 		var/confirm = input("Are you CERTAIN you wish to delete the current personality? This action cannot be undone.", "Personality Wipe") in list("Yes", "No")
 		if(confirm == "Yes")
+			if(!usr || usr.stat || !Adjacent(usr))
+				return
 			for(var/mob/M in src)
 				M << "<font color = #ff0000><h2>You feel yourself slipping away from reality.</h2></font>"
 				M << "<font color = #ff4d4d><h3>Byte by byte you lose your sense of self.</h3></font>"
@@ -263,6 +267,8 @@
 	if(href_list["setlaws"])
 		var/newlaws = sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.pai_laws) as message)
 		if(newlaws)
+			if(!usr || usr.stat || !Adjacent(usr))
+				return
 			pai.pai_laws = newlaws
 			pai << "Your supplemental directives have been updated. Your new directives are:"
 			pai << "Prime Directive: <br>[pai.pai_law0]"

@@ -21,7 +21,9 @@
 
 /datum/antagonist/changeling/update_antag_mob(var/datum/mind/player)
 	..()
-	player.current.make_changeling()
+	if(ishuman(player.current))
+		var/mob/living/carbon/human/H = player.current
+		H.make_changeling()
 
 /datum/antagonist/changeling/create_objectives(var/datum/mind/changeling)
 	if(!..())

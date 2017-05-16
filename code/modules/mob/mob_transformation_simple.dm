@@ -40,17 +40,20 @@
 		M.name = src.name
 		M.real_name = src.real_name
 
-	if(src.dna)
-		M.dna = src.dna.Clone()
-
 	if(mind)
 		mind.transfer_to(M)
 	else
 		M.key = key
 
-	if(subspecies && ishuman(M))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.set_species(subspecies)
+		if(ishuman(src))
+			var/mob/living/carbon/human/Self = src
+			if(Self.dna)
+				H.dna = Self.dna.Clone()
+
+		if(subspecies)
+			H.set_species(subspecies)
 
 	if(delete_old_mob)
 		spawn(1)

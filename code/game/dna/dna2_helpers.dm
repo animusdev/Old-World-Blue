@@ -13,8 +13,8 @@
 	return temp1
 
 // Give Random Bad Mutation to M
-/proc/randmutb(var/mob/living/M)
-	if(!M) return
+/proc/randmutb(var/mob/living/carbon/human/M)
+	if(!istype(M)) return
 	M.dna.check_integrity()
 /*
 	var/block = pick(GLASSESBLOCK,COUGHBLOCK,FAKEBLOCK,NERVOUSBLOCK,CLUMSYBLOCK,TWITCHBLOCK,HEADACHEBLOCK,BLINDBLOCK,DEAFBLOCK,HALLUCINATIONBLOCK)
@@ -22,8 +22,8 @@
 */
 
 // Give Random Good Mutation to M
-/proc/randmutg(var/mob/living/M)
-	if(!M) return
+/proc/randmutg(var/mob/living/carbon/human/M)
+	if(!istype(M)) return
 	M.dna.check_integrity()
 /*
 	var/block = pick(HULKBLOCK,XRAYBLOCK,FIREBLOCK,TELEBLOCK,NOBREATHBLOCK,REMOTEVIEWBLOCK,REGENERATEBLOCK,INCREASERUNBLOCK,REMOTETALKBLOCK,MORPHBLOCK,BLENDBLOCK,NOPRINTSBLOCK,SHOCKIMMUNITYBLOCK,SMALLSIZEBLOCK)
@@ -31,15 +31,14 @@
 */
 
 // Random Appearance Mutation
-/proc/randmuti(var/mob/living/M)
-	if(!M) return
+/proc/randmuti(var/mob/living/carbon/human/M)
+	if(!istype(M)) return
 	M.dna.check_integrity()
 	M.dna.SetUIValue(rand(1,DNA_UI_LENGTH),rand(1,4095))
 
 // Scramble UI or SE.
-/proc/scramble(var/UI, var/mob/M, var/prob)
-	if(!M)	return
-	M.dna.check_integrity()
+/proc/scramble(var/UI, var/mob/living/carbon/human/M, var/prob)
+	if(!istype(M)) return	M.dna.check_integrity()
 	if(UI)
 		for(var/i = 1, i <= DNA_UI_LENGTH-1, i++)
 			if(prob(prob))

@@ -64,10 +64,18 @@
 			// Check the carrier
 			var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") in list("Yes", "No")
 			if(answer == "Yes")
-				var/turf/T = get_turf_or_move(P.loc)
-				for (var/mob/v in viewers(T))
-					v.show_message("<span class='notice'>[M] presses \his thumb against [P].</span>", 3, "<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>", 2)
-				var/datum/dna/dna = M.dna
+				if(!istype(M) || M.isSynthetic() || M.status_flags & NOCLONE)
+					M << SPAN_WARN("You have no DNA!")
+					P << SPAN_WARN("[M] have no DNA!")
+					return
+
+				M.visible_message(
+					SPAN_NOTE("[M] presses \his thumb against [P]."),
+					SPAN_NOTE("You press your thumb againts [P]."),
+					SPAN_NOTE("You hear sharp clicking sound.")
+				)
+				var/mob/living/carbon/human/H = M
+				var/datum/dna/dna = H.dna
 				P << "<font color = red><h3>[M]'s UE string : [dna.unique_enzymes]</h3></font>"
 				if(dna.unique_enzymes == P.master_dna)
 					P << "<b>DNA is a match to stored Master DNA.</b>"

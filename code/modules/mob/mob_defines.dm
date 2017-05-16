@@ -144,7 +144,6 @@
 
 	var/job = null//Living
 
-	var/datum/dna/dna = null//Carbon
 	var/radiation = 0.0//Carbon
 
 	var/voice_name = "unidentifiable voice"

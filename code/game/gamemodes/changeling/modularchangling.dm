@@ -24,7 +24,7 @@ var/list/datum/power/changeling/powerinstances = list()
 	name = "Transform"
 	desc = "We take on the apperance and voice of one we have absorbed."
 	genomecost = 0
-	verbpath = /mob/proc/changeling_transform
+	verbpath = /mob/living/carbon/human/proc/changeling_transform
 
 /datum/power/changeling/fakedeath
 	name = "Regenerative Stasis"
@@ -503,5 +503,6 @@ var/list/datum/power/changeling/powerinstances = list()
 	if(!Thepower.isVerb && Thepower.verbpath)
 		call(M.current, Thepower.verbpath)()
 	else if(remake_verbs)
-		M.current.make_changeling()
+		var/mob/living/carbon/human/H = M.current
+		H.make_changeling()
 

@@ -2,6 +2,8 @@
 	gender = MALE
 	var/datum/species/species //Contains icon generation and language information, set during New().
 	var/list/stomach_contents = list()
+	var/datum/dna/dna = null
+
 	var/list/datum/disease2/disease/virus2 = list()
 	var/list/antibodies = list()
 

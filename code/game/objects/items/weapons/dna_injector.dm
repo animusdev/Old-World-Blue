@@ -63,33 +63,34 @@
 	else
 		return buf.dna.SetUIValue(real_block,val)
 
-/obj/item/weapon/dnainjector/proc/inject(mob/M as mob, mob/user as mob)
-	if(istype(M,/mob/living))
-		M.radiation += rand(5,20)
+/obj/item/weapon/dnainjector/proc/inject(mob/living/carbon/human/H, mob/living/user)
+	if(istype(H))
+		H.radiation += rand(5,20)
 
-	if (!(NOCLONE & M.status_flags)) // prevents drained people from having their DNA changed
+	// prevents drained people from having their DNA changed
+	if(!(NOCLONE & H.status_flags))
 		if (buf.types & DNA2_BUF_UI)
 			if (!block) //isolated block?
-				M.UpdateAppearance(buf.dna.UI.Copy())
+				H.UpdateAppearance(buf.dna.UI.Copy())
 				if (buf.types & DNA2_BUF_UE) //unique enzymes? yes
-					M.real_name = buf.dna.real_name
-					M.name = buf.dna.real_name
+					H.real_name = buf.dna.real_name
+					H.name = buf.dna.real_name
 				uses--
 			else
-				M.dna.SetUIValue(block,src.GetValue())
-				M.UpdateAppearance()
+				H.dna.SetUIValue(block,src.GetValue())
+				H.UpdateAppearance()
 				uses--
 		if (buf.types & DNA2_BUF_SE)
 			if (!block) //isolated block?
-				M.dna.SE = buf.dna.SE.Copy()
-				M.dna.UpdateSE()
+				H.dna.SE = buf.dna.SE.Copy()
+				H.dna.UpdateSE()
 			else
-				M.dna.SetSEValue(block,src.GetValue())
+				H.dna.SetSEValue(block,src.GetValue())
 			//TODO: DNA3 update_mutations
-			//domutcheck(M, null, block!=null)
+			//domutcheck(H, null, block!=null)
 			uses--
 			if(prob(5))
-				trigger_side_effect(M)
+				trigger_side_effect(H)
 
 	spawn(0)//this prevents the collapse of space-time continuum
 		if (user)
@@ -97,27 +98,27 @@
 		qdel(src)
 	return uses
 
-/obj/item/weapon/dnainjector/attack(mob/M as mob, mob/user as mob)
-	if (!istype(M, /mob))
+/obj/item/weapon/dnainjector/attack(mob/living/M, mob/living/user)
+	if (!istype(M))
 		return
 	if (!usr.IsAdvancedToolUser())
 		return
 	if(inuse)
 		return 0
 
-	user.visible_message("<span class='danger'>\The [user] is trying to inject \the [M] with \the [src]!</span>")
+	user.visible_message(SPAN_DANG("\The [user] is trying to inject \the [M] with \the [src]!"))
 	inuse = 1
 	s_time = world.time
 	spawn(50)
 		inuse = 0
 
-	if(!do_after(user,50))
+	if(!do_mob(user, M, 50))
 		return
 
 	user.setClickCooldown(DEFAULT_QUICK_COOLDOWN)
 	user.do_attack_animation(M)
 
-	M.visible_message("<span class='danger'>\The [M] has been injected with \the [src] by \the [user].</span>")
+	M.visible_message(SPAN_DANG("\The [M] has been injected with \the [src] by \the [user]."))
 
 	var/mob/living/carbon/human/H = M
 	if(!istype(H))
