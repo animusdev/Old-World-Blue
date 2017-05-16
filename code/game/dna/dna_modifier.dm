@@ -155,7 +155,6 @@
 					break
 	return
 
-
 /obj/machinery/dna_scannernew/MouseDrop_T(var/mob/target, var/mob/user)
 	if(!ismob(target))
 		return
