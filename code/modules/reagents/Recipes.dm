@@ -1927,3 +1927,18 @@
 	result = "luminol"
 	required_reagents = list("hydrazine" = 2, "carbon" = 2, "ammonia" = 2)
 	result_amount = 6
+
+/datum/chemical_reaction/enzyme_ingibitor
+	name = "Enzyme inhibitor"
+	id = "enzyme_ingibitor"
+	result = "enzyme_ingibitor"
+	required_reagents = list("inaprovaline" = 1, "hyronalin" = 1)//, "ryetalyn" = 1)
+	result_amount = 3
+
+/datum/chemical_reaction/enzyme_activator
+	name = "Enzyme activator"
+	id = "enzyme_activator"
+	result = "enzyme_activator"
+	required_reagents = list("inaprovaline" = 1, "mutagen" = 1)
+	result_amount = 3
+

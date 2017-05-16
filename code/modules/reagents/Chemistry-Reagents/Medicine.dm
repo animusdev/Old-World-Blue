@@ -549,3 +549,16 @@
 	if(dose > 10)
 		M.make_dizzy(5)
 		M.make_jittery(5)
+
+/* Genetics */
+/datum/reagent/enzyme_ingibitor
+	name = "Enzyme inhibitor"
+	id = "enzyme_ingibitor"
+	description = "Binds to an enzyme and decreases its activity."
+	taste_description = "acid"
+
+/datum/reagent/enzyme_activator
+	name = "Enzyme activator"
+	id = "enzyme_activator"
+	description = "Inhibit natural mutation rejection."
+	taste_description = "sickness"

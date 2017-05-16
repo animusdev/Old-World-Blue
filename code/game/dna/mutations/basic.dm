@@ -40,14 +40,19 @@ var/list/all_mutations = new
 	return TRUE
 
 /mob/living/carbon/human/proc/update_mutations(var/block = 0)
+	var/modif = 0
+	modif += reagents.get_reagent_amount("enzyme_ingibitor")
+	modif -= reagents.get_reagent_amount("enzyme_ingibitor")
+	if(abs(modif) < 3)
+		modif = 0
 	if(!block)
 		var/datum/mutation/mutation = null
 		for(var/i = 1 to dna.SE.len)
 			mutation = all_mutations[species.mutations[i]]
-			mutation.test(src, dna.SE[i], 0)
+			mutation.test(src, dna.SE[i], modif)
 	else
 		var/datum/mutation/mutation = all_mutations[species.mutations[block]]
-		mutation.test(src, dna.SE[block], 0)
+		mutation.test(src, dna.SE[block], modif)
 
 
 /////////////////////
