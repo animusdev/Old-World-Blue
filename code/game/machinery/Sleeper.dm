@@ -307,6 +307,7 @@
 			src.occupant.client.perspective = MOB_PERSPECTIVE
 		src.occupant.loc = src.loc
 		src.occupant = null
+		update_icon()
 		update_use_power(1)
 		return
 
