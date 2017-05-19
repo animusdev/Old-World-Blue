@@ -107,6 +107,11 @@
 			SPAN_DANG("[user] slams [target] into the [src]!"),
 			SPAN_NOTE("You slam [target] into the [src]!")
 		)
+		admin_attack_log(user, target,
+			"slams <b>[key_name(target)]</b> into the [src]",
+			"Was slamed by <b>[key_name(user)] into the [src]</b>",
+			"slamed into the [src]"
+		)
 		target.adjustBruteLoss(8)
 	return TRUE
 
@@ -130,6 +135,11 @@
 		user.visible_message(
 			SPAN_DANG("[user] slams [target] into the [src]!"),
 			SPAN_NOTE("You slam [target] into the [src]!")
+		)
+		admin_attack_log(user, target,
+			"slams <b>[key_name(target)]</b> into the [src]",
+			"Was slamed by <b>[key_name(user)] into the [src]</b>",
+			"slamed into the [src]"
 		)
 		target.adjustBruteLoss(8)
 		return TRUE
