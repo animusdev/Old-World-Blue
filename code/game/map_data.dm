@@ -55,7 +55,6 @@ var/datum/maps_data/maps_data = new
 	var/list/asteroid_leves = new
 
 /datum/maps_data/proc/registrate(var/obj/map_data/MD)
-	world.log << "Registrate Z lelve [MD.z_level]. AG = [MD.generate_asteroid]"
 	var/level = MD.z_level
 	if(level in all_levels)
 		WARNING("[level] is already in all_levels list!")
