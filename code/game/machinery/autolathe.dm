@@ -56,7 +56,7 @@
 
 		for(var/material in stored_material)
 			material_top += "<td width = '25%' align = center><b>"
-			material_top += "<a href='?src=/ref[src];remove_material=[material]'>[material]</a>"
+			material_top += "<a href='?src=\ref[src];remove_material=[material]'>[material]</a>"
 			material_top += "</b></td>"
 			material_bottom += "<td width = '25%' align = center>[stored_material[material]]<b>/[storage_capacity[material]]</b></td>"
 
@@ -222,11 +222,11 @@
 			return
 		//convert list to units
 		amount *= SHEET_MATERIAL_AMOUNT
-		if(stored_material < amount)
+		if(stored_material[material] < amount)
 			amount = round(stored_material, SHEET_MATERIAL_AMOUNT)
 			if(amount < SHEET_MATERIAL_AMOUNT)
 				return
-		stored_material -= amount
+		stored_material[material] -= amount
 		create_material_stack(material, amount, src.loc)
 
 	if(href_list["change_category"])
