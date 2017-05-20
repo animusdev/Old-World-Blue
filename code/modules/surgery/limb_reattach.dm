@@ -45,17 +45,19 @@
 /datum/surgery_step/limb/attach/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/E = tool
 	user.visible_message(
-		"<span class='notice'>[user] has attached [target]'s [E.name] to the [E.amputation_point].</span>",
-		"<span class='notice'>You have attached [target]'s [E.name] to the [E.amputation_point].</span>"
+		SPAN_NOTE("[user] has attached [target]'s [E.name] to the [E.amputation_point]."),
+		SPAN_NOTE("You have attached [target]'s [E.name] to the [E.amputation_point].")
 	)
 	user.drop_from_inventory(E)
 	E.install(target)
+	E.status |= ORGAN_CUT_AWAY
+
 
 /datum/surgery_step/limb/attach/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/E = tool
 	user.visible_message(
-		"<span class='warning'> [user]'s hand slips, damaging [target]'s [E.amputation_point]!</span>",
-		"<span class='warning'> Your hand slips, damaging [target]'s [E.amputation_point]!</span>"
+		SPAN_WARN("[user]'s hand slips, damaging [target]'s [E.amputation_point]!"),
+		SPAN_WARN("Your hand slips, damaging [target]'s [E.amputation_point]!")
 	)
 	target.apply_damage(10, BRUTE, null, sharp=1)
 
@@ -87,13 +89,10 @@
 /datum/surgery_step/limb/connect/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/E = target.get_organ(target_zone)
 	user.visible_message(
-		"<span class='notice'>[user] has connected tendons and muscles in [target]'s [E.amputation_point] with [tool].</span>",
-		"<span class='notice'>You have connected tendons and muscles in [target]'s [E.amputation_point] with [tool].</span>"
+		SPAN_NOTE("[user] has connected tendons and muscles in [target]'s [E.amputation_point] with [tool]."),
+		SPAN_NOTE("You have connected tendons and muscles in [target]'s [E.amputation_point] with [tool].")
 	)
 	E.status &= ~ORGAN_CUT_AWAY
-	if(E.children)
-		for(var/obj/item/organ/external/C in E.children)
-			C.status &= ~ORGAN_CUT_AWAY
 	target.update_body()
 	target.updatehealth()
 	target.UpdateDamageIcon()
@@ -101,8 +100,8 @@
 /datum/surgery_step/limb/connect/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/E = target.get_organ(target_zone)
 	user.visible_message(
-		"<span class='warning'> [user]'s hand slips, damaging [target]'s [E.amputation_point]!</span>",
-		"<span class='warning'> Your hand slips, damaging [target]'s [E.amputation_point]!</span>"
+		SPAN_WARN("[user]'s hand slips, damaging [target]'s [E.amputation_point]!"),
+		SPAN_WARN("Your hand slips, damaging [target]'s [E.amputation_point]!")
 	)
 	target.apply_damage(10, BRUTE, null, sharp=1)
 

@@ -71,7 +71,6 @@ var/list/organ_cache = list()
 	loc = get_turf(owner)
 	processing_objects |= src
 	rejecting = null
-	status |= ORGAN_CUT_AWAY
 
 	var/datum/reagent/blood/organ_blood = locate(/datum/reagent/blood) in reagents.reagent_list
 	if(!organ_blood || !organ_blood.data["blood_DNA"])

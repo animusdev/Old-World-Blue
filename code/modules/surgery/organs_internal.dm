@@ -236,11 +236,11 @@
 
 		target.op_stage.current_organ = null
 
+		var/obj/item/organ/external/affected = target.get_organ(target_zone)
 		var/list/attached_organs = list()
-		for(var/organ in target.internal_organs_by_name)
-			var/obj/item/organ/internal/I = target.internal_organs_by_name[organ]
-			if(I && !(I.status&ORGAN_CUT_AWAY) && I.parent_organ == target_zone)
-				attached_organs |= organ
+		for(var/obj/item/organ/internal/I in affected.internal_organs)
+			if(!(I.status&ORGAN_CUT_AWAY))
+				attached_organs |= I.organ_tag
 
 		var/organ_to_remove = input(user, "Which organ do you want to prepare for removal?") as null|anything in attached_organs
 		if(!organ_to_remove)
@@ -262,14 +262,14 @@
 		..()
 
 	end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		user.visible_message(
-			SPAN_NOTE("[user] has separated [target]'s [target.op_stage.current_organ] with \the [tool]."),
-			SPAN_NOTE("You have separated [target]'s [target.op_stage.current_organ] with \the [tool].")
-		)
-
 		var/obj/item/organ/internal/I = target.internal_organs_by_name[target.op_stage.current_organ]
-		if(I && istype(I))
+		if(istype(I))
 			I.status |= ORGAN_CUT_AWAY
+
+			user.visible_message(
+				SPAN_NOTE("[user] has separated [target]'s [target.op_stage.current_organ] with \the [tool]."),
+				SPAN_NOTE("You have separated [target]'s [target.op_stage.current_organ] with \the [tool].")
+			)
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		var/obj/item/organ/external/affected = target.get_organ(target_zone)
@@ -280,7 +280,6 @@
 		affected.createwound(CUT, rand(30,50), 1)
 
 /datum/surgery_step/internal/remove_organ
-
 	allowed_tools = list(
 		/obj/item/weapon/hemostat = 100,
 		/obj/item/weapon/wirecutters = 75,
@@ -410,6 +409,7 @@
 		if(istype(O))
 			user.remove_from_mob(O)
 			O.install(target)
+			O.status |= ORGAN_CUT_AWAY
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 		user.visible_message(
@@ -464,7 +464,7 @@
 		)
 
 		var/obj/item/organ/internal/I = target.internal_organs_by_name[target.op_stage.current_organ]
-		if(I && istype(I))
+		if(istype(I))
 			I.status &= ~ORGAN_CUT_AWAY
 
 	fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
