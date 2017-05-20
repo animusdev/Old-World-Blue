@@ -55,15 +55,13 @@
 		var/material_bottom = ""
 
 		for(var/material in stored_material)
-<<<<<<< HEAD
+
 			material_top += "<td width = '25%' align = center><b>[material]</b></td>"
 			material_bottom += "<td width = '25%' align = center>[round(stored_material[material])]<b>/[storage_capacity[material]]</b></td>"
-=======
 			material_top += "<td width = '25%' align = center><b>"
 			material_top += "<a href='?src=\ref[src];remove_material=[material]'>[material]</a>"
 			material_top += "</b></td>"
 			material_bottom += "<td width = '25%' align = center>[stored_material[material]]<b>/[storage_capacity[material]]</b></td>"
->>>>>>> b3875d4851527a40e0fe3dbdbb087c225d5cea73
 
 		dat += "<tr>[material_top]</tr><tr>[material_bottom]</tr></table><hr>"
 		dat += "<b>Current color:</b> <a href='?src=\ref[src];color=set'><span class='box' style='background-color:[current_color];'></span></a><hr><br>"
