@@ -52,9 +52,10 @@ var/datum/maps_data/maps_data = new
 	var/list/player_levels  = new
 	var/list/overmap_levels = new
 	var/list/overmap_finds  = new
+	var/list/asteroid_leves = new
 
 /datum/maps_data/proc/registrate(var/obj/map_data/MD)
-	var/level = MD.z
+	var/level = MD.z_level
 	if(level in all_levels)
 		WARNING("[level] is already in all_levels list!")
 		qdel(MD)
@@ -80,6 +81,9 @@ var/datum/maps_data/maps_data = new
 	if(MD.is_overmap_finds)
 		overmap_finds += level
 
+	if(MD.generate_asteroid)
+		asteroid_leves += level
+
 
 
 /obj/map_data
@@ -90,6 +94,7 @@ var/datum/maps_data/maps_data = new
 	var/is_overmap_level = 0
 	var/is_overmap_finds = 0
 	var/generate_asteroid= 0
+	var/tmp/z_level
 
 /obj/map_data/station
 	name = "Station Level"
@@ -112,7 +117,9 @@ var/datum/maps_data/maps_data = new
 
 /obj/map_data/New()
 	..()
-	maps_data.registrate(src)
+	z_level = z
+	spawn()
+		maps_data.registrate(src)
 
 
 

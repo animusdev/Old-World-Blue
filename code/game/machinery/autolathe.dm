@@ -51,14 +51,21 @@
 
 	if(!disabled)
 		dat += "<table width = '100%'>"
-		var/material_top = "<tr>"
-		var/material_bottom = "<tr>"
+		var/material_top = ""
+		var/material_bottom = ""
 
 		for(var/material in stored_material)
+<<<<<<< HEAD
 			material_top += "<td width = '25%' align = center><b>[material]</b></td>"
 			material_bottom += "<td width = '25%' align = center>[round(stored_material[material])]<b>/[storage_capacity[material]]</b></td>"
+=======
+			material_top += "<td width = '25%' align = center><b>"
+			material_top += "<a href='?src=\ref[src];remove_material=[material]'>[material]</a>"
+			material_top += "</b></td>"
+			material_bottom += "<td width = '25%' align = center>[stored_material[material]]<b>/[storage_capacity[material]]</b></td>"
+>>>>>>> b3875d4851527a40e0fe3dbdbb087c225d5cea73
 
-		dat += "[material_top]</tr>[material_bottom]</tr></table><hr>"
+		dat += "<tr>[material_top]</tr><tr>[material_bottom]</tr></table><hr>"
 		dat += "<b>Current color:</b> <a href='?src=\ref[src];color=set'><span class='box' style='background-color:[current_color];'></span></a><hr><br>"
 		dat += "<h2>Printable Designs</h2><h3>Showing: <a href='?src=\ref[src];change_category=1'>[show_category]</a>.</h3></center><table width = '100%'>"
 
@@ -216,8 +223,23 @@
 		usr << "<span class='notice'>The autolathe is busy. Please wait for completion of previous operation.</span>"
 		return
 
-	if(href_list["change_category"])
+	if(href_list["remove_material"])
+		var/material = href_list["remove_material"]
+		if(!material in stored_material)
+			return
+		var/amount = input(usr, "How many stacks you want eject?") as null|num
+		if(amount < 1 || !in_range(usr,src) || usr.stat || usr.restrained())
+			return
+		//convert list to units
+		amount *= SHEET_MATERIAL_AMOUNT
+		if(stored_material[material] < amount)
+			amount = round(stored_material, SHEET_MATERIAL_AMOUNT)
+			if(amount < SHEET_MATERIAL_AMOUNT)
+				return
+		stored_material[material] -= amount
+		create_material_stack(material, amount, src.loc)
 
+	if(href_list["change_category"])
 		var/choice = input("Which category do you wish to display?") as null|anything in autolathe_categories+"All"
 		if(!choice) return
 		show_category = choice
