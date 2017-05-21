@@ -75,6 +75,7 @@
 			..()
 
 	holotable/wood
-	New()
-		..()
-		material = get_material_by_name("holowood")
+		color = "#824B28"
+		New()
+			..()
+			material = get_material_by_name("holowood")
