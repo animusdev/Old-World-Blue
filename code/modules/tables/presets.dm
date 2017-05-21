@@ -74,8 +74,7 @@
 			material = get_material_by_name("holo[DEFAULT_TABLE_MATERIAL]")
 			..()
 
-	woodentable/holotable
-		icon_state = "holo_preview"
-		New()
-			material = get_material_by_name("holowood")
-			..()
+	holotable/wood
+	New()
+		..()
+		material = get_material_by_name("holowood")
