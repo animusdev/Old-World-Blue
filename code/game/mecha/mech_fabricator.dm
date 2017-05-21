@@ -122,17 +122,20 @@
 			var/req_amount = get_resource_cost_w_coeff(D.materials[M])
 			if(req_amount>resources[M])
 				output += "<span class='deficiency'>[req_amount] [M]</span>"
-			output = "[req_amount] [M]"
+			else
+				output += "[req_amount] [M]"
 	return jointext(output, "|")
 
 /obj/machinery/mecha_part_fabricator/proc/output_available_resources()
-	var/output
+	var/output = "<table><tr>"
+	var/i = 0
 	for(var/resource in resources)
 		var/amount = min(res_max_amount, resources[resource])
-		output += "<span class=\"res_name\">[resource]: </span>[amount] cm&sup3;"
-		if(amount>0)
-			output += "<span style='font-size:80%;'> - Remove \[<a href='?src=\ref[src];remove_mat=1;material=[resource]'>1</a>\] | \[<a href='?src=\ref[src];remove_mat=10;material=[resource]'>10</a>\] | \[<a href='?src=\ref[src];remove_mat=[res_max_amount];material=[resource]'>All</a>\]</span>"
-		output += "<br/>"
+		output += "<td><span class='res_name'><a href='?src=\ref[src];remove_material=[resource]'>[resource]</a></span>: "
+		output += "[amount] cm&sup3;</td>"
+		if(++i % 2 == 0)
+			output += "</tr><tr>"
+	output += "</td></table>"
 	return output
 
 /obj/machinery/mecha_part_fabricator/proc/remove_resources(var/datum/design/D)
@@ -338,7 +341,7 @@
 		left_part += "<a href='?src=\ref[src];sync=1'>Sync with R&D servers</a><hr>"
 		for(var/category in categories)
 			left_part += "<a href='?src=\ref[src];category=[category]'>[category]</a> - "
-			left_part += "\[<a href='?src=\ref[src];partset_to_queue=[category]'>Add all parts to queue\]<br>"
+			left_part += "\[<a href='?src=\ref[src];partset_to_queue=[category]'>Add all parts to queue</a>\]<br>"
 	dat = {"<html>
 		<head>
 			<title>[src.name]</title>
@@ -348,27 +351,26 @@
 				.red {color: #f00;}
 				.part {margin-bottom: 10px;}
 				.arrow {text-decoration: none; font-size: 10px;}
-				body, table {height: 100%;}
-				td {vertical-align: top; padding: 5px;}
-				html, body {padding: 0px; margin: 0px;}
+				.panel {height:100%; bottom:0px; float:left; overflow:auto;}
+				.right {width: 40%; background: #ccc;}
+				.left {width: 60%; padding-right: 10px;}
+				.content {height:98%;}
+				html, body {overflow:hidden;}
+				html {padding: 2px; margin: 0px;}
 				h1 {font-size: 18px; margin: 5px 0px;}
 				</style>
-			<script language='javascript' type='text/javascript'>
-				[js_byjax]
-			</script>
+			<script language='javascript' type='text/javascript'>[js_byjax]</script>
 		</head>
-		<body>
-			<table style='width: 100%;'>
+		<body><div class='content'>
+			<div class='panel left'>
 				<tr>
-				<td style='width: 70%; padding-right: 10px;'>
+				<td class='left'>
 				[left_part]
-				</td>
-				<td style='width: 30%; background: #ccc;' id='queue'>
+			</div>
+			<div class='panel right' id='queue'>
 				[list_queue()]
-				</td>
-				<tr>
-			</table>
-		</body>
+			</div>
+		</div></body>
 		</html>"}
 	user << browse(dat, "window=mecha_fabricator;size=1000x400")
 	onclose(user, "mecha_fabricator")
@@ -468,21 +470,24 @@
 				[D.desc]<br>
 				<a href='?src=\ref[src];clear_temp=1'>Return</a>
 			"}
-	if(href_list["remove_mat"] && href_list["material"])
-		temp = "Ejected [remove_material(href_list["material"],text2num(href_list["remove_mat"]))] of [href_list["material"]]<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
+	if(href_list["remove_material"])
+		var/material = href_list["remove_material"]
+		if(!material in resources)
+			return
+		var/amount = input(usr, "How many stacks you want eject?") as null|num
+		if(amount < 1 || !in_range(usr,src) || usr.stat || usr.restrained())
+			return
+		//convert list to units
+		amount *= SHEET_MATERIAL_AMOUNT
+		if(resources[material] < amount)
+			amount = round(resources, SHEET_MATERIAL_AMOUNT)
+			if(amount < SHEET_MATERIAL_AMOUNT)
+				return
+		resources[material] -= amount
+		create_material_stack(material, amount, src.loc)
+		temp = "Ejected [round(amount, SHEET_MATERIAL_AMOUNT)] of [material]<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
 	src.updateUsrDialog()
 	return
-
-
-/obj/machinery/mecha_part_fabricator/proc/remove_material(var/M, var/amount)
-	if(!M in resources || amount <= 0)
-		return
-	var/eject_amount = min(round(amount)*SHEET_MATERIAL_AMOUNT, resources[M])
-	if(eject_amount >= SHEET_MATERIAL_AMOUNT)
-		resources[M] = resources[M] - eject_amount
-		create_material_stack(M, eject_amount, src.loc)
-	return eject_amount
-
 
 /obj/machinery/mecha_part_fabricator/update_icon()
 	..()
