@@ -55,6 +55,9 @@
 		var/material_bottom = ""
 
 		for(var/material in stored_material)
+
+			material_top += "<td width = '25%' align = center><b>[material]</b></td>"
+			material_bottom += "<td width = '25%' align = center>[round(stored_material[material])]<b>/[storage_capacity[material]]</b></td>"
 			material_top += "<td width = '25%' align = center><b>"
 			material_top += "<a href='?src=\ref[src];remove_material=[material]'>[material]</a>"
 			material_top += "</b></td>"
@@ -96,9 +99,10 @@
 				if(R.is_stack)
 					if(max_sheets && max_sheets > 0)
 						multiplier_string  += "<br>"
-						for(var/i = 5;i<max_sheets;i*=2) //5,10,20,40...
+						for(var/i = 5;i<=40;i*=2) //5,10,20,40...
 							multiplier_string  += "<a href='?src=\ref[src];make=[index];multiplier=[i]'>\[x[i]\]</a>"
 						multiplier_string += "<a href='?src=\ref[src];make=[index];multiplier=[max_sheets]'>\[x[max_sheets]\]</a>"
+
 
 			dat += "<tr><td width = 180>[R.hidden ? "<font color = 'red'>*</font>" : ""]<b>[can_make ? "<a href='?src=\ref[src];make=[index];multiplier=1'>" : ""][R.name][can_make ? "</a>" : ""]</b>[R.hidden ? "<font color = 'red'>*</font>" : ""][multiplier_string]</td><td align = right>[material_string]</tr>"
 
@@ -166,6 +170,10 @@
 		if(istype(eating,/obj/item/stack))
 			var/obj/item/stack/stack = eating
 			total_material *= stack.get_amount()
+
+		//Если это предмет
+		if(istype(eating,/obj/item))
+			total_material *= 0.75
 
 		if(stored_material[material] + total_material > storage_capacity[material])
 			total_material = storage_capacity[material] - stored_material[material]
@@ -279,11 +287,16 @@
 
 		//Create the desired item.
 		var/obj/item/I = new making.path(loc)
+		var/list/required = making.resources
 		if(multiplier > 1 && istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I
 			S.amount = multiplier
+		if(multiplier <= 1 && istype (I, /obj/item))
+			for(var/material in required)
+				I.matter[material] = required[material]*mat_efficiency
 		if(istype(I, /obj/item/weapon/light))
 			I:brightness_color = current_color
+
 
 
 	updateUsrDialog()
