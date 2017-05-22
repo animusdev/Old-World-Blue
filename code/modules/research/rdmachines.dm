@@ -46,7 +46,6 @@
 		return 1
 
 	if(istype(O, /obj/item/stack/material) && O.get_material_name() in materials)
-
 		var/obj/item/stack/material/stack = O
 		var/free_space = (max_material_storage - TotalMaterials())/SHEET_MATERIAL_AMOUNT
 		if(free_space < 1)

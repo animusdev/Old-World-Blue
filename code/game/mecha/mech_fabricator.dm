@@ -524,7 +524,7 @@
 		if(src.resources[material] >= res_max_amount)
 			user << "The fabricator cannot hold more [sname]."
 			return
-		if(!stack || stack.amount <= 1)
+		if(!stack || stack.amount < 1)
 			user << "The fabricator can only accept full sheets of [sname]."
 			return
 		src.overlays += "fab-load-[material]"
