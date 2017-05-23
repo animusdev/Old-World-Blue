@@ -183,7 +183,7 @@
 	mob_offset_y = 5
 
 /obj/structure/bed/psych/New(var/newloc)
-	..(newloc,"wood","leather")
+	..(newloc,MATERIAL_WOOD,"leather")
 
 /obj/structure/bed/padded/New(var/newloc)
 	..(newloc,MATERIAL_PLASTIC,"cotton")

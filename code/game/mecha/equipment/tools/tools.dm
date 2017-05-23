@@ -843,7 +843,6 @@
 	New()
 		..()
 		init()
-		return
 
 	Destroy()
 		qdel(pr_mech_generator)
@@ -884,7 +883,7 @@
 			var/result = load_fuel(target)
 			var/message
 			if(isnull(result))
-				message = "<span class='warning'>[fuel] traces in target minimal. [target] cannot be used as fuel.</span>"
+				message = SPAN_WARN("[fuel] traces in target minimal. [target] cannot be used as fuel.")
 			else if(!result)
 				message = "Unit is full."
 			else
@@ -894,7 +893,7 @@
 		return
 
 	proc/load_fuel(var/obj/item/stack/material/P)
-		if(P.type == fuel.type && P.amount)
+		if(P.get_material() == fuel.get_material() && P.amount)
 			var/to_load = max(max_fuel - fuel.amount*SHEET_MATERIAL_AMOUNT,0)
 			if(to_load)
 				var/units = min(max(round(to_load / SHEET_MATERIAL_AMOUNT),1),P.amount)

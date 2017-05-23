@@ -4,7 +4,9 @@
 #define MATERIAL_STEEL "steel"
 #define MATERIAL_GLASS "glass"
 #define MATERIAL_PLASTIC "plastic"
+#define MATERIAL_WOOD "wood"
 #define MATERIAL_PLASTEEL "plasteel"
+#define MATERIAL_RGLASS "rglass"
 #define MATERIAL_URANIUM "uranium"
 #define MATERIAL_DIAMOND "diamond"
 #define MATERIAL_GOLD "gold"
@@ -14,6 +16,7 @@
 #define MATERIAL_SANDSTONE "sandstone"
 #define MATERIAL_MARBLE "marble"
 #define MATERIAL_OSMIUM "osmium"
+#define MATERIAL_TRITIUM "tritium"
 #define MATERIAL_IRON "iron"
 #define MATERIAL_MYTHRIL "mhydrogen"
 

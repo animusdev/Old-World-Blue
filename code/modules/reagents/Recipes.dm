@@ -9,7 +9,9 @@
 	var/result_amount = 0
 	var/mix_message = "The solution begins to bubble."
 
-	var/log_is_important = 0 // If this reaction should be considered important for logging. Important recipes message admins when mixed, non-important ones just log to file.
+	// If this reaction should be considered important for logging.
+	// Important recipes message admins when mixed, non-important ones just log to file.
+	var/log_is_important = 0
 
 /datum/chemical_reaction/proc/can_happen(var/datum/reagents/holder)
 	return 1
@@ -436,7 +438,7 @@
 	result_amount = 1
 
 /datum/chemical_reaction/phoronsolidification/on_reaction(var/datum/reagents/holder, var/created_volume)
-	new /obj/item/stack/material/phoron(get_turf(holder.my_atom), created_volume)
+	PoolorNew(/obj/item/stack/material/phoron, list(get_turf(holder.my_atom), created_volume))
 	return
 
 /datum/chemical_reaction/plastication
@@ -447,7 +449,7 @@
 	result_amount = 1
 
 /datum/chemical_reaction/plastication/on_reaction(var/datum/reagents/holder, var/created_volume)
-	new /obj/item/stack/material/plastic(get_turf(holder.my_atom), created_volume)
+	PoolorNew(/obj/item/stack/material/plastic, list(get_turf(holder.my_atom), created_volume))
 	return
 
 /* Grenade reactions */
@@ -895,7 +897,9 @@
 	required = /obj/item/slime_extract/grey
 
 /datum/chemical_reaction/slime/spawn/on_reaction(var/datum/reagents/holder)
-	holder.my_atom.visible_message("<span class='warning'>Infused with phoron, the core begins to quiver and grow, and soon a new baby slime emerges from it!</span>")
+	holder.my_atom.visible_message(
+		SPAN_WARN("Infused with phoron, the core begins to quiver and grow, and soon a new baby slime emerges from it!"))
+	)
 	var/mob/living/carbon/slime/S = new /mob/living/carbon/slime
 	S.loc = get_turf(holder.my_atom)
 	..()
@@ -933,12 +937,8 @@
 	required = /obj/item/slime_extract/metal
 
 /datum/chemical_reaction/slime/metal/on_reaction(var/datum/reagents/holder)
-	var/obj/item/stack/material/steel/M = new /obj/item/stack/material/steel
-	M.amount = 15
-	M.loc = get_turf(holder.my_atom)
-	var/obj/item/stack/material/plasteel/P = new /obj/item/stack/material/plasteel
-	P.amount = 5
-	P.loc = get_turf(holder.my_atom)
+	PoolorNew(/obj/item/stack/material/steel, list(get_turf(holder.my_atom), 15))
+	PoolorNew(/obj/item/stack/material/plasteel, list(get_turf(holder.my_atom), 5))
 	..()
 
 //Gold - removed
@@ -1103,9 +1103,7 @@
 
 /datum/chemical_reaction/slime/plasma/on_reaction(var/datum/reagents/holder)
 	..()
-	var/obj/item/stack/material/phoron/P = new /obj/item/stack/material/phoron
-	P.amount = 10
-	P.loc = get_turf(holder.my_atom)
+	PoolorNew(/obj/item/stack/material/phoron, list(get_turf(holder.my_atom),10)
 
 //Red
 /datum/chemical_reaction/slime/glycerol

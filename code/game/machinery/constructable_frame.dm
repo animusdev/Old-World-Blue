@@ -26,26 +26,26 @@
 
 /obj/machinery/constructable_frame/machine_frame/attackby(obj/item/P as obj, mob/user as mob)
 	if(P.crit_fail)
-		user << "\red This part is faulty, you cannot add this to the machine!"
+		user << SPAN_WARN("This part is faulty, you cannot add this to the machine!")
 		return
 	switch(state)
 		if(1)
 			if(istype(P, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = P
 				if (C.get_amount() < 5)
-					user << "<span class='warning'>You need five lengths of cable to add them to the frame.</span>"
+					user << SPAN_WARN("You need five lengths of cable to add them to the frame.")
 					return
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				user << "<span class='notice'>You start to add cables to the frame.</span>"
+				user << SPAN_NOTE("You start to add cables to the frame.")
 				if(do_after(user, 20) && state == 1)
 					if(C.use(5))
-						user << "<span class='notice'>You add cables to the frame.</span>"
+						user << SPAN_NOTE("You add cables to the frame.")
 						state = 2
 						icon_state = "box_1"
 			else
 				if(istype(P, /obj/item/weapon/wrench))
 					playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-					user << "<span class='notice'>You dismantle the frame</span>"
+					user << SPAN_NOTE("You dismantle the frame.")
 					new /obj/item/stack/material/steel(src.loc, 5)
 					qdel(src)
 		if(2)
@@ -53,7 +53,7 @@
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "machine")
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					user << "<span class='notice'>You add the circuit board to the frame.</span>"
+					user << SPAN_NOTE("You add the circuit board to the frame.")
 					circuit = P
 					user.drop_from_inventory(P, src)
 					icon_state = "box_2"
@@ -69,11 +69,11 @@
 					update_desc()
 					user << desc
 				else
-					user << "<span class='warning'>This frame does not accept circuit boards of this type!</span>"
+					user << SPAN_WARN("This frame does not accept circuit boards of this type!")
 			else
 				if(istype(P, /obj/item/weapon/wirecutters))
 					playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-					user << "<span class='notice'>You remove the cables.</span>"
+					user << SPAN_NOTE("You remove the cables.")
 					state = 1
 					icon_state = "box_0"
 					var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( src.loc )
@@ -86,9 +86,9 @@
 				circuit.loc = src.loc
 				circuit = null
 				if(components.len == 0)
-					user << "<span class='notice'>You remove the circuit board.</span>"
+					user << SPAN_WARN("You remove the circuit board.")
 				else
-					user << "<span class='notice'>You remove the circuit board and other components.</span>"
+					user << SPAN_NOTE("You remove the circuit board and other components.")
 					for(var/obj/item/weapon/W in components)
 						W.loc = src.loc
 				desc = initial(desc)
@@ -132,7 +132,9 @@
 								if(istype(P, /obj/item/stack/cable_coil))
 									var/obj/item/stack/cable_coil/CP = P
 									if(CP.get_amount() > 1)
-										var/camt = min(CP.amount, req_components[I]) // amount of cable to take, idealy amount required, but limited by amount provided
+										// amount of cable to take, idealy amount required,
+										// but limited by amount provided
+										var/camt = min(CP.amount, req_components[I])
 										var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src)
 										CC.amount = camt
 										CC.update_icon()
@@ -148,4 +150,4 @@
 								break
 						user << desc
 						if(P && P.loc != src && !istype(P, /obj/item/stack/cable_coil))
-							user << "<span class='warning'>You cannot add that component to the machine!</span>"
+							user << SPAN_WARN("You cannot add that component to the machine!")

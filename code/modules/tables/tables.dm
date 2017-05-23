@@ -257,17 +257,21 @@
 /obj/structure/table/proc/dismantle(obj/item/weapon/wrench/W, mob/user)
 	if(manipulating) return
 	manipulating = 1
-	user.visible_message("<span class='notice'>\The [user] begins dismantling \the [src].</span>",
-	                              "<span class='notice'>You begin dismantling \the [src].</span>")
+	user.visible_message(
+		"<span class='notice'>\The [user] begins dismantling \the [src].</span>",
+		"<span class='notice'>You begin dismantling \the [src].</span>"
+	)
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	if(!do_after(user, 20))
 		manipulating = 0
 		return
-	user.visible_message("<span class='notice'>\The [user] dismantles \the [src].</span>",
-	                              "<span class='notice'>You dismantle \the [src].</span>")
-	new /obj/item/stack/material/steel(src.loc)
+	user.visible_message(
+		"<span class='notice'>\The [user] dismantles \the [src].</span>",
+		"<span class='notice'>You dismantle \the [src].</span>"
+	)
+	PoolorNew(/obj/item/stack/material/steel, src.loc)
 	qdel(src)
-	return
+
 
 // Returns a list of /obj/item/weapon/material/shard objects that were created as a result of this table's breakage.
 // Used for !fun! things such as embedding shards in the faces of tableslammed people.
@@ -290,7 +294,7 @@
 	if(carpeted && (full_return || prob(50)))
 		new /obj/item/stack/tile/carpet(src.loc)
 	if(full_return || prob(20))
-		new /obj/item/stack/material/steel(src.loc)
+		PoolorNew(/obj/item/stack/material/steel, src.loc)
 	else
 		var/material/M = get_material_by_name(MATERIAL_STEEL)
 		shards += M.place_shard(loc)

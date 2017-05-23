@@ -197,8 +197,8 @@
 
 //Fuel for MRSPACMAN generator.
 /obj/item/stack/material/tritium
-	name = "tritium"
-	default_type = "tritium"
+	name = MATERIAL_TRITIUM
+	default_type = MATERIAL_TRITIUM
 	icon_state = "sheet-silver"
 	apply_colour = 1
 
@@ -231,7 +231,7 @@
 
 /obj/item/stack/material/wood
 	name = "wooden plank"
-	default_type = "wood"
+	default_type = MATERIAL_WOOD
 	icon_state = "sheet-wood"
 
 /obj/item/stack/material/wood/full
@@ -270,7 +270,7 @@
 
 /obj/item/stack/material/glass/reinforced
 	name = "reinforced glass"
-	default_type = "rglass"
+	default_type = MATERIAL_RGLASS
 	icon_state = "sheet-rglass"
 
 /obj/item/stack/material/glass/reinforced/full

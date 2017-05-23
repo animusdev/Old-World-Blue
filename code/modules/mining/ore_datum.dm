@@ -128,6 +128,6 @@ var/global/list/ore_data = list()
 /ore/hydrogen
 	name = MATERIAL_MYTHRIL
 	display_name = "metallic hydrogen"
-	smelts_to = "tritium"
+	smelts_to = MATERIAL_TRITIUM
 	compresses_to = MATERIAL_MYTHRIL
 	scan_icon = "mineral_rare"

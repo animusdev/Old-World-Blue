@@ -15,7 +15,7 @@
 	..()
 
 /obj/item/stack/material/cultify()
-	if(get_material_name() == "wood")
+	if(get_material_name() == MATERIAL_WOOD)
 		return
 	return ..()
 
@@ -135,8 +135,8 @@
 	// Make it a wood-reinforced wooden table.
 	// There are cult materials available, but it'd make the table non-deconstructable with how holotables work.
 	// Could possibly use a new material var for holographic-ness?
-	material = get_material_by_name("wood")
-	reinforced = get_material_by_name("wood")
+	material = get_material_by_name(MATERIAL_WOOD)
+	reinforced = get_material_by_name(MATERIAL_WOOD)
 	update_desc()
 	update_connections(1)
 	update_icon()

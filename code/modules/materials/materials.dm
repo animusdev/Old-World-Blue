@@ -443,7 +443,7 @@ var/list/name_to_material
 	return (hardness > 35) //todo
 
 /material/glass/reinforced
-	name = "rglass"
+	name = MATERIAL_RGLASS
 	display_name = "reinforced glass"
 	icon_state = "sheet-rglass"
 	flags = MATERIAL_BRITTLE
@@ -513,7 +513,7 @@ var/list/name_to_material
 	sheet_plural_name = "ingots"
 
 /material/tritium
-	name = "tritium"
+	name = MATERIAL_TRITIUM
 	icon_state = "sheet-silver"
 	icon_colour = "#777777"
 	stack_origin_tech = list(TECH_MATERIAL = 5)
@@ -560,7 +560,7 @@ var/list/name_to_material
 	return
 
 /material/wood
-	name = "wood"
+	name = MATERIAL_WOOD
 	icon_state = "sheet-wood"
 	icon_colour = "#8B471D"
 	integrity = 25
@@ -582,7 +582,7 @@ var/list/name_to_material
 
 /material/wood/holographic
 	name = "holowood"
-	display_name = "wood"
+	display_name = MATERIAL_WOOD
 	shard_type = SHARD_NONE
 
 /material/wood/holographic/place_sheet()

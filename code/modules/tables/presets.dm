@@ -41,21 +41,21 @@
 		icon_state = "reinf_wood_preview"
 		color = "#CF570D"
 		New()
-			material = get_material_by_name("wood")
-			reinforced = get_material_by_name("wood")
+			material = get_material_by_name(MATERIAL_WOOD)
+			reinforced = get_material_by_name(MATERIAL_WOOD)
 			..()
 
 	woodentable
 		icon_state = "plain_preview"
 		color = "#824B28"
 		New()
-			material = get_material_by_name("wood")
+			material = get_material_by_name(MATERIAL_WOOD)
 			..()
 
 	gamblingtable
 		icon_state = "gamble_preview"
 		New()
-			material = get_material_by_name("wood")
+			material = get_material_by_name(MATERIAL_WOOD)
 			carpeted = 1
 			..()
 

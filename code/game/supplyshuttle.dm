@@ -60,7 +60,7 @@ var/list/mechtoys = list(
 		if(do_after(user, 10))
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 			user << "<span class='notice'>You cut the plastic flaps.</span>"
-			new /obj/item/stack/material/plastic( src.loc, 4)
+			new /obj/item/stack/material/plastic(src.loc, 4)
 			qdel(src)
 		return
 	else

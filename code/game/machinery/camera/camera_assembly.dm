@@ -9,7 +9,7 @@
 	matter = list(MATERIAL_STEEL = 700,MATERIAL_GLASS = 300)
 
 	//	Motion, EMP-Proof, X-Ray
-	var/list/obj/item/possible_upgrades = list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/material/osmium, /obj/item/weapon/stock_parts/scanning_module)
+	var/list/obj/item/possible_upgrades = list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/material, /obj/item/weapon/stock_parts/scanning_module)
 	var/list/upgrades = list()
 	var/state = 0
 	var/busy = 0
@@ -122,6 +122,10 @@
 
 	// Upgrades!
 	if(is_type_in_list(W, possible_upgrades) && !is_type_in_list(W, upgrades)) // Is a possible upgrade and isn't in the camera already.
+		if(istype(W, /obj/item/stack/material))
+			var/obj/item/stack/material/M = W
+			if(M.get material name() != MATERIAL_OSMIUM)
+				return
 		user << "You attach \the [W] into the assembly inner circuits."
 		upgrades += W
 		user.remove_from_mob(W)

@@ -174,11 +174,11 @@
 	proc/ProcessStomach()
 		for(var/atom/movable/stomachContent in contents)
 			if(prob(digestionProbability))
-				if(istype(stomachContent,/obj/item/stack)) //converts to plasma, keeping the stack value
-					if(!istype(stomachContent,/obj/item/stack/material/phoron))
-						var/obj/item/stack/oldStack = stomachContent
-						new /obj/item/stack/material/phoron(src, oldStack.get_amount())
-						qdel(oldStack)
+				if(istype(stomachContent,/obj/item/stack/material)) //converts to plasma, keeping the stack value
+					var/obj/item/stack/material/M = stomachContent
+					if(!M.get_material_name() == MATERIAL_PHORON)
+						new /obj/item/stack/material/phoron(src, M.get_amount())
+						qdel(M)
 						continue
 				else if(istype(stomachContent,/obj/item)) //converts to plasma, keeping the w_class
 					var/obj/item/oldItem = stomachContent

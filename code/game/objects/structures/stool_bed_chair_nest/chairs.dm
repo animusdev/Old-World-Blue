@@ -188,7 +188,7 @@
 	..()
 
 /obj/structure/bed/chair/wood/New(var/newloc)
-	..(newloc, "wood")
+	..(newloc, MATERIAL_WOOD)
 
 /obj/structure/bed/chair/wood/wings
 	icon_state = "wooden_chair_wings"
