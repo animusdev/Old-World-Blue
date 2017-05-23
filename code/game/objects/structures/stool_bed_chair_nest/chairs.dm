@@ -203,7 +203,7 @@
 	can_buckle = 0
 
 /obj/structure/bed/chair/plastic/bar/New(var/newloc)
-	..(newloc, "plastic")
+	..(newloc, MATERIAL_PLASTIC)
 
 /obj/structure/bed/chair/plastic/bar/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/screwdriver))
@@ -226,7 +226,7 @@
 	base_icon = "schair"
 
 /obj/structure/bed/chair/plastic/shuttle/New(var/newloc)
-	..(newloc, "plastic", "plastic")
+	..(newloc, MATERIAL_PLASTIC, MATERIAL_PLASTIC)
 
 
 /obj/structure/bed/chair/plastic/shuttle/set_dir()

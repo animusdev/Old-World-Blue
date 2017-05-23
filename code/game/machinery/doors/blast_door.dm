@@ -105,7 +105,7 @@
 				usr << "<span class='notice'>[src]'s motors resist your effort.</span>"
 			return
 
-		if(istype(C, /obj/item/stack/material) && C.get_material_name() == "plasteel") // Repairing.
+		if(istype(C, /obj/item/stack/material) && C.get_material_name() == MATERIAL_PLASTEEL) // Repairing.
 			var/amt = Ceiling((maxhealth - health)/150)
 			if(!amt)
 				usr << "<span class='notice'>\The [src] is already fully repaired.</span>"

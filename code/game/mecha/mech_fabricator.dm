@@ -17,14 +17,14 @@
 	var/time_coeff = 1.5 //can be upgraded with research
 	var/resource_coeff = 1.5 //can be upgraded with research
 	var/list/resources = list(
-		DEFAULT_WALL_MATERIAL=0,
-		"glass"=0,
-		"gold"=0,
-		"silver"=0,
-		"diamond"=0,
-		"phoron"=0,
-		"uranium"=0,
-		"plasteel"=0
+		MATERIAL_STEEL=0,
+		MATERIAL_GLASS=0,
+		MATERIAL_GOLD=0,
+		MATERIAL_SILVER=0,
+		MATERIAL_DIAMOND=0,
+		MATERIAL_PHORON=0,
+		MATERIAL_URANIUM=0,
+		MATERIAL_PLASTEEL=0
 	)
 
 	var/res_max_amount = 200000
@@ -484,7 +484,7 @@
 			if(amount < SHEET_MATERIAL_AMOUNT)
 				return
 		resources[material] -= amount
-		create_material_stack(material, amount, src.loc)
+		create_material_stacks_from_unit(material, amount, src.loc)
 		temp = "Ejected [round(amount, SHEET_MATERIAL_AMOUNT)] of [material]<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
 	src.updateUsrDialog()
 	return
@@ -498,7 +498,7 @@
 
 /obj/machinery/mecha_part_fabricator/dismantle()
 	for(var/material in resources)
-		create_material_stack(material, resources[material], src.loc)
+		create_material_stacks_from_unit(material, resources[material], src.loc)
 	return ..()
 
 

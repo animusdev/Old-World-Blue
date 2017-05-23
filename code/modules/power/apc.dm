@@ -1289,7 +1289,7 @@ obj/machinery/power/apc/proc/autoset(var/val, var/on)
 	icon = 'icons/obj/module.dmi'
 	icon_state = "power_mod"
 	item_state = "electronic"
-	matter = list(DEFAULT_WALL_MATERIAL = 50, "glass" = 50)
+	matter = list(MATERIAL_STEEL = 50, MATERIAL_GLASS = 50)
 	w_class = ITEM_SIZE_SMALL
 	flags = CONDUCT
 

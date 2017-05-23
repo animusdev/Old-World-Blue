@@ -47,20 +47,18 @@
 
 	if(href_list["change_stack"])
 		var/choice = input("What would you like to set the stack amount to?") as null|anything in list(1,5,10,20,50)
-		if(!choice) return
+		if(!choice)
+			return
 		machine.stack_amt = choice
 
 	if(href_list["release_stack"])
-		if(machine.stack_storage[href_list["release_stack"]] > 0)
-			var/stacktype = machine.stack_paths[href_list["release_stack"]]
-			var/obj/item/stack/material/S = new stacktype (get_turf(machine.output))
-			S.amount = machine.stack_storage[href_list["release_stack"]]
+		var/material = href_list["release_stack"]
+		if(machine.stack_storage[material] > 0)
+			create_material_stacks(material, machine.stack_storage[material], get_turf(machine.output))
 			machine.stack_storage[href_list["release_stack"]] = 0
 
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
-
-	return
 
 /**********************Mineral stacking unit**************************/
 
@@ -75,26 +73,14 @@
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null
 	var/list/stack_storage[0]
-	var/list/stack_paths[0]
 	var/stack_amt = 50; // Amount to stack before releassing
 
 /obj/machinery/mineral/stacking_machine/New()
 	..()
 
-	for(var/stacktype in typesof(/obj/item/stack/material)-/obj/item/stack/material)
-		var/obj/item/stack/S = new stacktype(src)
-		stack_storage[S.name] = 0
-		stack_paths[S.name] = stacktype
-		qdel(S)
-
-	stack_storage["glass"] = 0
-	stack_paths["glass"] = /obj/item/stack/material/glass
-	stack_storage[DEFAULT_WALL_MATERIAL] = 0
-	stack_paths[DEFAULT_WALL_MATERIAL] = /obj/item/stack/material/steel
-	stack_storage["plasteel"] = 0
-	stack_paths["plasteel"] = /obj/item/stack/material/plasteel
-
-	spawn( 5 )
+	spawn(5)
+		for(var/material in name_to_material)
+			stack_storage[material] = 0
 		for (var/dir in cardinal)
 			src.input = locate(/obj/machinery/mineral/input, get_step(src, dir))
 			if(src.input) break
@@ -121,9 +107,7 @@
 	//Output amounts that are past stack_amt.
 	for(var/sheet in stack_storage)
 		if(stack_storage[sheet] >= stack_amt)
-			var/stacktype = stack_paths[sheet]
-			var/obj/item/stack/material/S = new stacktype (get_turf(output))
-			S.amount = stack_amt
+			create_material_stacks(sheet, stack_amt, get_turf(output))
 			stack_storage[sheet] -= stack_amt
 
 	console.updateUsrDialog()

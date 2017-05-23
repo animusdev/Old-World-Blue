@@ -14,8 +14,10 @@
 	new /obj/structure/cult/pylon(loc)
 	..()
 
-/obj/item/stack/material/wood/cultify()
-	return
+/obj/item/stack/material/cultify()
+	if(get_material_name() == "wood")
+		return
+	return ..()
 
 /obj/item/weapon/book/cultify()
 	new /obj/item/weapon/book/tome(loc)

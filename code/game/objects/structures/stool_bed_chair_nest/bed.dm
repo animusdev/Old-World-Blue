@@ -26,7 +26,7 @@
 	..(newloc)
 	color = null
 	if(!new_material)
-		new_material = DEFAULT_WALL_MATERIAL
+		new_material = MATERIAL_STEEL
 	material = get_material_by_name(new_material)
 	if(!istype(material))
 		qdel(src)
@@ -186,7 +186,7 @@
 	..(newloc,"wood","leather")
 
 /obj/structure/bed/padded/New(var/newloc)
-	..(newloc,"plastic","cotton")
+	..(newloc,MATERIAL_PLASTIC,"cotton")
 
 /obj/structure/bed/alien
 	name = "resting contraption"
@@ -314,7 +314,7 @@
 
 /obj/structure/bed/sofa/New(var/newloc)
 	base_icon = icon_state
-	..(newloc,"plastic")
+	..(newloc,MATERIAL_PLASTIC)
 
 
 /obj/structure/bed/sofa/update_icon()

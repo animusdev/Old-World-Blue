@@ -4,7 +4,7 @@
 /datum/design/circuit
 	build_type = IMPRINTER
 	req_tech = list("programming" = 2)
-	materials = list("glass" = 2000)
+	materials = list(MATERIAL_GLASS = 2000)
 	chemicals = list("sacid" = 20)
 
 /datum/design/circuit/AssembleDesignName()
@@ -195,7 +195,7 @@
 ///////////////////////////////////
 /datum/design/circuit/shield
 	req_tech = list("bluespace" = 4, "phorontech" = 3)
-	materials = list("glass" = 2000, "diamond" = 5000, "gold" = 10000)
+	materials = list(MATERIAL_GLASS = 2000, MATERIAL_DIAMOND = 5000, MATERIAL_GOLD = 10000)
 	chemicals = list("sacid" = 20)
 
 /datum/design/circuit/shield/AssembleDesignName()
@@ -423,7 +423,7 @@
 	id = "pacman"
 	req_tech = list("programming" = 3, "phorontech" = 3, "powerstorage" = 3, "engineering" = 3)
 	reliability_base = 79
-	materials = list("glass" = 2000)
+	materials = list(MATERIAL_GLASS = 2000)
 	chemicals = list("sacid" = 20)
 	category = "Engineering"
 	build_path = /obj/item/weapon/circuitboard/pacman
@@ -433,7 +433,7 @@
 	id = "superpacman"
 	req_tech = list("programming" = 3, "powerstorage" = 4, "engineering" = 4)
 	reliability_base = 76
-	materials = list("glass" = 2000)
+	materials = list(MATERIAL_GLASS = 2000)
 	chemicals = list("sacid" = 20)
 	category = "Engineering"
 	build_path = /obj/item/weapon/circuitboard/pacman/super
@@ -443,7 +443,7 @@
 	id = "mrspacman"
 	req_tech = list("programming" = 3, "powerstorage" = 5, "engineering" = 5)
 	reliability_base = 74
-	materials = list("glass" = 2000)
+	materials = list(MATERIAL_GLASS = 2000)
 	chemicals = list("sacid" = 20)
 	category = "Engineering"
 	build_path = /obj/item/weapon/circuitboard/pacman/mrs
@@ -452,7 +452,7 @@
 	name = "cell rack PSU"
 	id = "batteryrack"
 	req_tech = list("powerstorage" = 3, "engineering" = 2)
-	materials = list("glass" = 2000)
+	materials = list(MATERIAL_GLASS = 2000)
 	chemicals = list("sacid" = 20)
 	category = "Engineering"
 	build_path = /obj/item/weapon/circuitboard/batteryrack
@@ -463,7 +463,7 @@
 	id = "smes_cell"
 	req_tech = list("powerstorage" = 7, "engineering" = 5)
 	//A uniquely-priced board; probably not the best idea
-	materials = list("glass" = 2000, "gold" = 1000, "silver" = 1000, "diamond" = 500)
+	materials = list(MATERIAL_GLASS = 2000, MATERIAL_GOLD = 1000, MATERIAL_SILVER = 1000, MATERIAL_DIAMOND = 500)
 	chemicals = list("sacid" = 20)
 	category = "Engineering"
 	build_path = /obj/item/weapon/circuitboard/smes

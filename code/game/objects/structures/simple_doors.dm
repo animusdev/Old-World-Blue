@@ -22,7 +22,7 @@
 /obj/structure/simple_door/New(var/newloc, var/material_name)
 	..()
 	if(!material_name)
-		material_name = DEFAULT_WALL_MATERIAL
+		material_name = MATERIAL_STEEL
 	material = get_material_by_name(material_name)
 	if(!material)
 		qdel(src)
@@ -172,25 +172,25 @@
 		L.apply_effect(round(material.radioactivity/3),IRRADIATE,0)
 
 /obj/structure/simple_door/iron/New(var/newloc,var/material_name)
-	..(newloc, "iron")
+	..(newloc, MATERIAL_IRON)
 
 /obj/structure/simple_door/silver/New(var/newloc,var/material_name)
-	..(newloc, "silver")
+	..(newloc, MATERIAL_SILVER)
 
 /obj/structure/simple_door/gold/New(var/newloc,var/material_name)
-	..(newloc, "gold")
+	..(newloc, MATERIAL_GOLD)
 
 /obj/structure/simple_door/uranium/New(var/newloc,var/material_name)
-	..(newloc, "uranium")
+	..(newloc, MATERIAL_URANIUM)
 
 /obj/structure/simple_door/sandstone/New(var/newloc,var/material_name)
-	..(newloc, "sandstone")
+	..(newloc, MATERIAL_SANDSTONE)
 
 /obj/structure/simple_door/phoron/New(var/newloc,var/material_name)
-	..(newloc, "phoron")
+	..(newloc, MATERIAL_PHORON)
 
 /obj/structure/simple_door/diamond/New(var/newloc,var/material_name)
-	..(newloc, "diamond")
+	..(newloc, MATERIAL_DIAMOND)
 
 /obj/structure/simple_door/wood/New(var/newloc,var/material_name)
 	..(newloc, "wood")

@@ -9,7 +9,7 @@
 	var/metaltag
 
 /datum/alloy/plasteel
-	metaltag = "plasteel"
+	metaltag = MATERIAL_PLASTEEL
 	requires = list(
 		"platinum" = 1,
 		"carbon" = 2,
@@ -19,7 +19,7 @@
 	product = /obj/item/stack/material/plasteel
 
 /datum/alloy/steel
-	metaltag = DEFAULT_WALL_MATERIAL
+	metaltag = MATERIAL_STEEL
 	requires = list(
 		"carbon" = 1,
 		"hematite" = 1

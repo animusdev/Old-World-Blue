@@ -12,7 +12,7 @@
 		if(prob(10))
 			if(prob(5))
 				if(prob(5))
-					rarity = "Plasteel"
+					rarity = MATERIAL_PLASTEEL
 				else
 					rarity = "Platinum"
 			else

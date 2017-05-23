@@ -218,10 +218,9 @@
 				for(var/i=0,i<can_make,i+=2)
 					ores_stored[metal]-=2
 					sheets+=2
-					new M.stack_type(output.loc)
+					M.place_sheet(output.loc)
 
 			else if(ores_processing[metal] == 1 && O.smelts_to) //Smelting.
-
 				var/can_make = Clamp(ores_stored[metal],0,sheets_per_tick-sheets)
 
 				var/material/M = get_material_by_name(O.smelts_to)
@@ -231,7 +230,7 @@
 				for(var/i=0,i<can_make,i++)
 					ores_stored[metal]--
 					sheets++
-					new M.stack_type(output.loc)
+					M.place_sheet(output.loc)
 			else
 				ores_stored[metal]--
 				sheets++

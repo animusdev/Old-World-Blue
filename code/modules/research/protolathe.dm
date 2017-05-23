@@ -19,13 +19,13 @@ Note: Must be placed west/left of and R&D console to function.
 
 	max_material_storage = 100000 //All this could probably be done better with a list but meh.
 	materials = list(
-		DEFAULT_WALL_MATERIAL = 0,
-		"glass" = 0,
-		"gold" = 0,
-		"silver" = 0,
-		"phoron" = 0,
-		"uranium" = 0,
-		"diamond" = 0
+		MATERIAL_STEEL = 0,
+		MATERIAL_GLASS = 0,
+		MATERIAL_GOLD = 0,
+		MATERIAL_SILVER = 0,
+		MATERIAL_PHORON = 0,
+		MATERIAL_URANIUM = 0,
+		MATERIAL_DIAMOND = 0
 	)
 
 /obj/machinery/r_n_d/protolathe/RefreshParts()
@@ -74,8 +74,7 @@ Note: Must be placed west/left of and R&D console to function.
 			new_item.investigate_log("built by [key]","singulo")
 
 		new_item.reliability = D.reliability
-		if(mat_efficiency != 1) // No matter out of nowhere
-			if(new_item.matter && new_item.matter.len > 0)
-				for(var/i in new_item.matter)
-					new_item.matter[i] = new_item.matter[i] * mat_efficiency
+		if(new_item.matter && new_item.matter.len > 0)
+			for(var/i in new_item.matter)
+				new_item.matter[i] = new_item.matter[i] * mat_efficiency
 	busy = 0

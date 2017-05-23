@@ -277,7 +277,7 @@
 	icon_state = "odysseus_armour"
 	origin_tech = list(TECH_MATERIAL = 3, TECH_ENGINEERING = 3)
 	construction_time = 200
-	construction_cost = list(DEFAULT_WALL_MATERIAL=15000)*/
+	construction_cost = list(MATERIAL_STEEL=15000)*/
 
 
 // Mecha Equipment
@@ -286,7 +286,7 @@
 	name = "Exosuit tracking beacon"
 	build_type = MECHFAB
 	time = 5
-	materials = list(DEFAULT_WALL_MATERIAL = 500)
+	materials = list(MATERIAL_STEEL = 500)
 	build_path = /obj/item/mecha_parts/mecha_tracking
 	category = "Misc"
 
@@ -294,7 +294,7 @@
 	build_type = MECHFAB
 	category = "Exosuit Equipment"
 	time = 10
-	materials = list(DEFAULT_WALL_MATERIAL = 10000)
+	materials = list(MATERIAL_STEEL = 10000)
 
 /datum/design/item/mecha/AssembleDesignDesc()
 	if(!desc)
@@ -324,26 +324,26 @@
 	name = "Flare launcher"
 	id = "mecha_flare_gun"
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flare
-	materials = list(DEFAULT_WALL_MATERIAL = 12500)
+	materials = list(MATERIAL_STEEL = 12500)
 */
 /datum/design/item/mecha/sleeper
 	name = "Sleeper"
 	id = "mech_sleeper"
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/sleeper
-	materials = list(DEFAULT_WALL_MATERIAL = 5000, "glass" = 10000)
+	materials = list(MATERIAL_STEEL = 5000, MATERIAL_GLASS = 10000)
 
 /datum/design/item/mecha/syringe_gun
 	name = "Syringe gun"
 	id = "mech_syringe_gun"
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun
 	time = 20
-	materials = list(DEFAULT_WALL_MATERIAL = 3000, "glass" = 2000)
+	materials = list(MATERIAL_STEEL = 3000, MATERIAL_GLASS = 2000)
 
 /datum/design/item/mecha/passenger
 	name = "Passenger compartment"
 	id = "mech_passenger"
 	build_path = /obj/item/mecha_parts/mecha_equipment/tool/passenger
-	materials = list(DEFAULT_WALL_MATERIAL = 5000, "glass" = 5000)
+	materials = list(MATERIAL_STEEL = 5000, MATERIAL_GLASS = 5000)
 
 /datum/design/item/mecha/jetpack
 	name = "Mecha jetpack"

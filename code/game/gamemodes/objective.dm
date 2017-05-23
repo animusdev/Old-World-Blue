@@ -740,28 +740,28 @@ datum/objective/heist/salvage
 	choose_target()
 		switch(rand(1,8))
 			if(1)
-				target = DEFAULT_WALL_MATERIAL
+				target = MATERIAL_STEEL
 				target_amount = 300
 			if(2)
-				target = "glass"
+				target = MATERIAL_GLASS
 				target_amount = 200
 			if(3)
-				target = "plasteel"
+				target = MATERIAL_PLASTEEL
 				target_amount = 100
 			if(4)
-				target = "phoron"
+				target = MATERIAL_PHORON
 				target_amount = 100
 			if(5)
-				target = "silver"
+				target = MATERIAL_SILVER
 				target_amount = 50
 			if(6)
-				target = "gold"
+				target = MATERIAL_GOLD
 				target_amount = 20
 			if(7)
-				target = "uranium"
+				target = MATERIAL_URANIUM
 				target_amount = 20
 			if(8)
-				target = "diamond"
+				target = MATERIAL_DIAMOND
 				target_amount = 20
 
 		explanation_text = "Ransack the station and escape with [target_amount] [target]."
@@ -773,23 +773,20 @@ datum/objective/heist/salvage
 		for(var/obj/item/O in locate(/area/skipjack_station/start))
 
 			var/obj/item/stack/material/S
-			if(istype(O,/obj/item/stack/material))
-				if(O.name == target)
-					S = O
-					total_amount += S.get_amount()
+			if(istype(O) && O.get_material() == target)
+				S = O
+				total_amount += S.get_amount()
 			for(var/obj/I in O.contents)
-				if(istype(I,/obj/item/stack/material))
-					if(I.name == target)
-						S = I
-						total_amount += S.get_amount()
+				if(ismaterial(I) && I.get_material() == target)
+					S = I
+					total_amount += S.get_amount()
 
 		for(var/datum/mind/raider in raiders.current_antagonists)
 			if(raider.current)
 				for(var/obj/item/O in raider.current.get_contents())
-					if(istype(O,/obj/item/stack/material))
-						if(O.name == target)
-							var/obj/item/stack/material/S = O
-							total_amount += S.get_amount()
+					if(ismaterial(O) && O.get_material() == target)
+						var/obj/item/stack/material/S = O
+						total_amount += S.get_amount()
 
 		if(total_amount >= target_amount) return 1
 		return 0

@@ -12,7 +12,7 @@
 	throw_range = 5
 	w_class = ITEM_SIZE_NORMAL
 	flags = CONDUCT
-	matter = list(DEFAULT_WALL_MATERIAL = 3000)
+	matter = list(MATERIAL_STEEL = 3000)
 	var/max_carry = 8
 
 /obj/item/weapon/tray/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)

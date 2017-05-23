@@ -20,7 +20,8 @@
 	var/material/material = null
 	var/material/reinforced = null
 
-	// Gambling tables. I'd prefer reinforced with carpet/felt/cloth/whatever, but AFAIK it's either harder or impossible to get /obj/item/stack/material of those.
+	// Gambling tables. I'd prefer reinforced with carpet/felt/cloth/whatever,
+	// but AFAIK it's either harder or impossible to get /obj/item/stack/material of those.
 	// Convert if/when you can easily get stacks of these.
 	var/carpeted = 0
 
@@ -39,7 +40,8 @@
 	health += maxhealth - old_maxhealth
 
 /obj/structure/table/proc/take_damage(amount)
-	// If the table is made of a brittle material, and is *not* reinforced with a non-brittle material, damage is multiplied by TABLE_BRITTLE_MATERIAL_MULTIPLIER
+	// If the table is made of a brittle material, and is *not* reinforced with a non-brittle material,
+	// damage is multiplied by TABLE_BRITTLE_MATERIAL_MULTIPLIER
 	if(material && material.is_brittle())
 		if(reinforced)
 			if(reinforced.is_brittle())
@@ -199,7 +201,8 @@
 		desc = initial(desc)
 
 // Returns the material to set the table to.
-/obj/structure/table/proc/common_material_add(obj/item/stack/material/S, mob/user, verb) // Verb is actually verb without 'e' or 'ing', which is added. Works for 'plate'/'plating' and 'reinforce'/'reinforcing'.
+// Verb is actually verb without 'e' or 'ing', which is added. Works for 'plate'/'plating' and 'reinforce'/'reinforcing'.
+/obj/structure/table/proc/common_material_add(obj/item/stack/material/S, mob/user, verb)
 	var/material/M = S.get_material()
 	if(!istype(M))
 		user << "<span class='warning'>You cannot [verb]e \the [src] with \the [S].</span>"
@@ -211,28 +214,37 @@
 	if(!do_after(user, 20) || !S.use(1))
 		manipulating = 0
 		return null
-	user.visible_message("<span class='notice'>\The [user] [verb]es \the [src] with [M.display_name].</span>", "<span class='notice'>You finish [verb]ing \the [src].</span>")
+	user.visible_message(
+		SPAN_NOTE("\The [user] [verb]es \the [src] with [M.display_name]."),
+		SPAN_NOTE("You finish [verb]ing \the [src].")
+	)
 	manipulating = 0
 	return M
 
 // Returns the material to set the table to.
 /obj/structure/table/proc/common_material_remove(mob/user, material/M, delay, what, type_holding, sound)
+/*
 	if(!M.stack_type)
 		user << "<span class='warning'>You are unable to remove the [what] from this table!</span>"
 		return M
-
-	if(manipulating) return M
+*/
+	if(manipulating)
+		return M
 	manipulating = 1
-	user.visible_message("<span class='notice'>\The [user] begins removing the [type_holding] holding \the [src]'s [M.display_name] [what] in place.</span>",
-	                              "<span class='notice'>You begin removing the [type_holding] holding \the [src]'s [M.display_name] [what] in place.</span>")
+	user.visible_message(
+		SPAN_NOTE("\The [user] begins removing the [type_holding] holding \the [src]'s [M.display_name] [what] in place."),
+		SPAN_NOTE("You begin removing the [type_holding] holding \the [src]'s [M.display_name] [what] in place.")
+	)
 	if(sound)
 		playsound(src.loc, sound, 50, 1)
 	if(!do_after(user, 40))
 		manipulating = 0
 		return M
-	user.visible_message("<span class='notice'>\The [user] removes the [M.display_name] [what] from \the [src].</span>",
-	                              "<span class='notice'>You remove the [M.display_name] [what] from \the [src].</span>")
-	new M.stack_type(src.loc)
+	user.visible_message(
+		SPAN_NOTE("\The [user] removes the [M.display_name] [what] from \the [src]."),
+		SPAN_NOTE("You remove the [M.display_name] [what] from \the [src].")
+	)
+	M.place_sheet(src.loc)
 	manipulating = 0
 	return null
 
@@ -267,27 +279,21 @@
 
 /obj/structure/table/proc/break_to_parts(full_return = 0)
 	var/list/shards = list()
-	var/obj/item/weapon/material/shard/S = null
 	if(reinforced)
-		if(reinforced.stack_type && (full_return || prob(20)))
-			reinforced.place_sheet(loc)
-		else
-			S = reinforced.place_shard(loc)
-			if(S) shards += S
+		if(!(full_return || prob(20)) || !reinforced.place_sheet(loc))
+			shards += reinforced.place_shard(loc)
 	if(material)
-		if(material.stack_type && (full_return || prob(20)))
-			material.place_sheet(loc)
-		else
-			S = material.place_shard(loc)
-			if(S) shards += S
-	if(carpeted && (full_return || prob(50))) // Higher chance to get the carpet back intact, since there's no non-intact option
+		if(!(full_return || prob(20)) || !material.place_sheet(loc))
+			shards += material.place_shard(loc)
+
+	// Higher chance to get the carpet back intact, since there's no non-intact option
+	if(carpeted && (full_return || prob(50)))
 		new /obj/item/stack/tile/carpet(src.loc)
 	if(full_return || prob(20))
 		new /obj/item/stack/material/steel(src.loc)
 	else
-		var/material/M = get_material_by_name(DEFAULT_WALL_MATERIAL)
-		S = M.place_shard(loc)
-		if(S) shards += S
+		var/material/M = get_material_by_name(MATERIAL_STEEL)
+		shards += M.place_shard(loc)
 	qdel(src)
 	return shards
 
@@ -356,7 +362,8 @@
 			for(var/n in connections)
 				overlays += "carpet_flip[type]"
 
-// set propagate if you're updating a table that should update tables around it too, for example if it's a new table or something important has changed (like material).
+// set propagate if you're updating a table that should update tables around it too,
+// for example if it's a new table or something important has changed (like material).
 /obj/structure/table/proc/update_connections(propagate=0)
 	if(!material)
 		connections = list("nw0", "ne0", "sw0", "se0")

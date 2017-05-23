@@ -253,19 +253,19 @@
 			else
 				user << "<span class='notice'>You need at least five segments of cable coil to complete this task.</span>"
 			return
-	else if(istype(W,/obj/item/stack/material) && W.get_material_name() == "plastic")
+	else if(istype(W,/obj/item/stack/material) && W.get_material_name() == MATERIAL_PLASTIC)
 		if(buildstate == 3)
 			var/obj/item/stack/material/P = W
 			if(P.use(3))
-				user << "<span class='notice'>You assemble and install a heavy plastic lath onto the crossbow.</span>"
+				user << SPAN_NOTE("You assemble and install a heavy plastic lath onto the crossbow.")
 				buildstate++
 				update_icon()
 			else
-				user << "<span class='notice'>You need at least three plastic sheets to complete this task.</span>"
+				user << SPAN_NOTE("You need at least three plastic sheets to complete this task.")
 			return
 	else if(istype(W,/obj/item/weapon/screwdriver))
 		if(buildstate == 5)
-			user << "<span class='notice'>You secure the crossbow's various parts.</span>"
+			user << SPAN_NOTE("You secure the crossbow's various parts.")
 			new /obj/item/weapon/gun/launcher/crossbow(get_turf(src))
 			qdel(src)
 		return
