@@ -39,7 +39,7 @@
 	update_recipe_list()
 
 	if(..() || (disabled && !panel_open))
-		user << "<span class='danger'>\The [src] is disabled!</span>"
+		user << SPAN_NOTE("\The [src] is disabled!")
 		return
 
 	if(shocked)
@@ -102,7 +102,13 @@
 						multiplier_string += "<a href='?src=\ref[src];make=[index];multiplier=[max_sheets]'>\[x[max_sheets]\]</a>"
 
 
-			dat += "<tr><td width = 180>[R.hidden ? "<font color = 'red'>*</font>" : ""]<b>[can_make ? "<a href='?src=\ref[src];make=[index];multiplier=1'>" : ""][R.name][can_make ? "</a>" : ""]</b>[R.hidden ? "<font color = 'red'>*</font>" : ""][multiplier_string]</td><td align = right>[material_string]</tr>"
+			var/line = R.name
+			if(can_make)
+				line = "<a href='?src=\ref[src];make=[index];multiplier=1'>[line]</a>"
+			line = "<b>[line]</b>"
+			if(R.hidden)
+				line = "<font color = 'red'>*</font>[line]<font color = 'red'>*</font>"
+			dat += "<tr><td width = 180>[line] [multiplier_string]</td><td align = right>[material_string]</tr>"
 
 		dat += "</table><hr>"
 	//Hacking.
@@ -118,7 +124,7 @@
 /obj/machinery/autolathe/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	if(busy)
-		user << "<span class='notice'>\The [src] is busy. Please wait for completion of previous operation.</span>"
+		user << SPAN_NOTE("\The [src] is busy. Please wait for completion of previous operation.")
 		return
 
 	if(default_deconstruction_screwdriver(user, O))
@@ -146,7 +152,7 @@
 
 	//Resources are being loaded.
 	var/obj/item/eating = O
-	if(!eating.matter)
+	if(!eating.matter || !eating.matter.len)
 		user << "\The [eating] does not contain significant amounts of useful materials and cannot be accepted."
 		return
 
@@ -162,7 +168,7 @@
 		if(stored_material[material] >= storage_capacity[material])
 			continue
 
-		var/total_material = eating.matter[material]
+		var/total_material = round(eating.matter[material])
 
 		//If it's a stack, we eat multiple sheets.
 		if(istype(eating,/obj/item/stack))
@@ -180,7 +186,7 @@
 		mass_per_sheet += eating.matter[material]
 
 	if(!filltype)
-		user << "<span class='notice'>\The [src] is full. Please remove material from the autolathe in order to insert more.</span>"
+		user << SPAN_NOTE("\The [src] is full. Please remove material from the autolathe in order to insert more.")
 		return
 	else if(filltype == 1)
 		user << "You fill \the [src] to capacity with \the [eating]."
@@ -212,7 +218,7 @@
 	add_fingerprint(usr)
 
 	if(busy)
-		usr << "<span class='notice'>The autolathe is busy. Please wait for completion of previous operation.</span>"
+		usr << SPAN_NOTE("The autolathe is busy. Please wait for completion of previous operation.")
 		return
 
 	if(href_list["remove_material"])
@@ -257,7 +263,7 @@
 		busy = 1
 		update_use_power(2)
 
-		var/list/required = making.resources
+		var/list/required = making.resources.Copy()
 		for(var/material in required)
 			required[material] *= mat_efficiency
 
