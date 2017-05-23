@@ -200,7 +200,7 @@
 						var/obj/item/stack/material/wood/NG = new (user.loc)
 						if(flesh_colour) NG.color = flesh_colour
 						for (var/obj/item/stack/material/G in user.loc)
-							if(G.get_material_name != MATERIAL_WOOD || G==NG)
+							if(G.get_material_name() != MATERIAL_WOOD || G==NG)
 								continue
 							if(G.amount>=G.max_amount)
 								continue

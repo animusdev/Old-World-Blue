@@ -438,7 +438,7 @@
 	result_amount = 1
 
 /datum/chemical_reaction/phoronsolidification/on_reaction(var/datum/reagents/holder, var/created_volume)
-	PoolorNew(/obj/item/stack/material/phoron, list(get_turf(holder.my_atom), created_volume))
+	PoolOrNew(/obj/item/stack/material/phoron, list(get_turf(holder.my_atom), created_volume))
 	return
 
 /datum/chemical_reaction/plastication
@@ -449,7 +449,7 @@
 	result_amount = 1
 
 /datum/chemical_reaction/plastication/on_reaction(var/datum/reagents/holder, var/created_volume)
-	PoolorNew(/obj/item/stack/material/plastic, list(get_turf(holder.my_atom), created_volume))
+	PoolOrNew(/obj/item/stack/material/plastic, list(get_turf(holder.my_atom), created_volume))
 	return
 
 /* Grenade reactions */
@@ -898,7 +898,7 @@
 
 /datum/chemical_reaction/slime/spawn/on_reaction(var/datum/reagents/holder)
 	holder.my_atom.visible_message(
-		SPAN_WARN("Infused with phoron, the core begins to quiver and grow, and soon a new baby slime emerges from it!"))
+		SPAN_WARN("Infused with phoron, the core begins to quiver and grow, and soon a new baby slime emerges from it!")
 	)
 	var/mob/living/carbon/slime/S = new /mob/living/carbon/slime
 	S.loc = get_turf(holder.my_atom)
@@ -914,8 +914,7 @@
 
 /datum/chemical_reaction/slime/monkey/on_reaction(var/datum/reagents/holder)
 	for(var/i = 1, i <= 3, i++)
-		var /obj/item/weapon/reagent_containers/food/snacks/monkeycube/M = new /obj/item/weapon/reagent_containers/food/snacks/monkeycube
-		M.loc = get_turf(holder.my_atom)
+		PoolOrNew(/obj/item/weapon/reagent_containers/food/snacks/monkeycube, get_turf(holder.my_atom))
 	..()
 
 //Green
@@ -937,8 +936,8 @@
 	required = /obj/item/slime_extract/metal
 
 /datum/chemical_reaction/slime/metal/on_reaction(var/datum/reagents/holder)
-	PoolorNew(/obj/item/stack/material/steel, list(get_turf(holder.my_atom), 15))
-	PoolorNew(/obj/item/stack/material/plasteel, list(get_turf(holder.my_atom), 5))
+	PoolOrNew(/obj/item/stack/material/steel, list(get_turf(holder.my_atom), 15))
+	PoolOrNew(/obj/item/stack/material/plasteel, list(get_turf(holder.my_atom), 5))
 	..()
 
 //Gold - removed
@@ -1103,7 +1102,7 @@
 
 /datum/chemical_reaction/slime/plasma/on_reaction(var/datum/reagents/holder)
 	..()
-	PoolorNew(/obj/item/stack/material/phoron, list(get_turf(holder.my_atom),10)
+	PoolOrNew(/obj/item/stack/material/phoron, list(get_turf(holder.my_atom),10))
 
 //Red
 /datum/chemical_reaction/slime/glycerol

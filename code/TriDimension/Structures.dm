@@ -19,9 +19,6 @@
 	var/d_state = 1
 	var/obj/multiz/target
 
-	New()
-		. = ..()
-
 	proc/connect()
 		if(icon_state == "ladderdown") // the upper will connect to the lower
 			d_state = 1
@@ -42,11 +39,6 @@
 			if(target && icon_state == "ladderdown")
 				qdel(target)
 		return ..()
-
-	attackby(obj/item/C as obj, mob/user as mob)
-		(..)
-		src.attack_hand(user)
-		return
 
 	attack_hand(var/mob/M)
 		if(!target || !istype(target.loc, /turf))

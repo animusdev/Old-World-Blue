@@ -269,7 +269,7 @@
 		"<span class='notice'>\The [user] dismantles \the [src].</span>",
 		"<span class='notice'>You dismantle \the [src].</span>"
 	)
-	PoolorNew(/obj/item/stack/material/steel, src.loc)
+	PoolOrNew(/obj/item/stack/material/steel, src.loc)
 	qdel(src)
 
 
@@ -294,7 +294,7 @@
 	if(carpeted && (full_return || prob(50)))
 		new /obj/item/stack/tile/carpet(src.loc)
 	if(full_return || prob(20))
-		PoolorNew(/obj/item/stack/material/steel, src.loc)
+		PoolOrNew(/obj/item/stack/material/steel, src.loc)
 	else
 		var/material/M = get_material_by_name(MATERIAL_STEEL)
 		shards += M.place_shard(loc)

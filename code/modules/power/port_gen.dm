@@ -154,14 +154,14 @@
 	if(sheets >= needed_sheets - sheet_left)
 		return 1
 	return 0
-
+/*
 //Removes one stack's worth of material from the generator.
 /obj/machinery/power/port_gen/pacman/DropFuel()
 	if(sheets)
-		var/amount = min(sheets, S.max_amount)
+		var/amount = min(sheets, fuel_material.max_amount)
 		sheets -= amount
-		fuel_material.place_sheets(loc, amount)
-
+		fuel_material.place_sheet(loc, amount)
+*/
 /obj/machinery/power/port_gen/pacman/UseFuel()
 	//break down sometimes
 	if (reliability < 100)
@@ -265,7 +265,7 @@
 
 /obj/machinery/power/port_gen/pacman/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/stack/material))
-		if(O.get_material == fuel_material)
+		if(O.get_material() == fuel_material)
 			var/obj/item/stack/addstack = O
 			var/amount = min((max_sheets - sheets), addstack.amount)
 			if(amount < 1)

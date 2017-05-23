@@ -14,11 +14,11 @@
 	var/state = 0
 	var/busy = 0
 	/*
-				0 = Nothing done to it
-				1 = Wrenched in place
-				2 = Welded in place
-				3 = Wires attached to it (you can now attach/dettach upgrades)
-				4 = Screwdriver panel closed and is fully built (you cannot attach upgrades)
+		0 = Nothing done to it
+		1 = Wrenched in place
+		2 = Welded in place
+		3 = Wires attached to it (you can now attach/dettach upgrades)
+		4 = Screwdriver panel closed and is fully built (you cannot attach upgrades)
 	*/
 
 /obj/item/weapon/camera_assembly/attackby(obj/item/W as obj, mob/living/user as mob)
@@ -124,7 +124,7 @@
 	if(is_type_in_list(W, possible_upgrades) && !is_type_in_list(W, upgrades)) // Is a possible upgrade and isn't in the camera already.
 		if(istype(W, /obj/item/stack/material))
 			var/obj/item/stack/material/M = W
-			if(M.get material name() != MATERIAL_OSMIUM)
+			if(M.get_material_name() != MATERIAL_OSMIUM)
 				return
 		user << "You attach \the [W] into the assembly inner circuits."
 		upgrades += W
