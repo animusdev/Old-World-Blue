@@ -91,14 +91,18 @@
 	var/update = FALSE
 	if(src.output && src.input)
 		var/turf/T = get_turf(input)
-		for(var/obj/item/stack/material/O in T)
-			update |= TRUE
-			var/material = O.get_material_name()
-			if(material in stack_storage)
-				stack_storage[material] += O.amount
+		for(var/obj/item/O in T.contents)
+			if(istype(O, /obj/item/stack/material))
+				var/obj/item/stack/material/M = O
+				update |= TRUE
+				var/material = M.get_material_name()
+				if(material in stack_storage)
+					stack_storage[material] += M.amount
+				else
+					stack_storage[material] = M.amount
+				qdel(M)
 			else
-				stack_storage[material] = O.amount
-			qdel(O)
+				O.forceMove(output.loc)
 
 	//Output amounts that are past stack_amt.
 	for(var/material in stack_storage)

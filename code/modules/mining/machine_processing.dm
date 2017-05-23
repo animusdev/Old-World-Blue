@@ -133,7 +133,7 @@
 			alloy_data += new alloytype()
 
 	if(!ore_data || !ore_data.len)
-		for(var/oretype in typesof(/ore)-/ore)
+		for(var/oretype in subtypesof(/ore))
 			var/ore/OD = new oretype()
 			ore_data[OD.name] = OD
 			ores_processing[OD.name] = 0
@@ -153,6 +153,7 @@
 /obj/machinery/mineral/processing_unit/process()
 
 	if (!src.output || !src.input) return
+	var/update = FALSE
 
 	var/list/tick_alloys = list()
 
@@ -160,6 +161,7 @@
 	for(var/i = 0,i<sheets_per_tick,i++)
 		var/obj/item/weapon/ore/O = locate() in input.loc
 		if(!O) break
+		update |= TRUE
 		if(!isnull(ores_stored[O.material]))
 			ores_stored[O.material]++
 
@@ -200,8 +202,9 @@
 							total = max(1,round(total*A.product_mod)) //Always get at least one sheet.
 							sheets += total-1
 
+						var/material/M = get_material_by_name(A.product)
 						for(var/i=0,i<total,i++)
-							new A.product(output.loc)
+							M.place_sheet(output.loc)
 
 			else if(ores_processing[metal] == 2 && O.compresses_to) //Compressing.
 
@@ -234,7 +237,9 @@
 				ores_stored[metal]--
 				sheets++
 				new /obj/item/weapon/ore/slag(output.loc)
+			update |= TRUE
 		else
 			continue
 
-	console.updateUsrDialog()
+	if(update)
+		console.updateUsrDialog()

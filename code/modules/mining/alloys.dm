@@ -16,7 +16,7 @@
 		"hematite" = 2
 		)
 	product_mod = 0.3
-	product = /obj/item/stack/material/plasteel
+	product = MATERIAL_PLASTEEL
 
 /datum/alloy/steel
 	metaltag = MATERIAL_STEEL
@@ -24,4 +24,4 @@
 		"carbon" = 1,
 		"hematite" = 1
 		)
-	product = /obj/item/stack/material/steel
+	product = MATERIAL_STEEL

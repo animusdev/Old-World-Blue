@@ -6,6 +6,7 @@
 	name = "Input area"
 	density = 0
 	anchored = 1.0
+	invisibility = 101
 	New()
 		icon_state = "blank"
 
@@ -15,5 +16,6 @@
 	name = "Output area"
 	density = 0
 	anchored = 1.0
+	invisibility = 101
 	New()
 		icon_state = "blank"

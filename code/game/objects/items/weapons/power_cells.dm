@@ -30,7 +30,7 @@
 	throw_speed = 5
 	throw_range = 7
 	maxcharge = 1000
-	matter = list("metal" = 350, MATERIAL_GLASS = 50)
+	matter = list(MATERIAL_STEEL = 350, MATERIAL_GLASS = 50)
 
 /obj/item/weapon/cell/device/variable/New(newloc, charge_amount)
 	..(newloc)
