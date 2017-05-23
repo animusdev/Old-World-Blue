@@ -409,7 +409,7 @@
 	name = "amanita"
 	seed_name = "fly amanita"
 	display_name = "fly amanita mushrooms"
-	mutants = list("destroyingangel",MATERIAL_PLASTIC)
+	mutants = list("destroyingangel","plastic")
 	chems = list("nutriment" = list(1), "amatoxin" = list(3,3), "psilocybin" = list(1,25))
 
 /datum/seed/mushroom/poison/New()
@@ -476,7 +476,7 @@
 	set_trait(TRAIT_PLANT_ICON,"mushroom7")
 
 /datum/seed/mushroom/plastic
-	name = MATERIAL_PLASTIC
+	name = "plastic"
 	seed_name = "plastellium"
 	display_name = "plastellium"
 	mutants = null

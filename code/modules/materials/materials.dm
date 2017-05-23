@@ -201,7 +201,7 @@ var/list/name_to_material
 		place_sheet(target)
 
 // Debris product. Used ALL THE TIME.
-/material/proc/place_sheet(var/turf/target, var/amount)
+/material/proc/place_sheet(var/turf/target, var/amount = 1)
 	create_material_stacks(src.name, amount, target)
 	return TRUE
 

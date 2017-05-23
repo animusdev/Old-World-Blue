@@ -4,7 +4,7 @@
 		icon_state = "plain_preview"
 		color = "#EEEEEE"
 		New()
-			material = get_material_by_name(MATERIAL_STEEL)
+			material = get_material_by_name(DEFAULT_TABLE_MATERIAL)
 			..()
 
 	steel

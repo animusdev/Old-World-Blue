@@ -1,5 +1,5 @@
-/proc/create_material_stacks_from_unit(var/material, var/units, var/atom/location)
-	var/amount = units/SHEET_MATERIAL_AMOUNT
+/proc/create_material_stacks_from_unit(var/material, var/amount, var/atom/location)
+	amount = amount/SHEET_MATERIAL_AMOUNT
 	create_material_stacks(material, amount, location)
 
 /proc/create_material_stacks(var/material, var/units, var/atom/location)
@@ -29,8 +29,7 @@
 	..()
 
 	if(!default_type)
-		qdel(src)
-		return
+		default_type = MATERIAL_STEEL
 	set_material(default_type)
 
 /obj/item/stack/material/get_material()

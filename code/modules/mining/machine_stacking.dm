@@ -33,7 +33,9 @@
 
 	for(var/stacktype in machine.stack_storage)
 		if(machine.stack_storage[stacktype] > 0)
-			dat += "<tr><td width = 150><b>[capitalize(stacktype)]:</b></td><td width = 30>[machine.stack_storage[stacktype]]</td><td width = 50><A href='?src=\ref[src];release_stack=[stacktype]'>\[release\]</a></td></tr>"
+			dat += "<tr><td width = 150><b>[capitalize(stacktype)]:</b></td>"
+			dat += "<td width = 30>[machine.stack_storage[stacktype]]</td>"
+			dat += "<td width = 50><A href='?src=\ref[src];release_stack=[stacktype]'>\[release\]</a></td></tr>"
 	dat += "</table><hr>"
 	dat += text("<br>Stacking: [machine.stack_amt] <A href='?src=\ref[src];change_stack=1'>\[change\]</a><br><br>")
 
@@ -62,7 +64,6 @@
 
 /**********************Mineral stacking unit**************************/
 
-
 /obj/machinery/mineral/stacking_machine
 	name = "stacking machine"
 	icon = 'icons/obj/machines/mining_machines.dmi'
@@ -73,43 +74,40 @@
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null
 	var/list/stack_storage[0]
-	var/stack_amt = 50; // Amount to stack before releassing
+	var/stack_amt = 50 // Amount to stack before releassing
 
 /obj/machinery/mineral/stacking_machine/New()
 	..()
 
 	spawn(5)
-		for(var/material in name_to_material)
-			stack_storage[material] = 0
 		for (var/dir in cardinal)
 			src.input = locate(/obj/machinery/mineral/input, get_step(src, dir))
 			if(src.input) break
 		for (var/dir in cardinal)
 			src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
 			if(src.output) break
-		return
-	return
 
 /obj/machinery/mineral/stacking_machine/process()
-	if (src.output && src.input)
+	var/update = FALSE
+	if(src.output && src.input)
 		var/turf/T = get_turf(input)
-		for(var/obj/item/O in T.contents)
-			if(!O) return
-			if(istype(O,/obj/item/stack))
-				if(!isnull(stack_storage[O.name]))
-					stack_storage[O.name]++
-					O.loc = null
-				else
-					O.loc = output.loc
+		for(var/obj/item/stack/material/O in T)
+			update |= TRUE
+			var/material = O.get_material_name()
+			if(material in stack_storage)
+				stack_storage[material] += O.amount
 			else
-				O.loc = output.loc
+				stack_storage[material] = O.amount
+			qdel(O)
 
 	//Output amounts that are past stack_amt.
-	for(var/sheet in stack_storage)
-		if(stack_storage[sheet] >= stack_amt)
-			create_material_stacks(sheet, stack_amt, get_turf(output))
-			stack_storage[sheet] -= stack_amt
+	for(var/material in stack_storage)
+		update |= TRUE
+		if(stack_storage[material] >= stack_amt)
+			create_material_stacks(material, stack_amt, get_turf(output))
+			stack_storage[material] -= stack_amt
 
-	console.updateUsrDialog()
+	if(update)
+		console.updateUsrDialog()
 	return
 
