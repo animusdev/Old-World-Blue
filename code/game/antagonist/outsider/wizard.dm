@@ -21,7 +21,6 @@ var/datum/antagonist/wizard/wizards
 	wizards = src
 
 /datum/antagonist/wizard/create_objectives(var/datum/mind/wizard)
-
 	if(!..())
 		return
 
@@ -132,3 +131,7 @@ Made a proc so this is not repeated 14 (or more) times.*/
 		src << "<span class='warning'>I don't feel strong enough without my hat.</span>"
 		return 0
 	return 1
+
+/datum/antagonist/wizard/remove_antagonist(var/datum/mind/player)
+	player.current.spellremove()
+	..()

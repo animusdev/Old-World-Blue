@@ -53,3 +53,12 @@ var/datum/antagonist/xenos/borer/borers
 				borer.host_brain.real_name = host.real_name
 				return
 	..() // Place them at a vent if they can't get a host.
+
+/datum/antagonist/xenos/borer/remove_antagonist(var/datum/mind/player, var/mob/M)
+	if(!ispath(mob_path, /mob/living/carbon/human))
+		if((input("Remove borer?") in list("Yes","No")) == "Yes")
+			M = player.current
+			..()
+			M.Destroy()
+		else
+			..()
