@@ -108,9 +108,11 @@
 	center_of_mass = list("x"=16, "y"=9)
 	matter = list("glass" = 250)
 	volume = 30
+	w_class = ITEM_SIZE_TINY
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25)
 	flags = OPENCONTAINER
+
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone
 	preloaded = list("cryoxadone" = 30)
 
@@ -126,7 +128,7 @@
 	item_state = "bucket"
 	center_of_mass = list("x"=16, "y"=9)
 	matter = list(DEFAULT_WALL_MATERIAL = 200)
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10,20,30,60,120)
 	volume = 120

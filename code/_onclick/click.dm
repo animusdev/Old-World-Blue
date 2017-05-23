@@ -205,6 +205,8 @@
 	animals lunging, etc.
 */
 /mob/proc/RangedAttack(var/atom/A, var/params)
+	//TODO: DNA3
+	/*
 	if(!mutations.len) return
 	if((LASER in mutations) && a_intent == I_HURT)
 		LaserEyes(A) // moved into a proc below
@@ -212,6 +214,8 @@
 		if(get_dist(src, A) > tk_maxrange)
 			return
 		A.attack_tk(src)
+	*/
+
 /*
 	Restrained ClickOn
 
@@ -362,3 +366,7 @@
 		else		direction = WEST
 	if(direction != dir)
 		facedir(direction)
+
+/mob/living/silicon/ai/face_atom(var/atom/A)
+	if(holo)
+		holo.face_hologram_to(A, src)

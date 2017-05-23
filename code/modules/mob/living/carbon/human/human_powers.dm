@@ -98,7 +98,7 @@
 	T.Weaken(3)
 
 	// Pariahs are not good at leaping. This is snowflakey, pls fix.
-	if(species.name == "Vox Pariah")
+	if(species.name == SPECIES_VOXPARIAH)
 		src.Weaken(5)
 		return
 
@@ -135,7 +135,7 @@
 		return
 
 	var/obj/item/weapon/grab/G = locate() in src
-	if(!G || !istype(G))
+	if(!G)
 		src << "\red You are not grabbing anyone."
 		return
 
@@ -150,13 +150,13 @@
 	if(ishuman(G.affecting))
 		var/mob/living/carbon/human/H = G.affecting
 		H.apply_damage(50,BRUTE)
-		if(H.stat == 2)
+		if(H.stat == DEAD)
 			H.gib()
 	else
 		var/mob/living/M = G.affecting
 		if(!istype(M)) return //wut
 		M.apply_damage(50,BRUTE)
-		if(M.stat == 2)
+		if(M.stat == DEAD)
 			M.gib()
 
 /mob/living/carbon/human/proc/commune()

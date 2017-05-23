@@ -72,7 +72,7 @@
 				current = newSegment
 
 		update_icon()
-			if(stat == CONSCIOUS || stat == UNCONSCIOUS)
+			if(stat)
 				icon_state = "spacewormhead[previous?1:0]"
 				if(previous)
 					set_dir(get_dir(previous,src))
@@ -124,7 +124,7 @@
 		return
 
 	proc/update_icon() //only for the sake of consistency with the other update icon procs
-		if(stat == CONSCIOUS || stat == UNCONSCIOUS)
+		if(stat)
 			if(previous) //midsection
 				icon_state = "spaceworm[get_dir(src,previous) | get_dir(src,next)]" //see 3 lines below
 			else //tail

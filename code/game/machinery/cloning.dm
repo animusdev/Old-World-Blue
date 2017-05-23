@@ -307,7 +307,7 @@
 		occupant.client.perspective = MOB_PERSPECTIVE
 	occupant.loc = loc
 	eject_wait = 0 //If it's still set somehow.
-	domutcheck(occupant) //Waiting until they're out before possible transforming.
+	//TODO: DNA3 update_mutations
 	occupant = null
 
 	biomass -= CLONE_BIOMASS
@@ -393,7 +393,7 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
 	item_state = "card-id"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	var/datum/dna2/record/buf = null
 	var/read_only = 0 //Well,it's still a floppy disk
 
@@ -416,6 +416,9 @@
 		//buf.dna.UI=list(0x0C8,0x0C8,0x0C8,0x0C8,0x0C8,0x0C8,0x000,0x000,0x000,0x000,0x161,0xFBD,0xDEF) // Farmer Jeff
 		buf.dna.UpdateUI()
 
+/*
+TODO: DNA3 monkey disk
+
 /obj/item/weapon/disk/data/monkey
 	name = "data disk - 'Mr. Muggles'"
 	read_only = 1
@@ -429,6 +432,7 @@
 			new_SE += rand(1,1024)
 		buf.dna.SE=new_SE
 		buf.dna.SetSEValueRange(MONKEYBLOCK,0xDAC, 0xFFF)
+*/
 
 /obj/item/weapon/disk/data/New()
 	..()
@@ -448,11 +452,11 @@
  *	Diskette Box
  */
 
-/obj/item/weapon/storage/box/disks
+/obj/item/storage/box/disks
 	name = "Diskette Box"
 	icon_state = "disk_kit"
 
-/obj/item/weapon/storage/box/disks/New()
+/obj/item/storage/box/disks/New()
 	..()
 	new /obj/item/weapon/disk/data(src)
 	new /obj/item/weapon/disk/data(src)

@@ -3,7 +3,7 @@
 	desc = "A small disk used for carrying data on plant genetics."
 	icon = 'icons/obj/hydroponics_machines.dmi'
 	icon_state = "disk"
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	randpixel = 5
 
 	var/list/genes = list()
@@ -19,11 +19,11 @@
 			genes = list()
 			genesource = "unknown"
 
-/obj/item/weapon/storage/box/botanydisk
+/obj/item/storage/box/botanydisk
 	name = "flora disk box"
 	desc = "A box of flora data disks, apparently."
 
-/obj/item/weapon/storage/box/botanydisk/New()
+/obj/item/storage/box/botanydisk/New()
 	..()
 	for(var/i = 0;i<7;i++)
 		new /obj/item/weapon/disk/botany(src)

@@ -4,7 +4,7 @@
 	icon_state = "flash"
 	item_state = "flashtool"
 	throwforce = 5
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 4
 	throw_range = 10
 	flags = CONDUCT
@@ -15,10 +15,13 @@
 	var/last_used = 0 //last world.time it was used.
 
 /obj/item/device/flash/proc/clown_check(var/mob/user)
+	//TODO: DNA3 clown_block
+	/*
 	if(user && (CLUMSY in user.mutations) && prob(50))
 		user << "<span class='warning'>\The [src] slips out of your hand.</span>"
 		user.unEquip(src)
 		return 0
+	*/
 	return 1
 
 /obj/item/device/flash/proc/flash_recharge()
@@ -35,7 +38,7 @@
 /obj/item/device/flash/attack(mob/living/M as mob, mob/user as mob)
 	if(!user || !M)	return	//sanity
 
-	admin_attack_log(
+	admin_attack_log(user, M,
 		"Used the [src.name] to flash [key_name(M)]",
 		"Has been flashed (attempt) with [src.name]  by [key_name(user)]",
 		"used the [src.name] to flash"
@@ -206,8 +209,6 @@
 	desc = "When a problem arises, SCIENCE is the solution."
 	icon_state = "sflash"
 	origin_tech = list(TECH_MAGNET = 2, TECH_COMBAT = 1)
-	var/construction_cost = list(DEFAULT_WALL_MATERIAL=750,"glass"=750)
-	var/construction_time=100
 
 /obj/item/device/flash/synthetic/attack(mob/living/M as mob, mob/user as mob)
 	..()

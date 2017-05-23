@@ -63,38 +63,14 @@
 
 /obj/structure/window/reinforced/holowindow/attackby(obj/item/W as obj, mob/user as mob)
 	if(!istype(W)) return//I really wish I did not need this
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
-		var/obj/item/weapon/grab/G = W
-		if(istype(G.affecting,/mob/living) && get_dist(src,G.affecting)<2)
-			var/mob/living/M = G.affecting
-			var/state = G.state
-			qdel(W)	//gotta delete it here because if window breaks, it won't get deleted
-			switch (state)
-				if(1)
-					M.visible_message("<span class='warning'>[user] slams [M] against \the [src]!</span>")
-					M.apply_damage(7)
-					hit(10)
-				if(2)
-					M.visible_message("<span class='danger'>[user] bashes [M] against \the [src]!</span>")
-					if (prob(50))
-						M.Weaken(1)
-					M.apply_damage(10)
-					hit(25)
-				if(3)
-					M.visible_message("<span class='danger'><big>[user] crushes [M] against \the [src]!</big></span>")
-					M.Weaken(5)
-					M.apply_damage(20)
-					hit(50)
-			return
-
 	if(W.flags & NOBLUDGEON) return
 
 	if(istype(W, /obj/item/weapon/screwdriver))
-		user << ("<span class='notice'>It's a holowindow, you can't unfasten it!</span>")
+		user << (SPAN_NOTE("It's a holowindow, you can't unfasten it!"))
 	else if(istype(W, /obj/item/weapon/crowbar) && reinf && state <= 1)
-		user << ("<span class='notice'>It's a holowindow, you can't pry it!</span>")
+		user << (SPAN_NOTE("It's a holowindow, you can't pry it!"))
 	else if(istype(W, /obj/item/weapon/wrench) && !anchored && (!state || !reinf))
-		user << ("<span class='notice'>It's a holowindow, you can't dismantle it!</span>")
+		user << (SPAN_NOTE("It's a holowindow, you can't dismantle it!"))
 	else
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			hit(W.force)
@@ -174,7 +150,7 @@
 	throw_speed = 1
 	throw_range = 5
 	throwforce = 0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	flags = NOBLOODY
 	var/active = 0
 	var/item_color
@@ -219,13 +195,13 @@
 	if (active)
 		force = 30
 		icon_state = "sword[item_color]"
-		w_class = 4
+		w_class = ITEM_SIZE_HUGE
 		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
 		user << "<span class='notice'>[src] is now active.</span>"
 	else
 		force = 3
 		icon_state = "sword0"
-		w_class = 2
+		w_class = ITEM_SIZE_SMALL
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
 		user << "<span class='notice'>[src] can now be concealed.</span>"
 
@@ -245,7 +221,7 @@
 	name = "basketball"
 	item_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
-	w_class = 4 //Stops people from hiding it in their bags/pockets
+	w_class = ITEM_SIZE_LARGE //Stops people from hiding it in their pockets
 
 /obj/structure/holohoop
 	name = "basketball hoop"
@@ -256,23 +232,19 @@
 	density = 1
 	throwpass = 1
 
+/obj/structure/holohoop/affect_grab(var/mob/living/user, var/mob/living/target, var/obj/item/weapon/grab/grab)
+	if(grab.state == GRAB_PASSIVE)
+		user << SPAN_WARN("You need a better grip to do that!")
+		return FALSE
+	target.forceMove(src.loc)
+	target.Weaken(5)
+	visible_message(SPAN_WARN("[user] dunks [target] into the [src]!"))
+	return TRUE
+
 /obj/structure/holohoop/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
-		var/obj/item/weapon/grab/G = W
-		if(get_dist(src,G.affecting)>=2)
-			return
-		if(G.state<2)
-			user << "<span class='warning'>You need a better grip to do that!</span>"
-			return
-		G.affecting.loc = src.loc
-		G.affecting.Weaken(5)
-		visible_message("<span class='warning'>[G.assailant] dunks [G.affecting] into the [src]!</span>", 3)
-		qdel(W)
+	if(istype(W, /obj/item) && user.unEquip(W, src.loc))
+		visible_message(SPAN_NOTE("[user] dunks [W] into the [src]!"))
 		return
-	else if (istype(W, /obj/item) && get_dist(src,user)<2)
-		if(user.unEquip(src.loc))
-			visible_message("<span class='notice'>[user] dunks [W] into the [src]!</span>", 3)
-			return
 
 /obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if (istype(mover,/obj/item) && mover.throwing)
@@ -280,10 +252,10 @@
 		if(istype(I, /obj/item/projectile))
 			return
 		if(prob(50))
-			I.loc = src.loc
-			visible_message("<span class='notice'>Swish! \the [I] lands in \the [src].</span>", 3)
+			I.forceMove(src.loc)
+			visible_message(SPAN_NOTE("Swish! \the [I] lands in \the [src]."), 3)
 		else
-			visible_message("<span class='warning'>\The [I] bounces off of \the [src]'s rim!</span>", 3)
+			visible_message(SPAN_WARN("\The [I] bounces off of \the [src]'s rim!"), 3)
 		return 0
 	else
 		return ..(mover, target, height, air_group)

@@ -39,7 +39,7 @@
 
 /obj/item/offear
 	name = "Other ear"
-	w_class = 5.0
+	w_class = ITEM_SIZE_HUGE
 	icon = 'icons/mob/screen1_Midnight.dmi'
 	icon_state = "block"
 	slot_flags = SLOT_EARS

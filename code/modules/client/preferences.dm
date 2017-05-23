@@ -2,23 +2,10 @@
 
 var/list/preferences_datums = list()
 
-var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm --rastaf
-//some autodetection here.
-// TODO: Update to new antagonist system.
-	"traitor" = IS_MODE_COMPILED("traitor"),             // 0
-	"operative" = IS_MODE_COMPILED("nuclear"),           // 1
-	"changeling" = IS_MODE_COMPILED("changeling"),       // 2
-	"wizard" = IS_MODE_COMPILED("wizard"),               // 3
-	"malf AI" = IS_MODE_COMPILED("malfunction"),         // 4
-	"revolutionary" = IS_MODE_COMPILED("revolution"),    // 5
-	"alien candidate" = 1, //always show                 // 6
-	"positronic brain" = 1,                              // 7
-	"cultist" = IS_MODE_COMPILED("cult"),                // 8
-	"ninja" = "true",                                    // 9
-	"raider" = IS_MODE_COMPILED("heist"),                // 10
-	"diona" = 1,                                         // 11
-	"loyalist" = IS_MODE_COMPILED("revolution"),         // 12
-	"pAI candidate" = 1, // -- TLE                       // 13
+var/global/list/special_roles = list(
+	ROLE_DIONA,
+	ROLE_POSIBRAIN,
+	ROLE_PAI
 )
 
 //used for alternate_option
@@ -41,7 +28,6 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/ooccolor = "#010000"			//Whatever this is set to acts as 'reset' color and is thus unusable as an actual custom color
-	var/be_special = 0					//Special role selection
 	var/UI_style = "Midnight"
 	var/toggles = TOGGLES_DEFAULT
 	var/chat_toggles = CHAT_TOGGLES_DEFAULT
@@ -62,7 +48,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	var/h_style = "Bald"				//Hair type
 	var/f_style = "Shaved"				//Face hair type
 	var/s_tone = 0						//Skin tone
-	var/species = "Human"				//Species name for save file
+	var/species = SPECIES_HUMAN			//Species name for save file
 	var/datum/species/current_species	//Species datum to use
 	var/body = "Default"
 	var/species_preview                 //Used for the species selection window.
@@ -95,7 +81,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 					return
 	gender = pick(MALE, FEMALE)
 	real_name = random_name(gender,species)
-	current_species = all_species["Human"]
+	current_species = all_species[species]
 	sanitize_body_build()
 	h_style = random_hair_style(gender, species)
 	gear = list()
@@ -167,6 +153,15 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	character.personal_faction = faction
 	character.religion = religion
 
+
+	if(disabilities)
+		// Set defer to 1 if you add more crap here so it only recalculates struc_enzymes once. - N3X
+		//TODO: DNA3 glasses_block
+		character.disabilities |= NEARSIGHTED
+
+	// And uncomment this, too.
+	// character.dna.UpdateSE()
+
 	character.rebuild_organs(src)
 
 	if(backbag > backbaglist.len || backbag < 1)
@@ -178,5 +173,4 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 		if(isliving(src)) //Ghosts get neuter by default
 			message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
 			character.gender = MALE
-
-	character.force_update_limbs()
+			character.force_update_limbs()

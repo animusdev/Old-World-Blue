@@ -63,62 +63,89 @@
  * Corporate
  */
 /obj/item/clothing/under/rank/head_of_security/corp
-	icon_state = "hos_corporate"
+	icon_state = "hos_corp"
 	item_state = "black"
 
 /obj/item/clothing/under/rank/warden/corp
-	icon_state = "warden_corporate"
+	icon_state = "warden_corp"
 	item_state = "black"
 
 /obj/item/clothing/under/rank/security/corp
-	icon_state = "sec_corporate"
+	icon_state = "sec_corp"
 	item_state = "black"
 
 /obj/item/clothing/under/rank/det/corp
-	icon_state = "det_corporate"
+	icon_state = "det_corp"
 	item_state = "black"
 
 /*
  * Navy uniforms
  */
-/obj/item/clothing/under/rank/security/dnavy
-	name = "security officer's uniform"
-	desc = "Dark, navy and stylish. Enough to be the perfect piece of clothing."
-	icon_state = "officerdnavyclothes"
-	item_state = "ba_suit"
-
 /obj/item/clothing/under/rank/head_of_security/dnavy
 	desc = "The insignia on this uniform tells you that this uniform belongs to the Head of Security."
 	name = "head of security's uniform"
-	icon_state = "hosdnavyclothes"
+	icon_state = "hos_dnavy"
 	item_state = "ba_suit"
 
 /obj/item/clothing/under/rank/warden/dnavy
 	desc = "Dark. Navy. Sexy."
 	name = "warden's uniform"
-	icon_state = "wardendnavyclothes"
+	icon_state = "warden_dnavy"
+	item_state = "ba_suit"
+
+/obj/item/clothing/under/rank/security/dnavy
+	name = "security officer's uniform"
+	desc = "Dark, navy and stylish. Enough to be the perfect piece of clothing."
+	icon_state = "officer_dnavy"
 	item_state = "ba_suit"
 
 /*
  * Blue uniforms
  */
-/obj/item/clothing/under/rank/head_of_security/navyblue
+/obj/item/clothing/under/rank/head_of_security/blue
 	desc = "The insignia on this uniform tells you that this uniform belongs to the Head of Security."
 	name = "head of security's uniform"
-	icon_state = "hosblueclothes"
+	icon_state = "hos_blue"
 	item_state = "ba_suit"
 
-/obj/item/clothing/under/rank/warden/navyblue
+/obj/item/clothing/under/rank/warden/blue
 	desc = "The insignia on this uniform tells you that this uniform belongs to the Warden."
 	name = "warden's uniform"
-	icon_state = "wardenblueclothes"
+	icon_state = "warden_blue"
 	item_state = "ba_suit"
 
-/obj/item/clothing/under/rank/security/navyblue
+/obj/item/clothing/under/rank/security/blue
 	name = "security officer's uniform"
 	desc = "The latest in fashionable security outfits."
-	icon_state = "officerblueclothes"
+	icon_state = "officer_blue"
 	item_state = "ba_suit"
+
+/obj/item/clothing/under/rank/det/blue
+	desc = "That's a simple blue dress shirt with the jeans."
+	icon_state = "det_blue"
+	item_state = "ba_suit"
+
+/*
+ * Tan uniforms
+ */
+/obj/item/clothing/under/rank/head_of_security/tan
+	desc = "The insignia on this uniform tells you that this uniform belongs to the Head of Security."
+	name = "head of security's uniform"
+	icon_state = "hos_tan"
+	item_state = "ba_suit"
+
+/obj/item/clothing/under/rank/warden/tan
+	desc = "The insignia on this uniform tells you that this uniform belongs to the Warden."
+	name = "warden's uniform"
+	icon_state = "warden_tan"
+	item_state = "ba_suit"
+
+/obj/item/clothing/under/rank/security/tan
+	name = "security officer's uniform"
+	desc = "The latest in fashionable security outfits."
+	icon_state = "officer_tan"
+	item_state = "ba_suit"
+
 
 /*
  * Head of Security
@@ -153,11 +180,6 @@
 	item_state = "ba_suit"
 	desc = "An immaculate white dress shirt, paired with a pair of dark grey dress pants."
 	starting_accessories = null
-
-/obj/item/clothing/under/rank/det/jeans
-	desc = "That's a simple blue dress shirt with the jeans."
-	icon_state = "detectivej"
-	item_state = "blue"
 
 /*
  *Forensic Technician

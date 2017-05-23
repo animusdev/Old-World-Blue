@@ -1,8 +1,13 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
-//NOTE: Breathing happens once per FOUR TICKS, unless the last breath fails. In which case it happens once per ONE TICK! So oxyloss healing is done once per 4 ticks while oxyloss damage is applied once per tick!
-#define HUMAN_MAX_OXYLOSS 1 //Defines how much oxyloss humans can get per tick. A tile with no air at all (such as space) applies this value, otherwise it's a percentage of it.
-#define HUMAN_CRIT_MAX_OXYLOSS ( 2.0 / 6) //The amount of damage you'll get when in critical condition. We want this to be a 5 minute deal = 300s. There are 50HP to get through, so (1/6)*last_tick_duration per second. Breaths however only happen every 4 ticks. last_tick_duration = ~2.0 on average
+//NOTE: Breathing happens once per FOUR TICKS, unless the last breath fails.
+// In which case it happens once per ONE TICK! So oxyloss healing is done once per 4 ticks while oxyloss damage is applied once per tick!
+
+//Defines how much oxyloss humans can get per tick. A tile with no air at all (such as space) applies this value, otherwise it's a percentage of it.
+#define HUMAN_MAX_OXYLOSS 1
+//The amount of damage you'll get when in critical condition. We want this to be a 5 minute deal = 300s.
+// There are 50HP to get through, so (1/6)*last_tick_duration per second. Breaths however only happen every 4 ticks. last_tick_duration = ~2.0 on average
+#define HUMAN_CRIT_MAX_OXYLOSS ( 2.0 / 6)
 
 #define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
 #define HEAT_DAMAGE_LEVEL_2 4 //Amount of damage applied when your body temperature passes the 400K point
@@ -214,16 +219,10 @@
 		return
 
 	if(getFireLoss())
-		if((COLD_RESISTANCE in mutations) || (prob(1)))
+		if(prob(1))
 			heal_organ_damage(0,1)
 
-	// DNA2 - Gene processing.
-	// The HULK stuff that was here is now in the hulk gene.
-	for(var/datum/dna/gene/gene in dna_genes)
-		if(!gene.block)
-			continue
-		if(gene.is_active(src))
-			gene.OnMobLife(src)
+	//TODO: DNA3 on_mob_life()
 
 	radiation = Clamp(radiation,0,100)
 
@@ -255,11 +254,11 @@
 					Weaken(3)
 					if(!lying)
 						emote("collapse")
-				if(prob(5) && prob(100 * RADIATION_SPEED_COEFFICIENT) && species.get_bodytype() == "Human") //apes go bald
-					if((h_style != "Bald" || f_style != "Shaved" ))
+				if(prob(5) && prob(100 * RADIATION_SPEED_COEFFICIENT) && species.get_bodytype() == SPECIES_HUMAN) //apes go bald
+					if(h_style != species.default_h_style || f_style != species.default_f_style)
 						src << "<span class='warning'>Your hair falls out.</span>"
-						h_style = "Bald"
-						f_style = "Shaved"
+						h_style = species.default_h_style
+						f_style = species.default_f_style
 						update_hair()
 
 		if (radiation > 75)
@@ -495,7 +494,7 @@
 
 
 	// Hot air hurts :(
-	if((breath.temperature < species.cold_level_1 || breath.temperature > species.heat_level_1) && !(COLD_RESISTANCE in mutations))
+	if(breath.temperature < species.cold_level_1 || breath.temperature > species.heat_level_1)
 
 		if(breath.temperature <= species.cold_level_1)
 			if(prob(20))
@@ -584,7 +583,8 @@
 		else
 			loc_temp = environment.temperature
 
-		if(adjusted_pressure < species.warning_high_pressure && adjusted_pressure > species.warning_low_pressure && abs(loc_temp - bodytemperature) < 20 && bodytemperature < species.heat_level_1 && bodytemperature > species.cold_level_1)
+		if(adjusted_pressure < species.warning_high_pressure && adjusted_pressure > species.warning_low_pressure &&\
+				abs(loc_temp - bodytemperature) < 20 && bodytemperature < species.heat_level_1 && bodytemperature > species.cold_level_1)
 			pressure_alert = 0
 			return // Temperatures are within normal ranges, fuck all this processing. ~Ccomp
 
@@ -650,13 +650,10 @@
 	else if(adjusted_pressure >= species.hazard_low_pressure)
 		pressure_alert = -1
 	else
-		if( !(COLD_RESISTANCE in mutations))
-			take_overall_damage(brute=LOW_PRESSURE_DAMAGE, used_weapon = "Low Pressure")
-			if(getOxyLoss() < 55) // 11 OxyLoss per 4 ticks when wearing internals;    unconsciousness in 16 ticks, roughly half a minute
-				adjustOxyLoss(4)  // 16 OxyLoss per 4 ticks when no internals present; unconsciousness in 13 ticks, roughly twenty seconds
-			pressure_alert = -2
-		else
-			pressure_alert = -1
+		take_overall_damage(brute=LOW_PRESSURE_DAMAGE, used_weapon = "Low Pressure")
+		if(getOxyLoss() < 55) // 11 OxyLoss per 4 ticks when wearing internals;    unconsciousness in 16 ticks, roughly half a minute
+			adjustOxyLoss(4)  // 16 OxyLoss per 4 ticks when no internals present; unconsciousness in 13 ticks, roughly twenty seconds
+		pressure_alert = -2
 
 	return
 
@@ -737,10 +734,10 @@
 	return get_thermal_protection(thermal_protection_flags)
 
 /mob/living/carbon/human/get_cold_protection(temperature)
-	if(COLD_RESISTANCE in mutations)
-		return 1 //Fully protected from the cold.
-
-	temperature = max(temperature, 2.7) //There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them, so this is necessary to ensure that that bug does not affect this calculation. Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
+	//There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them,
+	// so this is necessary to ensure that that bug does not affect this calculation.
+	// Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
+	temperature = max(temperature, 2.7)
 	var/thermal_protection_flags = get_cold_protection_flags(temperature)
 	return get_thermal_protection(thermal_protection_flags)
 
@@ -823,22 +820,8 @@
 					adjustOxyLoss(-(light_amount))
 					//TODO: heal wounds, heal broken limbs.
 
-	if(species.light_dam)
-		var/light_amount = 0
-		if(isturf(loc))
-			var/turf/T = loc
-			var/atom/movable/lighting_overlay/L = locate(/atom/movable/lighting_overlay) in T
-			if(L)
-				light_amount = L.lum_r + L.lum_g + L.lum_b //hardcapped so it's not abused by having a ton of flashlights
-			else
-				light_amount =  10
-		if(light_amount > species.light_dam) //if there's enough light, start dying
-			take_overall_damage(1,1)
-		else //heal in the dark
-			heal_overall_damage(1,1)
-
 	// nutrition decrease
-	if (nutrition > 0 && stat != 2)
+	if (nutrition > 0 && stat != DEAD)
 		nutrition = max (0, nutrition - species.hunger_factor)
 
 	if (nutrition > 450)
@@ -1057,7 +1040,7 @@
 		if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
 			client.images.Remove(hud)
 
-	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask, global_hud.nvg, global_hud.thermal, global_hud.meson, global_hud.science, global_hud.horny) //add aphrodisiac
+	client.screen.Remove(global_hud.blurry, global_hud.druggy, global_hud.vimpaired, global_hud.darkMask, global_hud.nvg, global_hud.thermal, global_hud.meson, global_hud.science, global_hud.horny)
 
 	update_action_buttons()
 
@@ -1156,11 +1139,6 @@
 		sight = species.vision_flags
 		see_in_dark = species.darksight
 		see_invisible = see_in_dark>2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
-
-		if(XRAY in mutations)
-			sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
-			see_in_dark = 8
-			if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
 		if(seer)
 			var/obj/effect/rune/R = locate() in loc
@@ -1334,7 +1312,8 @@
 				src.sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 		else
 			var/isRemoteObserve = 0
-			if((mRemote in mutations) && remoteview_target)
+			//TODO: DNA3 remote_view
+			if(remoteview_target)
 				if(remoteview_target.stat==CONSCIOUS)
 					isRemoteObserve = 1
 			if(!isRemoteObserve && client && !client.adminobs)

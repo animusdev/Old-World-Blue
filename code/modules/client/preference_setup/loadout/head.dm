@@ -134,7 +134,7 @@
 /datum/gear/head/zhan_scarf
 	display_name = "Zhan headscarf"
 	path = /obj/item/clothing/head/tajaran/scarf
-	whitelisted = "Tajara"
+	whitelisted = SPECIES_TAJARA
 
 /datum/gear/head/sombrero
 	display_name = "sombrero"

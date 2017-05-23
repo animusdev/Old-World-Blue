@@ -10,16 +10,16 @@
 /datum/supply_packs/med/medical
 	name = "Medical crate"
 	contains = list(
-		/obj/item/weapon/storage/firstaid/regular,
-		/obj/item/weapon/storage/firstaid/fire,
-		/obj/item/weapon/storage/firstaid/toxin,
-		/obj/item/weapon/storage/firstaid/o2,
-		/obj/item/weapon/storage/firstaid/adv,
+		/obj/item/storage/firstaid/regular,
+		/obj/item/storage/firstaid/fire,
+		/obj/item/storage/firstaid/toxin,
+		/obj/item/storage/firstaid/o2,
+		/obj/item/storage/firstaid/adv,
 		/obj/item/weapon/reagent_containers/glass/beaker/bottle/antitoxin,
 		/obj/item/weapon/reagent_containers/glass/beaker/bottle/inaprovaline,
 		/obj/item/weapon/reagent_containers/glass/beaker/bottle/stoxin,
-		/obj/item/weapon/storage/box/syringes,
-		/obj/item/weapon/storage/box/autoinjectors
+		/obj/item/storage/box/syringes,
+		/obj/item/storage/box/autoinjectors
 	)
 	cost = 10
 	containertype = /obj/structure/closet/crate/medical
@@ -27,14 +27,14 @@
 
 /datum/supply_packs/med/bloodpack
 	name = "BloodPack crate"
-	contains = list(/obj/item/weapon/storage/box/bloodpacks = 3)
+	contains = list(/obj/item/storage/box/bloodpacks = 3)
 	cost = 10
 	containertype = /obj/structure/closet/crate/medical
 	containername = "BloodPack crate"
 
 /datum/supply_packs/med/bodybag
 	name = "Body bag crate"
-	contains = list(/obj/item/weapon/storage/box/bodybags = 3)
+	contains = list(/obj/item/storage/box/bodybags = 3)
 	cost = 10
 	containertype = /obj/structure/closet/crate/medical
 	containername = "Body bag crate"
@@ -71,9 +71,9 @@
 	contains = list(
 		/obj/item/clothing/under/rank/medical/sleeveless/green = 2,
 		/obj/item/clothing/head/surgery/green = 2,
-		/obj/item/weapon/storage/box/masks,
-		/obj/item/weapon/storage/box/gloves,
-		/obj/item/weapon/storage/belt/medical = 3
+		/obj/item/storage/box/masks,
+		/obj/item/storage/box/gloves,
+		/obj/item/storage/belt/medical = 3
 	)
 	cost = 10
 	containertype = /obj/structure/closet/crate
@@ -81,7 +81,7 @@
 
 /datum/supply_packs/gen_disks
 	name = "Genetics disks crate"
-	contains = list(/obj/item/weapon/storage/box/disks = 2)
+	contains = list(/obj/item/storage/box/disks = 2)
 	cost = 10
 	containertype = /obj/structure/closet/crate/medical
 	containername = "Genetics disks crate"

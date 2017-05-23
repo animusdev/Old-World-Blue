@@ -11,7 +11,6 @@
 	health = 150
 	gender = NEUTER
 
-	update_icon = 0
 	nutrition = 700
 
 	see_in_dark = 8
@@ -194,13 +193,11 @@
 
 
 /mob/living/carbon/slime/blob_act()
-	if (stat == 2)
+	if(stat == DEAD)
 		return
 	var/shielded = 0
 
-	var/damage = null
-	if (stat != 2)
-		damage = rand(10,30)
+	var/damage = rand(10,30)
 
 	if(shielded)
 		damage /= 4
@@ -306,6 +303,8 @@
 
 			attacked += 10
 			if (prob(90))
+				//TODO: DNA3 hulk
+				/*
 				if (HULK in M.mutations)
 					damage += 5
 					if(Victim || Target)
@@ -318,6 +317,7 @@
 						step_away(src,M,15)
 						sleep(3)
 						step_away(src,M,15)
+				*/
 
 				playsound(loc, "punch", 25, 1, -1)
 				visible_message("<span class='danger'>[M] has punched [src]!</span>", \

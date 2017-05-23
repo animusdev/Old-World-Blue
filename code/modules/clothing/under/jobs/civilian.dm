@@ -9,6 +9,22 @@
 	desc = "It's a blue jumpsuit with some gold markings denoting the rank of \"Captain\"."
 	name = "captain's jumpsuit"
 	icon_state = "captain"
+	item_state = "captain"
+
+/obj/item/clothing/under/rank/captain/dress
+	name = "captain's dress uniform"
+	desc = "Feminine fashion for the style concious captain."
+	icon_state = "captain_dress"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
+/obj/item/clothing/under/rank/captain/old_school
+	icon_state = "captain_oldschool"
+
+/obj/item/clothing/under/rank/captain/green
+	name = "captain's suit"
+	desc = "A green suit and yellow necktie. Exemplifies authority."
+	icon_state = "captain_green"
+	item_state = "centcom"
 
 /obj/item/clothing/under/rank/qm
 	name = "quartermaster's jumpsuit"
@@ -29,8 +45,6 @@
 	icon_state = "qmj"
 
 /obj/item/clothing/under/rank/qm/jeans/female
-	name = "quartermaster's jumpjeans"
-	desc = "Jeeeaaans! They're comfy!"
 	icon_state = "qmjf"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
 
@@ -81,6 +95,12 @@
 	icon_state = "hop"
 	item_state = "hop"
 
+/obj/item/clothing/under/rank/hop/dress
+	name = "head of personnel dress uniform"
+	desc = "Feminine fashion for the style concious HoP."
+	icon_state = "hop_dress"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
 /obj/item/clothing/under/rank/hop/whimsy
 	desc = "A blue jacket and red tie, with matching red cuffs! Snazzy. Wearing this makes you feel more important than your job title does."
 	name = "head of personnel's suit"
@@ -90,10 +110,11 @@
 	name = "dark head of personnel's jumpsuit"
 	icon_state = "hop_dark"
 
-/obj/item/clothing/under/rank/hop/doctor
-	desc = "This bow tie is kinda cool, you know."
-	name = "head of personnel's jumpsuit"
-	icon_state = "gmshirt"
+/obj/item/clothing/under/rank/hop/teal
+	name = "head of personnel's suit"
+	desc = "A teal suit and yellow necktie. An authoritative yet tacky ensemble."
+	icon_state = "hop_teal"
+	item_state = "green"
 
 /obj/item/clothing/under/rank/hydroponics
 	desc = "It's a jumpsuit designed to protect against minor plant-related hazards."

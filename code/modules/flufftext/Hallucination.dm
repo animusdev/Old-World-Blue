@@ -334,14 +334,14 @@ proc/check_panel(mob/M)
 
 var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/item/ammo_magazine/a357,\
 	/obj/item/weapon/gun/energy/crossbow, /obj/item/weapon/melee/energy/sword,\
-	/obj/item/weapon/storage/box/syndicate, /obj/item/weapon/storage/box/emps,\
+	/obj/item/storage/box/syndicate, /obj/item/storage/box/emps,\
 	/obj/item/weapon/cartridge/syndicate, /obj/item/chameleon/under,\
 	/obj/item/clothing/shoes/syndigaloshes, /obj/item/weapon/card/id/syndicate,\
 	/obj/item/clothing/mask/gas/voice, /obj/item/clothing/glasses/thermal,\
 	/obj/item/device/chameleon, /obj/item/weapon/card/emag,\
-	/obj/item/weapon/storage/toolbox/syndicate, /obj/item/weapon/aiModule,\
+	/obj/item/storage/toolbox/syndicate, /obj/item/weapon/aiModule,\
 	/obj/item/device/radio/headset/syndicate,	/obj/item/weapon/plastique,\
-	/obj/item/device/powersink, /obj/item/weapon/storage/box/syndie_kit,\
+	/obj/item/device/powersink, /obj/item/storage/box/syndie_kit,\
 	/obj/item/toy/syndicateballoon, /obj/item/weapon/gun/energy/captain,\
 	/obj/item/weapon/hand_tele, /obj/item/weapon/rcd, /obj/item/weapon/tank/jetpack,\
 	/obj/item/clothing/under/rank/captain, /obj/item/device/aicard,\

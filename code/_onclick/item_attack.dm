@@ -78,8 +78,11 @@ item/resolve_attackby() calls the target atom's attackby() proc.
 	/////////////////////////
 
 	var/power = force
+	//TODO: DNA3 hulk
+	/*
 	if(HULK in user.mutations)
 		power *= 2
+	*/
 
 	// TODO: needs to be refactored into a mob/living level attacked_by() proc. ~Z
 	user.do_attack_animation(M)
@@ -111,9 +114,8 @@ item/resolve_attackby() calls the target atom's attackby() proc.
 					var/turf/simulated/location = get_turf(M)
 					if(istype(location)) location.add_blood_floor(M)
 			if("fire")
-				if (!(COLD_RESISTANCE in M.mutations))
-					M.take_organ_damage(0, power)
-					M << "Aargh it burns!"
+				M.take_organ_damage(0, power)
+				M << "Aargh it burns!"
 		M.updatehealth()
 	add_fingerprint(user)
 	return 1

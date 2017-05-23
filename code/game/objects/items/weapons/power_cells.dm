@@ -9,13 +9,11 @@
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	var/charge = 0	// note %age conveted to actual charge in New
 	var/maxcharge = 1000
 	var/rigged = 0		// true if rigged to explode
 	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
-	var/construction_cost = list(DEFAULT_WALL_MATERIAL=750,"glass"=75)
-	var/construction_time=100
 	matter = list(DEFAULT_WALL_MATERIAL = 700, "glass" = 50)
 
 	suicide_act(mob/user)
@@ -27,7 +25,7 @@
 	name = "device power cell"
 	desc = "A small power cell designed to power handheld devices."
 	icon_state = "cell" //placeholder
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	force = 0
 	throw_speed = 5
 	throw_range = 7
@@ -83,7 +81,6 @@
 	icon_state = "scell"
 	maxcharge = 20000
 	matter = list(DEFAULT_WALL_MATERIAL = 700, "glass" = 70)
-	construction_cost = list(DEFAULT_WALL_MATERIAL=750,"glass"=100)
 
 /obj/item/weapon/cell/super/empty/New()
 	..()
@@ -95,7 +92,6 @@
 	icon_state = "hpcell"
 	maxcharge = 30000
 	matter = list(DEFAULT_WALL_MATERIAL = 700, "glass" = 80)
-	construction_cost = list(DEFAULT_WALL_MATERIAL=500,"glass"=150,"gold"=200,"silver"=200)
 
 /obj/item/weapon/cell/hyper/empty/New()
 	..()

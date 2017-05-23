@@ -862,7 +862,7 @@ Just a object used in constructing air alarms
 	icon = 'icons/obj/doors/door_assembly.dmi'
 	icon_state = "door_electronics"
 	desc = "Looks like a circuit. Probably is."
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	matter = list(DEFAULT_WALL_MATERIAL = 50, "glass" = 50)
 
 /*
@@ -1120,7 +1120,7 @@ FIRE ALARM
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 
 /obj/machinery/firealarm/initialize()
-	if(z in config.contact_levels)
+	if(isStationLevel(z))
 		if(security_level)
 			src.overlays += image('icons/obj/monitors.dmi', "overlay_[get_security_level()]")
 		else
@@ -1136,8 +1136,8 @@ Just a object used in constructing fire alarms
 	name = "fire alarm electronics"
 	icon = 'icons/obj/doors/door_assembly.dmi'
 	icon_state = "door_electronics"
-	desc = "A circuit. It has a label on it, it says \"Can handle heat levels up to 40 degrees celsius!\""
-	w_class = 2.0
+	desc = "A circuit. It has a label on it, it says \"Can handle heat levels up to 40 degrees celsius!\"."
+	w_class = ITEM_SIZE_SMALL
 	matter = list(DEFAULT_WALL_MATERIAL = 50, "glass" = 50)
 
 /obj/machinery/partyalarm

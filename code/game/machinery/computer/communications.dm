@@ -105,6 +105,7 @@
 				var/input = input(usr, "Please write a message to announce to the station crew.", "Priority Announcement")
 				if(!input || !(usr in view(1,src)))
 					return
+				log_game("[usr] use [src] for annonce \"[input]\"", src.loc, FALSE)
 				crew_announcement.Announce(input)
 				message_cooldown = 1
 				spawn(600)//One minute cooldown
@@ -415,7 +416,7 @@
 	return dat
 
 /proc/enable_prison_shuttle(var/mob/user)
-	for(var/obj/machinery/computer/prison_shuttle/PS in world)
+	for(var/obj/machinery/computer/prison_shuttle/PS in machines)
 		PS.allowedtocall = !(PS.allowedtocall)
 
 /proc/call_shuttle_proc(var/mob/user)
@@ -500,7 +501,7 @@
 
 
 /proc/cancel_call_proc(var/mob/user)
-	if (!( ticker ) || !emergency_shuttle.can_recall())
+	if (!ticker || !emergency_shuttle.can_recall())
 		return
 	if((ticker.mode.name == "blob")||(ticker.mode.name == "Meteor"))
 		return
@@ -511,8 +512,8 @@
 
 
 /proc/is_relay_online()
-	for(var/obj/machinery/bluespacerelay/M in world)
-		if(M.stat == 0)
+	for(var/obj/machinery/bluespacerelay/M in machines)
+		if(!M.stat)
 			return 1
 	return 0
 
@@ -531,7 +532,7 @@
 		if("message")
 			status_signal.data["msg1"] = data1
 			status_signal.data["msg2"] = data2
-			log_game("STATUS: [src.fingerprintslast] set status screen message with [src]: [data1] [data2]")
+			log_game("STATUS: [key_name(usr)] set status screen message with [src]: [data1] [data2]")
 			//message_admins("STATUS: [user] set status screen with [PDA]. Message: [data1] [data2]")
 		if("alert")
 			status_signal.data["picture_state"] = data1
@@ -541,12 +542,12 @@
 
 /obj/machinery/computer/communications/Destroy()
 
-	for(var/obj/machinery/computer/communications/commconsole in world)
+	for(var/obj/machinery/computer/communications/commconsole in machines)
 		if(istype(commconsole.loc,/turf) && commconsole != src)
 			return ..()
 
 	for(var/obj/item/weapon/circuitboard/communications/commboard in world)
-		if(istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage))
+		if(istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/storage))
 			return ..()
 
 	for(var/mob/living/silicon/ai/shuttlecaller in player_list)
@@ -563,12 +564,12 @@
 
 /obj/item/weapon/circuitboard/communications/Destroy()
 
-	for(var/obj/machinery/computer/communications/commconsole in world)
+	for(var/obj/machinery/computer/communications/commconsole in machines)
 		if(istype(commconsole.loc,/turf))
 			return ..()
 
 	for(var/obj/item/weapon/circuitboard/communications/commboard in world)
-		if((istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage)) && commboard != src)
+		if((istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/storage)) && commboard != src)
 			return ..()
 
 	for(var/mob/living/silicon/ai/shuttlecaller in player_list)

@@ -122,8 +122,7 @@
 					dat += "<a href='?src=\ref[src];screen=1'>Back</a>"
 					dat += "<br><b>Medical Robots:</b>"
 					var/bdat = null
-					for(var/mob/living/bot/medbot/M in world)
-
+					for(var/mob/living/bot/medbot/M in mob_list)
 						if(M.z != src.z)	continue	//only find medibots on the same z-level as the computer
 						var/turf/bl = get_turf(M)
 						if(bl)	//if it can't find a turf for the medibot, then it probably shouldn't be showing up

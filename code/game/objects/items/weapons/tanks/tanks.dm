@@ -6,7 +6,7 @@
 	icon = 'icons/obj/tank.dmi'
 	flags = CONDUCT
 	slot_flags = SLOT_BACK
-	w_class = 3
+	w_class = ITEM_SIZE_LARGE
 
 	pressure_resistance = ONE_ATMOSPHERE*5
 

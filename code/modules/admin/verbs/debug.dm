@@ -124,12 +124,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 				if("client")
 					var/list/keys = list()
-					for(var/mob/M in world)
+					for(var/mob/M in mob_list)
 						keys += M.client
 					lst[i] = input("Please, select a player!", "Selection", null, null) as null|anything in keys
 
 				if("mob's area")
-					var/mob/temp = input("Select mob", "Selection", usr) as mob in world
+					var/mob/temp = input("Select mob", "Selection", usr) as mob in mob_list
 					lst[i] = temp.loc
 
 		if(targetselected)
@@ -351,31 +351,31 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/list/areas_with_intercom = list()
 	var/list/areas_with_camera = list()
 
-	for(var/area/A in world)
+	for(var/area/A in all_areas)
 		if(!(A.type in areas_all))
 			areas_all.Add(A.type)
 
-	for(var/obj/machinery/power/apc/APC in world)
+	for(var/obj/machinery/power/apc/APC in machines)
 		var/area/A = get_area(APC)
 		if(!(A.type in areas_with_APC))
 			areas_with_APC.Add(A.type)
 
-	for(var/obj/machinery/alarm/alarm in world)
+	for(var/obj/machinery/alarm/alarm in machines)
 		var/area/A = get_area(alarm)
 		if(!(A.type in areas_with_air_alarm))
 			areas_with_air_alarm.Add(A.type)
 
-	for(var/obj/machinery/requests_console/RC in world)
+	for(var/obj/machinery/requests_console/RC in machines)
 		var/area/A = get_area(RC)
 		if(!(A.type in areas_with_RC))
 			areas_with_RC.Add(A.type)
 
-	for(var/obj/machinery/light/L in world)
+	for(var/obj/machinery/light/L in machines)
 		var/area/A = get_area(L)
 		if(!(A.type in areas_with_light))
 			areas_with_light.Add(A.type)
 
-	for(var/obj/machinery/light_switch/LS in world)
+	for(var/obj/machinery/light_switch/LS in machines)
 		var/area/A = get_area(LS)
 		if(!(A.type in areas_with_LS))
 			areas_with_LS.Add(A.type)
@@ -385,7 +385,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if(!(A.type in areas_with_intercom))
 			areas_with_intercom.Add(A.type)
 
-	for(var/obj/machinery/camera/C in world)
+	for(var/obj/machinery/camera/C in machines)
 		var/area/A = get_area(C)
 		if(!(A.type in areas_with_camera))
 			areas_with_camera.Add(A.type)
@@ -540,7 +540,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if ("tournament janitor")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/janitor(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), slot_shoes)
-			var/obj/item/weapon/storage/backpack/backpack = new(M)
+			var/obj/item/storage/backpack/backpack = new(M)
 			for(var/obj/item/I in backpack)
 				qdel(I)
 			M.equip_to_slot_or_del(backpack, slot_back)
@@ -631,7 +631,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword(M), slot_l_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/cloaking_device(M), slot_r_store)
 
-			var/obj/item/weapon/storage/secure/briefcase/sec_briefcase = new(M)
+			var/obj/item/storage/secure/briefcase/sec_briefcase = new(M)
 			for(var/obj/item/briefcase_item in sec_briefcase)
 				qdel(briefcase_item)
 			for(var/i=3, i>0, i--)
@@ -754,7 +754,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/ert(M), slot_l_ear)
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun(M), slot_belt)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(M), slot_glasses)
-			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/storage/backpack/satchel(M), slot_back)
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.name = "[M.real_name]'s ID Card"
@@ -776,7 +776,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/deathsquad/beret(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle/M1911(M), slot_belt)
 			M.equip_to_slot_or_del(new /obj/item/weapon/flame/lighter/zippo(M), slot_r_store)
-			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/storage/backpack/satchel(M), slot_back)
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.name = "[M.real_name]'s ID Card"
@@ -788,18 +788,18 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
 		if("red code agent")
-			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/storage/backpack/satchel/sec(M), slot_back)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret/sec/alt(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate/PMC(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), slot_gloves)
-			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/security/tactical(M), slot_belt)
+			M.equip_to_slot_or_del(new /obj/item/storage/belt/security/tactical(M), slot_belt)
 			M.equip_to_slot_or_del(new /obj/item/device/flashlight/seclite(M), slot_r_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen/double(M), slot_l_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/sec(M), slot_s_store)
 			new /obj/item/clothing/mask/gas/voice(M.back)
-			new /obj/item/weapon/storage/firstaid/regular(M.back)
+			new /obj/item/storage/firstaid/regular(M.back)
 			new /obj/item/weapon/reagent_containers/food/snacks/liquidfood(M.back)
 			new /obj/item/weapon/melee/classic_baton(M.belt)
 			new /obj/item/weapon/handcuffs(M.belt)
@@ -827,15 +827,15 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/riot(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(M), slot_shoes)
-			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(M), slot_back)
-			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/security/tactical(M), slot_belt)
+			M.equip_to_slot_or_del(new /obj/item/storage/backpack/satchel/sec(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/storage/belt/security/tactical(M), slot_belt)
 			M.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen/double(M), slot_r_store)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas(M), slot_wear_mask)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/riot(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/shotgun/pump/combat(M), slot_s_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/shield/riot(M), slot_l_hand)
 
-			new /obj/item/weapon/storage/box/shotgunammo(M.back)
+			new /obj/item/storage/box/shotgunammo(M.back)
 			new /obj/item/device/flashlight/seclite(M.back)
 			new /obj/item/device/flashlight/flare(M.back)
 			new /obj/item/weapon/melee/baton/loaded(M.back)
@@ -868,8 +868,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(M), slot_r_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/spellbook(M), slot_r_hand)
 			M.equip_to_slot_or_del(new /obj/item/weapon/staff(M), slot_l_hand)
-			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(M), slot_back)
-			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/storage/backpack(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/storage/box(M), slot_in_backpack)
 
 		if("red wizard")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(M), slot_w_uniform)
@@ -880,8 +880,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(M), slot_r_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/spellbook(M), slot_r_hand)
 			M.equip_to_slot_or_del(new /obj/item/weapon/staff(M), slot_l_hand)
-			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(M), slot_back)
-			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/storage/backpack(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/storage/box(M), slot_in_backpack)
 
 		if("marisa wizard")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(M), slot_w_uniform)
@@ -892,8 +892,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(M), slot_r_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/spellbook(M), slot_r_hand)
 			M.equip_to_slot_or_del(new /obj/item/weapon/staff(M), slot_l_hand)
-			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(M), slot_back)
-			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/storage/backpack(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/storage/box(M), slot_in_backpack)
 
 		if("soviet admiral")
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/hgpiratecap(M), slot_head)
@@ -902,7 +902,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(M), slot_l_ear)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/plain/eyepatch(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/hgpirate(M), slot_wear_suit)
-			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/storage/backpack/satchel(M), slot_back)
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/revolver/mateba(M), slot_belt)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/soviet(M), slot_w_uniform)
 			var/obj/item/weapon/card/id/W = new(M)
@@ -930,15 +930,15 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(alert("Are you sure? This will start up the engine. Should only be used during debug!",,"Yes","No") != "Yes")
 		return
 
-	for(var/obj/machinery/power/emitter/E in world)
+	for(var/obj/machinery/power/emitter/E in machines)
 		if(E.anchored)
 			E.active = 1
 
-	for(var/obj/machinery/field_generator/F in world)
+	for(var/obj/machinery/field_generator/F in machines)
 		if(F.anchored)
 			F.Varedit_start = 1
 	spawn(30)
-		for(var/obj/machinery/the_singularitygen/G in world)
+		for(var/obj/machinery/the_singularitygen/G in machines)
 			if(G.anchored)
 				var/obj/singularity/S = new /obj/singularity(get_turf(G), 50)
 				spawn(0)
@@ -956,7 +956,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				//S.dissipate_track = 0
 				//S.dissipate_strength = 10
 
-	for(var/obj/machinery/power/rad_collector/Rad in world)
+	for(var/obj/machinery/power/rad_collector/Rad in machines)
 		if(Rad.anchored)
 			if(!Rad.P)
 				var/obj/item/weapon/tank/phoron/Phoron = new/obj/item/weapon/tank/phoron(Rad)
@@ -968,7 +968,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			if(!Rad.active)
 				Rad.toggle_power()
 
-	for(var/obj/machinery/power/smes/SMES in world)
+	for(var/obj/machinery/power/smes/SMES in machines)
 		if(SMES.anchored)
 			SMES.input_attempt = 1
 
@@ -987,7 +987,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/found_the_pump = 0
 	var/obj/machinery/power/supermatter/SM
 
-	for(var/obj/machinery/M in world)
+	for(var/obj/machinery/M in machines)
 		if(!M)
 			continue
 		if(!M.loc)
@@ -1072,18 +1072,3 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			usr << jointext(dead_mob_list,",")
 		if("Clients")
 			usr << jointext(clients,",")
-
-// DNA2 - Admin Hax
-/client/proc/cmd_admin_toggle_block(var/mob/M,var/block)
-	if(!ticker)
-		alert("Wait until the game starts")
-		return
-	if(istype(M, /mob/living/carbon))
-		M.dna.SetSEState(block,!M.dna.GetSEState(block))
-		domutcheck(M,null,MUTCHK_FORCED)
-		M.update_mutations()
-		var/state="[M.dna.GetSEState(block)?"on":"off"]"
-		var/blockname=assigned_blocks[block]
-		log_admin("[key_name(src)] has toggled [key_name(M)]'s [blockname] block [state]!", M)
-	else
-		alert("Invalid mob")

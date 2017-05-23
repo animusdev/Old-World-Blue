@@ -4,11 +4,11 @@
 	icon = 'icons/obj/items.dmi'
 	name = "Coin"
 	icon_state = "coin"
+	randpixel = 8
 	flags = CONDUCT
 	force = 0.0
 	throwforce = 0.0
-	w_class = 1.0
-	randpixel = 8
+	w_class = ITEM_SIZE_TINY
 	slot_flags = SLOT_EARS
 	var/string_attached
 	var/sides = 2

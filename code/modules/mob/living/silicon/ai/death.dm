@@ -14,22 +14,22 @@
 	remove_ai_verbs(src)
 
 	var/callshuttle = 0
-	for(var/obj/machinery/computer/communications/commconsole in world)
-		if(commconsole.z == 2)
+	for(var/obj/machinery/computer/communications/commconsole in machines)
+		if(isOnAdminLevel(commconsole))
 			continue
 		if(istype(commconsole.loc,/turf))
 			break
 		callshuttle++
 
 	for(var/obj/item/weapon/circuitboard/communications/commboard in world)
-		if(commboard.z == 2)
+		if(isOnAdminLevel(commboard))
 			continue
-		if(istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage))
+		if(istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/storage))
 			break
 		callshuttle++
 
 	for(var/mob/living/silicon/ai/shuttlecaller in player_list)
-		if(shuttlecaller.z == 2)
+		if(isOnAdminLevel(shuttlecaller))
 			continue
 		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			break
@@ -43,7 +43,7 @@
 		log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 		message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.", 1)
 
-	for(var/obj/machinery/ai_status_display/O in world)
+	for(var/obj/machinery/ai_status_display/O in machines)
 		spawn( 0 )
 		O.mode = 2
 		if (istype(loc, /obj/item/device/aicard))

@@ -3,7 +3,7 @@
 	desc = "A folder."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "folder"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	pressure_resistance = 2
 
 /obj/item/weapon/folder/blue
@@ -35,7 +35,7 @@
 		update_icon()
 	else if(istype(W, /obj/item/weapon/pen))
 		var/n_name = sanitizeSafe(input(usr, "What would you like to label the folder?", "Folder Labelling", null)  as text, MAX_NAME_LEN)
-		if((loc == usr && usr.stat == 0))
+		if(loc == usr && !usr.stat)
 			name = "folder[(n_name ? text("- '[n_name]'") : null)]"
 	return
 

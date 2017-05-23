@@ -1,7 +1,7 @@
 /obj/item/weapon/grenade
 	name = "grenade"
 	desc = "A hand held grenade, with an adjustable timer."
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "grenade"
 	item_state = "grenade"
@@ -11,8 +11,10 @@
 	slot_flags = SLOT_BELT
 	var/active = 0
 	var/det_time = 50
-
 /obj/item/weapon/grenade/proc/clown_check(var/mob/living/user)
+	return 1 // Allows to use grenades at all
+	//TODO: DNA3 clown_block
+/*
 	if((CLUMSY in user.mutations) && prob(50))
 		user << "<span class='warning'>Huh? How does this thing work?</span>"
 
@@ -21,11 +23,11 @@
 		spawn(5)
 			prime()
 		return 0
-	return 1
 
+*/
 
 /*/obj/item/weapon/grenade/afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-	if (istype(target, /obj/item/weapon/storage)) return ..() // Trying to put it in a full container
+	if (istype(target, /obj/item/storage)) return ..() // Trying to put it in a full container
 	if (istype(target, /obj/item/weapon/gun/grenadelauncher)) return ..()
 	if((user.get_active_hand() == src) && (!active) && (clown_check(user)) && target.loc != src.loc)
 		user << "<span class='warning'>You prime the [name]! [det_time/10] seconds!</span>"

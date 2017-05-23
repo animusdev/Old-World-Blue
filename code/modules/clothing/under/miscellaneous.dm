@@ -1,15 +1,3 @@
-/obj/item/clothing/under/pj/red
-	name = "red pj's"
-	desc = "Sleepwear."
-	icon_state = "red_pyjamas"
-	item_state = "white"
-
-/obj/item/clothing/under/pj/blue
-	name = "blue pj's"
-	desc = "Sleepwear."
-	icon_state = "blue_pyjamas"
-	item_state = "white"
-
 /obj/item/clothing/under/captain_fly
 	name = "rogue's uniform"
 	desc = "For the man who doesn't care because he's still free."
@@ -25,11 +13,6 @@
 	desc = "It's a very amish looking suit."
 	name = "amish suit"
 	icon_state = "sl_suit"
-
-/obj/item/clothing/under/max
-	name = "classy suit"
-	desc = "You can't really tell the reason, but this suit looks kinda painful"
-	icon_state = "max"
 
 /obj/item/clothing/under/waiter
 	name = "waiter's outfit"
@@ -87,7 +70,7 @@
 	name = "\improper NASA jumpsuit"
 	desc = "It has a NASA logo on it and is made of space-proofed materials."
 	icon_state = "black"
-	w_class = 4//bulky item
+	w_class = ITEM_SIZE_HUGE//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
@@ -130,18 +113,6 @@
 	icon_state = "gentlesuit"
 	item_state = "grey"
 	starting_accessories = list(/obj/item/clothing/accessory/white, /obj/item/clothing/accessory/wcoat/gentleman)
-
-/obj/item/clothing/under/gimmick/rank/captain/suit
-	name = "captain's suit"
-	desc = "A green suit and yellow necktie. Exemplifies authority."
-	icon_state = "green_suit"
-	item_state = "centcom"
-
-/obj/item/clothing/under/gimmick/rank/head_of_personnel/suit
-	name = "head of personnel's suit"
-	desc = "A teal suit and yellow necktie. An authoritative yet tacky ensemble."
-	icon_state = "teal_suit"
-	item_state = "green"
 
 /obj/item/clothing/under/suit_jacket
 	name = "black suit"
@@ -427,11 +398,6 @@
 
 
 
-/obj/item/clothing/under/army
-	name = "battle dress uniform"
-	desc = "Standard-issue uniform of the NT colonial infantry"
-	icon_state = "armybd"
-	item_state = "armybd"
 /*
  * swimsuit
  */
@@ -472,27 +438,14 @@
 /*
  * pyjamas
  */
-/obj/item/clothing/under/bluepyjamas
-	name = "blue pyjamas"
-	desc = "Slightly old-fashioned sleepwear."
-	icon_state = "blue_pyjamas"
-	item_state = "blue"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-
-/obj/item/clothing/under/redpyjamas
-	name = "red pyjamas"
+/obj/item/clothing/under/pj/red
+	name = "red pj's"
 	desc = "Slightly old-fashioned sleepwear."
 	icon_state = "red_pyjamas"
-	item_state = "red"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	item_state = "white"
 
-/*
- * Venlingen is trying to kill me
- */
-/obj/item/clothing/under/biker
-	name = "biker's suit"
-	desc = "A simple outfit. Dark jeans and an ochre flannel shirt that definitely need some more ironing."
-	icon_state = "biker_suit"
-	item_state = "biker_suit"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-
+/obj/item/clothing/under/pj/blue
+	name = "blue pj's"
+	desc = "Slightly old-fashioned sleepwear."
+	icon_state = "blue_pyjamas"
+	item_state = "white"

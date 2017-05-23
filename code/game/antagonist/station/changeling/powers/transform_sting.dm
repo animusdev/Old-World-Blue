@@ -41,7 +41,7 @@
 		src.verbs += /mob/living/proc/changeling_transformation_sting
 
 	var/mob/living/carbon/T = G.affecting
-	if((HUSK in T.mutations) || !ishuman(T) || issmall(T))
+	if((HUSK & T.status_flags) || !ishuman(T) || issmall(T))
 		src << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
 		return 0
 	src << "<span class='notice'>We stealthily sting [T] in the neck.</span>"

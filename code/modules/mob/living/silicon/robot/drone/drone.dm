@@ -81,7 +81,7 @@
 /mob/living/silicon/robot/drone/updateicon()
 
 	overlays.Cut()
-	if(stat == 0)
+	if(!stat)
 		overlays += "[icon_state]-eyes"
 	else
 		overlays -= "eyes"
@@ -105,7 +105,7 @@
 
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 
-		if(stat == 2)
+		if(stat == DEAD)
 
 			if(!config.allow_drone_spawn || emagged || health < -35) //It's dead, Dave.
 				user << "<span class='danger'>The interface is fried, and a distressing burned smell wafts from the robot's interior. You're not rebooting this one.</span>"
@@ -117,7 +117,7 @@
 
 			user.visible_message("<span class='danger'>\The [user] swipes \his ID card through \the [src], attempting to reboot it.</span>", "<span class='danger'>>You swipe your ID card through \the [src], attempting to reboot it.</span>")
 			var/drones = 0
-			for(var/mob/living/silicon/robot/drone/D in world)
+			for(var/mob/living/silicon/robot/drone/D in mob_list)
 				if(D.key && D.client)
 					drones++
 			if(drones < config.max_maint_drones)
@@ -228,7 +228,7 @@
 		if(jobban_isbanned(O, "Cyborg"))
 			continue
 		if(O.client)
-			if(O.client.prefs.be_special & BE_PAI)
+			if(ROLE_PAI in O.client.prefs.special_toggles)
 				question(O.client)
 
 /mob/living/silicon/robot/drone/proc/question(var/client/C)
@@ -240,7 +240,7 @@
 		if(response == "Yes")
 			transfer_personality(C)
 		else if (response == "Never for this round")
-			C.prefs.be_special ^= BE_PAI
+			C.prefs.special_toggles -= ROLE_PAI
 
 /mob/living/silicon/robot/drone/proc/transfer_personality(var/client/player)
 

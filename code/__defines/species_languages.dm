@@ -1,3 +1,22 @@
+//Species names
+#define SPECIES_HUMAN "Human"
+#define SPECIES_TAJARA "Tajara"
+#define SPECIES_DIONA "Diona"
+#define SPECIES_VOX "Vox"
+#define SPECIES_VOXPARIAH "Vox Pariah"
+#define SPECIES_IPC "Machine"
+#define SPECIES_UNATHI "Unathi"
+#define SPECIES_SKRELL "Skrell"
+
+#define SPECIES_MONKEY "Monkey"
+#define SPECIES_FARWA "Farwa"
+#define SPECIES_NEAERA "Neaera"
+#define SPECIES_STOK "Stok"
+
+
+#define STATION_ORGANIC_SPECIES list(SPECIES_HUMAN, SPECIES_TAJARA, SPECIES_SKRELL, \
+	SPECIES_MONKEY, SPECIES_FARWA, SPECIES_NEAERA, SPECIES_STOK)
+
 // Species flags.
 #define NO_BLOOD          1     // Vessel var is not filled with blood, cannot bleed out.
 #define NO_BREATHE        2     // Cannot suffocate or take oxygen loss.
@@ -16,7 +35,9 @@
 #define CAN_JOIN          16384 // Species is selectable in chargen.
 #define IS_RESTRICTED     32768 // Is not a core/normally playable species. (castes, mutantraces)
 
-// Languages
+// Languages.
+#define LANGUAGE_GALCOM "Galactic Common"
+#define LANGUAGE_EAL "Encoded Audio Language"
 #define LANGUAGE_SOL_COMMON "Sol Common"
 #define LANGUAGE_UNATHI "Sinta'unathi"
 #define LANGUAGE_SIIK_MAAS "Siik'maas"
@@ -25,6 +46,7 @@
 #define LANGUAGE_ROOTSPEAK "Rootspeak"
 #define LANGUAGE_TRADEBAND "Tradeband"
 #define LANGUAGE_GUTTER "Gutter"
+#define LANGUAGE_CULT "Cult"
 #define LANGUAGE_SIIK_MAAS "Siik'maas"
 #define LANGUAGE_SURZHYK "Surzhyk"
 

@@ -10,5 +10,5 @@
 	uplink_uses = 10
 	end_on_antag_death = 1
 	shuttle_delay = 3
-	antag_tags = list(MODE_REVOLUTIONARY, MODE_LOYALIST)
+	antag_tags = list(ROLE_REVOLUTIONARY, ROLE_LOYALIST)
 	require_all_templates = 1

@@ -74,8 +74,8 @@
 			material = get_material_by_name("holo[DEFAULT_TABLE_MATERIAL]")
 			..()
 
-	woodentable/holotable
-		icon_state = "holo_preview"
+	holotable/wood
+		color = "#824B28"
 		New()
-			material = get_material_by_name("holowood")
 			..()
+			material = get_material_by_name("holowood")

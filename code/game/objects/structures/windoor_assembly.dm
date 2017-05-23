@@ -16,6 +16,7 @@
 	anchored = 0
 	density = 0
 	dir = NORTH
+	w_class = ITEM_SIZE_NORMAL
 
 	var/obj/item/weapon/airlock_electronics/electronics = null
 

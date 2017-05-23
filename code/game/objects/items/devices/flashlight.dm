@@ -4,7 +4,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
 	item_state = "flashlight"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 
@@ -61,8 +61,12 @@
 				if(H.stat == DEAD || H.blinded)	//mob is dead or fully blind
 					user << "<span class='warning'>\The [H]'s pupils do not react to the light!</span>"
 					return
+				//TODO: DNA3 xray
+				//TODO: move to organ code
+				/*
 				if(XRAY in H.mutations)
 					user << "<span class='notice'>\The [H] pupils give an eerie glow!</span>"
+				*/
 				if(vision.is_bruised())
 					user << "<span class='warning'>There's visible damage to [H]'s [vision.name]!</span>"
 				else if(M.eye_blurry)
@@ -93,7 +97,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_EARS
 	brightness_on = 2
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 /obj/item/device/flashlight/drone
 	name = "low-power flashlight"
@@ -102,7 +106,7 @@
 	item_state = ""
 	flags = CONDUCT
 	brightness_on = 2
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 /obj/item/device/flashlight/heavy
 	name = "heavy duty flashlight"
@@ -130,7 +134,7 @@
 	icon_state = "lamp"
 	item_state = "lamp"
 	brightness_on = 5
-	w_class = 4
+	w_class = ITEM_SIZE_LARGE
 	flags = CONDUCT
 
 	on = 1
@@ -161,7 +165,7 @@
 /obj/item/device/flashlight/flare
 	name = "flare"
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
-	w_class = 2.0
+	w_class = ITEM_SIZE_TINY
 	brightness_on = 8 // Pretty bright.
 	light_power = 3
 	light_color = "#e58775"
@@ -217,7 +221,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "floor1" //not a slime extract sprite but... something close enough!
 	item_state = "slime"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	brightness_on = 6
 	on = 1 //Bio-luminesence has one setting, on.
 

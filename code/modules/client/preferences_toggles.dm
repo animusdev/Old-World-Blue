@@ -134,15 +134,16 @@
 		src << sound(null, repeat = 0, wait = 0, volume = 0, channel = 2)
 
 //be special
-/client/verb/toggle_be_special(role in be_special_flags)
+/client/verb/toggle_be_special()
 	set name = "Toggle SpecialRole Candidacy"
 	set category = "Preferences"
 	set desc = "Toggles which special roles you would like to be a candidate for, during events."
-	var/role_flag = be_special_flags[role]
-	if(!role_flag)	return
-	prefs.be_special ^= role_flag
+	var/role = input("Select role for toggle") as null|anything in (special_roles + all_antag_types)
+	if(!role)
+		return
+	prefs.special_toggles ^= role
 	prefs.save_preferences()
-	src << "You will [(prefs.be_special & role_flag) ? "now" : "no longer"] be considered for [role] events (where possible)."
+	src << "You will [(role in prefs.special_toggles) ? "now" : "no longer"] be considered for [role] events (where possible)."
 
 
 /client/verb/change_ui()

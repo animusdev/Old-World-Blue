@@ -44,6 +44,8 @@
 		else
 			var/damage = rand(1, 9)
 			if (prob(90))
+				//TODO: DNA3 hulk
+				/*
 				if (HULK in M.mutations)
 					damage += 5
 					spawn(0)
@@ -51,6 +53,7 @@
 						step_away(src,M,15)
 						sleep(3)
 						step_away(src,M,15)
+				*/
 				playsound(loc, "punch", 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))

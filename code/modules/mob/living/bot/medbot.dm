@@ -242,7 +242,7 @@
 	visible_message("<span class='danger'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
-	new /obj/item/weapon/storage/firstaid(Tsec)
+	new /obj/item/storage/firstaid(Tsec)
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 	new /obj/item/device/healthanalyzer(Tsec)
 	if (prob(50))
@@ -292,7 +292,7 @@
 
 /* Construction */
 
-/obj/item/weapon/storage/firstaid/attackby(var/obj/item/robot_parts/S, mob/user as mob)
+/obj/item/storage/firstaid/attackby(var/obj/item/robot_parts/S, mob/user as mob)
 	if ((!istype(S, /obj/item/robot_parts/l_arm)) && (!istype(S, /obj/item/robot_parts/r_arm)))
 		..()
 		return
@@ -302,11 +302,11 @@
 		return
 
 	var/obj/item/weapon/firstaid_arm_assembly/A = new /obj/item/weapon/firstaid_arm_assembly
-	if(istype(src, /obj/item/weapon/storage/firstaid/fire))
+	if(istype(src, /obj/item/storage/firstaid/fire))
 		A.skin = "ointment"
-	else if(istype(src, /obj/item/weapon/storage/firstaid/toxin))
+	else if(istype(src, /obj/item/storage/firstaid/toxin))
 		A.skin = "tox"
-	else if(istype(src, /obj/item/weapon/storage/firstaid/o2))
+	else if(istype(src, /obj/item/storage/firstaid/o2))
 		A.skin = "o2"
 
 	qdel(S)
@@ -323,7 +323,7 @@
 	var/build_step = 0
 	var/created_name = "Medibot" //To preserve the name if it's a unique medbot I guess
 	var/skin = null //Same as medbot, set to tox or ointment for the respective kits.
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/weapon/firstaid_arm_assembly/New()
 	..()

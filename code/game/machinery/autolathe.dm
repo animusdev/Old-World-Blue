@@ -51,14 +51,17 @@
 
 	if(!disabled)
 		dat += "<table width = '100%'>"
-		var/material_top = "<tr>"
-		var/material_bottom = "<tr>"
+		var/material_top = ""
+		var/material_bottom = ""
 
 		for(var/material in stored_material)
-			material_top += "<td width = '25%' align = center><b>[material]</b></td>"
+
+			material_top += "<td width = '25%' align = center><b>"
+			material_top += "<a href='?src=\ref[src];remove_material=[material]'>[material]</a>"
+			material_top += "</b></td>"
 			material_bottom += "<td width = '25%' align = center>[stored_material[material]]<b>/[storage_capacity[material]]</b></td>"
 
-		dat += "[material_top]</tr>[material_bottom]</tr></table><hr>"
+		dat += "<tr>[material_top]</tr><tr>[material_bottom]</tr></table><hr>"
 		dat += "<b>Current color:</b> <a href='?src=\ref[src];color=set'><span class='box' style='background-color:[current_color];'></span></a><hr><br>"
 		dat += "<h2>Printable Designs</h2><h3>Showing: <a href='?src=\ref[src];change_category=1'>[show_category]</a>.</h3></center><table width = '100%'>"
 
@@ -94,9 +97,10 @@
 				if(R.is_stack)
 					if(max_sheets && max_sheets > 0)
 						multiplier_string  += "<br>"
-						for(var/i = 5;i<max_sheets;i*=2) //5,10,20,40...
+						for(var/i = 5;i<=max_sheets;i*=2) //5,10,20,40...
 							multiplier_string  += "<a href='?src=\ref[src];make=[index];multiplier=[i]'>\[x[i]\]</a>"
 						multiplier_string += "<a href='?src=\ref[src];make=[index];multiplier=[max_sheets]'>\[x[max_sheets]\]</a>"
+
 
 			dat += "<tr><td width = 180>[R.hidden ? "<font color = 'red'>*</font>" : ""]<b>[can_make ? "<a href='?src=\ref[src];make=[index];multiplier=1'>" : ""][R.name][can_make ? "</a>" : ""]</b>[R.hidden ? "<font color = 'red'>*</font>" : ""][multiplier_string]</td><td align = right>[material_string]</tr>"
 
@@ -211,8 +215,23 @@
 		usr << "<span class='notice'>The autolathe is busy. Please wait for completion of previous operation.</span>"
 		return
 
-	if(href_list["change_category"])
+	if(href_list["remove_material"])
+		var/material = href_list["remove_material"]
+		if(!material in stored_material)
+			return
+		var/amount = input(usr, "How many stacks you want eject?") as null|num
+		if(amount < 1 || !in_range(usr,src) || usr.stat || usr.restrained())
+			return
+		//convert list to units
+		amount *= SHEET_MATERIAL_AMOUNT
+		if(stored_material[material] < amount)
+			amount = round(stored_material, SHEET_MATERIAL_AMOUNT)
+			if(amount < SHEET_MATERIAL_AMOUNT)
+				return
+		stored_material[material] -= amount
+		create_material_stack(material, amount, src.loc)
 
+	if(href_list["change_category"])
 		var/choice = input("Which category do you wish to display?") as null|anything in autolathe_categories+"All"
 		if(!choice) return
 		show_category = choice
@@ -238,16 +257,20 @@
 		busy = 1
 		update_use_power(2)
 
+		var/list/required = making.resources
+		for(var/material in required)
+			required[material] *= mat_efficiency
+
 		//Check if we still have the materials.
-		for(var/material in making.resources)
+		for(var/material in required)
 			if(!isnull(stored_material[material]))
-				if(stored_material[material] < round(making.resources[material] * mat_efficiency) * multiplier)
+				if(stored_material[material] < required[material] * multiplier)
 					return
 
 		//Consume materials.
-		for(var/material in making.resources)
+		for(var/material in required)
 			if(!isnull(stored_material[material]))
-				stored_material[material] = max(0, stored_material[material] - round(making.resources[material] * mat_efficiency) * multiplier)
+				stored_material[material] = max(0, stored_material[material] - required[material] * multiplier)
 
 		//Fancy autolathe animation.
 		flick("autolathe_n", src)
@@ -265,9 +288,12 @@
 		if(multiplier > 1 && istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I
 			S.amount = multiplier
+		if(istype(I))
+			for(var/material in required)
+				I.matter[material] = required[material] * 0.75
+
 		if(istype(I, /obj/item/weapon/light))
 			I:brightness_color = current_color
-
 
 	updateUsrDialog()
 

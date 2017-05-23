@@ -78,7 +78,6 @@
 	warning_high_pressure = WARNING_HIGH_PRESSURE // High pressure warning.
 	warning_low_pressure = WARNING_LOW_PRESSURE   // Low pressure warning.
 	hazard_low_pressure = HAZARD_LOW_PRESSURE     // Dangerously low pressure.
-//	light_dam                                     // If set, mob will be damaged in light over this value and heal in light below its negative.
 	body_temperature = 310.15	                  // Species will try to stabilize at this temperature.
 	                                                  // (also affects temperature processing)
 

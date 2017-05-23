@@ -17,7 +17,7 @@
 	var/inactive_on_main_station = 0
 	for(var/zone/zone in air_master.zones)
 		var/turf/simulated/turf = locate() in zone.contents
-		if(turf && turf.z in config.station_levels)
+		if(turf && isStationLevel(turf.z))
 			if(zone.needs_update)
 				active_on_main_station++
 			else
@@ -48,7 +48,7 @@
 	var/largest_click_time = 0
 	var/mob/largest_move_mob = null
 	var/mob/largest_click_mob = null
-	for(var/mob/M in world)
+	for(var/mob/M in mob_list)
 		if(!M.client)
 			continue
 		if(M.next_move >= largest_move_time)

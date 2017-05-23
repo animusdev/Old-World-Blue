@@ -6,5 +6,5 @@
 	required_players = 16			//What could possibly go wrong?
 	required_enemies = 8
 	end_on_antag_death = 0
-	antag_tags = list(MODE_MERCENARY, MODE_RENEGADE)
+	antag_tags = list(ROLE_MERCENARY, ROLE_RENEGADE)
 	require_all_templates = 1

@@ -1,8 +1,7 @@
 var/datum/antagonist/loyalists/loyalists
 
 /datum/antagonist/loyalists
-	id = MODE_LOYALIST
-	role_type = BE_LOYALIST
+	id = ROLE_LOYALIST
 	role_text = "Head Loyalist"
 	role_text_plural = "Loyalists"
 	bantype = "loyalist"

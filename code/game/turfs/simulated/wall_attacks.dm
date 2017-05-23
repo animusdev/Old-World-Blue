@@ -24,7 +24,7 @@
 		set_light(1)
 
 	if(air_master)
-		for(var/turf/simulated/turf in range(1))
+		for(var/turf/simulated/turf in RANGE_TURFS(1, src))
 			air_master.mark_for_update(turf)
 
 	sleep(15)
@@ -67,12 +67,15 @@
 	add_fingerprint(user)
 	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	var/rotting = (locate(/obj/effect/overlay/wallrot) in src)
+	//TODO: DNA3 hulk
+	/*
 	if (HULK in user.mutations)
 		if (rotting || !prob(material.hardness))
 			success_smash(user)
 		else
 			fail_smash(user)
 			return 1
+	*/
 
 	try_touch(user, rotting)
 
@@ -200,7 +203,7 @@
 			if(cut_delay<0)
 				cut_delay = 0
 
-			if(!do_after(user,cut_delay))
+			if(!do_after(user,cut_delay, src))
 				return
 
 			user << "<span class='notice'>You remove the outer plating.</span>"

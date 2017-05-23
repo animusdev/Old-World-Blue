@@ -1,8 +1,7 @@
 var/datum/antagonist/wizard/wizards
 
 /datum/antagonist/wizard
-	id = MODE_WIZARD
-	role_type = BE_WIZARD
+	id = ROLE_WIZARD
 	role_text = "Space Wizard"
 	role_text_plural = "Space Wizards"
 	bantype = "wizard"
@@ -81,12 +80,12 @@ var/datum/antagonist/wizard/wizards
 	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(wizard_mob), slot_wear_suit)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(wizard_mob), slot_head)
 	switch(wizard_mob.backbag)
-		if(2) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(wizard_mob), slot_back)
-		if(3) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(wizard_mob), slot_back)
-		if(4) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(wizard_mob), slot_back)
-		if(5) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/dufflebag(wizard_mob), slot_back)
-		if(6) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/messenger(wizard_mob), slot_back)
-	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box(wizard_mob), slot_in_backpack)
+		if(2) wizard_mob.equip_to_slot_or_del(new /obj/item/storage/backpack(wizard_mob), slot_back)
+		if(3) wizard_mob.equip_to_slot_or_del(new /obj/item/storage/backpack/satchel/norm(wizard_mob), slot_back)
+		if(4) wizard_mob.equip_to_slot_or_del(new /obj/item/storage/backpack/satchel(wizard_mob), slot_back)
+		if(5) wizard_mob.equip_to_slot_or_del(new /obj/item/storage/backpack/dufflebag(wizard_mob), slot_back)
+		if(6) wizard_mob.equip_to_slot_or_del(new /obj/item/storage/backpack/messenger(wizard_mob), slot_back)
+	wizard_mob.equip_to_slot_or_del(new /obj/item/storage/box(wizard_mob), slot_in_backpack)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(wizard_mob), slot_r_store)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/spellbook(wizard_mob), slot_r_hand)
 	wizard_mob.equip_survival_gear()

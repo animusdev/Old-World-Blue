@@ -74,23 +74,19 @@
 			return
 
 
-	attackby(var/obj/item/weapon/grab/G as obj, var/mob/user as mob)
-		if(istype(G))
-			if(!(ismob(G.affecting)&& get_dist(src,G.affecting)<2))
-				return
-			for(var/mob/living/carbon/slime/M in range(1,G.affecting))
-				if(M.Victim == G.affecting)
-					usr << "[G.affecting:name] will not fit into the [src.name] because they have a slime latched onto their head."
-					return
-			var/mob/M = G.affecting
-			if(put_mob(M))
-				qdel(G)
+	affect_grab(var/mob/living/user, var/mob/living/target)
+		for(var/mob/living/carbon/slime/M in range(1,target))
+			if(M.Victim == target)
+				user << "[target] will not fit into the [src] because they have a slime latched onto their head."
+				return FALSE
+		if(put_mob(target))
+			return TRUE
 		src.updateUsrDialog()
-		return
+		return FALSE
 
 
 	go_out(var/mob/M)
-		if(!( src.occupant ))
+		if(!occupant)
 			return
 		if(M == occupant) // so that the guy inside can't eject himself -Agouri
 			return
@@ -129,17 +125,14 @@
 			return
 		if(!implant_list.len)	return
 		for(var/obj/item/weapon/implant/loyalty/imp in implant_list)
-			if(!imp)	continue
-			if(istype(imp, /obj/item/weapon/implant/loyalty))
-				for (var/mob/O in viewers(M, null))
-					O.show_message("\red [M] has been implanted by the [src.name].", 1)
-
-				if(imp.implanted(M))
-					imp.loc = M
-					imp.imp_in = M
-					imp.implanted = 1
-				implant_list -= imp
-				break
+			M.visible_message(SPAN_WARN("[M] has been implanted by the [src.name]."))
+			if(ishuman(M))
+				var/mob/living/carbon/human/H
+				imp.implanted(H, H.get_organ(BP_CHEST))
+			else
+				imp.implanted(M)
+			implant_list -= imp
+			break
 		return
 
 

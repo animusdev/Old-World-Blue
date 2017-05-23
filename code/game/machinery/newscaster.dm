@@ -550,6 +550,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(src.msg =="" || src.msg=="\[REDACTED\]" || src.scanned_user == "Unknown" || src.channel_name == "" )
 				src.screen=6
 			else
+				log_game("[usr] use [src] for submit message: \"[msg]\"", src.loc, FALSE)
 				var/image = photo_data ? photo_data.photo : null
 				news_network.SubmitArticle(src.msg, src.scanned_user, src.channel_name, image, 0)
 				src.screen=4
@@ -808,7 +809,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	desc = "An issue of The Griffon, the newspaper circulating aboard Nanotrasen Space Stations."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "newspaper"
-	w_class = 2	//Let's make it fit in trashbags!
+	w_class = ITEM_SIZE_SMALL	//Let's make it fit in trashbags!
 	attack_verb = list("bapped")
 	var/screen = 0
 	var/pages = 0

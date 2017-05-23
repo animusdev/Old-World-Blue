@@ -74,22 +74,17 @@
 		// Mandatory part
 		src.organ_tag = desc.organ_tag
 		src.body_part = desc.body_part
+		src.vital = desc.vital
+		src.cannot_amputate = desc.cannot_amputate
 		src.parent_organ = desc.parent_organ
 		src.icon_position = desc.icon_position
 		src.can_grasp = desc.can_grasp
 		src.can_stand = desc.can_stand
 		src.drop_on_remove = desc.drop_on_remove
-
 		// Decorative part (depend on organ type)
 		set_description(desc)
 
 	..(holder)
-	if(owner)
-		sync_to_owner()
-/*
-	spawn(1)
-		get_icon()
-*/
 
 /obj/item/organ/external/proc/set_description(var/datum/organ_description/desc)
 	src.name = desc.name
@@ -105,7 +100,7 @@
 	owner.organs |= src
 	var/obj/item/organ/external/outdated = H.organs_by_name[organ_tag]
 	if(outdated)
-		outdated.removed()
+		outdated.removed(H, 0)
 	owner.organs_by_name[organ_tag] = src
 
 	for(var/obj/item/organ/organ in src)
@@ -122,17 +117,19 @@
 			qdel(W)
 		parent.update_damages()
 
+	if(module)
+		module.organ_installed(src, owner)
+
 	update_icon()
+	owner.updatehealth()
+	owner.UpdateDamageIcon(0)
 	if(redraw_mob)
 		owner.update_body()
-	owner.updatehealth()
-	owner.UpdateDamageIcon()
 
 
 /obj/item/organ/external/Destroy()
 	if(parent)
 		parent.children -= src
-		parent = null
 
 	if(children)
 		for(var/obj/item/organ/external/C in children)
@@ -141,6 +138,10 @@
 	if(internal_organs)
 		for(var/obj/item/organ/O in internal_organs)
 			qdel(O)
+
+	if(module)
+		qdel(module)
+		module = null
 
 	if(owner)
 		//drop_items()
@@ -158,6 +159,9 @@
 	owner.organs_by_name[organ_tag] = null // Remove from owner's vars.
 	owner.bad_external_organs -= src
 
+	if(module)
+		module.organ_removed(src, owner)
+
 	drop_items()
 
 	for(var/atom/movable/implant in implants)
@@ -171,12 +175,12 @@
 
 	if(children)
 		for(var/obj/item/organ/external/child in children)
-			child.removed()
+			child.removed(user, 0)
 			child.loc = src
 
 	if(internal_organs)
 		for(var/obj/item/organ/internal/organ in internal_organs)
-			organ.removed()
+			organ.removed(user, 0)
 			organ.loc = src
 
 	// Remove parent references
@@ -187,7 +191,7 @@
 
 	if(redraw_mob) victim.update_body()
 
-/obj/item/organ/external/proc/activate()
+/obj/item/organ/external/proc/activate_module()
 	set name = "Activate module"
 	set category = "Organs"
 	set src in usr
@@ -240,7 +244,6 @@
 			if(istype(W,/obj/item/weapon/hemostat))
 				if(contents.len)
 					var/obj/item/removing = pick(contents)
-					removing.forceMove(get_turf(user))
 					user.put_in_hands(removing)
 					user.visible_message("<span class='danger'><b>[user]</b> extracts [removing] from [src] with [W]!</span>")
 				else
@@ -732,7 +735,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if(DROPLIMB_BURN)
 			new /obj/effect/decal/cleanable/ash(get_turf(victim))
 			for(var/obj/item/I in src)
-				if(I.w_class > 2 && !istype(I,/obj/item/organ))
+				if(I.w_class > ITEM_SIZE_SMALL && !istype(I,/obj/item/organ))
 					I.loc = get_turf(src)
 			qdel(src)
 		if(DROPLIMB_BLUNT)
@@ -753,9 +756,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 					I.throw_at(get_edge_target_turf(src,pick(alldirs)),rand(1,3),30)
 
 			for(var/obj/item/I in src)
-				if(I.w_class <= 2)
-					qdel(I)
-					continue
 				I.loc = get_turf(src)
 				I.throw_at(get_edge_target_turf(src,pick(alldirs)),rand(1,3),30)
 

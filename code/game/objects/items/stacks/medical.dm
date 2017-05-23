@@ -4,11 +4,18 @@
 	icon = 'icons/obj/items.dmi'
 	amount = 10
 	max_amount = 10
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 4
 	throw_range = 20
 	var/heal_brute = 0
 	var/heal_burn = 0
+
+/obj/item/stack/medical/do_surgery(var/mob/living/carbon/human/target, var/mob/user)
+	if(istype(target) && istype(user))
+		var/obj/item/organ/external/E = target.get_organ(user.zone_sel.selecting)
+		if(!E.open)
+			return 0
+	return ..()
 
 /obj/item/stack/medical/attack(mob/living/carbon/M, mob/user)
 	if (!istype(M))

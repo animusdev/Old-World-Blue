@@ -16,7 +16,7 @@
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = null
 	volume = 15
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	slot_flags = SLOT_EARS
 	sharp = 1
 	unacidable = 1 //glass
@@ -70,8 +70,11 @@
 		return
 
 	if(user.a_intent == I_HURT && ismob(target))
+		//TODO: DNA3 clown_block
+		/*
 		if((CLUMSY in user.mutations) && prob(50))
 			target = user
+		*/
 		syringestab(target, user)
 		return
 
@@ -96,7 +99,7 @@
 					if(!T.dna)
 						user << "<span class='warning'>You are unable to locate any blood. (To be specific, your target seems to be missing their DNA datum).</span>"
 						return
-					if(NOCLONE in T.mutations) //target done been et, no more blood in him
+					if(NOCLONE & T.status_flags) //target done been et, no more blood in him
 						user << "<span class='warning'>You are unable to locate any blood.</span>"
 						return
 
@@ -144,7 +147,7 @@
 			if(istype(target, /obj/item/weapon/implantcase/chem))
 				return
 
-			if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/slime_extract) && !istype(target, /obj/item/clothing/mask/smokable/cigarette) && !istype(target, /obj/item/weapon/storage/fancy/cigarettes))
+			if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/slime_extract) && !istype(target, /obj/item/clothing/mask/smokable/cigarette) && !istype(target, /obj/item/storage/fancy/cigarettes))
 				user << "<span class='notice'>You cannot directly fill this object.</span>"
 				return
 			if(!target.reagents.get_free_space())

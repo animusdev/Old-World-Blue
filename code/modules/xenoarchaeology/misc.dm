@@ -74,8 +74,8 @@
 		new /obj/item/clothing/shoes/white(src)
 		new /obj/item/clothing/glasses/science(src)
 		new /obj/item/device/radio/headset/sci(src)
-		new /obj/item/weapon/storage/belt/archaeology(src)
-		new /obj/item/weapon/storage/box/excavation(src)
+		new /obj/item/storage/belt/archaeology(src)
+		new /obj/item/storage/box/excavation(src)
 		return
 
 /obj/structure/closet/excavation
@@ -86,8 +86,8 @@
 	New()
 		..()
 		sleep(2)
-		new /obj/item/weapon/storage/belt/archaeology(src)
-		new /obj/item/weapon/storage/box/excavation(src)
+		new /obj/item/storage/belt/archaeology(src)
+		new /obj/item/storage/box/excavation(src)
 		new /obj/item/device/flashlight/lantern(src)
 		new /obj/item/device/ano_scanner(src)
 		new /obj/item/device/depth_scanner(src)
@@ -99,7 +99,7 @@
 		new /obj/item/weapon/pickaxe(src)
 		new /obj/item/device/measuring_tape(src)
 		new /obj/item/weapon/pickaxe/hand(src)
-		new /obj/item/weapon/storage/bag/fossils(src)
+		new /obj/item/storage/bag/fossils(src)
 		new /obj/item/weapon/hand_labeler(src)
 		return
 

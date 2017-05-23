@@ -261,6 +261,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 	if(href_list["sendAnnouncement"])
 		if(!announcementConsole)	return
+		log_game("[usr] use [src] for annonce \"[message]\"", src.loc, FALSE)
 		announcement.Announce(utf8_to_cp1251(message), msg_sanitized = 1)
 		reset_announce()
 		screen = 0
@@ -278,7 +279,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		screen = 7 //if it's successful, this will get overrwritten (7 = unsufccessfull, 6 = successfull)
 		if (sending)
 			var/pass = 0
-			for (var/obj/machinery/message_server/MS in world)
+			for (var/obj/machinery/message_server/MS in machines)
 				if(!MS.active) continue
 				MS.send_rc_message(href_list["department"],department,log_msg,msgStamped,msgVerified,priority)
 				pass = 1

@@ -16,8 +16,10 @@
 
 /obj/effect/landmark/zcontroller/New()
 	..()
-	for (var/turf/T in world)
-		if (T.z == z)
+	var/turf/T
+	for(var/elem in turfs)
+		T = elem
+		if(T.z == z)
 			fast += T
 	slow_time = world.time + 3000
 	normal_time = world.time + 600

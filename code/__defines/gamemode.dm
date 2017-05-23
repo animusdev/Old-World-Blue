@@ -9,62 +9,29 @@
 #define SEC_LEVEL_RED   2
 #define SEC_LEVEL_DELTA 3
 
-#define BE_TRAITOR    0x1
-#define BE_OPERATIVE  0x2
-#define BE_CHANGELING 0x4
-#define BE_WIZARD     0x8
-#define BE_MALF       0x10
-#define BE_REV        0x20
-#define BE_ALIEN      0x40
-#define BE_AI         0x80
-#define BE_CULTIST    0x100
-#define BE_MEME       0x200
-#define BE_NINJA      0x400
-#define BE_RAIDER     0x800
-#define BE_PLANT      0x1000
-#define BE_LOYALIST   0x2000
-#define BE_PAI        0x4000
-
-var/list/be_special_flags = list(
-	"Traitor"          = BE_TRAITOR,
-	"Operative"        = BE_OPERATIVE,
-	"Changeling"       = BE_CHANGELING,
-	"Wizard"           = BE_WIZARD,
-	"Malf AI"          = BE_MALF,
-	"Revolutionary"    = BE_REV,
-	"Xenomorph"        = BE_ALIEN,
-	"Positronic Brain" = BE_AI,
-	"Cultist"          = BE_CULTIST,
-	"Ninja"            = BE_NINJA,
-	"Raider"           = BE_RAIDER,
-	"Diona"            = BE_PLANT,
-	"Loyalist"         = BE_LOYALIST,
-	"pAI"              = BE_PAI
-)
-
-#define IS_MODE_COMPILED(MODE) (ispath(text2path("/datum/game_mode/"+(MODE))))
-
 // Mode/antag template macros.
-#define MODE_BORER "borer"
-#define MODE_XENOMORPH "xeno"
-#define MODE_LOYALIST "loyalist"
-#define MODE_MUTINEER "mutineer"
-#define MODE_COMMANDO "commando"
-#define MODE_DEATHSQUAD "deathsquad"
-#define MODE_ERT "ert"
-#define MODE_MERCENARY "mercenary"
-#define MODE_NINJA "ninja"
-#define MODE_RAIDER "raider"
-#define MODE_WIZARD "wizard"
-#define MODE_CHANGELING "changeling"
-#define MODE_CULTIST "cultist"
-#define MODE_HIGHLANDER "highlander"
-#define MODE_RENEGADE "renegade"
-#define MODE_REVOLUTIONARY "revolutionary"
-#define MODE_LOYALIST "loyalist"
-#define MODE_MALFUNCTION "malf"
-#define MODE_TRAITOR "traitor"
-#define MODE_MEME "meme"
+#define ROLE_BORER "borer"
+#define ROLE_ALIEN "xenomorph"
+#define ROLE_MUTINEER "mutineer"
+#define ROLE_COMMANDO "commando"
+#define ROLE_DEATHSQUAD "deathsquad"
+#define ROLE_ERT "ert"
+#define ROLE_MERCENARY "mercenary"
+#define ROLE_NINJA "ninja"
+#define ROLE_RAIDER "raider"
+#define ROLE_WIZARD "wizard"
+#define ROLE_CHANGELING "changeling"
+#define ROLE_CULTIST "cultist"
+#define ROLE_HIGHLANDER "highlander"
+#define ROLE_RENEGADE "renegade"
+#define ROLE_REVOLUTIONARY "revolutionary"
+#define ROLE_LOYALIST "loyalist"
+#define ROLE_MALFUNCTION "malf"
+#define ROLE_TRAITOR "traitor"
+#define ROLE_MEME "meme"
+#define ROLE_DIONA "diona"
+#define ROLE_PAI "pAI"
+#define ROLE_POSIBRAIN "positronic"
 
 /////////////////
 ////WIZARD //////

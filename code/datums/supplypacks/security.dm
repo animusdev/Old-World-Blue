@@ -19,9 +19,9 @@
 		/obj/item/weapon/melee/baton = 3,
 		/obj/item/weapon/shield/riot = 3,
 		/obj/item/weapon/handcuffs = 3,
-		/obj/item/weapon/storage/box/flashbangs,
-		/obj/item/weapon/storage/box/beanbags,
-		/obj/item/weapon/storage/box/handcuffs
+		/obj/item/storage/box/flashbangs,
+		/obj/item/storage/box/beanbags,
+		/obj/item/storage/box/handcuffs
 	)
 	cost = 40
 	containertype = /obj/structure/closet/crate/secure
@@ -30,7 +30,7 @@
 
 /datum/supply_packs/security/beanbagammo
 	name = "Beanbag shells"
-	contains = list(/obj/item/weapon/storage/box/beanbags = 3)
+	contains = list(/obj/item/storage/box/beanbags = 3)
 	cost = 30
 	containertype = /obj/structure/closet/crate/secure
 	containername = "Beanbag shells"
@@ -62,8 +62,8 @@
 		/obj/item/weapon/gun/energy/taser,
 		/obj/item/weapon/gun/projectile/sec,
 		/obj/item/weapon/gun/projectile/sec,
-		/obj/item/weapon/storage/box/flashbangs,
-		/obj/item/weapon/storage/box/flashbangs
+		/obj/item/storage/box/flashbangs,
+		/obj/item/storage/box/flashbangs
 	)
 	cost = 40
 	containertype = /obj/structure/closet/crate/secure/weapon
@@ -75,7 +75,7 @@
 		/obj/item/weapon/gun/projectile/sec/flash,
 		/obj/item/ammo_magazine/c45m/flash,
 		/obj/item/weapon/gun/projectile/shotgun/doublebarrel/flare,
-		/obj/item/weapon/storage/box/flashshells
+		/obj/item/storage/box/flashshells
 	)
 	cost = 25
 	containertype = /obj/structure/closet/crate/secure/weapon
@@ -109,8 +109,8 @@
 	name = "Shotgun crate"
 	contains = list(
 		/obj/item/clothing/suit/armor/bulletproof = 2,
-		/obj/item/weapon/storage/box/shotgunammo,
-		/obj/item/weapon/storage/box/shotgunshells,
+		/obj/item/storage/box/shotgunammo,
+		/obj/item/storage/box/shotgunshells,
 		/obj/item/weapon/gun/projectile/shotgun/pump/combat = 2
 	)
 	cost = 65
@@ -134,8 +134,8 @@
 /datum/supply_packs/security/shotgunammo
 	name = "Ballistic ammunition crate"
 	contains = list(
-		/obj/item/weapon/storage/box/shotgunammo = 2,
-		/obj/item/weapon/storage/box/shotgunshells = 2
+		/obj/item/storage/box/shotgunammo = 2,
+		/obj/item/storage/box/shotgunshells = 2
 	)
 	cost = 60
 	containertype = /obj/structure/closet/crate/secure
@@ -146,7 +146,7 @@
 	name = "Electromagnetic weapons crate"
 	contains = list(
 		/obj/item/weapon/gun/energy/ionrifle = 2,
-		/obj/item/weapon/storage/box/emps
+		/obj/item/storage/box/emps
 	)
 	cost = 50
 	containertype = /obj/structure/closet/crate/secure
@@ -188,13 +188,13 @@
 		/obj/item/clothing/head/helmet/tactical = 2,
 		/obj/item/clothing/mask/balaclava/tactical = 2,
 		/obj/item/clothing/glasses/sunglasses/sechud/tactical = 2,
-		/obj/item/weapon/storage/belt/security/tactical = 2,
+		/obj/item/storage/belt/security/tactical = 2,
 		/obj/item/clothing/shoes/jackboots = 2,
 		/obj/item/clothing/gloves/black = 2
 	)
 
 /datum/supply_packs/randomised/security/armor
-	num_contained = 5
+	num_contained = 7
 	contains = list(
 		/obj/item/clothing/suit/storage/vest,
 		/obj/item/clothing/suit/storage/vest/officer,
@@ -206,7 +206,12 @@
 		/obj/item/clothing/suit/storage/vest/heavy/officer,
 		/obj/item/clothing/suit/storage/vest/heavy/warden,
 		/obj/item/clothing/suit/storage/vest/heavy/hos,
-		/obj/item/clothing/suit/storage/vest/heavy/pcrc
+		/obj/item/clothing/suit/storage/vest/heavy/pcrc,
+		/obj/item/clothing/head/helmet/security,
+		/obj/item/clothing/head/helmet/security,
+		/obj/item/clothing/head/helmet/security,
+		/obj/item/clothing/head/helmet/heavy,
+		/obj/item/clothing/head/helmet/swat
 		)
 	name = "Armor crate"
 	cost = 40
@@ -236,4 +241,25 @@
 	cost = 20
 	containertype = /obj/structure/closet/crate/secure
 	containername = "Automatic weapon ammunition crate"
+	access = access_armory
+
+/datum/supply_packs/security/detective
+	name = "Forensics kit"
+	contains = list(
+		/obj/item/storage/briefcase/crimekit
+	)
+	cost = 20
+	containertype = /obj/structure/closet/crate/secure
+	containername = "Forensics kit crate"
+	
+/datum/supply_packs/security/implant
+	name = "Security implant kits crate"
+	contains = list(
+		/obj/item/storage/lockbox/loyalty,
+		/obj/item/storage/box/trackimp,
+		/obj/item/storage/box/chemimp
+	)
+	cost = 80
+	containertype = /obj/structure/closet/crate/secure
+	containername = "Security implant kits crate"
 	access = access_armory

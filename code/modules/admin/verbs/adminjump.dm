@@ -19,7 +19,7 @@
 	else
 		alert("Admin jumping disabled")
 
-/client/proc/jumptoturf(var/turf/T in world)
+/client/proc/jumptoturf(var/turf/T in turfs)
 	set name = "Jump to Turf"
 	set category = "Admin"
 	if(!check_rights(R_ADMIN|R_MOD|R_DEBUG))

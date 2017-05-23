@@ -4,9 +4,9 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
 	item_state = "paper"
-	throwforce = 0
-	w_class = 2
 	randpixel = 8
+	throwforce = 0
+	w_class = ITEM_SIZE_SMALL
 	throw_range = 2
 	throw_speed = 1
 	layer = 4
@@ -192,7 +192,7 @@
 	set src in usr
 
 	var/n_name = sanitizeSafe(input(usr, "What would you like to label the bundle?", "Bundle Labelling", null)  as text, MAX_NAME_LEN)
-	if((loc == usr || loc.loc && loc.loc == usr) && usr.stat == 0)
+	if((loc == usr || loc.loc && loc.loc == usr) && !usr.stat)
 		name = "[(n_name ? text("[n_name]") : "paper")]"
 	add_fingerprint(usr)
 	return

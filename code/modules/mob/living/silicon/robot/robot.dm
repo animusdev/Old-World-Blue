@@ -525,12 +525,7 @@
 				user << "You jam the crowbar into the robot and begin levering [mmi]."
 				sleep(30)
 				user << "You damage some parts of the chassis, but eventually manage to rip out [mmi]!"
-				var/obj/item/robot_parts/robot_suit/C = new(loc)
-				C.l_leg = new (C)
-				C.r_leg = new (C)
-				C.l_arm = new (C)
-				C.r_arm = new (C)
-				C.update_icon()
+				new/obj/item/robot_parts/robot_suit/with_limbs(loc)
 				new/obj/item/robot_parts/chest(loc)
 				qdel(src)
 			else
@@ -572,8 +567,8 @@
 			user << "Close the panel first."
 		else if(cell)
 			user << "There is a power cell already installed."
-		else if(W.w_class != 3)
-			user << "\The [W] is too [W.w_class < 3? "small" : "large"] to fit here."
+		else if(W.w_class != ITEM_SIZE_NORMAL)
+			user << "\The [W] is too [W.w_class < ITEM_SIZE_NORMAL? "small" : "large"] to fit here."
 		else
 			user.unEquip(W, src)
 			cell = W
@@ -707,7 +702,7 @@
 
 /mob/living/silicon/robot/updateicon()
 	overlays.Cut()
-	if(stat == 0)
+	if(!stat)
 		var/image/eyes = image(icon, sprite_data.eyes)
 		eyes.color = sprite_data.eyes_color
 		overlays += eyes

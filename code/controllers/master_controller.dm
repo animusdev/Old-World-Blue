@@ -38,7 +38,6 @@ datum/controller/game_controller/proc/setup()
 		createRandomZlevel()
 
 	setup_objects()
-	setupgenetics()
 	SetupXenoarch()
 
 	transfer_controller = new

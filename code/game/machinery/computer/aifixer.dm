@@ -9,6 +9,7 @@
 	var/active = 0
 
 /obj/machinery/computer/aifixer/New()
+	..()
 	update_icon()
 
 /obj/machinery/computer/aifixer/proc/load_ai(var/mob/living/silicon/ai/transfer, var/obj/item/device/aicard/card, var/mob/user)
@@ -76,7 +77,7 @@
 
 		dat += "Laws:<br>[laws]<br>"
 
-		if (src.occupant.stat == 2)
+		if (src.occupant.stat == DEAD)
 			dat += "<b>AI nonfunctional</b>"
 		else
 			dat += "<b>AI functional</b>"

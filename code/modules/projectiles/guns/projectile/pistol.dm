@@ -109,7 +109,7 @@
 	name = "silenced pistol"
 	desc = "A small, quiet,  easily concealable gun. Uses .45 rounds."
 	icon_state = "silenced_pistol"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	caliber = ".45"
 	silenced = 1
 	origin_tech = list(TECH_COMBAT = 2, TECH_MATERIAL = 2, TECH_ILLEGAL = 8)
@@ -166,7 +166,7 @@
 	desc = "The Lumoco Arms P3 Whisper. small, easily concealable gun. Uses 9mm rounds."
 	icon_state = "pistol"
 	item_state = null
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	caliber = "9mm"
 	silenced = 0
 	origin_tech = list(TECH_COMBAT = 2, TECH_MATERIAL = 2, TECH_ILLEGAL = 2)
@@ -187,8 +187,8 @@
 				return
 			user << "<span class='notice'>You unscrew [silenced] from [src].</span>"
 			user.put_in_hands(silenced)
-			silenced = 0
-			w_class = 2
+			silenced = initial(silenced)
+			w_class = initial(w_class)
 			update_icon()
 			return
 	..()
@@ -201,7 +201,7 @@
 		user.drop_from_inventory(I, src) //put the silencer into the gun
 		user << "<span class='notice'>You screw [I] onto [src].</span>"
 		silenced = I	//dodgy?
-		w_class = 3
+		w_class = ITEM_SIZE_NORMAL
 		update_icon()
 		return
 	..()
@@ -215,13 +215,13 @@
 
 /obj/item/weapon/silencer
 	name = "silencer"
-	desc = "a silencer"
+	desc = "A silencer."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "silencer"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 
 /obj/item/weapon/gun/projectile/pirate
-	name = "zipgun"
+	name = "zip gun"
 	desc = "Little more than a barrel, handle, and firing mechanism, cheap makeshift firearms like this one are not uncommon in frontier systems."
 	icon_state = "sawnshotgun"
 	item_state = "sawnshotgun"

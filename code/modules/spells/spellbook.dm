@@ -5,7 +5,7 @@
 	icon_state ="spellbook"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2
+	w_class = ITEM_SIZE_NORMAL
 	var/uses = 5
 	var/temp = null
 	var/max_uses = 5
@@ -34,8 +34,6 @@
 			<I>This spell disables all weapons, cameras and most other technology in range.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=smoke'>Smoke</A> (10)<BR>
 			<I>This spell spawns a cloud of choking smoke at your location and does not require wizard garb.</I><BR>
-			<A href='byond://?src=\ref[src];spell_choice=blind'>Blind</A> (30)<BR>
-			<I>This spell temporarly blinds a single person and does not require wizard garb.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=subjugation'>Subjugation</A> (30)<BR>
 			<I>This spell temporarily subjugates a target's mind and does not require wizard garb.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=mindswap'>Mind Transfer</A> (60)<BR>
@@ -46,8 +44,6 @@
 			<I>This spell randomly teleports you a short distance. Useful for evasion or getting into areas if you have patience.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=teleport'>Teleport</A> (60)<BR>
 			<I>This spell teleports you to a type of area of your selection. Very useful if you are in danger, but has a decent cooldown, and is unpredictable.</I><BR>
-			<A href='byond://?src=\ref[src];spell_choice=mutate'>Mutate</A> (60)<BR>
-			<I>This spell causes you to turn into a hulk and gain telekinesis for a short while.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=etherealjaunt'>Ethereal Jaunt</A> (60)<BR>
 			<I>This spell creates your ethereal form, temporarily making you invisible and able to pass through walls.</I><BR>
 			<A href='byond://?src=\ref[src];spell_choice=knock'>Knock</A> (10)<BR>
@@ -76,7 +72,7 @@
 			<I>An arcane staff capable of shooting bolts of eldritch energy which cause inanimate objects to come to life. This magic doesn't affect machines.</I><BR>
 			<HR>
 			<A href='byond://?src=\ref[src];spell_choice=scrying'>Scrying Orb</A><BR>
-			<I>An incandescent orb of crackling energy, using it will allow you to ghost while alive, allowing you to spy upon the station with ease. In addition, buying it will permanently grant you x-ray vision.</I><BR>
+			<I>An incandescent orb of crackling energy, using it will allow you to ghost while alive, allowing you to spy upon the station with ease.</I><BR>
 			<HR>"}
 		// END AUTOFIX
 		if(op)
@@ -116,7 +112,7 @@
 				uses--
 			/*
 			*/
-				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disabletech = "Disable Tech", smoke = "Smoke", blind = "Blind", subjugation = "Subjugation", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", staffchange = "Staff of Change", mentalfocus = "Mental Focus", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation", noclothes = "No Clothes")
+				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disabletech = "Disable Tech", smoke = "Smoke", subjugation = "Subjugation", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport",  etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", staffchange = "Staff of Change", mentalfocus = "Mental Focus", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation", noclothes = "No Clothes")
 				var/already_knows = 0
 				for(var/spell/aspell in H.spell_list)
 					if(available_spells[href_list["spell_choice"]] == initial(aspell.name))
@@ -159,9 +155,6 @@
 						if("smoke")
 							H.add_spell(new/spell/aoe_turf/smoke)
 							temp = "You have learned smoke."
-						if("blind")
-							H.add_spell(new/spell/targeted/genetic/blind)
-							temp = "You have learned blind."
 						if("subjugation")
 							H.add_spell(new/spell/targeted/subjugation)
 							temp = "You have learned subjugate."
@@ -177,9 +170,6 @@
 						if("teleport")
 							H.add_spell(new/spell/area_teleport)
 							temp = "You have learned teleport."
-						if("mutate")
-							H.add_spell(new/spell/targeted/genetic/mutate)
-							temp = "You have learned mutate."
 						if("etherealjaunt")
 							H.add_spell(new/spell/targeted/ethereal_jaunt)
 							temp = "You have learned ethereal jaunt."
@@ -198,7 +188,7 @@
 							temp = "An artefact that channels the will of the user into destructive bolts of force."
 							max_uses--
 						if("soulstone")
-							new /obj/item/weapon/storage/belt/soulstone/full(get_turf(H))
+							new /obj/item/storage/belt/soulstone/full(get_turf(H))
 							H.add_spell(new/spell/aoe_turf/conjure/construct)
 							temp = "You have purchased a belt full of soulstones and have learned the artificer spell."
 							max_uses--
@@ -215,6 +205,8 @@
 							max_uses--
 						if("scrying")
 							new /obj/item/weapon/scrying(get_turf(H))
+							//TODO: DNA3 hulk
+							/*
 							if (!(XRAY in H.mutations))
 								H.mutations.Add(XRAY)
 								H.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
@@ -222,6 +214,8 @@
 								H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 								H << "span class='notice'>The walls suddenly disappear.</span>"
 							temp = "You have purchased a scrying orb, and gained x-ray vision."
+							*/
+							temp = "You have purchased a scrying orb."
 							max_uses--
 		else
 			if(href_list["temp"])
@@ -299,6 +293,8 @@
 		if(user.nutrition <= 0)
 			user.nutrition = 0
 
+//TODO: DNA3
+/*
 /obj/item/weapon/spellbook/oneuse/blind
 	spell = /spell/targeted/genetic/blind
 	spellname = "blind"
@@ -309,7 +305,7 @@
 	..()
 	user <<"<span class='warning'>You go blind!</span>"
 	user.eye_blind = 10
-
+*/
 /obj/item/weapon/spellbook/oneuse/mindswap
 	spell = /spell/targeted/mind_transfer
 	spellname = "mindswap"

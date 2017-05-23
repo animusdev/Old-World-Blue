@@ -5,6 +5,7 @@
 
 /obj/item/organ/external/stump/New(var/mob/living/carbon/holder, var/obj/item/organ/external/limb)
 	if(istype(limb))
+		name = "stump of [limb.name]"
 		organ_tag = limb.organ_tag
 		body_part = limb.body_part
 		amputation_point = limb.amputation_point

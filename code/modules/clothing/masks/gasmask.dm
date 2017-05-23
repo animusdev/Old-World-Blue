@@ -5,7 +5,7 @@
 	item_flags = BLOCK_GAS_SMOKE_EFFECT | AIRTIGHT
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 	body_parts_covered = FACE|EYES
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	item_state = "gas_alt"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
@@ -51,7 +51,7 @@
 	name = "\improper alien mask"
 	desc = "Clearly not designed for a human face."
 	item_flags = BLOCK_GAS_SMOKE_EFFECT | AIRTIGHT | FLEXIBLEMATERIAL
-	species_restricted = list("Vox")
+	species_restricted = list(SPECIES_VOX)
 
 /obj/item/clothing/mask/gas/syndicate
 	name = "tactical mask"

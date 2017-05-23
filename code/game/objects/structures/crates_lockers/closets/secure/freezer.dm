@@ -43,7 +43,7 @@
 		for(var/i = 1 to 4)
 			new /obj/item/weapon/reagent_containers/glass/drinks/soymilk(src)
 		for(var/i = 1 to 2)
-			new /obj/item/weapon/storage/fancy/egg_box(src)
+			new /obj/item/storage/fancy/egg_box(src)
 		return
 
 

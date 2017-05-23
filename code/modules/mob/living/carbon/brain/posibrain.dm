@@ -3,11 +3,9 @@
 	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "posibrain"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = list(TECH_ENGINEERING = 4, TECH_MATERIAL = 4, TECH_BLUESPACE = 2, TECH_DATA = 4)
 
-	construction_cost = list(DEFAULT_WALL_MATERIAL=500,"glass"=500,"silver"=200,"gold"=200,"phoron"=100,"diamond"=10)
-	construction_time = 75
 	var/searching = 0
 	var/askDelay = 10 * 60 * 1
 	req_access = list(access_robotics)
@@ -31,7 +29,7 @@
 		if(jobban_isbanned(O, "AI") && jobban_isbanned(O, "Cyborg"))
 			continue
 		if(O.client)
-			if(O.client.prefs.be_special & BE_AI)
+			if(ROLE_POSIBRAIN in O.client.prefs.special_toggles)
 				question(O.client)
 
 /obj/item/device/mmi/digital/posibrain/proc/question(var/client/C)
@@ -40,11 +38,12 @@
 		var/response = alert(C, "Someone is requesting a personality for a positronic brain. Would you like to play as one?", "Positronic brain request", "Yes", "No", "Never for this round")
 		if(response == "Yes")
 			response = alert(C, "Are you sure you want to play as a positronic brain?", "Positronic brain request", "Yes", "No")
-		if(!C || brainmob.key || 0 == searching)	return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
+		if(!C || brainmob.key || 0 == searching)
+			return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
 		if(response == "Yes")
 			transfer_personality(C.mob)
 		else if(response == "Never for this round")
-			C.prefs.be_special ^= BE_AI
+			C.prefs.special_toggles -= ROLE_POSIBRAIN
 
 /obj/item/device/mmi/digital/posibrain/update_icon()
 	if(searching)

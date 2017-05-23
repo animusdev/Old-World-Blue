@@ -9,9 +9,12 @@
 	display_name = "job, skirt"
 	description = "Totally as your default uniform, but with skirt!"
 	path = /obj/item/clothing/under
-	allowed_roles = list("QM", "Cargo Technician","Chief Engineer","Station Engineer","Atmospheric Technician","Roboticist",\
-	"Research Director","Scientist","Chief Medical Officer","Chemist","Medical Doctor","Geneticist",\
-	"Head of Security","Warden","Security Officer")
+	allowed_roles = list(
+		"Captain", "Head of Personnel", "QM", "Cargo Technician",
+		"Chief Engineer","Station Engineer","Atmospheric Technician","Roboticist",
+		"Research Director","Scientist","Chief Medical Officer","Chemist","Medical Doctor","Geneticist",
+		"Head of Security","Warden","Security Officer"
+	)
 
 /datum/gear/uniform/job_skirt/spawn_for(var/mob/living/carbon/human/H)
 	if(allowed_roles && !(H.job in allowed_roles))
@@ -20,24 +23,42 @@
 
 	var/tmp_path = path
 	switch(H.job)
-		if("QM") tmp_path = /obj/item/clothing/under/rank/qm/skirt
-		if("Cargo Technician") tmp_path = /obj/item/clothing/under/rank/cargo/skirt
-		if("Chief Engineer") tmp_path = /obj/item/clothing/under/rank/chief_engineer/skirt
-		if("Station Engineer") tmp_path = /obj/item/clothing/under/rank/engineer/skirt
-		if("Atmospheric Technician") tmp_path = /obj/item/clothing/under/rank/atmospheric_technician/skirt
-		if("Roboticist") tmp_path = /obj/item/clothing/under/rank/roboticist/skirt
-		if("Research Director") tmp_path = /obj/item/clothing/under/rank/research_director/skirt
-		if("Scientist") tmp_path = /obj/item/clothing/under/rank/scientist/skirt
-		if("Chief Medical Officer") tmp_path = /obj/item/clothing/under/rank/chief_medical_officer/skirt
-		if("Chemist") tmp_path = /obj/item/clothing/under/rank/chemist/skirt
+		if("Captain")
+			tmp_path = /obj/item/clothing/under/rank/captain/dress
+		if("Head of Personal")
+			tmp_path = /obj/item/clothing/under/rank/hop/dress
+		if("QM")
+			tmp_path = /obj/item/clothing/under/rank/qm/skirt
+		if("Cargo Technician")
+			tmp_path = /obj/item/clothing/under/rank/cargo/skirt
+		if("Chief Engineer")
+			tmp_path = /obj/item/clothing/under/rank/chief_engineer/skirt
+		if("Station Engineer")
+			tmp_path = /obj/item/clothing/under/rank/engineer/skirt
+		if("Atmospheric Technician")
+			tmp_path = /obj/item/clothing/under/rank/atmospheric_technician/skirt
+		if("Roboticist")
+			tmp_path = /obj/item/clothing/under/rank/roboticist/skirt
+		if("Research Director")
+			tmp_path = /obj/item/clothing/under/rank/research_director/skirt
+		if("Scientist")
+			tmp_path = /obj/item/clothing/under/rank/scientist/skirt
+		if("Chief Medical Officer")
+			tmp_path = /obj/item/clothing/under/rank/chief_medical_officer/skirt
+		if("Chemist")
+			tmp_path = /obj/item/clothing/under/rank/chemist/skirt
 		if("Medical Doctor")
 			tmp_path = /obj/item/clothing/under/rank/medical/skirt
 			if(H.mind && H.mind.role_alt_title == "Virologist")
 				tmp_path = /obj/item/clothing/under/rank/virologist/skirt
-		if("Geneticist") tmp_path = /obj/item/clothing/under/rank/geneticist/skirt
-		if("Head of Security") tmp_path = /obj/item/clothing/under/rank/head_of_security/skirt
-		if("Warden") tmp_path = /obj/item/clothing/under/rank/warden/skirt
-		if("Security Officer") tmp_path = /obj/item/clothing/under/rank/security/skirt
+		if("Geneticist")
+			tmp_path = /obj/item/clothing/under/rank/geneticist/skirt
+		if("Head of Security")
+			tmp_path = /obj/item/clothing/under/rank/head_of_security/skirt
+		if("Warden")
+			tmp_path = /obj/item/clothing/under/rank/warden/skirt
+		if("Security Officer")
+			tmp_path = /obj/item/clothing/under/rank/security/skirt
 		else return null
 
 	return new tmp_path(H)
@@ -47,7 +68,7 @@
 	display_name = "job, jeans"
 	description = "Totally as your default uniform, but with jeans!"
 	path = /obj/item/clothing/under
-	allowed_roles = list("QM", "Cargo Technician","Station Engineer","Atmospheric Technician","Detective",\
+	allowed_roles = list("QM", "Cargo Technician","Station Engineer","Atmospheric Technician"  ,\
 	"Research Director","Scientist","Chief Medical Officer","Chemist","Medical Doctor","Geneticist")
 
 /datum/gear/uniform/job_jeans/spawn_for(var/mob/living/carbon/human/H)
@@ -69,7 +90,6 @@
 			if(H.mind && H.mind.role_alt_title == "Virologist")
 				tmp_path = /obj/item/clothing/under/rank/virologist/jeans
 		if("Geneticist") tmp_path = /obj/item/clothing/under/rank/geneticist/jeans
-		if("Detective")  tmp_path = /obj/item/clothing/under/rank/det/jeans
 		else return null
 
 	return new tmp_path(H)
@@ -236,12 +256,7 @@
 
 /datum/gear/uniform/dress_fire
 	display_name = "flame dress"
-	path = /obj/item/clothing/under/dress/dress_fire
-
-/datum/gear/uniform/uniform_captain
-	display_name = "uniform, captain's dress"
-	path = /obj/item/clothing/under/dress/dress_cap
-	allowed_roles = list("Captain")
+	path = /obj/item/clothing/under/dress/fire
 
 /datum/gear/uniform/corpsecsuit
 	display_name = "uniform, corporate (Security)"
@@ -263,22 +278,17 @@
 			tmp_path = /obj/item/clothing/under/rank/det/corp
 	return new tmp_path ()
 
-/datum/gear/uniform/uniform_hop
-	display_name = "uniform, HoP's dress"
-	path = /obj/item/clothing/under/dress/dress_hop
-	allowed_roles = list("Head of Personnel")
-
 /datum/gear/uniform/uniform_hr
 	display_name = "uniform, HR director (HoP)"
-	path = /obj/item/clothing/under/dress/dress_hr
+	path = /obj/item/clothing/under/dress/hr
 	allowed_roles = list("Head of Personnel")
 
-/datum/gear/uniform/navysecsuit
+/datum/gear/uniform/bluesecsuit
 	display_name = "uniform, navy blue (Security)"
-	path = /obj/item/clothing/under/rank/security/navyblue
-	allowed_roles = list("Head of Security","Warden", "Security Officer")
+	path = /obj/item/clothing/under/rank/security/blue
+	allowed_roles = list("Head of Security","Warden", "Security Officer", "Detective")
 
-/datum/gear/uniform/navysecsuit/spawn_for(var/mob/living/carbon/human/H)
+/datum/gear/uniform/bluesecsuit/spawn_for(var/mob/living/carbon/human/H)
 	if(allowed_roles && !(H.job in allowed_roles))
 		H << "<span class='warning'>Your current job does not permit you to spawn with [display_name]!</span>"
 		return null
@@ -286,9 +296,11 @@
 	var/tmp_path = path
 	switch(H.job)
 		if("Head of Security")
-			tmp_path = /obj/item/clothing/under/rank/head_of_security/navyblue
+			tmp_path = /obj/item/clothing/under/rank/head_of_security/blue
 		if("Warden")
-			tmp_path = /obj/item/clothing/under/rank/warden/navyblue
+			tmp_path = /obj/item/clothing/under/rank/warden/blue
+		if("Detective")
+			tmp_path = /obj/item/clothing/under/rank/det/blue
 	return new tmp_path ()
 
 /datum/gear/uniform/dnavysecsuit
@@ -307,6 +319,24 @@
 			tmp_path = /obj/item/clothing/under/rank/head_of_security/dnavy
 		if("Warden")
 			tmp_path = /obj/item/clothing/under/rank/warden/dnavy
+	return new tmp_path ()
+
+/datum/gear/uniform/tansecsuit
+	display_name = "uniform, tan (Security)"
+	path = /obj/item/clothing/under/rank/security/tan
+	allowed_roles = list("Head of Security","Warden", "Security Officer")
+
+/datum/gear/uniform/tansecsuit/spawn_for(var/mob/living/carbon/human/H)
+	if(allowed_roles && !(H.job in allowed_roles))
+		H << "<span class='warning'>Your current job does not permit you to spawn with [display_name]!</span>"
+		return null
+
+	var/tmp_path = path
+	switch(H.job)
+		if("Head of Security")
+			tmp_path = /obj/item/clothing/under/rank/head_of_security/tan
+		if("Warden")
+			tmp_path = /obj/item/clothing/under/rank/warden/tan
 	return new tmp_path ()
 
 /datum/gear/uniform/squatter_outfit

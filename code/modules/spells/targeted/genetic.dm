@@ -4,6 +4,8 @@ code\game\dna\genes\vg_powers.dm //hulk is in this file
 code\game\dna\genes\goon_disabilities.dm
 code\game\dna\genes\goon_powers.dm
 */
+//TODO: DNA3
+/*
 /spell/targeted/genetic
 	name = "Genetic modifier"
 	desc = "This spell inflicts a set of mutations and disabilities upon the target."
@@ -66,3 +68,4 @@ code\game\dna\genes\goon_powers.dm
 	cooldown_min = 300 //25 deciseconds reduction per rank
 
 	hud_state = "wiz_hulk"
+*/

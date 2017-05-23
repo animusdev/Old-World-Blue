@@ -9,28 +9,28 @@
 
 /datum/supply_packs/hydro/monkey
 	name = "Monkey crate"
-	contains = list (/obj/item/weapon/storage/box/monkeycubes)
+	contains = list (/obj/item/storage/box/monkeycubes)
 	cost = 20
 	containertype = /obj/structure/closet/crate/freezer
 	containername = "Monkey crate"
 
 /datum/supply_packs/hydro/farwa
 	name = "Farwa crate"
-	contains = list (/obj/item/weapon/storage/box/monkeycubes/farwacubes)
+	contains = list (/obj/item/storage/box/monkeycubes/farwacubes)
 	cost = 20
 	containertype = /obj/structure/closet/crate/freezer
 	containername = "Farwa crate"
 
 /datum/supply_packs/hydro/neara
 	name = "Neaera crate"
-	contains = list (/obj/item/weapon/storage/box/monkeycubes/neaeracubes)
+	contains = list (/obj/item/storage/box/monkeycubes/neaeracubes)
 	cost = 20
 	containertype = /obj/structure/closet/crate/freezer
 	containername = "Neaera crate"
 
 /datum/supply_packs/hydro/stok
 	name = "Stok crate"
-	contains = list (/obj/item/weapon/storage/box/monkeycubes/stokcubes)
+	contains = list (/obj/item/storage/box/monkeycubes/stokcubes)
 	cost = 20
 	containertype = /obj/structure/closet/crate/freezer
 	containername = "Stok crate"
@@ -53,7 +53,7 @@
 		/obj/item/clothing/gloves/botanic_leather,
 		/obj/item/clothing/suit/apron,
 		/obj/item/weapon/material/minihoe,
-		/obj/item/weapon/storage/box/botanydisk
+		/obj/item/storage/box/botanydisk
 	)
 	cost = 20
 	containertype = /obj/structure/closet/crate/hydroponics

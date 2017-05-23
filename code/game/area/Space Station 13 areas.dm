@@ -64,11 +64,11 @@ so I'll just make it run the usual telepot routine at the start of the game*/
 var/list/teleportlocs = list()
 
 /hook/startup/proc/setupTeleportLocs()
-	for(var/area/AR in world)
+	for(var/area/AR in all_areas)
 		if(is_type_in_list(AR, list(/area/shuttle, /area/syndicate_station, /area/wizard_station))) continue
 		if(teleportlocs.Find(AR.name)) continue
 		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (picked.z in config.station_levels)
+		if(isStationLevel(picked.z))
 			teleportlocs += AR.name
 			teleportlocs[AR.name] = AR
 
@@ -79,7 +79,7 @@ var/list/teleportlocs = list()
 var/list/ghostteleportlocs = list()
 
 /hook/startup/proc/setupGhostTeleportLocs()
-	for(var/area/AR in world)
+	for(var/area/AR in all_areas)
 		if(ghostteleportlocs.Find(AR.name)) continue
 		if(is_type_in_list(
 			AR, list(/area/turret_protected/aisat, /area/derelict, /area/tdome, /area/shuttle/specops/centcom)
@@ -87,7 +87,7 @@ var/list/ghostteleportlocs = list()
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (picked.z in config.player_levels)
+		if(isPlayerLevel(picked.z))
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 

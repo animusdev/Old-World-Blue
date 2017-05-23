@@ -20,7 +20,8 @@
 		"exotic matter" = 0
 		)
 
-	for(var/turf/T in range(2, get_turf(user)))
+	var/turf/my_loc = get_turf(user)
+	for(var/turf/T in RANGE_TURFS(2, my_loc))
 
 		if(!T.has_resources)
 			continue

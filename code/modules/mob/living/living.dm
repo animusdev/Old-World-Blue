@@ -48,20 +48,20 @@ default behaviour is:
 
 /mob/living/Bump(atom/movable/AM, yes)
 	spawn(0)
-		if ((!( yes ) || now_pushing) || !loc)
+		if(!yes || now_pushing || !loc)
 			return
 		now_pushing = 1
 		if (istype(AM, /mob/living))
 			var/mob/living/tmob = AM
 
-			for(var/mob/living/M in range(tmob, 1))
-				if(tmob.pinned.len ||  ((M.pulling == tmob && ( tmob.restrained() && !( M.restrained() ) && M.stat == 0)) || locate(/obj/item/weapon/grab, tmob.grabbed_by.len)) )
+			for(var/mob/living/M in range(1,tmob))
+				if(tmob.pinned.len || (M.pulling == tmob && (tmob.restrained() && !M.restrained() && !M.stat)) || tmob.grabbed_by.len)
 					if ( !(world.time % 5) )
 						src << "<span class='warning'>[tmob] is restrained, you cannot push past</span>"
 					now_pushing = 0
 					return
-				if( tmob.pulling == M && ( M.restrained() && !( tmob.restrained() ) && tmob.stat == 0) )
-					if ( !(world.time % 5) )
+				if(tmob.pulling == M && (M.restrained() && !tmob.restrained() && !tmob.stat))
+					if( !(world.time % 5) )
 						src << "<span class='warning'>[tmob] is restraining [M], you cannot push past</span>"
 					now_pushing = 0
 					return
@@ -133,13 +133,12 @@ default behaviour is:
 							now_pushing = 0
 							return
 					step(AM, t)
-					if(ishuman(AM) && AM:grabbed_by)
-						for(var/obj/item/weapon/grab/G in AM:grabbed_by)
-							step(G:assailant, get_dir(G:assailant, AM))
+					if(ishuman(AM))
+						var/mob/living/carbon/human/H = AM
+						for(var/obj/item/weapon/grab/G in H.grabbed_by)
+							step(G.assailant, get_dir(G.assailant, AM))
 							G.adjust_position()
 				now_pushing = 0
-			return
-	return
 
 /mob/living/verb/succumb()
 	set hidden = 1
@@ -168,10 +167,6 @@ default behaviour is:
 	return 0
 
 /mob/living/carbon/human/burn_skin(burn_amount)
-	if(mShock in src.mutations) //shockproof
-		return 0
-	if (COLD_RESISTANCE in src.mutations) //fireproof
-		return 0
 	//make this damage method divide the damage to be done among all the body parts, then burn each body part for that much damage. will have better effect then just randomly picking a body part
 	var/mob/living/carbon/human/H = src
 	var/divided_damage = (burn_amount)/(H.organs.len)
@@ -199,8 +194,6 @@ default behaviour is:
 		temperature -= change
 		if(actual < desired)
 			temperature = desired
-//	if(ishuman(src))
-//		world << "[src] ~ [src.bodytemperature] ~ [temperature]"
 	return temperature
 
 
@@ -289,41 +282,41 @@ default behaviour is:
 
 
 //Recursive function to find everything a mob is holding.
-/mob/living/get_contents(var/obj/item/weapon/storage/Storage = null)
+/mob/living/get_contents(var/obj/item/storage/Storage = null)
 	var/list/L = list()
 
 	if(Storage) //If it called itself
 		L += Storage.return_inv()
 
 		//Leave this commented out, it will cause storage items to exponentially add duplicate to the list
-		//for(var/obj/item/weapon/storage/S in Storage.return_inv()) //Check for storage items
+		//for(var/obj/item/storage/S in Storage.return_inv()) //Check for storage items
 		//	L += get_contents(S)
 
 		for(var/obj/item/weapon/gift/G in Storage.return_inv()) //Check for gift-wrapped items
 			L += G.gift
-			if(istype(G.gift, /obj/item/weapon/storage))
+			if(istype(G.gift, /obj/item/storage))
 				L += get_contents(G.gift)
 
 		for(var/obj/item/smallDelivery/D in Storage.return_inv()) //Check for package wrapped items
 			L += D.wrapped
-			if(istype(D.wrapped, /obj/item/weapon/storage)) //this should never happen
+			if(istype(D.wrapped, /obj/item/storage)) //this should never happen
 				L += get_contents(D.wrapped)
 		return L
 
 	else
 
 		L += src.contents
-		for(var/obj/item/weapon/storage/S in src.contents)	//Check for storage items
+		for(var/obj/item/storage/S in src.contents)	//Check for storage items
 			L += get_contents(S)
 
 		for(var/obj/item/weapon/gift/G in src.contents) //Check for gift-wrapped items
 			L += G.gift
-			if(istype(G.gift, /obj/item/weapon/storage))
+			if(istype(G.gift, /obj/item/storage))
 				L += get_contents(G.gift)
 
 		for(var/obj/item/smallDelivery/D in src.contents) //Check for package wrapped items
 			L += D.wrapped
-			if(istype(D.wrapped, /obj/item/weapon/storage)) //this should never happen
+			if(istype(D.wrapped, /obj/item/storage)) //this should never happen
 				L += get_contents(D.wrapped)
 		return L
 
@@ -460,7 +453,7 @@ default behaviour is:
 
 	var/t7 = 1
 	if (restrained())
-		for(var/mob/living/M in range(src, 1))
+		for(var/mob/living/M in range(1,src))
 			if (M.pulling == src && !M.stat && !M.restrained())
 				t7 = null
 	if (t7 && pulling && (get_dist(src, pulling) <= 1) && client && client.moving)

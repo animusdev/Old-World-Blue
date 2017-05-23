@@ -1,7 +1,7 @@
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
 	var/tmp/image/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
@@ -141,17 +141,52 @@
 /obj/item/examine(mob/user, var/return_dist = 0)
 	var/size
 	switch(src.w_class)
-		if(1.0)
+		if(ITEM_SIZE_TINY)
 			size = "tiny"
-		if(2.0)
+		if(ITEM_SIZE_SMALL)
 			size = "small"
-		if(3.0)
+		if(ITEM_SIZE_NORMAL)
 			size = "normal-sized"
-		if(4.0)
+		if(ITEM_SIZE_LARGE)
+			size = "large"
+		if(ITEM_SIZE_HUGE)
 			size = "bulky"
-		if(5.0)
+		if(ITEM_SIZE_HUGE + 1 to INFINITY)
 			size = "huge"
 	return ..(user, return_dist, "", "It is a [size] item.")
+
+/obj/item/proc/on_mob_description(var/mob/living/carbon/human/H, var/datum/gender/T, var/slot, var/slot_name)
+	var/msg = "[T.He] [T.is] wearing \icon[src]"
+	var/end_part = " on [T.his] [slot_name]"
+
+	switch(slot)
+		if(slot_w_uniform, slot_wear_suit)
+			end_part = ""
+		if(slot_back, slot_gloves)
+			msg = "[T.He] [T.has] \icon[src]"
+		if(slot_belt)
+			msg = "[T.He] [T.has] \icon[src]"
+			end_part = " about [T.his] waist"
+		if(slot_s_store)
+			msg = "[T.He] [T.is] carring \icon[src]"
+		if(slot_glasses)
+			msg = "[T.He] [T.has] \icon[src]"
+			end_part = " covering [T.his] eyes"
+		if(slot_l_hand, slot_r_hand)
+			msg = "[T.He] [T.is] holding \icon[src]"
+			end_part = " in [T.his] [slot_name]"
+		if(slot_l_ear, slot_r_ear)
+			return "[T.He] [T.has] \icon[src] \a [src] on [T.his] left ear."
+		if(slot_wear_id)
+			return "[T.He] [T.is] wearing \icon[src] \a [src]."
+
+	if(blood_DNA)
+		msg = SPAN_WARN("[msg] [gender==PLURAL?"some":"a"] [(blood_color != SYNTH_BLOOD_COLOUR) ? "blood" : "oil"]-stained [src][end_part]!")
+	else
+		msg += " \a [src][end_part]."
+	return msg
+
+
 
 /obj/item/attack_hand(mob/living/user as mob)
 	if (!user) return
@@ -159,14 +194,14 @@
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/external/temp = H.get_organ(user.hand ? BP_L_HAND : BP_R_HAND)
 		if(!temp)
-			user << "<span class='notice'>You try to use your hand, but realize it is no longer attached!</span>"
+			user << SPAN_NOTE("You try to use your hand, but realize it is no longer attached!")
 			return
 		if(!temp.is_usable())
-			user << "<span class='notice'>You try to move your [temp.name], but cannot!</span>"
+			user << SPAN_NOTE("You try to move your [temp.name], but cannot!")
 			return
 	src.pickup(user)
-	if (istype(src.loc, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = src.loc
+	if (istype(src.loc, /obj/item/storage))
+		var/obj/item/storage/S = src.loc
 		S.remove_from_storage(src)
 
 	src.throwing = 0
@@ -191,8 +226,8 @@
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
 /obj/item/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = W
+	if(istype(W,/obj/item/storage))
+		var/obj/item/storage/S = W
 		if(S.use_to_pickup)
 			if(S.collection_mode) //Mode is set to collect all items on a tile and we clicked on a valid one.
 				if(isturf(src.loc))
@@ -314,7 +349,7 @@ var/list/global/slot_flags_enumeration = list(
 	//Lastly, check special rules for the desired slot.
 	switch(slot)
 		if(slot_l_ear, slot_r_ear)
-			if( (w_class > 1) && !(slot_flags & SLOT_EARS) )
+			if((w_class > ITEM_SIZE_TINY) && !(slot_flags & SLOT_EARS))
 				return 0
 		if(slot_wear_id)
 			if(!H.w_uniform && (slot_w_uniform in mob_equip))
@@ -328,8 +363,10 @@ var/list/global/slot_flags_enumeration = list(
 				return 0
 			if(slot_flags & SLOT_DENYPOCKET)
 				return 0
-			if( w_class > 2 && !(slot_flags & SLOT_POCKET) )
+			if(w_class > ITEM_SIZE_SMALL && !(slot_flags & SLOT_POCKET))
 				return 0
+			if(get_storage_cost() == ITEM_SIZE_NO_CONTAINER)
+				return 0 //pockets act like storage and should respect ITEM_SIZE_NO_CONTAINER. Suit storage might be fine as is
 		if(slot_s_store)
 			if(!H.wear_suit && (slot_wear_suit in mob_equip))
 				if(!disable_warning)
@@ -348,8 +385,8 @@ var/list/global/slot_flags_enumeration = list(
 			if(!istype(src, /obj/item/weapon/legcuffs))
 				return 0
 		if(slot_in_backpack) //used entirely for equipping spawned mobs or at round start
-			if(H.back && istype(H.back, /obj/item/weapon/storage))
-				var/obj/item/weapon/storage/B = H.back
+			if(H.back && istype(H.back, /obj/item/storage))
+				var/obj/item/storage/B = H.back
 				if(!B.can_be_inserted(src, disable_warning))
 					return 0
 		if(slot_tie)

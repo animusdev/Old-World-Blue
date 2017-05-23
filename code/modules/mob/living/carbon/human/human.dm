@@ -155,7 +155,8 @@
 
 
 /mob/living/carbon/human/blob_act()
-	if(stat == 2)	return
+	if(stat == DEAD)
+		return
 	show_message("\red The blob attacks you!")
 	var/dam_zone = pick(BP_CHEST, BP_L_HAND, BP_R_HAND, BP_L_LEG, BP_R_LEG)
 	var/obj/item/organ/external/affecting = get_organ(ran_zone(dam_zone))
@@ -181,13 +182,8 @@
 /mob/living/carbon/human/proc/implant_loyalty(override = FALSE) // Won't override by default.
 	if(!config.use_loyalty_implants && !override) return // Nuh-uh.
 
-	var/obj/item/weapon/implant/loyalty/L = new (src)
-	L.imp_in = src
-	L.implanted = 1
-	var/obj/item/organ/external/affected = src.organs_by_name[BP_HEAD]
-	affected.implants += L
-	L.part = affected
-	L.implanted(src)
+	var/obj/item/weapon/implant/loyalty/L = new()
+	L.implanted(src, get_organ(BP_HEAD))
 
 /mob/living/carbon/human/proc/is_loyalty_implanted()
 	for(var/L in src.contents)
@@ -326,7 +322,7 @@
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name()
 	var/obj/item/organ/external/head = get_organ(BP_HEAD)
-	if(!head || head.disfigured || head.is_stump() || !real_name || (HUSK in mutations) )	//disfigured. use id-name if possible
+	if(!head || head.disfigured || head.is_stump() || !real_name || (HUSK & status_flags) )	//disfigured. use id-name if possible
 		return "Unknown"
 	return real_name
 
@@ -645,6 +641,10 @@
 		src.examinate(M)
 
 	if (href_list["flavor_change"])
+		if(usr != src)
+			usr << "No."
+			return
+
 		switch(href_list["flavor_change"])
 			if("done")
 				src << browse(null, "window=flavor_changes")
@@ -778,10 +778,6 @@
 		remoteview_target = null
 		return
 
-	if(!(mMorph in mutations))
-		src.verbs -= /mob/living/carbon/human/proc/morph
-		return
-
 	var/new_facial = input("Please select facial hair color.", "Character Generation", facial_color) as color
 	if(new_facial)
 		facial_color = new_facial
@@ -856,24 +852,21 @@
 		remoteview_target = null
 		return
 
-	if(!(mRemotetalk in src.mutations))
-		src.verbs -= /mob/living/carbon/human/proc/remotesay
-		return
 	var/list/creatures = list()
-	for(var/mob/living/carbon/h in world)
+	for(var/mob/living/carbon/h in mob_list)
 		creatures += h
 	var/mob/target = input("Who do you want to project your mind to ?") as null|anything in creatures
 	if (isnull(target))
 		return
 
 	var/say = sanitize(input("What do you wish to say"))
-	if(mRemotetalk in target.mutations)
+	if(/mob/living/carbon/human/proc/remotesay in target.verbs)
 		target.show_message("\blue You hear [src.real_name]'s voice: [say]")
 	else
 		target.show_message("\blue You hear a voice that seems to echo around the room: [say]")
 	usr.show_message("\blue You project your mind into [target.real_name]: [say]")
 	log_say("[key_name(usr)] sent a telepathic message to [key_name(target)]: [say]")
-	for(var/mob/observer/dead/G in world)
+	for(var/mob/observer/dead/G in dead_mob_list)
 		G.show_message("<i>Telepathic message from <b>[src]</b> to <b>[target]</b>: [say]</i>")
 
 /mob/living/carbon/human/proc/remoteobserve()
@@ -885,12 +878,6 @@
 		reset_view(0)
 		return
 
-	if(!(mRemote in src.mutations))
-		remoteview_target = null
-		reset_view(0)
-		src.verbs -= /mob/living/carbon/human/proc/remoteobserve
-		return
-
 	if(client.eye != client.mob)
 		remoteview_target = null
 		reset_view(0)
@@ -898,9 +885,8 @@
 
 	var/list/mob/creatures = list()
 
-	for(var/mob/living/carbon/h in world)
-		var/turf/temp_turf = get_turf(h)
-		if((temp_turf.z != 1 && temp_turf.z != 5) || h.stat!=CONSCIOUS) //Not on mining or the station. Or dead
+	for(var/mob/living/carbon/h in mob_list)
+		if(isOnPlayerLevel(h) || h.stat) //Not on mining or the station. Or dead
 			continue
 		creatures += h
 
@@ -1081,7 +1067,7 @@
 
 	if(!dna)
 		if(!new_species)
-			new_species = "Human"
+			new_species = SPECIES_HUMAN
 	else
 		if(!new_species)
 			new_species = dna.species
@@ -1090,7 +1076,7 @@
 
 	// No more invisible screaming wheelchairs because of set_species() typos.
 	if(!all_species[new_species])
-		new_species = "Human"
+		new_species = SPECIES_HUMAN
 
 	if(species)
 		if(species.name && species.name == new_species)
@@ -1182,19 +1168,22 @@
 			BM = Pref.get_modification(tag)
 			Organ = BM.create_organ(species.has_organ[tag], Pref.modifications_colors[tag])
 			if(Organ)
-				Organ.install(src, 0) // Not update icon
+				Organ.install(src, 0)
 
 	else
 		var/organ_type = null
+		var/obj/item/organ/Organ = null
 
 		for(var/limb_tag in species.has_limbs)
 			var/datum/organ_description/OD = species.has_limbs[limb_tag]
 			organ_type = OD.default_type
-			new organ_type(src, OD)
+			Organ = new organ_type(null, OD)
+			Organ.install(src, 0) // Not update icon
 
 		for(var/organ_tag in species.has_organ)
 			organ_type = species.has_organ[organ_tag]
-			new organ_type(src)
+			Organ = new organ_type(null)
+			Organ.install(src, 0)
 
 	species.organs_spawned(src)
 	update_body()

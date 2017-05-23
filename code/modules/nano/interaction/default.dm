@@ -35,7 +35,7 @@
 	if(. != STATUS_INTERACTIVE)
 		return
 
-	if(z in config.admin_levels)						// Syndicate borgs can interact with everything on the admin level
+	if(isOnAdminLevel(src))								// Syndicate borgs can interact with everything on the admin level
 		return STATUS_INTERACTIVE
 	if(istype(get_area(src), /area/syndicate_station))	// If elsewhere, they can interact with everything on the syndicate shuttle
 		return STATUS_INTERACTIVE
@@ -53,7 +53,7 @@
 	// Prevents the AI from using Topic on admin levels (by for example viewing through the court/thunderdome cameras)
 	// unless it's on the same level as the object it's interacting with.
 	var/turf/T = get_turf(src_object)
-	if(!T || !(z == T.z || (T.z in config.player_levels)))
+	if(!T || !(z == T.z || isPlayerLevel(T.z)))
 		return STATUS_CLOSE
 
 	// If an object is in view then we can interact with it
@@ -63,7 +63,7 @@
 	// If we're installed in a chassi, rather than transfered to an inteliCard or other container, then check if we have camera view
 	if(is_in_chassis())
 		//stop AIs from leaving windows open and using then after they lose vision
-		if(cameranet && !cameranet.checkTurfVis(get_turf(src_object)))
+		if(cameranet && !cameranet.checkTurfVis(T))
 			return STATUS_CLOSE
 		return STATUS_INTERACTIVE
 	else if(get_dist(src_object, src) <= client.view)	// View does not return what one would expect while installed in an inteliCard
@@ -100,5 +100,6 @@
 	. = shared_nano_interaction(src_object)
 	if(. != STATUS_CLOSE)
 		. = min(., shared_living_nano_distance(src_object))
-		if(. == STATUS_UPDATE && (TK in mutations))	// If we have telekinesis and remain close enough, allow interaction.
+		//TODO: DNA3 TK_mutation
+		if(. == STATUS_UPDATE)	// If we have telekinesis and remain close enough, allow interaction.
 			return STATUS_INTERACTIVE

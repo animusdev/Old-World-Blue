@@ -115,7 +115,7 @@
 		H << "<span class='warning'>You cannot teleport into solid walls.</span>"
 		return 0
 
-	if(T.z in config.admin_levels)
+	if(isAdminLevel(z))
 		H << "<span class='warning'>You cannot use your teleporter on this Z-level.</span>"
 		return 0
 
@@ -183,7 +183,7 @@
 		return 0
 
 	//OH SHIT.
-	if(holder.wearer.stat == 2)
+	if(holder.wearer.stat == DEAD)
 		engage()
 
 /obj/item/rig_module/self_destruct/engage()

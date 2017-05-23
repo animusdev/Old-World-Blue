@@ -44,17 +44,17 @@ var/global/list/additional_antag_types = list()
 			new/datum/uplink_item(/obj/item/ammo_magazine/a357, 2, ".357", "RA"),
 			new/datum/uplink_item(/obj/item/ammo_magazine/mc9mm, 1, "9mm", "R9"),
 			new/datum/uplink_item(/obj/item/ammo_magazine/chemdart, 2, "Darts", "AD"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/sniperammo, 2, "14.5mm", "SA")
+			new/datum/uplink_item(/obj/item/storage/box/sniperammo, 2, "14.5mm", "SA")
 			),
 		"Highly Visible and Dangerous Weapons" = list(
-			 new/datum/uplink_item(/obj/item/weapon/storage/box/emps, 3, "5 EMP Grenades", "EM"),
+			 new/datum/uplink_item(/obj/item/storage/box/emps, 3, "5 EMP Grenades", "EM"),
 			 new/datum/uplink_item(/obj/item/weapon/melee/energy/sword, 4, "Energy Sword", "ES"),
 			 new/datum/uplink_item(/obj/item/weapon/gun/projectile/dartgun, 5, "Dart Gun", "DG"),
 			 new/datum/uplink_item(/obj/item/weapon/gun/energy/crossbow, 5, "Energy Crossbow", "XB"),
-			 new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/g9mm, 5, "Silenced 9mm", "S9"),
+			 new/datum/uplink_item(/obj/item/storage/box/syndie_kit/g9mm, 5, "Silenced 9mm", "S9"),
 			 new/datum/uplink_item(/obj/item/mecha_parts/mecha_equipment/weapon/energy/riggedlaser, 6, "Exosuit Rigged Laser", "RL"),
 			 new/datum/uplink_item(/obj/item/weapon/gun/projectile/revolver, 6, "Revolver", "RE"),
-			 new/datum/uplink_item(/obj/item/weapon/storage/box/syndicate, 10, "Mercenary Bundle", "BU"),
+			 new/datum/uplink_item(/obj/item/storage/box/syndicate, 10, "Mercenary Bundle", "BU"),
 			 new/datum/uplink_item(/obj/item/weapon/gun/projectile/heavysniper, 12, "Anti-materiel Rifle", "AMR"),
 			 new/datum/uplink_item(/obj/item/weapon/syndie/c4explosive, 3, "Small explosives package", "SE"),
 			 new/datum/uplink_item(/obj/item/weapon/syndie/c4explosive/heavy, 5, "Big explosives package", "BE")
@@ -64,26 +64,26 @@ var/global/list/additional_antag_types = list()
 			new/datum/uplink_item(/obj/item/weapon/cane/concealed, 2, "Concealed Cane Sword", "CC"),
 			new/datum/uplink_item(/obj/item/weapon/cartridge/syndicate, 3, "Detomatix PDA Cartridge", "DC"),
 			new/datum/uplink_item(/obj/item/weapon/pen/reagent/paralysis, 3, "Paralysis Pen", "PP"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/cigarette, 4, "Cigarette Kit", "BH"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/toxin, 4, "Random Toxin - Beaker", "RT")
+			new/datum/uplink_item(/obj/item/storage/box/syndie_kit/cigarette, 4, "Cigarette Kit", "BH"),
+			new/datum/uplink_item(/obj/item/storage/box/syndie_kit/toxin, 4, "Random Toxin - Beaker", "RT")
 			),
 		"Stealth and Camouflage Items" = list(
 			new/datum/uplink_item(/obj/item/weapon/card/id/syndicate, 2, "Agent ID card", "AC"),
 			new/datum/uplink_item(/obj/item/clothing/shoes/syndigaloshes, 2, "No-Slip Shoes", "SH"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/spy, 2, "Bug Kit", "BK"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/chameleon, 3, "Chameleon Kit", "CB"),
+			new/datum/uplink_item(/obj/item/storage/box/syndie_kit/spy, 2, "Bug Kit", "BK"),
+			new/datum/uplink_item(/obj/item/storage/box/syndie_kit/chameleon, 3, "Chameleon Kit", "CB"),
 			new/datum/uplink_item(/obj/item/device/chameleon, 4, "Chameleon-Projector", "CP"),
 			new/datum/uplink_item(/obj/item/clothing/mask/gas/voice, 4, "Voice Changer", "VC"),
 			new/datum/uplink_item(/obj/item/weapon/disk/file/cameras/syndicate, 6, "Camera Network Access - Floppy", "SF")
 			),
 		"Devices and Tools" = list(
-			new/datum/uplink_item(/obj/item/weapon/storage/toolbox/syndicate, 1, "Fully Loaded Toolbox", "ST"),
+			new/datum/uplink_item(/obj/item/storage/toolbox/syndicate, 1, "Fully Loaded Toolbox", "ST"),
 			new/datum/uplink_item(/obj/item/weapon/plastique, 1, "C-4 (Destroys walls)", "C4"),
 			new/datum/uplink_item(/obj/item/device/encryptionkey/syndicate, 2, "Encrypted Radio Channel Key", "ER"),
 			new/datum/uplink_item(/obj/item/device/encryptionkey/binary, 3, "Binary Translator Key", "BT"),
 			new/datum/uplink_item(/obj/item/weapon/card/emag, 3, "Cryptographic Sequencer", "EC"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/clerical, 3, "Morphic Clerical Kit", "CK"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/space, 3, "Space Suit", "SS"),
+			new/datum/uplink_item(/obj/item/storage/box/syndie_kit/clerical, 3, "Morphic Clerical Kit", "CK"),
+			new/datum/uplink_item(/obj/item/storage/box/syndie_kit/space, 3, "Space Suit", "SS"),
 			new/datum/uplink_item(/obj/item/clothing/glasses/thermal/syndi, 3, "Thermal Imaging Glasses", "TM"),
 			new/datum/uplink_item(/obj/item/clothing/suit/storage/vest/heavy/merc, 4, "Heavy Armor Vest", "HAV"),
 			new/datum/uplink_item(/obj/item/weapon/aiModule/syndicate, 7, "Hacked AI Upload Module", "AI"),
@@ -92,20 +92,20 @@ var/global/list/additional_antag_types = list()
 			new/datum/uplink_item(/obj/item/weapon/circuitboard/teleporter, 20, "Teleporter Circuit Board", "TP")
 			),
 		"Implants" = list(
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_freedom, 3, "Freedom Implant", "FI"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_compress, 4, "Compressed Matter Implant", "CI"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_explosive, 6, "Explosive Implant (DANGER!)", "EI"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/imp_uplink, 10, "Uplink Implant (Contains 5 Telecrystals)", "UI")
+			new/datum/uplink_item(/obj/item/storage/box/syndie_kit/imp_freedom, 3, "Freedom Implant", "FI"),
+			new/datum/uplink_item(/obj/item/storage/box/syndie_kit/imp_compress, 4, "Compressed Matter Implant", "CI"),
+			new/datum/uplink_item(/obj/item/storage/box/syndie_kit/imp_explosive, 6, "Explosive Implant (DANGER!)", "EI"),
+			new/datum/uplink_item(/obj/item/storage/box/syndie_kit/imp_uplink, 10, "Uplink Implant (Contains 5 Telecrystals)", "UI")
 			),
 		"Medical" = list(
-			new/datum/uplink_item(/obj/item/weapon/storage/box/sinpockets, 1, "Box of Sin-Pockets", "DP"),
-			new/datum/uplink_item(/obj/item/weapon/storage/firstaid/surgery, 5, "Surgery kit", "SK"),
-			new/datum/uplink_item(/obj/item/weapon/storage/firstaid/combat, 5, "Combat medical kit", "CM")
+			new/datum/uplink_item(/obj/item/storage/box/sinpockets, 1, "Box of Sin-Pockets", "DP"),
+			new/datum/uplink_item(/obj/item/storage/firstaid/surgery, 5, "Surgery kit", "SK"),
+			new/datum/uplink_item(/obj/item/storage/firstaid/combat, 5, "Combat medical kit", "CM")
 		),
 		"Hardsuit Modules" = list(
 			new/datum/uplink_item(/obj/item/rig_module/vision/thermal, 2, "Thermal Scanner", "RTS"),
 			new/datum/uplink_item(/obj/item/rig_module/fabricator/energy_net, 3, "Net Projector", "REN"),
-			new/datum/uplink_item(/obj/item/weapon/storage/box/syndie_kit/ewar_voice, 4, "Electrowarfare Suite and Voice Synthesiser", "REV"),
+			new/datum/uplink_item(/obj/item/storage/box/syndie_kit/ewar_voice, 4, "Electrowarfare Suite and Voice Synthesiser", "REV"),
 			new/datum/uplink_item(/obj/item/rig_module/maneuvering_jets, 4, "Maneuvering Jets", "RMJ"),
 			new/datum/uplink_item(/obj/item/rig_module/mounted/egun, 6, "Mounted Energy Gun", "REG"),
 			new/datum/uplink_item(/obj/item/rig_module/power_sink, 6, "Power Sink", "RPS"),
@@ -193,12 +193,9 @@ var/global/list/additional_antag_types = list()
 			ticker.mode.antag_templates |= antag
 			message_admins("Admin [key_name_admin(usr)] added [antag.role_text] template to game mode.")
 
-	// I am very sure there's a better way to do this, but I'm not sure what it might be. ~Z
-	spawn(1)
-		for(var/datum/admins/admin in world)
-			if(usr.client == admin.owner)
-				admin.show_game_mode(usr)
-				return
+	spawn(0)
+		var/datum/admins/admin = admin_datums[usr.ckey]
+		admin.show_game_mode(usr)
 
 /datum/game_mode/proc/announce() //to be called when round starts
 	world << "<B>The current game mode is [capitalize(name)]!</B>"
@@ -463,7 +460,7 @@ var/global/list/additional_antag_types = list()
 			comm.messagetext.Add(intercepttext)
 	world << sound('sound/AI/commandreport.ogg')
 
-/datum/game_mode/proc/get_players_for_role(var/role, var/antag_id, var/ghosts_only)
+/datum/game_mode/proc/get_players_for_role(var/antag_id, var/ghosts_only)
 	var/list/players = list()
 	var/list/candidates = list()
 
@@ -480,7 +477,7 @@ var/global/list/additional_antag_types = list()
 				continue
 			if(isobserver(player) && !ghosts_only)
 				continue
-			if(!role || (player.client.prefs.be_special & role))
+			if(antag_id in player.client.prefs.special_toggles)
 				log_debug("[player.key] had [antag_id] enabled, so we are drafting them.")
 				candidates |= player.mind
 	else
@@ -491,7 +488,7 @@ var/global/list/additional_antag_types = list()
 
 		// Get a list of all the people who want to be the antagonist for this round
 		for(var/mob/new_player/player in players)
-			if(!role || (player.client.prefs.be_special & role))
+			if(antag_id in player.client.prefs.special_toggles)
 				log_debug("[player.key] had [antag_id] enabled, so we are drafting them.")
 				candidates += player.mind
 				players -= player

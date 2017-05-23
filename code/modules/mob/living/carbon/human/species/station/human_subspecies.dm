@@ -22,7 +22,7 @@ datum/species/human/vatgrown
 		)
 
 /datum/species/human/vatgrown/get_bodytype()
-	return "Human"
+	return SPECIES_HUMAN
 
 
 datum/species/human/android
@@ -53,4 +53,4 @@ datum/species/human/android
 		)
 
 /datum/species/human/android/get_bodytype()
-	return "Human"
+	return SPECIES_HUMAN

@@ -191,7 +191,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/jumptomob,
 	/client/proc/jumptocoord,
 	/client/proc/dsay,
-	/client/proc/beacon_move
+	/client/proc/beacon_move,
+	/client/proc/test_MD
 	)
 
 var/list/admin_verbs_paranoid_debug = list(
@@ -805,7 +806,7 @@ var/list/admin_verbs_mentor = list(
 		usr << "\red You can only do this to humans!"
 		return
 	var/datum/species/S = M.species
-	if(!S) S = all_species["Human"]
+	if(!S) S = all_species[SPECIES_HUMAN]
 
 	if(alert("Are you sure you wish to edit this mob's appearance?",,"Yes","No") != "Yes")
 		return

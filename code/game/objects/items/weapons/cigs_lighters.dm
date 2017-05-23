@@ -37,7 +37,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "match_unlit"
 	var/burnt = 0
 	var/smoketime = 5
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	origin_tech = list(TECH_MATERIAL = 1)
 	slot_flags = SLOT_EARS
 	attack_verb = list("burnt", "singed")
@@ -133,6 +133,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			else
 				user << "[src] is nearly burnt out!"
 
+/obj/item/clothing/mask/smokable/on_mob_description(mob/living/carbon/human/H, datum/gender/T, slot, slot_name)
+	if(slot == slot_wear_mask)
+		if(lit)
+			return "[T.He] smokes \icon[src] \a [src]."
+		else
+			return "[T.He] holding \icon[src] \a [src] in [T.his] mouth."
+	else
+		return ..()
 
 /obj/item/clothing/mask/smokable/proc/light(var/flavor_text = "[usr] lights the [name].")
 	if(!src.lit)
@@ -229,7 +237,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigoff"
 	throw_speed = 0.5
 	item_state = "cigoff"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	slot_flags = SLOT_EARS | SLOT_MASK
 	attack_verb = list("burnt", "singed")
 	icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
@@ -314,7 +322,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A manky old cigarette butt."
 	icon = 'icons/inv_slots/masks/icon.dmi'
 	icon_state = "cigbutt"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	slot_flags = SLOT_EARS
 	throwforce = 1
 	randpixel = 10
@@ -350,6 +358,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A pipe, for smoking. Made of fine, stained cherry wood."
 	icon_state = "pipeoff"
 	item_state = "pipeoff"
+	w_class = ITEM_SIZE_TINY
 	icon_on = "pipeon"  //Note - these are in masks.dmi
 	icon_off = "pipeoff"
 	smoketime = 0
@@ -449,7 +458,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon = 'icons/obj/items.dmi'
 	icon_state = "lighter-g"
 	item_state = "lighter-g"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	throwforce = 4
 	flags = CONDUCT
 	slot_flags = SLOT_BELT | SLOT_EARS

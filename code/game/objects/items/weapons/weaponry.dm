@@ -9,7 +9,7 @@
 	icon_state = "toyhammer"
 	slot_flags = SLOT_BELT
 	throwforce = 0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 7
 	throw_range = 15
 	attack_verb = list("banned")
@@ -28,7 +28,7 @@
 	throw_speed = 1
 	throw_range = 4
 	throwforce = 10
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 
 	suicide_act(mob/user)
 		viewers(user) << "<span class='danger'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>"
@@ -45,11 +45,14 @@
 	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	user.do_attack_animation(M)
 
+	//TODO: DNA3 clown_block
+	/*
 	if ((CLUMSY in user.mutations) && prob(50))
 		user << "<span class='danger'>The rod slips out of your hand and hits your head.</span>"
 		user.take_organ_damage(10)
 		user.Paralyse(20)
 		return
+	*/
 
 	if (M.stat !=2)
 		if(cult && (M.mind in cult.current_antagonists) && prob(33))
@@ -82,7 +85,7 @@
 	throwforce = 1
 	sharp = 1
 	edge = 1
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 	suicide_act(mob/user)
@@ -235,8 +238,6 @@
 		else
 			health -= rand(1,3)
 
-	else if (HULK in user.mutations)
-		health = 0
 	else
 		health -= rand(5,8)
 

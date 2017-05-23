@@ -7,10 +7,10 @@
 /obj/structure/closet/secure_closet/personal/New()
 	..()
 	switch(rand(4))
-		if(1) new /obj/item/weapon/storage/backpack(src)
-		if(2) new /obj/item/weapon/storage/backpack/satchel/norm(src)
-		if(3) new /obj/item/weapon/storage/backpack/dufflebag(src)
-		if(4) new /obj/item/weapon/storage/backpack/messenger(src)
+		if(1) new /obj/item/storage/backpack(src)
+		if(2) new /obj/item/storage/backpack/satchel/norm(src)
+		if(3) new /obj/item/storage/backpack/dufflebag(src)
+		if(4) new /obj/item/storage/backpack/messenger(src)
 	new /obj/item/device/radio/headset( src )
 	return
 
@@ -39,14 +39,12 @@
 		// Not really the best way to do this, but it's better than "contents = list()"!
 		for(var/atom/movable/AM in contents)
 			qdel(AM)
-		new /obj/item/weapon/storage/backpack/satchel/withwallet( src )
+		new /obj/item/storage/backpack/satchel/withwallet( src )
 		new /obj/item/device/radio/headset( src )
 	return
 
 /obj/structure/closet/secure_closet/personal/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (src.opened)
-		if (istype(W, /obj/item/weapon/grab))
-			src.MouseDrop_T(W:affecting, user)      //act like they were dragged onto the closet
 		user.unEquip(W, src.loc)
 	else if(istype(W, /obj/item/device/pda))
 		var/obj/item/device/pda/P = W
@@ -54,7 +52,7 @@
 			return src.attackby(P.id)
 	else if(istype(W, /obj/item/weapon/card/id))
 		if(src.broken)
-			user << "<span class='warning'>It appears to be broken.</span>"
+			user << SPAN_WARN("It appears to be broken.")
 			return
 		var/obj/item/weapon/card/id/I = W
 		if(!I || !I.registered_name)	return
@@ -67,7 +65,7 @@
 				src.registered_name = I.registered_name
 				src.desc = "Owned by [I.registered_name]."
 		else
-			user << "<span class='warning'>Access Denied</span>"
+			user << SPAN_WARN("Access Denied")
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))
 		if(emag_act(INFINITY, user, "The locker has been sliced open by [user] with \an [W]!", "You hear metal being sliced and sparks flying."))
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()

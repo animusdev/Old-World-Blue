@@ -6,7 +6,7 @@
 	icon_state = "plastic-explosive0"
 	item_state = "plasticx"
 	flags = NOBLUDGEON
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	origin_tech = list(TECH_ILLEGAL = 2)
 	var/datum/wires/explosive/c4/wires = null
 	var/timer = 10
@@ -43,7 +43,7 @@
 /obj/item/weapon/plastique/afterattack(atom/movable/target, mob/user, flag)
 	if (!flag)
 		return
-	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/weapon/storage/) || istype(target, /obj/item/clothing/accessory/storage/) || istype(target, /obj/item/clothing/under))
+	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/storage/) || istype(target, /obj/item/clothing/accessory/storage/) || istype(target, /obj/item/clothing/under))
 		return
 	user << "Planting explosives..."
 

@@ -9,6 +9,7 @@
 	projectile_type = /obj/item/projectile/beam
 	sel_mode = 2
 	max_shots = 10
+	w_class = ITEM_SIZE_HUGE
 	
 	firemodes = list(
 		list(name="stun", projectile_type=/obj/item/projectile/beam/stun, fire_sound='sound/weapons/Taser.ogg'),

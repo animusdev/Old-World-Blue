@@ -62,7 +62,7 @@
 		/obj/item/weapon/stock_parts,
 		/obj/item/device/mmi,
 		/obj/item/robot_parts,
-		/obj/item/weapon/storage/firstaid,
+		/obj/item/storage/firstaid,
 		/obj/item/device/assembly,
 		/obj/item/borg/upgrade,
 		/obj/item/mecha_parts/,
@@ -87,7 +87,7 @@
 		/obj/item/weapon/reagent_containers/food,
 		/obj/item/seeds,
 		/obj/item/weapon/grown,
-		/obj/item/weapon/storage/fancy,
+		/obj/item/storage/fancy,
 		/obj/item/weapon/reagent_containers/condiment //робот сможет носить соусы,муку, универсальные энзимы и т.д.
 		)
 
@@ -171,16 +171,16 @@
 		//There's some weirdness with items being lost inside the arm. Trying to fix all cases. ~Z
 		for(var/obj/item/thing in src.contents)
 			thing.forceMove(target)
-		return
+		return TRUE
 
 	if(wrapped.loc != src)
 		wrapped = null
-		return
+		return FALSE
 
-	src.loc << "<span class='danger'>You drop \the [wrapped].</span>"
+	src.loc << SPAN_NOTE("You drop \the [wrapped].")
 	wrapped.forceMove(target)
 	wrapped = null
-
+	return TRUE
 
 /obj/item/weapon/gripper/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(wrapped) 	//The force of the wrapped obj gets set to zero during the attack() and afterattack().
@@ -189,13 +189,14 @@
 		wrapped.attack(M,user)
 		if(deleted(wrapped))
 			wrapped = null
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/item/weapon/gripper/afterattack(var/atom/target, var/mob/living/user, proximity, params)
 
+	//Prevent using guns at range.
 	if(!proximity)
-		return // This will prevent them using guns at range but adminbuse can add them directly to modules, so eh.
+		return
 
 	//There's some weirdness with items being lost inside the arm. Trying to fix all cases. ~Z
 	if(!wrapped)

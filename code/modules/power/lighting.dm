@@ -450,10 +450,13 @@
 		else
 			prot = 1
 
-		if(prot > 0 || (COLD_RESISTANCE in user.mutations))
+		if(prot > 0)
 			user << "You remove the light [fitting]"
+		//TODO: DNA3 TK_mutation
+		/*
 		else if(TK in user.mutations)
 			user << "You telekinetically remove the light [fitting]."
+		*/
 		else
 			user << "You try to remove the light [fitting], but it's too hot and you don't want to burn your hand."
 			return				// if burned, don't remove the light
@@ -593,7 +596,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	force = 2
 	throwforce = 5
-	w_class = 2
+	w_class = ITEM_SIZE_TINY
 	var/status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/switchcount = 0	// number of times switched
@@ -614,7 +617,7 @@
 	brightness_power = 3
 
 /obj/item/weapon/light/tube/large
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	name = "large light tube"
 	brightness_range = 15
 	brightness_power = 4

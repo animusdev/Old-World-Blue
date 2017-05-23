@@ -160,7 +160,7 @@ var/global/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","E
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
-	w_class = 5.0
+	w_class = ITEM_SIZE_NO_CONTAINER
 	force = 40
 	sharp = 1
 	edge = 1
@@ -215,7 +215,7 @@ var/global/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","E
 		src << "<span class='warning'>We do not know how to parse this creature's DNA!</span>"
 		return
 
-	if(HUSK in T.mutations)
+	if(HUSK & status_flags)
 		src << "<span class='warning'>This creature's DNA is ruined beyond useability!</span>"
 		return
 
@@ -347,7 +347,7 @@ var/global/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","E
 		update_inv_back(0)
 		update_inv_wear_mask()
 
-	domutcheck(src, null)
+	//TODO: DNA3 update_mutations
 
 	src.verbs -= /mob/proc/changeling_transform
 	spawn(10)	src.verbs += /mob/proc/changeling_transform
@@ -447,7 +447,7 @@ var/global/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","E
 	O.loc = C.loc
 
 	O.UpdateAppearance()
-	domutcheck(O, null)
+	//TODO: DNA3 update_mutations
 	O.setToxLoss(C.getToxLoss())
 	O.adjustBruteLoss(C.getBruteLoss())
 	O.setOxyLoss(C.getOxyLoss())
@@ -876,7 +876,7 @@ var/list/datum/dna/hivemind_bank = list()
 	spawn(10)	src.verbs += /mob/proc/changeling_transformation_sting
 
 	var/mob/living/carbon/T = G.affecting
-	if((HUSK in T.mutations) || (!ishuman(T) && !issmall(T)))
+	if((HUSK & status_flags) || (!ishuman(T) && !issmall(T)))
 		src << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
 		return 0
 	src << "<span class='notice'>We stealthily sting [T] in the neck.</span>"
@@ -886,7 +886,7 @@ var/list/datum/dna/hivemind_bank = list()
 		T.dna = chosen_dna.Clone()
 		T.real_name = chosen_dna.real_name
 		T.UpdateAppearance()
-		domutcheck(T, null)
+		//TODO: DNA3 update_mutations()
 		return 1
 	return
 

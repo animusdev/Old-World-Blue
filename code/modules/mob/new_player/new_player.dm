@@ -157,7 +157,7 @@
 					usr << "<span class='notice'>You have been added to the queue to join the game. Your position in queue is [ticker.queued_players.len].</span>"
 				return
 
-			if(client.prefs.species != "Human" && !check_rights(R_ADMIN, 0))
+			if(client.prefs.species != SPECIES_HUMAN && !check_rights(R_ADMIN, 0))
 				if(jobban_isbanned(src, client.prefs.species))
 					src << alert("You are currently banned from play [client.prefs.species].")
 					return 0
@@ -184,7 +184,7 @@
 				usr << "<span class='danger'>The station is currently exploding. Joining would go poorly.</span>"
 				return
 
-			if(client.prefs.species != "Human")
+			if(client.prefs.species != SPECIES_HUMAN)
 				if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
 					src << alert("You are currently not whitelisted to play [client.prefs.species].")
 					return 0
@@ -218,6 +218,9 @@
 			return 0
 		if(!config.enter_allowed)
 			usr << "<span class='notice'>There is an administrative lock on entering the game!</span>"
+			return 0
+		if(!check_rights(show_msg=0) && find_general_record("name", client.prefs.real_name))
+			src << SPAN_WARN("You can't have same name as any other player!")
 			return 0
 		if(!IsJobAvailable(rank))
 			src << alert("[rank] is not available. Please try another.")
@@ -378,19 +381,6 @@
 		new_character.dna.ready_dna(new_character)
 		new_character.dna.b_type = client.prefs.b_type
 
-		if(client.prefs.disabilities)
-			// Set defer to 1 if you add more crap here so it only recalculates struc_enzymes once. - N3X
-			new_character.dna.SetSEState(GLASSESBLOCK,1,0)
-			new_character.disabilities |= NEARSIGHTED
-
-		// And uncomment this, too.
-		//new_character.dna.UpdateSE()
-
-		// Do the initial caching of the player's body icons.
-		new_character.force_update_limbs()
-		new_character.update_eyes()
-		new_character.regenerate_icons()
-
 		new_character.key = key		//Manually transfer the key to log them in
 
 		return new_character
@@ -443,12 +433,12 @@
 		chosen_species = all_species[client.prefs.species]
 
 	if(!chosen_species)
-		return "Human"
+		return SPECIES_HUMAN
 
 	if(is_species_whitelisted(chosen_species) || has_admin_rights())
 		return chosen_species.name
 
-	return "Human"
+	return SPECIES_HUMAN
 
 /mob/new_player/get_gender()
 	if(!client || !client.prefs) ..()

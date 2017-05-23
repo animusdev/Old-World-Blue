@@ -24,7 +24,7 @@
 			qdel(M)
 		for(var/obj/O in orange(1,src))
 			qdel(O)
-		for(var/turf/simulated/ST in orange(1,src))
+		for(var/turf/simulated/ST in RANGE_TURFS(1,src))
 			ST.ChangeTurf(/turf/space)
 
 		sleep(6)

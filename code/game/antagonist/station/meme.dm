@@ -1,6 +1,5 @@
 /datum/antagonist/meme
-	id = MODE_MEME
-	role_type = BE_MEME
+	id = ROLE_MEME
 	role_text = "Meme"
 	role_text_plural = "Meme"
 	bantype = "meme"

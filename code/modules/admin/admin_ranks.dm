@@ -114,7 +114,8 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 		while(query.NextRow())
 			var/ckey = query.item[1]
 			var/rank = query.item[2]
-			if(rank == "Removed")	continue	//This person was de-adminned. They are only in the admin list for archive purposes.
+			if(rank == "Removed")
+				continue	//This person was de-adminned. They are only in the admin list for archive purposes.
 
 			var/rights = query.item[3]
 			if(istext(rights))	rights = text2num(rights)
@@ -122,6 +123,7 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 
 			//find the client for a ckey if they are connected and associate them with the new admin datum
 			D.associate(directory[ckey])
+
 		if(!admin_datums)
 			error("The database query in load_admins() resulted in no admins being added to the list. Reverting to legacy system.")
 			log_misc("The database query in load_admins() resulted in no admins being added to the list. Reverting to legacy system.")

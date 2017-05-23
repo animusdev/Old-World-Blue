@@ -24,10 +24,7 @@
 /obj/item/clothing/clean_blood()
 	..()
 	gunshot_residue = null
-	if(istype(loc, /mob))
-		var/mob/M = loc
-		M.update_icon = 1
-		M.update_icons()
+	update_clothing_icon()
 
 /obj/item/clothing/New()
 	..()
@@ -73,8 +70,8 @@
 
 	//Set species_restricted list
 	switch(target_species)
-		if("Human", "Skrell")	//humanoid bodytypes
-			species_restricted = list("Human", "Skrell") //skrell/humans can wear each other's suits
+		if(SPECIES_HUMAN, SPECIES_SKRELL)	//humanoid bodytypes
+			species_restricted = list(SPECIES_HUMAN, SPECIES_SKRELL) //skrell/humans can wear each other's suits
 		else
 			species_restricted = list(target_species)
 
@@ -95,13 +92,13 @@
 
 	//Set species_restricted list
 	switch(target_species)
-		if("Skrell")
-			species_restricted = list("Human", "Skrell") //skrell helmets fit humans too
+		if(SPECIES_SKRELL)
+			species_restricted = list(SPECIES_HUMAN, SPECIES_SKRELL) //skrell helmets fit humans too
 
 		else
 			species_restricted = list(target_species)
 
-	if(target_species == "Vox")
+	if(target_species == SPECIES_VOX)
 		flags_inv &= ~BLOCKHAIR
 		flags_inv &= ~BLOCKHEADHAIR
 	else
@@ -125,7 +122,7 @@
 // Ears: headsets, earmuffs and tiny objects
 /obj/item/clothing/ears
 	name = "ears"
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	throwforce = 2
 	slot_flags = SLOT_EARS
 
@@ -140,7 +137,7 @@
 /obj/item/clothing/gloves
 	name = "gloves"
 	gender = PLURAL //Carn: for grammarically correct text-parsing
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	item_state = null
 	icon = 'icons/inv_slots/gloves/icon.dmi'
 	siemens_coefficient = 0.75
@@ -151,7 +148,7 @@
 	body_parts_covered = HANDS
 	slot_flags = SLOT_GLOVES
 	attack_verb = list("challenged")
-	species_restricted = list("exclude","Unathi","Tajara")
+	species_restricted = list("exclude",SPECIES_UNATHI,SPECIES_TAJARA)
 
 /obj/item/clothing/gloves/update_clothing_icon()
 	if (ismob(src.loc))
@@ -185,8 +182,8 @@
 	name = "fingerless [name]"
 	desc = "[desc]<br>They have had the fingertips cut off of them."
 	if("exclude" in species_restricted)
-		species_restricted -= "Unathi"
-		species_restricted -= "Tajara"
+		species_restricted -= SPECIES_UNATHI
+		species_restricted -= SPECIES_TAJARA
 	return
 
 
@@ -201,7 +198,7 @@
 	icon = 'icons/inv_slots/hats/icon.dmi'
 	body_parts_covered = HEAD
 	slot_flags = SLOT_HEAD
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 
 	var/light_overlay = "helmet_light"
 	var/light_applied
@@ -271,6 +268,13 @@
 		var/mob/M = src.loc
 		M.update_inv_wear_mask()
 
+/obj/item/clothing/mask/on_mob_description(mob/living/carbon/human/H, datum/gender/T, slot, slot_name)
+	if(slot == slot_wear_mask)
+		slot_name = "neck"
+		if(body_parts_covered&FACE)
+			slot_name = "face"
+	return ..(H, T, slot, slot_name)
+
 /obj/item/clothing/mask/proc/filter_air(datum/gas_mixture/air)
 	return
 
@@ -288,7 +292,7 @@
 	permeability_coefficient = 0.50
 	force = 2
 	var/overshoes = 0
-	species_restricted = list("exclude","Unathi","Tajara")
+	species_restricted = list("exclude",SPECIES_UNATHI,SPECIES_TAJARA)
 
 /obj/item/clothing/shoes/proc/handle_movement(var/turf/walking, var/running)
 	return
@@ -311,7 +315,7 @@
 	var/blood_overlay_type = "suit"
 	siemens_coefficient = 0.9
 	center_of_mass = null
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/clothing/suit/update_clothing_icon()
 	if (ismob(src.loc))
@@ -333,8 +337,8 @@
 	permeability_coefficient = 0.90
 	slot_flags = SLOT_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	w_class = ITEM_SIZE_NORMAL
 	center_of_mass = null
-	w_class = 3
 	var/has_sensor = 1 //For the crew computer 2 = unable to change mode
 	var/sensor_mode = 0
 		/*
@@ -357,6 +361,12 @@
 
 /obj/item/clothing/under/equipped(mob/user, slot)
 	update_status()
+
+/obj/item/clothing/under/on_mob_description(mob/living/carbon/human/H, datum/gender/T, slot)
+	var/msg = ..()
+	if(slot == slot_w_uniform && accessories.len)
+		msg += " Attached to it is [lowertext(english_list(accessories))]."
+	return msg
 
 /obj/item/clothing/under/proc/update_status()
 	if(!ishuman(loc)) return

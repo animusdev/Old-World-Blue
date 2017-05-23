@@ -468,6 +468,27 @@
 		OCCUPANT = null //Testing this as a backup sanity test
 	return
 
+/obj/machinery/suit_storage_unit/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
+	if(!isopen)
+		user << SPAN_WARN("The unit's doors are shut.")
+		return
+	if(!ispowered || isbroken)
+		user << SPAN_WARN("The unit is not operational.")
+		return
+	if(OCCUPANT || HELMET || SUIT) //Unit needs to be absolutely empty
+		user << SPAN_WARN("The unit's storage area is too cluttered.")
+		return
+	visible_message("[user] starts putting [target] into the Suit Storage Unit.")
+	if(do_after(user, 20, src) && Adjacent(target))
+		target.reset_view(src)
+		target.forceMove(src)
+		OCCUPANT = target
+		isopen = 0 //close ittt
+
+		add_fingerprint(user)
+		updateUsrDialog()
+		update_icon()
+		return TRUE
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I as obj, mob/user as mob)
 	if(!ispowered)
@@ -477,38 +498,6 @@
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		user << text("<font color='blue'>You [] the unit's maintenance panel.</font>",(panelopen ? "open up" : "close"))
 		updateUsrDialog()
-		return
-	if(istype(I, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = I
-		if( !(ismob(G.affecting) && get_dist(src,G.affecting)<2) )
-			return
-		if(!isopen)
-			usr << "<font color='red'>The unit's doors are shut.</font>"
-			return
-		if(!ispowered || isbroken)
-			usr << "<font color='red'>The unit is not operational.</font>"
-			return
-		if((OCCUPANT) || (HELMET) || (SUIT)) //Unit needs to be absolutely empty
-			user << "<font color='red'>The unit's storage area is too cluttered.</font>"
-			return
-		visible_message("[user] starts putting [G.affecting.name] into the Suit Storage Unit.", 3)
-		if(do_after(user, 20))
-			if(!G || !G.affecting) return //derpcheck
-			var/mob/M = G.affecting
-			if(M.client)
-				M.client.perspective = EYE_PERSPECTIVE
-				M.client.eye = src
-			M.loc = src
-			OCCUPANT = M
-			isopen = 0 //close ittt
-
-			//for(var/obj/O in src)
-			//	O.loc = src.loc
-			add_fingerprint(user)
-			qdel(G)
-			updateUsrDialog()
-			update_icon()
-			return
 		return
 	if(istype(I,/obj/item/clothing/suit/space))
 		if(!isopen)
@@ -586,7 +575,7 @@
 	//Departments that the cycler can paint suits to look like.
 	var/list/departments = list("Engineering","Mining","Medical","Security","Atmos")
 	//Species that the suits can be configured to fit.
-	var/list/species = list("Human","Skrell","Unathi","Tajara")
+	var/list/species = list(SPECIES_HUMAN,SPECIES_SKRELL,SPECIES_UNATHI,SPECIES_TAJARA)
 
 	var/target_department
 	var/target_species
@@ -615,39 +604,60 @@
 	model_text = "Engineering"
 	req_access = list(access_construction)
 	departments = list("Engineering","Atmos")
-	species = list("Human","Tajara","Skrell","Unathi") //Add Unathi when sprites exist for their suits.
+	species = list(SPECIES_HUMAN,SPECIES_TAJARA,SPECIES_SKRELL,SPECIES_UNATHI) //Add Unathi when sprites exist for their suits.
 
 /obj/machinery/suit_cycler/mining
 	name = "Mining suit cycler"
 	model_text = "Mining"
 	req_access = list(access_mining)
 	departments = list("Mining")
-	species = list("Human","Tajara","Skrell","Unathi", "Vox")
+	species = list(SPECIES_HUMAN,SPECIES_TAJARA,SPECIES_SKRELL,SPECIES_UNATHI, SPECIES_VOX)
 
 /obj/machinery/suit_cycler/security
 	name = "Security suit cycler"
 	model_text = "Security"
 	req_access = list(access_security)
 	departments = list("Security")
-	species = list("Human","Tajara","Skrell","Unathi")
+	species = list(SPECIES_HUMAN,SPECIES_TAJARA,SPECIES_SKRELL,SPECIES_UNATHI)
 
 /obj/machinery/suit_cycler/medical
 	name = "Medical suit cycler"
 	model_text = "Medical"
 	req_access = list(access_medical)
 	departments = list("Medical")
-	species = list("Human","Tajara","Skrell","Unathi")
+	species = list(SPECIES_HUMAN,SPECIES_TAJARA,SPECIES_SKRELL,SPECIES_UNATHI)
 
 /obj/machinery/suit_cycler/syndicate
 	name = "Nonstandard suit cycler"
 	model_text = "Nonstandard"
 	req_access = list(access_syndicate)
 	departments = list("Mercenary")
-	species = list("Human","Tajara","Skrell","Unathi", "Vox")
+	species = list(SPECIES_HUMAN,SPECIES_TAJARA,SPECIES_SKRELL,SPECIES_UNATHI, SPECIES_VOX)
 	can_repair = 1
 
 /obj/machinery/suit_cycler/attack_ai(mob/user as mob)
 	return attack_hand(user)
+
+/obj/machinery/suit_cycler/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
+	if(locked)
+		user << SPAN_DANG("The suit cycler is locked.")
+		return
+
+	if(contents.len)
+		user << SPAN_DANG("There is no room inside the cycler for [target].")
+		return
+
+	visible_message(SPAN_NOTE("[user] starts putting [target] into the suit cycler."))
+
+	if(do_after(user, 20) && Adjacent(target))
+		target.reset_view(src)
+		target.forceMove(src)
+		occupant = target
+
+		add_fingerprint(user)
+		updateUsrDialog()
+		return TRUE
+
 
 /obj/machinery/suit_cycler/attackby(obj/item/I as obj, mob/user as mob)
 
@@ -660,38 +670,6 @@
 		if(panel_open)
 			attack_hand(user)
 		return
-	//Other interface stuff.
-	if(istype(I, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = I
-
-		if(!(ismob(G.affecting) && get_dist(src,G.affecting)<2))
-			return
-
-		if(locked)
-			user << "<span class='danger'>The suit cycler is locked.</span>"
-			return
-
-		if(contents.len > 0)
-			user << "<span class='danger'>There is no room inside the cycler for [G.affecting.name].</span>"
-			return
-
-		visible_message("<span class='notice'>[user] starts putting [G.affecting.name] into the suit cycler.</span>", 3)
-
-		if(do_after(user, 20))
-			if(!G || !G.affecting) return
-			var/mob/M = G.affecting
-			if(M.client)
-				M.client.perspective = EYE_PERSPECTIVE
-				M.client.eye = src
-			M.loc = src
-			occupant = M
-
-			add_fingerprint(user)
-			qdel(G)
-
-			updateUsrDialog()
-
-			return
 	else if(istype(I,/obj/item/weapon/screwdriver))
 
 		panel_open = !panel_open
@@ -745,7 +723,7 @@
 	//Clear the access reqs, disable the safeties, and open up all paintjobs.
 	user << "<span class='danger'>You run the sequencer across the interface, corrupting the operating protocols.</span>"
 	departments = list("Engineering","Mining","Medical","Security","Atmos","HAZMAT","Construction","Biohazard","Crowd Control","Emergency Medical Response","^%###^%$")
-	species = list("Human","Tajara","Skrell","Unathi", "Teshari")
+	species = list(SPECIES_HUMAN,SPECIES_TAJARA,SPECIES_SKRELL,SPECIES_UNATHI)
 
 	emagged = 1
 	safeties = 0

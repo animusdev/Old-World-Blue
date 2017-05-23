@@ -6,12 +6,12 @@
 //	show_messages = 1
 
 	var/slots = 3
-	var/obj/item/weapon/storage/internal/hold
-	w_class = 3.0
+	var/obj/item/storage/internal/hold
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/clothing/accessory/storage/New()
 	..()
-	hold = new/obj/item/weapon/storage/internal(src)
+	hold = new/obj/item/storage/internal(src)
 	hold.max_storage_space = slots * 2
 	hold.storage_slots = slots
 

@@ -30,7 +30,7 @@
 		return
 
 	var/epicentre = pick(possibleEpicentres)
-	for(var/obj/machinery/power/apc/apc in range(epicentre,apcSelectionRange))
+	for(var/obj/machinery/power/apc/apc in range(apcSelectionRange, epicentre))
 		if(is_valid_apc(apc))
 			apcs += apc
 			// Greatly increase the chance for APCs in maintenance areas to be selected
@@ -50,5 +50,4 @@
 	if(apc.type != /obj/machinery/power/apc)
 		return 0
 
-	var/turf/T = get_turf(apc)
-	return !apc.emagged && T && (T.z in config.player_levels)
+	return !apc.emagged && isOnPlayerLevel(apc)

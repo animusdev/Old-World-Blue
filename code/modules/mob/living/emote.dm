@@ -10,7 +10,10 @@
 	if(!message)
 		return 0
 
-	log_emote("[name]/[key] : [message]")
+	if(!usr || src == usr)
+		log_emote("[name]/[key] : [message]")
+	else
+		log_emote("[name]/[key] forced by ([key_name(usr)]) : [message]")
 	message = "<B>[src]</B> [message]"
 	. = 1
 

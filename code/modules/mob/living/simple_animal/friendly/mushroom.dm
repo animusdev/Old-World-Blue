@@ -29,7 +29,7 @@
 	set desc = "Spread your spores!"
 	set src = usr
 
-	if(stat == 2)
+	if(stat == DEAD)
 		usr << "<span class='danger'>You are dead; it is too late for that.</span>"
 		return
 
@@ -54,7 +54,7 @@
 		return
 	if(world.time < harvest_time + min_explode_time)
 		return
-	for(var/turf/simulated/target_turf in orange(1,src))
+	for(var/turf/simulated/target_turf in RANGE_TURFS(1,src))
 		if(prob(60) && !target_turf.density && src.Adjacent(target_turf))
 			new /obj/machinery/portable_atmospherics/hydroponics/soil/invisible(target_turf,seed)
 	seed.thrown_at(src,get_turf(src),1)

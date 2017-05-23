@@ -467,13 +467,13 @@ obj/structure/cable/proc/cableColor(var/colorC)
 	name = "cable coil"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil"
+	randpixel = 2
 	amount = MAXCOIL
 	max_amount = MAXCOIL
 	color = COLOR_RED
 	desc = "A coil of power cable."
 	throwforce = 10
-	w_class = 2.0
-	randpixel = 3
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 2
 	throw_range = 5
 	matter = list(DEFAULT_WALL_MATERIAL = 50, "glass" = 20)
@@ -548,9 +548,9 @@ obj/structure/cable/proc/cableColor(var/colorC)
 
 /obj/item/stack/cable_coil/proc/update_wclass()
 	if(amount == 1)
-		w_class = 1.0
+		w_class = ITEM_SIZE_TINY
 	else
-		w_class = 2.0
+		w_class = ITEM_SIZE_SMALL
 
 /obj/item/stack/cable_coil/examine(mob/user, return_dist=1)
 	.=..()

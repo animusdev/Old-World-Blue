@@ -6,5 +6,5 @@
 	required_players = 2
 	required_enemies = 3
 	end_on_antag_death = 0
-	antag_tags = list(MODE_WIZARD, MODE_CHANGELING)
+	antag_tags = list(ROLE_WIZARD, ROLE_CHANGELING)
 	require_all_templates = 1

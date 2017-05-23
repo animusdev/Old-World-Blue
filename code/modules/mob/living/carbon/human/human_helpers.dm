@@ -7,14 +7,13 @@
 // This is the 'mechanical' check for synthetic-ness, not appearance
 // Returns the company that made the synthetic
 /mob/living/carbon/human/isSynthetic()
-	if(synthetic) return synthetic //Your synthetic-ness is not going away
+	if(synthetic)
+		return synthetic //Your synthetic-ness is not going away
 	var/obj/item/organ/external/T = organs_by_name[BP_CHEST]
 	if(T && T.robotic >= ORGAN_ROBOT)
-//		src.verbs += /mob/living/carbon/human/proc/self_diagnostics
-		var/datum/robolimb/R = all_robolimbs[T.model]
-		return R ? R : basic_robolimb
-
-	return 0
+		synthetic = TRUE
+		return TRUE
+	return FALSE
 
 // Would an onlooker know this person is synthetic?
 // Based on sort of logical reasoning, 'Look at head, look at torso'
@@ -74,9 +73,8 @@
 	return (isSynthetic() ? "gives one shrill beep before falling lifeless." : species.death_message)
 
 /mob/living/carbon/human/proc/get_blood_colour()
-	var/datum/robolimb/company = isSynthetic()
-	if(company)
-		return company.blood_color
+	if(isSynthetic())
+		return SYNTH_BLOOD_COLOUR
 	else
 		return species.blood_color
 

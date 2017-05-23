@@ -39,6 +39,7 @@ var/list/organ_cache = list()
 
 /obj/item/organ/Destroy()
 	if(owner)           owner = null
+	if(parent)          parent = null
 	if(transplant_data) transplant_data.Cut()
 	if(autopsy_data)    autopsy_data.Cut()
 	if(trace_chemicals) trace_chemicals.Cut()
@@ -47,7 +48,7 @@ var/list/organ_cache = list()
 	return ..()
 
 // Move organ inside new owner and attach it.
-/obj/item/organ/proc/install(mob/living/carbon/human/H)
+/obj/item/organ/proc/install(mob/living/carbon/human/H, var/redraw_mob = 1)
 	if(!istype(H))
 		return 1
 
@@ -61,6 +62,7 @@ var/list/organ_cache = list()
 			blood_DNA = list()
 		blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
 	processing_objects -= src
+	sync_to_owner()
 
 /obj/item/organ/proc/removed(var/mob/living/user)
 	if(!istype(owner))
@@ -69,7 +71,6 @@ var/list/organ_cache = list()
 	loc = get_turf(owner)
 	processing_objects |= src
 	rejecting = null
-	status |= ORGAN_CUT_AWAY
 
 	var/datum/reagent/blood/organ_blood = locate(/datum/reagent/blood) in reagents.reagent_list
 	if(!organ_blood || !organ_blood.data["blood_DNA"])

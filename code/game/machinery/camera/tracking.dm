@@ -5,11 +5,8 @@
 /mob/living/silicon/ai/var/max_locations = 10
 /mob/living/silicon/ai/var/stored_locations[0]
 
-/proc/InvalidPlayerTurf(turf/T as turf)
-	return !(T && T.z in config.player_levels)
-
 /mob/living/silicon/ai/proc/get_camera_list()
-	if(src.stat == 2)
+	if(src.stat == DEAD)
 		return
 
 	cameranet.process_sort()
@@ -59,7 +56,7 @@
 		return
 
 	var/L = src.eyeobj.getLoc()
-	if (InvalidPlayerTurf(get_turf(L)))
+	if(!isOnPlayerLevel(L))
 		src << "<span class='warning'>Unable to store this location</span>"
 		return
 
@@ -102,7 +99,7 @@
 	var/list/cameras = list()
 
 /mob/living/silicon/ai/proc/trackable_mobs()
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		return list()
 
 	var/datum/trackable/TB = new()
@@ -133,7 +130,7 @@
 	set name = "Follow With Camera"
 	set desc = "Select who you would like to track."
 
-	if(src.stat == 2)
+	if(src.stat == DEAD)
 		src << "You can't follow [target_name] with cameras because you are dead!"
 		return
 	if(!target_name)
@@ -218,13 +215,13 @@ mob/living/proc/near_camera()
 /mob/living/proc/tracking_status()
 	// Easy checks first.
 	// Don't detect mobs on Centcom. Since the wizard den is on Centcomm, we only need this.
-	if(InvalidPlayerTurf(get_turf(src)))
+	if(!isOnPlayerLevel(src))
 		return TRACKING_TERMINATE
 	if(invisibility >= INVISIBILITY_LEVEL_ONE) //cloaked
 		return TRACKING_TERMINATE
-	if(digitalcamo)
-		return TRACKING_TERMINATE
 	if(istype(loc,/obj/effect/dummy))
+		return TRACKING_TERMINATE
+	if(digitalcamo)
 		return TRACKING_TERMINATE
 
 	 // Now, are they viewable by a camera? (This is last because it's the most intensive check)
@@ -252,8 +249,7 @@ mob/living/proc/near_camera()
 		return
 
 	if(. == TRACKING_NO_COVERAGE)
-		var/turf/T = get_turf(src)
-		if(T && (T.z in config.station_levels) && hassensorlevel(src, SUIT_SENSOR_TRACKING))
+		if(isOnStationLevel(src) && hassensorlevel(src, SUIT_SENSOR_TRACKING))
 			return TRACKING_POSSIBLE
 
 mob/living/proc/tracking_initiated()

@@ -868,16 +868,16 @@
 	vend_delay = 34
 	icon_state = "cigs"
 	products = list(
-		/obj/item/weapon/storage/fancy/cigarettes = 10,
-		/obj/item/weapon/storage/box/matches = 10,
+		/obj/item/storage/fancy/cigarettes = 10,
+		/obj/item/storage/box/matches = 10,
 		/obj/item/weapon/flame/lighter/random = 4,
 	)
 	contraband = list(/obj/item/weapon/flame/lighter/zippo = 4)
-	premium = list(/obj/item/weapon/storage/fancy/cigar = 5)
+	premium = list(/obj/item/storage/fancy/cigar = 5)
 	prices = list(
-		/obj/item/weapon/storage/fancy/cigarettes = 150,
+		/obj/item/storage/fancy/cigarettes = 150,
 		/obj/item/weapon/flame/lighter/random = 20,
-		/obj/item/weapon/storage/box/matches = 10,
+		/obj/item/storage/box/matches = 10,
 	)
 
 /obj/machinery/vending/cigarette/wallmounted
@@ -997,7 +997,7 @@
 	req_access = list(access_security)
 	products = list(
 		/obj/item/weapon/reagent_containers/food/snacks/donut/normal = 12,
-		/obj/item/weapon/storage/box/evidence = 6,
+		/obj/item/storage/box/evidence = 6,
 		/obj/item/weapon/grenade/flashbang = 4,
 		/obj/item/device/flashlight/seclite=7,
 		/obj/item/weapon/handcuffs = 8,
@@ -1005,7 +1005,7 @@
 	)
 	contraband = list(
 		/obj/item/clothing/glasses/sunglasses = 2,
-		/obj/item/weapon/storage/box/donut = 2
+		/obj/item/storage/box/donut = 2
 	)
 
 /obj/machinery/vending/hydronutrients
@@ -1030,7 +1030,7 @@
 		/obj/item/weapon/reagent_containers/glass/fertilizer/ez = 35,
 		/obj/item/weapon/reagent_containers/glass/fertilizer/rh = 15,
 		/obj/item/weapon/reagent_containers/syringe = 5,
-		/obj/item/weapon/storage/bag/plants = 5,
+		/obj/item/storage/bag/plants = 5,
 		/obj/item/weapon/plantspray/pests = 20,
 	)
 	premium = list(
@@ -1240,7 +1240,7 @@
 		/obj/item/device/multitool = 4,
 	)
 	contraband = list(/obj/item/weapon/cell/potato = 3)
-	premium = list(/obj/item/weapon/storage/belt/utility = 3)
+	premium = list(/obj/item/storage/belt/utility = 3)
 
 //This one's from bay12
 /obj/machinery/vending/engineering
@@ -1257,7 +1257,7 @@
 		/obj/item/weapon/stock_parts/manipulator = 5,
 		/obj/item/weapon/stock_parts/matter_bin = 5,
 		/obj/item/clothing/under/rank/engineer = 4,
-		/obj/item/weapon/storage/belt/utility = 4,
+		/obj/item/storage/belt/utility = 4,
 		/obj/item/stack/cable_coil/heavyduty = 8,
 		/obj/item/device/flashlight/heavy = 5,
 		/obj/item/clothing/glasses/meson = 4,

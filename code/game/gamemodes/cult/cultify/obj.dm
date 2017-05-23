@@ -25,11 +25,11 @@
 	new /obj/item/weapon/melee/cultblade(loc)
 	..()
 
-/obj/item/weapon/storage/backpack/cultify()
-	new /obj/item/weapon/storage/backpack/cultpack(loc)
+/obj/item/storage/backpack/cultify()
+	new /obj/item/storage/backpack/cultpack(loc)
 	..()
 
-/obj/item/weapon/storage/backpack/cultpack/cultify()
+/obj/item/storage/backpack/cultpack/cultify()
 	return
 
 /obj/machinery/cultify()

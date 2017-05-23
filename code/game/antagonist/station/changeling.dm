@@ -1,6 +1,5 @@
 /datum/antagonist/changeling
-	id = MODE_CHANGELING
-	role_type = BE_CHANGELING
+	id = ROLE_CHANGELING
 	role_text = "Changeling"
 	role_text_plural = "Changelings"
 	bantype = "changeling"
@@ -13,7 +12,8 @@
 
 /datum/antagonist/changeling/can_become_antag(var/datum/mind/player, var/ignore_role)
 	if(player.current && ishuman(player.current))
-		if(player.current.isSynthetic()) return 0
+		if(player.current.isSynthetic())
+			return FALSE
 	return ..()
 
 /datum/antagonist/changeling/get_special_objective_text(var/datum/mind/player)

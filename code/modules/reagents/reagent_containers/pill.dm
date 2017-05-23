@@ -7,9 +7,9 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = null
 	item_state = "pill"
+	randpixel = 7
 	possible_transfer_amounts = null
-	w_class = 1
-	randpixel = 8
+	w_class = ITEM_SIZE_TINY
 	slot_flags = SLOT_EARS
 	volume = 60
 	center_of_mass = list("x"=16, "y"=15)

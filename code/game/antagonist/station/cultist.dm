@@ -7,13 +7,12 @@ var/datum/antagonist/cultist/cult
 		return 1
 
 /datum/antagonist/cultist
-	id = MODE_CULTIST
+	id = ROLE_CULTIST
 	role_text = "Cultist"
 	role_text_plural = "Cultists"
 	bantype = "cultist"
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Internal Affairs Agent", "Head of Security", "Captain")
 	protected_jobs = list("Security Officer", "Warden", "Detective")
-	role_type = BE_CULTIST
 	feedback_tag = "cult_objective"
 	antag_indicator = "cult"
 	welcome_text = "You have a talisman in your possession; one that will help you start the cult on this station. Use it well and remember - there are others."
@@ -70,7 +69,7 @@ var/datum/antagonist/cultist/cult
 		player.equip_to_slot(T, slot)
 		if(T.loc == player)
 			break
-	var/obj/item/weapon/storage/S = locate() in player.contents
+	var/obj/item/storage/S = locate() in player.contents
 	if(S && istype(S))
 		T.loc = S
 
@@ -111,10 +110,10 @@ var/datum/antagonist/cultist/cult
 
 /datum/antagonist/cultist/can_become_antag(var/datum/mind/player)
 	if(!..())
-		return 0
+		return FALSE
 	if(player.current.isSynthetic())
-		return 0
+		return FALSE
 	for(var/obj/item/weapon/implant/loyalty/L in player.current)
-		if(L && (L.imp_in == player.current))
-			return 0
-	return 1
+		if(L.imp_in == player.current)
+			return FALSE
+	return TRUE

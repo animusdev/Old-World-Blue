@@ -6,5 +6,5 @@
 	required_players = 8
 	required_enemies = 2
 	end_on_antag_death = 0
-	antag_tags = list(MODE_WIZARD, MODE_NINJA)
+	antag_tags = list(ROLE_WIZARD, ROLE_NINJA)
 	require_all_templates = 1

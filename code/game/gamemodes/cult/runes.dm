@@ -1060,7 +1060,7 @@ var/list/sacrificed = list()
 					if(iscarbon(L))
 						var/mob/living/carbon/C = L
 						flick("e_flash", C.flash)
-						if(C.stuttering < 1 && (!(HULK in C.mutations)))
+						if(C.stuttering < 1)
 							C.stuttering = 1
 						C.Weaken(1)
 						C.Stun(1)
@@ -1089,8 +1089,7 @@ var/list/sacrificed = list()
 					else if(iscarbon(T))
 						var/mob/living/carbon/C = T
 						flick("e_flash", C.flash)
-						if (!(HULK in C.mutations))
-							C.silent += 15
+						C.silent += 15
 						C.Weaken(25)
 						C.Stun(25)
 						admin_attack_log(usr, C, "Used a stun rune.", "Was victim of a stun rune.", "used a stun rune on")
@@ -1110,7 +1109,7 @@ var/list/sacrificed = list()
 			user.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), slot_head)
 			user.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), slot_wear_suit)
 			user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), slot_shoes)
-			user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
+			user.equip_to_slot_or_del(new /obj/item/storage/backpack/cultpack(user), slot_back)
 			//the above update their overlay icons cache but do not call update_icons()
 			//the below calls update_icons() at the end, which will update overlay icons by using the (now updated) cache
 			user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))	//put in hands or on floor

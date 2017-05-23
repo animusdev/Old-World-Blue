@@ -1,8 +1,7 @@
 var/datum/antagonist/raider/raiders
 
 /datum/antagonist/raider
-	id = MODE_RAIDER
-	role_type = BE_RAIDER
+	id = ROLE_RAIDER
 	role_text = "Raider"
 	role_text_plural = "Raiders"
 	bantype = "raider"
@@ -104,7 +103,7 @@ var/datum/antagonist/raider/raiders
 	raiders = src
 
 /datum/antagonist/raider/update_access(var/mob/living/player)
-	for(var/obj/item/weapon/storage/wallet/W in player.contents)
+	for(var/obj/item/storage/wallet/W in player.contents)
 		for(var/obj/item/weapon/card/id/id in W.contents)
 			id.name = "[player.real_name]'s Passport"
 			id.registered_name = player.real_name
@@ -198,7 +197,7 @@ var/datum/antagonist/raider/raiders
 	if(!..())
 		return 0
 
-	if(player.species && player.species.get_bodytype() == "Vox")
+	if(player.species && player.species.get_bodytype() == SPECIES_VOX)
 		equip_vox(player)
 	else
 		var/new_shoes =   pick(raider_shoes)
@@ -223,7 +222,7 @@ var/datum/antagonist/raider/raiders
 	var/obj/item/weapon/card/id/id = create_id("Visitor", player, equip = 0)
 	id.name = "[player.real_name]'s Passport"
 	id.assignment = "Visitor"
-	var/obj/item/weapon/storage/wallet/W = new(player)
+	var/obj/item/storage/wallet/W = new(player)
 	W.handle_item_insertion(id)
 	player.equip_to_slot_or_del(W, slot_wear_id)
 	spawn_money(rand(50,150)*10,W)
@@ -278,7 +277,7 @@ var/datum/antagonist/raider/raiders
 			if(prob(20)) //don't want to give them too much
 				player.equip_to_slot_or_del(new bullet_thrower.magazine_type(player), slot_r_store)
 		else if(bullet_thrower.ammo_type)
-			var/obj/item/weapon/storage/box/ammobox = new(get_turf(player.loc))
+			var/obj/item/storage/box/ammobox = new(get_turf(player.loc))
 			for(var/i in 1 to rand(3,5) + rand(0,2))
 				new bullet_thrower.ammo_type(ammobox)
 			player.put_in_any_hand_if_possible(ammobox)
@@ -289,7 +288,7 @@ var/datum/antagonist/raider/raiders
 			/obj/item/weapon/grenade/smokebomb,
 			/obj/item/weapon/grenade/flashbang
 			)
-		var/obj/item/weapon/storage/box/ammobox = new(get_turf(player.loc))
+		var/obj/item/storage/box/ammobox = new(get_turf(player.loc))
 		for(var/i in 1 to 7)
 			var/grenade_type = pick(grenades)
 			new grenade_type(ammobox)

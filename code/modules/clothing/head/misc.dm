@@ -252,6 +252,7 @@
 	icon_state = "xenos"
 	item_state = "xenos_helm"
 	desc = "A helmet made out of chitinous alien hide."
+	w_class = ITEM_SIZE_NORMAL
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|BLOCKHAIR
 	siemens_coefficient = 2.0
 	body_parts_covered = HEAD|FACE|EYES

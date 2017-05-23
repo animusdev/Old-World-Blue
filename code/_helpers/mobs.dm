@@ -1,21 +1,19 @@
-proc/random_hair_style(gender, species = "Human")
-	var/h_style = "Bald"
-	h_style = pick(get_hair_styles_list(species, gender))
+proc/random_hair_style(gender, species = SPECIES_HUMAN)
+	var/h_style = pick(get_hair_styles_list(species, gender))
 	return h_style
 
-proc/random_facial_hair_style(gender, species = "Human")
-	var/f_style = "Shaved"
-	f_style = pick(get_facial_styles_list(species, gender))
+proc/random_facial_hair_style(gender, species = SPECIES_HUMAN)
+	var/f_style = pick(get_facial_styles_list(species, gender))
 	return f_style
 
-proc/sanitize_name(name, species = "Human")
+proc/sanitize_name(name, species = SPECIES_HUMAN)
 	var/datum/species/current_species
 	if(species)
 		current_species = all_species[species]
 
 	return current_species ? current_species.sanitize_name(name) : sanitizeName(name)
 
-proc/random_name(gender, species = "Human")
+proc/random_name(gender, species = SPECIES_HUMAN)
 
 	var/datum/species/current_species
 	if(species)

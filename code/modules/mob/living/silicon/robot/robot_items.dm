@@ -55,8 +55,6 @@
 	if(response == "Sync")
 		var/success = 0
 		for(var/obj/machinery/r_n_d/server/S in machines)
-			if(S.disabled)
-				continue
 			for(var/datum/tech/T in files.known_tech) //Uploading
 				S.files.AddTech2Known(T)
 			for(var/datum/tech/T in S.files.known_tech) //Downloading
@@ -245,9 +243,9 @@
 		return
 
 	//n_name = copytext(n_name, 1, 32)
-	if(( get_dist(user,paper) <= 1  && user.stat == 0))
+	if(get_dist(user,paper) <= 1  && !user.stat)
+		add_fingerprint(user)
 		paper.name = "paper[(n_name ? text("- '[n_name]'") : null)]"
-	add_fingerprint(user)
 	return
 
 //TODO: Add prewritten forms to dispense when you work out a good way to store the strings.
@@ -305,7 +303,7 @@
 	desc = "Small device which allows rapid deployment and removal of inflatables."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "inf_box"
-	w_class = 3
+	w_class = ITEM_SIZE_LARGE
 
 	// By default stores up to 10 walls and 5 doors. May be changed.
 	var/stored_walls = 10

@@ -24,7 +24,7 @@
 	new /obj/item/clothing/under/sl_suit(src)
 	new /obj/item/clothing/under/rank/bartender(src)
 	new /obj/item/clothing/under/rank/bartender(src)
-	new /obj/item/clothing/under/dress/dress_saloon(src)
+	new /obj/item/clothing/under/dress/saloon(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/shoes/black(src)
 
@@ -43,8 +43,8 @@
 	new /obj/item/clothing/under/waiter(src)
 	new /obj/item/device/radio/headset/service(src)
 	new /obj/item/device/radio/headset/service(src)
-	new /obj/item/weapon/storage/box/mousetraps(src)
-	new /obj/item/weapon/storage/box/mousetraps(src)
+	new /obj/item/storage/box/mousetraps(src)
+	new /obj/item/storage/box/mousetraps(src)
 	new /obj/item/clothing/under/rank/chef(src)
 	new /obj/item/clothing/head/chefhat(src)
 
@@ -70,8 +70,8 @@
 	new /obj/item/weapon/caution(src)
 	new /obj/item/weapon/caution(src)
 	new /obj/item/device/lightreplacer(src)
-	new /obj/item/weapon/storage/bag/trash(src)
-	new /obj/item/weapon/storage/belt/janitor(src)
+	new /obj/item/storage/bag/trash(src)
+	new /obj/item/storage/belt/janitor(src)
 	new /obj/item/clothing/shoes/galoshes(src)
 
 /*

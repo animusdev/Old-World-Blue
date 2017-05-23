@@ -128,7 +128,7 @@
 		for(var/mob/observer/dead/G in player_list)
 			if(G)
 				if(G.client)
-					if(G.client.prefs.be_special & BE_ALIEN)
+					if(ROLE_ALIEN in G.client.prefs.special_toggles)
 						candidates += G.key
 
 		// To stop clientless larva, we will check that our host has a client
@@ -168,7 +168,7 @@
 		affected_mob.stat = DEAD
 		src.protect = 1
 
-		for(var/mob/L in range(src, 10))
+		for(var/mob/L in range(10,src))
 			L << "\red <b>[new_xeno] crawls out of [affected_mob]!</b>"
 		affected_mob.overlays += image('icons/mob/alien.dmi', loc = affected_mob, icon_state = "bursted_stand")
 	//	if(gib_on_success)

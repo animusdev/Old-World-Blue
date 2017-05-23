@@ -100,7 +100,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "syndballoon"
 	item_state = "syndballoon"
-	w_class = 4.0
+	w_class = ITEM_SIZE_HUGE
 
 /obj/item/toy/nanotrasenballoon
 	name = "criminal balloon"
@@ -112,7 +112,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "ntballoon"
 	item_state = "ntballoon"
-	w_class = 4.0
+	w_class = ITEM_SIZE_HUGE
 
 /*
  * Fake telebeacon
@@ -144,7 +144,7 @@
 	sprite_group = SPRITE_GUNS
 	flags =  CONDUCT
 	slot_flags = SLOT_BELT|SLOT_HOLSTER
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 
 	matter = list("glass" = 10,DEFAULT_WALL_MATERIAL = 10)
 
@@ -197,7 +197,7 @@
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "357-7"
 	flags = CONDUCT
-	w_class = 1.0
+	w_class = ITEM_SIZE_SMALL
 
 	matter = list(DEFAULT_WALL_MATERIAL = 10,"glass" = 10)
 
@@ -219,7 +219,7 @@
 	icon_state = "crossbow"
 	item_state = "crossbow"
 	sprite_group = SPRITE_GUNS
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	attack_verb = list("attacked", "struck", "hit")
 	var/bullets = 5
 
@@ -321,7 +321,7 @@
 	desc = "It's nerf or nothing! Ages 8 and up."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "foamdart"
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	slot_flags = SLOT_EARS|SLOT_BELT
 
 /obj/effect/foam_dart_dummy
@@ -341,30 +341,25 @@
 	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "sword0"
-	item_state = "sword0"
 	var/active = 0.0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
+	sprite_group = SPRITE_MELEE
 	attack_verb = list("attacked", "struck", "hit")
 
 	attack_self(mob/user as mob)
-		src.active = !( src.active )
+		src.active = !src.active
 		if (src.active)
 			user << "\blue You extend the plastic blade with a quick flick of your wrist."
 			playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
 			src.icon_state = "swordblue"
-			src.item_state = "swordblue"
-			src.w_class = 4
+			src.w_class = ITEM_SIZE_HUGE
 		else
 			user << "\blue You push the plastic blade back down into the handle."
 			playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
 			src.icon_state = "sword0"
-			src.item_state = "sword0"
-			src.w_class = 2
+			src.w_class = ITEM_SIZE_TINY
 
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			H.update_inv_l_hand()
-			H.update_inv_r_hand()
+		update_held_icon()
 
 		src.add_fingerprint(user)
 		return
@@ -379,7 +374,7 @@
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 5
 	throwforce = 5
-	w_class = 3
+	w_class = ITEM_SIZE_LARGE
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
 
 /*
@@ -390,7 +385,7 @@
 	desc = "Wow!"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "snappop"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 	throw_impact(atom/hit_atom)
 		..()
@@ -439,7 +434,7 @@
 
 /obj/item/toy/waterflower/afterattack(atom/A as mob|obj, mob/user as mob)
 
-	if (istype(A, /obj/item/weapon/storage/backpack ))
+	if (istype(A, /obj/item/storage/backpack ))
 		return
 
 	else if (locate (/obj/structure/table, src.loc))
@@ -489,13 +484,13 @@
  * Bosun's whistle
  */
 
- /obj/item/toy/bosunwhistle
- 	name = "bosun's whistle"
- 	desc = "A genuine Admiral Krush Bosun's Whistle, for the aspiring ship's captain! Suitable for ages 8 and up, do not swallow."
- 	icon = 'icons/obj/toy.dmi'
- 	icon_state = "bosunwhistle"
- 	var/cooldown = 0
-	w_class = 1
+/obj/item/toy/bosunwhistle
+	name = "bosun's whistle"
+	desc = "A genuine Admiral Krush Bosun's Whistle, for the aspiring ship's captain! Suitable for ages 8 and up, do not swallow."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "bosunwhistle"
+	var/cooldown = 0
+	w_class = ITEM_SIZE_TINY
 	slot_flags = SLOT_EARS
 
 /obj/item/toy/bosunwhistle/attack_self(mob/user as mob)
@@ -792,56 +787,46 @@
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 5
 	throwforce = 5
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
 
-/obj/item/toy/therapy_red
+/obj/item/toy/therapy
 	name = "red therapy doll"
 	desc = "A toy for therapeutic and recreational purposes. This one is red."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "therapyred"
 	item_state = "egg4" // It's the red egg in items_left/righthand
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
-/obj/item/toy/therapy_purple
+/obj/item/toy/therapy/purple
 	name = "purple therapy doll"
 	desc = "A toy for therapeutic and recreational purposes. This one is purple."
-	icon = 'icons/obj/weapons.dmi'
 	icon_state = "therapypurple"
 	item_state = "egg1" // It's the magenta egg in items_left/righthand
-	w_class = 1
 
-/obj/item/toy/therapy_blue
+/obj/item/toy/therapy/blue
 	name = "blue therapy doll"
 	desc = "A toy for therapeutic and recreational purposes. This one is blue."
-	icon = 'icons/obj/weapons.dmi'
 	icon_state = "therapyblue"
 	item_state = "egg2" // It's the blue egg in items_left/righthand
-	w_class = 1
 
-/obj/item/toy/therapy_yellow
+/obj/item/toy/therapy/yellow
 	name = "yellow therapy doll"
 	desc = "A toy for therapeutic and recreational purposes. This one is yellow."
-	icon = 'icons/obj/weapons.dmi'
 	icon_state = "therapyyellow"
 	item_state = "egg5" // It's the yellow egg in items_left/righthand
-	w_class = 1
 
-/obj/item/toy/therapy_orange
+/obj/item/toy/therapy/orange
 	name = "orange therapy doll"
 	desc = "A toy for therapeutic and recreational purposes. This one is orange."
-	icon = 'icons/obj/weapons.dmi'
 	icon_state = "therapyorange"
 	item_state = "egg4" // It's the red one again, lacking an orange item_state and making a new one is pointless
-	w_class = 1
 
-/obj/item/toy/therapy_green
+/obj/item/toy/therapy/green
 	name = "green therapy doll"
 	desc = "A toy for therapeutic and recreational purposes. This one is green."
-	icon = 'icons/obj/weapons.dmi'
 	icon_state = "therapygreen"
 	item_state = "egg3" // It's the green egg in items_left/righthand
-	w_class = 1
 
 /*
  * Plushies
@@ -955,7 +940,38 @@
 /obj/item/toy/plushie/kitten
 	name = "kitten plush"
 	desc = "A plushie of a cute kitten! Watch as it purrs it's way right into your heart."
-	icon_state = "kittenplushie"
+	icon_state = "cat_black"
+
+/obj/item/toy/plushie/kitten/New()
+	icon_state = pick(list(
+		"cat_black",
+		"cat_grey",
+		"cat_white",
+		"cat_orange",
+		"cat_siamese",
+		"cat_tabby",
+		"cat_tuxedo"
+	))
+	..()
+
+/obj/item/toy/plushie/animal
+	name = "puppy plush"
+	desc = "A very cute plushie toy! Watch as it purrs it! Isn't they stick in your heart?"
+	icon_state = "corgi_plushie"
+
+/obj/item/toy/plushie/animal/New()
+	var/variants = list(
+		"plush corgy" = "corgi_plushie",
+		"plush girl corgy" = "girlycorgi_plushie",
+		"plush robocorgy" = "robotcorgi_plushie",
+		"deer plushie" = "deer_plushie",
+		"loveable plushie" = "loveable_plushie",
+		"huggable plushie" = "huggable_plushie"
+	)
+	name = pick(variants)
+	icon_state = variants[name]
+	..()
+
 
 /obj/item/toy/plushie/lizard
 	name = "lizard plush"
@@ -989,7 +1005,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "cultblade"
 	item_state = "cultblade"
-	w_class = 4
+	w_class = ITEM_SIZE_HUGE
+	sprite_group = SPRITE_MELEE
 	attack_verb = list("attacked", "slashed", "stabbed", "poked")
 
 /* NYET.
@@ -998,7 +1015,7 @@
 	name = "toddler"
 	desc = "This baby looks almost real. Wait, did it just burp?"
 	force = 5
-	w_class = 4.0
+	w_class = ITEM_SIZE_HUGE
 	slot_flags = SLOT_BACK
 */
 

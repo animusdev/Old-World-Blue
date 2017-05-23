@@ -1,9 +1,3 @@
-//Define a macro that we can use to assemble all the circuit board names
-#ifdef T_BOARD
-#error T_BOARD already defined elsewhere, we can't use it.
-#endif
-#define T_BOARD(name)	"circuit board (" + (name) + ")"
-
 /obj/item/weapon/circuitboard
 	name = "circuit board"
 	icon = 'icons/obj/module.dmi'
@@ -12,7 +6,7 @@
 	origin_tech = list(TECH_DATA = 2)
 	density = 0
 	anchored = 0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	flags = CONDUCT
 	force = 5.0
 	throwforce = 5.0

@@ -1,5 +1,6 @@
 /obj/structure
 	icon = 'icons/obj/structures.dmi'
+	w_class = ITEM_SIZE_NO_CONTAINER
 
 	var/climbable
 	var/breakable
@@ -13,17 +14,23 @@
 
 /obj/structure/attack_hand(mob/user)
 	if(breakable)
+		//TODO: DNA3 hulk
+		/*
 		if(HULK in user.mutations)
 			user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			attack_generic(user,1,"smashes")
-		else if(ishuman(user))
+			return
+		*/
+		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.can_shred(user))
 				attack_generic(user,1,"slices")
 
 	if(climbers.len && !(user in climbers))
-		user.visible_message("<span class='warning'>[user.name] shakes \the [src].</span>", \
-					"<span class='notice'>You shake \the [src].</span>")
+		user.visible_message(
+			"<span class='warning'>[user.name] shakes \the [src].</span>",
+			"<span class='notice'>You shake \the [src].</span>"
+		)
 		structure_shaken()
 
 	return ..()

@@ -14,7 +14,7 @@ RSF
 	anchored = 0.0
 	var/stored_matter = 30
 	var/mode = 1
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/weapon/rsf/examine(mob/user, return_dist = 1)
 	.=..()
@@ -92,7 +92,7 @@ RSF
 			product = new /obj/item/weapon/pen()
 			used_energy = 50
 		if(5)
-			product = new /obj/item/weapon/storage/pill_bottle/dice()
+			product = new /obj/item/storage/pill_bottle/dice()
 			used_energy = 200
 
 	user << "Dispensing [product ? product : "product"]..."

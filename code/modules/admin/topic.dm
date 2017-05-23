@@ -511,7 +511,8 @@
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
 		jobs += "<tr bgcolor='dddddd'><th colspan='[length(playable_species)-1]'><a href='?src=\ref[src];jobban3=Species;jobban4=\ref[M]'>Species</a></th></tr><tr align='center'>"
 		for(var/species in playable_species)
-			if(species == "Human")	continue
+			if(species == SPECIES_HUMAN)
+				continue
 			if(jobban_isbanned(M, species))
 				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[species];jobban4=\ref[M]'><font color=red>[replacetext(species, " ", "&nbsp")]</font></a></td>"
 				counter++
@@ -667,7 +668,7 @@
 					if(!temp) continue
 					joblist += temp.title
 			if("Species")
-				for(var/species in playable_species-"Human")
+				for(var/species in playable_species-SPECIES_HUMAN)
 					joblist += species
 			else
 				joblist += href_list["jobban3"]
@@ -1201,19 +1202,6 @@
 			return
 
 		usr.client.cmd_admin_animalize(M)
-
-	else if(href_list["togmutate"])
-		if(!check_rights(R_SPAWN))	return
-
-		var/mob/living/carbon/human/H = locate(href_list["togmutate"])
-		if(!istype(H))
-			usr << "This can only be used on instances of type /mob/living/carbon/human"
-			return
-		var/block=text2num(href_list["block"])
-		//testing("togmutate([href_list["block"]] -> [block])")
-		usr.client.cmd_admin_toggle_block(H,block)
-		show_player_panel(H)
-		//H.regenerate_icons()
 
 	else if(href_list["adminplayeropts"])
 		var/mob/M = locate(href_list["adminplayeropts"])

@@ -1,7 +1,7 @@
 /obj/item/inflatable
 	name = "inflatable wall"
 	desc = "A folded membrane which rapidly expands into a large cubical shape on activation."
-	w_class = 2
+	w_class = ITEM_SIZE_NORMAL
 	icon_state = "folded_wall"
 	icon = 'icons/obj/inflatable.dmi'
 	var/deploy_path = /obj/structure/inflatable
@@ -252,12 +252,13 @@
 		user << "\blue The inflatable door is too torn to be inflated!"
 		add_fingerprint(user)
 
-/obj/item/weapon/storage/briefcase/inflatable
+/obj/item/storage/briefcase/inflatable
 	name = "inflatable barrier box"
 	desc = "Contains inflatable walls and doors."
 	icon_state = "inf_box"
 	item_state = "syringe_kit"
-	max_storage_space = 28
+	w_class = ITEM_SIZE_LARGE
+	max_storage_space = DEFAULT_LARGEBOX_STORAGE
 	can_hold = list(/obj/item/inflatable)
 
 	New()

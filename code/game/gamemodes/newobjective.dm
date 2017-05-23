@@ -269,7 +269,7 @@ datum
 			check_completion()
 				if(!emergency_shuttle.returned())
 					return 0
-				if(target.current.stat == 2)
+				if(target.current.stat == DEAD)
 					return 0
 				var/turf/location = get_turf(target.current.loc)
 				if(!location)
@@ -316,7 +316,7 @@ datum
 				if(!emergency_shuttle.returned())
 					return 0
 
-				if(target.current.stat == 2)
+				if(target.current.stat == DEAD)
 					return 0
 
 				var/turf/location = get_turf(target.current.loc)
@@ -358,7 +358,7 @@ datum
 
 			check_completion()
 				if(target && target.current)
-					if(target.current.stat == 2 || istype(get_area(target.current), /area/tdome) || issilicon(target.current) || isbrain(target.current))
+					if(target.current.stat == DEAD || istype(get_area(target.current), /area/tdome) || issilicon(target.current) || isbrain(target.current))
 						return 1
 					else
 						return 0
@@ -429,7 +429,7 @@ datum
 
 			check_completion()
 				if(target && target.current)
-					if(target.current.stat == 2)
+					if(target.current.stat == DEAD)
 						if(config.require_heads_alive) return 0
 					else
 						if(!target.current.handcuffed)
@@ -480,7 +480,7 @@ datum
 				if(!emergency_shuttle.returned())
 					return 0
 
-				if(!owner.current || owner.current.stat == 2)
+				if(!owner.current || owner.current.stat == DEAD)
 					return 0
 				var/turf/location = get_turf(owner.current.loc)
 
@@ -515,7 +515,7 @@ datum
 				if(!emergency_shuttle.returned())
 					return 0
 
-				if(!owner.current || owner.current.stat ==2)
+				if(!owner.current || owner.current.stat == DEAD)
 					return 0
 
 				var/turf/location = get_turf(owner.current.loc)
@@ -540,7 +540,7 @@ datum
 			explanation_text = "Stay alive."
 
 			check_completion()
-				if(!owner.current || owner.current.stat == 2)
+				if(!owner.current || owner.current.stat == DEAD)
 					return 0
 
 				return 1
@@ -862,7 +862,7 @@ datum
 					return 2
 
 			boh
-				steal_target = /obj/item/weapon/storage/backpack/holding
+				steal_target = /obj/item/storage/backpack/holding
 				explanation_text = "Steal a \"bag of holding.\""
 				weight = 20
 
@@ -1070,7 +1070,7 @@ datum
 							for(var/mob/living/silicon/ai/M in C)
 								if(isAI(M) && M.stat != 2)
 									return 1
-						for(var/mob/living/silicon/ai/M in world)
+						for(var/mob/living/silicon/ai/M in mob_list)
 							if(istype(M.loc, /turf))
 								if(istype(get_area(M), /area/shuttle/escape))
 									return 1
@@ -1236,10 +1236,10 @@ datum
 					return 0
 				var/area/shuttle = locate(/area/shuttle/escape/centcom)
 				var/protected_mobs[] = list(/mob/living/silicon/ai, /mob/living/silicon/pai, /mob/living/silicon/robot)
-				for(var/mob/living/player in world)
+				for(var/mob/living/player in mob_list)
 					if(player.type in protected_mobs)	continue
 					if (player.mind)
-						if (player.stat != 2)
+						if (player.stat != DEAD)
 							if (get_turf(player) in shuttle)
 								return 0
 				return 1
@@ -1286,11 +1286,11 @@ datum
 				if (ticker)
 					var/n_p = 1 //autowin
 					if (ticker.current_state == GAME_STATE_SETTING_UP)
-						for(var/mob/new_player/P in world)
+						for(var/mob/new_player/P in mob_list)
 							if(P.client && P.ready && P.mind!=owner)
 								n_p ++
 					else if (ticker.current_state == GAME_STATE_PLAYING)
-						for(var/mob/living/carbon/human/P in world)
+						for(var/mob/living/carbon/human/P in mob_list)
 							if(P.client && !(P.mind in ticker.mode.changelings) && P.mind!=owner)
 								n_p ++
 					target_amount = min(target_amount, n_p)
@@ -1329,7 +1329,7 @@ datum
 			check_completion()
 				if(!ishuman(owner.current))
 					return 0
-				if(!owner.current || owner.current.stat == 2)
+				if(!owner.current || owner.current.stat == DEAD)
 					return 0
 
 				var/current_amount
@@ -1404,7 +1404,7 @@ datum
 			check_completion()
 				if(target && target.current)
 					var/turf/T = get_turf(target.current)
-					if(target.current.stat == 2)
+					if(target.current.stat == DEAD)
 						return 1
 					else if((T) && (isNotStationLevel(T.z)))//If they leave the station they count as dead for this
 						return 2
@@ -1464,7 +1464,7 @@ datum/objective/silence
 		var/area/pod3 =    locate(/area/shuttle/escape_pod3/centcom)
 		var/area/pod4 =    locate(/area/shuttle/escape_pod5/centcom)
 
-		for(var/mob/living/player in world)
+		for(var/mob/living/player in mob_list)
 			if (player == owner.current)
 				continue
 			if (player.mind)

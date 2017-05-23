@@ -49,7 +49,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
 	for(var/obj/machinery/r_n_d/D in range(3, src))
-		if(D.linked_console != null || D.disabled || D.panel_open)
+		if(D.linked_console != null || D.panel_open)
 			continue
 		if(istype(D, /obj/machinery/r_n_d/destructive_analyzer))
 			if(linked_destroy == null)
@@ -64,6 +64,22 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				linked_imprinter = D
 				D.linked_console = src
 	return
+
+/obj/machinery/computer/rdconsole/proc/update_categories()
+	if(linked_imprinter)
+		linked_imprinter.categories = list("None")
+	if(linked_lathe)
+		linked_lathe.categories = list("None")
+	for(var/datum/design/D in files.known_designs)
+		if(linked_imprinter && D.build_type & IMPRINTER)
+			linked_imprinter.categories |= D.category
+		if(linked_lathe && D.build_type & PROTOLATHE)
+			linked_lathe.categories |= D.category
+
+	if(linked_imprinter && !(linked_imprinter.category in linked_imprinter.categories))
+		linked_imprinter.category = null
+	if(linked_lathe && !(linked_lathe.category in linked_lathe.categories))
+		linked_lathe.category = null
 
 //Have it automatically push research to the centcomm server so wild griffins can't fuck up R&D's work
 /obj/machinery/computer/rdconsole/proc/griefProtection()
@@ -93,8 +109,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			user << "A disk is already loaded into the machine."
 			return
 
-		if(istype(D, /obj/item/weapon/disk/tech_disk)) t_disk = D
-		else if (istype(D, /obj/item/weapon/disk/design_disk)) d_disk = D
+		if(istype(D, /obj/item/weapon/disk/tech_disk))
+			t_disk = D
+		else if (istype(D, /obj/item/weapon/disk/design_disk))
+			d_disk = D
 		else
 			user << "\red Machine cannot accept disks in that format."
 			return
@@ -234,6 +252,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 									qdel(I)
 									linked_destroy.icon_state = "d_analyzer"
 
+						files.RefreshResearch()
+						update_categories()
 						use_power(linked_destroy.active_power_usage)
 						screen = 1.0
 						updateUsrDialog()
@@ -254,8 +274,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				if(src)
 					for(var/obj/machinery/r_n_d/server/S in machines)
 						var/server_processed = 0
-						if(S.disabled)
-							continue
 						if((id in S.id_with_upload) || istype(S, /obj/machinery/r_n_d/server/centcom))
 							for(var/datum/tech/T in files.known_tech)
 								S.files.AddTech2Known(T)
@@ -263,7 +281,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								S.files.AddDesign2Known(D)
 							S.files.RefreshResearch()
 							server_processed = 1
-						if(((id in S.id_with_download) && !istype(S, /obj/machinery/r_n_d/server/centcom)) || S.hacked)
+						if((id in S.id_with_download) && !istype(S, /obj/machinery/r_n_d/server/centcom))
 							for(var/datum/tech/T in S.files.known_tech)
 								files.AddTech2Known(T)
 							for(var/datum/design/D in S.files.known_designs)
@@ -272,11 +290,22 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							server_processed = 1
 						if(!istype(S, /obj/machinery/r_n_d/server/centcom) && server_processed)
 							S.produce_heat()
+					update_categories()
 					screen = 1.6
 					updateUsrDialog()
 
 	else if(href_list["togglesync"]) //Prevents the console from being synced by other consoles. Can still send data.
 		sync = !sync
+
+	else if(href_list["build_categeory"])
+		if(linked_lathe)
+			var/new_pc = input("Select category for displaying") as null|anything in linked_lathe.categories
+			if(Adjacent(usr) && !usr.stat)
+				if(new_pc == "None")
+					linked_lathe.category = null
+				else
+					linked_lathe.category = new_pc
+				updateUsrDialog()
 
 	else if(href_list["build"]) //Causes the Protolathe to build something.
 		if(linked_lathe && !linked_lathe.busy)
@@ -293,6 +322,16 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					errored = 0
 					screen = 3.1
 					updateUsrDialog()
+
+	else if(href_list["imprint_categeory"])
+		if(linked_imprinter)
+			var/new_cc = input("Select category for displaying") as null|anything in linked_imprinter.categories
+			if(Adjacent(usr) && !usr.stat)
+				if(new_cc == "None")
+					linked_imprinter.category = null
+				else
+					linked_imprinter.category = new_cc
+				updateUsrDialog()
 
 	else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
 		if(linked_imprinter && !linked_imprinter.busy)
@@ -346,7 +385,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				linked_imprinter.linked_console = null
 				linked_imprinter = null
 
-	else if(href_list["reset"]) //Reset the R&D console's database.
+	else if(href_list["reset_base"]) //Reset the R&D console's database.
 		griefProtection()
 		var/choice = alert("R&D Console Database Reset", "Are you sure you want to reset the R&D console's database? Data lost cannot be recovered.", "Continue", "Cancel")
 		if(choice == "Continue")
@@ -409,7 +448,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	user.set_machine(src)
 	var/dat = "<style>span.requirements{padding-left: 20px; font-size: 90%}\
 					  span.deficiency{color: red}</style>"
-	files.RefreshResearch()
 	switch(screen) //A quick check to make sure you get the right screen when a device is disconnected.
 		if(2 to 2.9)
 			if(linked_destroy == null)
@@ -482,7 +520,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "</UL>"
 
 		if(1.2) //Technology Disk Menu
-
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>"
 			dat += "Disk Contents: (Technology Data Disk)<BR><BR>"
 			if(t_disk.stored == null)
@@ -539,6 +576,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				if(D.build_path)
 					dat += "<LI>[D.name] "
 					dat += "<A href='?src=\ref[src];copy_design=1;copy_design_ID=[D.id]'>\[copy to disk\]</A>"
+					dat += "</LI>"
 			dat += "</UL>"
 
 		if(1.6) //R&D console settings
@@ -546,13 +584,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "R&D Console Setting:<HR>"
 			dat += "<UL>"
 			if(sync)
-				dat += "<LI><A href='?src=\ref[src];sync=1'>Sync Database with Network</A><BR>"
-				dat += "<LI><A href='?src=\ref[src];togglesync=1'>Disconnect from Research Network</A><BR>"
+				dat += "<LI><A href='?src=\ref[src];sync=1'>Sync Database with Network</A></LI>"
+				dat += "<LI><A href='?src=\ref[src];togglesync=1'>Disconnect from Research Network</A></LI>"
 			else
-				dat += "<LI><A href='?src=\ref[src];togglesync=1'>Connect to Research Network</A><BR>"
-			dat += "<LI><A href='?src=\ref[src];menu=1.7'>Device Linkage Menu</A><BR>"
-			dat += "<LI><A href='?src=\ref[src];lock=0.2'>Lock Console</A><BR>"
-			dat += "<LI><A href='?src=\ref[src];reset=1'>Reset R&D Database</A><BR>"
+				dat += "<LI><A href='?src=\ref[src];togglesync=1'>Connect to Research Network</A></LI>"
+			dat += "<LI><A href='?src=\ref[src];menu=1.7'>Device Linkage Menu</A></LI>"
+			dat += "<LI><A href='?src=\ref[src];lock=0.2'>Lock Console</A></LI>"
+			dat += "<LI><A href='?src=\ref[src];reset_base=1'>Reset R&D Database</A></LI>"
 			dat += "<UL>"
 
 		if(1.7) //R&D device linkage
@@ -563,17 +601,17 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "Linked Devices:"
 			dat += "<UL>"
 			if(linked_destroy)
-				dat += "<LI>Destructive Analyzer <A href='?src=\ref[src];disconnect=destroy'>(Disconnect)</A>"
+				dat += "<LI>Destructive Analyzer <A href='?src=\ref[src];disconnect=destroy'>(Disconnect)</A></LI>"
 			else
-				dat += "<LI>(No Destructive Analyzer Linked)"
+				dat += "<LI>(No Destructive Analyzer Linked)</LI>"
 			if(linked_lathe)
-				dat += "<LI>Protolathe <A href='?src=\ref[src];disconnect=lathe'>(Disconnect)</A>"
+				dat += "<LI>Protolathe <A href='?src=\ref[src];disconnect=lathe'>(Disconnect)</A></LI>"
 			else
-				dat += "<LI>(No Protolathe Linked)"
+				dat += "<LI>(No Protolathe Linked)</LI>"
 			if(linked_imprinter)
-				dat += "<LI>Circuit Imprinter <A href='?src=\ref[src];disconnect=imprinter'>(Disconnect)</A>"
+				dat += "<LI>Circuit Imprinter <A href='?src=\ref[src];disconnect=imprinter'>(Disconnect)</A></LI>"
 			else
-				dat += "<LI>(No Circuit Imprinter Linked)"
+				dat += "<LI>(No Circuit Imprinter Linked)</LI>"
 			dat += "</UL>"
 
 		////////////////////DESTRUCTIVE ANALYZER SCREENS////////////////////////////
@@ -610,13 +648,15 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
 			dat += "<A href='?src=\ref[src];menu=3.2'>Material Storage</A> || "
 			dat += "<A href='?src=\ref[src];menu=3.3'>Chemical Storage</A><HR>"
-			dat += "Protolathe Menu:<BR><BR>"
+			dat += "Protolathe Menu:<BR>"
+			dat += "Current category: <a href='?src=\ref[src];build_categeory=1'>[linked_lathe.category ? linked_lathe.category : "None"]</a><BR>"
 			dat += "<B>Material Amount:</B> [linked_lathe.TotalMaterials()] cm<sup>3</sup> (MAX: [linked_lathe.max_material_storage])<BR>"
 			dat += "<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] (MAX: [linked_lathe.reagents.maximum_volume])<HR>"
 
-
 			dat += "<UL>"
 			for(var/datum/design/D in files.known_designs)
+				if(linked_lathe.category && linked_lathe.category != D.category)
+					continue
 				if(!D.build_path || !(D.build_type & PROTOLATHE))
 					continue
 				var/material_string = linked_lathe.get_requirements(D)
@@ -626,6 +666,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					dat += "<LI><B>[D.name]</B> [material_string]"
 				if(D.reliability < 100)
 					dat += " (Reliability: [D.reliability])"
+				dat += "</LI>"
 			dat += "</UL>"
 
 		if(3.2) //Protolathe Material Storage Sub-menu
@@ -664,11 +705,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> || "
 			dat += "<A href='?src=\ref[src];menu=4.3'>Material Storage</A> || "
 			dat += "<A href='?src=\ref[src];menu=4.2'>Chemical Storage</A><HR>"
-			dat += "Circuit Imprinter Menu:<BR><BR>"
+			dat += "Circuit Imprinter Menu:<BR>"
+			dat += "Current category: <a href='?src=\ref[src];imprint_categeory=1'>[linked_imprinter.category ? linked_imprinter.category : "None"]</a><BR>"
 			dat += "Material Amount: [linked_imprinter.TotalMaterials()] cm<sup>3</sup><BR>"
 			dat += "Chemical Volume: [linked_imprinter.reagents.total_volume]<HR>"
 			dat += "<UL>"
 			for(var/datum/design/D in files.known_designs)
+				if(linked_imprinter.category && linked_imprinter.category != D.category)
+					continue
 				if(!D.build_path || !(D.build_type & IMPRINTER))
 					continue
 				var/material_string = linked_imprinter.get_requirements(D)

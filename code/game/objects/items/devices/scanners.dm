@@ -13,11 +13,10 @@ REAGENT SCANNER
 	name = "health analyzer"
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
 	icon_state = "health"
-	item_state = "analyzer"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 3
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 5
 	throw_range = 10
 	matter = list(DEFAULT_WALL_MATERIAL = 200)
@@ -34,6 +33,8 @@ REAGENT SCANNER
 	scan_mob(M, user)
 
 /obj/item/device/healthanalyzer/proc/scan_mob(mob/living/M, mob/living/user)
+	//TODO: DNA3 clown_block
+	/*
 	if ((CLUMSY in user.mutations) && prob(50))
 		user << text("<span class='warning'>You try to analyze the floor's vitals!</span>")
 		for(var/mob/O in viewers(M, null))
@@ -44,6 +45,7 @@ REAGENT SCANNER
 		user.show_message("<span class='notice'>Key: Suffocation/Toxin/Burns/Brute</span>", 1)
 		user.show_message("<span class='notice'>Body Temperature: ???</span>", 1)
 		return
+	*/
 	user.visible_message("<span class='notice'> [user] has analyzed [M]'s vitals.</span>","<span class='notice'> You have analyzed [M]'s vitals.</span>")
 
 	if (!ishuman(M) || M.isSynthetic())
@@ -193,7 +195,7 @@ REAGENT SCANNER
 	desc = "A hand-held environmental scanner which reports current gas levels."
 	icon_state = "atmos"
 	item_state = "analyzer"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 5
@@ -226,7 +228,7 @@ REAGENT SCANNER
 	desc = "A hand-held mass spectrometer which identifies trace chemicals in a blood sample."
 	icon_state = "spectrometer"
 	item_state = "analyzer"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	flags = CONDUCT | OPENCONTAINER
 	slot_flags = SLOT_BELT
 	throwforce = 5
@@ -287,7 +289,7 @@ REAGENT SCANNER
 	desc = "A hand-held reagent scanner which identifies chemical agents."
 	icon_state = "spectrometer"
 	item_state = "analyzer"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 5
@@ -333,7 +335,7 @@ REAGENT SCANNER
 	icon_state = "adv_spectrometer"
 	item_state = "analyzer"
 	origin_tech = list(TECH_BIO = 1)
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	flags = CONDUCT
 	throwforce = 0
 	throw_speed = 3

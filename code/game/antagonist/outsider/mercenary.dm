@@ -1,8 +1,7 @@
 var/datum/antagonist/mercenary/mercs
 
 /datum/antagonist/mercenary
-	id = MODE_MERCENARY
-	role_type = BE_OPERATIVE
+	id = ROLE_MERCENARY
 	role_text = "Mercenary"
 	bantype = "operative"
 	antag_indicator = "synd"
@@ -39,12 +38,12 @@ var/datum/antagonist/mercenary/mercs
 	player.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(player), slot_shoes)
 	player.equip_to_slot_or_del(new /obj/item/clothing/gloves/black/swat(player), slot_gloves)
 	switch(player.backbag)
-		if(2) player.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(player), slot_back)
-		if(3) player.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(player), slot_back)
-		if(4) player.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(player), slot_back)
-		if(5) player.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/dufflebag(player), slot_back)
-		if(6) player.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/messenger(player), slot_back)
-	player.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(player.back), slot_in_backpack)
+		if(2) player.equip_to_slot_or_del(new /obj/item/storage/backpack(player), slot_back)
+		if(3) player.equip_to_slot_or_del(new /obj/item/storage/backpack/satchel/norm(player), slot_back)
+		if(4) player.equip_to_slot_or_del(new /obj/item/storage/backpack/satchel(player), slot_back)
+		if(5) player.equip_to_slot_or_del(new /obj/item/storage/backpack/dufflebag(player), slot_back)
+		if(6) player.equip_to_slot_or_del(new /obj/item/storage/backpack/messenger(player), slot_back)
+	player.equip_to_slot_or_del(new /obj/item/storage/box/engineer(player.back), slot_in_backpack)
 	player.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/cyanide(player), slot_in_backpack)
 
 	if (player.mind == leader)

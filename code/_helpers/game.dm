@@ -12,19 +12,9 @@
 /proc/is_on_same_plane_or_station(var/z1, var/z2)
 	if(z1 == z2)
 		return 1
-	if((z1 in config.station_levels) &&	(z2 in config.station_levels))
+	if(isStationLevel(z1) && isStationLevel(z2))
 		return 1
 	return 0
-
-/proc/max_default_z_level()
-	var/max_z = 0
-	for(var/z in config.station_levels)
-		max_z = max(z, max_z)
-	for(var/z in config.admin_levels)
-		max_z = max(z, max_z)
-	for(var/z in config.player_levels)
-		max_z = max(z, max_z)
-	return max_z
 
 /proc/get_area(O)
 	var/turf/loc = get_turf(O)
@@ -33,7 +23,7 @@
 		.= res
 
 /proc/get_area_name(N) //get area by its name
-	for(var/area/A in world)
+	for(var/area/A in all_areas)
 		if(A.name == N)
 			return A
 	return 0
@@ -60,21 +50,6 @@
 	source.luminosity = lum
 
 	return heard
-
-/proc/isStationLevel(var/level)
-	return level in config.station_levels
-
-/proc/isNotStationLevel(var/level)
-	return !isStationLevel(level)
-
-/proc/isPlayerLevel(var/level)
-	return level in config.player_levels
-
-/proc/isAdminLevel(var/level)
-	return level in config.admin_levels
-
-/proc/isNotAdminLevel(var/level)
-	return !isAdminLevel(level)
 
 /proc/circlerange(center=usr,radius=3)
 
@@ -106,14 +81,6 @@
 	//turfs += centerturf
 	return atoms
 
-/proc/trange(rad = 0, turf/centre = null) //alternative to range (ONLY processes turfs and thus less intensive)
-	if(!centre)
-		return
-
-	var/turf/x1y1 = locate(((centre.x-rad)<1 ? 1 : centre.x-rad),((centre.y-rad)<1 ? 1 : centre.y-rad),centre.z)
-	var/turf/x2y2 = locate(((centre.x+rad)>world.maxx ? world.maxx : centre.x+rad),((centre.y+rad)>world.maxy ? world.maxy : centre.y+rad),centre.z)
-	return block(x1y1,x2y2)
-
 /proc/get_dist_euclidian(atom/Loc1 as turf|mob|obj,atom/Loc2 as turf|mob|obj)
 	var/dx = Loc1.x - Loc2.x
 	var/dy = Loc1.y - Loc2.y
@@ -128,7 +95,7 @@
 	var/list/turfs = new/list()
 	var/rsq = radius * (radius+0.5)
 
-	for(var/turf/T in range(radius, centerturf))
+	for(var/turf/T in RANGE_TURFS(radius, centerturf))
 		var/dx = T.x - centerturf.x
 		var/dy = T.y - centerturf.y
 		if(dx*dx + dy*dy <= rsq)
@@ -247,8 +214,6 @@
 					. |= M		// Since we're already looping through mobs, why bother using |= ? This only slows things down.
 	return .
 
-#define SIGN(X) ((X<0)?-1:1)
-
 proc
 	inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)
 		var/turf/T
@@ -256,7 +221,7 @@ proc
 			if(Y1==Y2)
 				return 1 //Light cannot be blocked on same tile
 			else
-				var/s = SIGN(Y2-Y1)
+				var/s = SIMPLE_SIGN(Y2-Y1)
 				Y1+=s
 				while(Y1!=Y2)
 					T=locate(X1,Y1,Z)
@@ -266,8 +231,8 @@ proc
 		else
 			var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
 			var/b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) //In tiles
-			var/signX = SIGN(X2-X1)
-			var/signY = SIGN(Y2-Y1)
+			var/signX = SIMPLE_SIGN(X2-X1)
+			var/signY = SIMPLE_SIGN(Y2-Y1)
 			if(X1<X2)
 				b+=m
 			while(X1!=X2 || Y1!=Y2)
@@ -279,7 +244,6 @@ proc
 				if(T.opacity)
 					return 0
 		return 1
-#undef SIGN
 
 proc/isInSight(var/atom/A, var/atom/B)
 	var/turf/Aturf = get_turf(A)
@@ -337,7 +301,7 @@ proc/isInSight(var/atom/A, var/atom/B)
 	var/i = 0
 	while(candidates.len <= 0 && i < 5)
 		for(var/mob/observer/dead/G in player_list)
-			if(G.client.prefs.be_special & BE_ALIEN)
+			if(ROLE_ALIEN in G.client.prefs.special_toggles)
 				if(((G.client.inactivity/10)/60) <= ALIEN_SELECT_AFK_BUFFER + i) // the most active players are more likely to become an alien
 					if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
 						candidates += G.key

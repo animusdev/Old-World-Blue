@@ -28,7 +28,7 @@ datum/controller/game_controller/proc/SetupXenoarch()
 
 			if(target_digsite_size > 1)
 				var/list/viable_adjacent_turfs = orange(1, archeo_turf)
-				for(var/turf/simulated/mineral/T in orange(1, archeo_turf))
+				for(var/turf/simulated/mineral/T in RANGE_TURFS(1, archeo_turf))
 					if(T.finds)
 						continue
 					if(T in processed_turfs)

@@ -10,13 +10,13 @@
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	flags = CONDUCT
 	matter = list(DEFAULT_WALL_MATERIAL = 3000)
 	var/max_carry = 8
 
 /obj/item/weapon/tray/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-
+	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 	// Drop all the things. All of them.
 	overlays.Cut()
 	for(var/obj/item/I in src)
@@ -29,6 +29,8 @@
 						sleep(rand(2,4))
 
 
+	//TODO: DNA3 clown_block
+	/*
 	if((CLUMSY in user.mutations) && prob(50))              //What if he's a clown?
 		M << "<span class='warning'>You accidentally slam yourself with the [src]!</span>"
 		M.Weaken(1)
@@ -39,6 +41,7 @@
 		else
 			playsound(M, 'sound/items/trayhit2.ogg', 50, 1) //sound playin'
 			return //it always returns, but I feel like adding an extra return just for safety's sakes. EDIT; Oh well I won't :3
+	*/
 
 	if(!(user.zone_sel.selecting in list(O_EYES, BP_HEAD))) //hitting anything else other than the eyes
 		if(prob(33))
@@ -48,9 +51,9 @@
 				location.add_blood(M)     ///Plik plik, the sound of blood
 
 		admin_attack_log(user, M,
-			"Used the [src.name] to attack [key_name(M)]",
-			"Has been attacked with [src.name] by [key_name(user)]",
-			"used the [src.name] to attack"
+			"Used \the [src.name] to attack [key_name(M)]",
+			"Was attacked with \a [src] by [key_name(user)]",
+			"used \a [src] to attack"
 		)
 
 		if(prob(15))
@@ -156,7 +159,7 @@
 	return ..()
 
 /obj/item/weapon/tray/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/material/kitchen/rollingpin))
+	if(user.get_inactive_hand() == src && istype(W, /obj/item/weapon/material/kitchen/rollingpin))
 		if(cooldown < world.time - 25)
 			user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
 			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
@@ -188,6 +191,11 @@
 		/obj/item/projectile
 	)
 
+/obj/item/weapon/tray/MouseDrop(mob/living/carbon/human/H) //Drag'n'drop for pass object grabbing.
+	if(!H || usr!=H) return
+	if(!isturf(loc) || !Adjacent(H)) return
+	H.put_in_active_hand(src)
+
 /obj/item/weapon/tray/update_icon()
 	overlays.Cut()
 	for(var/item in src)
@@ -207,10 +215,11 @@
 		return 0
 	if(ismob(I.loc))
 		var/mob/M = I.loc
-		if(!M.unEquip(I))
+		if(!M.unEquip(I, src))
 			return 0
+	else
+		I.forceMove(src)
 	carry += I.w_class
-	I.forceMove(src)
 	update_icon()
 	return 1
 
@@ -228,9 +237,10 @@
 
 /obj/item/weapon/tray/dropped(mob/user)
 	spawn() //Allows the tray to udpate location, rather than just checking against mob's location
-		if(!isturf(src.loc))
+		if(ismob(src.loc))
 			return
-		var/Table = locate(/obj/structure/table) in src.loc
+		var/turf/new_loc = get_turf(src)
+		var/Table = locate(/obj/structure/table) in new_loc
 		if(!Table) //Put on the floor
 			Table = user && (user.loc==src.loc)
 

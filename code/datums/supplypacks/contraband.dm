@@ -8,8 +8,8 @@
 	num_contained = 5
 	contains = list(
 		/obj/item/seeds/bloodtomatoseed,
-		/obj/item/weapon/storage/pill_bottle/zoom,
-		/obj/item/weapon/storage/pill_bottle/happy,
+		/obj/item/storage/pill_bottle/zoom,
+		/obj/item/storage/pill_bottle/happy,
 		/obj/item/weapon/reagent_containers/glass/drinks/bottle/pwine
 	)
 
@@ -23,7 +23,7 @@
 /datum/supply_packs/security/specialops
 	name = "Special Ops supplies"
 	contains = list(
-		/obj/item/weapon/storage/box/emps,
+		/obj/item/storage/box/emps,
 		/obj/item/weapon/grenade/smokebomb = 3,
 		/obj/item/weapon/pen/reagent/paralysis,
 		/obj/item/weapon/grenade/chem_grenade/incendiary

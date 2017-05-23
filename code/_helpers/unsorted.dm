@@ -192,9 +192,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			return 1
 	return 0
 
-/proc/sign(x)
-	return x!=0?x/abs(x):0
-
 /proc/getline(atom/M,atom/N)//Ultra-Fast Bresenham Line-Drawing Algorithm
 	var/px=M.x		//starting x
 	var/py=M.y
@@ -203,8 +200,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/dy=N.y-py
 	var/dxabs=abs(dx)//Absolute value of x distance
 	var/dyabs=abs(dy)
-	var/sdx=sign(dx)	//Sign of x distance (+ or -)
-	var/sdy=sign(dy)
+	var/sdx=SIGN(dx)	//Sign of x distance (+ or -)
+	var/sdy=SIGN(dy)
 	var/x=dxabs>>1	//Counters for steps taken, setting to distance/2
 	var/y=dyabs>>1	//Bit-shifting makes me l33t.  It also makes getline() unnessecarrily fast.
 	var/j			//Generic integer for counting
@@ -352,7 +349,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/select = null
 	var/list/borgs = list()
 	for (var/mob/living/silicon/robot/A in player_list)
-		if (A.stat == 2 || A.connected_ai || A.scrambledcodes || istype(A,/mob/living/silicon/robot/drone))
+		if (A.stat == DEAD || A.connected_ai || A.scrambledcodes || istype(A,/mob/living/silicon/robot/drone))
 			continue
 		var/name = "[A.real_name] ([A.modtype] [A.braintype])"
 		borgs[name] = A
@@ -400,7 +397,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		var/mob/M = old_list[named]
 		if(issilicon(M))
 			AI_list |= M
-		else if(isobserver(M) || M.stat == 2)
+		else if(isobserver(M) || M.stat == DEAD)
 			Dead_list |= M
 		else if(M.key && M.client)
 			keyclient_list |= M
@@ -434,7 +431,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			namecounts[name] = 1
 		if (M.real_name && M.real_name != M.name)
 			name += " \[[M.real_name]\]"
-		if (M.stat == 2)
+		if (M.stat == DEAD)
 			if(isobserver(M))
 				name += " \[ghost\]"
 			else
@@ -469,9 +466,9 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		moblist.Add(M)
 	for(var/mob/living/simple_animal/M in sortmob)
 		moblist.Add(M)
-//	for(var/mob/living/silicon/hivebot/M in world)
+//	for(var/mob/living/silicon/hivebot/M in mob_list)
 //		mob_list.Add(M)
-//	for(var/mob/living/silicon/hive_mainframe/M in world)
+//	for(var/mob/living/silicon/hive_mainframe/M in mob_list)
 //		mob_list.Add(M)
 	return moblist
 
@@ -1317,15 +1314,9 @@ proc/GaussRandRound(var/sigma,var/roundto)
 	else return 0
 
 //Returns: all the areas in the world
-/proc/return_areas()
-	var/list/area/areas = list()
-	for(var/area/A in world)
-		areas += A
-	return areas
-
 //Returns: all the areas in the world, sorted.
 /proc/return_sorted_areas()
-	return sortAtom(return_areas())
+	return sortAtom(all_areas)
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.
@@ -1336,8 +1327,8 @@ proc/GaussRandRound(var/sigma,var/roundto)
 		var/area/areatemp = areatype
 		areatype = areatemp.type
 
-	var/list/areas = new/list()
-	for(var/area/N in world)
+	var/list/areas = new
+	for(var/area/N in all_areas)
 		if(istype(N, areatype)) areas += N
 	return areas
 
@@ -1351,7 +1342,7 @@ proc/GaussRandRound(var/sigma,var/roundto)
 		areatype = areatemp.type
 
 	var/list/turfs = new/list()
-	for(var/area/N in world)
+	for(var/area/N in all_areas)
 		if(istype(N, areatype))
 			for(var/turf/T in N) turfs += T
 	return turfs
@@ -1365,8 +1356,8 @@ proc/GaussRandRound(var/sigma,var/roundto)
 		var/area/areatemp = areatype
 		areatype = areatemp.type
 
-	var/list/atoms = new/list()
-	for(var/area/N in world)
+	var/list/atoms = new
+	for(var/area/N in all_areas)
 		if(istype(N, areatype))
 			for(var/atom/A in N)
 				atoms += A
@@ -1826,7 +1817,7 @@ var/list/WALLITEMS = list(
 	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/embedded_controller,
 	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/button,
 	/obj/machinery/computer/security/telescreen, /obj/machinery/keycard_auth, /obj/structure/closet/fireaxecabinet,
-	/obj/item/weapon/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/structure/mirror,
+	/obj/item/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/structure/mirror,
 	/obj/machinery/computer/security/telescreen/entertainment
 )
 

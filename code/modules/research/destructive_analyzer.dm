@@ -38,8 +38,6 @@ Note: Must be placed within 3 tiles of the R&D Console
 		icon_state = "d_analyzer"
 
 /obj/machinery/r_n_d/destructive_analyzer/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(shocked)
-		shock(user, 50)
 	if(busy)
 		user << "<span class='notice'>\The [src] is busy right now.</span>"
 		return
@@ -55,8 +53,6 @@ Note: Must be placed within 3 tiles of the R&D Console
 	if(panel_open)
 		user << "<span class='notice'>You can't load \the [src] while it's opened.</span>"
 		return 1
-	if(disabled)
-		return
 	if(!linked_console)
 		user << "<span class='notice'>\The [src] must be linked to an R&D console first!</span>"
 		return

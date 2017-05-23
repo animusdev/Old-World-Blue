@@ -8,13 +8,17 @@
 		"purple" = /obj/item/weapon/lipstick/purple,
 	)
 
+/datum/gear/dice
+	display_name = "dice pack"
+	path = /obj/item/storage/pill_bottle/dice
+
+/datum/gear/dice/nerd
+	display_name = "dice pack (gaming)"
+	path = /obj/item/storage/pill_bottle/dice_nerd
+
 /datum/gear/cane
 	display_name = "cane"
 	path = /obj/item/weapon/cane
-
-/datum/gear/dice
-	display_name = "d20"
-	path = /obj/item/weapon/dice/d20
 
 /datum/gear/cards
 	display_name = "deck of cards"
@@ -68,7 +72,7 @@
 
 /datum/gear/matchbook
 	display_name = "matchbook"
-	path = /obj/item/weapon/storage/box/matches
+	path = /obj/item/storage/box/matches
 
 /datum/gear/zippo
 	display_name = "zippo"
@@ -78,12 +82,12 @@
 
 /datum/gear/fannypack
 	display_name = "fannypack"
-	path = /obj/item/weapon/storage/belt/fannypack
+	path = /obj/item/storage/belt/fannypack
 	slot = slot_belt
 	cost = 2
 	options = list(
-		"leather"= /obj/item/weapon/storage/belt/fannypack,
-		"red"    = /obj/item/weapon/storage/belt/fannypack/red,
-		"white"  = /obj/item/weapon/storage/belt/fannypack/white,
-		"black"  = /obj/item/weapon/storage/belt/fannypack/black
+		"leather"= /obj/item/storage/belt/fannypack,
+		"red"    = /obj/item/storage/belt/fannypack/red,
+		"white"  = /obj/item/storage/belt/fannypack/white,
+		"black"  = /obj/item/storage/belt/fannypack/black
 	)

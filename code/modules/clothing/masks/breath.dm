@@ -5,7 +5,7 @@
 	item_state = "breath"
 	item_flags = AIRTIGHT|FLEXIBLEMATERIAL
 	body_parts_covered = FACE
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	gas_transfer_coefficient = 0.10
 	permeability_coefficient = 0.50
 	var/hanging = 0
@@ -13,7 +13,7 @@
 /obj/item/clothing/mask/vox_breath
 	icon_state = "breath_vox"
 	item_state = "breath"
-	species_restricted = list("Vox")
+	species_restricted = list(SPECIES_VOX)
 	item_flags = AIRTIGHT|FLEXIBLEMATERIAL
 	body_parts_covered = 0
 	gas_transfer_coefficient = 0.10

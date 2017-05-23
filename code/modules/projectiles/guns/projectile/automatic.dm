@@ -2,7 +2,7 @@
 	name = "prototype SMG"
 	desc = "A protoype lightweight, fast firing gun. Uses 9mm rounds."
 	icon_state = "saber"	//ugly
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	load_method = SPEEDLOADER //yup. until someone sprites a magazine for it.
 	max_shells = 22
 	caliber = "9mm"
@@ -21,7 +21,7 @@
 	name = "\improper Uzi"
 	desc = "A lightweight, fast firing gun, for when you want someone dead. Uses .45 rounds."
 	icon_state = "mini-uzi"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	load_method = SPEEDLOADER //yup. until someone sprites a magazine for it.
 	max_shells = 15
 	caliber = ".45"
@@ -76,7 +76,7 @@
 	desc = "The C-20r is a lightweight, fast firing gun, for when you REALLY need someone dead. Uses 12mm pistol rounds. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp"
 	icon_state = "c20r"
 	item_state = "c20r"
-	w_class = 3
+	w_class = ITEM_SIZE_LARGE
 	force = 10
 	caliber = "12mm"
 	origin_tech = list(TECH_COMBAT = 5, TECH_MATERIAL = 2, TECH_ILLEGAL = 8)
@@ -100,7 +100,7 @@
 	desc = "A rugged STS-35 is a durable, rugged looking automatic weapon of a make popular on the frontier worlds. Uses 7.62mm rounds. It is unmarked."
 	icon_state = "arifle"
 	item_state = null
-	w_class = 4
+	w_class = ITEM_SIZE_HUGE
 	force = 10
 	caliber = "a762"
 	origin_tech = list(TECH_COMBAT = 6, TECH_MATERIAL = 1, TECH_ILLEGAL = 4)
@@ -124,7 +124,7 @@
 	desc = "A W-T 550 Saber is a cheap, mass produced Ward-Takahashi PDW. Uses 9mm rounds."
 	icon_state = "wt550"
 	item_state = "wt550"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	caliber = "9mm"
 	origin_tech = list(TECH_COMBAT = 5, TECH_MATERIAL = 2)
 	slot_flags = SLOT_BELT
@@ -149,7 +149,7 @@
 	desc = "The Z8 Bulldog is a model bullpup carbine, made by the now defunct Zendai Foundries. Uses armor piercing 5.56mm rounds. Makes you feel like a space marine when you hold it."
 	icon_state = "carbine"
 	item_state = "z8carbine"
-	w_class = 4
+	w_class = ITEM_SIZE_HUGE
 	force = 10
 	caliber = "a556"
 	origin_tech = list(TECH_COMBAT = 8, TECH_MATERIAL = 3)
@@ -217,7 +217,7 @@
 	desc = "A rather traditionally made L6 SAW with a pleasantly lacquered wooden pistol grip. Has 'Aussec Armoury- 2531' engraved on the reciever"
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
-	w_class = 4
+	w_class = ITEM_SIZE_HUGE
 	force = 10
 	slot_flags = 0
 	max_shells = 50

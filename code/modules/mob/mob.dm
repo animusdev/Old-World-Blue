@@ -214,13 +214,10 @@
 		return L
 	if (!L)
 		L = list(src)
-	for(var/A in list(l_hand,r_hand))
-		if (istype(A, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = A
-			if (!(G.affecting in L))
-				L += G.affecting
-				if (G.affecting)
-					G.affecting.ret_grab(L)
+	for(var/obj/item/weapon/grab/G in list(l_hand,r_hand))
+		if(G.affecting)
+			L |= G.affecting
+				G.affecting.ret_grab(L)
 	return L
 
 /mob/verb/mode()
@@ -271,20 +268,6 @@
 		mind.store_memory(msg)
 	else
 		src << "The game appears to have misplaced your mind datum, so we can't show you your notes."
-
-/mob/proc/store_memory(msg as message, popup, sane = 1)
-	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
-
-	if (sane)
-		msg = sanitize(msg)
-
-	if (length(memory) == 0)
-		memory += msg
-	else
-		memory += "<BR>[msg]"
-
-	if (popup)
-		memory()
 
 /mob/proc/update_flavor_text()
 	set src in usr
@@ -441,8 +424,9 @@
 		src << browse(null, t1)
 
 	if(href_list["flavor_more"])
+		var/dat = cp1251_to_utf8(replacetext(flavor_text, "\n", "<BR>"))
 		if(src in view(usr))
-			usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, cp1251_to_utf8(replacetext(flavor_text, "\n", "<BR>"))), text("window=[];size=500x200", name))
+			usr << browse("<html><body><tt>[dat]</tt></body></html>", "window=[name];size=500x200")
 			onclose(usr, "[name]")
 	if(href_list["flavor_change"])
 		update_flavor_text()
@@ -525,15 +509,10 @@
 	return
 
 /mob/proc/is_active()
-	return (0 >= usr.stat)
+	return (usr.stat <= 0)
 
 /mob/proc/is_dead()
 	return stat == DEAD
-
-/mob/proc/is_mechanical()
-	if(mind && (mind.assigned_role == "Cyborg" || mind.assigned_role == "AI"))
-		return 1
-	return issilicon(src) || get_species() == "Machine"
 
 /mob/proc/is_ready()
 	return client && !!mind
@@ -610,7 +589,8 @@
 			pixel_y = V.mob_offset_y - 5
 			downed = 1
 		else
-			if(buckled.buckle_lying != -1) lying = buckled.buckle_lying
+			if(buckled.buckle_lying != -1)
+				lying = buckled.buckle_lying
 			pixel_y = V.mob_offset_y
 	else if(buckled)
 		anchored = 1
@@ -624,7 +604,7 @@
 
 	else
 		if(stat || paralysis || sleeping || (status_flags & FAKEDEATH))
-			lying = 1
+			lying = 3
 			canmove = 0
 			downed = 1
 		else if(captured)
@@ -632,18 +612,26 @@
 			canmove = 0
 			downed = 1
 		else if(weakened)
-			lying = 1
+			lying = 3
 			canmove = 0
 			if(prob(25))
 				downed = 1
 		else if(resting)
-			lying = 1
+			lying = 3
 			canmove = 0
 		else if(stunned)
 			if(src.lying)
-				lying = 1
+				lying = src.lying
 			canmove = 0
 
+	if(lying == 3)
+		var/check_dir = dir
+		if(l_move_time + 15 < world.time)
+			check_dir = last_move
+		if(check_dir in list(NORTH, EAST))
+			lying = RIGHT
+		else
+			lying = LEFT
 	src.lying = lying
 	src.canmove = canmove
 
@@ -661,13 +649,7 @@
 			canmove = 0
 			break
 
-	//Temporarily moved here from the various life() procs
-	//I'm fixing stuff incrementally so this will likely find a better home.
-	//It just makes sense for now. ~Carn
-	if(update_icon)	//forces a full overlay update
-		update_icon = 0
-		regenerate_icons()
-	else if(lying != lying_prev)
+	if(lying != lying_prev)
 		update_icons()
 
 	return canmove

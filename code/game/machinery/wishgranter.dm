@@ -36,6 +36,8 @@
 		charges--
 		insisting = 0
 
+		//TODO: DNA3
+		/*
 		if (!(HULK in user.mutations))
 			user.mutations.Add(HULK)
 
@@ -56,8 +58,8 @@
 
 		if(!(HEAL in user.mutations))
 			user.mutations.Add(HEAL)
+		*/
 
-		user.update_mutations()
 		user.mind.special_role = "Avatar of the Wish Granter"
 
 		var/datum/objective/silence/silence = new

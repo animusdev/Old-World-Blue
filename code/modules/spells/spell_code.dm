@@ -211,11 +211,11 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 	if(!user_turf)
 		user << "<span class='warning'>You cannot cast spells in null space!</span>"
 
-	if(spell_flags & Z2NOCAST && (user_turf.z in config.admin_levels)) //Certain spells are not allowed on the centcomm zlevel
+	if(spell_flags & Z2NOCAST && isOnAdminLevel(user)) //Certain spells are not allowed on the centcomm zlevel
 		return 0
 
 	if(spell_flags & CONSTRUCT_CHECK)
-		for(var/turf/T in range(holder, 1))
+		for(var/turf/T in RANGE_TURFS(1, holder))
 			if(findNullRod(T))
 				return 0
 

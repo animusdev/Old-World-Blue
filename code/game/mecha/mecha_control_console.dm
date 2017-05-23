@@ -69,8 +69,6 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "motion2"
 	origin_tech = list(TECH_DATA = 2, TECH_MAGNET = 2)
-	construction_time = 50
-	construction_cost = list(DEFAULT_WALL_MATERIAL=500)
 
 	proc/get_mecha_info()
 		if(!in_mecha())
@@ -116,7 +114,7 @@
 		return M.get_log_html()
 
 
-/obj/item/weapon/storage/box/mechabeacons
+/obj/item/storage/box/mechabeacons
 	name = "Exosuit Tracking Beacons"
 	New()
 		..()

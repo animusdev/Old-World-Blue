@@ -165,11 +165,6 @@ var/list/gamemode_cache = list()
 
 	var/use_overmap = 0
 
-	var/list/station_levels = list(1)				// Defines which Z-levels the station exists on.
-	var/list/admin_levels= list(2)					// Defines which Z-levels which are for admin functionality, for example including such areas as Central Command and the Syndicate Shuttle
-	var/list/contact_levels = list(1, 5)			// Defines which Z-levels which, for example, a Code Red announcement may affect
-	var/list/player_levels = list(1, 3, 4, 5, 6)	// Defines all Z-levels a character can typically reach
-
 	// Event settings
 	var/expected_round_length = 3 * 60 * 60 * 10 // 3 hours
 	// If the first delay has a custom start time
@@ -192,7 +187,7 @@ var/list/gamemode_cache = list()
 
 	var/starlight = 0	// Whether space turfs have ambient light or not
 
-	var/list/ert_species = list("Human")
+	var/list/ert_species = list(SPECIES_HUMAN)
 
 	var/law_zero = "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'ALL LAWS OVERRIDDEN#*?&110010"
 
@@ -552,7 +547,6 @@ var/list/gamemode_cache = list()
 					config.extreme_popcap_message = value
 				////END Plyaer-cap END////
 
-
 				if("usealienwhitelist")
 					usealienwhitelist = 1
 
@@ -599,18 +593,6 @@ var/list/gamemode_cache = list()
 				if("use_overmap")
 					config.use_overmap = 1
 
-				if("station_levels")
-					config.station_levels = text2numlist(value, ";")
-
-				if("admin_levels")
-					config.admin_levels = text2numlist(value, ";")
-
-				if("contact_levels")
-					config.contact_levels = text2numlist(value, ";")
-
-				if("player_levels")
-					config.player_levels = text2numlist(value, ";")
-
 				if("expected_round_length")
 					config.expected_round_length = MinutesToTicks(text2num(value))
 
@@ -651,7 +633,7 @@ var/list/gamemode_cache = list()
 				if("ert_species")
 					config.ert_species = splittext(value, ";")
 					if(!config.ert_species.len)
-						config.ert_species += "Human"
+						config.ert_species += SPECIES_HUMAN
 
 				if("law_zero")
 					law_zero = value

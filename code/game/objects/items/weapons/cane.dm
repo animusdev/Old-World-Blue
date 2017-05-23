@@ -7,7 +7,7 @@
 	flags = CONDUCT
 	force = 5.0
 	throwforce = 7.0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	matter = list(DEFAULT_WALL_MATERIAL = 50)
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
@@ -30,11 +30,9 @@
 		playsound(user.loc, 'sound/weapons/flipblade.ogg', 50, 1)
 		user.drop_from_inventory(src)
 		user.put_in_hands(concealed_blade)
-		user.put_in_hands(src)
-		user.update_inv_l_hand(0)
-		user.update_inv_r_hand()
-		concealed_blade = null
 		update_icon()
+		concealed_blade = null
+		user.put_in_hands(src)
 	else
 		..()
 

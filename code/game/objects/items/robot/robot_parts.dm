@@ -1,256 +1,237 @@
 /obj/item/robot_parts
 	name = "robot parts"
+	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon = 'icons/obj/robot_parts.dmi'
 	item_state = "buildpipe"
 	icon_state = "blank"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	var/construction_time = 100
-	var/list/construction_cost = list(DEFAULT_WALL_MATERIAL=20000,"glass"=5000)
 	dir = SOUTH
+	var/body_part = "part"
 
 /obj/item/robot_parts/set_dir()
 	return
 
+/obj/item/robot_parts/proc/is_ready(var/mob/living/user)
+	return TRUE
+
 /obj/item/robot_parts/l_arm
 	name = "left arm"
-	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "l_arm"
-	construction_time = 200
+	body_part = "l_arm"
 	matter = list(DEFAULT_WALL_MATERIAL = 12000)
-	construction_cost = list(DEFAULT_WALL_MATERIAL=18000)
 
 /obj/item/robot_parts/r_arm
 	name = "right arm"
-	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "r_arm"
-	construction_time = 200
+	body_part = "r_arm"
 	matter = list(DEFAULT_WALL_MATERIAL = 12000)
-	construction_cost = list(DEFAULT_WALL_MATERIAL=18000)
 
 /obj/item/robot_parts/l_leg
 	name = "left leg"
-	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "l_leg"
-	construction_time = 200
+	body_part = "l_leg"
 	matter = list(DEFAULT_WALL_MATERIAL = 10000)
-	construction_cost = list(DEFAULT_WALL_MATERIAL=15000)
 
 /obj/item/robot_parts/r_leg
 	name = "right leg"
-	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "r_leg"
-	construction_time = 200
+	body_part = "r_leg"
 	matter = list(DEFAULT_WALL_MATERIAL = 10000)
-	construction_cost = list(DEFAULT_WALL_MATERIAL=15000)
 
 /obj/item/robot_parts/chest
 	name = "torso"
 	desc = "A heavily reinforced case containing cyborg logic boards, with space for a standard power cell."
 	icon_state = "chest"
-	construction_time = 350
+	body_part = "chest"
 	matter = list(DEFAULT_WALL_MATERIAL = 32000)
-	construction_cost = list(DEFAULT_WALL_MATERIAL=40000)
 	var/wires = 0.0
 	var/obj/item/weapon/cell/cell = null
+
+/obj/item/robot_parts/chest/is_ready(var/mob/living/user)
+	if(!wires)
+		user << SPAN_WARN("You need to attach wires to it first!")
+		return FALSE
+	else if(!cell)
+		user << SPAN_WARN("You need to attach a cell to it first!")
+		return FALSE
+	return TRUE
 
 /obj/item/robot_parts/head
 	name = "head"
 	desc = "A standard reinforced braincase, with spine-plugged neural socket and sensor gimbals."
 	icon_state = "head"
-	construction_time = 350
+	body_part = "head"
 	matter = list(DEFAULT_WALL_MATERIAL = 20000)
-	construction_cost = list(DEFAULT_WALL_MATERIAL=25000)
 	var/obj/item/device/flash/flash1 = null
 	var/obj/item/device/flash/flash2 = null
+
+/obj/item/robot_parts/head/is_ready(var/mob/living/user)
+	if(!flash1 || !flash2)
+		user << SPAN_WARN("You need to attach a flash to it first!")
+		return FALSE
+	return TRUE
 
 /obj/item/robot_parts/robot_suit
 	name = "endoskeleton"
 	desc = "A complex metal backbone with standard limb sockets and pseudomuscle anchors."
 	icon_state = "robo_suit"
-	construction_time = 500
 	matter = list(DEFAULT_WALL_MATERIAL = 42000)
-	construction_cost = list(DEFAULT_WALL_MATERIAL=50000)
-	var/obj/item/robot_parts/l_arm/l_arm = null
-	var/obj/item/robot_parts/r_arm/r_arm = null
-	var/obj/item/robot_parts/l_leg/l_leg = null
-	var/obj/item/robot_parts/r_leg/r_leg = null
-	var/obj/item/robot_parts/chest/chest = null
-	var/obj/item/robot_parts/head/head = null
+	var/list/req_parts = list(
+		"chest",
+		"head",
+		"l_arm",
+		"r_arm",
+		"l_leg",
+		"r_leg"
+	)
+	var/list/parts = list()
 	var/created_name = ""
+
+/obj/item/robot_parts/robot_suit/with_limbs/New()
+	..()
+	var/list/preinstalled = list(
+		/obj/item/robot_parts/r_arm,
+		/obj/item/robot_parts/l_arm,
+		/obj/item/robot_parts/r_leg,
+		/obj/item/robot_parts/l_leg
+	)
+	for(var/path in preinstalled)
+		var/obj/item/robot_parts/P = new path (src)
+		parts[P.body_part] = P
+	update_icon()
 
 /obj/item/robot_parts/robot_suit/update_icon()
 	src.overlays.Cut()
-	if(src.l_arm)
-		src.overlays += "l_arm+o"
-	if(src.r_arm)
-		src.overlays += "r_arm+o"
-	if(src.chest)
-		src.overlays += "chest+o"
-	if(src.l_leg)
-		src.overlays += "l_leg+o"
-	if(src.r_leg)
-		src.overlays += "r_leg+o"
-	if(src.head)
-		src.overlays += "head+o"
+	for(var/part in parts)
+		if(parts[part])
+			overlays += "[part]+o"
 
-/obj/item/robot_parts/robot_suit/proc/check_completion()
-	if(src.l_arm && src.r_arm)
-		if(src.l_leg && src.r_leg)
-			if(src.chest && src.head)
-				return 1
-	return 0
+/obj/item/robot_parts/robot_suit/is_ready()
+	var/list/missed = req_parts - parts
+	return !missed.len
 
 /obj/item/robot_parts/robot_suit/attackby(obj/item/W as obj, mob/user as mob)
 	..()
-	if(istype(W, /obj/item/stack/material) && W.get_material_name() == DEFAULT_WALL_MATERIAL && !l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
+	if(istype(W, /obj/item/stack/material) && W.get_material_name() == DEFAULT_WALL_MATERIAL && !parts.len)
 		var/obj/item/stack/material/M = W
 		if (M.use(1))
 			var/obj/item/weapon/secbot_assembly/ed209_assembly/B = new(loc)
 			B.loc = get_turf(src)
-			user << "<span class='notice'>You armed the robot frame.</span>"
-			if (user.get_inactive_hand()==src)
+			user << SPAN_NOTE("You armed the robot frame.")
+			if (user.get_inactive_hand() == src)
 				user.remove_from_mob(src)
 				user.put_in_inactive_hand(B)
 			qdel(src)
 		else
-			user << "<span class='warning'>You need one sheet of metal to arm the robot frame.</span>"
+			user << SPAN_WARN("You need one sheet of metal to arm the robot frame.")
 
 	if(istype(W, /obj/item/weapon/wrench))
-		var/obj/item/robot_parts/selected = input("Select part for detach", "Detach") \
-			as null|anything in list(head, chest, r_arm, l_arm, l_leg, r_leg)
+		var/part = input("Select part for detach", "Detach") \
+			as null|anything in parts
+		var/obj/item/robot_parts/selected = part ? parts[part] : null
 		if(!Adjacent(user) || !selected) return
 
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		if(!do_after(user, 30, src))
-			user << "<span class='notice'>You stop detaching [selected].</span>"
+			user << SPAN_NOTE("You stop detaching [selected].")
 			return
 
-		if(selected == head)
-			head = null
-		else if(selected == chest)
-			chest = null
-		else if(selected == r_arm)
-			r_arm = null
-		else if(selected == l_arm)
-			l_arm = null
-		else if(selected == r_leg)
-			r_leg = null
-		else if(selected == l_leg)
-			l_leg = null
+		if(selected.loc == src)
+			parts -= selected.body_part
 		else
 			return
 
 		selected.forceMove(get_turf(src))
 		src.update_icon()
 		user.visible_message(
-			"<span class='notice'>[user] detached [selected] from [src].</span>",
-			"<span class='notice'>You had successfuly detach [selected] from [src].</span>",
-			"<span class='warning'>You have hear how something metallic hit the floor</span>"
+			SPAN_NOTE("[user] detached [selected] from [src]."),
+			SPAN_NOTE("You had successfuly detach [selected] from [src]."),
+			SPAN_WARN("You have hear how something metallic hit the floor.")
 		)
 		return
 
 	if(istype(W, /obj/item/robot_parts))
-		if(istype(W, /obj/item/robot_parts/l_leg))
-			if(src.l_leg)	return
-			src.l_leg = W
-		else if(istype(W, /obj/item/robot_parts/r_leg))
-			if(src.r_leg)	return
-			src.r_leg = W
-		else if(istype(W, /obj/item/robot_parts/l_arm))
-			if(src.l_arm)	return
-			src.l_arm = W
-		else if(istype(W, /obj/item/robot_parts/r_arm))
-			if(src.r_arm)	return
-			src.r_arm = W
-		else if(istype(W, /obj/item/robot_parts/chest))
-			if(src.chest)	return
-			if(!W:wires)
-				user << "<span class='warning'>You need to attach wires to it first!</span>"
-				return
-			else if(!W:cell)
-				user << "<span class='warning'>You need to attach a cell to it first!</span>"
-				return
-			else
-				src.chest = W
-		else if(istype(W, /obj/item/robot_parts/head))
-			if(src.head)	return
-			if(W:flash2 && W:flash1)
-				src.head = W
-			else
-				user << "<span class='warning'>You need to attach a flash to it first!</span>"
-				return
-		else
+		var/obj/item/robot_parts/RP = W
+		if(!req_parts.Find(RP.body_part))
+			user << SPAN_WARN("You can't attach that here!")
 			return
+		if(parts[RP.body_part])
+			user << SPAN_WARN("There is already one [parts[RP.body_part]] attached.")
+			return
+		if(!RP.is_ready(user))
+			return
+		parts[RP.body_part] = RP
 
 		user.drop_from_inventory(W, src)
 		src.update_icon()
 
 	if(istype(W, /obj/item/device/mmi))
 		var/obj/item/device/mmi/M = W
-		if(check_completion())
-			if(!istype(loc,/turf))
-				user << "<span class='warning'>You can't put \the [W] in, the frame has to be standing on the ground to be perfectly precise.</span>"
-				return
-			if(!M.brainmob)
-				user << "<span class='warning'>Sticking an empty [W] into the frame would sort of defeat the purpose.</span>"
-				return
-			if(!M.brainmob.key)
-				var/ghost_can_reenter = 0
-				if(M.brainmob.mind)
-					for(var/mob/observer/dead/G in player_list)
-						if(G.can_reenter_corpse && G.mind == M.brainmob.mind)
-							ghost_can_reenter = 1
-							break
-				if(!ghost_can_reenter)
-					user << "<span class='notice'>\The [W] is completely unresponsive; there's no point.</span>"
-					return
+		if(!is_ready(user))
+			user << SPAN_WARN("The MMI must go in after everything else!")
+			return
 
-			if(M.brainmob.stat == DEAD)
-				user << "<span class='warning'>Sticking a dead [W] into the frame would sort of defeat the purpose.</span>"
-				return
-
-			if(jobban_isbanned(M.brainmob, "Cyborg"))
-				user << "<span class='warning'>This [W] does not seem to fit.</span>"
+		if(!istype(loc,/turf))
+			user << SPAN_WARN("You can't put \the [W] in, the frame has to be standing on the ground to be perfectly precise.")
+			return
+		if(!M.brainmob)
+			user << SPAN_WARN("Sticking an empty [W] into the frame would sort of defeat the purpose.")
+			return
+		if(!M.brainmob.key)
+			var/ghost_can_reenter = 0
+			if(M.brainmob.mind)
+				for(var/mob/observer/dead/G in player_list)
+					if(G.can_reenter_corpse && G.mind == M.brainmob.mind)
+						ghost_can_reenter = 1
+						break
+			if(!ghost_can_reenter)
+				user << SPAN_NOTE("\The [W] is completely unresponsive; there's no point.")
 				return
 
-			var/mob/living/silicon/robot/O = new (get_turf(loc), unfinished = 1)
-			if(!O)	return
+		if(M.brainmob.stat == DEAD)
+			user << SPAN_WARN("Sticking a dead [W] into the frame would sort of defeat the purpose.")
+			return
 
-			user.unEquip(M)
+		if(jobban_isbanned(M.brainmob, "Cyborg"))
+			user << SPAN_WARN("This [W] does not seem to fit.")
+			return
 
-			O.mmi = M
-			O.invisibility = 0
-			O.custom_name = created_name
-			O.updatename("Default")
+		var/mob/living/silicon/robot/O = new (get_turf(loc), unfinished = 1)
+		if(!O)	return
 
-			M.brainmob.mind.transfer_to(O)
+		user.unEquip(M)
 
-			if(O.mind && O.mind.special_role)
-				O.mind.store_memory({"
-					In case you look at this after being borged,
-					the objectives are only here until I find a way to make them not show up for you,
-					as I can't simply delete them without screwing up round-end reporting. --NeoFite
-				"})
+		O.mmi = M
+		O.invisibility = 0
+		O.custom_name = created_name
+		O.updatename("Default")
 
-			O.job = "Cyborg"
+		M.brainmob.mind.transfer_to(O)
 
-			O.cell = chest.cell
-			O.cell.loc = O
-			W.loc = O//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
+		if(O.mind && O.mind.special_role)
+			O.mind.store_memory({"
+				In case you look at this after being borged,
+				the objectives are only here until I find a way to make them not show up for you,
+				as I can't simply delete them without screwing up round-end reporting. --NeoFite
+			"})
 
-			// Since we "magically" installed a cell, we also have to update the correct component.
-			if(O.cell)
-				var/datum/robot_component/cell_component = O.components["power cell"]
-				cell_component.wrapped = O.cell
-				cell_component.installed = 1
+		O.job = "Cyborg"
+		var/obj/item/robot_parts/chest/chest = parts["chest"]
+		O.cell = chest.cell
+		O.cell.loc = O
+		W.loc = O//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 
-			callHook("borgify", list(O))
-			O.Namepick()
+		// Since we "magically" installed a cell, we also have to update the correct component.
+		if(O.cell)
+			var/datum/robot_component/cell_component = O.components["power cell"]
+			cell_component.wrapped = O.cell
+			cell_component.installed = 1
 
-			qdel(src)
-		else
-			user << "<span class='warning'>The MMI must go in after everything else!</span>"
+		callHook("borgify", list(O))
+		O.Namepick()
+
+		qdel(src)
 
 	if (istype(W, /obj/item/weapon/pen))
 		var/t = sanitizeSafe(input(user, "Enter new robot name", src.name, src.created_name), MAX_NAME_LEN)

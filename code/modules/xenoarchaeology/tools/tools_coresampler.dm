@@ -1,6 +1,6 @@
 //device to take core samples from mineral turfs - used for various types of analysis
 
-/obj/item/weapon/storage/box/samplebags
+/obj/item/storage/box/samplebags
 	name = "sample bag box"
 	desc = "A box claiming to contain sample bags."
 	New()

@@ -14,7 +14,7 @@ LINEN BINS
 	throwforce = 1
 	throw_speed = 1
 	throw_range = 2
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 
 /obj/item/weapon/bedsheet/attack_self(mob/user as mob)
 	user.drop_from_inventory(src)
@@ -112,8 +112,7 @@ LINEN BINS
 		amount++
 		user << "<span class='notice'>You put [I] in [src].</span>"
 	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
-	else if(amount && !hidden && I.w_class < 4)
-		user.drop_from_inventory(I, src)
+	else if(amount && !hidden && I.w_class < ITEM_SIZE_HUGE && user.unEquip(I, src))
 		hidden = I
 		user << "<span class='notice'>You hide [I] among the sheets.</span>"
 

@@ -14,7 +14,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "hdd1"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 
 	var/emagged = 0
 	crit_fail = 0

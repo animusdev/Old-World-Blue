@@ -227,9 +227,13 @@
 /datum/disease2/effect/telepathic
 	name = "Telepathy Syndrome"
 	stage = 3
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.dna.SetSEState(REMOTETALKBLOCK,1)
-		domutcheck(mob, null, MUTCHK_FORCED)
+	activate(var/mob/living/carbon/human/mob,var/multiplier)
+		if(istype(mob))
+			mob.verbs |= /mob/living/carbon/human/proc/remotesay
+	deactivate(var/mob/living/carbon/human/mob,var/multiplier)
+		if(istype(mob))
+			mob.verbs -= /mob/living/carbon/human/proc/remotesay
+
 
 /datum/disease2/effect/mind
 	name = "Lazy Mind Syndrome"
@@ -355,7 +359,7 @@
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
-			if(H.species.name == "Human" && !(H.h_style == "Bald") && !(H.h_style == "Balding Hair"))
+			if(H.species.name == SPECIES_HUMAN && !(H.h_style == "Bald") && !(H.h_style == "Balding Hair"))
 				H << "<span class='danger'>Your hair starts to fall out in clumps...</span>"
 				spawn(50)
 					H.h_style = "Balding Hair"

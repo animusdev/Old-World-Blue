@@ -22,12 +22,8 @@
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "mmi"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = list(TECH_BIO = 3)
-
-	var/list/construction_cost = list(DEFAULT_WALL_MATERIAL=1000,"glass"=500)
-	var/construction_time = 75
-	//these vars are so the mecha fabricator doesn't shit itself anymore. --NEO
 
 	req_access = list(access_robotics)
 

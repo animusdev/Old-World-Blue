@@ -7,7 +7,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 2
 	throw_range = 5
 	origin_tech = list(TECH_MATERIAL = 1)
@@ -25,19 +25,31 @@
 	icon_state = "handcuff"
 	flags = CONDUCT
 	throwforce = 0
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = list(TECH_MATERIAL = 1)
 	var/breakouttime = 300	//Deciseconds = 30s = 0.5 minute
+
+/obj/item/weapon/handcuffs/on_mob_description(mob/living/carbon/human/H, datum/gender/T, slot)
+	if(slot == slot_handcuffed)
+		if(name == "handcuffs")
+			return SPAN_WARN("[T.He] [T.is] \icon[src] handcuffed!")
+		else
+			return SPAN_WARN("[T.He] [T.is] restrained with \icon[src] [src]!")
+	else
+		return ..()
 
 /obj/item/weapon/handcuffs/attack(var/mob/living/carbon/C, var/mob/living/user)
 
 	if(!user.IsAdvancedToolUser())
 		return
 
+	//TODO: DNA3 clown_block
+	/*
 	if ((CLUMSY in user.mutations) && prob(50))
 		user << "<span class='warning'>Uh ... how do those things work?!</span>"
 		place_handcuffs(user, user)
 		return
+	*/
 
 	if(!C.handcuffed)
 		if (C == user)
@@ -57,7 +69,7 @@
 		if(can_place)
 			place_handcuffs(C, user)
 		else
-			user << "<span class='danger'>You need to have a firm grip on [C] before you can put \the [src] on!</span>"
+			user << SPAN_DANG("You need to have a firm grip on [C] before you can put \the [src] on!")
 
 /obj/item/weapon/handcuffs/proc/place_handcuffs(var/mob/living/carbon/target, var/mob/user)
 	playsound(src.loc, cuff_sound, 30, 1, -2)
@@ -67,14 +79,14 @@
 		return
 
 	if (!H.has_organ_for_slot(slot_handcuffed))
-		user << "<span class='danger'>\The [H] needs at least two wrists before you can cuff them together!</span>"
+		user << SPAN_DANG("\The [H] needs at least two wrists before you can cuff them together!")
 		return
 
 	if(istype(H.gloves,/obj/item/clothing/gloves/rig)) // Can't cuff someone who's in a deployed hardsuit.
 		user << "<span class='danger'>The cuffs won't fit around \the [H.gloves]!</span>"
 		return
 
-	user.visible_message("<span class='danger'>\The [user] is attempting to put [cuff_type] on \the [H]!</span>")
+	user.visible_message(SPAN_DANG("\The [user] is attempting to put [cuff_type] on \the [H]!"))
 
 	if(!do_mob(user, target, 30))
 		return
@@ -134,6 +146,12 @@
 	cuff_sound = 'sound/weapons/cablecuff.ogg'
 	cuff_type = "cable restraints"
 
+/obj/item/weapon/handcuffs/cable/on_mob_description(mob/living/carbon/human/H, datum/gender/T, slot)
+	if(slot == slot_handcuffed)
+		return SPAN_WARN("[T.He] [T.is] \icon[src] restrained with cable!")
+	else
+		return ..()
+
 /obj/item/weapon/handcuffs/cable/red
 	color = "#DD0000"
 
@@ -165,15 +183,26 @@
 		if (R.use(1))
 			var/obj/item/weapon/material/wirerod/W = new(get_turf(user))
 			user.put_in_hands(W)
-			user << "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>"
+			user << SPAN_NOTE("You wrap the cable restraint around the top of the rod.")
 			qdel(src)
 			update_icon(user)
+
+/obj/item/weapon/handcuffs/pink
+	name = "pink handcuffs"
+	icon_state = "handcuffpink"
+	breakouttime = 600
 
 /obj/item/weapon/handcuffs/tape
 	name = "tape restraints"
 	desc = "A few pieces of tape glued together. It looks unreliable."
 	icon_state = "tapecuffs"
 	breakouttime = 300
+
+/obj/item/weapon/handcuffs/tape/on_mob_description(mob/living/carbon/human/H, datum/gender/T, slot)
+	if(slot == slot_handcuffed)
+		return SPAN_WARN("[T.He] [T.is] \icon[src] restrained with lenght of tape!")
+	else
+		return ..()
 
 /obj/item/weapon/handcuffs/tape/dropped()
 	new/obj/item/weapon/tape_piece(src.loc)

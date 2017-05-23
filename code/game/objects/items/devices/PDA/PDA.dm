@@ -9,7 +9,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda"
 	item_state = "electronic"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	slot_flags = SLOT_ID | SLOT_BELT
 
 	//Main variables
@@ -247,7 +247,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "AI IM"
 	set name = "Send Message"
 	set src in usr
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		usr << "You can't send PDA messages because you are dead!"
 		return
 	var/list/plist = available_pdas()
@@ -263,7 +263,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "AI IM"
 	set name = "Toggle Sender/Receiver"
 	set src in usr
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		usr << "You can't do that because you are dead!"
 		return
 	toff = !toff
@@ -274,7 +274,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "AI IM"
 	set name = "Toggle Ringer"
 	set src in usr
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		usr << "You can't do that because you are dead!"
 		return
 	message_silent=!message_silent
@@ -285,7 +285,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	set category = "AI IM"
 	set name = "Show Message Log"
 	set src in usr
-	if(usr.stat == 2)
+	if(usr.stat == DEAD)
 		usr << "You can't do that because you are dead!"
 		return
 	var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>"
@@ -783,7 +783,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 		if("Toggle Door")
 			if(cartridge && cartridge.access_remote_door)
-				for(var/obj/machinery/door/blast/M in world)
+				for(var/obj/machinery/door/blast/M in machines)
 					if(M.id == cartridge.remote_door_id)
 						if(M.density)
 							M.open()
@@ -1387,7 +1387,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 //Some spare PDAs in a box
-/obj/item/weapon/storage/box/PDAs
+/obj/item/storage/box/PDAs
 	name = "box of spare PDAs"
 	desc = "A box of spare PDA microcomputers."
 	icon = 'icons/obj/pda.dmi'

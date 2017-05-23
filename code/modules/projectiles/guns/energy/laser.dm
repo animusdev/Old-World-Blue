@@ -5,7 +5,7 @@
 	item_state = "laser"
 	fire_sound = 'sound/weapons/Laser.ogg'
 	slot_flags = SLOT_BELT|SLOT_BACK
-	w_class = 3
+	w_class = ITEM_SIZE_LARGE
 	force = 10
 	origin_tech = list(TECH_COMBAT = 3, TECH_MAGNET = 2)
 	matter = list(DEFAULT_WALL_MATERIAL = 2000)
@@ -17,7 +17,7 @@
 	use_external_power = 1
 
 /obj/item/weapon/gun/energy/laser/practice
-	name = "practice laser gun"
+	name = "practice laser carbine"
 	desc = "A modified version of the HI G40E, this one fires less concentrated energy bolts designed for target practice."
 	projectile_type = /obj/item/projectile/beam/practice
 
@@ -27,8 +27,8 @@ obj/item/weapon/gun/energy/retro
 	item_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
 	fire_sound = 'sound/weapons/Laser.ogg'
-	slot_flags = SLOT_BELT
-	w_class = 3
+	slot_flags = SLOT_BELT|SLOT_HOLSTER
+	w_class = ITEM_SIZE_NORMAL
 	projectile_type = /obj/item/projectile/beam
 	fire_delay = 10 //old technology
 
@@ -39,8 +39,8 @@ obj/item/weapon/gun/energy/retro
 	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
 	force = 5
 	fire_sound = 'sound/weapons/Laser.ogg'
-	slot_flags = SLOT_BELT
-	w_class = 3
+	slot_flags = SLOT_BELT //too unusually shaped to fit in a holster
+	w_class = ITEM_SIZE_NORMAL
 	projectile_type = /obj/item/projectile/beam
 	origin_tech = null
 	max_shots = 5 //to compensate a bit for self-recharging
@@ -54,6 +54,7 @@ obj/item/weapon/gun/energy/retro
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 	origin_tech = list(TECH_COMBAT = 4, TECH_MATERIAL = 3, TECH_POWER = 3)
 	slot_flags = SLOT_BELT|SLOT_BACK
+	w_class = ITEM_SIZE_HUGE
 	projectile_type = /obj/item/projectile/beam/heavylaser
 	charge_cost = 400
 	max_shots = 5
@@ -66,13 +67,14 @@ obj/item/weapon/gun/energy/retro
 	recharge_time = 10
 
 /obj/item/weapon/gun/energy/xray
-	name = "xray laser gun"
-	desc = "A high-power laser gun capable of expelling concentrated xray blasts."
+	name = "x-ray laser carbine"
+	desc = "A high-power laser gun capable of emitting concentrated x-ray blasts, that are able to penetrate laser-resistant armor much more readily than standard photonic beams."
 	icon_state = "xray"
 	item_state = "xray"
 	fire_sound = 'sound/weapons/laser3.ogg'
 	origin_tech = list(TECH_COMBAT = 5, TECH_MATERIAL = 3, TECH_MAGNET = 2)
 	projectile_type = /obj/item/projectile/beam/xray
+	w_class = ITEM_SIZE_LARGE
 	charge_cost = 100
 	max_shots = 20
 	fire_delay = 1
@@ -90,7 +92,7 @@ obj/item/weapon/gun/energy/retro
 	max_shots = 4
 	fire_delay = 35
 	force = 10
-	w_class = 4
+	w_class = ITEM_SIZE_HUGE
 	accuracy = -3 //shooting at the hip
 	scoped_accuracy = 0
 

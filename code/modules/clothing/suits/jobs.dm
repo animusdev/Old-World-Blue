@@ -9,9 +9,11 @@
 	icon_state = "apron"
 	blood_overlay_type = "armor"
 	body_parts_covered = 0
-	allowed = list (/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/analyzer/plant_analyzer,
-					/obj/item/seeds,/obj/item/weapon/reagent_containers/glass/fertilizer,
-					/obj/item/weapon/material/minihoe)
+	allowed = list (
+		/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/analyzer/plant_analyzer,
+		/obj/item/seeds,/obj/item/weapon/reagent_containers/glass/fertilizer,
+		/obj/item/weapon/material/minihoe
+	)
 
 //Captain
 /obj/item/clothing/suit/captunic
@@ -35,7 +37,7 @@
 	desc = "This suit says to you 'hush'!"
 	icon_state = "chaplain_hoodie"
 	body_parts_covered = UPPER_TORSO|ARMS
-	allowed = list (/obj/item/weapon/storage/bible,/obj/item/weapon/nullrod)
+	allowed = list (/obj/item/storage/bible,/obj/item/weapon/nullrod)
 
 //Chaplain
 /obj/item/clothing/suit/nun
@@ -56,7 +58,6 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 	allowed = list (/obj/item/weapon/material/knife)
 
-//Chef
 /obj/item/clothing/suit/chef/classic
 	name = "A classic chef's apron."
 	desc = "A basic, dull, white chef's apron."
@@ -93,9 +94,11 @@
 	icon_state = "officerdnavyjacket"
 	item_state = "blue_blazer"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-	allowed = list( /obj/item/weapon/tank/emergency_oxygen,/obj/item/device/flashlight,/obj/item/weapon/gun/energy,
-					/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,
-					/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
+	allowed = list(
+		/obj/item/weapon/tank/emergency_oxygen,/obj/item/device/flashlight,/obj/item/weapon/gun/energy,
+		/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,
+		/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs
+	)
 	armor = list(melee = 20, bullet = 20, laser = 25, energy = 15, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/storage/security/dnavywarden
@@ -104,9 +107,11 @@
 	icon_state = "wardendnavyjacket"
 	item_state = "blue_blazer"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-	allowed = list( /obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,
-					/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,
-					/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
+	allowed = list(
+		/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,
+		/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,
+		/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs
+	)
 	armor = list(melee = 20, bullet = 20, laser = 25, energy = 15, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/storage/security/dnavyhos
@@ -115,9 +120,11 @@
 	icon_state = "hosdnavyjacket"
 	item_state = "blue_blazer"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-	allowed = list( /obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,
-					/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,
-					/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
+	allowed = list(
+		/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,
+		/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,
+		/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs
+	)
 	armor = list(melee = 20, bullet = 20, laser = 25, energy = 15, bomb = 0, bio = 0, rad = 0)
 
 //Detective
@@ -128,10 +135,12 @@
 	item_state = "det_suit"
 	blood_overlay_type = "coat"
 	body_parts_covered = UPPER_TORSO|ARMS
-	allowed = list( /obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,
-					/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/weapon/flame/lighter,
-					/obj/item/weapon/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,
-					/obj/item/weapon/melee/baton,/obj/item/ammo_casing)
+	allowed = list(
+		/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,
+		/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/weapon/flame/lighter,
+		/obj/item/weapon/handcuffs,/obj/item/storage/fancy/cigarettes,
+		/obj/item/weapon/melee/baton,/obj/item/ammo_casing
+	)
 	armor = list(melee = 50, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/storage/det_suit/black
@@ -152,9 +161,11 @@
 	desc = "A forensics technician jacket."
 	item_state = "det_suit"
 	body_parts_covered = UPPER_TORSO|ARMS
-	allowed = list( /obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,
-					/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/weapon/melee/baton,
-					/obj/item/weapon/handcuffs,/obj/item/device/taperecorder,/obj/item/ammo_casing,)
+	allowed = list(
+		/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,
+		/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/weapon/melee/baton,
+		/obj/item/weapon/handcuffs,/obj/item/device/taperecorder,/obj/item/ammo_casing
+	)
 	armor = list(melee = 10, bullet = 10, laser = 15, energy = 10, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/storage/forensics/red
@@ -173,11 +184,13 @@
 	desc = "A high-visibility vest used in work zones."
 	icon_state = "hazard"
 	blood_overlay_type = "armor"
-	allowed = list (/obj/item/device/analyzer, /obj/item/device/flashlight, /obj/item/weapon/tank/emergency_oxygen,
-					/obj/item/device/pipe_painter, /obj/item/weapon/weldingtool, /obj/item/weapon/screwdriver,
-					/obj/item/weapon/wirecutters, /obj/item/taperoll/engineering, /obj/item/device/multitool,
-					/obj/item/weapon/crowbar, /obj/item/weapon/wrench, /obj/item/device/radio,
-					/obj/item/clothing/mask/gas, /obj/item/device/t_scanner)
+	allowed = list (
+		/obj/item/device/analyzer, /obj/item/device/flashlight, /obj/item/weapon/tank/emergency_oxygen,
+		/obj/item/device/pipe_painter, /obj/item/weapon/weldingtool, /obj/item/weapon/screwdriver,
+		/obj/item/weapon/wirecutters, /obj/item/taperoll/engineering, /obj/item/device/multitool,
+		/obj/item/weapon/crowbar, /obj/item/weapon/wrench, /obj/item/device/radio,
+		/obj/item/clothing/mask/gas, /obj/item/device/t_scanner
+	)
 	body_parts_covered = UPPER_TORSO
 
 //Lawyer
@@ -223,10 +236,12 @@
 	item_state = "fr_jacket"
 	base_state = "fr_jacket"
 	blood_overlay_type = "armor"
-	allowed = list( /obj/item/stack/medical, /obj/item/device/radio, /obj/item/weapon/reagent_containers/dropper,
-					/obj/item/weapon/reagent_containers/hypospray, /obj/item/weapon/reagent_containers/syringe,
-					/obj/item/device/healthanalyzer, /obj/item/device/flashlight,
-					/obj/item/weapon/tank/emergency_oxygen)
+	allowed = list(
+		/obj/item/stack/medical, /obj/item/device/radio, /obj/item/weapon/reagent_containers/dropper,
+		/obj/item/weapon/reagent_containers/hypospray, /obj/item/weapon/reagent_containers/syringe,
+		/obj/item/device/healthanalyzer, /obj/item/device/flashlight,
+		/obj/item/weapon/tank/emergency_oxygen
+	)
 	body_parts_covered = UPPER_TORSO|ARMS
 
 /obj/item/clothing/suit/storage/toggle/fr_jacket/ems
@@ -239,10 +254,12 @@
 	name = "paramedic vest"
 	desc = "A hazard vest used in the recovery of bodies."
 	icon_state = "paramedic-vest"
-	allowed = list( /obj/item/device/analyzer,/obj/item/weapon/dnainjector,/obj/item/weapon/tank/emergency_oxygen,
-					/obj/item/weapon/reagent_containers/hypospray,/obj/item/weapon/reagent_containers/syringe,
-					/obj/item/device/healthanalyzer,/obj/item/weapon/reagent_containers/dropper,
-					/obj/item/device/flashlight/pen,/obj/item/stack/medical,/obj/item/device/radio)
+	allowed = list(
+		/obj/item/device/analyzer,/obj/item/weapon/dnainjector,/obj/item/weapon/tank/emergency_oxygen,
+		/obj/item/weapon/reagent_containers/hypospray,/obj/item/weapon/reagent_containers/syringe,
+		/obj/item/device/healthanalyzer,/obj/item/weapon/reagent_containers/dropper,
+		/obj/item/device/flashlight/pen,/obj/item/stack/medical,/obj/item/device/radio
+	)
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 10, rad = 10)
 
 /obj/item/clothing/suit/storage/fr_jacket/emerald
@@ -259,7 +276,12 @@
 	base_state = "investigator"
 	blood_overlay_type = "armor"
 	body_parts_covered = UPPER_TORSO|ARMS
-	allowed = list(/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/flame/lighter,/obj/item/device/taperecorder,/obj/item/device/uv_light)
+	allowed = list(
+		/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,
+		/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,
+		/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/storage/fancy/cigarettes,
+		/obj/item/weapon/flame/lighter,/obj/item/device/taperecorder,/obj/item/device/uv_light
+	)
 
 /obj/item/clothing/suit/storage/toggle/investigator/alt
 	desc = "That't a black jacket with investigator insignias."

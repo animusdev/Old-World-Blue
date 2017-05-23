@@ -16,7 +16,7 @@
 	anchored = 1
 	can_buckle = 1
 	buckle_dir = SOUTH
-	buckle_lying = 1
+	buckle_lying = RIGHT
 	mob_offset_y = 3
 	var/material/material
 	var/material/padding_material
@@ -96,6 +96,19 @@
 		material.place_sheet(get_turf(src))
 		qdel(src)
 
+/obj/structure/bed/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
+	user.visible_message(SPAN_NOTE("[user] attempts to buckle [target] into \the [src]!"))
+	if(do_after(user, 20, src) && Adjacent(target))
+		target.forceMove(loc)
+		spawn(0)
+			if(buckle_mob(target))
+				target.visible_message(
+					SPAN_DANG("[target] is buckled to [src] by [user]!"),
+					SPAN_DANG("You are buckled to [src] by [user]!"),
+					SPAN_NOTE("You hear metal clanking.")
+				)
+		return TRUE
+
 /obj/structure/bed/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
@@ -105,10 +118,10 @@
 		user.drop_from_inventory(W, src.loc)
 		if(buckled_mob)
 			W.layer = 5
-			src.visible_message("<span class='notice'>[user] covers [buckled_mob] with \the [W].")
+			src.visible_message(SPAN_NOTE("[user] covers [buckled_mob] with \the [W]."))
 		else
 			W.layer = initial(W.layer)
-			src.visible_message("<span class='notice'>[user] makes the bed with \the [W].")
+			src.visible_message(SPAN_NOTE("[user] makes the bed with \the [W]."))
 	else if(istype(W,/obj/item/stack))
 		if(padding_material)
 			user << "\The [src] is already padded."
@@ -144,21 +157,6 @@
 		playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
 		remove_padding()
 
-	else if(istype(W, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = W
-		var/mob/living/affecting = G.affecting
-		if(!get_dist(src,affecting)<2)
-			return
-		user.visible_message("<span class='notice'>[user] attempts to buckle [affecting] into \the [src]!</span>")
-		if(do_after(user, 20))
-			affecting.loc = loc
-			spawn(0)
-				if(buckle_mob(affecting))
-					affecting.visible_message(\
-						"<span class='danger'>[affecting.name] is buckled to [src] by [user.name]!</span>",\
-						"<span class='danger'>You are buckled to [src] by [user.name]!</span>",\
-						"<span class='notice'>You hear metal clanking.</span>")
-			qdel(W)
 	else
 		..()
 
@@ -231,19 +229,19 @@
 	icon_state = "folded"
 	item_state = "folded"
 	slot_flags = SLOT_BACK
-	w_class = 4.0 // Can't be put in backpacks. Oh well.
+	w_class = ITEM_SIZE_HUGE // Can't be put in backpacks. Oh well. For now.
 
 /obj/item/roller/attack_self(mob/user)
-		var/obj/structure/bed/roller/R = new /obj/structure/bed/roller(user.loc)
-		R.add_fingerprint(user)
-		qdel(src)
+	var/obj/structure/bed/roller/R = new /obj/structure/bed/roller(user.loc)
+	R.add_fingerprint(user)
+	qdel(src)
 
 /obj/item/roller/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if(istype(W,/obj/item/roller_holder))
 		var/obj/item/roller_holder/RH = W
 		if(!RH.held)
-			user << "\blue You collect the roller bed."
+			user << SPAN_NOTE("You collect the roller bed.")
 			src.loc = RH
 			RH.held = src
 			return
@@ -255,24 +253,18 @@
 	desc = "A rack for carrying a collapsed roller bed."
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "folded"
-	var/obj/item/roller/held
-
-/obj/item/roller_holder/New()
-	..()
-	held = new /obj/item/roller(src)
+	var/obj/item/roller/held = new
 
 /obj/item/roller_holder/attack_self(mob/user as mob)
 
 	if(!held)
-		user << "\blue The rack is empty."
+		user << SPAN_NOTE("The rack is empty.")
 		return
 
-	user << "\blue You deploy the roller bed."
-	var/obj/structure/bed/roller/R = new /obj/structure/bed/roller(user.loc)
-	R.add_fingerprint(user)
-	qdel(held)
+	user << SPAN_NOTE("You deploy the roller bed.")
+	held.add_fingerprint(user)
+	held.forceMove(user.loc)
 	held = null
-
 
 /obj/structure/bed/roller/Move()
 	..()
@@ -299,8 +291,8 @@
 /obj/structure/bed/roller/MouseDrop(over_object, src_location, over_location)
 	..()
 	if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
-		if(!ishuman(usr))	return
-		if(buckled_mob)	return 0
+		if(!ishuman(usr) || buckled_mob)
+			return 0
 		visible_message("[usr] collapses \the [src.name].")
 		new/obj/item/roller(get_turf(src))
 		spawn(0)
@@ -311,7 +303,6 @@
 	name = "comfy sofa"
 	desc = "So lovely, uh."
 	icon_state = "sofa_right"
-	base_icon = "sofa_right"
 	buckle_dir = 0
 	buckle_lying = 0
 	mob_offset_y = 0
@@ -320,9 +311,9 @@
 
 /obj/structure/bed/sofa/left
 	icon_state = "sofa_left"
-	base_icon = "sofa_left"
 
 /obj/structure/bed/sofa/New(var/newloc)
+	base_icon = icon_state
 	..(newloc,"plastic")
 
 
@@ -332,3 +323,33 @@
 		src.layer = 5
 	else
 		src.layer = OBJ_LAYER
+
+
+/obj/structure/bed/sofa/black
+	icon_state = "couchblack_middle"
+
+/obj/structure/bed/sofa/black/left
+	icon_state = "couchblack_left"
+
+/obj/structure/bed/sofa/black/right
+	icon_state = "couchblack_right"
+
+
+/obj/structure/bed/sofa/beige
+	icon_state = "couchbeige_middle"
+
+/obj/structure/bed/sofa/beige/left
+	icon_state = "couchbeige_left"
+
+/obj/structure/bed/sofa/beige/right
+	icon_state = "couchbeige_right"
+
+
+/obj/structure/bed/sofa/brown
+	icon_state = "couchbrown_middle"
+
+/obj/structure/bed/sofa/brown/left
+	icon_state = "couchbrown_left"
+
+/obj/structure/bed/sofa/brown/right
+	icon_state = "couchbrown_right"

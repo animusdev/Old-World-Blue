@@ -89,7 +89,7 @@
 
 		else
 			src << "\blue Unusable emote '[act]'. Say *help for a list."
-	if ((message && src.stat == 0))
+	if(message && !src.stat)
 		if (m_type & 1)
 			for(var/mob/O in viewers(src, null))
 				O.show_message(message, m_type)

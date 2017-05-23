@@ -217,7 +217,7 @@ var/global/ManifestJSON
 	G.fields["fingerprint"] = H ? md5(H.dna.uni_identity) : "Unknown"
 	G.fields["p_stat"] = "Active"
 	G.fields["m_stat"] = "Stable"
-	G.fields["species"] = H ? H.get_species() : "Human"
+	G.fields["species"] = H ? H.get_species() : SPECIES_HUMAN
 	G.fields["home_system"]	= H ? H.home_system : "Unknown"
 	G.fields["citizenship"]	= H ? H.citizenship : "Unknown"
 	G.fields["faction"]		= H ? H.personal_faction : "Unknown"
@@ -393,15 +393,15 @@ using /datum/datacore/proc/manifest_inject( ), or manifest_insert( )
 
 /proc/get_id_photo(var/mob/living/carbon/human/H, var/assigned_role)
 
-	var/icon/preview_icon = H.stand_icon
+	var/icon/preview_icon = new(H.stand_icon)
 	var/icon/temp
 
-	var/datum/sprite_accessory/hair_style = hair_styles_list[H.h_style ? H.h_style : "Bald"]
+	var/datum/sprite_accessory/hair_style = hair_styles_list[H.h_style ? H.h_style : H.species.default_h_style]
 	if(hair_style)
 		temp = new/icon(hair_style.icon, hair_style.icon_state)
 		temp.Blend(H.hair_color, ICON_ADD)
 
-	hair_style = facial_hair_styles_list[H.f_style ? H.f_style : "Shaved"]
+	hair_style = facial_hair_styles_list[H.f_style ? H.f_style : H.species.default_f_style]
 	if(hair_style)
 		var/icon/facial = new/icon(hair_style.icon, hair_style.icon_state)
 		facial.Blend(H.facial_color, ICON_ADD)

@@ -6,10 +6,10 @@
 	flags = HAS_SKIN_TONE | HAS_LIPS | HAS_UNDERWEAR | HAS_EYE_COLOR | IS_RESTRICTED
 
 /datum/species/human/cursed/get_bodytype()
-	return "Human"
+	return SPECIES_HUMAN
 
 /datum/species/human/cursed/handle_environment_special(var/mob/living/carbon/human/H)
-	var/is_skeleton = (SKELETON in H.mutations)
+	var/is_skeleton = (SKELETON & H.status_flags)
 	var/light_amount = 0
 	if(isturf(H.loc))
 		var/turf/T = H.loc
@@ -20,14 +20,15 @@
 			light_amount =  10
 	if(light_amount > 0.9)
 		if(is_skeleton)
-			H.mutations -= SKELETON
+			H.status_flags ^= SKELETON
 			H.update_hair(0)
 			H.update_body()
 	else
 		if(!is_skeleton)
-			H.mutations |= SKELETON
+			H.status_flags ^= SKELETON
 			H.update_hair(0)
 			H.update_body()
+
 
 /datum/species/human/vampire
 	name = "Vampire"
@@ -43,7 +44,7 @@
 	)
 
 /datum/species/human/vampire/get_bodytype()
-	return "Human"
+	return SPECIES_HUMAN
 
 /datum/species/human/vampire/equip_survival_gear(mob/living/carbon/human/H)
 	var/pack_type = pick(
@@ -54,7 +55,7 @@
 		/obj/item/weapon/reagent_containers/blood/OPlus,
 		/obj/item/weapon/reagent_containers/blood/OMinus)
 
-	if(H.back && istype(H.back,/obj/item/weapon/storage))
+	if(H.back && istype(H.back,/obj/item/storage))
 		H.equip_to_slot_or_del(new pack_type(H.back), slot_in_backpack)
 	else
 		H.equip_to_slot_or_del(new pack_type(H), slot_r_hand)
@@ -66,16 +67,17 @@
 
 	var/obj/item/weapon/grab/G = src.get_active_hand()
 	if(!istype(G))
-		src << "<span class='warning'>We must be grabbing a creature in our active hand to absorb them.</span>"
+		src << SPAN_WARN("We must be grabbing a creature in our active hand to absorb them.")
 		return
 
 	var/mob/living/carbon/human/H = G.affecting
-	if(!istype(H) || H.isSynthetic() || HUSK in H.mutations)
-		src << "<span class='warning'>\The [H] is not compatible with our biology.</span>"
+
+	if(!istype(H) || H.isSynthetic() || HUSK & status_flags)
+		src << SPAN_WARN("\The [H] is not compatible with our biology.")
 		return
 
 	if(G.state < GRAB_NECK)
-		src << "<span class='warning'>We must have a tighter grip to drink this creature blood.</span>"
+		src << SPAN_WARN("We must have a tighter grip to drink this creature blood.")
 		return
 
 	var/list/applayable_organs = list()

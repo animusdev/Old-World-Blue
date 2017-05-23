@@ -1,7 +1,7 @@
 var/datum/antagonist/deathsquad/mercenary/commandos
 
 /datum/antagonist/deathsquad/mercenary
-	id = MODE_COMMANDO
+	id = ROLE_COMMANDO
 	landmark_id = "Syndicate-Commando"
 	role_text = "Syndicate Commando"
 	role_text_plural = "Commandos"
@@ -25,7 +25,7 @@ var/datum/antagonist/deathsquad/mercenary/commandos
 	player.equip_to_slot_or_del(new /obj/item/clothing/gloves/black/swat(player), slot_gloves)
 	player.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal(player), slot_glasses)
 	player.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/syndicate(player), slot_wear_mask)
-	player.equip_to_slot_or_del(new /obj/item/weapon/storage/box(player), slot_in_backpack)
+	player.equip_to_slot_or_del(new /obj/item/storage/box(player), slot_in_backpack)
 	player.equip_to_slot_or_del(new /obj/item/ammo_magazine/c45(player), slot_in_backpack)
 	player.equip_to_slot_or_del(new /obj/item/weapon/rig/merc(player), slot_back)
 	player.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle(player), slot_r_hand)

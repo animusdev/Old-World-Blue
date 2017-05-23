@@ -111,9 +111,11 @@
 		if(92)
 			new/obj/item/weapon/material/sword/katana(src)
 		if(93)
-			new/obj/item/weapon/dnainjector/xraymut(src) // Probably the least OP
+			;
+			//TODO: DNA3 Xray injector
+			//new/obj/item/weapon/dnainjector/xraymut(src) // Probably the least OP
 		if(94) // Why the hell not
-			new/obj/item/weapon/storage/backpack/clown(src)
+			new/obj/item/storage/backpack/clown(src)
 			new/obj/item/clothing/under/rank/clown(src)
 			new/obj/item/clothing/shoes/clown_shoes(src)
 			new/obj/item/device/pda/clown(src)
@@ -139,7 +141,7 @@
 		if(98)
 			new/obj/item/weapon/melee/energy/sword(src)
 		if(99)
-			new/obj/item/weapon/storage/belt/champion(src)
+			new/obj/item/storage/belt/champion(src)
 			new/obj/item/clothing/mask/luchador(src)
 		if(100)
 			new/obj/item/clothing/head/bearpelt(src)

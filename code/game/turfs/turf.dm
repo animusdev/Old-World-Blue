@@ -50,6 +50,10 @@
 /turf/ex_act(severity)
 	return 0
 
+/turf/attack_robot(mob/living/silicon/user)
+	if(Adjacent(user))
+		attack_hand(user)
+
 /turf/attack_hand(mob/user)
 	if(!(user.canmove) || user.restrained() || !(user.pulling))
 		return 0
@@ -256,7 +260,7 @@
 		if(air_master)
 			air_master.mark_for_update(src) //handle the addition of the new turf.
 
-		for(var/turf/space/S in range(W,1))
+		for(var/turf/space/S in RANGE_TURFS(1,W))
 			S.update_starlight()
 
 		W.levelupdate()
@@ -275,7 +279,7 @@
 		if(air_master)
 			air_master.mark_for_update(src)
 
-		for(var/turf/space/S in range(W,1))
+		for(var/turf/space/S in RANGE_TURFS(1,W))
 			S.update_starlight()
 
 		W.levelupdate()

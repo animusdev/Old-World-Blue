@@ -10,16 +10,16 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 
 	//Species-specific stuff.
-	species_restricted = list("exclude","Unathi","Tajara","Skrell","Diona","Vox", "Xenomorph")
+	species_restricted = list("exclude",SPECIES_UNATHI,SPECIES_TAJARA,SPECIES_SKRELL,SPECIES_DIONA,SPECIES_VOX, "Xenomorph")
 	sprite_sheets_refit = list(
-		"Unathi" = 'icons/inv_slots/hats/mob_unathi.dmi',
-		"Tajara" = 'icons/inv_slots/hats/mob_tajaran.dmi',
-		"Skrell" = 'icons/inv_slots/hats/mob_skrell.dmi',
+		SPECIES_UNATHI = 'icons/inv_slots/hats/mob_unathi.dmi',
+		SPECIES_TAJARA = 'icons/inv_slots/hats/mob_tajaran.dmi',
+		SPECIES_SKRELL = 'icons/inv_slots/hats/mob_skrell.dmi',
 	)
 	sprite_sheets_obj = list(
-		"Unathi" = 'icons/inv_slots/hats/icon_unathi.dmi',
-		"Tajara" = 'icons/inv_slots/hats/icon_tajaran.dmi',
-		"Skrell" = 'icons/inv_slots/hats/icon_skrell.dmi',
+		SPECIES_UNATHI = 'icons/inv_slots/hats/icon_unathi.dmi',
+		SPECIES_TAJARA = 'icons/inv_slots/hats/icon_tajaran.dmi',
+		SPECIES_SKRELL = 'icons/inv_slots/hats/icon_skrell.dmi',
 	)
 
 	light_overlay = "helmet_light"
@@ -28,6 +28,7 @@
 	name = "voidsuit"
 	icon_state = "void"
 	item_state = "void"
+	w_class = ITEM_SIZE_HUGE//bulky item
 	desc = "A high-tech dark red space suit. Used for AI satellite maintenance."
 	slowdown = 1
 	armor = list(melee = 40, bullet = 5, laser = 20,energy = 5, bomb = 35, bio = 100, rad = 20)
@@ -35,16 +36,16 @@
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 
-	species_restricted = list("exclude","Unathi","Tajara","Diona","Vox", "Xenomorph")
+	species_restricted = list("exclude",SPECIES_UNATHI,SPECIES_TAJARA,SPECIES_DIONA,SPECIES_VOX, "Xenomorph")
 	sprite_sheets_refit = list(
-		"Unathi" = 'icons/inv_slots/suits/mob_unathi.dmi',
-		"Tajara" = 'icons/inv_slots/suits/mob_tajaran.dmi',
-		"Skrell" = 'icons/inv_slots/suits/mob_skrell.dmi',
+		SPECIES_UNATHI = 'icons/inv_slots/suits/mob_unathi.dmi',
+		SPECIES_TAJARA = 'icons/inv_slots/suits/mob_tajaran.dmi',
+		SPECIES_SKRELL = 'icons/inv_slots/suits/mob_skrell.dmi',
 	)
 	sprite_sheets_obj = list(
-		"Unathi" = 'icons/inv_slots/suits/icon_unathi.dmi',
-		"Tajara" = 'icons/inv_slots/suits/icon_tajaran.dmi',
-		"Skrell" = 'icons/inv_slots/suits/icon_skrell.dmi',
+		SPECIES_UNATHI = 'icons/inv_slots/suits/icon_unathi.dmi',
+		SPECIES_TAJARA = 'icons/inv_slots/suits/icon_tajaran.dmi',
+		SPECIES_SKRELL = 'icons/inv_slots/suits/icon_skrell.dmi',
 	)
 
 	//Breach thresholds, should ideally be inherited by most (if not all) voidsuits.

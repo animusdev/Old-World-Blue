@@ -4,7 +4,7 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "cart"
 	item_state = "electronic"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 	var/obj/item/radio/integrated/radio = null
 	var/access_security = 0
@@ -460,7 +460,7 @@
 			BucketData[++BucketData.len] = list("x" = 0, "y" = 0, dir=null, status = null)
 
 		var/CbotData[0]
-		for(var/mob/living/bot/cleanbot/B in world)
+		for(var/mob/living/bot/cleanbot/B in mob_list)
 			var/turf/bl = get_turf(B)
 			if(bl)
 				if(bl.z != cl.z)

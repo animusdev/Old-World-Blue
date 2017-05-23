@@ -8,8 +8,8 @@
 	icon_state = "sleeperconsole"
 	var/obj/machinery/sleeper/connected = null
 	anchored = 1 //About time someone fixed this.
-	density = 1
-	var/orient = "LEFT" // "RIGHT" changes the dir suffix to "-r"
+	density = 0
+	dir = WEST
 
 	use_power = 1
 	idle_power_usage = 40
@@ -37,15 +37,12 @@
 
 /obj/machinery/sleep_console/New()
 	..()
-	spawn( 5 )
-		if(orient == "RIGHT")
-			icon_state = "sleeperconsole-r"
-			src.connected = locate(/obj/machinery/sleeper, get_step(src, EAST))
-		else
-			src.connected = locate(/obj/machinery/sleeper, get_step(src, WEST))
+	spawn(5)
+		for(var/dir in cardinal)
+			connected = locate(/obj/machinery/sleeper) in get_step(src, dir)
+			if(connected)
+				return
 
-		return
-	return
 
 /obj/machinery/sleep_console/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
@@ -149,15 +146,14 @@
 /////////////////////////////////////////
 // THE SLEEPER ITSELF
 /////////////////////////////////////////
-
 /obj/machinery/sleeper
 	name = "Sleeper"
 	desc = "A fancy bed with built-in injectors, a dialysis machine, and a limited health scanner."
 	icon = 'icons/obj/Cryogenic2.dmi'
-	icon_state = "sleeper_0"
+	icon_state = "sleeper"
 	density = 1
 	anchored = 1
-	var/orient = "LEFT" // "RIGHT" changes the dir suffix to "-r"
+	dir = WEST
 	var/mob/living/carbon/human/occupant = null
 	var/available_chemicals = list("inaprovaline" = "Inaprovaline", "stoxin" = "Soporific", "paracetamol" = "Paracetamol", "anti_toxin" = "Dylovene", "dexalin" = "Dexalin")
 	var/amounts = list(5, 10)
@@ -171,11 +167,6 @@
 	New()
 		..()
 		beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
-		spawn( 5 )
-			if(orient == "RIGHT")
-				icon_state = "sleeper_0-r"
-			return
-		return
 
 	process()
 		if (stat & (NOPOWER|BROKEN))
@@ -193,6 +184,11 @@
 		src.updateUsrDialog()
 		return
 
+	update_icon()
+		if(occupant)
+			icon_state = "[initial(icon_state)]_occupied"
+		else
+			icon_state = initial(icon_state)
 
 	blob_act()
 		if(prob(75))
@@ -202,55 +198,43 @@
 			qdel(src)
 		return
 
+	affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
+		if(src.occupant)
+			user << SPAN_NOTE("The sleeper is already occupied!")
+			return
+
+		for(var/mob/living/carbon/slime/M in range(1,target))
+			if(M.Victim == target)
+				usr << "[target] will not fit into the sleeper because they have a slime latched onto their head."
+				return
+
+		visible_message("[user] starts putting [target] into the sleeper.")
+
+		if(do_after(user, 20, src) && Adjacent(target))
+			if(src.occupant)
+				user << "\blue <B>The sleeper is already occupied!</B>"
+				return
+			target.reset_view(src)
+			target.forceMove(src)
+			update_use_power(2)
+			occupant = target
+			update_icon()
+
+			src.add_fingerprint(user)
+			return TRUE
+
 	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 		if(istype(W, /obj/item/weapon/reagent_containers/glass))
 			if(!beaker)
 				beaker = W
 				user.drop_from_inventory(beaker, src)
-				user.visible_message("[user] adds \a [beaker] to \the [src]!", "You add \a [beaker] to \the [src]!")
+				user.visible_message(
+					"[user] adds \a [beaker] to \the [src]!",
+					"You add \a [beaker] to \the [src]!"
+				)
 				src.updateUsrDialog()
-				return
 			else
-				user << "\red The sleeper has a beaker already."
-				return
-
-		else if(istype(W, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = W
-			if(!(ismob(G.affecting) && get_dist(src,G.affecting)<2))
-				return
-
-			if(src.occupant)
-				user << "\blue <B>The sleeper is already occupied!</B>"
-				return
-
-			for(var/mob/living/carbon/slime/M in range(1,G.affecting))
-				if(M.Victim == G.affecting)
-					usr << "[G:affecting.name] will not fit into the sleeper because they have a slime latched onto their head."
-					return
-
-			visible_message("[user] starts putting [G.affecting:name] into the sleeper.", 3)
-
-			if(do_after(user, 20))
-				if(src.occupant)
-					user << "\blue <B>The sleeper is already occupied!</B>"
-					return
-				if(!G || !G.affecting) return
-				var/mob/M = G.affecting
-				if(M.client)
-					M.client.perspective = EYE_PERSPECTIVE
-					M.client.eye = src
-				M.loc = src
-				update_use_power(2)
-				src.occupant = M
-				src.icon_state = "sleeper_1"
-				if(orient == "RIGHT")
-					icon_state = "sleeper_1-r"
-
-				src.add_fingerprint(user)
-				qdel(G)
-			return
-		return
-
+				user << SPAN_WARN("The sleeper has a beaker already.")
 
 	ex_act(severity)
 		if(filtering)
@@ -323,9 +307,8 @@
 			src.occupant.client.perspective = MOB_PERSPECTIVE
 		src.occupant.loc = src.loc
 		src.occupant = null
+		update_icon()
 		update_use_power(1)
-		if(orient == "RIGHT")
-			icon_state = "sleeper_0-r"
 		return
 
 
@@ -376,11 +359,9 @@
 		set name = "Eject Sleeper"
 		set category = "Object"
 		set src in oview(1)
-		if(usr.stat != 0)
+		if(usr.stat)
 			return
-		if(orient == "RIGHT")
-			icon_state = "sleeper_0-r"
-		src.icon_state = "sleeper_0"
+		update_icon()
 		src.go_out()
 		add_fingerprint(usr)
 		return
@@ -420,17 +401,17 @@
 				usr << "\blue <B>The sleeper is already occupied!</B>"
 				return
 			usr.stop_pulling()
-			usr.client.perspective = EYE_PERSPECTIVE
-			usr.client.eye = src
+			usr.reset_view()
 			usr.loc = src
 			update_use_power(2)
 			src.occupant = usr
-			src.icon_state = "sleeper_1"
-			if(orient == "RIGHT")
-				icon_state = "sleeper_1-r"
+			update_icon()
 
 			for(var/obj/O in src)
 				if(O!=beaker) O.forceMove(loc)
 			src.add_fingerprint(usr)
 			return
 		return
+
+/obj/machinery/sleeper/old
+	icon_state = "sleeper_old"

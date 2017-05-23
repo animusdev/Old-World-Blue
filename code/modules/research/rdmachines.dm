@@ -2,7 +2,6 @@
 
 //All devices that link into the R&D console fall into thise type for easy identification and some shared procs.
 
-
 /obj/machinery/r_n_d
 	name = "R&D Device"
 	icon = 'icons/obj/machines/research.dmi'
@@ -10,34 +9,68 @@
 	anchored = 1
 	use_power = 1
 	var/busy = 0
-	var/hacked = 0
-	var/disabled = 0
-	var/shocked = 0
-	var/list/wires = list()
-	var/hack_wire
-	var/disable_wire
-	var/shock_wire
 	var/obj/machinery/computer/rdconsole/linked_console
+
+	var/category = ""
+	var/list/categories = list()
 
 	var/list/materials
 	var/max_material_storage = 0
 	var/mat_efficiency = 1
 
-/obj/machinery/r_n_d/New()
-	..()
-	wires["Red"] = 0
-	wires["Blue"] = 0
-	wires["Green"] = 0
-	wires["Yellow"] = 0
-	wires["Black"] = 0
-	wires["White"] = 0
-	var/list/w = list("Red","Blue","Green","Yellow","Black","White")
-	src.hack_wire = pick(w)
-	w -= src.hack_wire
-	src.shock_wire = pick(w)
-	w -= src.shock_wire
-	src.disable_wire = pick(w)
-	w -= src.disable_wire
+/obj/machinery/r_n_d/attack_hand(mob/user as mob)
+	return
+
+/obj/machinery/r_n_d/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	if(default_deconstruction_screwdriver(user, O))
+		if(linked_console)
+			linked_console.linked_lathe = null
+			linked_console = null
+		return
+	if(default_deconstruction_crowbar(user, O))
+		return
+	if(default_part_replacement(user, O))
+		return
+	if(O.is_open_container())
+		return 0
+	if(panel_open)
+		user << "<span class='notice'>You can't load \the [src] while it's opened.</span>"
+		return 1
+	if(!linked_console)
+		user << "<span class='notice'>\The [src] must be linked to an R&D console first!</span>"
+		return 1
+	if(stat)
+		return 1
+	if(busy)
+		user << "<span class='notice'>\The [src] is busy. Please wait for completion of previous operation.</span>"
+		return 1
+
+	if(istype(O, /obj/item/stack/material) && O.get_material_name() in materials)
+		var/obj/item/stack/material/stack = O
+		var/free_space = (max_material_storage - TotalMaterials())/SHEET_MATERIAL_AMOUNT
+		if(free_space < 1)
+			user << "<span class='notice'>\The [src] is full. Please remove some material from \the [src] in order to insert more.</span>"
+			return 1
+
+		var/amount = round(input("How many sheets do you want to add?") as num)
+		amount = min(amount, stack.amount, round(free_space))
+		if(amount <= 0 || busy)
+			return
+
+		busy = 1
+
+		overlays += "[icon_state]_[stack.name]"
+		sleep(10)
+		overlays -= "[icon_state]_[stack.name]"
+
+		var/material = stack.get_material_name()
+		if(do_after(usr, 16) && stack.use(amount))
+			user << "<span class='notice'>You add [amount] sheets to \the [src].</span>"
+			use_power(max(1000, (SHEET_MATERIAL_AMOUNT * amount / 10)))
+			materials[material] += amount * SHEET_MATERIAL_AMOUNT
+		busy = 0
+		updateUsrDialog()
+		return
 
 /obj/machinery/r_n_d/dismantle()
 	for(var/obj/item/weapon/reagent_containers/glass/beaker/I in component_parts)
@@ -50,65 +83,9 @@
 	if(!M in materials || amount <= 0)
 		return
 	var/eject_amount = min(round(amount)*SHEET_MATERIAL_AMOUNT, materials[M])
-	if(eject_amount > SHEET_MATERIAL_AMOUNT)
+	if(eject_amount >= SHEET_MATERIAL_AMOUNT)
 		materials[M] = materials[M] - eject_amount
 		create_material_stack(M, eject_amount, src.loc)
-
-/obj/machinery/r_n_d/attack_hand(mob/user as mob)
-	if (shocked)
-		shock(user,50)
-	if(panel_open)
-		var/dat as text
-		dat += "[src.name] Wires:<BR>"
-		for(var/wire in src.wires)
-			dat += text("[wire] Wire: <A href='?src=\ref[src];wire=[wire];cut=1'>[src.wires[wire] ? "Mend" : "Cut"]</A> <A href='?src=\ref[src];wire=[wire];pulse=1'>Pulse</A><BR>")
-
-		dat += text("The red light is [src.disabled ? "off" : "on"].<BR>")
-		dat += text("The green light is [src.shocked ? "off" : "on"].<BR>")
-		dat += text("The blue light is [src.hacked ? "off" : "on"].<BR>")
-		user << browse("<HTML><HEAD><TITLE>[src.name] Hacking</TITLE></HEAD><BODY>[dat]</BODY></HTML>","window=hack_win")
-	return
-
-
-/obj/machinery/r_n_d/Topic(href, href_list)
-	if(..())
-		return
-	usr.set_machine(src)
-	src.add_fingerprint(usr)
-	if(href_list["pulse"])
-		var/temp_wire = href_list["wire"]
-		if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
-			usr << "You need a multitool!"
-		else
-			if(src.wires[temp_wire])
-				usr << "You can't pulse a cut wire."
-			else
-				if(src.hack_wire == href_list["wire"])
-					src.hacked = !src.hacked
-					spawn(100) src.hacked = !src.hacked
-				if(src.disable_wire == href_list["wire"])
-					src.disabled = !src.disabled
-					src.shock(usr,50)
-					spawn(100) src.disabled = !src.disabled
-				if(src.shock_wire == href_list["wire"])
-					src.shocked = !src.shocked
-					src.shock(usr,50)
-					spawn(100) src.shocked = !src.shocked
-	if(href_list["cut"])
-		if (!istype(usr.get_active_hand(), /obj/item/weapon/wirecutters))
-			usr << "You need wirecutters!"
-		else
-			var/temp_wire = href_list["wire"]
-			wires[temp_wire] = !wires[temp_wire]
-			if(src.hack_wire == temp_wire)
-				src.hacked = !src.hacked
-			if(src.disable_wire == temp_wire)
-				src.disabled = !src.disabled
-				src.shock(usr,50)
-			if(src.shock_wire == temp_wire)
-				src.shocked = !src.shocked
-				src.shock(usr,50)
-	src.updateUsrDialog()
 
 /obj/machinery/r_n_d/proc/CallMaterialName(var/ID)
 	var/return_name = ID
@@ -140,10 +117,8 @@
 	return return_name
 
 /obj/machinery/r_n_d/proc/TotalMaterials()
-	. = 0
 	for(var/M in materials)
 		. += materials[M]
-	return .
 
 /obj/machinery/r_n_d/proc/get_requirements(var/datum/design/D)
 	. = list()

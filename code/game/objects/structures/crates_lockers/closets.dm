@@ -4,6 +4,7 @@
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "closed"
 	density = 1
+	w_class = ITEM_SIZE_NO_CONTAINER
 	var/icon_opened = "open"
 	var/icon_closed = ""
 	var/opened = 0
@@ -215,12 +216,15 @@
 		src.dump_contents()
 		qdel(src)
 
+/obj/structure/closet/affect_grab(var/mob/living/user, var/mob/living/target)
+	if(src.opened)
+		MouseDrop_T(target, user)      //act like they were dragged onto the closet
+		return TRUE
+	return FALSE
+
+
 /obj/structure/closet/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(src.opened)
-		if(istype(W, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = W
-			src.MouseDrop_T(G.affecting, user)      //act like they were dragged onto the closet
-			return 0
 		if(istype(W,/obj/item/tk_grab))
 			return 0
 		if(istype(W, /obj/item/weapon/weldingtool))
@@ -229,11 +233,13 @@
 				if(!WT.isOn())
 					return
 				else
-					user << "<span class='notice'>You need more welding fuel to complete this task.</span>"
+					user << SPAN_NOTE("You need more welding fuel to complete this task.")
 					return
 			new /obj/item/stack/material/steel(src.loc)
-			for(var/mob/M in viewers(src))
-				M.show_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>", 3, "You hear welding.", 2)
+			src.visible_message(
+				SPAN_NOTE("\The [src] has been cut apart by [user] with \the [WT]."),
+				"You hear welding."
+			)
 			qdel(src)
 			return
 		user.unEquip(W, src.loc)

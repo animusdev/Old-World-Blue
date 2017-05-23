@@ -17,7 +17,7 @@
 	armor = list(melee = 40, bullet = 5, laser = 20,energy = 5, bomb = 35, bio = 100, rad = 80)
 	allowed = list(
 		/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,
-		/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe,
+		/obj/item/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe,
 		/obj/item/weapon/rcd
 	)
 
@@ -35,16 +35,16 @@
 	armor = list(melee = 50, bullet = 5, laser = 20,energy = 5, bomb = 55, bio = 100, rad = 20)
 	light_overlay = "helmet_light_dual"
 	sprite_sheets_refit = list(
-		"Unathi" = 'icons/inv_slots/hats/mob_unathi.dmi',
-		"Tajara" = 'icons/inv_slots/hats/mob_tajaran.dmi',
-		"Skrell" = 'icons/inv_slots/hats/mob_skrell.dmi',
-		"Vox"    = 'icons/inv_slots/hats/mob_vox.dmi'
+		SPECIES_UNATHI = 'icons/inv_slots/hats/mob_unathi.dmi',
+		SPECIES_TAJARA = 'icons/inv_slots/hats/mob_tajaran.dmi',
+		SPECIES_SKRELL = 'icons/inv_slots/hats/mob_skrell.dmi',
+		SPECIES_VOX    = 'icons/inv_slots/hats/mob_vox.dmi'
 	)
 	sprite_sheets_obj = list(
-		"Unathi" = 'icons/inv_slots/hats/icon_unathi.dmi',
-		"Tajara" = 'icons/inv_slots/hats/icon_tajaran.dmi',
-		"Skrell" = 'icons/inv_slots/hats/icon_skrell.dmi',
-		"Vox"    = 'icons/inv_slots/hats/icon_vox.dmi'
+		SPECIES_UNATHI = 'icons/inv_slots/hats/icon_unathi.dmi',
+		SPECIES_TAJARA = 'icons/inv_slots/hats/icon_tajaran.dmi',
+		SPECIES_SKRELL = 'icons/inv_slots/hats/icon_skrell.dmi',
+		SPECIES_VOX    = 'icons/inv_slots/hats/icon_vox.dmi'
 	)
 
 /obj/item/clothing/suit/space/void/mining
@@ -54,16 +54,16 @@
 	item_state = "mining_voidsuit"
 	armor = list(melee = 50, bullet = 5, laser = 20,energy = 5, bomb = 55, bio = 100, rad = 20)
 	sprite_sheets_refit = list(
-		"Unathi" = 'icons/inv_slots/suits/mob_unathi.dmi',
-		"Tajara" = 'icons/inv_slots/suits/mob_tajaran.dmi',
-		"Skrell" = 'icons/inv_slots/suits/mob_skrell.dmi',
-		"Vox"    = 'icons/inv_slots/suits/mob_vox.dmi'
+		SPECIES_UNATHI = 'icons/inv_slots/suits/mob_unathi.dmi',
+		SPECIES_TAJARA = 'icons/inv_slots/suits/mob_tajaran.dmi',
+		SPECIES_SKRELL = 'icons/inv_slots/suits/mob_skrell.dmi',
+		SPECIES_VOX    = 'icons/inv_slots/suits/mob_vox.dmi'
 	)
 	sprite_sheets_obj = list(
-		"Unathi" = 'icons/inv_slots/suits/icon_unathi.dmi',
-		"Tajara" = 'icons/inv_slots/suits/icon_tajaran.dmi',
-		"Skrell" = 'icons/inv_slots/suits/icon_skrell.dmi',
-		"Vox"    = 'icons/inv_slots/suits/icon_vox.dmi'
+		SPECIES_UNATHI = 'icons/inv_slots/suits/icon_unathi.dmi',
+		SPECIES_TAJARA = 'icons/inv_slots/suits/icon_tajaran.dmi',
+		SPECIES_SKRELL = 'icons/inv_slots/suits/icon_skrell.dmi',
+		SPECIES_VOX    = 'icons/inv_slots/suits/icon_vox.dmi'
 	)
 
 /obj/item/clothing/suit/space/void/mining/prepared/New()
@@ -85,7 +85,7 @@
 	item_state = "medical_voidsuit"
 	allowed = list(
 		/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,
-		/obj/item/weapon/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical
+		/obj/item/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical
 	)
 	armor = list(melee = 30, bullet = 5, laser = 20,energy = 5, bomb = 25, bio = 100, rad = 50)
 
@@ -135,7 +135,7 @@
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	allowed = list(
 		/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/rcd,
-		/obj/item/weapon/storage/toolbox,/obj/item/weapon/storage/briefcase/inflatable,/obj/item/device/t_scanner
+		/obj/item/storage/toolbox,/obj/item/storage/briefcase/inflatable,/obj/item/device/t_scanner
 	)
 
 /obj/item/clothing/suit/space/void/atmos/prepared/New()
@@ -196,7 +196,7 @@
 	icon_state = "rig-medicalalt"
 	name = "streamlined medical voidsuit"
 	desc = "A more recent model of Vey-Med voidsuit, featuring the latest in radiation shielding technology, without sacrificing comfort or style."
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)
 	armor = list(melee = 30, bullet = 5, laser = 10,energy = 5, bomb = 5, bio = 100, rad = 60)
 
 /obj/item/clothing/suit/space/void/medical/alt/prepared/New()

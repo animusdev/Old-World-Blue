@@ -141,26 +141,16 @@
 
 //Decorative structures to go alongside cryopods.
 /obj/structure/cryofeed
-
 	name = "cryogenic feed"
 	desc = "A bewildering tangle of machinery and pipes."
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "cryo_rear"
+	dir = WEST
 	anchored = 1
 
-	var/orient_right = null //Flips the sprite.
-
 /obj/structure/cryofeed/right
-	orient_right = 1
-	icon_state = "cryo_rear-r"
+	dir = EAST
 
-/obj/structure/cryofeed/New()
-
-	if(orient_right)
-		icon_state = "cryo_rear-r"
-	else
-		icon_state = "cryo_rear"
-	..()
 
 //Cryopods themselves.
 /obj/machinery/cryopod
@@ -168,6 +158,7 @@
 	desc = "A man-sized pod for entering suspended animation."
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "body_scanner_0"
+	dir = WEST
 	density = 1
 	anchored = 1
 
@@ -180,7 +171,6 @@
 	var/disallow_occupant_types = list()
 
 	var/mob/occupant = null       // Person waiting to be despawned.
-	var/orient_right = null       // Flips the sprite.
 	var/time_till_despawn = 18000 // 30 minutes-ish safe period before being despawned.
 	var/time_entered = 0          // Used to keep track of the safe period.
 	var/obj/item/device/radio/intercom/announce //
@@ -201,12 +191,11 @@
 		/obj/item/clothing/shoes/magboots,
 		/obj/item/blueprints,
 		/obj/item/clothing/head/helmet/space,
-		/obj/item/weapon/storage/internal
+		/obj/item/storage/internal
 	)
 
 /obj/machinery/cryopod/right
-	orient_right = 1
-	icon_state = "body_scanner_0-r"
+	dir = EAST
 
 /obj/machinery/cryopod/robot
 	name = "robotic storage unit"
@@ -221,18 +210,8 @@
 	allow_occupant_types = list(/mob/living/silicon/robot)
 	disallow_occupant_types = list(/mob/living/silicon/robot/drone)
 
-/obj/machinery/cryopod/robot/right
-	orient_right = 1
-	icon_state = "pod_0-r"
-
 /obj/machinery/cryopod/New()
 	announce = new /obj/item/device/radio/intercom(src)
-
-	if(orient_right)
-		icon_state = "[base_icon_state]-r"
-	else
-		icon_state = base_icon_state
-
 	..()
 
 /obj/machinery/cryopod/Destroy()
@@ -310,7 +289,7 @@
 
 		if(W.contents.len) //Make sure we catch anything not handled by qdel() on the items.
 			for(var/obj/item/O in W.contents)
-				if(istype(O,/obj/item/weapon/storage/internal)) //Stop eating pockets, you fuck!
+				if(istype(O,/obj/item/storage/internal)) //Stop eating pockets, you fuck!
 					continue
 				O.loc = src
 
@@ -320,7 +299,6 @@
 	items -= announce // or the autosay radio.
 
 	for(var/obj/item/W in items)
-
 		var/preserve = null
 		for(var/T in preserve_items)
 			if(istype(W,T))
@@ -393,49 +371,59 @@
 	set_occupant(null)
 
 
-/obj/machinery/cryopod/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/cryopod/affect_grab(var/mob/user, var/mob/target, var/obj/item/weapon/grab/grab)
+	put_inside(target, user)
+	return TRUE
 
-	var/obj/item/weapon/grab/G = W
-	if(istype(G))
+/obj/machinery/cryopod/MouseDrop_T(var/mob/living/L, mob/living/user)
+	if(istype(L) && istype(user))
+		put_inside(L, user)
 
-		if(occupant)
-			user << "<span class='notice'>\The [src] is in use.</span>"
-			return
+/obj/machinery/cryopod/proc/put_inside(var/mob/living/affecting, var/mob/living/user)
+	if(occupant)
+		user << "<span class='notice'>\The [src] is in use.</span>"
+		return
 
-		if( !(ismob(G.affecting) && get_dist(src,G.affecting)<2))
-			return
+	if(!ismob(affecting) || !Adjacent(affecting) || !Adjacent(user))
+		return
 
-		if(!check_occupant_allowed(G.affecting))
-			return
+	if(!check_occupant_allowed(affecting))
+		return
 
-		var/willing = null //We don't want to allow people to be forced into despawning.
-		var/mob/M = G.affecting
+	var/willing = null //We don't want to allow people to be forced into despawning.
 
-		if(M.client)
-			if(alert(M,"Would you like to enter long-term storage?",,"Yes","No") == "Yes")
-				if(!M || !G || !G.affecting) return
-				willing = 1
-		else
+	if(affecting != user && affecting.client)
+		if(alert(affecting,"Would you like to enter long-term storage?",,"Yes","No") == "Yes")
+			if(!affecting) return
 			willing = 1
+	else
+		willing = 1
 
-		if(willing)
+	if(willing)
 
-			visible_message("[user] starts putting [G:affecting:name] into \the [src].", 3)
+		visible_message("[user] starts putting [affecting] into \the [src].", 3)
 
-			if(!do_after(user, 20, src))
-				if(!M || !Adjacent(M)) return
-				if(!G || !G.affecting || !Adjacent(G.affecting)) return
+		if(!do_after(user, 20, src))
+			return
 
-				set_occupant(M)
-				M << "<span class='notice'>[on_enter_occupant_message]</span>"
-				M << "<span class='notice'><b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b></span>"
+		if(!user || !Adjacent(user))
+			return
+		if(!affecting || !Adjacent(affecting))
+			return
 
-				// Book keeping!
-				log_game("[key_name_admin(user)] put [key_name_admin(M)] in stasis pod.", src, 0)
+		set_occupant(affecting)
+		affecting << "<span class='notice'>[on_enter_occupant_message]</span>"
+		affecting << "<span class='notice'><b>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</b></span>"
 
-				//Despawning occurs when process() is called with an occupant without a client.
-				src.add_fingerprint(M)
-				src.add_fingerprint(user)
+		// Book keeping!
+		if(user == affecting)
+			log_game("[key_name(user)] enter stasis pod.", src, 0)
+		else
+			log_game("[key_name(user)] put [key_name(affecting)] in stasis pod.", src, 0)
+			src.add_fingerprint(affecting)
+
+		//Despawning occurs when process() is called with an occupant without a client.
+		src.add_fingerprint(user)
 
 /obj/machinery/cryopod/verb/eject()
 	set name = "Eject Pod"
@@ -444,10 +432,7 @@
 	if(usr.stat != 0)
 		return
 
-	if(orient_right)
-		icon_state = "[base_icon_state]-r"
-	else
-		icon_state = base_icon_state
+	icon_state = base_icon_state
 
 	//Eject any items that aren't meant to be in the pod.
 	var/list/items = src.contents
@@ -503,15 +488,9 @@
 
 /obj/machinery/cryopod/update_icon()
 	if(occupant)
-		if(orient_right)
-			icon_state = "[occupied_icon_state]-r"
-		else
-			icon_state = occupied_icon_state
+		icon_state = occupied_icon_state
 	else
-		if(orient_right)
-			icon_state = "[base_icon_state]-r"
-		else
-			icon_state = base_icon_state
+		icon_state = base_icon_state
 
 /obj/machinery/cryopod/proc/go_out()
 

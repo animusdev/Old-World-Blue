@@ -137,12 +137,11 @@
 		spawn(0)
 			//Prevent meteors from blowing up the singularity's containment.
 			//Changing emitter and generator ex_act would result in them being bomb and C4 proof
-			if(!istype(A,/obj/machinery/power/emitter) && \
-				!istype(A,/obj/machinery/field_generator))
+			if(!istype(A,/obj/machinery/power/emitter) && !istype(A,/obj/machinery/field_generator))
 				if(--src.hits <= 0)
 					qdel(src) //Dont blow up singularity containment if we get stuck there.
 
-			if (A)
+			if(A)
 				for(var/mob/M in player_list)
 					var/turf/T = get_turf(M)
 					if(!T || T.z != src.z)

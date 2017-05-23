@@ -8,18 +8,14 @@
 	name = "mecha part"
 	icon = 'icons/mecha/mech_construct.dmi'
 	icon_state = "blank"
-	w_class = 5
+	w_class = ITEM_SIZE_HUGE
 	flags = CONDUCT
 	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2)
-	var/construction_time = 100
-	var/list/construction_cost = list(DEFAULT_WALL_MATERIAL=20000,"glass"=5000)
-
 
 /obj/item/mecha_parts/chassis
 	name="Mecha Chassis"
 	icon_state = "backbone"
 	var/datum/construction/construct
-	construction_cost = list(DEFAULT_WALL_MATERIAL=20000)
 	flags = CONDUCT
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -39,19 +35,15 @@
 		..()
 		construct = new /datum/construction/mecha/ripley_chassis(src)
 
-/obj/item/mecha_parts/part/ripley_torso
+/obj/item/mecha_parts/part/ripley
+	desc="A Ripley APLU left arm. Data and power sockets are compatible with most exosuit tools."
+	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 2)
+
+/obj/item/mecha_parts/part/ripley/torso
 	name="Ripley Torso"
 	desc="A torso part of Ripley APLU. Contains power unit, processing core and life support systems."
 	icon_state = "ripley_harness"
 	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2, TECH_BIO = 2, TECH_ENGINEERING = 2)
-	construction_time = 200
-	construction_cost = list(DEFAULT_WALL_MATERIAL=40000,"glass"=15000)
-
-/obj/item/mecha_parts/part/ripley
-	desc="A Ripley APLU left arm. Data and power sockets are compatible with most exosuit tools."
-	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 2)
-	construction_time = 150
-	construction_cost = list(DEFAULT_WALL_MATERIAL=25000)
 
 /obj/item/mecha_parts/part/ripley/left_arm
 	name="Ripley Left Arm"
@@ -65,45 +57,36 @@
 	name="Ripley Left Leg"
 	desc="A Ripley APLU left leg. Contains somewhat complex servodrives and balance maintaining systems."
 	icon_state = "ripley_l_leg"
-	construction_cost = list(DEFAULT_WALL_MATERIAL=30000)
 
 /obj/item/mecha_parts/part/ripley/right_leg
 	name="Ripley Right Leg"
 	desc="A Ripley APLU right leg. Contains somewhat complex servodrives and balance maintaining systems."
 	icon_state = "ripley_r_leg"
-	construction_cost = list(DEFAULT_WALL_MATERIAL=30000)
 
 ///////// Gygax
 
 /obj/item/mecha_parts/chassis/gygax
 	name = "Gygax Chassis"
-	construction_cost = list(DEFAULT_WALL_MATERIAL=25000)
 
 	New()
 		..()
 		construct = new /datum/construction/mecha/gygax_chassis(src)
 
-/obj/item/mecha_parts/part/gygax_torso
+/obj/item/mecha_parts/part/gygax
+	desc="A Gygax left arm. Data and power sockets are compatible with most exosuit tools and weapons."
+	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 3)
+
+/obj/item/mecha_parts/part/gygax/torso
 	name="Gygax Torso"
 	desc="A torso part of Gygax. Contains power unit, processing core and life support systems. Has an additional equipment slot."
 	icon_state = "gygax_harness"
 	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2, TECH_BIO = 3, TECH_ENGINEERING = 3)
-	construction_time = 300
-	construction_cost = list(DEFAULT_WALL_MATERIAL=50000,"glass"=20000)
 
-/obj/item/mecha_parts/part/gygax_head
+/obj/item/mecha_parts/part/gygax/head
 	name="Gygax Head"
 	desc="A Gygax head. Houses advanced surveilance and targeting sensors."
 	icon_state = "gygax_head"
 	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2, TECH_MAGNET = 3, TECH_ENGINEERING = 3)
-	construction_time = 200
-	construction_cost = list(DEFAULT_WALL_MATERIAL=20000,"glass"=10000)
-
-/obj/item/mecha_parts/part/gygax
-	desc="A Gygax left arm. Data and power sockets are compatible with most exosuit tools and weapons."
-	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 3)
-	construction_time = 200
-	construction_cost = list(DEFAULT_WALL_MATERIAL=30000)
 
 /obj/item/mecha_parts/part/gygax/left_arm
 	name="Gygax Left Arm"
@@ -116,49 +99,38 @@
 /obj/item/mecha_parts/part/gygax/left_leg
 	name="Gygax Left Leg"
 	icon_state = "gygax_l_leg"
-	construction_cost = list(DEFAULT_WALL_MATERIAL=35000)
 
 /obj/item/mecha_parts/part/gygax/right_leg
 	name="Gygax Right Leg"
 	icon_state = "gygax_r_leg"
-	construction_cost = list(DEFAULT_WALL_MATERIAL=35000)
 
-/obj/item/mecha_parts/part/gygax_armour
+/obj/item/mecha_parts/part/gygax/armour
 	name="Gygax Armour Plates"
 	icon_state = "gygax_armor"
 	origin_tech = list(TECH_MATERIAL = 6, TECH_COMBAT = 4, TECH_ENGINEERING = 5)
-	construction_time = 600
-	construction_cost = list(DEFAULT_WALL_MATERIAL=50000,"diamond"=10000)
 
 
 //////////// Durand
 
 /obj/item/mecha_parts/chassis/durand
 	name = "Durand Chassis"
-	construction_cost = list(DEFAULT_WALL_MATERIAL=25000)
 
 	New()
 		..()
 		construct = new /datum/construction/mecha/durand_chassis(src)
 
-/obj/item/mecha_parts/part/durand_torso
+/obj/item/mecha_parts/part/durand
+	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 3, TECH_ENGINEERING = 3)
+
+/obj/item/mecha_parts/part/durand/torso
 	name="Durand Torso"
 	icon_state = "durand_harness"
 	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 3, TECH_BIO = 3, TECH_ENGINEERING = 3)
-	construction_time = 300
-	construction_cost = list(DEFAULT_WALL_MATERIAL=55000,"glass"=20000,"silver"=10000)
 
-/obj/item/mecha_parts/part/durand_head
+/obj/item/mecha_parts/part/durand/head
 	name="Durand Head"
 	icon_state = "durand_head"
 	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 3, TECH_MAGNET = 3, TECH_ENGINEERING = 3)
-	construction_time = 200
-	construction_cost = list(DEFAULT_WALL_MATERIAL=25000,"glass"=10000,"silver"=3000)
-
-/obj/item/mecha_parts/part/durand
-	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 3, TECH_ENGINEERING = 3)
-	construction_time = 200
-	construction_cost = list(DEFAULT_WALL_MATERIAL=35000,"silver"=3000)
 
 /obj/item/mecha_parts/part/durand/left_arm
 	name="Durand Left Arm"
@@ -171,19 +143,15 @@
 /obj/item/mecha_parts/part/durand/left_leg
 	name="Durand Left Leg"
 	icon_state = "durand_l_leg"
-	construction_cost = list(DEFAULT_WALL_MATERIAL=40000,"silver"=3000)
 
 /obj/item/mecha_parts/part/durand/right_leg
 	name="Durand Right Leg"
 	icon_state = "durand_r_leg"
-	construction_cost = list(DEFAULT_WALL_MATERIAL=40000,"silver"=3000)
 
-/obj/item/mecha_parts/part/durand_armour
+/obj/item/mecha_parts/part/durand/armour
 	name="Durand Armour Plates"
 	icon_state = "durand_armor"
 	origin_tech = list(TECH_MATERIAL = 5, TECH_COMBAT = 4, TECH_ENGINEERING = 5)
-	construction_time = 600
-	construction_cost = list(DEFAULT_WALL_MATERIAL=50000,"uranium"=10000)
 
 
 
@@ -227,25 +195,18 @@
 		..()
 		construct = new /datum/construction/mecha/phazon_chassis(src)
 
-/obj/item/mecha_parts/part/phazon_torso
-	name="Phazon Torso"
-	icon_state = "phazon_harness"
-	construction_time = 300
-	construction_cost = list(DEFAULT_WALL_MATERIAL=35000,"glass"=10000,"phoron"=20000)
-	origin_tech = list(TECH_DATA = 5, TECH_MATERIAL = 7, TECH_BLUESPACE = 6, TECH_POWER = 6)
-
-/obj/item/mecha_parts/part/phazon_head
-	name="Phazon Head"
-	icon_state = "phazon_head"
-	construction_time = 200
-	construction_cost = list(DEFAULT_WALL_MATERIAL=15000,"glass"=5000,"phoron"=10000,"silver"=3000)
-	origin_tech = list(TECH_DATA = 4, TECH_MATERIAL = 5, TECH_MAGNET = 6)
-
 /obj/item/mecha_parts/part/phazon
-	construction_time = 200
-	construction_cost = list(DEFAULT_WALL_MATERIAL=20000,"phoron"=10000,"silver"=3000)
 	origin_tech = list(TECH_MATERIAL = 5, TECH_BLUESPACE = 2, TECH_MAGNET = 2)
 
+/obj/item/mecha_parts/part/phazon/torso
+	name="Phazon Torso"
+	icon_state = "phazon_harness"
+	origin_tech = list(TECH_DATA = 5, TECH_MATERIAL = 7, TECH_BLUESPACE = 6, TECH_POWER = 6)
+
+/obj/item/mecha_parts/part/phazon/head
+	name="Phazon Head"
+	icon_state = "phazon_head"
+	origin_tech = list(TECH_DATA = 4, TECH_MATERIAL = 5, TECH_MAGNET = 6)
 
 /obj/item/mecha_parts/part/phazon/left_arm
 	name="Phazon Left Arm"
@@ -264,16 +225,12 @@
 	icon_state = "phazon_r_leg"
 
 
-/obj/item/mecha_parts/part/phazon_armor
+/obj/item/mecha_parts/part/phazon/armor
 	name="Phazon Right Armour"
 	icon_state = "phazon_armor"
-	construction_time = 200
-	construction_cost = list(DEFAULT_WALL_MATERIAL=20000,"phoron"=10000,"uranium"=10000,"silver"=3000,"diamond"=1000)
 	origin_tech = list(TECH_MATERIAL = 5, TECH_BLUESPACE = 6, TECH_MAGNET = 3)
 
 ///////// Odysseus
-
-
 /obj/item/mecha_parts/chassis/odysseus
 	name = "Odysseus Chassis"
 
@@ -281,26 +238,20 @@
 		..()
 		construct = new /datum/construction/mecha/odysseus_chassis(src)
 
-/obj/item/mecha_parts/part/odysseus_head
+/obj/item/mecha_parts/part/odysseus
+	desc="Data and power sockets are compatible with most exosuit tools."
+	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 2)
+
+/obj/item/mecha_parts/part/odysseus/head
 	name="Odysseus Head"
 	icon_state = "odysseus_head"
 	origin_tech = list(TECH_DATA = 3, TECH_MATERIAL = 2)
-	construction_time = 100
-	construction_cost = list(DEFAULT_WALL_MATERIAL=2000,"glass"=10000)
 
-/obj/item/mecha_parts/part/odysseus_torso
+/obj/item/mecha_parts/part/odysseus/torso
 	name="Odysseus Torso"
 	desc="A torso part of Odysseus. Contains power unit, processing core and life support systems."
 	icon_state = "odysseus_torso"
 	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2, TECH_BIO = 2, TECH_ENGINEERING = 2)
-	construction_time = 180
-	construction_cost = list(DEFAULT_WALL_MATERIAL=25000)
-
-/obj/item/mecha_parts/part/odysseus
-	desc="Data and power sockets are compatible with most exosuit tools."
-	origin_tech = list(TECH_DATA = 2, TECH_MATERIAL = 2, TECH_ENGINEERING = 2)
-	construction_time = 120
-	construction_cost = list(DEFAULT_WALL_MATERIAL=10000)
 
 /obj/item/mecha_parts/part/odysseus/left_arm
 	name="Odysseus Left Arm"
@@ -315,15 +266,11 @@
 	name="Odysseus Left Leg"
 	desc="Contains somewhat complex servodrives and balance maintaining systems."
 	icon_state = "odysseus_l_leg"
-	construction_time = 130
-	construction_cost = list(DEFAULT_WALL_MATERIAL=15000)
 
 /obj/item/mecha_parts/part/odysseus/right_leg
 	name="Odysseus Right Leg"
 	desc="A Odysseus right leg. Contains somewhat complex servodrives and balance maintaining systems."
 	icon_state = "odysseus_r_leg"
-	construction_time = 130
-	construction_cost = list(DEFAULT_WALL_MATERIAL=15000)
 
 /*/obj/item/mecha_parts/part/odysseus_armour
 	name="Odysseus Carapace"
@@ -331,3 +278,91 @@
 	origin_tech = list(TECH_MATERIAL = 3, TECH_ENGINEERING = 3)
 	construction_time = 200
 	construction_cost = list(DEFAULT_WALL_MATERIAL=15000)*/
+
+
+// Mecha Equipment
+
+/datum/design/item/mecha_tracking
+	name = "Exosuit tracking beacon"
+	build_type = MECHFAB
+	time = 5
+	materials = list(DEFAULT_WALL_MATERIAL = 500)
+	build_path = /obj/item/mecha_parts/mecha_tracking
+	category = "Misc"
+
+/datum/design/item/mecha
+	build_type = MECHFAB
+	category = "Exosuit Equipment"
+	time = 10
+	materials = list(DEFAULT_WALL_MATERIAL = 10000)
+
+/datum/design/item/mecha/AssembleDesignDesc()
+	if(!desc)
+		desc = "Allows for the construction of \a '[item_name]' exosuit module."
+
+/datum/design/item/mecha/hydraulic_clamp
+	name = "Hydraulic clamp"
+	id = "hydraulic_clamp"
+	build_path = /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp
+
+/datum/design/item/mecha/drill
+	name = "Drill"
+	id = "mech_drill"
+	build_path = /obj/item/mecha_parts/mecha_equipment/tool/drill
+
+/datum/design/item/mecha/extinguisher
+	name = "Extinguisher"
+	id = "extinguisher"
+	build_path = /obj/item/mecha_parts/mecha_equipment/tool/extinguisher
+
+/datum/design/item/mecha/cable_layer
+	name = "Cable layer"
+	id = "mech_cable_layer"
+	build_path = /obj/item/mecha_parts/mecha_equipment/tool/cable_layer
+/*
+/datum/design/item/mecha/flaregun
+	name = "Flare launcher"
+	id = "mecha_flare_gun"
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flare
+	materials = list(DEFAULT_WALL_MATERIAL = 12500)
+*/
+/datum/design/item/mecha/sleeper
+	name = "Sleeper"
+	id = "mech_sleeper"
+	build_path = /obj/item/mecha_parts/mecha_equipment/tool/sleeper
+	materials = list(DEFAULT_WALL_MATERIAL = 5000, "glass" = 10000)
+
+/datum/design/item/mecha/syringe_gun
+	name = "Syringe gun"
+	id = "mech_syringe_gun"
+	build_path = /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun
+	time = 20
+	materials = list(DEFAULT_WALL_MATERIAL = 3000, "glass" = 2000)
+
+/datum/design/item/mecha/passenger
+	name = "Passenger compartment"
+	id = "mech_passenger"
+	build_path = /obj/item/mecha_parts/mecha_equipment/tool/passenger
+	materials = list(DEFAULT_WALL_MATERIAL = 5000, "glass" = 5000)
+
+/datum/design/item/mecha/jetpack
+	name = "Mecha jetpack"
+	id = "mech_jetpack"
+	build_path = /obj/item/mecha_parts/mecha_equipment/jetpack
+
+//obj/item/mecha_parts/mecha_equipment/repair_droid,
+
+/datum/design/item/mecha/taser
+	name = "PBT \"Pacifier\" mounted taser"
+	id = "mech_taser"
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
+
+/datum/design/item/mecha/lmg
+	name = "Ultra AC 2"
+	id = "mech_lmg"
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
+
+
+/datum/design/item/mecha/weapon
+	req_tech = list(TECH_COMBAT = 3)
+

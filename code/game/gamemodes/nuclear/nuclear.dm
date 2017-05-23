@@ -13,7 +13,7 @@
 	uplink_uses = 40
 	var/nuke_off_station = 0 //Used for tracking if the syndies actually haul the nuke to the station
 	var/syndies_didnt_escape = 0 //Used for tracking if the syndies got the shuttle off of the z-level
-	antag_tags = list(MODE_MERCENARY)
+	antag_tags = list(ROLE_MERCENARY)
 
 /datum/game_mode/nuclear/declare_completion()
 	if(config.objectives_disabled)

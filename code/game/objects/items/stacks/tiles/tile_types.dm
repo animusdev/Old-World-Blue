@@ -9,8 +9,8 @@
 /obj/item/stack/tile
 	name = "tile"
 	singular_name = "tile"
-	desc = "A non-descript floor tile"
-	w_class = 3
+	desc = "A non-descript floor tile."
+	w_class = ITEM_SIZE_NORMAL
 	max_amount = 60
 	var/build_type = null
 

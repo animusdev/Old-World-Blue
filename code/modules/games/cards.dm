@@ -4,7 +4,7 @@
 	var/back_icon = "card_back"
 
 /obj/item/weapon/deck
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/playing_cards.dmi'
 	var/list/cards = list()
 
@@ -179,12 +179,12 @@
 	deal_at(usr, over)
 
 /obj/item/weapon/pack/
-	name = "Card Pack"
+	name = "card pack"
 	desc = "For those with disposible income."
 
 	icon_state = "card_pack"
 	icon = 'icons/obj/playing_cards.dmi'
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	var/list/cards = list()
 
 
@@ -194,7 +194,7 @@
 
 	H.cards += cards
 	cards.Cut();
-	user.drop_from_inventory()
+	user.drop_from_inventory(src)
 	qdel(src)
 
 	H.update_icon()
@@ -205,7 +205,7 @@
 	desc = "Some playing cards."
 	icon = 'icons/obj/playing_cards.dmi'
 	icon_state = "empty"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 	var/concealed = 0
 	var/list/cards = list()

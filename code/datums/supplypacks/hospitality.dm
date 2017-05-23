@@ -10,12 +10,12 @@
 /datum/supply_packs/hospitality/party
 	name = "Party equipment"
 	contains = list(
-		/obj/item/weapon/storage/box/drinkingglasses,
+		/obj/item/storage/box/drinkingglasses,
 		/obj/item/weapon/reagent_containers/glass/drinks/shaker,
 		/obj/item/weapon/reagent_containers/glass/drinks/flask/barflask,
 		/obj/item/weapon/reagent_containers/glass/drinks/bottle/patron,
 		/obj/item/weapon/reagent_containers/glass/drinks/bottle/goldschlager,
-		/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
+		/obj/item/storage/fancy/cigarettes/dromedaryco,
 		/obj/item/weapon/lipstick/random,
 		/obj/item/weapon/reagent_containers/glass/drinks/bottle/small/ale = 2,
 		/obj/item/weapon/reagent_containers/glass/drinks/bottle/small/beer = 4

@@ -9,9 +9,9 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
 	item_state = "paper"
-	throwforce = 0
-	w_class = 1
 	randpixel = 8
+	throwforce = 0
+	w_class = ITEM_SIZE_TINY
 	throw_range = 1
 	throw_speed = 1
 	layer = 4
@@ -91,13 +91,16 @@
 	set category = "Object"
 	set src in usr
 
+	//TODO: DNA3 clown_block
+/*
 	if((CLUMSY in usr.mutations) && prob(50))
 		usr << "<span class='warning'>You cut yourself on the paper.</span>"
 		return
+*/
 	var/n_name = sanitizeSafe(input(usr, "What would you like to label the paper?", "Paper Labelling", null)  as text, MAX_NAME_LEN)
 
 	// We check loc one level up, so we can rename in clipboards and such. See also: /obj/item/weapon/photo/rename()
-	if((loc == usr || loc.loc && loc.loc == usr) && usr.stat == 0 && n_name)
+	if((loc == usr || loc.loc && loc.loc == usr) && !usr.stat && n_name)
 		name = n_name
 		if(n_name != "paper")
 			desc = "This is a paper titled '" + name + "'."

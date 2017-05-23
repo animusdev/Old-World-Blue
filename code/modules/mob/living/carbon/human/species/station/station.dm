@@ -1,5 +1,5 @@
 /datum/species/human
-	name = "Human"
+	name = SPECIES_HUMAN
 	name_plural = "Humans"
 	language = "Sol Common"
 	primitive_form = "Monkey"
@@ -26,7 +26,7 @@
 	flags = CAN_JOIN | HAS_SKIN_TONE | HAS_LIPS | HAS_UNDERWEAR | HAS_EYE_COLOR
 
 /datum/species/unathi
-	name = "Unathi"
+	name = SPECIES_UNATHI
 	name_plural = "Unathi"
 	icobase = 'icons/mob/human_races/unathi.dmi'
 	deform = 'icons/mob/human_races/unathi_def.dmi'
@@ -63,7 +63,7 @@
 	heat_level_2 = 480  //Default 400
 	heat_level_3 = 1100 //Default 1000
 
-	flags = CAN_JOIN | IS_WHITELISTED | HAS_LIPS | HAS_UNDERWEAR | HAS_SKIN_COLOR | HAS_EYE_COLOR
+	flags = CAN_JOIN | IS_WHITELISTED | HAS_UNDERWEAR | HAS_SKIN_COLOR | HAS_EYE_COLOR
 
 	flesh_color = "#34AF10"
 
@@ -113,10 +113,13 @@
 	..()
 	var/gear = /obj/item/clothing/shoes/sandal
 
-	if(J && ispath(J.shoes, /obj/item/clothing/shoes/jackboots))
-		gear = /obj/item/clothing/shoes/jackboots/unathi
+	if(J)
+		if(ispath(J.shoes, /obj/item/clothing/shoes/jackboots))
+			gear = /obj/item/clothing/shoes/jackboots/unathi
+		else if(ispath(J.shoes, /obj/item/clothing/shoes/workboots))
+			gear = /obj/item/clothing/shoes/workboots/toeless
 
-	if(H.shoes)
+	if(H.shoes && H.shoes.type == J.shoes) // Do not delete loadout items.
 		var/obj/item/shoes = H.shoes
 		if(H.unEquip(shoes))
 			qdel(shoes)
@@ -125,13 +128,14 @@
 		H.equip_to_slot_or_del(new gear (H),slot_shoes)
 
 /datum/species/tajaran
-	name = "Tajara"
+	name = SPECIES_TAJARA
 	name_plural = "Tajaran"
 	icobase = 'icons/mob/human_races/tajaran.dmi'
 	deform = 'icons/mob/human_races/tajaran_def.dmi'
 	language = "Siik'tajr"
 	tail = "tajtail"
 	tail_animation = 'icons/mob/human_races/tajaran_tail.dmi'
+	default_h_style = "Tajaran Ears"
 	unarmed_attacks = list(
 		new /datum/unarmed_attack/stomp,
 		new /datum/unarmed_attack/kick,
@@ -205,10 +209,13 @@
 	..()
 	var/gear = /obj/item/clothing/shoes/sandal
 
-	if(J && ispath(J.shoes, /obj/item/clothing/shoes/jackboots))
-		gear = /obj/item/clothing/shoes/jackboots/unathi
+	if(J)
+		if(ispath(J.shoes, /obj/item/clothing/shoes/jackboots))
+			gear = /obj/item/clothing/shoes/jackboots/unathi
+		else if(ispath(J.shoes, /obj/item/clothing/shoes/workboots))
+			gear = /obj/item/clothing/shoes/workboots/toeless
 
-	if(H.shoes)
+	if(H.shoes && H.shoes.type == J.shoes) // Do not delete loadout items.
 		var/obj/item/shoes = H.shoes
 		if(H.unEquip(shoes))
 			qdel(shoes)
@@ -218,7 +225,7 @@
 
 
 /datum/species/skrell
-	name = "Skrell"
+	name = SPECIES_SKRELL
 	name_plural = "Skrell"
 	icobase = 'icons/mob/human_races/skrell.dmi'
 	deform = 'icons/mob/human_races/skrell_def.dmi'
@@ -255,7 +262,7 @@
 	)
 
 /datum/species/diona
-	name = "Diona"
+	name = SPECIES_DIONA
 	name_plural = "Dionaea"
 	icobase = 'icons/mob/human_races/diona.dmi'
 	deform = 'icons/mob/human_races/diona_def.dmi'
@@ -344,7 +351,7 @@
 	return 0
 
 /datum/species/diona/equip_survival_gear(var/mob/living/carbon/human/H)
-	if(H.back && istype(H.back, /obj/item/weapon/storage))
+	if(H.back && istype(H.back, /obj/item/storage))
 		H.equip_to_slot_or_del(new /obj/item/device/flashlight/flare(H.back), slot_in_backpack)
 	else
 		H.equip_to_slot_or_del(new /obj/item/device/flashlight/flare(H), slot_r_hand)
@@ -373,7 +380,7 @@
 	H.visible_message("<span class='danger'>\The [H] splits apart with a wet slithering noise!</span>")
 
 /datum/species/machine
-	name = "Machine"
+	name = SPECIES_IPC
 	name_plural = "machines"
 
 	icobase = 'icons/mob/human_races/machine.dmi'

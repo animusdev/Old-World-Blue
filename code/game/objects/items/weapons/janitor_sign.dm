@@ -7,7 +7,7 @@
 	throwforce = 3.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	attack_verb = list("warned", "cautioned", "smashed")
 
 /obj/item/weapon/caution/cone

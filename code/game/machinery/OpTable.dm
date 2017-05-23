@@ -15,13 +15,11 @@
 
 /obj/machinery/optable/New()
 	..()
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(var/dir in list(NORTH,EAST,SOUTH,WEST))
 		computer = locate(/obj/machinery/computer/operating, get_step(src, dir))
-		if (computer)
+		if(computer)
 			computer.table = src
 			break
-//	spawn(100) //Wont the MC just call this process() before and at the 10 second mark anyway?
-//		process()
 
 /obj/machinery/optable/ex_act(severity)
 
@@ -46,11 +44,14 @@
 		qdel(src)
 
 /obj/machinery/optable/attack_hand(mob/user as mob)
+	//TODO: DNA3 hulk
+	/*
 	if (HULK in usr.mutations)
 		usr << text("\blue You destroy the table.")
 		visible_message("\red [usr] destroys the operating table!")
 		src.density = 0
 		qdel(src)
+	*/
 	return
 
 /obj/machinery/optable/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -64,7 +65,7 @@
 
 /obj/machinery/optable/MouseDrop_T(obj/O as obj, mob/user as mob)
 
-	if (!istype(O, /obj/item/weapon) || (user.get_active_hand() != O))
+	if (!istype(O, /obj/item) || (user.get_active_hand() != O))
 		return
 	user.unEquip(O)
 	if (O.loc != src.loc)
@@ -87,16 +88,14 @@
 
 /obj/machinery/optable/proc/take_victim(mob/living/carbon/C, mob/living/carbon/user as mob)
 	if (C == user)
-		user.visible_message("[user] climbs on the operating table.","You climb on the operating table.")
+		user.visible_message(
+			"[user] climbs on the operating table.",
+			"You climb on the operating table."
+		)
 	else
-		visible_message("\red [C] has been laid on the operating table by [user].", 3)
-	if (C.client)
-		C.client.perspective = EYE_PERSPECTIVE
-		C.client.eye = src
+		visible_message(SPAN_WARN("[C] has been laid on the operating table by [user]."))
 	C.resting = 1
-	C.loc = src.loc
-	for(var/obj/O in src)
-		O.loc = src.loc
+	C.forceMove(loc)
 	src.add_fingerprint(user)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
@@ -125,21 +124,20 @@
 
 	take_victim(usr,usr)
 
+/obj/machinery/optable/affect_grab(var/mob/user, var/mob/target)
+	take_victim(target,user)
+	return TRUE
+
 /obj/machinery/optable/attackby(obj/item/weapon/W as obj, mob/living/carbon/user as mob)
-	if (istype(W, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = W
-		if(iscarbon(G.affecting) && get_dist(src,G.affecting)<2 && check_table(G.affecting))
-			take_victim(G.affecting,usr)
-			qdel(W)
-			return
+	return
 
 /obj/machinery/optable/proc/check_table(mob/living/carbon/patient as mob)
 	if(src.victim)
-		usr << "\blue <B>The table is already occupied!</B>"
+		usr << SPAN_NOTE("<B>The table is already occupied!</B>")
 		return 0
 
 	if(patient.buckled)
-		usr << "\blue <B>Unbuckle first!</B>"
+		usr << SPAN_NOTE("<B>Unbuckle first!</B>")
 		return 0
 
 	return 1

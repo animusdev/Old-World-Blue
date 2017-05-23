@@ -47,25 +47,24 @@
 		return
 
 
-	implanted(mob/living/carbon/source)
+	on_implanted(mob/living/carbon/source)
 		source.mind.store_memory("Freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
 		source << "The implanted freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
-		return 1
 
 
 	get_data()
 		var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> Freedom Beacon<BR>
-<b>Life:</b> optimum 5 uses<BR>
-<b>Important Notes:</b> <font color='red'>Illegal</font><BR>
-<HR>
-<b>Implant Details:</b> <BR>
-<b>Function:</b> Transmits a specialized cluster of signals to override handcuff locking
-mechanisms<BR>
-<b>Special Features:</b><BR>
-<i>Neuro-Scan</i>- Analyzes certain shadow signals in the nervous system<BR>
-<b>Integrity:</b> The battery is extremely weak and commonly after injection its
-life can drive down to only 1 use.<HR>
-No Implant Specifics"}
+			<b>Implant Specifications:</b><BR>
+			<b>Name:</b> Freedom Beacon<BR>
+			<b>Life:</b> optimum 5 uses<BR>
+			<b>Important Notes:</b> <font color='red'>Illegal</font><BR>
+			<HR>
+			<b>Implant Details:</b> <BR>
+			<b>Function:</b> Transmits a specialized cluster of signals to override handcuff locking
+			mechanisms<BR>
+			<b>Special Features:</b><BR>
+			<i>Neuro-Scan</i>- Analyzes certain shadow signals in the nervous system<BR>
+			<b>Integrity:</b> The battery is extremely weak and commonly after injection its
+			life can drive down to only 1 use.<HR>
+			No Implant Specifics"}
 		return dat

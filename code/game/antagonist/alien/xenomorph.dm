@@ -1,8 +1,7 @@
 var/datum/antagonist/xenos/xenomorphs
 
 /datum/antagonist/xenos
-	id = MODE_XENOMORPH
-	role_type = BE_ALIEN
+	id = ROLE_ALIEN
 	role_text = "Xenomorph"
 	role_text_plural = "Xenomorphs"
 	mob_path = /mob/living/carbon/alien/larva
@@ -32,7 +31,7 @@ var/datum/antagonist/xenos/xenomorphs
 /datum/antagonist/xenos/proc/get_vents()
 	var/list/vents = list()
 	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in machines)
-		if(!temp_vent.welded && temp_vent.network && temp_vent.loc.z in config.station_levels)
+		if(!temp_vent.welded && temp_vent.network && isOnStationLevel(temp_vent))
 			if(temp_vent.network.normal_members.len > 50)
 				vents += temp_vent
 	return vents

@@ -46,9 +46,13 @@ research holder datum.
 
 /datum/research								//Holder for all the existing, archived, and known tech. Individual to console.
 	var/list/possible_tech = list()			//List of all tech in the game that players have access to (barring special events).
-	var/list/known_tech = list()				//List of locally known tech.
+	var/list/known_tech = list()			//List of locally known tech.
 	var/list/possible_designs = list()		//List of all designs (at base reliability).
 	var/list/known_designs = list()			//List of available designs (at base reliability).
+
+	var/list/protolathe_categories = list("None")
+	var/list/circuit_categories = list("None")
+	var/list/fabricator_categories = list("None")
 
 /datum/research/New()		//Insert techs into possible_tech here. Known_tech automatically updated.
 	for(var/T in typesof(/datum/tech) - /datum/tech)
@@ -132,7 +136,6 @@ research holder datum.
 				known.reliability_mod = D.reliability_mod
 			return
 	known_designs += D
-	return
 
 //Refreshes known_tech and known_designs list. Then updates the reliability vars of the designs in the known_designs list.
 //Input/Output: n/a
@@ -239,7 +242,7 @@ research holder datum.
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk2"
 	item_state = "card-id"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	randpixel = 5
 	matter = list(DEFAULT_WALL_MATERIAL = 30, "glass" = 10)
 	var/datum/tech/stored
@@ -250,7 +253,7 @@ research holder datum.
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk2"
 	item_state = "card-id"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	randpixel = 5
 	matter = list(DEFAULT_WALL_MATERIAL = 30, "glass" = 10)
 	var/datum/design/blueprint

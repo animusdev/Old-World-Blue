@@ -838,7 +838,7 @@ var/global/floorIsLava = 0
 /datum/admins/proc/unprison(var/mob/M in mob_list)
 	set category = "Admin"
 	set name = "Unprison"
-	if (M.z == 2)
+	if(isOnAdminLevel(M))
 		if (config.allow_admin_jump)
 			M.loc = pick(latejoin)
 			log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
@@ -967,6 +967,7 @@ var/global/floorIsLava = 0
 		new chosen(usr.loc)
 
 	log_admin("[key_name(usr)] spawned [chosen].", usr, 0)
+	usr << "<span class=\"log_message message\">Spawned: [chosen].</span>"
 
 
 /datum/admins/proc/show_traitor_panel(var/mob/M in mob_list)

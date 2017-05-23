@@ -1,4 +1,5 @@
 //Contains the rapid construction device.
+
 /obj/item/weapon/rcd
 	name = "rapid construction device"
 	desc = "A device used to rapidly build walls and floors."
@@ -8,11 +9,12 @@
 	density = 0
 	anchored = 0.0
 	flags = CONDUCT
+	slot_flags = SLOT_BELT|SLOT_HOLSTER
 	force = 10.0
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = list(TECH_ENGINEERING = 4, TECH_MATERIAL = 2)
 	matter = list(DEFAULT_WALL_MATERIAL = 50000)
 	var/datum/effect/effect/system/spark_spread/spark_system
@@ -151,11 +153,11 @@
 
 /obj/item/weapon/rcd_ammo
 	name = "compressed matter cartridge"
-	desc = "Highly compressed matter for the RCD."
+	desc = "A highly-compressed matter cartridge usable in rapid construction (and deconstruction) devices, such as railguns."
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "rcd"
 	item_state = "rcdammo"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	origin_tech = list(TECH_MATERIAL = 2)
 	matter = list(DEFAULT_WALL_MATERIAL = 30000,"glass" = 15000)
 

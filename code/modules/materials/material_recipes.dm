@@ -93,7 +93,7 @@
 /material/plastic/generate_recipes()
 	..()
 	recipes += new/datum/stack_recipe("plastic crate", /obj/structure/closet/crate/plastic, 10, one_per_turf = 1, on_floor = 1)
-	recipes += new/datum/stack_recipe("plastic bag", /obj/item/weapon/storage/bag/plasticbag, 3, on_floor = 1)
+	recipes += new/datum/stack_recipe("plastic bag", /obj/item/storage/bag/plasticbag, 3, on_floor = 1)
 	recipes += new/datum/stack_recipe("blood pack", /obj/item/weapon/reagent_containers/blood/empty, 4, on_floor = 0)
 
 
@@ -110,12 +110,12 @@
 
 /material/cardboard/generate_recipes()
 	..()
-	recipes += new/datum/stack_recipe("box", /obj/item/weapon/storage/box)
-	recipes += new/datum/stack_recipe("donut box", /obj/item/weapon/storage/box/donut/empty)
-	recipes += new/datum/stack_recipe("egg box", /obj/item/weapon/storage/fancy/egg_box)
-	recipes += new/datum/stack_recipe("light tubes box", /obj/item/weapon/storage/box/lights/tubes)
-	recipes += new/datum/stack_recipe("light bulbs box", /obj/item/weapon/storage/box/lights/bulbs)
-	recipes += new/datum/stack_recipe("mouse traps box", /obj/item/weapon/storage/box/mousetraps)
+	recipes += new/datum/stack_recipe("box", /obj/item/storage/box)
+	recipes += new/datum/stack_recipe("donut box", /obj/item/storage/box/donut/empty)
+	recipes += new/datum/stack_recipe("egg box", /obj/item/storage/fancy/egg_box)
+	recipes += new/datum/stack_recipe("light tubes box", /obj/item/storage/box/lights/tubes)
+	recipes += new/datum/stack_recipe("light bulbs box", /obj/item/storage/box/lights/bulbs)
+	recipes += new/datum/stack_recipe("mouse traps box", /obj/item/storage/box/mousetraps)
 	recipes += new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3)
 	recipes += new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg)
 	recipes += new/datum/stack_recipe("pizza box", /obj/item/pizzabox)

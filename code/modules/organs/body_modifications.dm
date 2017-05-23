@@ -13,7 +13,8 @@ var/global/list/modifications_types = list(
 /proc/generate_body_modification_lists()
 	for(var/mod_type in typesof(/datum/body_modification))
 		var/datum/body_modification/BM = new mod_type()
-		if(!BM.id) continue
+		if(!BM.id)
+			continue
 		body_modifications[BM.id] = BM
 		var/class = ""
 		if(BM.allowed_species && BM.allowed_species.len)
@@ -23,9 +24,12 @@ var/global/list/modifications_types = list(
 
 /proc/get_default_modificaton(var/nature = MODIFICATION_ORGANIC)
 	switch(nature)
-		if(MODIFICATION_ORGANIC) return body_modifications["nothing"]
-		if(MODIFICATION_SILICON) return body_modifications["prosthesis_basic"]
-		if(MODIFICATION_REMOVED) return body_modifications["amputated"]
+		if(MODIFICATION_ORGANIC)
+			return body_modifications["nothing"]
+		if(MODIFICATION_SILICON)
+			return body_modifications["prosthesis_basic"]
+		if(MODIFICATION_REMOVED)
+			return body_modifications["amputated"]
 
 /datum/body_modification
 	var/name = ""
@@ -35,7 +39,7 @@ var/global/list/modifications_types = list(
 	var/list/body_parts = list(				// For sorting'n'selection optimization.
 		BP_CHEST, "chest2", BP_HEAD, BP_GROIN, BP_L_ARM, BP_R_ARM, BP_L_HAND, BP_R_HAND, BP_L_LEG, BP_R_LEG,\
 		BP_L_FOOT, BP_R_FOOT, O_HEART, O_LUNGS, O_LIVER, O_BRAIN, O_EYES)
-	var/list/allowed_species = list("Human")// Species restriction.
+	var/list/allowed_species = list(SPECIES_HUMAN)// Species restriction.
 	var/replace_limb = null					// To draw usual limb or not.
 	var/mob_icon = ""
 	var/icon/icon = 'icons/mob/human_races/body_modification.dmi'
@@ -46,7 +50,7 @@ var/global/list/modifications_types = list(
 
 	proc/is_allowed(var/organ = "", datum/preferences/P)
 		if(!organ || !(organ in body_parts))
-			usr << "[name] isn't useable for [organ_tag_to_name[organ]]"
+			usr << "[name] isn't useable for [P.get_organ_name(organ)]"
 			return 0
 		if(allowed_species && !(P.species in allowed_species))
 			usr << "[name] isn't allowed for [P.species]"
@@ -101,7 +105,7 @@ var/global/list/modifications_types = list(
 	name = "Abstract"
 	desc = "Simple tattoo (use flavor)."
 	id = "abstract"
-	allowed_species = list("Human", "Skrell", "Tajara", "Unathi", "Vox")
+	allowed_species = list(SPECIES_HUMAN, SPECIES_SKRELL, SPECIES_TAJARA, SPECIES_UNATHI, SPECIES_VOX)
 	body_parts = list(
 		BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_R_ARM,
 		BP_L_HAND, BP_R_HAND, BP_L_LEG, BP_R_LEG, BP_L_FOOT, BP_R_FOOT
@@ -175,7 +179,7 @@ var/global/list/modifications_types = list(
 	id = "stripes"
 	body_parts = list(BP_HEAD, BP_CHEST)
 	mob_icon = "tajara"
-	allowed_species = list("Tajara")
+	allowed_species = list(SPECIES_TAJARA)
 
 /datum/body_modification/limb/tattoo/tribal_markings
 	name = "Unathi Tribal Markings"
@@ -184,7 +188,7 @@ var/global/list/modifications_types = list(
 	id = "tribal"
 	body_parts = list(BP_HEAD, BP_CHEST)
 	mob_icon = "unathi"
-	allowed_species = list("Unathi")
+	allowed_species = list(SPECIES_UNATHI)
 
 /datum/body_modification/limb/prosthesis
 	name = "Unbranded"
@@ -194,7 +198,7 @@ var/global/list/modifications_types = list(
 		BP_L_LEG, BP_R_LEG, BP_L_FOOT, BP_R_FOOT)
 	replace_limb = /obj/item/organ/external/robotic
 	icon = 'icons/mob/human_races/cyberlimbs/robotic.dmi'
-	allowed_species = list("Human","Tajaran","Unathi","Skrell")
+	allowed_species = list(SPECIES_HUMAN,SPECIES_TAJARA,SPECIES_UNATHI,SPECIES_SKRELL)
 	nature = MODIFICATION_SILICON
 
 	New()
@@ -259,7 +263,7 @@ var/global/list/modifications_types = list(
 ////Internals////
 
 /datum/body_modification/organ
-	allowed_species = list("Human", "Skrell", "Tajara", "Unathi", "Vox")
+	allowed_species = list(SPECIES_HUMAN, SPECIES_SKRELL, SPECIES_TAJARA, SPECIES_UNATHI, SPECIES_VOX)
 	create_organ(var/organ_type, var/color)
 		if(replace_limb)
 			return new replace_limb(null)
@@ -303,7 +307,7 @@ var/global/list/modifications_types = list(
 	id = "prosthesis_eye_cam"
 	desc = "One of your eyes replaced with portable cam. Do not lose it."
 	body_parts = list(O_EYES)
-	allowed_species = list("Human")
+	allowed_species = list(SPECIES_HUMAN)
 
 	get_mob_icon(organ, body_build, color, gender, species)
 		var/datum/species/S = all_species[species]

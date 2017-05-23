@@ -99,6 +99,8 @@ Class Procs:
 /obj/machinery
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
+	w_class = ITEM_SIZE_NO_CONTAINER
+
 	var/stat = 0
 	var/emagged = 0
 	var/use_power = 1
@@ -142,7 +144,7 @@ Class Procs:
 	return
 
 /obj/machinery/emp_act(severity)
-	if(use_power && stat == 0)
+	if(use_power && !stat)
 		use_power(7500/severity)
 
 		var/obj/effect/overlay/pulse2 = PoolOrNew(/obj/effect/overlay, src.loc)
@@ -300,7 +302,7 @@ Class Procs:
 			return 1
 	return 0
 
-/obj/machinery/proc/default_part_replacement(var/mob/user, var/obj/item/weapon/storage/part_replacer/R)
+/obj/machinery/proc/default_part_replacement(var/mob/user, var/obj/item/storage/part_replacer/R)
 	if(!istype(R))
 		return 0
 	if(!component_parts)
@@ -356,5 +358,6 @@ Class Procs:
 		I.forceMove(loc)
 		component_parts -= I
 	circuit.forceMove(loc)
+	circuit.deconstruct(src)
 	qdel(src)
 	return 1

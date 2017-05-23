@@ -15,7 +15,7 @@
 	desc = "A camera film cartridge. Insert it into a camera to reload it."
 	icon_state = "film"
 	item_state = "electropack"
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 
 
 /********
@@ -28,8 +28,8 @@ var/global/photo_count = 0
 	icon = 'icons/obj/items.dmi'
 	icon_state = "photo"
 	item_state = "paper"
-	w_class = 2.0
 	randpixel = 10
+	w_class = ITEM_SIZE_TINY
 	var/id
 	var/icon/img	//Big photo image
 	var/scribble	//Scribble on the back.
@@ -79,7 +79,7 @@ var/global/photo_count = 0
 
 	var/n_name = sanitizeSafe(input(usr, "What would you like to label the photo?", "Photo Labelling", null)  as text, MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
-	if(( (loc == usr || (loc.loc && loc.loc == usr)) && usr.stat == 0))
+	if(( (loc == usr || (loc.loc && loc.loc == usr)) && !usr.stat))
 		name = "[(n_name ? text("[n_name]") : "photo")]"
 	add_fingerprint(usr)
 	return
@@ -101,14 +101,16 @@ var/global/photo_count = 0
 /**************
 * photo album *
 **************/
-/obj/item/weapon/storage/photo_album
+/obj/item/storage/photo_album
 	name = "Photo album"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "album"
 	item_state = "briefcase"
+	w_class = ITEM_SIZE_NORMAL //same as book
+	storage_slots = DEFAULT_BOX_STORAGE //yes, that's storage_slots. Photos are w_class 1 so this has as many slots equal to the number of photos you could put in a box
 	can_hold = list(/obj/item/weapon/photo)
 
-/obj/item/weapon/storage/photo_album/MouseDrop(obj/over_object as obj)
+/obj/item/storage/photo_album/MouseDrop(obj/over_object as obj)
 
 	if(!ishuman(usr))
 		return
@@ -144,7 +146,7 @@ var/global/photo_count = 0
 	desc = "A polaroid camera. 10 photos left."
 	icon_state = "camera"
 	item_state = "electropack"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	randpixel = 5
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
@@ -244,20 +246,19 @@ var/global/photo_count = 0
 	var/mob_detail
 	for(var/mob/living/carbon/A in the_turf)
 		if(A.invisibility) continue
-		var/holding = null
+		var/holding = ""
 		var/posenow = null
-		if(A.l_hand || A.r_hand)
-			if(A.l_hand) holding = "They are holding \a [A.l_hand]"
-			if(A.r_hand)
-				if(holding)
-					holding += " and \a [A.r_hand]"
-				else
-					holding = "They are holding \a [A.r_hand]"
-		if(ishuman(A))
-			if(A.pose) posenow = "They're appears to [A.pose] on this photo."
+		var/datum/gender/T = gender_datums[A.get_gender()]
+		if(A.r_hand)
+			holding = A.r_hand.on_mob_description(A, T, slot_r_hand, "right hand")
+		if(A.l_hand)
+			holding += " "
+			holding += A.l_hand.on_mob_description(A, T, slot_l_hand, "left hand")
+		if(ishuman(A) && A.pose)
+			posenow = "They're appears to [A.pose] on this photo."
 
 		if(!mob_detail)
-			mob_detail = "You can see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]. [posenow] "
+			mob_detail = "You can see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""]. [holding][posenow] "
 		else
 			mob_detail += "You can also see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."] [posenow]."
 	return mob_detail

@@ -5,7 +5,7 @@
  * Utensils
  */
 /obj/item/weapon/material/kitchen/utensil
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	thrown_force_divisor = 1
 	origin_tech = list(TECH_MATERIAL = 1)
 	attack_verb = list("attacked", "stabbed", "poked")
@@ -28,8 +28,11 @@
 
 	if(user.a_intent != I_HELP)
 		if(user.zone_sel.selecting in list(BP_HEAD, O_EYES))
+			//TODO: DNA3 clown_block
+			/*
 			if((CLUMSY in user.mutations) && prob(50))
 				M = user
+			*/
 			return eyestab(M,user)
 		else
 			return ..()
@@ -75,19 +78,15 @@
 	icon_state = "knife"
 	force_divisor = 0.1 // 6 when wielded with hardness 60 (steel)
 
+//TODO: DNA3 clown_block
+/*
 /obj/item/weapon/material/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
 	if ((CLUMSY in user.mutations) && prob(50))
 		user << "\red You accidentally cut yourself with the [src]."
 		user.take_organ_damage(20)
 		return
 	return ..()
-
-/obj/item/weapon/material/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
-	if ((CLUMSY in user.mutations) && prob(50))
-		user << "\red You somehow managed to cut yourself with the [src]."
-		user.take_organ_damage(20)
-		return
-	return ..()
+*/
 
 /obj/item/weapon/material/kitchen/utensil/knife/plastic
 	default_material = "plastic"
@@ -105,6 +104,8 @@
 	force_divisor = 0.7 // 10 when wielded with weight 15 (wood)
 	thrown_force_divisor = 1 // as above
 
+//TODO: DNA3 clown_block
+/*
 /obj/item/weapon/material/kitchen/rollingpin/attack(mob/living/M as mob, mob/living/user as mob)
 	if ((CLUMSY in user.mutations) && prob(50))
 		user << "\red The [src] slips out of your hand and hits your head."
@@ -112,3 +113,4 @@
 		user.Paralyse(2)
 		return
 	return ..()
+*/

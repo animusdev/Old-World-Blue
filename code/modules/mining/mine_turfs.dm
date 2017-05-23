@@ -258,7 +258,7 @@
 		var/pain = 0
 		if(prob(50))
 			pain = 1
-		for(var/mob/living/M in range(src, 200))
+		for(var/mob/living/M in range(200, src))
 			M << "<font color='red'><b>[pick("A high pitched [pick("keening","wailing","whistle")]","A rumbling noise like [pick("thunder","heavy machinery")]")] somehow penetrates your mind before fading away!</b></font>"
 			if(pain)
 				flick("pain",M.pain)
@@ -398,7 +398,7 @@
 	has_resources = 1
 
 /turf/simulated/floor/plating/airless/asteroid/New()
-
+	..()
 	if(prob(20))
 		overlay_detail = "asteroid[rand(0,9)]"
 
@@ -448,14 +448,14 @@
 		user << "\blue You dug a hole."
 		gets_dug()
 
-	else if(istype(W,/obj/item/weapon/storage/bag/ore))
-		var/obj/item/weapon/storage/bag/ore/S = W
+	else if(istype(W,/obj/item/storage/bag/ore))
+		var/obj/item/storage/bag/ore/S = W
 		if(S.collection_mode)
 			for(var/obj/item/weapon/ore/O in contents)
 				O.attackby(W,user)
 				return
-	else if(istype(W,/obj/item/weapon/storage/bag/fossils))
-		var/obj/item/weapon/storage/bag/fossils/S = W
+	else if(istype(W,/obj/item/storage/bag/fossils))
+		var/obj/item/storage/bag/fossils/S = W
 		if(S.collection_mode)
 			for(var/obj/item/weapon/fossil/F in contents)
 				F.attackby(W,user)
@@ -506,11 +506,11 @@
 	if(istype(M,/mob/living/silicon/robot))
 		var/mob/living/silicon/robot/R = M
 		if(R.module)
-			if(istype(R.module_state_1,/obj/item/weapon/storage/bag/ore))
+			if(istype(R.module_state_1,/obj/item/storage/bag/ore))
 				attackby(R.module_state_1,R)
-			else if(istype(R.module_state_2,/obj/item/weapon/storage/bag/ore))
+			else if(istype(R.module_state_2,/obj/item/storage/bag/ore))
 				attackby(R.module_state_2,R)
-			else if(istype(R.module_state_3,/obj/item/weapon/storage/bag/ore))
+			else if(istype(R.module_state_3,/obj/item/storage/bag/ore))
 				attackby(R.module_state_3,R)
 			else
 				return

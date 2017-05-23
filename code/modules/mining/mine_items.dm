@@ -10,16 +10,16 @@
 /obj/structure/closet/secure_closet/miner/New()
 	..()
 	switch(rand(4))
-		if(1) new /obj/item/weapon/storage/backpack/industrial(src)
-		if(2) new /obj/item/weapon/storage/backpack/satchel/eng(src)
-		if(3) new /obj/item/weapon/storage/backpack/dufflebag/eng(src)
-		if(4) new /obj/item/weapon/storage/backpack/messenger/eng(src)
+		if(1) new /obj/item/storage/backpack/industrial(src)
+		if(2) new /obj/item/storage/backpack/satchel/eng(src)
+		if(3) new /obj/item/storage/backpack/dufflebag/eng(src)
+		if(4) new /obj/item/storage/backpack/messenger/eng(src)
 	new /obj/item/device/radio/headset/cargo(src)
 	new /obj/item/clothing/under/rank/miner(src)
 	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/device/analyzer(src)
-	new /obj/item/weapon/storage/bag/ore(src)
+	new /obj/item/storage/bag/ore(src)
 	new /obj/item/device/flashlight/lantern(src)
 	new /obj/item/weapon/shovel(src)
 	if(prob(50))
@@ -48,7 +48,7 @@
 	throwforce = 4.0
 	icon_state = "pickaxe"
 	item_state = "pickaxe"
-	w_class = 4.0
+	w_class = ITEM_SIZE_HUGE
 	matter = list(DEFAULT_WALL_MATERIAL = 3750)
 	var/digspeed = 40 //moving the delay to an item var so R&D can make improved picks. --NEO
 	origin_tech = list(TECH_MATERIAL = 1, TECH_ENGINEERING = 1)
@@ -110,7 +110,7 @@
 	name = "plasma cutter"
 	icon_state = "plasmacutter"
 	item_state = "gun"
-	w_class = 3.0 //it is smaller than the pickaxe
+	w_class = ITEM_SIZE_NORMAL //it is smaller than the pickaxe
 	damtype = "fire"
 	digspeed = 20 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
 	origin_tech = list(TECH_MATERIAL = 4, TECH_PHORON = 3, TECH_ENGINEERING = 3)
@@ -158,7 +158,7 @@
 	force = 8.0
 	throwforce = 4.0
 	item_state = "shovel"
-	w_class = 3.0
+	w_class = ITEM_SIZE_HUGE
 	origin_tech = list(TECH_MATERIAL = 1, TECH_ENGINEERING = 1)
 	matter = list(DEFAULT_WALL_MATERIAL = 50)
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
@@ -172,7 +172,7 @@
 	item_state = "spade"
 	force = 5.0
 	throwforce = 7.0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 
 
 /**********************Mining car (Crate like thing, not the rail car)**************************/

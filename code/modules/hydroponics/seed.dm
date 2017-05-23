@@ -308,7 +308,7 @@
 
 		var/list/turfs = list()
 		if(inner_teleport_radius > 0)
-			for(var/turf/T in orange(target,outer_teleport_radius))
+			for(var/turf/T in RANGE_TURFS(outer_teleport_radius, target))
 				if(get_dist(target,T) >= inner_teleport_radius)
 					turfs |= T
 

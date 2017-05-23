@@ -3,7 +3,6 @@
 /obj/item/prosthesis/runner
 	desc = "Full limb runner prosthesis module."
 	matter = list(DEFAULT_WALL_MATERIAL = 9000)
-	construction_cost = list(DEFAULT_WALL_MATERIAL=15000)
 
 /obj/item/prosthesis/runner/l_leg
 	name = "R.U.N.N.E.R. left leg"

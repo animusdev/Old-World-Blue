@@ -4,7 +4,7 @@
 	icon_state = "muzzle"
 	item_state = "muzzle"
 	body_parts_covered = FACE
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	gas_transfer_coefficient = 0.90
 
 /obj/item/clothing/mask/muzzle/ballgag
@@ -42,7 +42,7 @@
 	desc = "A sterile mask designed to help prevent the spread of diseases."
 	icon_state = "sterile"
 	item_state = "sterile"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	body_parts_covered = FACE
 	item_flags = FLEXIBLEMATERIAL
 	gas_transfer_coefficient = 0.90
@@ -90,71 +90,62 @@
 
 //scarves (large so fit in in mask slot)
 /obj/item/clothing/mask/scarf
-	body_parts_covered = FACE
+	body_parts_covered = 0
 	item_flags = FLEXIBLEMATERIAL
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	gas_transfer_coefficient = 0.90
 
 /obj/item/clothing/mask/scarf/blue
 	name = "blue neck scarf"
 	desc = "A blue neck scarf."
 	icon_state = "blue_scarf"
-	item_state = "blue_scarf"
 
 /obj/item/clothing/mask/scarf/redwhite
 	name = "red scarf"
 	desc = "A red and white checkered neck scarf."
 	icon_state = "redwhite_scarf"
-	item_state = "redwhite_scarf"
 
 /obj/item/clothing/mask/scarf/red
 	name = "red scarf"
 	desc = "A red neck scarf."
 	icon_state = "red_scarf"
-	item_state = "red_scarf"
 
 /obj/item/clothing/mask/scarf/green
 	name = "green scarf"
 	desc = "A green neck scarf."
 	icon_state = "green_scarf"
-	item_state = "green_scarf"
 
 /obj/item/clothing/mask/scarf/ninja
 	name = "ninja scarf"
 	desc = "A stealthy, dark scarf."
 	icon_state = "ninja_scarf"
-	item_state = "ninja_scarf"
 	siemens_coefficient = 0
 
 /obj/item/clothing/mask/scarf/long_blue
 	name = "long blue scarf"
 	desc = "A long blue neck scarf."
 	icon_state = "stripedbluescarf"
-	item_state = "stripedbluescarf"
 
 /obj/item/clothing/mask/scarf/long_red
 	name = "long red scarf"
 	desc = "A long red neck scarf."
 	icon_state = "stripedredscarf"
-	item_state = "stripedredscarf"
 
 /obj/item/clothing/mask/scarf/long_green
 	name = "long green scarf"
 	desc = "A long green neck scarf."
 	icon_state = "stripedgreenscarf"
-	item_state = "stripedgreenscarf"
 
 /obj/item/clothing/mask/scarf/flagmask
 	name = "flgmask"
 	desc = "A simple cloth rag that bears the flag of the first nations."
+	body_parts_covered = FACE
 	icon_state = "flagmask"
-	item_state = "flagmask"
 
 /obj/item/clothing/mask/scarf/arafatka
 	name = "shemagh"
 	desc = "Traditional Middle Eastern headdress fashioned from a square scarf."
 	icon_state = "arafatka"
-	item_state = "arafatka"
 	slot_flags = SLOT_HEAD|SLOT_MASK
 
 /obj/item/clothing/mask/scarf/arafatka/equipped(mob/living/carbon/human/H, var/slot)
@@ -169,9 +160,8 @@
 	name = "pig mask"
 	desc = "A rubber pig mask."
 	icon_state = "pig"
-	item_state = "pig"
 	flags_inv = HIDEFACE|BLOCKHAIR
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	siemens_coefficient = 0.9
 	body_parts_covered = HEAD|FACE|EYES
 
@@ -179,14 +169,12 @@
 	name = "horse head mask"
 	desc = "A mask made of soft vinyl and latex, representing the head of a horse."
 	icon_state = "horsehead"
-	item_state = "horsehead"
 	flags_inv = HIDEFACE|BLOCKHAIR
 	body_parts_covered = HEAD|FACE|EYES
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	siemens_coefficient = 0.9
 	say_messages = list("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
 	say_verbs = list("whinnies", "neighs", "says")
-
 
 /obj/item/clothing/mask/tuskmask
 	name = "tuskmask"
@@ -201,7 +189,6 @@
 	name = "camera MIU"
 	desc = "Allows for direct mental connection to accessible camera networks."
 	icon_state = "s-ninja"
-	item_state = "s-ninja"
 	flags_inv = HIDEFACE
 	body_parts_covered = 0
 	var/mob/observer/eye/aiEye/eye
@@ -237,7 +224,6 @@
 	flags_inv = HIDEFACE
 	item_flags = FLEXIBLEMATERIAL
 	icon_state = "bandblack"
-	item_state = "bandblack"
 	var/tied = 0
 
 /obj/item/clothing/mask/bandana/proc/adjust_bandana(mob/user)
@@ -248,14 +234,12 @@
 			slot_flags = SLOT_HEAD
 			body_parts_covered = HEAD
 			icon_state = "[icon_state]_up"
-			item_state = "[item_state]_up"
 			usr << "You tie the bandana so that it can be worn on the head."
 		else
 			flags_inv = initial(flags_inv)
 			body_parts_covered = FACE
 			slot_flags = initial(slot_flags)
 			icon_state = initial(icon_state)
-			item_state = initial(item_state)
 			usr << "You tie the bandana so that it can be worn on the face."
 
 /obj/item/clothing/mask/bandana/verb/toggle()

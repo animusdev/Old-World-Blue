@@ -44,7 +44,7 @@
 
 /datum/supply_packs/misc/underwear
 	name = "Random underwear pack"
-	contains = list(/obj/item/weapon/storage/box/underwear = 3)
+	contains = list(/obj/item/storage/box/underwear = 3)
 	cost = 10
 	containertype = /obj/structure/closet/crate
 	containername = "Underwear crate"

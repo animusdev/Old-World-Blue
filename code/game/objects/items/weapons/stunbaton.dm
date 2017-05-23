@@ -3,13 +3,13 @@
 	name = "stunbaton"
 	desc = "A stun baton for incapacitating people with."
 	icon_state = "stunbaton"
-	item_state = "baton"
+	item_state = "stunbaton"
 	slot_flags = SLOT_BELT
 	force = 15
 	sharp = 0
 	edge = 0
 	throwforce = 7
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = list(TECH_COMBAT = 2)
 	attack_verb = list("beaten")
 	var/stunforce = 2
@@ -99,12 +99,14 @@
 
 
 /obj/item/weapon/melee/baton/attack(mob/M, mob/user)
+	//TODO: DNA3 clown_block
+/*
 	if(status && (CLUMSY in user.mutations) && prob(50))
 		user << "span class='danger'>You accidentally hit yourself with the [src]!</span>"
 		user.Weaken(30)
 		deductcharge(hitcost)
 		return
-
+*/
 	if(isrobot(M))
 		..()
 		return
@@ -206,7 +208,7 @@
 	stunforce = 0
 	agonyforce = 60
 	hitcost = 1000
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	attack_verb = list("shocked")
 	slot_flags = SLOT_BELT
 

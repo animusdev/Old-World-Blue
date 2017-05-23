@@ -21,22 +21,24 @@ var/datum/body_build/default_body_build = new
 	var/hidden_icon = 'icons/inv_slots/hidden/mob.dmi'
 	var/rig_back	= 'icons/inv_slots/rig/mob.dmi'
 
-	var/r_hand		= 'icons/mob/items/righthand.dmi'
-	var/l_hand		= 'icons/mob/items/lefthand.dmi'
+	var/r_hand		= 'icons/inv_slots/items/items_r_default.dmi'
+	var/l_hand		= 'icons/inv_slots/items/items_l_default.dmi'
 
 	var/list/hand_groups = list()
 
 /datum/body_build/New()
-	hand_groups = list(
-		"[SPRITE_STORAGE]_l"  = 'icons/inv_slots/back/hand_l_default.dmi',
-		"[SPRITE_STORAGE]_r"  = 'icons/inv_slots/back/hand_r_default.dmi',
-		"[SPRITE_UNIFORMS]_l" = 'icons/inv_slots/uniforms/hand_l_default.dmi',
-		"[SPRITE_UNIFORMS]_r" = 'icons/inv_slots/uniforms/hand_r_default.dmi',
-		"[SPRITE_GLOVES]_l"   = 'icons/inv_slots/gloves/hand_l_default.dmi',
-		"[SPRITE_GLOVES]_r"   = 'icons/inv_slots/gloves/hand_r_default.dmi',
-		"[SPRITE_GUNS]_l"     = 'icons/inv_slots/items/guns_l_default.dmi',
-		"[SPRITE_GUNS]_r"     = 'icons/inv_slots/items/guns_r_default.dmi'
-	)
+	hand_groups["[SPRITE_UNIFORMS]_l"] = 'icons/inv_slots/uniforms/hand_l_default.dmi'
+	hand_groups["[SPRITE_UNIFORMS]_r"] = 'icons/inv_slots/uniforms/hand_r_default.dmi'
+	hand_groups["[SPRITE_BACKPACK]_l"] = 'icons/inv_slots/back/hand_l_default.dmi'
+	hand_groups["[SPRITE_BACKPACK]_r"] = 'icons/inv_slots/back/hand_r_default.dmi'
+	hand_groups["[SPRITE_GLOVES]_l"]   = 'icons/inv_slots/gloves/hand_l_default.dmi'
+	hand_groups["[SPRITE_GLOVES]_r"]   = 'icons/inv_slots/gloves/hand_r_default.dmi'
+	hand_groups["[SPRITE_MELEE]_l"]    = 'icons/inv_slots/items/melee_l_default.dmi'
+	hand_groups["[SPRITE_MELEE]_r"]    = 'icons/inv_slots/items/melee_r_default.dmi'
+	hand_groups["[SPRITE_STORAGE]_l"]  = 'icons/inv_slots/items/storage_l_default.dmi'
+	hand_groups["[SPRITE_STORAGE]_r"]  = 'icons/inv_slots/items/storage_r_default.dmi'
+	hand_groups["[SPRITE_GUNS]_l"]     = 'icons/inv_slots/items/guns_l_default.dmi'
+	hand_groups["[SPRITE_GUNS]_r"]     = 'icons/inv_slots/items/guns_r_default.dmi'
 
 /datum/body_build/proc/get_inhand_icon(var/group, var/hand)
 	if(hand == LEFT)
@@ -95,16 +97,15 @@ var/datum/body_build/default_body_build = new
 	rig_back		= 'icons/inv_slots/rig/mob_slim.dmi'
 
 /datum/body_build/slim/New()
-	hand_groups = list(
-		"[SPRITE_STORAGE]_l"  = 'icons/inv_slots/back/hand_l_default.dmi',
-		"[SPRITE_STORAGE]_r"  = 'icons/inv_slots/back/hand_r_default.dmi',
-		"[SPRITE_UNIFORMS]_l" = 'icons/inv_slots/uniforms/hand_l_slim.dmi',
-		"[SPRITE_UNIFORMS]_r" = 'icons/inv_slots/uniforms/hand_r_slim.dmi',
-		"[SPRITE_GLOVES]_l"   = 'icons/inv_slots/gloves/hand_l_slim.dmi',
-		"[SPRITE_GLOVES]_r"   = 'icons/inv_slots/gloves/hand_r_slim.dmi',
-		"[SPRITE_GUNS]_l"     = 'icons/inv_slots/items/guns_l_default.dmi',
-		"[SPRITE_GUNS]_r"     = 'icons/inv_slots/items/guns_r_default.dmi'
-	)
+	..()
+	hand_groups["[SPRITE_UNIFORMS]_l"] = 'icons/inv_slots/uniforms/hand_l_slim.dmi'
+	hand_groups["[SPRITE_UNIFORMS]_r"] = 'icons/inv_slots/uniforms/hand_r_slim.dmi'
+	hand_groups["[SPRITE_BACKPACK]_l"] = 'icons/inv_slots/back/hand_l_slim.dmi'
+	hand_groups["[SPRITE_BACKPACK]_r"] = 'icons/inv_slots/back/hand_r_slim.dmi'
+	hand_groups["[SPRITE_GLOVES]_l"]   = 'icons/inv_slots/gloves/hand_l_slim.dmi'
+	hand_groups["[SPRITE_GLOVES]_r"]   = 'icons/inv_slots/gloves/hand_r_slim.dmi'
+	hand_groups["[SPRITE_MELEE]_l"]    = 'icons/inv_slots/items/melee_l_slim.dmi'
+	hand_groups["[SPRITE_MELEE]_r"]    = 'icons/inv_slots/items/melee_r_slim.dmi'
 
 /datum/body_build/tajaran
 	name		= "Tajaran"
@@ -117,7 +118,7 @@ var/datum/body_build/default_body_build = new
 	hidden_icon = 'icons/inv_slots/hidden/mob_tajaran.dmi'
 
 /datum/body_build/unathi
-	name		= "Unathi"
+	name		= SPECIES_UNATHI
 
 	suit_icon	= 'icons/inv_slots/suits/mob_unathi.dmi'
 	mask_icon	= 'icons/inv_slots/masks/mob_unathi.dmi'

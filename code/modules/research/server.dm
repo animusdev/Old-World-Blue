@@ -107,40 +107,12 @@
 			env.merge(removed)
 
 /obj/machinery/r_n_d/server/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if (disabled)
+	if(default_deconstruction_screwdriver(user, O))
 		return
-	if (shocked)
-		shock(user,50)
-	if (istype(O, /obj/item/weapon/screwdriver))
-		if (!panel_open)
-			panel_open = 1
-			icon_state = "server_o"
-			user << "You open the maintenance hatch of [src]."
-		else
-			panel_open = 0
-			icon_state = "server"
-			user << "You close the maintenance hatch of [src]."
+	if(default_deconstruction_crowbar(user, O))
 		return
-	if (panel_open)
-		if(istype(O, /obj/item/weapon/crowbar))
-			griefProtection()
-			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-			var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(src.loc)
-			M.state = 2
-			M.icon_state = "box_1"
-			for(var/obj/I in component_parts)
-				if(I.reliability != 100 && crit_fail)
-					I.crit_fail = 1
-				I.loc = src.loc
-			qdel(src)
-			return 1
-
-/obj/machinery/r_n_d/server/attack_hand(mob/user as mob)
-	if (disabled)
+	if(default_part_replacement(user, O))
 		return
-	if (shocked)
-		shock(user,50)
-	return
 
 /obj/machinery/r_n_d/server/centcom
 	name = "Central R&D Database"

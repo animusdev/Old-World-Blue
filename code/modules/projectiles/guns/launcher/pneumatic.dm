@@ -4,18 +4,18 @@
 	icon_state = "pneumatic"
 	item_state = "pneumatic"
 	slot_flags = SLOT_BELT
-	w_class = 5.0
+	w_class = ITEM_SIZE_HUGE
 	flags =  CONDUCT
 	fire_sound_text = "a loud whoosh of moving air"
 	fire_delay = 50
 	fire_sound = 'sound/weapons/tablehit1.ogg'
 
 	var/fire_pressure                                   // Used in fire checks/pressure checks.
-	var/max_w_class = 3                                 // Hopper intake size.
-	var/max_storage_space = 20                       // Total internal storage size.
+	var/max_w_class = ITEM_SIZE_NORMAL                                 // Hopper intake size.
+	var/max_storage_space = DEFAULT_BOX_STORAGE         // Total internal storage size.
 	var/obj/item/weapon/tank/tank = null                // Tank of gas for use in firing the cannon.
 
-	var/obj/item/weapon/storage/item_storage
+	var/obj/item/storage/item_storage
 	var/pressure_setting = 10                           // Percentage of the gas in the tank used to fire the projectile.
 	var/possible_pressure_amounts = list(5,10,20,25,50) // Possible pressure settings.
 	var/force_divisor = 400                             // Force equates to speed. Speed/5 equates to a damage multiplier for whoever you hit.

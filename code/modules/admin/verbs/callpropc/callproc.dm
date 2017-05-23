@@ -113,7 +113,7 @@
 				if(isnull(current)) return
 
 			if("mob's area")
-				var/mob/M = input("Select mob to take area for [arguments.len+1]\th argument") as null|mob in world
+				var/mob/M = input("Select mob to take area for [arguments.len+1]\th argument") as null|mob in mob_list
 				if(!M) return
 				current = get_area(M)
 				if(!current)

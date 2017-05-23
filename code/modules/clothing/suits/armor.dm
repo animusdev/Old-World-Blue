@@ -30,10 +30,11 @@
 	icon_state = "armorsec"
 
 /obj/item/clothing/suit/armor/riot
-	name = "Riot Suit"
+	name = "riot suit"
 	desc = "A suit of armor with heavy padding to protect against melee attacks. Looks like it might impair movement."
 	icon_state = "riot"
 	item_state = "swat_suit"
+	w_class = ITEM_SIZE_LARGE
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	slowdown = 1
 	armor = list(melee = 80, bullet = 10, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0)
@@ -134,16 +135,16 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/reactive/handle_shield(mob/user, var/damage, atom/damage_source = null, mob/attacker = null, var/attack_text = "the attack")
-	if(prob(50)) //áðîíÿ øðåäèãåðà
+	if(prob(50))
 		user.visible_message("<span class='danger'>The reactive teleport system flings [user] clear of the attack!</span>")
 		var/list/turfs = new/list()
-		for(var/turf/T in orange(6, user))
+		for(var/turf/T in RANGE_TURFS(6, user))
 			if(istype(T,/turf/space)) continue
 			if(T.density) continue
 			if(T.x>world.maxx-6 || T.x<6)	continue
 			if(T.y>world.maxy-6 || T.y<6)	continue
 			turfs += T
-		if(!turfs.len) turfs += pick(/turf in orange(6))
+		if(!turfs.len) turfs += pick(/turf in RANGE_TURFS(6, user))
 		var/turf/picked = pick(turfs)
 		if(!isturf(picked)) return
 
@@ -243,10 +244,13 @@
 	desc = "A simple kevlar plate carrier."
 	icon_state = "kvest"
 	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
-	allowed = list( /obj/item/weapon/gun, /obj/item/weapon/reagent_containers/spray/pepper, /obj/item/ammo_magazine,\
-					/obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/handcuffs, \
-					/obj/item/device/flashlight, /obj/item/weapon/melee/telebaton, \
-					/obj/item/clothing/head/helmet/security, /obj/item/clothing/mask/gas)
+	body_parts_covered = UPPER_TORSO
+	allowed = list(
+		/obj/item/weapon/gun, /obj/item/weapon/reagent_containers/spray/pepper, /obj/item/ammo_magazine,
+		/obj/item/ammo_casing, /obj/item/weapon/melee/baton, /obj/item/weapon/handcuffs,
+		/obj/item/device/flashlight, /obj/item/weapon/melee/telebaton,
+		/obj/item/clothing/head/helmet/security, /obj/item/clothing/mask/gas
+	)
 
 /obj/item/clothing/suit/storage/vest/warden
 	name = "Warden's jacket"
@@ -293,12 +297,14 @@
 	name = "EMS armor vest"
 	desc = "That's a light plate carrier with additional pouches and EMS sign."
 	icon_state = "emsarmorvest_nobadge"
-	icon_badge = "emsarmorvest_badge"
-	icon_nobadge = "emsarmorvest_nobadge"
-	allowed = list( /obj/item/device/analyzer, /obj/item/stack/medical, /obj/item/weapon/dnainjector,\
-					/obj/item/weapon/reagent_containers/dropper, /obj/item/weapon/reagent_containers/syringe, \
-					/obj/item/weapon/reagent_containers/hypospray, /obj/item/device/healthanalyzer, \
-					/obj/item/device/flashlight/pen, /obj/item/weapon/tank/emergency_oxygen, /obj/item/device/radio, /obj/item/clothing/mask/gas)
+	armor = list(melee = 40, bullet = 10, laser = 10, energy = 15, bomb = 20, bio = 0, rad = 0)
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+	allowed = list(
+		/obj/item/device/analyzer, /obj/item/stack/medical, /obj/item/weapon/dnainjector,
+		/obj/item/weapon/reagent_containers/dropper, /obj/item/weapon/reagent_containers/syringe,
+		/obj/item/weapon/reagent_containers/hypospray, /obj/item/device/healthanalyzer, /obj/item/clothing/mask/gas,
+		/obj/item/device/flashlight/pen, /obj/item/weapon/tank/emergency_oxygen, /obj/item/device/radio
+	)
 
 /obj/item/clothing/suit/storage/vest/officer
 	name = "officer armor vest"
@@ -419,10 +425,12 @@
 	desc = "A suit that protects against some damage."
 	icon_state = "centcom"
 	item_state = "centcom"
-	w_class = 4//bulky item
+	w_class = ITEM_SIZE_HUGE//bulky item
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	allowed = list( /obj/item/weapon/gun/energy, /obj/item/weapon/melee/baton, /obj/item/weapon/handcuffs,\
-					/obj/item/weapon/tank/emergency_oxygen)
+	allowed = list(
+		/obj/item/weapon/gun/energy, /obj/item/weapon/melee/baton, /obj/item/weapon/handcuffs,
+		/obj/item/weapon/tank/emergency_oxygen
+	)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
@@ -433,7 +441,7 @@
 	desc = "A heavily armored suit that protects against moderate damage."
 	icon_state = "heavy"
 	item_state = "swat_suit"
-	w_class = 4//bulky item
+	w_class = ITEM_SIZE_HUGE//bulky item
 	gas_transfer_coefficient = 0.90
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	slowdown = 3

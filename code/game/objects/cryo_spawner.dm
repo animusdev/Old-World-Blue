@@ -3,6 +3,7 @@
 	desc = "A man-sized pod for entering suspended animation."
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "body_scanner_0"
+	dir = WEST
 	density = 1
 	anchored = 1
 	var/player_spawn = 0
@@ -115,7 +116,7 @@
 
 /obj/cryo_spawner/thunderblue
 	name = "thunderdome spawner (BLUE)"
-	icon_state = "body_scanner_0-r"
+	dir = EAST
 	player_spawn = -1
 
 /obj/cryo_spawner/thunderblue/equip_character(mob/living/carbon/human/H, is_admin)

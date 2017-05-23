@@ -6,7 +6,6 @@
 	origin_tech = list(TECH_DATA = 2, TECH_BIO = 3)
 	energy_drain = 20
 	range = MELEE
-	construction_cost = list(DEFAULT_WALL_MATERIAL=5000,"glass"=10000)
 	reliability = 1000
 	equip_cooldown = 20
 	var/mob/living/carbon/occupant = null
@@ -33,41 +32,48 @@
 	action(var/mob/living/carbon/target)
 		if(!action_checks(target))
 			return
-		if(!istype(target))
-			return
-		if(target.buckled)
-			occupant_message("[target] will not fit into the sleeper because they are buckled to [target.buckled].")
-			return
-		if(occupant)
-			occupant_message("The sleeper is already occupied")
-			return
-		for(var/mob/living/carbon/slime/M in range(1,target))
-			if(M.Victim == target)
-				occupant_message("[target] will not fit into the sleeper because they have a slime latched onto their head.")
-				return
-		occupant_message("You start putting [target] into [src].")
-		chassis.visible_message("[chassis] starts putting [target] into the [src].")
-		var/C = chassis.loc
-		var/T = target.loc
-		if(do_after_cooldown(target))
-			if(chassis.loc!=C || target.loc!=T)
+		if(istype(target))
+			if(target.buckled)
+				occupant_message("[target] will not fit into the sleeper because they are buckled to [target.buckled].")
 				return
 			if(occupant)
-				occupant_message("<font color=\"red\"><B>The sleeper is already occupied!</B></font>")
+				occupant_message("The sleeper is already occupied")
 				return
-			target.forceMove(src)
-			occupant = target
-			target.reset_view(src)
-			/*
-			if(target.client)
-				target.client.perspective = EYE_PERSPECTIVE
-				target.client.eye = chassis
-			*/
-			set_ready_state(0)
-			pr_mech_sleeper.start()
-			occupant_message("<font color='blue'>[target] successfully loaded into [src]. Life support functions engaged.</font>")
-			chassis.visible_message("[chassis] loads [target] into [src].")
-			log_message("[target] loaded. Life support functions engaged.")
+			for(var/mob/living/carbon/slime/M in range(1,target))
+				if(M.Victim == target)
+					occupant_message("[target] will not fit into the sleeper because they have a slime latched onto their head.")
+					return
+			occupant_message("You start putting [target] into [src].")
+			chassis.visible_message("[chassis] starts putting [target] into the [src].")
+			var/C = chassis.loc
+			var/T = target.loc
+			if(do_after_cooldown(target))
+				if(chassis.loc!=C || target.loc!=T)
+					return
+				if(occupant)
+					occupant_message("<font color=\"red\"><B>The sleeper is already occupied!</B></font>")
+					return
+				target.forceMove(src)
+				occupant = target
+				target.reset_view(src)
+				/*
+				if(target.client)
+					target.client.perspective = EYE_PERSPECTIVE
+					target.client.eye = chassis
+				*/
+				set_ready_state(0)
+				pr_mech_sleeper.start()
+				occupant_message("<font color='blue'>[target] successfully loaded into [src]. Life support functions engaged.</font>")
+				chassis.visible_message("[chassis] loads [target] into [src].")
+				log_message("[target] loaded. Life support functions engaged.")
+		else
+			if(occupant && istype(target, /obj/machinery/atmospherics/unary/cryo_cell))
+				var/obj/machinery/atmospherics/unary/cryo_cell/CC = target
+				if(CC.occupant)
+					return
+				var/mob/living/carbon/H = occupant
+				go_out()
+				return CC.affect_grab(H, chassis.occupant)
 		return
 
 	proc/go_out()
@@ -380,8 +386,6 @@
 	range = MELEE|RANGED
 	equip_cooldown = 10
 	origin_tech = list(TECH_MATERIAL = 3, TECH_BIO = 4, TECH_MAGNET = 4, TECH_DATA = 3)
-	construction_time = 200
-	construction_cost = list(DEFAULT_WALL_MATERIAL=3000,"glass"=2000)
 	required_type = /obj/mecha/medical
 
 	New()
@@ -413,7 +417,7 @@
 			return
 		if(istype(target,/obj/item/weapon/reagent_containers/syringe))
 			return load_syringe(target)
-		if(istype(target,/obj/item/weapon/storage))//Loads syringes from boxes
+		if(istype(target,/obj/item/storage))//Loads syringes from boxes
 			for(var/obj/item/weapon/reagent_containers/syringe/S in target.contents)
 				load_syringe(S)
 			return

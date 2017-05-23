@@ -186,7 +186,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	return
 
 /obj/item/clothing/mask/facehugger/proc/GoActive()
-	if(stat == DEAD || stat == CONSCIOUS)
+	if(stat != UNCONSCIOUS)
 		return
 
 	stat = CONSCIOUS
@@ -195,7 +195,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	return
 
 /obj/item/clothing/mask/facehugger/proc/GoIdle(var/min_time=MIN_ACTIVE_TIME, var/max_time=MAX_ACTIVE_TIME)
-	if(stat == DEAD || stat == UNCONSCIOUS)
+	if(stat)
 		return
 
 /*		RemoveActiveIndicators()	*/

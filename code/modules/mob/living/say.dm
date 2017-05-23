@@ -60,10 +60,6 @@ proc/get_radio_key_from_channel(var/channel)
 	var/list/returns[3]
 	var/speech_problem_flag = 0
 
-	if((HULK in mutations) && health >= 25 && length(message))
-		message = "[ruppertext(message)]!!!"
-		verb = pick("yells","roars","hollers")
-		speech_problem_flag = 1
 	if(slurring)
 		message = slur(message)
 		verb = pick("slobbers","slurs")
@@ -258,7 +254,10 @@ proc/get_radio_key_from_channel(var/channel)
 			if(O) //It's possible that it could be deleted in the meantime.
 				O.hear_talk(src, message, verb, speaking)
 
-	log_say("[key]/[name] : [message]")
+	if(!usr || usr == src)
+		log_say("[key]/[name] : [message]")
+	else
+		log_say("[key]/[name] (forced by [key_name(usr)]) : [message]")
 	return 1
 
 /mob/living/proc/say_signlang(var/message, var/verb="gestures", var/datum/language/language)
@@ -296,7 +295,7 @@ proc/get_radio_key_from_channel(var/channel)
 			italics = 1
 			sound_vol *= 0.5 //muffle the sound a bit, so it's like we're actually talking through contact
 
-	if(sleeping || stat == 1)
+	if(sleeping || stat == UNCONSCIOUS)
 		hear_sleep(message)
 		return
 
@@ -328,7 +327,7 @@ proc/get_radio_key_from_channel(var/channel)
 			src << "<span class='warning'>You feel your headset vibrate but can hear nothing from it!</span>"
 		return
 
-	if(sleeping || stat==1) //If unconscious or sleeping
+	if(sleeping || stat == UNCONSCIOUS) //If unconscious or sleeping
 		hear_sleep(message)
 		return
 

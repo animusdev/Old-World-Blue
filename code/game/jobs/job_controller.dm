@@ -103,8 +103,8 @@ var/global/datum/controller/occupations/job_master
 			return 1
 		return 0
 
-	proc/FindOccupationCandidates(datum/job/job, level, flag)
-		Debug("Running FOC, Job: [job], Level: [level], Flag: [flag]")
+	proc/FindOccupationCandidates(datum/job/job, level)
+		Debug("Running FOC, Job: [job], Level: [level]")
 		var/list/candidates = list()
 		for(var/mob/new_player/player in unassigned)
 			if(jobban_isbanned(player, job.title))
@@ -118,9 +118,6 @@ var/global/datum/controller/occupations/job_master
 				continue
 			if(job.minimum_character_age && (player.client.prefs.age < job.minimum_character_age))
 				Debug("FOC character not old enough, Player: [player]")
-				continue
-			if(flag && (!player.client.prefs.be_special & flag))
-				Debug("FOC flag failed, Player: [player], Flag: [flag], ")
 				continue
 			if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
 				Debug("FOC pass, Player: [player], Level:[level]")
@@ -234,20 +231,23 @@ var/global/datum/controller/occupations/job_master
 		for(var/i = job.total_positions, i > 0, i--)
 			for(var/level = 1 to 3)
 				var/list/candidates = list()
-				if(ticker.mode.name == "AI malfunction")//Make sure they want to malf if its malf
-					candidates = FindOccupationCandidates(job, level, BE_MALF)
-				else
-					candidates = FindOccupationCandidates(job, level)
+				candidates = FindOccupationCandidates(job, level)
+
+				if(ticker.mode.name == "AI malfunction")
+					for(var/mob/player in candidates)
+						if(!ROLE_MALFUNCTION in player.client.prefs.special_toggles)
+							candidates -= player
+
 				if(candidates.len)
 					var/mob/new_player/candidate = pick(candidates)
 					if(AssignRole(candidate, "AI"))
 						ai_selected++
 						break
-			//Malf NEEDS an AI so force one if we didn't get a player who wanted it
 			if((ticker.mode.name == "AI malfunction")&&(!ai_selected))
 				unassigned = shuffle(unassigned)
 				for(var/mob/new_player/player in unassigned)
-					if(jobban_isbanned(player, "AI"))	continue
+					if(jobban_isbanned(player, "AI"))
+						continue
 					if(AssignRole(player, "AI"))
 						ai_selected++
 						break
@@ -449,20 +449,21 @@ var/global/datum/controller/occupations/job_master
 			H.mind.assigned_role = rank
 			alt_title = H.mind.role_alt_title
 
-			//Deferred item spawning.
-			if(put_in_storage.len)
-				var/obj/item/weapon/storage/B
-				if(istype(H.back, /obj/item/weapon/storage))
-					B = H.back
-				else
-					B = locate(/obj/item/weapon/storage) in H.contents
+		//Deferred item spawning.
+		if(put_in_storage.len)
+			var/obj/item/storage/B
+			if(istype(H.back, /obj/item/storage))
+				B = H.back
+			else
+				B = locate(/obj/item/storage) in H.contents
 
-				if(isnull(B))
-					H << "<span class='danger'>Failed to locate a storage object on your mob, either you spawned with no arms and no backpack or this is a bug.</span>"
-				else
-					for(var/obj/item/I in put_in_storage)
-						H << "<span class='notice'>Placing \the [I] in your [B.name]!</span>"
-						I.forceMove(B)
+			if(isnull(B))
+				H << "<span class='danger'>Failed to locate a storage object on your mob, either you spawned with no arms and no backpack or this is a bug.</span>"
+			else
+				for(var/obj/item/I in put_in_storage)
+					H << "<span class='notice'>Placing \the [I] in your [B.name]!</span>"
+					B.handle_item_insertion(I, 1)
+					I.forceMove(B)
 
 		if(istype(H) && !H.buckled) //give humans wheelchairs, if they need them.
 			if(!H.get_organ(BP_L_FOOT) && !H.get_organ(BP_R_FOOT))
@@ -490,6 +491,8 @@ var/global/datum/controller/occupations/job_master
 			if(equipped != 1)
 				var/obj/item/clothing/glasses/G = H.glasses
 				G.prescription = 1
+
+		H.update_icons() //Draw PDA, ID, glasses, etc.
 
 		BITSET(H.hud_updateflag, ID_HUD)
 		BITSET(H.hud_updateflag, IMPLOYAL_HUD)

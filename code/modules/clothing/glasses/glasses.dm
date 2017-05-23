@@ -14,7 +14,7 @@ BLIND     // can't see anything
 /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/inv_slots/glasses/icon.dmi'
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	slot_flags = SLOT_EYES
 	var/vision_flags = 0
 	var/darkness_view = 0//Base human is 2

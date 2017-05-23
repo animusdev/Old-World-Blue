@@ -61,7 +61,7 @@
 /datum/gear/suit/unathi_mantle
 	display_name = "hide mantle (Unathi)"
 	path = /obj/item/clothing/suit/unathi/mantle
-	whitelisted = "Unathi"
+	whitelisted = SPECIES_UNATHI
 
 /datum/gear/suit/labcoat
 	display_name = "labcoat"
@@ -130,19 +130,19 @@
 /datum/gear/suit/zhan_furs
 	display_name = "Zhan-Khazan furs (Tajaran)"
 	path = /obj/item/clothing/suit/tajaran/furs
-	whitelisted = "Tajara" // You do have a monopoly on a fur suit tho
+	whitelisted = SPECIES_TAJARA // You do have a monopoly on a fur suit tho
 
 /datum/gear/suit/native
 	display_name = "traditional clothing (Tajaran)"
 	path = /obj/item/clothing/suit/storage/native
 	cost = 3
-	whitelisted = "Tajara"
+	whitelisted = SPECIES_TAJARA
 
 /datum/gear/suit/fluffy_priest
 	display_name = "priest robe (Tajaran)"
 	path = /obj/item/clothing/suit/fluffy_priest
 	cost = 3
-	whitelisted = "Tajara"
+	whitelisted = SPECIES_TAJARA
 
 /datum/gear/suit/ianshirt
 	display_name = "Worn shirt"

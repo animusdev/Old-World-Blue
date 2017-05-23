@@ -116,7 +116,7 @@ be able to influence the host through various commands.
 		src.death()
 		return
 */
-	if(host.stat == 2)
+	if(host.stat == DEAD)
 		src << "\red <b>Your host has died.. you fade away..</b>"
 		src.death()
 		return
@@ -539,7 +539,6 @@ be able to influence the host through various commands.
 		host_mind.transfer_to(dummy)
 		meme_mind.transfer_to(host)
 		host_mind.current.clearHUD()
-		host.update_body()
 
 		dummy << "\blue You feel very drowsy.. Your eyelids become heavy..."
 
@@ -548,7 +547,6 @@ be able to influence the host through various commands.
 		meme_mind.transfer_to(src)
 		host_mind.transfer_to(host)
 		meme_mind.current.clearHUD()
-		host.update_body()
 		src << "\red You lose control.."
 
 		del dummy
