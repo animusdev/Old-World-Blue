@@ -92,7 +92,6 @@
 						material_string += "<span class='deficiency'>[round(R.resources[material] * mat_efficiency)] [material]</span>"
 					else
 						material_string += "[round(R.resources[material] * mat_efficiency)] [material]"
-				material_string += ".<br></td>"
 				//Build list of multipliers for sheets.
 				if(R.is_stack)
 					if(max_sheets && max_sheets > 0)
@@ -108,7 +107,7 @@
 			line = "<b>[line]</b>"
 			if(R.hidden)
 				line = "<font color = 'red'>*</font>[line]<font color = 'red'>*</font>"
-			dat += "<tr><td width = 180>[line] [multiplier_string]</td><td align = right>[material_string]</tr>"
+			dat += "<tr><td width=180>[line] [multiplier_string]</td><td align=right>[material_string].</td></tr>"
 
 		dat += "</table><hr>"
 	//Hacking.
@@ -231,9 +230,10 @@
 		//convert list to units
 		amount *= SHEET_MATERIAL_AMOUNT
 		if(stored_material[material] < amount)
-			amount = round(stored_material, SHEET_MATERIAL_AMOUNT)
-			if(amount < SHEET_MATERIAL_AMOUNT)
+			amount = round(stored_material[material]/SHEET_MATERIAL_AMOUNT)
+			if(amount <= 0)
 				return
+			amount *= SHEET_MATERIAL_AMOUNT
 		stored_material[material] -= amount
 		create_material_stack(material, amount, src.loc)
 
