@@ -59,3 +59,16 @@
 				survive_objective.owner = changeling
 				changeling.objectives += survive_objective
 	return
+
+/datum/antagonist/changeling/remove_antagonist(var/datum/mind/player, var/datum/language/language, var/mob/M)
+	switch(input("What to remove?") in list ("Powers (+language)", "Mob", "Role"))
+		if("Powers (+language)")
+			player.current.remove_changeling_powers()
+			player.current.verbs -= /datum/changeling/proc/EvolutionMenu
+			player.current.remove_language("Changeling")
+		if("Mob")
+			M = player.current
+			..()
+			qdel(M)
+		if ("Role")
+			..()
