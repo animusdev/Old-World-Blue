@@ -224,7 +224,7 @@
 		var/material = href_list["remove_material"]
 		if(!material in stored_material)
 			return
-		var/amount = input(usr, "How many stacks you want eject?") as null|num
+		var/amount = input(usr, "How many sheets do you want to eject?") as null|num
 		if(amount < 1 || !in_range(usr,src) || usr.stat || usr.restrained())
 			return
 		//convert list to units
