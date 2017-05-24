@@ -132,3 +132,14 @@ Made a proc so this is not repeated 14 (or more) times.*/
 		src << "<span class='warning'>I don't feel strong enough without my hat.</span>"
 		return 0
 	return 1
+
+/datum/antagonist/wizard/remove_antagonist(var/datum/mind/player, var/mob/M)
+	switch(input("What to remove?") in list ("Spells", "Mob", "Role (without spells)"))
+		if("Spells")
+			player.current.spellremove()
+		if("Mob")
+			M = player.current
+			..()
+			qdel(M)
+		if ("Role")
+			..()
