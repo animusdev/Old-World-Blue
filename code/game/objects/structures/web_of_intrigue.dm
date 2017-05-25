@@ -22,7 +22,12 @@
 		return ..()
 
 
-/obj/structure/web_of_intrigue/attack_hand(mob/user as mob)
+/obj/structure/web_of_intrigue/attack_hand(mob/user)
+	interact(user)
+
+/obj/structure/web_of_intrigue/interact(mob/user)
+	user.set_machine(src)
+	in_use = 1
 	var/dat = "<html><style>td{width:33%;height:33%;border:1px solid;vertical-align:top;}\
 		body{overflow:hidden;}img{height:100%}div.field{overflow:auto;height:100%;}\
 		table{table-layout:fixed;width:100%;height:100%;}</style><body><table>"
@@ -74,6 +79,6 @@
 		pages[page] = null
 		usr.put_in_hands(I)
 	spawn()
-		attack_hand(usr)
+		updateDialog()
 
 # undef TOTAL_PAGES
