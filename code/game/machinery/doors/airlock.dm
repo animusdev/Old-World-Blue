@@ -752,6 +752,10 @@ About the new airlock wires panel:
 			usr << "<span class='notice'>You open '[name]' airlock panel.</span>"
 			src.p_open = 1
 		src.update_icon()
+	else if(istype(C, /obj/item/device/debugger))
+		if (src.p_open)
+			var/obj/item/device/debugger/debugger = C
+			debugger.is_used_on(src, user)
 	else if(istype(C, /obj/item/weapon/wirecutters))
 		return src.attack_hand(user)
 	else if(istype(C, /obj/item/device/multitool))
