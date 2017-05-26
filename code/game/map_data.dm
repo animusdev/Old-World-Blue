@@ -126,8 +126,7 @@ var/datum/maps_data/maps_data = new
 /obj/map_data/New()
 	..()
 	z_level = z
-	spawn()
-		maps_data.registrate(src)
+	maps_data.registrate(src)
 
 
 
