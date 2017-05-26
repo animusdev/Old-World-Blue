@@ -47,7 +47,6 @@
 
 
 		for(var/obj/O in T)
-
 			// Reset the shuttle corners
 			if(O.tag == "delete me")
 				target.icon = 'icons/turf/shuttle.dmi'

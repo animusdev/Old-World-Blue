@@ -1,3 +1,5 @@
+/area
+	var/datum/shuttle/untethered/is_shuttle = null
 
 /datum/shuttle_controller
 	var/list/new_shuttles = list()
@@ -12,8 +14,10 @@
 	var/global/num = 1
 	var/turf/target = null
 
-/obj/shuttle_beacon/initialize()
-	setup()
+/obj/shuttle_beacon/New()
+	..()
+	spawn(15)
+		setup()
 
 /obj/shuttle_beacon/verb/setup()
 	set name = "Init Dock"
@@ -37,6 +41,10 @@
 	icon_state = "marker"
 	var/list/beacon_systems = list("Station")
 
+/obj/shuttle_marker/New()
+	spawn(15)
+		setup()
+
 /obj/shuttle_marker/verb/setup()
 	set name = "Init shuttle"
 	set category = "Object"
@@ -58,16 +66,16 @@
 
 	if(!check_rights(R_DEBUG))	return
 
-	var/shuttle_tag = input("Shuttle","pick!") as null|anything in shuttle_controller.new_shuttles
+	var/shuttle_tag = input("Shuttle","Pick!") as null|anything in shuttle_controller.new_shuttles
 	if(!shuttle_tag) return
 	var/datum/shuttle/untethered/shuttle = shuttle_controller.new_shuttles[shuttle_tag]
 	var/where = input("Beakon", "Pick!") as null|anything in shuttle_controller.sh_beakons
 	if(!where) return
 	var/result = shuttle.beacon_move(shuttle_controller.sh_beakons[where])
 	if(!result)
-		result = "<span class='notice'>Success!</span>"
+		result = SPAN_NOTE("Success!")
 	else
-		result = "<span class='warning'>[result]</span>"
+		result = SPAN_WARN(result)
 	usr << result
 
 /proc/get_most_distant_object(var/list/L, var/dir = NORTH)
@@ -95,10 +103,12 @@
 	var/obj/west_port
 	var/obj/east_port
 	var/list/beacon_systems
+	var/obj/shuttle_beacon/target_dock = null
 
 /datum/shuttle/untethered/New(var/obj/shuttle_marker/Marker)
 	..()
 	src.my_area = get_area(Marker)
+	my_area.is_shuttle = src
 	src.marker  = Marker
 	src.name    = Marker.name
 	src.beacon_systems = Marker.beacon_systems
@@ -181,10 +191,10 @@
 		if(M.client)
 			spawn(0)
 				if(M.buckled)
-					M << "\red Sudden acceleration presses you into your chair!"
+					M << SPAN_WARN("Sudden acceleration presses you into your chair!")
 					shake_camera(M, 3, 1)
 				else
-					M << "\red The floor lurches beneath you!"
+					M << SPAN_WARN("The floor lurches beneath you!")
 					shake_camera(M, 10, 1)
 		if(istype(M, /mob/living/carbon))
 			if(!M.buckled)
