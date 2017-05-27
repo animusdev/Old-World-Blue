@@ -61,8 +61,13 @@ Note: Must be placed west/left of and R&D console to function.
 	flick("protolathe_n",src)
 	use_power(power)
 	sleep(16)
-	for(var/M in D.materials)
-		materials[M] = max(0, materials[M] - D.materials[M] * mat_efficiency)
+
+	var/list/required = D.materials.Copy()
+	for(var/material in required)
+		required[material] *= mat_efficiency
+
+	for(var/M in required)
+		materials[M] = max(0, materials[M] - required[M])
 
 	for(var/C in D.chemicals)
 		reagents.remove_reagent(C, D.materials[C] * mat_efficiency)
@@ -74,7 +79,7 @@ Note: Must be placed west/left of and R&D console to function.
 			new_item.investigate_log("built by [key]","singulo")
 
 		new_item.reliability = D.reliability
-		if(new_item.matter && new_item.matter.len > 0)
-			for(var/i in new_item.matter)
-				new_item.matter[i] = new_item.matter[i] * mat_efficiency
+		new_item.matter = list()
+		for(var/M in required)
+			new_item.matter[M] = required[M] * 0.75
 	busy = 0
