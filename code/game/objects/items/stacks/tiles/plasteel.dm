@@ -4,7 +4,7 @@
 	desc = "Those could work as a pretty decent throwing weapon" //why?
 	icon_state = "tile"
 	force = 6.0
-	matter = list(MATERIAL_STEEL = 400)
+	matter = list(MATERIAL_STEEL = 500)
 	throwforce = 15.0
 	throw_speed = 5
 	throw_range = 20
