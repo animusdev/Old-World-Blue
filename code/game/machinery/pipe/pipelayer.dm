@@ -30,7 +30,7 @@
 
 /obj/machinery/pipelayer/attack_hand(mob/user as mob)
 	if(!metal&&!on)
-		user << "<span class='warning'>\The [src] doesn't work without metal.</span>"
+		user << SPAN_WARN("\The [src] doesn't work without metal.")
 		return
 	on=!on
 	user.visible_message(
@@ -46,7 +46,8 @@
 		P_type = Pipes[P_type_t]
 		user.visible_message(
 			SPAN_NOTE("[user] has set \the [src] to manufacture [P_type_t]."),
-			"<span class='notice'>You set \the [src] to manufacture [P_type_t].</span>")
+			SPAN_NOTE("You set \the [src] to manufacture [P_type_t].")
+		)
 		return
 
 	if(istype(W, /obj/item/weapon/crowbar))
@@ -61,9 +62,9 @@
 
 		var/result = load_metal(W)
 		if(isnull(result))
-			user << "<span class='warning'>Unable to load [W] - no metal found.</span>"
+			user << SPAN_WARN("Unable to load [W] - no metal found.")
 		else if(!result)
-			user << "<span class='notice'>\The [src] is full.</span>"
+			user << SPAN_NOTE("\The [src] is full.")
 		else
 			user.visible_message(
 				SPAN_NOTE("[user] has loaded metal into \the [src]."),
