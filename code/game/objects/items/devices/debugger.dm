@@ -20,16 +20,14 @@
 	origin_tech = list(TECH_MAGNET = 5, TECH_ENGINEERING = 5)
 
 /obj/item/device/debugger/resolve_attackby(obj/O, mob/user)
-	if(mode == 1)
-		if(istype(O, /obj/machinery/door))
-			var/obj/machinery/door/D = O
+	var/obj/machinery/door/D = O
+	if(istype(O, /obj/machinery/door) && (D.p_open))
+		if(mode == 1)
 			if(D.operating == -1)
 				user << "<span class='warning'>There is a software error with the device.</span>"
 			else
 				user << "<span class='notice'>The device's software appears to be fine.</span>"
-	else if (mode == 2)
-		if(istype(O, /obj/machinery/door))
-			var/obj/machinery/door/D = O
+		else if (mode == 2)
 			if(D.operating == -1)
 				user << "<span class='notice'>You start fixing the door device's software.</span>"
 				sleep(40)
