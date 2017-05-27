@@ -19,7 +19,7 @@
 	matter = list(DEFAULT_WALL_MATERIAL = 900,"glass" = 1600)
 	origin_tech = list(TECH_MAGNET = 5, TECH_ENGINEERING = 5)
 
-/obj/item/device/debugger/is_used_on(obj/O, mob/user)
+/obj/item/device/debugger/resolve_attackby(obj/O, mob/user)
 	if(mode == 1)
 		if(istype(O, /obj/machinery/door))
 			var/obj/machinery/door/D = O
@@ -27,8 +27,7 @@
 				user << "<span class='warning'>There is a software error with the device.</span>"
 			else
 				user << "<span class='notice'>The device's software appears to be fine.</span>"
-			return 1
-	else
+	else if (mode == 2)
 		if(istype(O, /obj/machinery/door))
 			var/obj/machinery/door/D = O
 			if(D.operating == -1)
@@ -38,6 +37,8 @@
 				user << "<span class='notice'>You fixed the door device's software.</span>"
 			else
 				user << "<span class='notice'>The device's software appears to be fine.</span>"
+	else
+		return ..()
 
 /obj/item/device/debugger/attack_self(mob/user)
 	if (mode == 1)
