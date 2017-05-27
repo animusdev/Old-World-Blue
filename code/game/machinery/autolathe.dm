@@ -10,8 +10,8 @@
 	circuit = /obj/item/weapon/circuitboard/autolathe
 
 	var/tmp/list/machine_recipes
-	var/list/stored_material =  list(DEFAULT_WALL_MATERIAL = 0, "glass" = 0)
-	var/list/storage_capacity = list(DEFAULT_WALL_MATERIAL = 0, "glass" = 0)
+	var/list/stored_material =  list(MATERIAL_STEEL = 0, MATERIAL_GLASS = 0)
+	var/list/storage_capacity = list(MATERIAL_STEEL = 0, MATERIAL_GLASS = 0)
 	var/show_category = "All"
 	var/current_color = "#ffffff"
 
@@ -235,7 +235,7 @@
 				return
 			amount *= SHEET_MATERIAL_AMOUNT
 		stored_material[material] -= amount
-		create_material_stack(material, amount, src.loc)
+		create_material_stacks_from_unit(material, amount, src.loc)
 
 	if(href_list["change_category"])
 		var/choice = input("Which category do you wish to display?") as null|anything in autolathe_categories+"All"
@@ -316,14 +316,14 @@
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		man_rating += M.rating
 
-	storage_capacity[DEFAULT_WALL_MATERIAL] = mb_rating  * 25000
-	storage_capacity["glass"] = mb_rating  * 12500
+	storage_capacity[MATERIAL_STEEL] = mb_rating  * 25000
+	storage_capacity[MATERIAL_GLASS] = mb_rating  * 12500
 	build_time = 50 / man_rating
 	mat_efficiency = 1.1 - man_rating * 0.3// Normally, price is 1.25 the amount of material, so this shouldn't go higher than 0.8. Maximum rating of parts is 3
 
 /obj/machinery/autolathe/dismantle()
 
 	for(var/mat in stored_material)
-		create_material_stack(mat, stored_material[mat], get_turf(src))
+		create_material_stacks_from_unit(mat, stored_material[mat], get_turf(src))
 	..()
 	return 1

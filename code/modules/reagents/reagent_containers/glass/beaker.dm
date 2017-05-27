@@ -11,7 +11,7 @@
 	icon_state = "beaker"
 	item_state = "beaker"
 	center_of_mass = list("x"=16, "y"=11)
-	matter = list("glass" = 500)
+	matter = list(MATERIAL_GLASS = 500)
 	var/lid_type = ""
 
 /obj/item/weapon/reagent_containers/glass/beaker/New()
@@ -72,7 +72,7 @@
 	desc = "A large beaker."
 	icon_state = "beakerlarge"
 	center_of_mass = list("x"=16, "y"=10)
-	matter = list("glass" = 5000)
+	matter = list(MATERIAL_GLASS = 5000)
 	volume = 120
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30,60,120)
@@ -83,7 +83,7 @@
 	desc = "A cryostasis beaker that allows for chemical storage without reactions."
 	icon_state = "beakernoreact"
 	center_of_mass = list("x"=16, "y"=9)
-	matter = list("glass" = 500)
+	matter = list(MATERIAL_GLASS = 500)
 	volume = 60
 	amount_per_transfer_from_this = 10
 	flags = OPENCONTAINER | NOREACT
@@ -94,7 +94,7 @@
 	desc = "A bluespace beaker, powered by experimental bluespace technology."
 	icon_state = "beakerbluespace"
 	center_of_mass = list("x"=16, "y"=10)
-	matter = list("glass" = 5000)
+	matter = list(MATERIAL_GLASS = 5000)
 	volume = 300
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30,60,120,300)
@@ -106,7 +106,7 @@
 	desc = "A small glass vial."
 	icon_state = "vial"
 	center_of_mass = list("x"=16, "y"=9)
-	matter = list("glass" = 250)
+	matter = list(MATERIAL_GLASS = 250)
 	volume = 30
 	w_class = ITEM_SIZE_TINY
 	amount_per_transfer_from_this = 10
@@ -127,7 +127,7 @@
 	icon_state = "bucket"
 	item_state = "bucket"
 	center_of_mass = list("x"=16, "y"=9)
-	matter = list(DEFAULT_WALL_MATERIAL = 200)
+	matter = list(MATERIAL_STEEL = 200)
 	w_class = ITEM_SIZE_NORMAL
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10,20,30,60,120)

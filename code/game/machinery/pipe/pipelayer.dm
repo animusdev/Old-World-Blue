@@ -1,5 +1,4 @@
 /obj/machinery/pipelayer
-
 	name = "automatic pipe layer"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
@@ -31,10 +30,13 @@
 
 /obj/machinery/pipelayer/attack_hand(mob/user as mob)
 	if(!metal&&!on)
-		user << "<span class='warning'>\The [src] doesn't work without metal.</span>"
+		user << SPAN_WARN("\The [src] doesn't work without metal.")
 		return
 	on=!on
-	user.visible_message("<span class='notice'>[user] has [!on?"de":""]activated \the [src].</span>", "<span class='notice'>You [!on?"de":""]activate \the [src].</span>")
+	user.visible_message(
+		SPAN_NOTE("[user] has [!on?"de":""]activated \the [src]."),
+		SPAN_NOTE("You [!on?"de":""]activate \the [src].")
+	)
 	return
 
 /obj/machinery/pipelayer/attackby(var/obj/item/W as obj, var/mob/user as mob)
@@ -42,23 +44,32 @@
 	if (istype(W, /obj/item/weapon/wrench))
 		P_type_t = input("Choose pipe type", "Pipe type") as null|anything in Pipes
 		P_type = Pipes[P_type_t]
-		user.visible_message("<span class='notice'>[user] has set \the [src] to manufacture [P_type_t].</span>", "<span class='notice'>You set \the [src] to manufacture [P_type_t].</span>")
+		user.visible_message(
+			SPAN_NOTE("[user] has set \the [src] to manufacture [P_type_t]."),
+			SPAN_NOTE("You set \the [src] to manufacture [P_type_t].")
+		)
 		return
 
 	if(istype(W, /obj/item/weapon/crowbar))
 		a_dis=!a_dis
-		user.visible_message("<span class='notice'>[user] has [!a_dis?"de":""]activated auto-dismantling.</span>", "<span class='notice'>You [!a_dis?"de":""]activate auto-dismantling.</span>")
+		user.visible_message(
+			SPAN_NOTE("[user] has [!a_dis?"de":""]activated auto-dismantling."),
+			SPAN_NOTE("You [!a_dis?"de":""]activate auto-dismantling.")
+		)
 		return
 
-	if(istype(W, /obj/item/stack/material) && W.get_material_name() == DEFAULT_WALL_MATERIAL)
+	if(ismaterial(W) && W.get_material_name() == MATERIAL_STEEL)
 
 		var/result = load_metal(W)
 		if(isnull(result))
-			user << "<span class='warning'>Unable to load [W] - no metal found.</span>"
+			user << SPAN_WARN("Unable to load [W] - no metal found.")
 		else if(!result)
-			user << "<span class='notice'>\The [src] is full.</span>"
+			user << SPAN_NOTE("\The [src] is full.")
 		else
-			user.visible_message("<span class='notice'>[user] has loaded metal into \the [src].</span>", "<span class='notice'>You load metal into \the [src]</span>")
+			user.visible_message(
+				SPAN_NOTE("[user] has loaded metal into \the [src]."),
+				SPAN_NOTE("You load metal into \the [src].")
+			)
 
 		return
 
@@ -72,7 +83,10 @@
 				use_metal(m)
 				var/obj/item/stack/material/steel/MM = new (get_turf(src))
 				MM.amount = m
-				user.visible_message("<span class='notice'>[user] removes [m] sheet\s of metal from the \the [src].</span>", "<span class='notice'>You remove [m] sheet\s of metal from \the [src]</span>")
+				user.visible_message(
+					SPAN_NOTE("[user] removes [m] sheet\s of metal from the \the [src]."),
+					SPAN_NOTE("You remove [m] sheet\s of metal from \the [src]")
+				)
 		else
 			user << "\The [src] is empty."
 		return

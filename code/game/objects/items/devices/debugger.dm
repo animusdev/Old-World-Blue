@@ -16,7 +16,6 @@
 	throw_range = 15
 	throw_speed = 3
 	var/mode = 1
-	matter = list(DEFAULT_WALL_MATERIAL = 900,"glass" = 1600)
 	origin_tech = list(TECH_MAGNET = 5, TECH_ENGINEERING = 5)
 
 /obj/item/device/debugger/resolve_attackby(obj/O, mob/user)

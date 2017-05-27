@@ -19,32 +19,32 @@
 	name = "left arm"
 	icon_state = "l_arm"
 	body_part = "l_arm"
-	matter = list(DEFAULT_WALL_MATERIAL = 12000)
+	matter = list(MATERIAL_STEEL = 12000)
 
 /obj/item/robot_parts/r_arm
 	name = "right arm"
 	icon_state = "r_arm"
 	body_part = "r_arm"
-	matter = list(DEFAULT_WALL_MATERIAL = 12000)
+	matter = list(MATERIAL_STEEL = 12000)
 
 /obj/item/robot_parts/l_leg
 	name = "left leg"
 	icon_state = "l_leg"
 	body_part = "l_leg"
-	matter = list(DEFAULT_WALL_MATERIAL = 10000)
+	matter = list(MATERIAL_STEEL = 10000)
 
 /obj/item/robot_parts/r_leg
 	name = "right leg"
 	icon_state = "r_leg"
 	body_part = "r_leg"
-	matter = list(DEFAULT_WALL_MATERIAL = 10000)
+	matter = list(MATERIAL_STEEL = 10000)
 
 /obj/item/robot_parts/chest
 	name = "torso"
 	desc = "A heavily reinforced case containing cyborg logic boards, with space for a standard power cell."
 	icon_state = "chest"
 	body_part = "chest"
-	matter = list(DEFAULT_WALL_MATERIAL = 32000)
+	matter = list(MATERIAL_STEEL = 32000)
 	var/wires = 0.0
 	var/obj/item/weapon/cell/cell = null
 
@@ -62,7 +62,7 @@
 	desc = "A standard reinforced braincase, with spine-plugged neural socket and sensor gimbals."
 	icon_state = "head"
 	body_part = "head"
-	matter = list(DEFAULT_WALL_MATERIAL = 20000)
+	matter = list(MATERIAL_STEEL = 20000)
 	var/obj/item/device/flash/flash1 = null
 	var/obj/item/device/flash/flash2 = null
 
@@ -76,7 +76,7 @@
 	name = "endoskeleton"
 	desc = "A complex metal backbone with standard limb sockets and pseudomuscle anchors."
 	icon_state = "robo_suit"
-	matter = list(DEFAULT_WALL_MATERIAL = 42000)
+	matter = list(MATERIAL_STEEL = 42000)
 	var/list/req_parts = list(
 		"chest",
 		"head",
@@ -113,7 +113,7 @@
 
 /obj/item/robot_parts/robot_suit/attackby(obj/item/W as obj, mob/user as mob)
 	..()
-	if(istype(W, /obj/item/stack/material) && W.get_material_name() == DEFAULT_WALL_MATERIAL && !parts.len)
+	if(ismaterial(W) && W.get_material_name() == MATERIAL_STEEL && !parts.len)
 		var/obj/item/stack/material/M = W
 		if (M.use(1))
 			var/obj/item/weapon/secbot_assembly/ed209_assembly/B = new(loc)

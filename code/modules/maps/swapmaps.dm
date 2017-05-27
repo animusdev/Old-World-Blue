@@ -420,7 +420,7 @@ swapmap
 		An item may be like:
 
 		/turf/wall
-		/obj/fence{icon_state="iron"}
+		/obj/fence{icon_state=MATERIAL_IRON}
 	 */
 	proc/BuildFilledRectangle(turf/T1,turf/T2,item)
 		if(!Contains(T1) || !Contains(T2)) return

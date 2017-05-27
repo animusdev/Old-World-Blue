@@ -57,10 +57,10 @@ var/list/mechtoys = list(
 	if(istype(P, /obj/item/weapon/wirecutters))
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 		user << "<span class='notice'>You start to cut the plastic flaps.</span>"
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 10))
+			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 			user << "<span class='notice'>You cut the plastic flaps.</span>"
-			new /obj/item/stack/material/plastic( src.loc, 4)
+			new /obj/item/stack/material/plastic(src.loc, 4)
 			qdel(src)
 		return
 	else
@@ -144,7 +144,7 @@ var/list/mechtoys = list(
 	var/points_per_process = 1
 	var/points_per_slip = 5
 	var/material_cost = list(
-		"phoron" = 5,
+		MATERIAL_PHORON = 5,
 		"platinum" = 5,
 	)
 	//control

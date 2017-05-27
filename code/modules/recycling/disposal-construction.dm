@@ -10,7 +10,7 @@
 	anchored = 0
 	density = 0
 	pressure_resistance = 5*ONE_ATMOSPHERE
-	matter = list(DEFAULT_WALL_MATERIAL = 1850)
+	matter = list(MATERIAL_STEEL = 1850)
 	level = 2
 	var/sortTypes = list()
 	var/ptype = 0

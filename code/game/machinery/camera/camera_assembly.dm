@@ -6,19 +6,19 @@
 	w_class = ITEM_SIZE_SMALL
 	anchored = 0
 
-	matter = list(DEFAULT_WALL_MATERIAL = 700,"glass" = 300)
+	matter = list(MATERIAL_STEEL = 700,MATERIAL_GLASS = 300)
 
 	//	Motion, EMP-Proof, X-Ray
-	var/list/obj/item/possible_upgrades = list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/material/osmium, /obj/item/weapon/stock_parts/scanning_module)
+	var/list/obj/item/possible_upgrades = list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/material, /obj/item/weapon/stock_parts/scanning_module)
 	var/list/upgrades = list()
 	var/state = 0
 	var/busy = 0
 	/*
-				0 = Nothing done to it
-				1 = Wrenched in place
-				2 = Welded in place
-				3 = Wires attached to it (you can now attach/dettach upgrades)
-				4 = Screwdriver panel closed and is fully built (you cannot attach upgrades)
+		0 = Nothing done to it
+		1 = Wrenched in place
+		2 = Welded in place
+		3 = Wires attached to it (you can now attach/dettach upgrades)
+		4 = Screwdriver panel closed and is fully built (you cannot attach upgrades)
 	*/
 
 /obj/item/weapon/camera_assembly/attackby(obj/item/W as obj, mob/living/user as mob)
@@ -65,7 +65,6 @@
 				return
 
 			else if(iswelder(W))
-
 				if(weld(W, user))
 					user << "You unweld the assembly from its place."
 					state = 1
@@ -123,6 +122,10 @@
 
 	// Upgrades!
 	if(is_type_in_list(W, possible_upgrades) && !is_type_in_list(W, upgrades)) // Is a possible upgrade and isn't in the camera already.
+		if(istype(W, /obj/item/stack/material))
+			var/obj/item/stack/material/M = W
+			if(M.get_material_name() != MATERIAL_OSMIUM)
+				return
 		user << "You attach \the [W] into the assembly inner circuits."
 		upgrades += W
 		user.remove_from_mob(W)

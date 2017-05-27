@@ -1,8 +1,15 @@
+#define subtypesof(type) (typesof(type) - type)
+
+#define SPAN_NOTE(text) "<span class='notice'>[text]</span>"
+#define SPAN_WARN(text) "<span class='warning'>[text]</span>"
+#define SPAN_DANG(text) "<span class='danger'>[text]</span>"
 
 #define Clamp(value, low, high) 	(value <= low ? low : (value >= high ? high : value))
 #define CLAMP01(x) 		(Clamp(x, 0, 1))
 
 #define get_turf(A) get_step(A,0)
+
+#define ismaterial(A) istype(A, /obj/item/stack/material)
 
 #define isAI(A) istype(A, /mob/living/silicon/ai)
 

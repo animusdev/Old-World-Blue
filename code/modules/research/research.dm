@@ -244,7 +244,7 @@ research holder datum.
 	item_state = "card-id"
 	w_class = ITEM_SIZE_SMALL
 	randpixel = 5
-	matter = list(DEFAULT_WALL_MATERIAL = 30, "glass" = 10)
+	matter = list(MATERIAL_STEEL = 30, MATERIAL_GLASS = 10)
 	var/datum/tech/stored
 
 /obj/item/weapon/disk/design_disk
@@ -255,5 +255,5 @@ research holder datum.
 	item_state = "card-id"
 	w_class = ITEM_SIZE_SMALL
 	randpixel = 5
-	matter = list(DEFAULT_WALL_MATERIAL = 30, "glass" = 10)
+	matter = list(MATERIAL_STEEL = 30, MATERIAL_GLASS = 10)
 	var/datum/design/blueprint

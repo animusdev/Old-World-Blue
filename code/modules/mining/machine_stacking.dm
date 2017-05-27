@@ -33,7 +33,9 @@
 
 	for(var/stacktype in machine.stack_storage)
 		if(machine.stack_storage[stacktype] > 0)
-			dat += "<tr><td width = 150><b>[capitalize(stacktype)]:</b></td><td width = 30>[machine.stack_storage[stacktype]]</td><td width = 50><A href='?src=\ref[src];release_stack=[stacktype]'>\[release\]</a></td></tr>"
+			dat += "<tr><td width = 150><b>[capitalize(stacktype)]:</b></td>"
+			dat += "<td width = 30>[machine.stack_storage[stacktype]]</td>"
+			dat += "<td width = 50><A href='?src=\ref[src];release_stack=[stacktype]'>\[release\]</a></td></tr>"
 	dat += "</table><hr>"
 	dat += text("<br>Stacking: [machine.stack_amt] <A href='?src=\ref[src];change_stack=1'>\[change\]</a><br><br>")
 
@@ -47,23 +49,20 @@
 
 	if(href_list["change_stack"])
 		var/choice = input("What would you like to set the stack amount to?") as null|anything in list(1,5,10,20,50)
-		if(!choice) return
+		if(!choice)
+			return
 		machine.stack_amt = choice
 
 	if(href_list["release_stack"])
-		if(machine.stack_storage[href_list["release_stack"]] > 0)
-			var/stacktype = machine.stack_paths[href_list["release_stack"]]
-			var/obj/item/stack/material/S = new stacktype (get_turf(machine.output))
-			S.amount = machine.stack_storage[href_list["release_stack"]]
+		var/material = href_list["release_stack"]
+		if(machine.stack_storage[material] > 0)
+			create_material_stacks(material, machine.stack_storage[material], get_turf(machine.output))
 			machine.stack_storage[href_list["release_stack"]] = 0
 
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 
-	return
-
 /**********************Mineral stacking unit**************************/
-
 
 /obj/machinery/mineral/stacking_machine
 	name = "stacking machine"
@@ -75,57 +74,44 @@
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null
 	var/list/stack_storage[0]
-	var/list/stack_paths[0]
-	var/stack_amt = 50; // Amount to stack before releassing
+	var/stack_amt = 50 // Amount to stack before releassing
 
 /obj/machinery/mineral/stacking_machine/New()
 	..()
 
-	for(var/stacktype in typesof(/obj/item/stack/material)-/obj/item/stack/material)
-		var/obj/item/stack/S = new stacktype(src)
-		stack_storage[S.name] = 0
-		stack_paths[S.name] = stacktype
-		qdel(S)
-
-	stack_storage["glass"] = 0
-	stack_paths["glass"] = /obj/item/stack/material/glass
-	stack_storage[DEFAULT_WALL_MATERIAL] = 0
-	stack_paths[DEFAULT_WALL_MATERIAL] = /obj/item/stack/material/steel
-	stack_storage["plasteel"] = 0
-	stack_paths["plasteel"] = /obj/item/stack/material/plasteel
-
-	spawn( 5 )
+	spawn(5)
 		for (var/dir in cardinal)
 			src.input = locate(/obj/machinery/mineral/input, get_step(src, dir))
 			if(src.input) break
 		for (var/dir in cardinal)
 			src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
 			if(src.output) break
-		return
-	return
 
 /obj/machinery/mineral/stacking_machine/process()
-	if (src.output && src.input)
+	var/update = FALSE
+	if(src.output && src.input)
 		var/turf/T = get_turf(input)
 		for(var/obj/item/O in T.contents)
-			if(!O) return
-			if(istype(O,/obj/item/stack))
-				if(!isnull(stack_storage[O.name]))
-					stack_storage[O.name]++
-					O.loc = null
+			if(istype(O, /obj/item/stack/material))
+				var/obj/item/stack/material/M = O
+				update |= TRUE
+				var/material = M.get_material_name()
+				if(material in stack_storage)
+					stack_storage[material] += M.amount
 				else
-					O.loc = output.loc
+					stack_storage[material] = M.amount
+				qdel(M)
 			else
-				O.loc = output.loc
+				O.forceMove(output.loc)
 
 	//Output amounts that are past stack_amt.
-	for(var/sheet in stack_storage)
-		if(stack_storage[sheet] >= stack_amt)
-			var/stacktype = stack_paths[sheet]
-			var/obj/item/stack/material/S = new stacktype (get_turf(output))
-			S.amount = stack_amt
-			stack_storage[sheet] -= stack_amt
+	for(var/material in stack_storage)
+		update |= TRUE
+		if(stack_storage[material] >= stack_amt)
+			create_material_stacks(material, stack_amt, get_turf(output))
+			stack_storage[material] -= stack_amt
 
-	console.updateUsrDialog()
+	if(update)
+		console.updateUsrDialog()
 	return
 

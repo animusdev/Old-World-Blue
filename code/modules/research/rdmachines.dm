@@ -76,7 +76,7 @@
 	for(var/obj/item/weapon/reagent_containers/glass/beaker/I in component_parts)
 		reagents.trans_to_obj(I, reagents.total_volume)
 	for(var/M in materials)
-		create_material_stack(M, materials[M], src.loc)
+		create_material_stacks_from_unit(M, materials[M], src.loc)
 	..()
 
 /obj/machinery/r_n_d/proc/eject_matter(var/M, var/amount)
@@ -85,26 +85,10 @@
 	var/eject_amount = min(round(amount)*SHEET_MATERIAL_AMOUNT, materials[M])
 	if(eject_amount >= SHEET_MATERIAL_AMOUNT)
 		materials[M] = materials[M] - eject_amount
-		create_material_stack(M, eject_amount, src.loc)
+		create_material_stacks_from_unit(M, eject_amount, src.loc)
 
 /obj/machinery/r_n_d/proc/CallMaterialName(var/ID)
-	var/return_name = ID
-	switch(return_name)
-		if("metal")
-			return_name = "Metal"
-		if("glass")
-			return_name = "Glass"
-		if("gold")
-			return_name = "Gold"
-		if("silver")
-			return_name = "Silver"
-		if("phoron")
-			return_name = "Solid Phoron"
-		if("uranium")
-			return_name = "Uranium"
-		if("diamond")
-			return_name = "Diamond"
-	return capitalize(return_name)
+	return capitalize(ID)
 
 /obj/machinery/r_n_d/proc/CallReagentName(var/ID)
 	var/return_name = ID

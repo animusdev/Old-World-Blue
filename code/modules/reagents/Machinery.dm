@@ -4,7 +4,6 @@
 
 #define CHEM_DISPENSER_ENERGY_COST	0.1	//How many energy points do we use per unit of chemical?
 #define BOTTLE_SPRITES list("bottle-1", "bottle-2", "bottle-3", "bottle-4") //list of available bottle sprites
-#define REAGENTS_PER_SHEET 20
 
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
@@ -595,14 +594,6 @@
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/limit = 10
 	var/list/holdingitems = list()
-	var/list/sheet_reagents = list(
-		/obj/item/stack/material/iron = "iron",
-		/obj/item/stack/material/uranium = "uranium",
-		/obj/item/stack/material/phoron = "phoron",
-		/obj/item/stack/material/gold = "gold",
-		/obj/item/stack/material/silver = "silver",
-		/obj/item/stack/material/mhydrogen = "hydrogen"
-		)
 
 /obj/machinery/reagentgrinder/New()
 	..()
@@ -638,7 +629,7 @@
 				continue
 			failed = 0
 			O.contents -= G
-			G.loc = src
+			G.forceMove(src)
 			holdingitems += G
 			if(holdingitems && holdingitems.len >= limit)
 				break
@@ -655,15 +646,24 @@
 		src.updateUsrDialog()
 		return 0
 
-	if(!sheet_reagents[O.type] && (!O.reagents || !O.reagents.total_volume))
+	if(!insert_material(O, user))
 		user << "\The [O] is not suitable for blending."
 		return 1
 
-	user.remove_from_mob(O)
-	O.loc = src
-	holdingitems += O
+
+/obj/machinery/reagentgrinder/proc/insert_material(var/obj/item/I, var/mob/living/user)
+	if(I.reagents && I.reagents.total_volume)
+		return 0
+	if(!ismaterial(I))
+		return 0
+	var/material/M = I.get_material()
+	if(!M.grind_to)
+		return 0
+	if(!user.unEquip(I, src))
+		return 0
+	holdingitems += I
 	src.updateUsrDialog()
-	return 0
+	return 1
 
 /obj/machinery/reagentgrinder/attack_ai(mob/user as mob)
 	return 0
@@ -783,23 +783,21 @@
 		if(remaining_volume <= 0)
 			break
 
-		if(sheet_reagents[O.type])
+		if(ismaterial(O))
 			var/obj/item/stack/stack = O
-			if(istype(stack))
-				var/amount_to_take = max(0,min(stack.amount,round(remaining_volume/REAGENTS_PER_SHEET)))
-				if(amount_to_take)
-					stack.use(amount_to_take)
-					if(deleted(stack))
-						holdingitems -= stack
-					beaker.reagents.add_reagent(sheet_reagents[stack.type], (amount_to_take*REAGENTS_PER_SHEET))
-					continue
+			var/amount_to_take = max(0,min(stack.amount,round(remaining_volume/REAGENTS_PER_SHEET)))
+			if(amount_to_take)
+				stack.use(amount_to_take)
+				if(deleted(stack))
+					holdingitems -= stack
+				var/material/M = O.get_material()
+				beaker.reagents.add_reagent(M.grind_to, (amount_to_take*REAGENTS_PER_SHEET))
+				continue
 
-		if(O.reagents)
+		else if(O.reagents)
 			O.reagents.trans_to(beaker, min(O.reagents.total_volume, remaining_volume))
 			if(O.reagents.total_volume == 0)
 				holdingitems -= O
 				qdel(O)
 			if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 				break
-
-#undef REAGENTS_PER_SHEET
