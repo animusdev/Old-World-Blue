@@ -154,7 +154,7 @@
 					qdel(N)//Make the disk respawn if it is floating on its own
 			return
 
-		var/move_to_z = text2num(pickweight(accessible_z_levels - "[src.z]"))
+		var/move_to_z = text2num(pickweight(maps_data.accessable_levels - "[z]"))
 
 		if(!move_to_z)
 			return

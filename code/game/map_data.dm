@@ -46,13 +46,14 @@ var/datum/maps_data/maps_data = new
 	mob << "isOnAdminLevel: [isOnAdminLevel(mob)]"
 
 /datum/maps_data
-	var/list/all_levels     = new
-	var/list/station_levels = new
-	var/list/admin_levels   = new
-	var/list/player_levels  = new
-	var/list/overmap_levels = new
-	var/list/overmap_finds  = new
-	var/list/asteroid_leves = new
+	var/list/all_levels        = new
+	var/list/station_levels    = new
+	var/list/admin_levels      = new
+	var/list/player_levels     = new
+	var/list/overmap_levels    = new
+	var/list/overmap_finds     = new
+	var/list/asteroid_leves    = new
+	var/list/accessable_levels = new
 
 /datum/maps_data/proc/registrate(var/obj/map_data/MD)
 	var/level = MD.z_level
@@ -84,15 +85,18 @@ var/datum/maps_data/maps_data = new
 	if(MD.generate_asteroid)
 		asteroid_leves += level
 
+	if(MD.is_accessable_level)
+		accessable_levels[num2text(level)] = MD.is_accessable_level
 
 
 /obj/map_data
 	name = "Map data"
 	var/is_admin_level   = 0 // Defines which Z-levels which are for admin functionality, for example including such areas as Central Command and the Syndicate Shuttle
-	var/is_station_level = 0 // Defines Z-levels on which the station exists.
+	var/is_station_level = 0 // Defines Z-levels on which the station exists
 	var/is_player_level  = 0 // Defines Z-levels a character can typically reach
 	var/is_overmap_level = 0
 	var/is_overmap_finds = 0
+	var/is_accessable_level = 1 // Prob modifier for random access (space travelling)
 	var/generate_asteroid= 0
 	var/tmp/z_level
 
@@ -100,26 +104,29 @@ var/datum/maps_data/maps_data = new
 	name = "Station Level"
 	is_station_level = 1
 	is_player_level = 1
+	is_accessable_level = 1
 
 /obj/map_data/admin
 	name = "Admin Level"
 	is_admin_level = 1
+	is_accessable_level = 0
 
 /obj/map_data/asteroid
 	name = "Asteroid Level"
 	is_player_level = 1
 	generate_asteroid = 1
+	is_accessable_level = 1
 
 /obj/map_data/finds
 	name = "Overmap finds Level"
 	is_overmap_finds = 1
 	is_player_level = 1
+	is_accessable_level = 1
 
 /obj/map_data/New()
 	..()
 	z_level = z
-	spawn()
-		maps_data.registrate(src)
+	maps_data.registrate(src)
 
 
 

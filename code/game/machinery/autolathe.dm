@@ -39,7 +39,7 @@
 	update_recipe_list()
 
 	if(..() || (disabled && !panel_open))
-		user << "<span class='danger'>\The [src] is disabled!</span>"
+		user << SPAN_NOTE("\The [src] is disabled!")
 		return
 
 	if(shocked)
@@ -92,7 +92,6 @@
 						material_string += "<span class='deficiency'>[round(R.resources[material] * mat_efficiency)] [material]</span>"
 					else
 						material_string += "[round(R.resources[material] * mat_efficiency)] [material]"
-				material_string += ".<br></td>"
 				//Build list of multipliers for sheets.
 				if(R.is_stack)
 					if(max_sheets && max_sheets > 0)
@@ -102,7 +101,13 @@
 						multiplier_string += "<a href='?src=\ref[src];make=[index];multiplier=[max_sheets]'>\[x[max_sheets]\]</a>"
 
 
-			dat += "<tr><td width = 180>[R.hidden ? "<font color = 'red'>*</font>" : ""]<b>[can_make ? "<a href='?src=\ref[src];make=[index];multiplier=1'>" : ""][R.name][can_make ? "</a>" : ""]</b>[R.hidden ? "<font color = 'red'>*</font>" : ""][multiplier_string]</td><td align = right>[material_string]</tr>"
+			var/line = R.name
+			if(can_make)
+				line = "<a href='?src=\ref[src];make=[index];multiplier=1'>[line]</a>"
+			line = "<b>[line]</b>"
+			if(R.hidden)
+				line = "<font color = 'red'>*</font>[line]<font color = 'red'>*</font>"
+			dat += "<tr><td width=180>[line] [multiplier_string]</td><td align=right>[material_string].</td></tr>"
 
 		dat += "</table><hr>"
 	//Hacking.
@@ -118,7 +123,7 @@
 /obj/machinery/autolathe/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	if(busy)
-		user << "<span class='notice'>\The [src] is busy. Please wait for completion of previous operation.</span>"
+		user << SPAN_NOTE("\The [src] is busy. Please wait for completion of previous operation.")
 		return
 
 	if(default_deconstruction_screwdriver(user, O))
@@ -146,7 +151,7 @@
 
 	//Resources are being loaded.
 	var/obj/item/eating = O
-	if(!eating.matter)
+	if(!eating.matter || !eating.matter.len)
 		user << "\The [eating] does not contain significant amounts of useful materials and cannot be accepted."
 		return
 
@@ -162,7 +167,7 @@
 		if(stored_material[material] >= storage_capacity[material])
 			continue
 
-		var/total_material = eating.matter[material]
+		var/total_material = round(eating.matter[material])
 
 		//If it's a stack, we eat multiple sheets.
 		if(istype(eating,/obj/item/stack))
@@ -180,7 +185,7 @@
 		mass_per_sheet += eating.matter[material]
 
 	if(!filltype)
-		user << "<span class='notice'>\The [src] is full. Please remove material from the autolathe in order to insert more.</span>"
+		user << SPAN_NOTE("\The [src] is full. Please remove material from the autolathe in order to insert more.")
 		return
 	else if(filltype == 1)
 		user << "You fill \the [src] to capacity with \the [eating]."
@@ -212,22 +217,23 @@
 	add_fingerprint(usr)
 
 	if(busy)
-		usr << "<span class='notice'>The autolathe is busy. Please wait for completion of previous operation.</span>"
+		usr << SPAN_NOTE("The autolathe is busy. Please wait for completion of previous operation.")
 		return
 
 	if(href_list["remove_material"])
 		var/material = href_list["remove_material"]
 		if(!material in stored_material)
 			return
-		var/amount = input(usr, "How many stacks you want eject?") as null|num
+		var/amount = input(usr, "How many sheets do you want to eject?") as null|num
 		if(amount < 1 || !in_range(usr,src) || usr.stat || usr.restrained())
 			return
 		//convert list to units
 		amount *= SHEET_MATERIAL_AMOUNT
 		if(stored_material[material] < amount)
-			amount = round(stored_material, SHEET_MATERIAL_AMOUNT)
-			if(amount < SHEET_MATERIAL_AMOUNT)
+			amount = round(stored_material[material]/SHEET_MATERIAL_AMOUNT)
+			if(amount <= 0)
 				return
+			amount *= SHEET_MATERIAL_AMOUNT
 		stored_material[material] -= amount
 		create_material_stacks_from_unit(material, amount, src.loc)
 
@@ -257,7 +263,7 @@
 		busy = 1
 		update_use_power(2)
 
-		var/list/required = making.resources
+		var/list/required = making.resources.Copy()
 		for(var/material in required)
 			required[material] *= mat_efficiency
 
