@@ -1655,6 +1655,8 @@
 #include "code\modules\research\stock_parts.dm"
 #include "code\modules\research\designs\circuits.dm"
 #include "code\modules\research\designs\mecha.dm"
+#include "code\modules\research\designs\mecha_circuit.dm"
+#include "code\modules\research\designs\mecha_parts.dm"
 #include "code\modules\research\designs\proprosthesis.dm"
 #include "code\modules\research\designs\robot.dm"
 #include "code\modules\scripting\Errors.dm"
