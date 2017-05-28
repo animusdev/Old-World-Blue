@@ -108,25 +108,25 @@
 
 	if (!can_use(required))
 		if (produced>1)
-			user << "<span class='warning'>You haven't got enough [src] to build \the [produced] [recipe.title]\s!</span>"
+			user << SPAN_WARN("You haven't got enough [src] to build \the [produced] [recipe.title]\s!")
 		else
-			user << "<span class='warning'>You haven't got enough [src] to build \the [recipe.title]!</span>"
+			user << SPAN_WARN("You haven't got enough [src] to build \the [recipe.title]!")
 		return
 
 	if (recipe.one_per_turf && (locate(recipe.result_type) in user.loc))
-		user << "<span class='warning'>There is another [recipe.title] here!</span>"
+		user << SPAN_WARN("There is another [recipe.title] here!")
 		return
 
 	if (recipe.on_floor && !isfloor(user.loc))
-		user << "<span class='warning'>\The [recipe.title] must be constructed on the floor!</span>"
+		user << SPAN_WARN("\The [recipe.title] must be constructed on the floor!")
 		return
 
 	if (recipe.time)
-		user << "<span class='notice'>Building [recipe.title] ...</span>"
+		user << SPAN_NOTE("Building [recipe.title] ...")
 		if (!do_after(user, recipe.time))
 			return
 
-	if (use(required))
+	if(use(required))
 		var/atom/O
 		if(recipe.use_material)
 			O = new recipe.result_type(user.loc, recipe.use_material)
@@ -146,6 +146,8 @@
 		if (istype(O, /obj/item/storage)) //BubbleWrap - so newly formed boxes are empty
 			for (var/obj/item/I in O)
 				qdel(I)
+
+		return O
 
 /obj/item/stack/Topic(href, href_list)
 	..()
@@ -191,7 +193,9 @@
 		if (amount <= 0)
 			if(usr)
 				usr.remove_from_mob(src)
-			qdel(src) //should be safe to qdel immediately since if someone is still using this stack it will persist for a little while longer
+			qdel(src)
+			//should be safe to qdel immediately since if someone is still using this stack
+			// it will persist for a little while longer
 		return 1
 	else
 		if(get_amount() < used)
@@ -295,7 +299,7 @@
 			continue
 		var/transfer = src.transfer_to(item)
 		if (transfer)
-			user << "<span class='notice'>You add a new [item.singular_name] to the stack. It now contains [item.amount] [item.singular_name]\s.</span>"
+			user << SPAN("You add a new [item.singular_name] to the stack. It now contains [item.amount] [item.singular_name]\s.")
 		if(!amount)
 			break
 
@@ -345,7 +349,8 @@
 	var/on_floor = 0
 	var/use_material
 
-	New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = 0, on_floor = 0, supplied_material = null)
+	New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1,\
+			time = 0, one_per_turf = 0, on_floor = 0, supplied_material = null)
 		src.title = title
 		src.result_type = result_type
 		src.req_amount = req_amount

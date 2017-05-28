@@ -95,6 +95,13 @@
 	if(!material.build_windows(user, src))
 		..()
 
+/obj/item/stack/material/produce_recipe(datum/stack_recipe/recipe, var/quantity, mob/user)
+	var/obj/O = ..()
+	if(istype(O))
+		var/matter_per_obj = recipe.req_amount/res_amount*SHEET_MATERIAL_AMOUNT
+		O.matter = list("[get_material_name()]" = matter_per_obj)
+	return O
+
 /obj/item/stack/material/attackby(var/obj/item/W, var/mob/user)
 	if(istype(W,/obj/item/stack/cable_coil))
 		material.build_wired_product(user, W, src)
