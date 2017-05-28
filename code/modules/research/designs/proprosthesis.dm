@@ -8,14 +8,14 @@
 	desc = "Combat organ module steel armblade."
 	id = "armblade"
 	build_path = /obj/item/organ_module/active/simple/armblade
-	req_tech = list("materials" = 3, "combat" = 4, "biotech" = 4)
+	req_tech = list(TECH_MATERIAL = 3, TECH_COMBAT = 4, TECH_BIO = 4)
 
 /datum/design/organ_module/armor
 	name = "Biotech prototype (subdermal armor - chest)"
 	desc = "Combat subdermal armor."
 	id = "OM-armor"
 	build_path = /obj/item/organ_module/armor
-	req_tech = list("materials" = 4, "combat" = 2, "biotech" = 4)
+	req_tech = list(TECH_MATERIAL = 4, TECH_COMBAT = 2, TECH_BIO = 4)
 
 /////////////////////////////////////
 ////////////PROSTHESIS////////////////
@@ -51,7 +51,7 @@
 
 
 /datum/design/prosthesis/enforcer
-	req_tech = list("materials" = 3, "engineering" = 2, "combat" = 2, "biotech" = 3)
+	req_tech = list(TECH_MATERIAL = 3, TECH_ENGINEERING = 2, TECH_COMBAT = 2, TECH_BIO = 3)
 	desc = "Fulllimb combat prosthesis with magboots and powerfists modules."
 	materials = list(MATERIAL_STEEL=25000)
 
@@ -80,7 +80,7 @@
 
 
 /datum/design/prosthesis/runner
-	req_tech = list("materials" = 3, "engineering" = 2, "biotech" = 3)
+	req_tech = list(TECH_MATERIAL = 3, TECH_ENGINEERING = 2, TECH_BIO = 3)
 	desc = "Fulllimb runner prosthesis. Light and quick."
 	materials = list(MATERIAL_STEEL=15000)
 
