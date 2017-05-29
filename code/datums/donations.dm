@@ -1,3 +1,4 @@
+/*
 /client/verb/sim_donate()
 	set name = "Simulate donation"
 
@@ -5,6 +6,8 @@
 	var/money = input("Money") as num
 	donations.donators[ckey] = money
 	return
+*/
+
 
 var/datum/donations/donations = new()
 
