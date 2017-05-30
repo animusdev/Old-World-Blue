@@ -6,6 +6,7 @@
 /area
 	var/global/global_uid = 0
 	var/uid
+	var/tmp/camera_id = 0 // For automatic c_tag setting
 	var/is_escape_location = 0
 
 /area/New()
@@ -36,6 +37,9 @@
 	for (var/obj/machinery/camera/C in src)
 		cameras += C
 	return cameras
+
+/area/proc/get_camera_tag(var/obj/machinery/camera/C)
+	return "[name] [camera_id++]"
 
 /area/proc/atmosalert(danger_level, var/alarm_source)
 	if (danger_level == 0)
