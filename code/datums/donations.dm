@@ -11,6 +11,9 @@
 
 var/datum/donations/donations = new()
 
+/hook/roundstart/proc/load_donators()
+	donations.load_donators()
+
 /datum/donations
 	var/list/donat_categoryes = list()
 	var/list/donators = list()
@@ -18,7 +21,6 @@ var/datum/donations/donations = new()
 
 	New()
 		build_prizes_list()
-		load_donators()
 
 	proc/show(var/mob/user)
 		if(!user.ckey || !user.client)
