@@ -299,7 +299,7 @@
 			continue
 		var/transfer = src.transfer_to(item)
 		if (transfer)
-			user << SPAN("You add a new [item.singular_name] to the stack. It now contains [item.amount] [item.singular_name]\s.")
+			user << SPAN_NOTE("You add a new [item.singular_name] to the stack. It now contains [item.amount] [item.singular_name]\s.")
 		if(!amount)
 			break
 

@@ -98,7 +98,7 @@
 /obj/item/stack/material/produce_recipe(datum/stack_recipe/recipe, var/quantity, mob/user)
 	var/obj/O = ..()
 	if(istype(O))
-		var/matter_per_obj = recipe.req_amount/res_amount*SHEET_MATERIAL_AMOUNT
+		var/matter_per_obj = recipe.req_amount/recipe.res_amount*SHEET_MATERIAL_AMOUNT
 		O.matter = list("[get_material_name()]" = matter_per_obj)
 	return O
 
