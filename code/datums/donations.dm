@@ -1,3 +1,4 @@
+/*
 /client/verb/sim_donate()
 	set name = "Simulate donation"
 
@@ -5,8 +6,13 @@
 	var/money = input("Money") as num
 	donations.donators[ckey] = money
 	return
+*/
+
 
 var/datum/donations/donations = new()
+
+/hook/roundstart/proc/load_donators()
+	donations.load_donators()
 
 /datum/donations
 	var/list/donat_categoryes = list()
@@ -20,11 +26,10 @@ var/datum/donations/donations = new()
 		if(!user.ckey || !user.client)
 			return
 
-		if(!user.ckey in donators) //It doesn't exist yet
-			load_donator(user.ckey)
+		var/money = (user.ckey in donators) ? donators[user.ckey] : "0"
 
 		var/dat = "<title>Donator panel</title>"
-		dat += "You have [donators[user.ckey]]<br>"
+		dat += "You have [money] points<br>"
 		usr << browse(dat+donation_cached, "window=donatorpanel;size=250x400")
 
 	Topic(href, href_list)
@@ -46,7 +51,7 @@ var/datum/donations/donations = new()
 		)
 
 		if(item.cost > money)
-			user << SPAN_WARN("You don't have enough funds.")
+			user << SPAN_WARN("You don't have enough points.")
 			return 0
 
 		donators[ckey] = max(0, money - item.cost)
@@ -62,21 +67,21 @@ var/datum/donations/donations = new()
 
 		show(user)
 
-	proc/load_donator(ckey)
+	proc/load_donators()
 		var/DBConnection/dbcon2 = new()
 		dbcon2.Connect("dbi:mysql:forum2:[sqladdress]:[sqlport]","[sqlfdbklogin]","[sqlfdbkpass]")
 
 		if(!dbcon2.IsConnected())
-			world.log << "Failed to connect to database [dbcon2.ErrorMsg()] in load_donator([ckey])."
-			diary << "Failed to connect to database in load_donator([ckey])."
+			world.log << "Failed to connect to database [dbcon2.ErrorMsg()] in load_donators()."
+			diary << "Failed to connect to database in load_donators()."
 			return 0
 
-		var/DBQuery/query = dbcon2.NewQuery("SELECT round(sum) FROM Z_donators WHERE byond='[ckey]'")
+		var/DBQuery/query = dbcon2.NewQuery("SELECT byond,sum FROM Z_donators")
 		query.Execute()
-		var/money = 0
 		while(query.NextRow())
-			money = round(text2num(query.item[1]))
-		donators[ckey] = money
+			var/ckey  = ckey(query.item[1])
+			var/money = round(text2num(query.item[2]))
+			donators[ckey] = money
 		dbcon2.Disconnect()
 		return 1
 
