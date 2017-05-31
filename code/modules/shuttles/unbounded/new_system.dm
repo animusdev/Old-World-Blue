@@ -3,62 +3,6 @@
 
 /datum/shuttle_controller
 	var/list/new_shuttles = list()
-	var/list/sh_beakons = list()
-
-/obj/shuttle_beacon
-	name = "Shuttle Beacon"
-	icon = 'icons/turf/shuttle.dmi'
-	icon_state = "beacon"
-	invisibility = 101
-	var/beacon_system = "Station"
-	var/global/num = 1
-	var/turf/target = null
-
-/obj/shuttle_beacon/New()
-	..()
-	spawn(15)
-		setup()
-
-/obj/shuttle_beacon/verb/setup()
-	set name = "Init Dock"
-	set category = "Object"
-	set src in view(1)
-
-	if(name == initial(name))
-		name = "[initial(name)] #[num++]"
-	shuttle_controller.sh_beakons[name] = src
-	target = get_step(src, dir)
-
-/obj/shuttle_beacon/proc/get_target()
-	return target
-
-/obj/shuttle_beacon/proc/get_docking_dir()
-	return get_dir(target, src)
-
-/obj/shuttle_marker
-	name = "Shuttle Marker"
-	icon = 'icons/turf/shuttle.dmi'
-	icon_state = "marker"
-	var/list/beacon_systems = list("Station")
-
-/obj/shuttle_marker/New()
-	spawn(15)
-		setup()
-
-/obj/shuttle_marker/verb/setup()
-	set name = "Init shuttle"
-	set category = "Object"
-	set src in view(1)
-
-	if(name == initial(name))
-		world.log << "Failed to init shuttle_marker at ([x],[y],[z])"
-		return
-	var/datum/shuttle/untethered/shuttle = new(src)
-	if(shuttle)
-		world.log << "Successfully init shuttle: [name]"
-
-		invisibility = 101
-		src.verbs -= /obj/shuttle_marker/verb/setup
 
 /client/proc/beacon_move()
 	set name = "Beacon move"
@@ -69,9 +13,9 @@
 	var/shuttle_tag = input("Shuttle","Pick!") as null|anything in shuttle_controller.new_shuttles
 	if(!shuttle_tag) return
 	var/datum/shuttle/untethered/shuttle = shuttle_controller.new_shuttles[shuttle_tag]
-	var/where = input("Beakon", "Pick!") as null|anything in shuttle_controller.sh_beakons
+	var/where = input("Beakon", "Pick!") as null|anything in shuttle.dock_system.docks
 	if(!where) return
-	var/result = shuttle.beacon_move(shuttle_controller.sh_beakons[where])
+	var/result = shuttle.beacon_move(shuttle.dock_system.docks[where])
 	if(!result)
 		result = SPAN_NOTE("Success!")
 	else
@@ -79,7 +23,7 @@
 	usr << result
 
 /proc/get_most_distant_object(var/list/L, var/dir = NORTH)
-	if(!L || !L.len || !(dir in cardinal)) return null
+	if(!istype(L) || !L.len || !(dir in cardinal)) return null
 
 	. = L[1]
 	var/quality = 0
@@ -102,17 +46,20 @@
 	var/obj/south_port
 	var/obj/west_port
 	var/obj/east_port
-	var/list/beacon_systems
-	var/obj/shuttle_beacon/target_dock = null
+	var/datum/dock_system/dock_system
+	var/obj/dock_marker/target_dock = null
+	var/obj/dock_marker/interim_dock = null //For multi-Z movement
+	var/process_state = IDLE_STATE
+	var/move_time = 0		//the time spent in the transition area
+	var/last_dock_attempt_time = 0
 
 /datum/shuttle/untethered/New(var/obj/shuttle_marker/Marker)
 	..()
 	src.my_area = get_area(Marker)
 	my_area.is_shuttle = src
-	src.marker  = Marker
 	src.name    = Marker.name
-	src.beacon_systems = Marker.beacon_systems
 	shuttle_controller.new_shuttles[name] = src
+	src.set_dock_system(shuttle_controller.get_dock_system(Marker.dock_system))
 
 	var/list/north = list()
 	var/list/south = list()
@@ -134,13 +81,19 @@
 	west_port  = get_most_distant_object(west,  WEST)
 	east_port  = get_most_distant_object(east,  EAST)
 
-/datum/shuttle/untethered/proc/get_dock_list()
-	. = list()
-	for(var/obj/shuttle_beacon/SB in shuttle_controller.sh_beakons)
-		if(SB.beacon_system in beacon_systems)
-			. += SB
+/datum/shuttle/untethered/proc/select_dock(var/name)
+	target_dock = dock_system.docks[name]
 
-/datum/shuttle/untethered/proc/beacon_move(var/obj/shuttle_beacon/destination, var/direction=null)
+/datum/shuttle/untethered/proc/get_dock_list()
+	return dock_system.docks
+
+/datum/shuttle/untethered/proc/set_dock_system(var/datum/dock_system/DS)
+	if(dock_system)
+		dock_system.shuttles -= src
+	dock_system = DS
+	dock_system.shuttles |= src
+
+/datum/shuttle/untethered/proc/beacon_move(var/obj/dock_marker/destination, var/direction=null)
 
 	var/turf/target = destination.get_target()
 
@@ -205,3 +158,128 @@
 		makepowernets()
 
 	return
+
+
+/datum/shuttle/untethered/short_jump()
+	if(istype(target_dock))
+		return
+
+	if(moving_status != SHUTTLE_IDLE) return
+
+	//it would be cool to play a sound here
+	moving_status = SHUTTLE_WARMUP
+	spawn(warmup_time*10)
+		if (moving_status == SHUTTLE_IDLE)
+			return	//someone cancelled the launch
+
+		moving_status = SHUTTLE_INTRANSIT //shouldn't matter but just to be safe
+		beacon_move(target_dock)
+		moving_status = SHUTTLE_IDLE
+
+
+/datum/shuttle/untethered/long_jump(var/travel_time)
+	if(istype(target_dock))
+		return
+
+	if(moving_status != SHUTTLE_IDLE) return
+
+	//it would be cool to play a sound here
+	moving_status = SHUTTLE_WARMUP
+	spawn(warmup_time*10)
+		if (moving_status == SHUTTLE_IDLE)
+			return	//someone cancelled the launch
+
+		arrive_time = world.time + travel_time*10
+		moving_status = SHUTTLE_INTRANSIT
+		beacon_move(interim_dock)
+
+		sleep(arrive_time - world.time)
+
+		beacon_move(target_dock)
+		moving_status = SHUTTLE_IDLE
+
+
+/*
+	Please ensure that long_jump() and short_jump() are only called from here. This applies to subtypes as well.
+	Doing so will ensure that multiple jumps cannot be initiated in parallel.
+*/
+/datum/shuttle/untethered/proc/process()
+	switch(process_state)
+		if (WAIT_LAUNCH)
+			if (skip_docking_checks() || docking_controller.can_launch())
+				if (move_time && interim_dock)
+					long_jump(move_time)
+				else
+					short_jump()
+				process_state = WAIT_ARRIVE
+		if (FORCE_LAUNCH)
+			if (move_time && interim_dock)
+				long_jump(move_time)
+			else
+				short_jump()
+			process_state = WAIT_ARRIVE
+		if (WAIT_ARRIVE)
+			if (moving_status == SHUTTLE_IDLE)
+				dock()
+				process_state = WAIT_FINISH
+		if (WAIT_FINISH)
+			if (skip_docking_checks() || docking_controller.docked() || world.time > last_dock_attempt_time + DOCK_ATTEMPT_TIMEOUT)
+				process_state = IDLE_STATE
+				arrived()
+
+/datum/shuttle/untethered/current_dock_target()
+	return
+
+/datum/shuttle/untethered/proc/launch(var/user)
+	if (!can_launch()) return
+
+	process_state = WAIT_LAUNCH
+	undock()
+
+/datum/shuttle/untethered/proc/force_launch(var/user)
+	if (!can_force()) return
+
+	process_state = FORCE_LAUNCH
+
+/datum/shuttle/untethered/proc/cancel_launch(var/user)
+	if (!can_cancel()) return
+
+	moving_status = SHUTTLE_IDLE
+	process_state = WAIT_FINISH
+
+	if (docking_controller && !docking_controller.undocked())
+		docking_controller.force_undock()
+
+	spawn(10)
+		dock()
+
+	return
+
+/datum/shuttle/untethered/proc/can_launch()
+	if (moving_status != SHUTTLE_IDLE)
+		return 0
+
+	if (!target_dock)
+		return 0
+
+	return 1
+
+/datum/shuttle/untethered/proc/can_force()
+	if (moving_status == SHUTTLE_IDLE && process_state == WAIT_LAUNCH)
+		return 1
+	return 0
+
+/datum/shuttle/untethered/proc/can_cancel()
+	if (moving_status == SHUTTLE_WARMUP || process_state == WAIT_LAUNCH || process_state == FORCE_LAUNCH)
+		return 1
+	return 0
+
+//returns 1 if the shuttle is getting ready to move, but is not in transit yet
+/datum/shuttle/untethered/proc/is_launching()
+	return (moving_status == SHUTTLE_WARMUP || process_state == WAIT_LAUNCH || process_state == FORCE_LAUNCH)
+
+//This gets called when the shuttle finishes arriving at it's destination
+//This can be used by subtypes to do things when the shuttle arrives.
+/datum/shuttle/untethered/proc/arrived()
+	return	//do nothing for now
+
