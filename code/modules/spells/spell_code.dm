@@ -239,8 +239,8 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 				return 0
 
 	var/spell/noclothes/spell = locate() in user.spell_list
-	if((spell_flags & NEEDSCLOTHES) && !(spell && istype(spell)) && holder == user)//clothes check
-		if(!user.wearing_wiz_garb())
+	if((spell_flags & NEEDSCLOTHES) && !istype(spell) && holder == user)//clothes check
+		if(!user.is_like_wizard(FALSE, TRUE))
 			return 0
 
 	return 1

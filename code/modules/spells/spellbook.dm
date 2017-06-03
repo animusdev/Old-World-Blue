@@ -10,6 +10,7 @@
 	var/temp = null
 	var/max_uses = 5
 	var/op = 1
+	origin_tech = list(TECH_ARCANE = 5)
 
 /obj/item/weapon/spellbook/attack_self(mob/user = usr)
 	if(!user)
@@ -220,6 +221,10 @@
 		else
 			if(href_list["temp"])
 				temp = null
+		if(uses <= 0)
+			origin_tech[TECH_ARCANE] = 4
+		else
+			origin_tech[TECH_ARCANE] = 5
 		attack_self()
 
 	return
