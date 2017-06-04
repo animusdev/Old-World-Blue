@@ -515,3 +515,7 @@
 				M.deactivate(source, E)
 				source << SPAN_WARN("[M] in your [E] automaticly deactivated and locked!")
 
+/obj/item/weapon/implant/wizard
+	name = "prosthesis inhibition implant"
+	desc = "Prevent embed electronics from being activated."
+
