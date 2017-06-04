@@ -15,6 +15,7 @@
 /obj/machinery/computer/new_shuttle_control/attack_hand(mob/user)
 	user.set_machine(src)
 	interact(user)
+	onclose(user, "shuttle")
 
 //NanoUI
 ///obj/machinery/computer/new_shuttle_control/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
@@ -22,7 +23,6 @@
 	if(!my_shuttle)
 		var/dat = SPAN_WARN("<H1>Shuttle connection lost!</H1>")
 		user << browse(dat, "window=shuttle")
-		onclose(user, "shuttle")
 		return
 
 	var/dat = list()
@@ -36,14 +36,14 @@
 		if(SHUTTLE_INTRANSIT) shuttle_state = "in_transit"
 
 	dat += "Shuttle state: [shuttle_state]"
-	dat += "<a href='src=/ref[src];move=1'>Move</a>"
-	dat += "<a href='src=/ref[src];force=1'>Force Move</a>"
-	dat += "<a href='src=/ref[src];cancel=1'>Cancel Move</a>"
+	dat += "<a href='src=\ref[src];move=1'>Move</a>"
+/*
+	dat += "<a href='src=\ref[src];force=1'>Force Move</a>"
+	dat += "<a href='src=\ref[src];cancel=1'>Cancel Move</a>"
+*/
 	dat += "</body></html>"
 
-	user << browse(jointext(dat, null), "window=shuttle")
-	onclose(user, "shuttle")
-	updateDialog()
+	user << browse(jointext(dat, "<br>"), "window=shuttle")
 
 
 /*
@@ -111,11 +111,18 @@
 		if(in_range(usr,src) && !src.stat)
 			my_shuttle.select_dock(selected)
 
+	if(href_list["move"] && my_shuttle.target_dock)
+		var/result = my_shuttle.beacon_move(my_shuttle.target_dock)
+		if(result)
+			usr << SPAN_WARN(result)
+	interact(usr)
+
+/*
 	if(href_list["move"])
 		my_shuttle.launch(src)
 	if(href_list["force"])
 		my_shuttle.force_launch(src)
 	else if(href_list["cancel"])
 		my_shuttle.cancel_launch(src)
-
 	updateDialog()
+*/
