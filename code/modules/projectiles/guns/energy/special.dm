@@ -133,7 +133,7 @@
 					SPAN_DANG("Accidentally [user] shoots \himself in with \the [src]!"),
 					SPAN_DANG("Accidentally you shoot yourself with \the [src]!")
 				)
-				M.drop_from_inventory(src)
+				user.drop_from_inventory(src)
 		else
 			handle_click_empty(user)
 	return 0
