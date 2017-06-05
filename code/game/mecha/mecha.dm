@@ -897,7 +897,7 @@
 
 
 
-/*
+
 /obj/mecha/attack_ai(var/mob/living/silicon/ai/user as mob)
 	if(!isAI(user))
 		return
@@ -906,7 +906,7 @@
 						"}
 	user << browse(output, "window=mecha_attack_ai")
 	return
-*/
+
 
 /////////////////////////////////////
 ////////  Atmospheric stuff  ////////
@@ -1795,7 +1795,7 @@
 
 
 
-/*
+
 	if (href_list["ai_take_control"])
 		var/mob/living/silicon/ai/AI = locate(href_list["ai_take_control"])
 		var/duration = text2num(href_list["duration"])
@@ -1839,7 +1839,7 @@
 			else
 				AI.icon_state = "ai-crash"
 			src.occupant = cur_occupant
-*/
+
 	return
 
 ///////////////////////
