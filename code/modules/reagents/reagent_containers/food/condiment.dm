@@ -132,7 +132,6 @@
 	possible_transfer_amounts = list(1,20)
 	amount_per_transfer_from_this = 1
 	volume = 20
-	center_of_mass = list()
 
 /obj/item/weapon/reagent_containers/condiment/small/on_reagent_change()
 	return

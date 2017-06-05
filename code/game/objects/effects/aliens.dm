@@ -346,12 +346,13 @@ Alien plants should do something if theres a lot of poison
 	var/status = GROWING //can be GROWING, GROWN or BURST; all mutually exclusive
 
 /obj/effect/alien/egg/New()
+	..()
 	if(config.aliens_allowed)
-		..()
 		spawn(rand(MIN_GROWTH_TIME,MAX_GROWTH_TIME))
 			Grow()
 	else
-		qdel(src)
+		if(prob(50))
+			Burst(TRUE)
 
 /obj/effect/alien/egg/attack_hand(user as mob)
 
@@ -361,14 +362,14 @@ Alien plants should do something if theres a lot of poison
 
 	switch(status)
 		if(BURST)
-			user << "\red You clear the hatched egg."
+			user << SPAN_WARN("You clear the hatched egg.")
 			qdel(src)
 			return
 		if(GROWING)
-			user << "\red The child is not developed yet."
+			user << SPAN_WARN("The child is not developed yet.")
 			return
 		if(GROWN)
-			user << "\red You retrieve the child."
+			user << SPAN_WARN("You retrieve the child.")
 			Burst(0)
 			return
 
@@ -389,15 +390,16 @@ Alien plants should do something if theres a lot of poison
 		status = BURSTING
 		spawn(15)
 			status = BURST
-			child.loc = get_turf(src)
+			if(istype(child))
+				child.forceMove(get_turf(src))
 
-			if(kill && istype(child))
-				child.Die()
-			else
-				for(var/mob/M in range(1,src))
-					if(CanHug(M))
-						child.Attach(M)
-						break
+				if(kill)
+					child.Die()
+				else
+					for(var/mob/M in range(1,src))
+						if(CanHug(M))
+							child.Attach(M)
+							break
 
 /obj/effect/alien/egg/bullet_act(var/obj/item/projectile/Proj)
 	health -= Proj.damage
@@ -418,7 +420,7 @@ Alien plants should do something if theres a lot of poison
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 
-		if(WT.remove_fuel(0, user))
+		if(WT.remove_fuel(1, user))
 			damage = 15
 			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 

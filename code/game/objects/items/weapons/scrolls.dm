@@ -39,9 +39,7 @@
 
 /obj/item/weapon/teleportation_scroll/proc/teleportscroll(var/mob/user)
 
-	var/A
-
-	A = input(user, "Area to jump to", "BOOYEA", A) in teleportlocs
+	var/A = input(user, "Area to jump to", "BOOYEA") in teleportlocs
 	var/area/thearea = teleportlocs[A]
 
 	if (user.stat || user.restrained())
