@@ -4,7 +4,7 @@
 /datum/design/aimodule
 	build_type = IMPRINTER
 	category = "AI modules"
-	materials = list("glass" = 2000, "gold" = 100)
+	materials = list(MATERIAL_GLASS = 2000, MATERIAL_GOLD = 100)
 	chemicals = list("sacid" = 20)
 
 /datum/design/aimodule/AssembleDesignName()
