@@ -201,49 +201,49 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 
 	if(!(src in user.spell_list) && holder == user)
 		error("[user] utilized the spell '[src]' without having it.")
-		user << "<span class='warning'>You shouldn't have this spell! Something's wrong.</span>"
-		return 0
+		user << SPAN_WARN("You shouldn't have this spell! Something's wrong.")
+		return FALSE
 
 	if(silenced > 0)
 		return
 
 	var/turf/user_turf = get_turf(user)
 	if(!user_turf)
-		user << "<span class='warning'>You cannot cast spells in null space!</span>"
+		user << SPAN_WARN("You cannot cast spells in null space!")
 
 	if(spell_flags & Z2NOCAST && isOnAdminLevel(user)) //Certain spells are not allowed on the centcomm zlevel
-		return 0
+		return FALSE
 
 	if(spell_flags & CONSTRUCT_CHECK)
 		for(var/turf/T in RANGE_TURFS(1, holder))
 			if(findNullRod(T))
-				return 0
+				return FALSE
 
 	if(istype(user, /mob/living/simple_animal) && holder == user)
 		var/mob/living/simple_animal/SA = user
 		if(SA.purge)
-			SA << "<span class='warning'>The nullrod's power interferes with your own!</span>"
-			return 0
+			SA << SPAN_WARN("The nullrod's power interferes with your own!")
+			return FALSE
 
 	if(!src.check_charge(skipcharge, user)) //sees if we can cast based on charges alone
-		return 0
+		return FALSE
 
 	if(!(spell_flags & GHOSTCAST) && holder == user)
 		if(user.stat && !(spell_flags & STATALLOWED))
 			usr << "Not when you're incapacitated."
-			return 0
+			return FALSE
 
 		if(ishuman(user) && !(invocation_type in list(SpI_EMOTE, SpI_NONE)))
 			if(user.is_muzzled())
 				user << "Mmmf mrrfff!"
-				return 0
+				return FALSE
 
 	var/spell/noclothes/spell = locate() in user.spell_list
-	if((spell_flags & NEEDSCLOTHES) && !(spell && istype(spell)) && holder == user)//clothes check
-		if(!user.wearing_wiz_garb())
-			return 0
+	if((spell_flags & NEEDSCLOTHES) && !istype(spell) && holder == user)//clothes check
+		if(!user.is_like_wizard(WIZARD_CLOTHINGS))
+			return FALSE
 
-	return 1
+	return TRUE
 
 /spell/proc/check_charge(var/skipcharge, mob/user)
 	if(!skipcharge)

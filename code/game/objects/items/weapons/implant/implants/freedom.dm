@@ -1,4 +1,7 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+/obj/item/weapon/implantcase/freedom
+	name = "glass case - 'freedom'"
+	desc = "A case containing a freedom implant."
+	imp = /obj/item/weapon/implant/freedom
 
 /obj/item/weapon/implant/freedom
 	name = "freedom implant"

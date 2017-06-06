@@ -154,3 +154,6 @@
 //Grid for Item Placement
 #define CELLS 8								//Amount of cells per row/column in grid
 #define CELLSIZE (world.icon_size/CELLS)	//Size of a cell in pixels
+
+#define WIZARD_KNOWLEDGE 1
+#define WIZARD_CLOTHINGS 2
