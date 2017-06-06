@@ -527,17 +527,19 @@
 				source << SPAN_WARN("[M] in your [E] automaticly deactivated and locked!")
 
 /obj/item/weapon/implant/wizard
-	name = "prosthesis inhibition implant"
-	desc = "Prevent embed electronics from being activated."
+	name = "magic power emulation implant"
+	desc = "Radiate wizard waves what allow bypassing magic protect."
 
 	get_data()
 		var/dat = {"
 			<b>Implant Specifications:</b><BR>
-			<b>Name:</b> Experemental magic power ingibition implant<BR>
+			<b>Name:</b> Experemental magic power emulation implant<BR>
 			<b>Life:</b> Undefined.<BR>
 			<HR>
 			<b>Implant Details:</b><BR>
-			<b>Function:</b> activate owner power and greatly increase it.<BR>
+			<b>Function:</b> radiate special waves similar to natural.<BR>
 		"}
 		return dat
 
+	on_implanted(mob/living/carbon/human/source)
+		source.show_message("You feel how magic power fill your body.")
