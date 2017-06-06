@@ -20,7 +20,7 @@
 	set name = "Msay"
 	set hidden = 1
 
-	if(!check_rights(R_ADMIN|R_MOD|R_MENTOR))	return
+	if(!check_rights(R_ADMIN|R_MOD))	return
 
 	msg = sanitize(msg)
 	log_admin("MOD: [key_name(src)] : [msg]", null, 0)
