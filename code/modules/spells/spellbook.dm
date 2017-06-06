@@ -262,6 +262,7 @@
 		user <<"<span class='notice'>you rapidly read through the arcane book. Suddenly you realize you understand [spellname]!</span>"
 		user.attack_log += text("\[[time_stamp()]\] <font color='orange'>[user.real_name] ([user.ckey]) learned the spell [spellname] ([S]).</font>")
 		onlearned(user)
+		origin_tech[TECH_ARCANE]--
 
 /obj/item/weapon/spellbook/oneuse/proc/recoil(mob/user as mob)
 	user.visible_message("<span class='warning'>[src] glows in a black light!</span>")
