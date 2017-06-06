@@ -29,6 +29,8 @@
 
 /turf/simulated/mineral/New()
 
+	..()
+
 	spawn(0)
 		MineralSpread()
 

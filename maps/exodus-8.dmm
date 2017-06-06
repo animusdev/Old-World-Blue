@@ -137,7 +137,7 @@
 "cG" = (/obj/structure/table,/obj/item/trash/plate,/turf/simulated/floor/wood,/area/desolatebar)
 "cH" = (/obj/structure/table/gamblingtable,/turf/simulated/floor/wood,/area/desolatebar)
 "cI" = (/obj/structure/grille,/obj/structure/window/basic{tag = "icon-window (EAST)"; icon_state = "window"; dir = 4},/obj/structure/window/basic{tag = "icon-window (WEST)"; icon_state = "window"; dir = 8},/turf/simulated/floor/plating/airless,/area/desolatebar)
-"cJ" = (/obj/structure/table/gamblingtable,/obj/item/weapon/deck,/turf/simulated/floor/wood,/area/desolatebar)
+"cJ" = (/obj/structure/table/gamblingtable,/obj/item/weapon/deck/cards,/turf/simulated/floor/wood,/area/desolatebar)
 "cK" = (/obj/structure/table/gamblingtable,/turf/simulated/floor/wood{tag = "icon-wood-broken4"; icon_state = "wood-broken4"},/area/desolatebar)
 "cL" = (/obj/structure/table/woodentable,/turf/simulated/floor/wood,/area/desolatebar)
 "cM" = (/obj/structure/grille,/obj/structure/window/basic{tag = "icon-window (WEST)"; icon_state = "window"; dir = 8},/turf/simulated/floor/plating/airless,/area/desolatebar)

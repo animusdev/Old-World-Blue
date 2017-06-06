@@ -8,7 +8,7 @@
 	item_state = "paper"
 	throw_speed = 4
 	throw_range = 20
-	origin_tech = list(TECH_BLUESPACE = 4)
+	origin_tech = list(TECH_BLUESPACE = 4, TECH_ARCANE = 4)
 
 /obj/item/weapon/teleportation_scroll/attack_self(mob/user as mob)
 	user.set_machine(src)
@@ -85,3 +85,5 @@
 
 	smoke.start()
 	src.uses -= 1
+	if(uses <= 0)
+		origin_tech[TECH_ARCANE] = 3

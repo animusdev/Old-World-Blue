@@ -45,7 +45,6 @@
 	build_path = /obj/item/mecha_parts/part/ripley/right_leg
 	materials = list(MATERIAL_STEEL = 30000)
 
-
 /datum/design/item/mechfab/odysseus
 	category = "Odysseus"
 	time = 12
@@ -259,3 +258,4 @@
 	build_path = /obj/item/mecha_parts/part/phazon/armor
 	time = 60
 	materials = list(MATERIAL_STEEL=20000,MATERIAL_PHORON=10000,MATERIAL_URANIUM=10000,MATERIAL_SILVER=3000,MATERIAL_DIAMOND=1000)
+
