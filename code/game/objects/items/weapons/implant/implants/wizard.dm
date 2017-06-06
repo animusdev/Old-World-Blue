@@ -5,12 +5,12 @@
 
 /obj/item/weapon/implant/wizard
 	name = "magic power emulation implant"
-	desc = "Radiate wizard waves what allow bypassing magic protect."
+	desc = "Emitates special wizard brainwaves that allows bypassing protection of magical stuff."
 
 	get_data()
 		var/dat = {"
 			<b>Implant Specifications:</b><BR>
-			<b>Name:</b> Experemental magic power emulation implant<BR>
+			<b>Name:</b> Experimental implant, emulating wizard's magic field.<BR>
 			<b>Life:</b> Undefined.<BR>
 			<HR>
 			<b>Implant Details:</b><BR>
@@ -19,4 +19,4 @@
 		return dat
 
 	on_implanted(mob/living/carbon/human/source)
-		source.show_message("You feel how magic power fill your body.")
+		source.show_message("You feel wizardier.")
