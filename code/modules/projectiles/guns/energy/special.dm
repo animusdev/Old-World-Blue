@@ -120,10 +120,10 @@
 	origin_tech = list(TECH_ARCANE = 2)
 
 /obj/item/weapon/gun/energy/staff/special_check(var/mob/user)
-	if(wizards && wizards.is_antagonist(user.mind))
-		return 1
+	if(user.is_like_wizard(WIZARD_KNOWLEDGE))
+		return TRUE
 	else if(!wizard_only)
-		return 1
+		return TRUE
 	else if(prob(40)) //Clumsy handling
 		var/obj/P = consume_next_projectile()
 		if(P)
@@ -136,7 +136,7 @@
 				user.drop_from_inventory(src)
 		else
 			handle_click_empty(user)
-	return 0
+	return FALSE
 
 
 /obj/item/weapon/gun/energy/staff/handle_click_empty(mob/user = null)

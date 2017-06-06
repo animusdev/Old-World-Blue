@@ -501,6 +501,17 @@
 	name = "prosthesis inhibition implant"
 	desc = "Prevent embed electronics from being activated."
 
+	get_data()
+		var/dat = {"
+			<b>Implant Specifications:</b><BR>
+			<b>Name:</b> NanoTrasen \"Prosthesis Restrict\" implant<BR>
+			<b>Life:</b> Up to three days.<BR>
+			<HR>
+			<b>Implant Details:</b><BR>
+			<b>Function:</b> deactivate and lock prosthesis special functionality including embed modules.<BR>
+			<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system."}
+		return dat
+
 	on_implanted(mob/living/carbon/human/source)
 		if(malfunction)
 			return
@@ -518,4 +529,15 @@
 /obj/item/weapon/implant/wizard
 	name = "prosthesis inhibition implant"
 	desc = "Prevent embed electronics from being activated."
+
+	get_data()
+		var/dat = {"
+			<b>Implant Specifications:</b><BR>
+			<b>Name:</b> Experemental magic power ingibition implant<BR>
+			<b>Life:</b> Undefined.<BR>
+			<HR>
+			<b>Implant Details:</b><BR>
+			<b>Function:</b> activate owner power and greatly increase it.<BR>
+		"}
+		return dat
 

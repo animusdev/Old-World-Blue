@@ -116,13 +116,13 @@ obj/item/clothing
 
 /*Checks if the wizard is wearing the proper attire.
 Made a proc so this is not repeated 14 (or more) times.*/
-/mob/proc/is_like_wizard(var/knowledge = FALSE, var/clothing = FALSE)
-	src << "Silly creature, you're not a human. Only humans can cast this spell."
+/mob/proc/is_like_wizard(flags)
+	src << SPAN_WARN("Silly creature, you're not a human. Only humans can cast this spell.")
 	return 0
 
 // Humans can wear clothes.
-/mob/living/carbon/human/is_like_wizard(knowledge = FALSE, clothing = TRUE)
-	if(clothing)
+/mob/living/carbon/human/is_like_wizard(flags)
+	if(flags & WIZARD_CLOTHINGS)
 		if(!is_wiz_garb(src.wear_suit))
 			src << SPAN_WARN("I don't feel strong enough without my robe.")
 			return FALSE
@@ -132,10 +132,15 @@ Made a proc so this is not repeated 14 (or more) times.*/
 		if(!is_wiz_garb(src.head))
 			src << SPAN_WARN("I don't feel strong enough without my hat.")
 			return FALSE
-	if(knowledge)
+	if(flags & WIZARD_KNOWLEDGE)
 		if(wizards && wizards.is_antagonist(mind))
 			return TRUE
-	return 1
+		else
+			for(var/obj/item/weapon/implant/wizard/I in src)
+				if(I.imp_in == src)
+					return TRUE
+			return FALSE
+	return TRUE
 
 /datum/antagonist/wizard/remove_antagonist(var/datum/mind/player, var/mob/M)
 	switch(input("What to remove?") in list ("Spells", "Mob", "Role (without spells)"))

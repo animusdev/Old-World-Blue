@@ -13,10 +13,10 @@
 	hitsound = 'sound/items/welder2.ogg'
 	origin_tech = list(TECH_ARCANE = 2)
 
-/obj/item/weapon/scrying/attack_self(mob/user as mob)
-	visible_message("<span class='danger'>[user] stares into [src], their eyes glazing over.</span>")
-	if(wizards && wizards.is_antagonist(user.mind))
-		user << "<span class='info'>You can see... everything!</span>"
+/obj/item/weapon/scrying/attack_self(mob/living/user)
+	visible_message(SPAN_DANG("[user] stares into [src], their eyes glazing over."))
+	if(user.is_like_wizard(WIZARD_KNOWLEDGE))
+		user << SPAN_NOTE("You can see... everything!")
 		user.teleop = user.ghostize(1)
 		announce_ghost_joinleave(user.teleop, 1, "You feel that they used a powerful artifact to [pick("invade","disturb","disrupt","infest","taint","spoil","blight")] this place with their presence.")
 	else
