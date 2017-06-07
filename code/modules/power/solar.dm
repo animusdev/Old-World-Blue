@@ -50,11 +50,11 @@ var/list/solars_list = list()
 /obj/machinery/power/solar/proc/Make(var/obj/item/solar_assembly/S)
 	if(!S)
 		S = new /obj/item/solar_assembly(src)
-		S.glass_type = /obj/item/stack/material/glass
+		S.glass_type = MATERIAL_GLASS
 		S.anchored = 1
 	S.loc = src
 	//if the panel is in reinforced glass
-	if(S.glass_type == /obj/item/stack/material/glass/reinforced)
+	if(S.glass_type == MATERIAL_RGLASS)
 		//this need to be placed here, because panels already on the map don't have an assembly linked to
 		health *= 2
 	update_icon()
@@ -233,8 +233,7 @@ var/list/solars_list = list()
 // Give back the glass type we were supplied with
 /obj/item/solar_assembly/proc/give_glass()
 	if(glass_type)
-		var/obj/item/stack/material/S = new glass_type(src.loc)
-		S.amount = 2
+		create_material_stacks(glass_type, 2, src.loc)
 		glass_type = null
 
 
@@ -256,7 +255,7 @@ var/list/solars_list = list()
 		if(ismaterial(W) && W.get_material_name() in list(MATERIAL_GLASS, MATERIAL_RGLASS))
 			var/obj/item/stack/material/S = W
 			if(S.use(2))
-				glass_type = W.type
+				glass_type = S.get_material_name()
 				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 				user.visible_message(SPAN_NOTE("[user] places the glass on the solar assembly."))
 				if(tracker)
