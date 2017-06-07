@@ -32,6 +32,10 @@
 			return 0
 		else
 			S.use(5)
+	else if(istype(used_atom, /obj/item/stack/material))
+		var/obj/item/stack/material/M = used_atom
+		if(M.get_material() != step["material"])
+			return 0
 	return 1
 
 /datum/construction/reversible/mecha/custom_action(index as num, diff as num, atom/used_atom, mob/user as mob)
@@ -64,6 +68,10 @@
 			return 0
 		else
 			S.use(5)
+	else if(istype(used_atom, /obj/item/stack/material))
+		var/obj/item/stack/material/M = used_atom
+		if(M.get_material() != step["material"])
+			return 0
 	return 1
 
 
@@ -112,9 +120,10 @@
 			 "backkey"=/obj/item/weapon/crowbar,
 			 "desc"="External armor is installed."),
 		//3
-		list("key"=/obj/item/stack/material/plasteel,
+		list("key"=/obj/item/stack/material,
 			 "backkey"=/obj/item/weapon/weldingtool,
-			 "desc"="Internal armor is welded."),
+			 "desc"="Internal armor is welded.",
+			 "material" = MATERIAL_PLASTEEL),
 		//4
 		list("key"=/obj/item/weapon/weldingtool,
 			 "backkey"=/obj/item/weapon/wrench,
@@ -124,9 +133,10 @@
 			 "backkey"=/obj/item/weapon/crowbar,
 			 "desc"="Internal armor is installed"),
 		//6
-		list("key"=/obj/item/stack/material/steel,
+		list("key"=/obj/item/stack/material,
 			 "backkey"=/obj/item/weapon/screwdriver,
-			 "desc"="Peripherals control module is secured"),
+			 "desc"="Peripherals control module is secured",
+			 "material" = MATERIAL_STEEL),
 		//7
 		list("key"=/obj/item/weapon/screwdriver,
 			 "backkey"=/obj/item/weapon/crowbar,
@@ -297,8 +307,7 @@
 						"[user] pries internal armor layer from [holder].",
 						"You prie internal armor layer from [holder]."
 					)
-					var/obj/item/stack/material/steel/MS = new (get_turf(holder))
-					MS.amount = 5
+					new /obj/item/stack/material/steel (get_turf(holder), 5)
 					holder.icon_state = "ripley8"
 			if(4)
 				if(diff==FORWARD)
@@ -338,8 +347,7 @@
 						"[user] pries external armor layer from [holder].",
 						"You prie external armor layer from [holder]."
 					)
-					var/obj/item/stack/material/plasteel/MS = new (get_turf(holder))
-					MS.amount = 5
+					new /obj/item/stack/material/plasteel (get_turf(holder), 5)
 					holder.icon_state = "ripley11"
 			if(1)
 				if(diff==FORWARD)
@@ -414,9 +422,10 @@
 			 "backkey"=/obj/item/weapon/crowbar,
 			 "desc"="Internal armor is installed"),
 		//6
-		list("key"=/obj/item/stack/material/steel,
+		list("key"=/obj/item/stack/material,
 			 "backkey"=/obj/item/weapon/screwdriver,
-			 "desc"="Advanced capacitor is secured"),
+			 "desc"="Advanced capacitor is secured",
+			 "material" = MATERIAL_STEEL),
 		//7
 		list("key"=/obj/item/weapon/screwdriver,
 			 "backkey"=/obj/item/weapon/crowbar,
@@ -695,8 +704,7 @@
 						"[user] pries internal armor layer from [holder].",
 						"You prie internal armor layer from [holder]."
 					)
-					var/obj/item/stack/material/steel/MS = new (get_turf(holder))
-					MS.amount = 5
+					new /obj/item/stack/material/steel = (get_turf(holder), 5)
 					holder.icon_state = "gygax14"
 			if(4)
 				if(diff==FORWARD)
@@ -800,13 +808,15 @@
 			 "backkey"=/obj/item/weapon/crowbar,
 			 "desc"="External armor is installed."),
 		//3
-		list("key"=/obj/item/stack/material/plasteel,
+		list("key"=/obj/item/stack/material,
 			 "backkey"=/obj/item/weapon/crowbar,
-			 "desc"="External armor is being installed."),
+			 "desc"="External armor is being installed.",
+			 "material" = MATERIAL_PLASTEEL),
 		//4
-		list("key"=/obj/item/stack/material/plasteel,
+		list("key"=/obj/item/stack/material,
 			 "backkey"=/obj/item/weapon/weldingtool,
-			 "desc"="Internal armor is welded."),
+			 "desc"="Internal armor is welded.",
+			 "material" = MATERIAL_PLASTEEL),
 		//5
 		list("key"=/obj/item/weapon/weldingtool,
 			 "backkey"=/obj/item/weapon/wrench,
@@ -816,9 +826,10 @@
 			 "backkey"=/obj/item/weapon/crowbar,
 			 "desc"="Internal armor is installed"),
 		//7
-		list("key"=/obj/item/stack/material/plasteel,
+		list("key"=/obj/item/stack/material,
 			 "backkey"=/obj/item/weapon/screwdriver,
-			 "desc"="Peripherals control module is secured"),
+			 "desc"="Peripherals control module is secured",
+			 "material" = MATERIAL_PLASTEEL),
 		//8
 		list("key"=/obj/item/weapon/screwdriver,
 			 "backkey"=/obj/item/weapon/crowbar,
@@ -990,8 +1001,7 @@
 						"[user] pries internal armor layer from [holder].",
 						"You prie internal armor layer from [holder]."
 					)
-					var/obj/item/stack/material/plasteel/MS = new (get_turf(holder))
-					MS.amount = 5
+					new /obj/item/stack/material/plasteel (get_turf(holder), 5)
 					holder.icon_state = "fireripley8"
 			if(5)
 				if(diff==FORWARD)
@@ -1031,8 +1041,7 @@
 						"[user] removes the external armor from [holder].",
 						"You remove the external armor from [holder]."
 					)
-					var/obj/item/stack/material/plasteel/MS = new (get_turf(holder))
-					MS.amount = 5
+					new /obj/item/stack/material/plasteel (get_turf(holder), 5)
 					holder.icon_state = "fireripley11"
 			if(2)
 				if(diff==FORWARD)
@@ -1046,8 +1055,7 @@
 						"[user] pries external armor layer from [holder].",
 						"You prie external armor layer from [holder]."
 					)
-					var/obj/item/stack/material/plasteel/MS = new (get_turf(holder))
-					MS.amount = 5
+					new /obj/item/stack/material/plasteel (get_turf(holder), 5)
 					holder.icon_state = "fireripley12"
 			if(1)
 				if(diff==FORWARD)
@@ -1119,9 +1127,10 @@
 			 "backkey"=/obj/item/weapon/crowbar,
 			 "desc"="Internal armor is installed"),
 		//6
-		list("key"=/obj/item/stack/material/steel,
+		list("key"=/obj/item/stack/material,
 			 "backkey"=/obj/item/weapon/screwdriver,
-			 "desc"="Advanced capacitor is secured"),
+			 "desc"="Advanced capacitor is secured",
+			 "material" = MATERIAL_PLASTEEL),
 		//7
 		list("key"=/obj/item/weapon/screwdriver,
 			 "backkey"=/obj/item/weapon/crowbar,
@@ -1401,8 +1410,7 @@
 						"[user] pries internal armor layer from [holder].",
 						"You prie internal armor layer from [holder]."
 					)
-					var/obj/item/stack/material/steel/MS = new (get_turf(holder))
-					MS.amount = 5
+					new /obj/item/stack/material/steel (get_turf(holder), 5)
 					holder.icon_state = "durand14"
 			if(4)
 				if(diff==FORWARD)
@@ -1523,9 +1531,10 @@
 			 "backkey"=/obj/item/weapon/crowbar,
 			 "desc"="Phase armor is installed."),
 		//7
-		list("key"=/obj/item/stack/material/plasteel,
+		list("key"=/obj/item/stack/material,
 			 "backkey"=/obj/item/weapon/screwdriver,
-			 "desc"="The bluespace crystal is engaged."),
+			 "desc"="The bluespace crystal is engaged.",
+			 "material" = MATERIAL_PLASTEEL),
 		//8
 		list("key"=/obj/item/weapon/screwdriver,
 			 "backkey"=/obj/item/weapon/wirecutters,
@@ -1858,8 +1867,7 @@
 						"[user] pries the phase armor layer from the [holder].",
 						SPAN_NOTE("You add the wiring to the [holder].")
 					)
-					var/obj/item/stack/material/plasteel/MS = new (get_turf(holder))
-					MS.amount = 5
+					new /obj/item/stack/material/plasteel (get_turf(holder), 5)
 					holder.icon_state = "phazon17"
 			if(5)
 				if(diff==FORWARD)
@@ -1971,9 +1979,10 @@
 			 "backkey"=/obj/item/weapon/crowbar,
 			 "desc"="External armor is installed."),
 		//3
-		list("key"=/obj/item/stack/material/plasteel,
+		list("key"=/obj/item/stack/material,
 			 "backkey"=/obj/item/weapon/weldingtool,
-			 "desc"="Internal armor is welded."),
+			 "desc"="Internal armor is welded.",
+			 "material" = MATERIAL_PLASTEEL),
 		//4
 		list("key"=/obj/item/weapon/weldingtool,
 			 "backkey"=/obj/item/weapon/wrench,
@@ -1983,9 +1992,10 @@
 			 "backkey"=/obj/item/weapon/crowbar,
 			 "desc"="Internal armor is installed"),
 		//6
-		list("key"=/obj/item/stack/material/steel,
+		list("key"=/obj/item/stack/material,
 			 "backkey"=/obj/item/weapon/screwdriver,
-			 "desc"="Peripherals control module is secured"),
+			 "desc"="Peripherals control module is secured",
+			 "material" = MATERIAL_STEEL),
 		//7
 		list("key"=/obj/item/weapon/screwdriver,
 			 "backkey"=/obj/item/weapon/crowbar,
@@ -2156,8 +2166,7 @@
 						"[user] pries internal armor layer from [holder].",
 						"You prie internal armor layer from [holder]."
 					)
-					var/obj/item/stack/material/steel/MS = new (get_turf(holder))
-					MS.amount = 5
+					new /obj/item/stack/material/steel (get_turf(holder), 5)
 					holder.icon_state = "odysseus8"
 			if(4)
 				if(diff==FORWARD)
@@ -2194,8 +2203,7 @@
 					)
 					holder.icon_state = "odysseus13"
 				else
-					var/obj/item/stack/material/plasteel/MS = new (get_turf(holder))
-					MS.amount = 5
+					new /obj/item/stack/material/plasteel (get_turf(holder), 5)
 					user.visible_message(
 						"[user] pries [MS] from [holder].",
 						"You prie [MS] from [holder]."
