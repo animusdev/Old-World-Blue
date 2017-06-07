@@ -480,7 +480,7 @@
 		//convert list to units
 		amount *= SHEET_MATERIAL_AMOUNT
 		if(resources[material] < amount)
-			amount = round(resources, SHEET_MATERIAL_AMOUNT)
+			amount = round(resources[material], SHEET_MATERIAL_AMOUNT)
 			if(amount < SHEET_MATERIAL_AMOUNT)
 				return
 		resources[material] -= amount
