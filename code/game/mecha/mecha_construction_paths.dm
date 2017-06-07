@@ -38,7 +38,7 @@
 			return 0
 	return 1
 
-/datum/construction/reversible/mecha/custom_action(index as num, diff as num, atom/used_atom, mob/user as mob)
+/datum/construction/reversible/mecha/custom_action(index, diff, atom/used_atom, mob/user)
 	if(istype(used_atom, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = used_atom
 		if (W.remove_fuel(0, user))
@@ -62,16 +62,17 @@
 			user << ("There's not enough cable to finish the task.")
 			return 0
 	else if(istype(used_atom, /obj/item/stack))
+		if(istype(used_atom, /obj/item/stack/material))
+			var/list/step = steps[index]
+			var/obj/item/stack/material/M = used_atom
+			if(M.get_material() != step["material"])
+				return 0
 		var/obj/item/stack/S = used_atom
 		if(S.get_amount() < 5)
 			user << ("There's not enough material in this stack.")
 			return 0
 		else
 			S.use(5)
-	else if(istype(used_atom, /obj/item/stack/material))
-		var/obj/item/stack/material/M = used_atom
-		if(M.get_material() != step["material"])
-			return 0
 	return 1
 
 
@@ -704,7 +705,7 @@
 						"[user] pries internal armor layer from [holder].",
 						"You prie internal armor layer from [holder]."
 					)
-					new /obj/item/stack/material/steel = (get_turf(holder), 5)
+					new /obj/item/stack/material/steel (get_turf(holder), 5)
 					holder.icon_state = "gygax14"
 			if(4)
 				if(diff==FORWARD)
@@ -2203,7 +2204,7 @@
 					)
 					holder.icon_state = "odysseus13"
 				else
-					new /obj/item/stack/material/plasteel (get_turf(holder), 5)
+					var/obj/item/stack/material/plasteel/MS = new (get_turf(holder), 5)
 					user.visible_message(
 						"[user] pries [MS] from [holder].",
 						"You prie [MS] from [holder]."
