@@ -34,7 +34,7 @@
 			S.use(5)
 	else if(istype(used_atom, /obj/item/stack/material))
 		var/obj/item/stack/material/M = used_atom
-		if(M.get_material() != step["material"])
+		if(M.get_material_name() != step["material"])
 			return 0
 	return 1
 
@@ -65,7 +65,7 @@
 		if(istype(used_atom, /obj/item/stack/material))
 			var/list/step = steps[index]
 			var/obj/item/stack/material/M = used_atom
-			if(M.get_material() != step["material"])
+			if(M.get_material_name() != step["material"])
 				return 0
 		var/obj/item/stack/S = used_atom
 		if(S.get_amount() < 5)
