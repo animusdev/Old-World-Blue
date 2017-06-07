@@ -514,7 +514,7 @@
 	if(default_part_replacement(user, W))
 		return
 
-	if(istype(W, /obj/item/stack/material))
+	if(ismaterial(W))
 		var/material = W.get_material_name()
 		if(!material in resources)
 			return

@@ -120,7 +120,7 @@
 		//verbs += /obj/item/storage/bag/sheetsnatcher/quick_empty
 
 	can_be_inserted(obj/item/W as obj, stop_messages = 0)
-		if(!istype(W,/obj/item/stack/material))
+		if(!ismaterial(W))
 			if(!stop_messages)
 				usr << "The snatcher does not accept [W]."
 			return 0

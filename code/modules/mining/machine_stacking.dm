@@ -92,7 +92,7 @@
 	if(src.output && src.input)
 		var/turf/T = get_turf(input)
 		for(var/obj/item/O in T.contents)
-			if(istype(O, /obj/item/stack/material))
+			if(ismaterial(O))
 				var/obj/item/stack/material/M = O
 				update |= TRUE
 				var/material = M.get_material_name()

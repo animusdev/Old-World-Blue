@@ -264,7 +264,7 @@
 		return 1
 
 /obj/machinery/power/port_gen/pacman/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(istype(O, /obj/item/stack/material))
+	if(ismaterial(O))
 		if(O.get_material() == fuel_material)
 			var/obj/item/stack/addstack = O
 			var/amount = min((max_sheets - sheets), addstack.amount)

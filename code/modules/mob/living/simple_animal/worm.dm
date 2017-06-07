@@ -67,7 +67,7 @@
 			var/mob/living/simple_animal/space_worm/current = src
 
 			for(var/i = 1 to segments)
-				var/mob/living/simple_animal/space_worm/newSegment = new /mob/living/simple_animal/space_worm(loc)
+				var/mob/living/simple_animal/space_worm/newSegment = new (loc)
 				current.Attach(newSegment)
 				current = newSegment
 
@@ -128,8 +128,10 @@
 			if(previous) //midsection
 				icon_state = "spaceworm[get_dir(src,previous) | get_dir(src,next)]" //see 3 lines below
 			else //tail
+				//next will always be present since it's not a head and if it's dead,
+				// it goes in the other if branch
 				icon_state = "spacewormtail"
-				set_dir(get_dir(src,next)) //next will always be present since it's not a head and if it's dead, it goes in the other if branch
+				set_dir(get_dir(src,next))
 		else
 			icon_state = "spacewormdead"
 
@@ -138,7 +140,8 @@
 	proc/AttemptToEat(var/atom/target)
 		if(istype(target,/turf/simulated/wall))
 			var/turf/simulated/wall/W = target
-			if((!W.reinf_material && eatingDuration >= 100) || eatingDuration >= 200) //need 20 ticks to eat an rwall, 10 for a regular one
+			//need 20 ticks to eat an rwall, 10 for a regular one
+			if((!W.reinf_material && eatingDuration >= 100) || eatingDuration >= 200)
 				W.dismantle_wall()
 				return 1
 		else if(istype(target,/atom/movable))
@@ -174,7 +177,7 @@
 	proc/ProcessStomach()
 		for(var/atom/movable/stomachContent in contents)
 			if(prob(digestionProbability))
-				if(istype(stomachContent,/obj/item/stack/material)) //converts to plasma, keeping the stack value
+				if(ismaterial(stomachContent)) //converts to plasma, keeping the stack value
 					var/obj/item/stack/material/M = stomachContent
 					if(!M.get_material_name() == MATERIAL_PHORON)
 						new /obj/item/stack/material/phoron(src, M.get_amount())

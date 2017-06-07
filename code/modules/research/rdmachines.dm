@@ -45,7 +45,7 @@
 		user << "<span class='notice'>\The [src] is busy. Please wait for completion of previous operation.</span>"
 		return 1
 
-	if(istype(O, /obj/item/stack/material) && O.get_material_name() in materials)
+	if(ismaterial(O) && O.get_material_name() in materials)
 		var/obj/item/stack/material/stack = O
 		var/free_space = (max_material_storage - TotalMaterials())/SHEET_MATERIAL_AMOUNT
 		if(free_space < 1)

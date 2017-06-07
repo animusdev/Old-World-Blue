@@ -148,7 +148,7 @@
 			health = max(health+(maxhealth/5), maxhealth) // 20% repair per application
 			return 1
 
-	if(!material && can_plate && istype(W, /obj/item/stack/material))
+	if(!material && can_plate && ismaterial(W))
 		material = common_material_add(W, user, "plat")
 		if(material)
 			update_connections(1)

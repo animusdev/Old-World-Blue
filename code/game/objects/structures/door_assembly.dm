@@ -286,7 +286,7 @@
 			electronics.loc = src.loc
 			electronics = null
 
-	else if(istype(W, /obj/item/stack/material) && !glass)
+	else if(ismaterial(W) && !glass)
 		src.in_use = 1
 		var/obj/item/stack/S = W
 		var/material_name = S.get_material_name()

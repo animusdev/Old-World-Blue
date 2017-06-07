@@ -51,8 +51,11 @@
 			if (!do_after(usr, 30))
 				return
 			new /obj/item/stack/material/steel( get_turf(src.loc), sheets_refunded )
-			user.visible_message("[user.name] deconstructs [src].", \
-				"You deconstruct [src].", "You hear a noise.")
+			user.visible_message(
+				"[user.name] deconstructs [src].",
+				"You deconstruct [src].",
+				"You hear a noise."
+			)
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 75, 1)
 			qdel(src)
 		if (src.stage == 2)
@@ -72,8 +75,11 @@
 			if("bulb")
 				src.icon_state = "bulb-construct-stage1"
 		new /obj/item/stack/cable_coil(get_turf(src.loc), 1, "red")
-		user.visible_message("[user.name] removes the wiring from [src].", \
-			"You remove the wiring from [src].", "You hear a noise.")
+		user.visible_message(
+			"[user.name] removes the wiring from [src].",
+			"You remove the wiring from [src].",
+			"You hear a noise."
+		)
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		return
 
@@ -87,8 +93,10 @@
 				if("bulb")
 					src.icon_state = "bulb-construct-stage2"
 			src.stage = 2
-			user.visible_message("[user.name] adds wires to [src].", \
-				"You add wires to [src].")
+			user.visible_message(
+				"[user.name] adds wires to [src].",
+				"You add wires to [src]."
+			)
 		return
 
 	if(istype(W, /obj/item/weapon/screwdriver))
@@ -99,8 +107,11 @@
 				if("bulb")
 					src.icon_state = "bulb-empty"
 			src.stage = 3
-			user.visible_message("[user.name] closes [src]'s casing.", \
-				"You close [src]'s casing.", "You hear a noise.")
+			user.visible_message(
+				"[user.name] closes [src]'s casing.",
+				"You close [src]'s casing.",
+				"You hear a noise."
+			)
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 
 			switch(fixture_type)

@@ -81,8 +81,7 @@
 			m = round(m)
 			if(m)
 				use_metal(m)
-				var/obj/item/stack/material/steel/MM = new (get_turf(src))
-				MM.amount = m
+				new /obj/item/stack/material/steel (get_turf(src), m)
 				user.visible_message(
 					SPAN_NOTE("[user] removes [m] sheet\s of metal from the \the [src]."),
 					SPAN_NOTE("You remove [m] sheet\s of metal from \the [src]")

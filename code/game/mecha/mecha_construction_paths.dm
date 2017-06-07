@@ -32,7 +32,7 @@
 			return 0
 		else
 			S.use(5)
-	else if(istype(used_atom, /obj/item/stack/material))
+	else if(ismaterial(used_atom))
 		var/obj/item/stack/material/M = used_atom
 		if(M.get_material_name() != step["material"])
 			return 0
@@ -62,7 +62,7 @@
 			user << ("There's not enough cable to finish the task.")
 			return 0
 	else if(istype(used_atom, /obj/item/stack))
-		if(istype(used_atom, /obj/item/stack/material))
+		if(ismaterial(used_atom))
 			var/list/step = steps[index]
 			var/obj/item/stack/material/M = used_atom
 			if(M.get_material_name() != step["material"])

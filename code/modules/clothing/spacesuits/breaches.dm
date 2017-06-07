@@ -178,7 +178,7 @@ var/global/list/breach_burn_descriptors = list(
 //Handles repairs (and also upgrades).
 
 /obj/item/clothing/suit/space/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/stack/material))
+	if(ismaterial(W))
 		var/repair_power = 0
 		switch(W.get_material_name())
 			if(MATERIAL_STEEL)
