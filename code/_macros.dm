@@ -9,8 +9,6 @@
 
 #define get_turf(A) get_step(A,0)
 
-#define ismaterial(A) istype(A, /obj/item/stack/material)
-
 #define isAI(A) istype(A, /mob/living/silicon/ai)
 
 #define isalien(A) istype(A, /mob/living/carbon/alien)
@@ -30,6 +28,8 @@
 #define ishuman(A) istype(A, /mob/living/carbon/human)
 
 #define isliving(A) istype(A, /mob/living)
+
+#define ismaterial(A) istype(A, /obj/item/stack/material)
 
 #define ismouse(A) istype(A, /mob/living/simple_animal/mouse)
 
