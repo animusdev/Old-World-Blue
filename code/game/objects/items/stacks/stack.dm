@@ -138,16 +138,19 @@
 		if (istype(O, /obj/item))
 			user.put_in_hands(O)
 
-		if (istype(O, /obj/item/stack))
-			var/obj/item/stack/S = O
-			S.amount = produced
-			S.add_to_stacks(user)
-
 		if (istype(O, /obj/item/storage)) //BubbleWrap - so newly formed boxes are empty
 			for (var/obj/item/I in O)
 				qdel(I)
 
+		if (istype(O, /obj/item/stack))
+			spawn()
+				if(O)
+					var/obj/item/stack/S = O
+					S.amount = produced
+					S.add_to_stacks(user)
+
 		return O
+
 
 /obj/item/stack/Topic(href, href_list)
 	..()

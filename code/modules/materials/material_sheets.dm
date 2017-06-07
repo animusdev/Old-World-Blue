@@ -25,12 +25,15 @@
 	var/material/material
 	var/apply_colour //temp pending icon rewrite
 
-/obj/item/stack/material/New()
-	..()
+/obj/item/stack/material/New(loc, var/amount, var/material)
+	..(loc, amount)
 
-	if(!default_type)
-		default_type = MATERIAL_STEEL
-	set_material(default_type)
+	if(material)
+		set_material(material)
+	else
+		if(!default_type)
+			default_type = MATERIAL_STEEL
+		set_material(default_type)
 
 /obj/item/stack/material/get_material()
 	return material
@@ -98,6 +101,9 @@
 /obj/item/stack/material/produce_recipe(datum/stack_recipe/recipe, var/quantity, mob/user)
 	var/obj/O = ..()
 	if(istype(O))
+		if(istype(O, /obj/item/))
+			var/obj/item/I = O
+			I.origin_tech = origin_tech.Copy()
 		var/matter_per_obj = recipe.req_amount/recipe.res_amount*SHEET_MATERIAL_AMOUNT
 		O.matter = list("[get_material_name()]" = matter_per_obj)
 	return O
