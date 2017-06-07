@@ -47,7 +47,7 @@
 
 	icon_state = material.icon_state
 	recipes = material.get_recipes()
-//	stacktype = material.stack_type //TODO: LETHALGHOST - check
+	stacktype = material.name
 	origin_tech = material.stack_origin_tech
 
 	if(apply_colour)
