@@ -385,6 +385,12 @@
 	req_tech = list(TECH_DATA = 2, TECH_ENGINEERING = 2)
 	build_path = /obj/item/weapon/circuitboard/autolathe
 
+/datum/design/circuit/autolathe/industrial
+	name = "industrial autolathe board"
+	id = "autolathe_industrial"
+	req_tech = list(TECH_DATA = 3, TECH_ENGINEERING = 4)
+	build_path = /obj/item/weapon/circuitboard/autolathe/industrial
+
 /datum/design/circuit/rdservercontrol
 	name = "R&D server control console"
 	id = "rdservercontrol"
