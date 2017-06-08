@@ -85,13 +85,14 @@
 	update_strings()
 	return
 
-/obj/item/stack/material/transfer_to(obj/item/stack/S, var/tamount=null, var/type_verified)
+/obj/item/stack/material/can_merge(var/obj/item/stack/material/S)
+	return ismaterial(S) && (material.name == S.material.name)
+
+/obj/item/stack/material/transfer_to(obj/item/stack/S, var/tamount=null)
 	var/obj/item/stack/material/M = S
-	if(!istype(M) || material.name != M.material.name)
-		return 0
-	var/transfer = ..(S,tamount,1)
-	if(src) update_strings()
-	if(M) M.update_strings()
+	var/transfer = ..(S,tamount)
+	if(transfer)
+		if(M) M.update_strings()
 	return transfer
 
 /obj/item/stack/material/attack_self(var/mob/user)
@@ -103,7 +104,11 @@
 	if(istype(O))
 		if(istype(O, /obj/item/))
 			var/obj/item/I = O
-			I.origin_tech = origin_tech.Copy()
+			if(!I.origin_tech)
+				I.origin_tech = list()
+			for(var/T in origin_tech)
+				if(I.origin_tech[T] < origin_tech[T])
+					I.origin_tech[T] = origin_tech[T]
 		var/matter_per_obj = recipe.req_amount/recipe.res_amount*SHEET_MATERIAL_AMOUNT
 		O.matter = list("[get_material_name()]" = matter_per_obj)
 	return O

@@ -229,11 +229,14 @@
 	They also remove an equal amount from the source stack.
 */
 
+/obj/item/stack/proc/can_merge(obj/item/stack/S)
+	return stacktype == S.stacktype
+
 //attempts to transfer amount to S, and returns the amount actually transferred
-/obj/item/stack/proc/transfer_to(obj/item/stack/S, var/tamount=null, var/type_verified)
+/obj/item/stack/proc/transfer_to(obj/item/stack/S, var/tamount=null)
 	if (!get_amount())
 		return 0
-	if ((stacktype != S.stacktype) && !type_verified)
+	if (!can_merge(S))
 		return 0
 	if (isnull(tamount))
 		tamount = src.get_amount()
