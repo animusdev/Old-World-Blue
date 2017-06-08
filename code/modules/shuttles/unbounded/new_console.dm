@@ -21,9 +21,12 @@
 ///obj/machinery/computer/new_shuttle_control/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
 /obj/machinery/computer/new_shuttle_control/interact(mob/user)
 	if(!my_shuttle)
-		var/dat = SPAN_WARN("<H1>Shuttle connection lost!</H1>")
-		user << browse(dat, "window=shuttle")
-		return
+		var/area/A = get_area(src)
+		if(!A.is_shuttle)
+			var/dat = SPAN_WARN("<H1>Shuttle connection lost!</H1>")
+			user << browse(dat, "window=shuttle")
+			return
+		my_shuttle = A.is_shuttle
 
 	var/dat = list()
 	dat += "<html><head><title>Shuttle control console</title></head><body>"
@@ -36,10 +39,10 @@
 		if(SHUTTLE_INTRANSIT) shuttle_state = "in_transit"
 
 	dat += "Shuttle state: [shuttle_state]"
-	dat += "<a href='src=\ref[src];move=1'>Move</a>"
+	dat += "<a href='?src=\ref[src];move=1'>Move</a>"
 /*
-	dat += "<a href='src=\ref[src];force=1'>Force Move</a>"
-	dat += "<a href='src=\ref[src];cancel=1'>Cancel Move</a>"
+	dat += "<a href='?src=\ref[src];force=1'>Force Move</a>"
+	dat += "<a href='?src=\ref[src];cancel=1'>Cancel Move</a>"
 */
 	dat += "</body></html>"
 
@@ -96,7 +99,6 @@
 /obj/machinery/computer/new_shuttle_control/Topic(href, href_list)
 	if(..())
 		return 1
-
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 
@@ -115,6 +117,7 @@
 		var/result = my_shuttle.beacon_move(my_shuttle.target_dock)
 		if(result)
 			usr << SPAN_WARN(result)
+
 	interact(usr)
 
 /*
