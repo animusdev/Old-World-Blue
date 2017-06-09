@@ -29,7 +29,6 @@
 
 Admin Observer
 Moderator		+MOD
-Mentor                  +MENTOR
 
 Admin Candidate	+ADMIN
 Trial Admin		+@ +SPAWN +REJUV +VAREDIT +BAN
