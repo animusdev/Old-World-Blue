@@ -236,10 +236,13 @@ var/list/name_to_material
 	flags = MATERIAL_UNMELTABLE
 	cut_delay = 60
 	icon_colour = "#00FFE1"
+	integrity = 1000
+	melting_point = 30000
+	explosion_resistance = 200
 	opacity = 0.4
 	shard_type = SHARD_SHARD
 	tableslam_noise = 'sound/effects/Glasshit.ogg'
-	hardness = 100
+	hardness = 200
 	stack_origin_tech = list(TECH_MATERIAL = 6)
 
 /material/gold
