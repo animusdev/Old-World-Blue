@@ -4024,7 +4024,7 @@
 "bzt" = (/turf/simulated/floor{dir = 4; icon_state = "loadingarea"},/area/quartermaster/storage)
 "bzu" = (/obj/machinery/hologram/holopad,/turf/simulated/floor,/area/quartermaster/storage)
 "bzv" = (/obj/machinery/light_switch{pixel_x = 27},/turf/simulated/floor,/area/quartermaster/storage)
-"bzw" = (/obj/machinery/autolathe,/obj/machinery/light_switch{pixel_x = -27},/turf/simulated/floor,/area/quartermaster/office)
+"bzw" = (/obj/machinery/autolathe/industrial,/obj/machinery/light_switch{pixel_x = -27},/turf/simulated/floor,/area/quartermaster/office)
 "bzx" = (/obj/structure/disposalpipe/segment,/turf/simulated/floor,/area/quartermaster/office)
 "bzy" = (/obj/machinery/computer/order/supply,/turf/simulated/floor,/area/quartermaster/office)
 "bzz" = (/obj/machinery/door/firedoor/border_only{dir = 4; name = "Firelock East"},/turf/simulated/floor/plating/with_grille/reinforced,/area/quartermaster/office)
