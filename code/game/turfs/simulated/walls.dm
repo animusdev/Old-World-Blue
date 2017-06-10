@@ -47,26 +47,29 @@ var/list/global/wall_cache = list()
 // Also removes damage from ion blasts, because it's ridiculous ICly and quite excessive elseif.
 /turf/simulated/wall/bullet_act(var/obj/item/projectile/Proj)
 	if(istype(Proj,/obj/item/projectile/beam))
-		if(material.name == MATERIAL_DIAMOND && reinf_material.name == MATERIAL_DIAMOND)
-			// This copies code from code/modules/mob/living/carbon/human/human_defense.dm mostly.
-			// Chance of reflect was boosted because it's a hull section of diamond wall reinforced with extra diamonds.
-			// And IMHO reflects beams better than warden's self-made 'ablative armor'
-			var/reflectchance = 100 - round(Proj.damage/3)
-			if(prob(reflectchance))
-				visible_message("\red <B>\The [Proj] gets reflected by shiny surface of reinforced diamond wall!</B>")
-				// Find a turf near or on the original location to bounce to
-				if(Proj.starting)
-					var/new_x = Proj.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-					var/new_y = Proj.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-					var/turf/curloc = get_turf(src)
+		if(reinf_material)
+			if(material.name == MATERIAL_DIAMOND && reinf_material.name == MATERIAL_DIAMOND)
+				// This copies code from code/modules/mob/living/carbon/human/human_defense.dm mostly.
+				// Chance of reflect was boosted because it's a hull section of diamond wall reinforced with extra diamonds.
+				// And IMHO reflects beams better than warden's self-made 'ablative armor'
+				var/reflectchance = 100 - round(Proj.damage/3)
+				if(prob(reflectchance))
+					visible_message("\red <B>\The [Proj] gets reflected by shiny surface of reinforced diamond wall!</B>")
+					// Find a turf near or on the original location to bounce to
+					if(Proj.starting)
+						var/new_x = Proj.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+						var/new_y = Proj.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+						var/turf/curloc = get_turf(src)
+	
+						// redirect the projectile
+						Proj.redirect(new_x, new_y, curloc, src)
 
-					// redirect the projectile
-					Proj.redirect(new_x, new_y, curloc, src)
-
-				return PROJECTILE_CONTINUE // complete projectile permutation
+					return PROJECTILE_CONTINUE // complete projectile permutation
+				else
+					// Because these are hull sections of diamonds reinforced with diamonds. They can deal with lasers.
+					burn(500)
 			else
-				// Because these are hull sections of diamonds reinforced with diamonds. They can deal with lasers.
-				burn(500)
+				burn(2000)
 		else
 			burn(2500)
 	//else if(istype(Proj,/obj/item/projectile/ion))
