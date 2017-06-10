@@ -242,7 +242,7 @@ var/list/name_to_material
 	opacity = 0.4
 	shard_type = SHARD_SHARD
 	tableslam_noise = 'sound/effects/Glasshit.ogg'
-	hardness = 200
+	hardness = 100
 	stack_origin_tech = list(TECH_MATERIAL = 6)
 
 /material/gold
