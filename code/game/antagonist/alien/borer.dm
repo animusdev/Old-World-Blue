@@ -55,10 +55,12 @@ var/datum/antagonist/xenos/borer/borers
 	..() // Place them at a vent if they can't get a host.
 
 /datum/antagonist/xenos/borer/remove_antagonist(var/datum/mind/player, var/mob/M)
-	switch(input("What to remove?") in list ("Mob", "Role"))
-		if("Mob")
-			M = player.current
-			..()
-			qdel(M)
-		if ("Role")
-			..()
+	var/mob/living/simple_animal/borer/borer
+	if(istype(borer))
+		switch(input("What to remove?") in list ("Mob", "Role"))
+			if("Mob")
+				M = player.current
+				..()
+				qdel(M)
+			if ("Role")
+				..()
