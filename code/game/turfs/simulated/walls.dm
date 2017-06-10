@@ -47,7 +47,7 @@ var/list/global/wall_cache = list()
 // Also removes damage from ion blasts, because it's ridiculous ICly and quite excessive elseif.
 /turf/simulated/wall/bullet_act(var/obj/item/projectile/Proj)
 	if(istype(Proj,/obj/item/projectile/beam))
-		if(material == MATERIAL_DIAMOND && reinf_material == MATERIAL_DIAMOND)
+		if(material.name == MATERIAL_DIAMOND && reinf_material.name == MATERIAL_DIAMOND)
 			// This copies code from code/modules/mob/living/carbon/human/human_defense.dm mostly.
 			// Chance of reflect was boosted because it's a hull section of diamond wall reinforced with extra diamonds.
 			// And IMHO reflects beams better than warden's self-made 'ablative armor'
