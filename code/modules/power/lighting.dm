@@ -51,8 +51,11 @@
 			if (!do_after(usr, 30))
 				return
 			new /obj/item/stack/material/steel( get_turf(src.loc), sheets_refunded )
-			user.visible_message("[user.name] deconstructs [src].", \
-				"You deconstruct [src].", "You hear a noise.")
+			user.visible_message(
+				"[user.name] deconstructs [src].",
+				"You deconstruct [src].",
+				"You hear a noise."
+			)
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 75, 1)
 			qdel(src)
 		if (src.stage == 2)
@@ -72,8 +75,11 @@
 			if("bulb")
 				src.icon_state = "bulb-construct-stage1"
 		new /obj/item/stack/cable_coil(get_turf(src.loc), 1, "red")
-		user.visible_message("[user.name] removes the wiring from [src].", \
-			"You remove the wiring from [src].", "You hear a noise.")
+		user.visible_message(
+			"[user.name] removes the wiring from [src].",
+			"You remove the wiring from [src].",
+			"You hear a noise."
+		)
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		return
 
@@ -87,8 +93,10 @@
 				if("bulb")
 					src.icon_state = "bulb-construct-stage2"
 			src.stage = 2
-			user.visible_message("[user.name] adds wires to [src].", \
-				"You add wires to [src].")
+			user.visible_message(
+				"[user.name] adds wires to [src].",
+				"You add wires to [src]."
+			)
 		return
 
 	if(istype(W, /obj/item/weapon/screwdriver))
@@ -99,8 +107,11 @@
 				if("bulb")
 					src.icon_state = "bulb-empty"
 			src.stage = 3
-			user.visible_message("[user.name] closes [src]'s casing.", \
-				"You close [src]'s casing.", "You hear a noise.")
+			user.visible_message(
+				"[user.name] closes [src]'s casing.",
+				"You close [src]'s casing.",
+				"You hear a noise."
+			)
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 
 			switch(fixture_type)
@@ -600,7 +611,7 @@
 	var/status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/switchcount = 0	// number of times switched
-	matter = list(DEFAULT_WALL_MATERIAL = 60)
+	matter = list(MATERIAL_STEEL = 60)
 	var/rigged = 0		// true if rigged to explode
 	var/brightness_range = 2 //how much light it gives off
 	var/brightness_power = 1
@@ -612,7 +623,7 @@
 	icon_state = "ltube"
 	base_state = "ltube"
 	item_state = "c_tube"
-	matter = list("glass" = 100)
+	matter = list(MATERIAL_GLASS = 100)
 	brightness_range = 8
 	brightness_power = 3
 
@@ -628,7 +639,7 @@
 	icon_state = "lbulb"
 	base_state = "lbulb"
 	item_state = "contvapour"
-	matter = list("glass" = 100)
+	matter = list(MATERIAL_GLASS = 100)
 	brightness_range = 5
 	brightness_power = 2
 	brightness_color = "#a0a080"
@@ -643,7 +654,7 @@
 	icon_state = "fbulb"
 	base_state = "fbulb"
 	item_state = "egg4"
-	matter = list("glass" = 100)
+	matter = list(MATERIAL_GLASS = 100)
 	brightness_range = 5
 	brightness_power = 2
 

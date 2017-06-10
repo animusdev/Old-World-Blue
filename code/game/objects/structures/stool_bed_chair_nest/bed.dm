@@ -26,7 +26,7 @@
 	..(newloc)
 	color = null
 	if(!new_material)
-		new_material = DEFAULT_WALL_MATERIAL
+		new_material = MATERIAL_STEEL
 	material = get_material_by_name(new_material)
 	if(!istype(material))
 		qdel(src)
@@ -134,7 +134,7 @@
 		var/padding_type //This is awful but it needs to be like this until tiles are given a material var.
 		if(istype(W,/obj/item/stack/tile/carpet))
 			padding_type = "carpet"
-		else if(istype(W,/obj/item/stack/material))
+		else if(ismaterial(W))
 			var/obj/item/stack/material/M = W
 			if(M.material && (M.material.flags & MATERIAL_PADDING))
 				padding_type = "[M.material.name]"
@@ -183,10 +183,10 @@
 	mob_offset_y = 5
 
 /obj/structure/bed/psych/New(var/newloc)
-	..(newloc,"wood","leather")
+	..(newloc,MATERIAL_WOOD,"leather")
 
 /obj/structure/bed/padded/New(var/newloc)
-	..(newloc,"plastic","cotton")
+	..(newloc,MATERIAL_PLASTIC,"cotton")
 
 /obj/structure/bed/alien
 	name = "resting contraption"
@@ -314,7 +314,7 @@
 
 /obj/structure/bed/sofa/New(var/newloc)
 	base_icon = icon_state
-	..(newloc,"plastic")
+	..(newloc,MATERIAL_PLASTIC)
 
 
 /obj/structure/bed/sofa/update_icon()

@@ -11,10 +11,15 @@
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	var/airlock_type = "" //the type path of the airlock once completed
 	var/glass_type = "/glass"
-	var/glass = 0 // 0 = glass can be installed. -1 = glass can't be installed. 1 = glass is already installed. Text = mineral plating is installed instead.
+	// 0 = glass can be installed.
+	// -1 = glass can't be installed.
+	// 1 = glass is already installed.
+	// Text = mineral plating is installed instead.
+	var/glass = 0
 	var/created_name = null
 
 	New()
+		..()
 		update_state()
 
 /obj/structure/door_assembly/door_assembly_com
@@ -95,7 +100,8 @@
 	airlock_type = "/maintenance_hatch"
 	glass = -1
 
-/obj/structure/door_assembly/door_assembly_highsecurity // Borrowing this until WJohnston makes sprites for the assembly
+// Borrowing this until WJohnston makes sprites for the assembly
+/obj/structure/door_assembly/door_assembly_highsecurity
 	base_icon_state = "highsec"
 	base_name = "High Security Airlock"
 	airlock_type = "/highsecurity"
@@ -151,26 +157,34 @@
 			src.in_use = 1
 			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 			if(istext(glass))
-				user.visible_message("[user] welds the [glass] plating off the airlock assembly.", "You start to weld the [glass] plating off the airlock assembly.")
+				user.visible_message(
+					"[user] welds the [glass] plating off the airlock assembly.",
+					"You start to weld the [glass] plating off the airlock assembly."
+				)
 				if(do_after(user, 40, src) && glass)
 					if(!src || !WT.isOn())
 						src.in_use = 0
 						return
-					user << "\blue You welded the [glass] plating off!"
-					var/M = text2path("/obj/item/stack/material/[glass]")
-					new M(src.loc, 2)
+					user << SPAN_NOTE("You welded the [glass] plating off!")
+					create_material_stacks(glass, 2, src.loc)
 					glass = 0
 			else if(glass == 1)
-				user.visible_message("[user] welds the glass panel out of the airlock assembly.", "You start to weld the glass panel out of the airlock assembly.")
+				user.visible_message(
+					"[user] welds the glass panel out of the airlock assembly.",
+					"You start to weld the glass panel out of the airlock assembly."
+				)
 				if(do_after(user, 40, src) && glass)
 					if(!src || !WT.isOn())
 						src.in_use = 0
 						return
-					user << "\blue You welded the glass panel out!"
+					user << SPAN_NOTE("You welded the glass panel out!")
 					new /obj/item/stack/material/glass/reinforced(src.loc)
 					glass = 0
 			else if(!anchored)
-				user.visible_message("[user] dissassembles the airlock assembly.", "You start to dissassemble the airlock assembly.")
+				user.visible_message(
+					"[user] dissassembles the airlock assembly.",
+					"You start to dissassemble the airlock assembly."
+				)
 				if(do_after(user, 40, src))
 					if(!src || !WT.isOn())
 						src.in_use = 0
@@ -187,12 +201,18 @@
 		src.in_use = 1
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		if(anchored)
-			user.visible_message("[user] begins unsecuring the airlock assembly from the floor.", "You starts unsecuring the airlock assembly from the floor.")
+			user.visible_message(
+				"[user] begins unsecuring the airlock assembly from the floor.",
+				"You starts unsecuring the airlock assembly from the floor."
+			)
 		else
-			user.visible_message("[user] begins securing the airlock assembly to the floor.", "You starts securing the airlock assembly to the floor.")
+			user.visible_message(
+				"[user] begins securing the airlock assembly to the floor.",
+				"You starts securing the airlock assembly to the floor."
+			)
 
 		if(do_after(user, 40, src) && src)
-			user << "<span class='notice'>You [anchored? "un" : ""]secured the airlock assembly!</span>"
+			user << SPAN_NOTE("You [anchored? "un" : ""]secured the airlock assembly!")
 			anchored = !anchored
 
 		src.in_use = 0
@@ -200,21 +220,27 @@
 	else if(istype(W, /obj/item/stack/cable_coil) && state == 0 && anchored)
 		var/obj/item/stack/cable_coil/C = W
 		if (C.get_amount() < 1)
-			user << "<span class='warning'>You need one length of coil to wire the airlock assembly.</span>"
+			user << SPAN_WARN("You need one length of coil to wire the airlock assembly.")
 			return
 
 		src.in_use = 1
-		user.visible_message("[user] wires the airlock assembly.", "You start to wire the airlock assembly.")
+		user.visible_message(
+			"[user] wires the airlock assembly.",
+			"You start to wire the airlock assembly."
+		)
 		if(do_after(user, 40, src) && state == 0 && anchored)
 			if (C.use(1))
 				src.state = 1
-				user << "<span class='notice'>You wire the airlock.</span>"
+				user << SPAN_NOTE("You wire the airlock.")
 		src.in_use = 0
 
 	else if(istype(W, /obj/item/weapon/wirecutters) && (state == 1))
 		src.in_use = 1
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-		user.visible_message("[user] cuts the wires from the airlock assembly.", "You start to cut the wires from airlock assembly.")
+		user.visible_message(
+			"[user] cuts the wires from the airlock assembly.",
+			"You start to cut the wires from airlock assembly."
+		)
 
 		if(do_after(user, 40, src) && src && state)
 			user << "<span class='notice'>You cut the airlock wires!</span>"
@@ -224,15 +250,18 @@
 
 	else if(istype(W, /obj/item/weapon/airlock_electronics) && (state == 1))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
-		user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
+		user.visible_message(
+			"[user] installs the electronics into the airlock assembly.",
+			"You start to install electronics into the airlock assembly."
+		)
 
 		if(do_after(user, 40, src))
 			if(!src) return
 			if(electronics)
-				user << "<span class='warning'>There already electronics installed.</span>"
+				user << SPAN_WARN("There already electronics installed.")
 				return
 			user.drop_from_inventory(W, src)
-			user << "<span class='notice'>You installed the airlock electronics!</span>"
+			user << SPAN_NOTE("You installed the airlock electronics!")
 			src.state = 2
 			src.name = "Near finished Airlock Assembly"
 			src.electronics = W
@@ -240,12 +269,15 @@
 	else if(istype(W, /obj/item/weapon/crowbar) && (state == 2))
 		//This should never happen, but just in case I guess
 		if (!electronics)
-			user << "<span class='notice'>There was nothing to remove.</span>"
+			user << SPAN_NOTE("There was nothing to remove.")
 			src.state = 1
 			return
 
 		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
-		user.visible_message("\The [user] starts removing the electronics from the airlock assembly.", "You start removing the electronics from the airlock assembly.")
+		user.visible_message(
+			"\The [user] starts removing the electronics from the airlock assembly.",
+			"You start removing the electronics from the airlock assembly."
+		)
 
 		if(do_after(user, 40, src) && src && (state != 1))
 			user << "<span class='notice'>You removed the airlock electronics!</span>"
@@ -254,30 +286,36 @@
 			electronics.loc = src.loc
 			electronics = null
 
-	else if(istype(W, /obj/item/stack/material) && !glass)
+	else if(ismaterial(W) && !glass)
 		src.in_use = 1
 		var/obj/item/stack/S = W
 		var/material_name = S.get_material_name()
 		if(S && S.get_amount() >= 1)
-			if(material_name == "rglass")
+			if(material_name == MATERIAL_RGLASS)
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
-				user.visible_message("[user] adds [S.name] to the airlock assembly.", "You start to install [S.name] into the airlock assembly.")
+				user.visible_message(
+					"[user] adds [S.name] to the airlock assembly.",
+					"You start to install [S.name] into the airlock assembly."
+				)
 				if(do_after(user, 40, src) && !glass)
 					if (S.use(1))
-						user << "<span class='notice'>You installed reinforced glass windows into the airlock assembly.</span>"
+						user << SPAN_NOTE("You installed reinforced glass windows into the airlock assembly.")
 						glass = 1
 			else if(material_name)
 				// Ugly hack, will suffice for now. Need to fix it upstream as well, may rewrite mineral walls. ~Z
-				if(!(material_name in list("gold", "silver", "diamond", "uranium", "phoron", "sandstone")))
-					user << "You cannot make an airlock out of that material."
+				if(!(material_name in list(MATERIAL_GOLD, MATERIAL_SILVER, MATERIAL_DIAMOND, MATERIAL_URANIUM, MATERIAL_PHORON, MATERIAL_SANDSTONE)))
+					user << SPAN_WARN("You cannot make an airlock out of that material.")
 					src.in_use = 0
 					return
 				if(S.get_amount() >= 2)
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
-					user.visible_message("[user] adds [S.name] to the airlock assembly.", "You start to install [S.name] into the airlock assembly.")
+					user.visible_message(
+						"[user] adds [S.name] to the airlock assembly.",
+						"You start to install [S.name] into the airlock assembly."
+					)
 					if(do_after(user, 40, src) && !glass)
 						if (S.use(2))
-							user << "<span class='notice'>You installed [material_display_name(material_name)] plating into the airlock assembly.</span>"
+							user << SPAN_NOTE("You installed [material_display_name(material_name)] plating into the airlock assembly.")
 							glass = material_name
 		src.in_use = 0
 

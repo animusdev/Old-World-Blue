@@ -10,7 +10,7 @@ using metal and glass, it uses glass and reagents (usually sulphuric acid).
 	flags = OPENCONTAINER
 	circuit = /obj/item/weapon/circuitboard/circuit_imprinter
 
-	materials = list("glass" = 0, "gold" = 0, "diamond" = 0, "uranium" = 0)
+	materials = list(MATERIAL_GLASS = 0, MATERIAL_GOLD = 0, MATERIAL_DIAMOND = 0, MATERIAL_URANIUM = 0)
 
 	max_material_storage = 75000
 	mat_efficiency = 1
@@ -63,14 +63,21 @@ using metal and glass, it uses glass and reagents (usually sulphuric acid).
 	sleep(16)
 	use_power(power)
 
-	for(var/M in D.materials)
-		materials[M] = max(0, materials[M] - D.materials[M] * mat_efficiency)
+	var/list/required = D.materials.Copy()
+	for(var/material in required)
+		required[material] *= mat_efficiency
+
+	for(var/M in required)
+		materials[M] = max(0, materials[M] - required[M])
 
 	for(var/C in D.chemicals)
 		reagents.remove_reagent(C, D.chemicals[C] * mat_efficiency)
 
 	var/obj/new_item = new D.build_path(src.loc)
 	new_item.reliability = D.reliability
+	new_item.matter = list()
+	for(var/M in required)
+		new_item.matter[M] = required[M] * 0.75
 
 	busy = 0
 

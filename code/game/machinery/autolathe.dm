@@ -10,8 +10,8 @@
 	circuit = /obj/item/weapon/circuitboard/autolathe
 
 	var/tmp/list/machine_recipes
-	var/list/stored_material =  list(DEFAULT_WALL_MATERIAL = 0, "glass" = 0)
-	var/list/storage_capacity = list(DEFAULT_WALL_MATERIAL = 0, "glass" = 0)
+	var/list/stored_material =  list(MATERIAL_STEEL = 0, MATERIAL_GLASS = 0)
+	var/list/storage_capacity = list(MATERIAL_STEEL = 0, MATERIAL_GLASS = 0)
 	var/show_category = "All"
 	var/current_color = "#ffffff"
 
@@ -25,6 +25,28 @@
 
 	var/tmp/datum/wires/autolathe/wires = null
 
+/obj/machinery/autolathe/industrial
+	name = "industrial autolathe"
+	desc = "It produces items using different materials."
+	circuit = /obj/item/weapon/circuitboard/autolathe/industrial
+
+	idle_power_usage = 20
+	active_power_usage = 2300
+
+	stored_material =  list(
+		MATERIAL_STEEL = 0, MATERIAL_GLASS = 0,
+		MATERIAL_PLASTEEL = 0, MATERIAL_PHORON = 0,
+		MATERIAL_GOLD = 0, MATERIAL_SILVER = 0,
+		MATERIAL_URANIUM = 0, MATERIAL_DIAMOND = 0,
+		MATERIAL_PLASTIC = 0, MATERIAL_WOOD = 0
+	)
+	storage_capacity = list(
+		MATERIAL_STEEL = 0, MATERIAL_GLASS = 0,
+		MATERIAL_PLASTEEL = 0, MATERIAL_PHORON = 0,
+		MATERIAL_GOLD = 0, MATERIAL_SILVER = 0,
+		MATERIAL_URANIUM = 0, MATERIAL_DIAMOND = 0,
+		MATERIAL_PLASTIC = 0, MATERIAL_WOOD = 0
+	)
 
 /obj/machinery/autolathe/New()
 	..()
@@ -52,16 +74,16 @@
 	if(!disabled)
 		dat += "<table width = '100%'>"
 		var/material_top = ""
-		var/material_bottom = ""
 
+		var/mat_line = 0
 		for(var/material in stored_material)
+			if(mat_line++ % 3 == 0)
+				material_top += "</tr><tr>"
+			material_top += "<td width = '25%' align = center>"
+			material_top += "<b><a href='?src=\ref[src];remove_material=[material]'>[material]</a></b>"
+			material_top += "<br>[stored_material[material]]<b>/[storage_capacity[material]]</b></td>"
 
-			material_top += "<td width = '25%' align = center><b>"
-			material_top += "<a href='?src=\ref[src];remove_material=[material]'>[material]</a>"
-			material_top += "</b></td>"
-			material_bottom += "<td width = '25%' align = center>[stored_material[material]]<b>/[storage_capacity[material]]</b></td>"
-
-		dat += "<tr>[material_top]</tr><tr>[material_bottom]</tr></table><hr>"
+		dat += "<tr>[material_top]</tr></table><hr>"
 		dat += "<b>Current color:</b> <a href='?src=\ref[src];color=set'><span class='box' style='background-color:[current_color];'></span></a><hr><br>"
 		dat += "<h2>Printable Designs</h2><h3>Showing: <a href='?src=\ref[src];change_category=1'>[show_category]</a>.</h3></center><table width = '100%'>"
 
@@ -161,7 +183,7 @@
 
 	for(var/material in eating.matter)
 
-		if(isnull(stored_material[material]) || isnull(storage_capacity[material]))
+		if(!material in stored_material || !material in storage_capacity)
 			continue
 
 		if(stored_material[material] >= storage_capacity[material])
@@ -235,7 +257,7 @@
 				return
 			amount *= SHEET_MATERIAL_AMOUNT
 		stored_material[material] -= amount
-		create_material_stack(material, amount, src.loc)
+		create_material_stacks_from_unit(material, amount, src.loc)
 
 	if(href_list["change_category"])
 		var/choice = input("Which category do you wish to display?") as null|anything in autolathe_categories+"All"
@@ -316,14 +338,23 @@
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		man_rating += M.rating
 
-	storage_capacity[DEFAULT_WALL_MATERIAL] = mb_rating  * 25000
-	storage_capacity["glass"] = mb_rating  * 12500
+	storage_capacity[MATERIAL_STEEL] = mb_rating  * 25000
+	storage_capacity[MATERIAL_GLASS] = mb_rating  * 12500
 	build_time = 50 / man_rating
 	mat_efficiency = 1.1 - man_rating * 0.3// Normally, price is 1.25 the amount of material, so this shouldn't go higher than 0.8. Maximum rating of parts is 3
+
+/obj/machinery/autolathe/industrial/RefreshParts()
+	..()
+	var/mb_rating = 0
+	for(var/obj/item/weapon/stock_parts/matter_bin/MB in component_parts)
+		mb_rating += MB.rating
+
+	for(var/material in storage_capacity)
+		storage_capacity[material] = mb_rating  * 9000
 
 /obj/machinery/autolathe/dismantle()
 
 	for(var/mat in stored_material)
-		create_material_stack(mat, stored_material[mat], get_turf(src))
+		create_material_stacks_from_unit(mat, stored_material[mat], get_turf(src))
 	..()
 	return 1

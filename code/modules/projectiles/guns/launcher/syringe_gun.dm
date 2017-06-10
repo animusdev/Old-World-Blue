@@ -20,7 +20,7 @@ obj/item/weapon/reagent_containers/syringe/throw_impact(atom/hit_atom, var/speed
 	item_state = "syringegun"
 	w_class = ITEM_SIZE_LARGE
 	force = 7
-	matter = list(DEFAULT_WALL_MATERIAL = 2000)
+	matter = list(MATERIAL_STEEL = 2000)
 	slot_flags = SLOT_BELT
 
 	fire_sound = 'sound/weapons/empty.ogg'

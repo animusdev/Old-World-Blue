@@ -146,7 +146,7 @@
 	slot_flags = SLOT_BELT|SLOT_HOLSTER
 	w_class = ITEM_SIZE_NORMAL
 
-	matter = list("glass" = 10,DEFAULT_WALL_MATERIAL = 10)
+	matter = list(MATERIAL_GLASS = 10,MATERIAL_STEEL = 10)
 
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7.0
@@ -199,7 +199,7 @@
 	flags = CONDUCT
 	w_class = ITEM_SIZE_SMALL
 
-	matter = list(DEFAULT_WALL_MATERIAL = 10,"glass" = 10)
+	matter = list(MATERIAL_STEEL = 10,MATERIAL_GLASS = 10)
 
 	var/amount_left = 7
 
