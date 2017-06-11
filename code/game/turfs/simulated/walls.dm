@@ -43,7 +43,7 @@ var/list/global/wall_cache = list()
 	if(!radiate())
 		return PROCESS_KILL
 
-/turf/simulated/wall/bullet_ricochet(var/obj/item/projectile/Proj)
+/turf/simulated/wall/proc/bullet_ricochet(var/obj/item/projectile/Proj)
 	if(Proj.starting)
 		var/turf/curloc = get_turf(src)
 		var/check_x0 = 32 * curloc.x
@@ -77,7 +77,7 @@ var/list/global/wall_cache = list()
 		else
 			Proj.redirect(round(check_x1 / 32), round((2 * check_y0 - check_y1)/32), curloc, src)
 
-/turf/simulated/wall/laser_reflect(var/obj/item/projectile/Proj)
+/turf/simulated/wall/proc/laser_reflect(var/obj/item/projectile/Proj)
 	// Find a turf near or on the original location to bounce to
 	if(Proj.starting)
 		var/new_x = Proj.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
