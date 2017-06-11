@@ -151,7 +151,13 @@
 
 	else if(href_list["remove_antagonist"])
 		var/datum/antagonist/antag = all_antag_types[href_list["remove_antagonist"]]
-		if(antag) antag.remove_antagonist(src)
+		if(antag)
+			switch(input("What to remove?") in list ("Mob", "Role"))
+				if("Mob")
+					antag.remove_antagonist(src)
+					qdel(src.current)
+				else
+					antag.remove_antagonist(src)
 
 	else if(href_list["equip_antagonist"])
 		var/datum/antagonist/antag = all_antag_types[href_list["equip_antagonist"]]
