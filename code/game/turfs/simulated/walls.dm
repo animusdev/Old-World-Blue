@@ -50,7 +50,7 @@ var/list/global/wall_cache = list()
 			if(material.reflectance + reinf_material.reflectance > 0)
 				// This copies code from code/modules/mob/living/carbon/human/human_defense.dm mostly.
 				// Reflection chance depends on materials' var 'reflectance'.
-				var/reflectchance = material.reflectance + reinf_material.reflectance - round(Proj.damage/3)
+				var/reflectchance = material.reflectance + reinf_material.reflectance - min(round(Proj.damage/3), 50)
 				if(prob(reflectchance))
 					visible_message("\red <B>\The [Proj] gets reflected by shiny surface of reinforced wall!</B>")
 					// Find a turf near or on the original location to bounce to
@@ -76,7 +76,7 @@ var/list/global/wall_cache = list()
 			if(material.reflectance > 0)
 				// This copies code from code/modules/mob/living/carbon/human/human_defense.dm mostly.
 				// Reflection chance depends on materials' var 'reflectance'.
-				var/reflectchance = material.reflectance - round(Proj.damage/3)
+				var/reflectchance = material.reflectance - min(round(Proj.damage/3), 50)
 				if(prob(reflectchance))
 					visible_message("\red <B>\The [Proj] gets reflected by shiny surface of wall!</B>")
 					// Find a turf near or on the original location to bounce to
