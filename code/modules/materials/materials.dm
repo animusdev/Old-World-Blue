@@ -375,6 +375,7 @@ var/list/name_to_material
 	tableslam_noise = 'sound/effects/Glasshit.ogg'
 	hardness = 30
 	weight = 15
+	resilience = 0
 	door_icon_base = "stone"
 	destruction_desc = "shatters"
 	window_options = list("One Direction" = 1, "Full Window" = 4)
