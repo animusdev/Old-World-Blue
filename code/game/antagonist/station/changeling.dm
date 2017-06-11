@@ -59,3 +59,9 @@
 				survive_objective.owner = changeling
 				changeling.objectives += survive_objective
 	return
+
+/datum/antagonist/changeling/remove_antagonist(var/datum/mind/player, var/show_message, var/implanted)
+	player.current.remove_changeling_powers()
+	player.current.verbs -= /datum/changeling/proc/EvolutionMenu
+	player.current.remove_language("Changeling")
+	..()

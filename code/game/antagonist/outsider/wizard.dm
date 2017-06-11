@@ -141,3 +141,7 @@ Made a proc so this is not repeated 14 (or more) times.*/
 					return TRUE
 			return FALSE
 	return TRUE
+
+/datum/antagonist/wizard/remove_antagonist(var/datum/mind/player, var/show_message, var/implanted)
+	player.current.spellremove()
+	..()
