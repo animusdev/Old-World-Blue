@@ -95,6 +95,7 @@ var/list/name_to_material
 	var/explosion_resistance = 5 // Only used by walls currently.
 	var/conductive = 1           // Objects with this var add CONDUCTS to flags on spawn.
 	var/list/composite_material  // If set, object matter var will be a list containing these values.
+	var/resilience = 1           // If set on higher values, bullets may ricochet from walls made of this material. 
 	var/reflectance = -50    // Defines whether material in walls raises (positive values) or decreases (negative values) reflection chance
 
 	// Placeholder vars for the time being, todo properly integrate windows/light tiles/rods.
@@ -230,6 +231,7 @@ var/list/name_to_material
 	stack_origin_tech = list(TECH_MATERIAL = 5)
 	door_icon_base = "stone"
 	grind_to = MATERIAL_URANIUM
+	resilience = 9
 	reflectance = 5
 
 /material/diamond
@@ -246,6 +248,7 @@ var/list/name_to_material
 	tableslam_noise = 'sound/effects/Glasshit.ogg'
 	hardness = 100
 	stack_origin_tech = list(TECH_MATERIAL = 6)
+	resilience = 25
 	reflectance = 50
 
 /material/gold
@@ -258,6 +261,7 @@ var/list/name_to_material
 	sheet_singular_name = "ingot"
 	sheet_plural_name = "ingots"
 	grind_to = MATERIAL_GOLD
+	resilience = 0
 	reflectance = 5
 
 /material/gold/bronze //placeholder for ashtrays
@@ -289,6 +293,7 @@ var/list/name_to_material
 	sheet_singular_name = "crystal"
 	sheet_plural_name = "crystals"
 	grind_to = MATERIAL_PHORON
+	resilience = 0
 	reflectance = -45
 
 /*
@@ -320,6 +325,7 @@ var/list/name_to_material
 	door_icon_base = "stone"
 	sheet_singular_name = "brick"
 	sheet_plural_name = "bricks"
+	resilience = 0
 
 /material/stone/marble
 	name = MATERIAL_MARBLE
@@ -338,6 +344,7 @@ var/list/name_to_material
 //	icon_colour = "#666666"
 //	icon_colour = "#777777"
 	icon_colour = "#646262"
+	resilience = 36
 	reflectance = -30
 
 /material/steel/holographic
@@ -361,6 +368,7 @@ var/list/name_to_material
 	hardness = 80
 	weight = 23
 	stack_origin_tech = list(TECH_MATERIAL = 2)
+	resilience = 49
 	reflectance = -20
 	composite_material = list(MATERIAL_STEEL = 3750, "platinum" = 3750) //todo
 
@@ -375,6 +383,7 @@ var/list/name_to_material
 	tableslam_noise = 'sound/effects/Glasshit.ogg'
 	hardness = 30
 	weight = 15
+	resilience = 0
 	reflectance = 20
 	door_icon_base = "stone"
 	destruction_desc = "shatters"
@@ -473,6 +482,7 @@ var/list/name_to_material
 	created_window = /obj/structure/window/reinforced
 	wire_product = null
 	rod_product = null
+	resilience = 9
 
 /material/glass/phoron
 	name = "phglass"
@@ -487,6 +497,7 @@ var/list/name_to_material
 	created_window = /obj/structure/window/phoronbasic
 	wire_product = null
 	rod_product = /obj/item/stack/material/glass/phoronrglass
+	resilience = 0
 
 /material/glass/phoron/reinforced
 	name = "rphglass"
@@ -498,6 +509,7 @@ var/list/name_to_material
 	created_window = /obj/structure/window/phoronreinforced
 	hardness = 40
 	rod_product = null
+	resilience = 36
 
 /material/plastic
 	name = MATERIAL_PLASTIC
@@ -508,6 +520,7 @@ var/list/name_to_material
 	icon_colour = "#CCCCCC"
 	hardness = 10
 	weight = 12
+	resilience = 0
 	melting_point = T0C+371 //assuming heat resistant plastic
 	stack_origin_tech = list(TECH_MATERIAL = 3)
 	reflectance = -10
@@ -573,6 +586,7 @@ var/list/name_to_material
 	explosion_resistance = 200 // Hull plating.
 	hardness = 500
 	weight = 500
+	resilience = 49
 
 /material/voxalloy/place_sheet()
 	return
@@ -597,6 +611,7 @@ var/list/name_to_material
 	destruction_desc = "splinters"
 	sheet_singular_name = "plank"
 	sheet_plural_name = "planks"
+	resilience = 0
 
 /material/wood/holographic
 	name = "holowood"
