@@ -117,8 +117,8 @@ var/list/global/wall_cache = list()
 						var/check_y1 = 32 * Proj.starting.y
 						var/check_x2 = 32 * Proj.original.x
 						var/check_y2 = 32 * Proj.original.y
-						var/corner_x0 = x0
-						var/corner_y0 = y0
+						var/corner_x0 = check_x0
+						var/corner_y0 = check_y0
 						if(check_y0 - check_y1 > 0)
 							corner_y0 = corner_y0 - 16
 						else
@@ -155,8 +155,8 @@ var/list/global/wall_cache = list()
 						var/check_y1 = 32 * Proj.starting.y
 						var/check_x2 = 32 * Proj.original.x
 						var/check_y2 = 32 * Proj.original.y
-						var/corner_x0 = x0
-						var/corner_y0 = y0
+						var/corner_x0 = check_x0
+						var/corner_y0 = check_y0
 						if(check_y0 - check_y1 > 0)
 							corner_y0 = corner_y0 - 16
 						else
