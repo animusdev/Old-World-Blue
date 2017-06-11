@@ -142,13 +142,6 @@ Made a proc so this is not repeated 14 (or more) times.*/
 			return FALSE
 	return TRUE
 
-/datum/antagonist/wizard/remove_antagonist(var/datum/mind/player, var/mob/M)
-	switch(input("What to remove?") in list ("Spells", "Mob", "Role (without spells)"))
-		if("Spells")
-			player.current.spellremove()
-		if("Mob")
-			M = player.current
-			..()
-			qdel(M)
-		if ("Role")
-			..()
+/datum/antagonist/wizard/remove_antagonist(var/datum/mind/player, var/show_message, var/implanted)
+	player.current.spellremove()
+	..()
