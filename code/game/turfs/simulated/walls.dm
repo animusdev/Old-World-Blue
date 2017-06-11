@@ -111,52 +111,74 @@ var/list/global/wall_cache = list()
 					visible_message("\red <B>\The [Proj] ricochets from the surface of reinforced wall!</B>")
 					if(Proj.starting)
 						var/turf/curloc = get_turf(src)
-						var/check_x0 = curloc.x
-						var/check_y0 = curloc.y
-						var/check_x1 = Proj.starting.x
-						var/check_y1 = Proj.starting.y
-						var/check_x2 = Proj.original.x
-						var/check_y2 = Proj.original.y
-						// Checks if wall is lower or upper than line connecting proj's starting and original 
+						var/check_x0 = 32 * curloc.x
+						var/check_y0 = 32 * curloc.y
+						var/check_x1 = 32 * Proj.starting.x
+						var/check_y1 = 32 * Proj.starting.y
+						var/check_x2 = 32 * Proj.original.x
+						var/check_y2 = 32 * Proj.original.y
+						var/corner_x0 = x0
+						var/corner_y0 = y0
+						if(check_y0 - check_y1 > 0)
+							corner_y0 = corner_y0 - 16
+						else
+							corner_y0 = corner_y0 + 16
+						if(check_x0 - check_x1 > 0)
+							corner_x0 = corner_x0 - 16
+						else
+							corner_x0 = corner_x0 + 16
+						
+						// Checks if original is lower or upper than line connecting proj's starting and wall 
 						// In specific coordinate system that has wall as (0,0) and 'starting' as (r, 0), where r > 0.
 						// So, this checks whether 'original's' y-coordinate is positive or negative in new c.s.
 						// In order to understand, in which direction bullet will ricochet.
 						// Actually new_y isn't y-coordinate, but it has the same sign.
-						var/new_y = (check_y2 - check_y0) * (check_x1 - check_x0) - (check_x2 - check_x0) * (check_y1 - check_y0)
+						var/new_y = (check_y2 - corner_y0) * (check_x1 - corner_x0) - (check_x2 - corner_x0) * (check_y1 - corner_y0)
 						// Here comes the thing which differs two situations:
 						// First - bullet comes from north-west or south-east, with negative func value. Second - NE or SW.
-						var/new_func = (check_x0 - check_x1) * (check_y0 - check_y1)
+						var/new_func = (corner_x0 - check_x1) * (corner_y0 - check_y1)
 						if(new_y * new_func > 0)
-							Proj.redirect(2 * check_x0 - check_x1, check_y1, curloc, src)
+							Proj.redirect(round((2 * check_x0 - check_x1) / 32), round(check_y1 / 32), curloc, src)
 						else
-							Proj.redirect(check_x1, 2 * check_y0 - check_y1, curloc, src)
+							Proj.redirect(round(check_x1 / 32), round((2 * check_y0 - check_y1)/32), curloc, src)
 					return PROJECTILE_CONTINUE // complete projectile permutation
 		else
 			if(material.resilience > 0)
 				var/reflectchance = round(material.resilience/2)
 				if(prob(reflectchance))
-					visible_message("\red <B>\The [Proj] ricochets from the surface of wall!</B>")
+					visible_message("\red <B>\The [Proj] ricochets from the surface of reinforced wall!</B>")
 					if(Proj.starting)
 						var/turf/curloc = get_turf(src)
-						var/check_x0 = curloc.x
-						var/check_y0 = curloc.y
-						var/check_x1 = Proj.starting.x
-						var/check_y1 = Proj.starting.y
-						var/check_x2 = Proj.original.x
-						var/check_y2 = Proj.original.y
-						// Checks if wall is lower or upper than line connecting proj's starting and original 
+						var/check_x0 = 32 * curloc.x
+						var/check_y0 = 32 * curloc.y
+						var/check_x1 = 32 * Proj.starting.x
+						var/check_y1 = 32 * Proj.starting.y
+						var/check_x2 = 32 * Proj.original.x
+						var/check_y2 = 32 * Proj.original.y
+						var/corner_x0 = x0
+						var/corner_y0 = y0
+						if(check_y0 - check_y1 > 0)
+							corner_y0 = corner_y0 - 16
+						else
+							corner_y0 = corner_y0 + 16
+						if(check_x0 - check_x1 > 0)
+							corner_x0 = corner_x0 - 16
+						else
+							corner_x0 = corner_x0 + 16
+						
+						// Checks if original is lower or upper than line connecting proj's starting and wall 
 						// In specific coordinate system that has wall as (0,0) and 'starting' as (r, 0), where r > 0.
 						// So, this checks whether 'original's' y-coordinate is positive or negative in new c.s.
 						// In order to understand, in which direction bullet will ricochet.
 						// Actually new_y isn't y-coordinate, but it has the same sign.
-						var/new_y = (check_y2 - check_y0) * (check_x1 - check_x0) - (check_x2 - check_x0) * (check_y1 - check_y0)
+						var/new_y = (check_y2 - corner_y0) * (check_x1 - corner_x0) - (check_x2 - corner_x0) * (check_y1 - corner_y0)
 						// Here comes the thing which differs two situations:
 						// First - bullet comes from north-west or south-east, with negative func value. Second - NE or SW.
-						var/new_func = (check_x0 - check_x1) * (check_y0 - check_y1)
+						var/new_func = (corner_x0 - check_x1) * (corner_y0 - check_y1)
 						if(new_y * new_func > 0)
-							Proj.redirect(2 * check_x0 - check_x1, check_y1, curloc, src)
+							Proj.redirect(round((2 * check_x0 - check_x1) / 32), round(check_y1 / 32), curloc, src)
 						else
-							Proj.redirect(check_x1, 2 * check_y0 - check_y1, curloc, src)
+							Proj.redirect(round(check_x1 / 32), round((2 * check_y0 - check_y1)/32), curloc, src)
 					return PROJECTILE_CONTINUE // complete projectile permutation
 
 	// Tasers and stuff? No thanks. Also no clone or tox damage crap.
