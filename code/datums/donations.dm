@@ -7,12 +7,11 @@
 	donations.donators[ckey] = money
 	return
 */
-
-
 var/datum/donations/donations = new()
 
 /hook/roundstart/proc/load_donators()
 	donations.load_donators()
+	return donations.donators.len
 
 /datum/donations
 	var/list/donat_categoryes = list()

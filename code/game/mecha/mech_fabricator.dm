@@ -17,14 +17,14 @@
 	var/time_coeff = 1.5 //can be upgraded with research
 	var/resource_coeff = 1.5 //can be upgraded with research
 	var/list/resources = list(
-		DEFAULT_WALL_MATERIAL=0,
-		"glass"=0,
-		"gold"=0,
-		"silver"=0,
-		"diamond"=0,
-		"phoron"=0,
-		"uranium"=0,
-		"plasteel"=0
+		MATERIAL_STEEL=0,
+		MATERIAL_GLASS=0,
+		MATERIAL_GOLD=0,
+		MATERIAL_SILVER=0,
+		MATERIAL_DIAMOND=0,
+		MATERIAL_PHORON=0,
+		MATERIAL_URANIUM=0,
+		MATERIAL_PLASTEEL=0
 	)
 
 	var/res_max_amount = 200000
@@ -117,9 +117,10 @@
 
 /obj/machinery/mecha_part_fabricator/proc/output_part_cost(var/datum/design/D)
 	var/list/output = list()
-	for(var/M in D.materials)
+	var/materials = get_resource_cost_w_coeff(D)
+	for(var/M in materials)
 		if(M in resources)
-			var/req_amount = get_resource_cost_w_coeff(D.materials[M])
+			var/req_amount = materials[M]
 			if(req_amount>resources[M])
 				output += "<span class='deficiency'>[req_amount] [M]</span>"
 			else
@@ -138,16 +139,16 @@
 	output += "</td></table>"
 	return output
 
-/obj/machinery/mecha_part_fabricator/proc/remove_resources(var/datum/design/D)
-	for(var/M in D.materials)
+/obj/machinery/mecha_part_fabricator/proc/remove_resources(var/list/materials)
+	for(var/M in materials)
 		if(M in resources)
-			src.resources[M] -= get_resource_cost_w_coeff(D.materials[M])
+			src.resources[M] -= materials[M]
 
 /obj/machinery/mecha_part_fabricator/proc/check_resources(var/datum/design/D)
-	for(var/M in D.materials)
-		if(M in resources)
-			if(resources[M] < get_resource_cost_w_coeff(D.materials[M]))
-				return FALSE
+	var/list/materials = get_resource_cost_w_coeff(D)
+	for(var/M in materials)
+		if(!(M in resources) || resources[M] < materials[M])
+			return FALSE
 	return TRUE
 
 /obj/machinery/mecha_part_fabricator/proc/build(var/datum/design/D)
@@ -156,8 +157,9 @@
 
 	src.being_built = new D.build_path(src)
 
+	var/list/required = get_resource_cost_w_coeff(D)
 	src.desc = "It's building [src.being_built]."
-	src.remove_resources(D)
+	src.remove_resources(required)
 	src.overlays += "fab-active"
 	src.use_power = 2
 	src.updateUsrDialog()
@@ -166,6 +168,9 @@
 	src.overlays -= "fab-active"
 	src.desc = initial(src.desc)
 	if(being_built)
+		being_built.matter = list()
+		for(var/M in required)
+			being_built.matter[M] = round(required[M] * 0.75)
 		src.being_built.Move(get_step(src,output_dir))
 		src.visible_message("\icon[src] <b>[src]</b> beeps, \"The following has been completed: [src.being_built] is built\".")
 		src.being_built = null
@@ -309,8 +314,11 @@
 		src.visible_message("\icon[src] <b>[src]</b> beeps, \"Error! Couldn't connect to R&D server.\"")
 	return
 
-/obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(var/req_amount, var/roundto=1)
-	return round(req_amount*resource_coeff, roundto)
+/obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(var/datum/design/D)
+	var/list/materials = list()
+	for(var/M in D.materials)
+		materials[M] = D.materials[M] * resource_coeff
+	return materials
 
 
 /obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(var/datum/design/D, var/roundto=1)
@@ -480,11 +488,11 @@
 		//convert list to units
 		amount *= SHEET_MATERIAL_AMOUNT
 		if(resources[material] < amount)
-			amount = round(resources, SHEET_MATERIAL_AMOUNT)
+			amount = round(resources[material], SHEET_MATERIAL_AMOUNT)
 			if(amount < SHEET_MATERIAL_AMOUNT)
 				return
 		resources[material] -= amount
-		create_material_stack(material, amount, src.loc)
+		create_material_stacks_from_unit(material, amount, src.loc)
 		temp = "Ejected [round(amount, SHEET_MATERIAL_AMOUNT)] of [material]<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
 	src.updateUsrDialog()
 	return
@@ -498,7 +506,7 @@
 
 /obj/machinery/mecha_part_fabricator/dismantle()
 	for(var/material in resources)
-		create_material_stack(material, resources[material], src.loc)
+		create_material_stacks_from_unit(material, resources[material], src.loc)
 	return ..()
 
 
@@ -514,7 +522,7 @@
 	if(default_part_replacement(user, W))
 		return
 
-	if(istype(W, /obj/item/stack/material))
+	if(ismaterial(W))
 		var/material = W.get_material_name()
 		if(!material in resources)
 			return

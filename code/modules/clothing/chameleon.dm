@@ -334,7 +334,7 @@ var/global/list/chameleons_categories = list(
 	caliber = ".45"
 	origin_tech = list(TECH_COMBAT = 2, TECH_MATERIAL = 2, TECH_ILLEGAL = 3)
 	ammo_type = /obj/item/ammo_casing/chameleon
-	matter = list()
+	matter = null
 
 /obj/item/weapon/gun/projectile/chameleon/New()
 	..()

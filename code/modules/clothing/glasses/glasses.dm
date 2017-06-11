@@ -208,7 +208,7 @@ BLIND     // can't see anything
 	icon_state = "welding-g"
 	item_state = "welding-g"
 	icon_action_button = "action_welding_g"
-	matter = list(DEFAULT_WALL_MATERIAL = 1500, "glass" = 1000)
+	matter = list(MATERIAL_STEEL = 1500, MATERIAL_GLASS = 1000)
 	var/up = 0
 
 /obj/item/clothing/glasses/welding/attack_self()

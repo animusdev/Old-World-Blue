@@ -115,7 +115,7 @@
 			health = 50
 			cover = 25
 
-	else if(istype(W, /obj/item/stack/material))
+	else if(ismaterial(W))
 		if(reinforcing && !reinf_material)
 			if(!reinforce_with_material(W, user))
 				return ..()

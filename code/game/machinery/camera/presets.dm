@@ -1,27 +1,28 @@
 // PRESETS
 var/global/list/station_networks = list(
-										NETWORK_CIVILIAN_EAST,
-										NETWORK_CIVILIAN_WEST,
-										NETWORK_COMMAND,
-										NETWORK_ENGINE,
-										NETWORK_ENGINEERING,
-										NETWORK_ENGINEERING_OUTPOST,
-										NETWORK_EXODUS,
-										NETWORK_MEDICAL,
-										NETWORK_MINE,
-										NETWORK_RESEARCH,
-										NETWORK_RESEARCH_OUTPOST,
-										NETWORK_ROBOTS,
-										NETWORK_PRISON,
-										NETWORK_SECURITY
-										)
+	NETWORK_CIVILIAN_EAST,
+	NETWORK_CIVILIAN_WEST,
+	NETWORK_COMMAND,
+	NETWORK_ENGINE,
+	NETWORK_ENGINEERING,
+	NETWORK_ENGINEERING_OUTPOST,
+	NETWORK_EXODUS,
+	NETWORK_MEDICAL,
+	NETWORK_MINE,
+	NETWORK_RESEARCH,
+	NETWORK_RESEARCH_OUTPOST,
+	NETWORK_ROBOTS,
+	NETWORK_PRISON,
+	NETWORK_SECURITY
+)
 var/global/list/engineering_networks = list(
-										NETWORK_ENGINE,
-										NETWORK_ENGINEERING,
-										NETWORK_ENGINEERING_OUTPOST,
-										"Atmosphere Alarms",
-										"Fire Alarms",
-										"Power Alarms")
+	NETWORK_ENGINE,
+	NETWORK_ENGINEERING,
+	NETWORK_ENGINEERING_OUTPOST,
+	"Atmosphere Alarms",
+	"Fire Alarms",
+	"Power Alarms"
+)
 /obj/machinery/camera/network/crescent
 	network = list(NETWORK_CRESCENT)
 
@@ -145,8 +146,9 @@ var/global/list/engineering_networks = list(
 // CHECKS
 
 /obj/machinery/camera/proc/isEmpProof()
-	var/O = locate(/obj/item/stack/material/osmium) in assembly.upgrades
-	return O
+	for(var/obj/item/stack/material/O in assembly.upgrades)
+		if(O.get_material() == MATERIAL_OSMIUM)
+			return O
 
 /obj/machinery/camera/proc/isXRay()
 	if(!assembly)

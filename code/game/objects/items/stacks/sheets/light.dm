@@ -22,12 +22,12 @@
 			user.drop_from_inventory(src)
 			qdel(src)
 
-	if(istype(O,/obj/item/stack/material) && O.get_material_name() == DEFAULT_WALL_MATERIAL)
+	if(ismaterial(O) && O.get_material_name() == MATERIAL_STEEL)
 		var/obj/item/stack/M = O
-		if (M.use(1))
+		if(M.use(1))
 			use(1)
 			new/obj/item/stack/tile/light(get_turf(user))
-			user << "<span class='notice'>You make a light tile.</span>"
+			user << SPAN_NOTE("You make a light tile.")
 		else
-			user << "<span class='warning'>You need one metal sheet to finish the light tile.</span>"
+			user << SPAN_WARN("You need one metal sheet to finish the light tile.")
 		return
