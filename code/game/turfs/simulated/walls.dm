@@ -72,7 +72,7 @@ var/list/global/wall_cache = list()
 		// Here comes the thing which differs two situations:
 		// First - bullet comes from north-west or south-east, with negative func value. Second - NE or SW.
 		var/new_func = (corner_x0 - check_x1) * (corner_y0 - check_y1)
-		if(new_y * new_func > 0)
+		if((new_y * new_func) > 0)
 			Proj.redirect(round((2 * check_x0 - check_x1) / 32), round(check_y1 / 32), curloc, src)
 		else
 			Proj.redirect(round(check_x1 / 32), round((2 * check_y0 - check_y1)/32), curloc, src)
@@ -87,7 +87,7 @@ var/list/global/wall_cache = list()
 		var/check_y1 = Proj.starting.y
 		var/random_value = pick(0, 1, 2, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 9, 9, 9, 10, 10, 10, 11, 11, 12, 13, 14)
 		var/resulting_x = check_x0 + round(((check_x1 - check_x0) / 14) * random_value)
-		var/resulting_y = check_y0 + round(((check_y1 - check_y0) / 14) * random_value)
+		var/resulting_y = check_y1 + round(((check_y0 - check_y1) / 14) * random_value)
 		// redirect the projectile
 		Proj.redirect(resulting_x, resulting_y, curloc, src)
 
