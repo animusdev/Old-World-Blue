@@ -52,7 +52,7 @@ var/list/global/wall_cache = list()
 				// Reflection chance depends on materials' var 'reflectance'.
 				var/reflectchance = material.reflectance + reinf_material.reflectance - round(Proj.damage/3)
 				if(prob(reflectchance))
-					visible_message("\red <B>\The [Proj] gets reflected by shiny surface of reinforced diamond wall!</B>")
+					visible_message("\red <B>\The [Proj] gets reflected by shiny surface of reinforced wall!</B>")
 					// Find a turf near or on the original location to bounce to
 					if(Proj.starting)
 						var/new_x = Proj.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
@@ -78,7 +78,7 @@ var/list/global/wall_cache = list()
 				// Reflection chance depends on materials' var 'reflectance'.
 				var/reflectchance = material.reflectance - round(Proj.damage/3)
 				if(prob(reflectchance))
-					visible_message("\red <B>\The [Proj] gets reflected by shiny surface of reinforced diamond wall!</B>")
+					visible_message("\red <B>\The [Proj] gets reflected by shiny surface of wall!</B>")
 					// Find a turf near or on the original location to bounce to
 					if(Proj.starting)
 						var/new_x = Proj.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
