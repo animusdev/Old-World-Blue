@@ -86,8 +86,8 @@ var/list/global/wall_cache = list()
 		var/check_x1 = Proj.starting.x
 		var/check_y1 = Proj.starting.y
 		var/random_value = pick(0, 1, 2, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 9, 9, 9, 10, 10, 10, 11, 11, 12, 13, 14)
-		var/resulting_x = check_x0 + round(((x1-x0)/14)*random_value)
-		var/resulting_y = check_y0 + round(((y1-y0)/14)*random_value)
+		var/resulting_x = check_x0 + round(((check_x1 - check_x0) / 14) * random_value)
+		var/resulting_y = check_y0 + round(((check_y1 - check_y0) / 14) * random_value)
 		// redirect the projectile
 		Proj.redirect(resulting_x, resulting_y, curloc, src)
 
