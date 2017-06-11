@@ -146,7 +146,7 @@ var/list/global/wall_cache = list()
 			if(material.resilience > 0)
 				var/reflectchance = round(material.resilience/2)
 				if(prob(reflectchance))
-					visible_message("\red <B>\The [Proj] ricochets from the surface of reinforced wall!</B>")
+					visible_message("\red <B>\The [Proj] ricochets from the surface of wall!</B>")
 					if(Proj.starting)
 						var/turf/curloc = get_turf(src)
 						var/check_x0 = 32 * curloc.x
