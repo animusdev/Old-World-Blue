@@ -37,11 +37,12 @@ var/list/global/wall_cache = list()
 	processing_turfs -= src
 	dismantle_wall(null,null,1)
 	..()
-
+		
 /turf/simulated/wall/process()
 	// Calling parent will kill processing
 	if(!radiate())
 		return PROCESS_KILL
+
 /turf/simulated/wall/bullet_ricochet(var/obj/item/projectile/Proj)
 	if(Proj.starting)
 		var/turf/curloc = get_turf(src)
@@ -75,7 +76,7 @@ var/list/global/wall_cache = list()
 			Proj.redirect(round((2 * check_x0 - check_x1) / 32), round(check_y1 / 32), curloc, src)
 		else
 			Proj.redirect(round(check_x1 / 32), round((2 * check_y0 - check_y1)/32), curloc, src)
-	return
+
 /turf/simulated/wall/laser_reflect(var/obj/item/projectile/Proj)
 	// Find a turf near or on the original location to bounce to
 	if(Proj.starting)
@@ -85,7 +86,6 @@ var/list/global/wall_cache = list()
 		
 		// redirect the projectile
 		Proj.redirect(new_x, new_y, curloc, src)
-	return
 
 // Makes walls made from reflective-able materials reflect beam-type projectiles depending on their reflectance value.
 /turf/simulated/wall/bullet_act(var/obj/item/projectile/Proj)
