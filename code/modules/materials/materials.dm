@@ -96,6 +96,7 @@ var/list/name_to_material
 	var/conductive = 1           // Objects with this var add CONDUCTS to flags on spawn.
 	var/list/composite_material  // If set, object matter var will be a list containing these values.
 	var/resilience = 1           // If set on higher values, bullets may ricochet from walls made of this material. 
+	var/reflectance = -50    // Defines whether material in walls raises (positive values) or decreases (negative values) reflection chance
 
 	// Placeholder vars for the time being, todo properly integrate windows/light tiles/rods.
 	var/created_window
@@ -231,6 +232,7 @@ var/list/name_to_material
 	door_icon_base = "stone"
 	grind_to = MATERIAL_URANIUM
 	resilience = 9
+	reflectance = 5
 
 /material/diamond
 	name = MATERIAL_DIAMOND
@@ -247,6 +249,7 @@ var/list/name_to_material
 	hardness = 100
 	stack_origin_tech = list(TECH_MATERIAL = 6)
 	resilience = 25
+	reflectance = 50
 
 /material/gold
 	name = MATERIAL_GOLD
@@ -259,6 +262,7 @@ var/list/name_to_material
 	sheet_plural_name = "ingots"
 	grind_to = MATERIAL_GOLD
 	resilience = 0
+	reflectance = 5
 
 /material/gold/bronze //placeholder for ashtrays
 	name = MATERIAL_BRONZE
@@ -274,6 +278,7 @@ var/list/name_to_material
 	sheet_singular_name = "ingot"
 	sheet_plural_name = "ingots"
 	grind_to = MATERIAL_SILVER
+	reflectance = 10
 
 /material/phoron
 	name = MATERIAL_PHORON
@@ -289,6 +294,7 @@ var/list/name_to_material
 	sheet_plural_name = "crystals"
 	grind_to = MATERIAL_PHORON
 	resilience = 0
+	reflectance = -45
 
 /*
 // Commenting this out while fires are so spectacularly lethal, as I can't seem to get this balanced appropriately.
@@ -339,6 +345,7 @@ var/list/name_to_material
 //	icon_colour = "#777777"
 	icon_colour = "#646262"
 	resilience = 36
+	reflectance = -30
 
 /material/steel/holographic
 	name = "holo" + MATERIAL_STEEL
@@ -362,6 +369,7 @@ var/list/name_to_material
 	weight = 23
 	stack_origin_tech = list(TECH_MATERIAL = 2)
 	resilience = 49
+	reflectance = -20
 	composite_material = list(MATERIAL_STEEL = 3750, "platinum" = 3750) //todo
 
 /material/glass
@@ -376,6 +384,7 @@ var/list/name_to_material
 	hardness = 30
 	weight = 15
 	resilience = 0
+	reflectance = 20
 	door_icon_base = "stone"
 	destruction_desc = "shatters"
 	window_options = list("One Direction" = 1, "Full Window" = 4)
@@ -466,6 +475,7 @@ var/list/name_to_material
 	tableslam_noise = 'sound/effects/Glasshit.ogg'
 	hardness = 40
 	weight = 30
+	reflectance = 15
 	stack_origin_tech = list(TECH_MATERIAL = 2)
 	composite_material = list(MATERIAL_STEEL = 1875,MATERIAL_GLASS = 3750)
 	window_options = list("One Direction" = 1, "Full Window" = 4, "Windoor" = 5)
@@ -483,6 +493,7 @@ var/list/name_to_material
 	integrity = 200 // idk why but phoron windows are strong, so.
 	icon_colour = "#FC2BC5"
 	stack_origin_tech = list(TECH_MATERIAL = 4)
+	reflectance = 30
 	created_window = /obj/structure/window/phoronbasic
 	wire_product = null
 	rod_product = /obj/item/stack/material/glass/phoronrglass
@@ -493,6 +504,7 @@ var/list/name_to_material
 	display_name = "reinforced phoron glass"
 	icon_state = "sheet-phoronrglass"
 	stack_origin_tech = list(TECH_MATERIAL = 5)
+	reflectance = 25
 	composite_material = list() //todo
 	created_window = /obj/structure/window/phoronreinforced
 	hardness = 40
@@ -511,6 +523,7 @@ var/list/name_to_material
 	resilience = 0
 	melting_point = T0C+371 //assuming heat resistant plastic
 	stack_origin_tech = list(TECH_MATERIAL = 3)
+	reflectance = -10
 
 /material/plastic/holographic
 	name = "holoplastic"
@@ -542,6 +555,7 @@ var/list/name_to_material
 	icon_colour = "#E6C5DE"
 	stack_origin_tech = list(TECH_MATERIAL = 6, TECH_POWER = 6, TECH_MAGNET = 5)
 	grind_to = "hydrogen"
+	reflectance = 0
 
 /material/platinum
 	name = "platinum"
@@ -551,6 +565,7 @@ var/list/name_to_material
 	stack_origin_tech = list(TECH_MATERIAL = 2)
 	sheet_singular_name = "ingot"
 	sheet_plural_name = "ingots"
+	reflectance = 10
 
 /material/iron
 	name = MATERIAL_IRON
