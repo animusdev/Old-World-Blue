@@ -78,14 +78,18 @@ var/list/global/wall_cache = list()
 			Proj.redirect(round(check_x1 / 32), round((2 * check_y0 - check_y1)/32), curloc, src)
 
 /turf/simulated/wall/proc/laser_reflect(var/obj/item/projectile/Proj)
-	// Find a turf near or on the original location to bounce to
+	// Sends a beam somewhere on diagonal line in square made from Proj's starting and wall, perpendicular to line connecting them.
 	if(Proj.starting)
-		var/new_x = Proj.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
-		var/new_y = Proj.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
 		var/turf/curloc = get_turf(src)
-		
+		var/check_x0 = curloc.x
+		var/check_y0 = curloc.y
+		var/check_x1 = Proj.starting.x
+		var/check_y1 = Proj.starting.y
+		var/random_value = pick(0, 1, 2, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 9, 9, 9, 10, 10, 10, 11, 11, 12, 13, 14)
+		var/resulting_x = check_x0 + round(((x1-x0)/14)*random_value)
+		var/resulting_y = check_y0 + round(((y1-y0)/14)*random_value)
 		// redirect the projectile
-		Proj.redirect(new_x, new_y, curloc, src)
+		Proj.redirect(resulting_x, resulting_y, curloc, src)
 
 // Makes walls made from reflective-able materials reflect beam-type projectiles depending on their reflectance value.
 /turf/simulated/wall/bullet_act(var/obj/item/projectile/Proj)
