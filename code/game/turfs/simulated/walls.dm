@@ -46,6 +46,13 @@ var/list/global/wall_cache = list()
 /turf/simulated/wall/proc/bullet_ricochet(var/obj/item/projectile/Proj)
 	if(Proj.starting)
 		var/turf/curloc = get_turf(src)
+		if((curloc.x == Proj.starting.x) || (curloc.y == Proj.starting.y))
+			visible_message("\red <B>\The [Proj] critically misses and ricochets directly into shooter!</B>")
+			var/random_value = pick(-1, 0, 1)
+			var/critical_x = Proj.starting.x + random_value
+			var/critical_y = Proj.starting.y + random_value
+			Proj.redirect(critical_x, critical_y, curloc, src)
+			return
 		var/check_x0 = 32 * curloc.x
 		var/check_y0 = 32 * curloc.y
 		var/check_x1 = 32 * Proj.starting.x
@@ -85,9 +92,11 @@ var/list/global/wall_cache = list()
 		var/check_y0 = curloc.y
 		var/check_x1 = Proj.starting.x
 		var/check_y1 = Proj.starting.y
-		var/random_value = pick(0, 1, 2, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 9, 9, 9, 10, 10, 10, 11, 11, 12, 13, 14)
-		var/resulting_x = check_x0 + round(((check_x1 - check_x0) / 14) * random_value)
-		var/resulting_y = check_y1 + round(((check_y0 - check_y1) / 14) * random_value)
+		var/random_value = pick(0, 1, 2, 2, 3, 3, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 8, 8, 9, 10)
+		var/resulting_x = (check_x1 - (check_y0 - check_y1)) + round(((check_y0 - check_y1) / 5) * random_value)
+		var/resulting_y = (check_y1 - (check_x0 - check_x1)) + round(((check_x0 - check_x1) / 5) * random_value)
+		resulting_x = resulting_x + pick(-1, 0, 0, 0, 0, 1)
+		resulting_y = resulting_y + pick(-1, 0, 0, 0, 0, 1)
 		// redirect the projectile
 		Proj.redirect(resulting_x, resulting_y, curloc, src)
 
@@ -138,14 +147,20 @@ var/list/global/wall_cache = list()
 	if(istype(Proj,/obj/item/projectile/bullet))
 		if(reinf_material)
 			if(material.resilience * reinf_material.resilience > 0)
-				var/reflectchance = round(sqrt(material.resilience * reinf_material.resilience)/2)
+				var/reflectchance = round(sqrt(material.resilience * reinf_material.resilience))
+				var/turf/curloc = get_turf(src)
+				if((curloc.x == Proj.starting.x) || (curloc.y == Proj.starting.y))
+					reflectchance = round(reflectchance / 3)
 				if(prob(reflectchance))
 					visible_message("\red <B>\The [Proj] ricochets from the surface of reinforced wall!</B>")
 					bullet_ricochet(Proj)
 					return PROJECTILE_CONTINUE // complete projectile permutation
 		else
 			if(material.resilience > 0)
-				var/reflectchance = round(material.resilience/2)
+				var/reflectchance = round(material.resilience)
+				var/turf/curloc = get_turf(src)
+				if((curloc.x == Proj.starting.x) || (curloc.y == Proj.starting.y))
+					reflectchance = round(reflectchance / 3)
 				if(prob(reflectchance))
 					visible_message("\red <B>\The [Proj] ricochets from the surface of wall!</B>")
 					bullet_ricochet(Proj)
