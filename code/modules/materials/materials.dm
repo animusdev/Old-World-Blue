@@ -294,7 +294,7 @@ var/list/name_to_material
 	sheet_plural_name = "crystals"
 	grind_to = MATERIAL_PHORON
 	resilience = 0
-	reflectance = -30
+	reflectance = 25
 
 /*
 // Commenting this out while fires are so spectacularly lethal, as I can't seem to get this balanced appropriately.
