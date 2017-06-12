@@ -93,9 +93,8 @@
 			T.time = worldtime2text()
 			T.source_terminal = terminal_id
 			D.transaction_log.Add(T)
-
 			return 1
-
+	alert("Target account was not found or is temporarily suspended.")
 	return 0
 
 //this returns the first account datum that matches the supplied accnum/pin combination, it returns null if the combination did not match any account

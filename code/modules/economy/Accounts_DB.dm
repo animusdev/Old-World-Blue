@@ -132,29 +132,24 @@
 					detailed_account_view.money = max(detailed_account_view.money - amount, 0)
 
 			if("transfer_funds")
-				var/amount = text2num(href_list["amount"])
-				var/purpose = href_list["purpose"]
-				var/target_account = text2num(href_list["target_account"])
 				if(detailed_account_view)
-					for(var/datum/money_account/D in all_money_accounts)
-						if(D.account_number == target_account && !D.suspended)
-							if(amount == 0)
-								alert("You kidding us, do you? Such useless transaction will not be registered.")
-								return
-							if(amount>0 ? D.money >= amount : detailed_account_view.money >= -amount)
-								D.money -= amount
-								D.transaction_log.Add(create_transation(held_card.registered_name, purpose, amount>0 ? "([amount])" : -amount))
-								detailed_account_view.money += amount
-								detailed_account_view.transaction_log.Add(create_transation(held_card.registered_name, purpose, amount>0 ? amount : "([-amount])"))
-								alert("Transaction is successful.")
-								ui.update()
-								return
-							else
-								alert("That is not a valid amount.")
-								return
-						else
-							alert("Target account was not found or is temporarily suspended.")
+					var/target_account = text2num(href_list["target_account"])
+					var/purpose = href_list["purpose"]
+					var/amount = text2num(href_list["amount"])
+					amount = round(amount)
+					if(amount <= 0)
+						alert("That is not a valid amount.")
+						return
+					else if(amount <= detailed_account_view.money)
+						if(charge_to_account(target_account, detailed_account_view.owner_name, purpose, machine_id, amount))
+							detailed_account_view.money -= amount
+							detailed_account_view.transaction_log.Add(create_transation(held_card.registered_name, purpose, amount>0 ? "(-[amount])" : -amount))
+							alert("Transaction is successful.")
+							ui.update()
 							return
+					else
+						alert("That is not a valid amount.")
+						return
 
 			if("toggle_suspension")
 				if(detailed_account_view)
