@@ -17,10 +17,14 @@
 		src << "<span class='danger'>You must wait five seconds between attempts.</span>"
 		return
 		
+	if(faction.is_antagonist(player))
+		src << "<span class='warning'>\The [player.current] already serves the [faction.faction_descriptor].</span>"
+		return
+
 	src << "<span class='danger'>You are attempting to convert \the [player.current]...</span>"
 	
 	// Prevents meta-using of 'convert' verb in order to indicate antags.
-	if(faction.is_antagonist(player) || player_is_antag(player) || !faction.can_become_antag(player))
+	if(player_is_antag(player) || !faction.can_become_antag(player))
 		player.rev_cooldown = world.time+100
 		player << "<span class='danger'>The [src] is trying to force you to join the [faction.faction_descriptor]! With no chance of success, actually.</span>"
 		var/choice = alert(player.current,"Asked by [src]: Do you want to join the [faction.faction_descriptor]?","Join the [faction.faction_descriptor]?","No!","Yes!(no)")
