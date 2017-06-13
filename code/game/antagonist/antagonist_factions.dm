@@ -21,7 +21,7 @@
 	
 	// Prevents meta-using of 'convert' verb in order to indicate antags.
 	if(faction.is_antagonist(player) || player_is_antag(player) || !faction.can_become_antag(player))
-		player << "<span class='danger'>The [src] is trying to force you joining [faction.faction_descriptor]! With no chance of success, actually.</span>"
+		player << "<span class='danger'>The [src] is trying to force you to join the [faction.faction_descriptor]! With no chance of success, actually.</span>"
 		sleep(5)
 		src << "<span class='danger'>\The [player.current] does not support the [faction.faction_descriptor]!</span>"
 		log_mode("[key_name(src)] pointlessly attempted to convert [key_name(player.current)].", player.current)
