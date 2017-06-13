@@ -39,7 +39,7 @@
 	//Admin PM
 	if(href_list["priv_msg"])
 		var/req_key = href_list["priv_msg"]
-		var/client/C = directory[req_key]
+		var/client/C = directory[ckey(req_key)]
 		if(ismob(C)) 		//Old stuff can feed-in mobs instead of clients
 			var/mob/M = C
 			C = M.client
