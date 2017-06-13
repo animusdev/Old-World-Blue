@@ -43,11 +43,40 @@ var/list/global/wall_cache = list()
 	if(!radiate())
 		return PROCESS_KILL
 
+// Extracts ricochet angle's tan from ricochet position. Mostly copies ricochet code below, so there will be no comments.
+/turf/simulated/wall/proc/bullet_ricochetchance_mod(var/obj/item/projectile/Proj)
+	if(Proj.starting)
+		var/turf/curloc = get_turf(src)
+		var/check_x0 = 32 * curloc.x
+		var/check_y0 = 32 * curloc.y
+		var/check_x1 = 32 * Proj.starting.x
+		var/check_y1 = 32 * Proj.starting.y
+		var/check_x2 = 32 * Proj.original.x
+		var/check_y2 = 32 * Proj.original.y
+		var/corner_x0 = check_x0
+		var/corner_y0 = check_y0
+		if(check_y0 - check_y1 > 0)
+			corner_y0 = corner_y0 - 16
+		else
+			corner_y0 = corner_y0 + 16
+		if(check_x0 - check_x1 > 0)
+			corner_x0 = corner_x0 - 16
+		else
+			corner_x0 = corner_x0 + 16	
+		var/new_y = (check_y2 - corner_y0) * (check_x1 - corner_x0) - (check_x2 - corner_x0) * (check_y1 - corner_y0)
+		var/new_func = (corner_x0 - check_x1) * (corner_y0 - check_y1)
+		if((new_y * new_func) > 0)
+			// Proj.redirect(round((2 * check_x0 - check_x1) / 32), round(check_y1 / 32), curloc, src)
+			return abs((check_x0 - check_x1) / (check_y0 - check_y1))
+		else
+			// Proj.redirect(round(check_x1 / 32), round((2 * check_y0 - check_y1)/32), curloc, src)
+			return abs((check_y0 - check_y1) / (check_x0 - check_x1))
+
 /turf/simulated/wall/proc/bullet_ricochet(var/obj/item/projectile/Proj)
 	if(Proj.starting)
 		var/turf/curloc = get_turf(src)
 		if((curloc.x == Proj.starting.x) || (curloc.y == Proj.starting.y))
-			visible_message("\red <B>\The [Proj] critically misses and ricochets directly into shooter!</B>")
+			visible_message("\red <B>\The [Proj] critically misses!</B>")
 			var/random_value = pick(-1, 0, 1)
 			var/critical_x = Proj.starting.x + random_value
 			var/critical_y = Proj.starting.y + random_value
@@ -83,7 +112,8 @@ var/list/global/wall_cache = list()
 			Proj.redirect(round((2 * check_x0 - check_x1) / 32), round(check_y1 / 32), curloc, src)
 		else
 			Proj.redirect(round(check_x1 / 32), round((2 * check_y0 - check_y1)/32), curloc, src)
-
+/*
+// Commented for further possible use of this reflection code
 /turf/simulated/wall/proc/laser_reflect(var/obj/item/projectile/Proj)
 	// Sends a beam somewhere on diagonal line in square made from Proj's starting and wall, perpendicular to line connecting them.
 	if(Proj.starting)
@@ -99,18 +129,17 @@ var/list/global/wall_cache = list()
 		resulting_y = resulting_y + pick(-1, 0, 0, 0, 0, 1)
 		// redirect the projectile
 		Proj.redirect(resulting_x, resulting_y, curloc, src)
-
+*/
 // Makes walls made from reflective-able materials reflect beam-type projectiles depending on their reflectance value.
 /turf/simulated/wall/bullet_act(var/obj/item/projectile/Proj)
 	if(istype(Proj,/obj/item/projectile/beam))
 		if(reinf_material)
 			if(material.reflectance + reinf_material.reflectance > 0)
-				// This copies code from code/modules/mob/living/carbon/human/human_defense.dm mostly.
 				// Reflection chance depends on materials' var 'reflectance'.
 				var/reflectchance = material.reflectance + reinf_material.reflectance - min(round(Proj.damage/3), 50)
 				if(prob(reflectchance))
 					visible_message("\red <B>\The [Proj] gets reflected by shiny surface of reinforced wall!</B>")
-					laser_reflect(Proj)
+					bullet_ricochet(Proj)
 					return PROJECTILE_CONTINUE // complete projectile permutation
 				else 
 					if(material.name == MATERIAL_DIAMOND && reinf_material.name == MATERIAL_DIAMOND)
@@ -123,14 +152,13 @@ var/list/global/wall_cache = list()
 				burn(2000)
 		else
 			if(material.reflectance > 0)
-				// This copies code from code/modules/mob/living/carbon/human/human_defense.dm mostly.
 				// Reflection chance depends on materials' var 'reflectance'.
 				var/reflectchance = material.reflectance - min(round(Proj.damage/3), 50)
 				if(prob(reflectchance))
 					visible_message("\red <B>\The [Proj] gets reflected by shiny surface of wall!</B>")
-					laser_reflect(Proj)
+					bullet_ricochet(Proj)
 					return PROJECTILE_CONTINUE // complete projectile permutation
-				else 
+				else
 					if(material.name == MATERIAL_DIAMOND)
 						// Diamond-walls can deal with laser beams.
 						burn(1000)
@@ -147,21 +175,25 @@ var/list/global/wall_cache = list()
 	if(istype(Proj,/obj/item/projectile/bullet))
 		if(reinf_material)
 			if(material.resilience * reinf_material.resilience > 0)
-				var/reflectchance = round(sqrt(material.resilience * reinf_material.resilience))
+				var/ricochetchance = round(sqrt(material.resilience * reinf_material.resilience))
 				var/turf/curloc = get_turf(src)
 				if((curloc.x == Proj.starting.x) || (curloc.y == Proj.starting.y))
-					reflectchance = round(reflectchance / 3)
-				if(prob(reflectchance))
+					ricochetchance = round(ricochetchance / 5)
+				else
+					ricochetchance = min(100, round(bullet_ricochetchance_mod(Proj) * ricochetchance))
+				if(prob(ricochetchance))
 					visible_message("\red <B>\The [Proj] ricochets from the surface of reinforced wall!</B>")
 					bullet_ricochet(Proj)
 					return PROJECTILE_CONTINUE // complete projectile permutation
 		else
 			if(material.resilience > 0)
-				var/reflectchance = round(material.resilience)
+				var/ricochetchance = round(material.resilience)
 				var/turf/curloc = get_turf(src)
 				if((curloc.x == Proj.starting.x) || (curloc.y == Proj.starting.y))
-					reflectchance = round(reflectchance / 3)
-				if(prob(reflectchance))
+					ricochetchance = round(ricochetchance / 5)
+				else
+					ricochetchance = min(100, round(bullet_ricochetchance_mod(Proj) * ricochetchance))
+				if(prob(ricochetchance))
 					visible_message("\red <B>\The [Proj] ricochets from the surface of wall!</B>")
 					bullet_ricochet(Proj)
 					return PROJECTILE_CONTINUE // complete projectile permutation
