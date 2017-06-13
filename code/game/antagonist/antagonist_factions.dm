@@ -13,23 +13,20 @@
 	if(!faction.faction_verb || !faction.faction_descriptor || !faction.faction_verb)
 		return
 
-	if(faction.is_antagonist(player))
-		src << "<span class='warning'>\The [player.current] already serves the [faction.faction_descriptor].</span>"
-		return
-
-	if(player_is_antag(player))
-		src << "<span class='warning'>\The [player.current]'s loyalties seem to be elsewhere...</span>"
-		return
-
-	if(!faction.can_become_antag(player))
-		src << "<span class='warning'>\The [player.current] cannot be \a [faction.faction_role_text]!</span>"
-		return
-
 	if(world.time < player.rev_cooldown)
 		src << "<span class='danger'>You must wait five seconds between attempts.</span>"
 		return
-
+		
 	src << "<span class='danger'>You are attempting to convert \the [player.current]...</span>"
+	
+	// Prevents meta-using of 'convert' verb in order to indicate antags.
+	if(faction.is_antagonist(player) || player_is_antag(player) || !faction.can_become_antag(player))
+		player << "<span class='danger'>The [src] is trying to force you joining [faction.faction_descriptor]! With no chance of success, actually.</span>"
+		sleep(5)
+		src << "<span class='danger'>\The [player.current] does not support the [faction.faction_descriptor]!</span>"
+		log_mode("[key_name(src)] pointlessly attempted to convert [key_name(player.current)].", player.current)
+		return
+
 	log_mode("[key_name(src)] attempted to convert [key_name(player.current)].", player.current)
 
 	player.rev_cooldown = world.time+100
