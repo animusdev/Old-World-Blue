@@ -38,7 +38,8 @@
 
 	//Admin PM
 	if(href_list["priv_msg"])
-		var/client/C = locate(href_list["priv_msg"])
+		var/req_key = href_list["priv_msg"]
+		var/client/C = directory[req_key]
 		if(ismob(C)) 		//Old stuff can feed-in mobs instead of clients
 			var/mob/M = C
 			C = M.client
@@ -120,7 +121,7 @@
 		src.preload_rsc = pick(config.resource_urls)
 	else src.preload_rsc = 1 // If config.resource_urls is not set, preload like normal.
 
-	src << "\red If the title screen is black, resources are still downloading. Please be patient until the title screen appears."
+	src << SPAN_WARN("If the title screen is black, resources are still downloading. Please be patient until the title screen appears.")
 
 
 	clients += src
