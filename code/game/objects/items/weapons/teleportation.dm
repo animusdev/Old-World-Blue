@@ -263,19 +263,19 @@ Frequency:
 /obj/item/weapon/vortex_manipulator/proc/malfunction()
 	visible_message("SPAN_NOTE(The Vortex Manipulator malfunctions!)")
 	if(prob(1))
-		visible_message("SPAN_DANG(The Vortex Manipulator explodes and disappears in Bluespace!)")
+		visible_message("SPAN_DANG("The Vortex Manipulator explodes and disappears in Bluespace!")")
 		explosion(get_turf(src), 1, 2, 4, 5)
 		qdel(src)
 		return
 	else if(prob(5))
-		visible_message("SPAN_WARN(The Vortex Manipulator violently shakes and extracts Space Carps from local bluespace anomaly!)")
+		visible_message("SPAN_WARN("The Vortex Manipulator violently shakes and extracts Space Carps from local bluespace anomaly!")")
 		playsound(get_turf(src), 'sound/effects/phasein.ogg', 50, 1)
 		var/amount = rand(1,3)
 		for(var/i=0;i<amount;i++)
 			new /mob/living/simple_animal/hostile/carp(get_turf(src))
 		return
 	else if(prob(10))
-		visible_message("SPAN_WARN(The Vortex Manipulator violently shakes and releases some of its hidden energy!)")
+		visible_message("SPAN_WARN("The Vortex Manipulator violently shakes and releases some of its hidden energy!")")
 		explosion(get_turf(src), 0, 0, 3, 4)
 		return
 	playsound(get_turf(src), "sparks", 50, 1)
