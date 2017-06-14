@@ -437,7 +437,10 @@ Frequency:
 	
 
 /obj/item/weapon/vortex_manipulator/proc/areateleport(var/mob/user, var/malf_use)
-	var/A = input(user, "Area to jump to", "JEEROOONIMOOO") in teleportlocs
+	if(!malf_use)
+		var/A = input(user, "Area to jump to", "JEEROOONIMOOO") in teleportlocs
+	else
+		var/A = pick(teleportlocs)
 	var/area/thearea = teleportlocs[A]
 	if (user.stat || user.restrained())
 		return
@@ -468,5 +471,5 @@ Frequency:
 			phase_out(G.affecting,get_turf(G.affecting))
 			G.affecting.forceMove(locate(user.x+rand(-1,1),user.y+rand(-1,1),T.z))
 			phase_in(G.affecting,get_turf(G.affecting))
-	if(prob(50))
+	if(prob(50 + (malf_use * 50)))
 		malfunction()
