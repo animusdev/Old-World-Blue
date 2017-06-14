@@ -268,7 +268,7 @@ Frequency:
 		qdel(src)
 		return
 	else if(prob(5))
-		visible_message("\red <B>\Space Carps fade from local bluespace anomaly!</B>")
+		visible_message("\red <B>\The Vortex Manipulator violently shakes and extracts Space Carps from local bluespace anomaly!</B>")
 		playsound(get_turf(src), 'sound/effects/phasein.ogg', 50, 1)
 		var/amount = rand(1,3)
 		for(var/i=0;i<amount;i++)
