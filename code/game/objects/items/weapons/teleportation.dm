@@ -263,7 +263,7 @@ Frequency:
 /obj/item/weapon/vortex_manipulator/proc/malfunction()
 	visible_message(SPAN_NOTE("The Vortex Manipulator malfunctions!"))
 	if(prob(1))
-		visible_message("SPAN_DANG("The Vortex Manipulator explodes and disappears in Bluespace!")")
+		visible_message(SPAN_DANG("The Vortex Manipulator explodes and disappears in Bluespace!"))
 		explosion(get_turf(src), 1, 2, 4, 5)
 		qdel(src)
 		return
