@@ -178,6 +178,10 @@ Frequency:
 
 /*
  * Vortex Manipulator (Hello Missy)
+ * TODO:
+ * - New Icon
+ * - Random Malfunctions
+ * - EMP interactions
  */
 
 /obj/item/weapon/vortex_manipulator
@@ -240,7 +244,8 @@ Frequency:
 	return
 
 /obj/item/weapon/vortex_manipulator/Topic(href, href_list)
-	..()
+	if(..())
+		return 1
 	if (usr.stat || usr.restrained() || src.loc != usr)
 		return
 	if (!ishuman(usr))
