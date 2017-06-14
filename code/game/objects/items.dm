@@ -176,7 +176,7 @@
 			msg = "[T.He] [T.is] holding \icon[src]"
 			end_part = " in [T.his] [slot_name]"
 		if(slot_l_ear, slot_r_ear)
-			return "[T.He] [T.has] \icon[src] \a [src] on [T.his] left ear."
+			return "[T.He] [T.has] \icon[src] \a [src] on [T.his] [slot_name]."
 		if(slot_wear_id)
 			return "[T.He] [T.is] wearing \icon[src] \a [src]."
 

@@ -172,7 +172,7 @@
 "dp" = (/obj/machinery/power/emitter{anchored = 1; dir = 4; state = 2},/turf/simulated/floor/plating/airless,/area/space)
 "dq" = (/obj/machinery/field_generator,/turf/simulated/floor/plating/airless,/area/space)
 "dr" = (/obj/machinery/power/emitter{anchored = 1; dir = 8; id = "EngineEmitter"; state = 2},/turf/simulated/floor/plating/airless,/area/space)
-"ds" = (/obj/map_data/finds,/turf/space,/area/space)
+"ds" = (/obj/map_data/finds{is_accessable_level = 3},/turf/space,/area/space)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

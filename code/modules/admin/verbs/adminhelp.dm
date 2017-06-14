@@ -35,17 +35,13 @@
 	src << "<font color='blue'>PM to-<b>Staff </b>: [msg]</font>"
 	log_admin("HELP: [key_name(src)]: [msg]", src, 0)
 
-	var/mentor_msg = "\blue <b><font color=red>Request for Help: </font>[get_options_bar(mob, 4, 1, 1, 0)]:</b> [msg]"
 	msg = "\blue <b><font color=red>Request for Help:: </font>[get_options_bar(mob, 2, 1, 1)]:</b> [msg]"
 
 	for(var/client/X in admins)
-		if((R_ADMIN|R_MOD|R_MENTOR|R_SERVER) & X.holder.rights)
+		if((R_ADMIN|R_MOD|R_SERVER) & X.holder.rights)
 			if(X.prefs.toggles & SOUND_ADMINHELP)
 				X << 'sound/effects/adminhelp.ogg'
-			if(X.holder.rights == R_MENTOR)
-				X << mentor_msg		// Mentors won't see coloring of names on people with special_roles (Antags, etc.)
-			else
-				X << msg
+			X << msg
 
 	return
 

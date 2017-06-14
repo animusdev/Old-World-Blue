@@ -258,10 +258,10 @@
 		target = null
 		repairing = 0
 		update_icons()
-	else if(istype(A, /obj/item/stack/material) && amount + 4 <= maxAmount)
+	else if(ismaterial(A) && amount + 4 <= maxAmount)
 		var/obj/item/stack/material/M = A
-		if(M.get_material_name() == DEFAULT_WALL_MATERIAL)
-			visible_message("<span class='notice'>[src] begins to make tiles.</span>")
+		if(M.get_material_name() == MATERIAL_STEEL)
+			visible_message(SPAN_NOTE("[src] begins to make tiles."))
 			repairing = 1
 			update_icons()
 			if(do_after(src, 40))

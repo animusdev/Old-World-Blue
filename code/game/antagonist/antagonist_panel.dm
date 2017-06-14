@@ -4,12 +4,13 @@
 	var/extra = get_extra_panel_options(player)
 	if(is_antagonist(player))
 		dat += "<a href='?src=\ref[player];remove_antagonist=[id]'>\[-\]</a>"
-		dat += "<a href='?src=\ref[player];equip_antagonist=[id]'>\[equip\]</a>"
+		dat += "<a href='?src=\ref[player];equip_antagonist=[id]'>\[Equip\]</a>"
 		if(starting_locations && starting_locations.len)
-			dat += "<a href='?src=\ref[player];move_antag_to_spawn=[id]'>\[move to spawn\]</a>"
+			dat += "<a href='?src=\ref[player];move_antag_to_spawn=[id]'>\[Move to spawn\]</a>"
 		if(extra) dat += "[extra]"
 	else
 		dat += "<a href='?src=\ref[player];add_antagonist=[id]'>\[+\]</a>"
+		dat += "<a href='?src=\ref[player];equip_antagonist=[id]'>\[Equip\]</a>"
 	dat += "</td></tr>"
 
 	return dat
@@ -31,7 +32,7 @@
 			if(!M.client)      dat += " <i>(logged out)</i>"
 			if(M.stat == DEAD) dat += " <b><font color=red>(DEAD)</font></b>"
 			dat += "</td>"
-			dat += "<td>\[<A href='?src=\ref[caller];priv_msg=\ref[M]'>PM</A>\]\[<A href='?src=\ref[caller];traitor=\ref[M]'>TP</A>\]</td>"
+			dat += "<td>\[<A href='?src=\ref[caller];priv_msg=[M.ckey]'>PM</A>\]\[<A href='?src=\ref[caller];traitor=\ref[M]'>TP</A>\]</td>"
 		else
 			dat += "<td><i>Mob not found!</i></td>"
 		dat += "</tr>"

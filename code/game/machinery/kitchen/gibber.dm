@@ -135,6 +135,7 @@
 	src.add_fingerprint(user)
 	if(do_after(user, 30, src) && victim.Adjacent(src) && user.Adjacent(src) && victim.Adjacent(user) && !occupant)
 		user.visible_message("\red [user] stuffs [victim] into the gibber!")
+		log_attack("[user] stuffs [victim] into the gibber!", src.loc, TRUE)
 		victim.forceMove(src)
 		victim.reset_view(src)
 		src.occupant = victim

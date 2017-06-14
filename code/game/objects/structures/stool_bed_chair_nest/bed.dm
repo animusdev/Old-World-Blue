@@ -26,7 +26,7 @@
 	..(newloc)
 	color = null
 	if(!new_material)
-		new_material = DEFAULT_WALL_MATERIAL
+		new_material = MATERIAL_STEEL
 	material = get_material_by_name(new_material)
 	if(!istype(material))
 		qdel(src)
@@ -134,7 +134,7 @@
 		var/padding_type //This is awful but it needs to be like this until tiles are given a material var.
 		if(istype(W,/obj/item/stack/tile/carpet))
 			padding_type = "carpet"
-		else if(istype(W,/obj/item/stack/material))
+		else if(ismaterial(W))
 			var/obj/item/stack/material/M = W
 			if(M.material && (M.material.flags & MATERIAL_PADDING))
 				padding_type = "[M.material.name]"
@@ -183,10 +183,10 @@
 	mob_offset_y = 5
 
 /obj/structure/bed/psych/New(var/newloc)
-	..(newloc,"wood","leather")
+	..(newloc,MATERIAL_WOOD,"leather")
 
 /obj/structure/bed/padded/New(var/newloc)
-	..(newloc,"plastic","cotton")
+	..(newloc,MATERIAL_PLASTIC,"cotton")
 
 /obj/structure/bed/alien
 	name = "resting contraption"
@@ -303,7 +303,6 @@
 	name = "comfy sofa"
 	desc = "So lovely, uh."
 	icon_state = "sofa_right"
-	base_icon = "sofa_right"
 	buckle_dir = 0
 	buckle_lying = 0
 	mob_offset_y = 0
@@ -312,10 +311,10 @@
 
 /obj/structure/bed/sofa/left
 	icon_state = "sofa_left"
-	base_icon = "sofa_left"
 
 /obj/structure/bed/sofa/New(var/newloc)
-	..(newloc,"plastic")
+	base_icon = icon_state
+	..(newloc,MATERIAL_PLASTIC)
 
 
 /obj/structure/bed/sofa/update_icon()
@@ -324,3 +323,33 @@
 		src.layer = 5
 	else
 		src.layer = OBJ_LAYER
+
+
+/obj/structure/bed/sofa/black
+	icon_state = "couchblack_middle"
+
+/obj/structure/bed/sofa/black/left
+	icon_state = "couchblack_left"
+
+/obj/structure/bed/sofa/black/right
+	icon_state = "couchblack_right"
+
+
+/obj/structure/bed/sofa/beige
+	icon_state = "couchbeige_middle"
+
+/obj/structure/bed/sofa/beige/left
+	icon_state = "couchbeige_left"
+
+/obj/structure/bed/sofa/beige/right
+	icon_state = "couchbeige_right"
+
+
+/obj/structure/bed/sofa/brown
+	icon_state = "couchbrown_middle"
+
+/obj/structure/bed/sofa/brown/left
+	icon_state = "couchbrown_left"
+
+/obj/structure/bed/sofa/brown/right
+	icon_state = "couchbrown_right"

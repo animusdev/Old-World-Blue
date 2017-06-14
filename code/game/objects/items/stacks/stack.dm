@@ -108,25 +108,25 @@
 
 	if (!can_use(required))
 		if (produced>1)
-			user << "<span class='warning'>You haven't got enough [src] to build \the [produced] [recipe.title]\s!</span>"
+			user << SPAN_WARN("You haven't got enough [src] to build \the [produced] [recipe.title]\s!")
 		else
-			user << "<span class='warning'>You haven't got enough [src] to build \the [recipe.title]!</span>"
+			user << SPAN_WARN("You haven't got enough [src] to build \the [recipe.title]!")
 		return
 
 	if (recipe.one_per_turf && (locate(recipe.result_type) in user.loc))
-		user << "<span class='warning'>There is another [recipe.title] here!</span>"
+		user << SPAN_WARN("There is another [recipe.title] here!")
 		return
 
 	if (recipe.on_floor && !isfloor(user.loc))
-		user << "<span class='warning'>\The [recipe.title] must be constructed on the floor!</span>"
+		user << SPAN_WARN("\The [recipe.title] must be constructed on the floor!")
 		return
 
 	if (recipe.time)
-		user << "<span class='notice'>Building [recipe.title] ...</span>"
+		user << SPAN_NOTE("Building [recipe.title] ...")
 		if (!do_after(user, recipe.time))
 			return
 
-	if (use(required))
+	if(use(required))
 		var/atom/O
 		if(recipe.use_material)
 			O = new recipe.result_type(user.loc, recipe.use_material)
@@ -138,14 +138,19 @@
 		if (istype(O, /obj/item))
 			user.put_in_hands(O)
 
-		if (istype(O, /obj/item/stack))
-			var/obj/item/stack/S = O
-			S.amount = produced
-			S.add_to_stacks(user)
-
 		if (istype(O, /obj/item/storage)) //BubbleWrap - so newly formed boxes are empty
 			for (var/obj/item/I in O)
 				qdel(I)
+
+		if (istype(O, /obj/item/stack))
+			spawn()
+				if(O)
+					var/obj/item/stack/S = O
+					S.amount = produced
+					S.add_to_stacks(user)
+
+		return O
+
 
 /obj/item/stack/Topic(href, href_list)
 	..()
@@ -191,7 +196,9 @@
 		if (amount <= 0)
 			if(usr)
 				usr.remove_from_mob(src)
-			qdel(src) //should be safe to qdel immediately since if someone is still using this stack it will persist for a little while longer
+			qdel(src)
+			//should be safe to qdel immediately since if someone is still using this stack
+			// it will persist for a little while longer
 		return 1
 	else
 		if(get_amount() < used)
@@ -222,11 +229,14 @@
 	They also remove an equal amount from the source stack.
 */
 
+/obj/item/stack/proc/can_merge(obj/item/stack/S)
+	return stacktype == S.stacktype
+
 //attempts to transfer amount to S, and returns the amount actually transferred
-/obj/item/stack/proc/transfer_to(obj/item/stack/S, var/tamount=null, var/type_verified)
+/obj/item/stack/proc/transfer_to(obj/item/stack/S, var/tamount=null)
 	if (!get_amount())
 		return 0
-	if ((stacktype != S.stacktype) && !type_verified)
+	if (!can_merge(S))
 		return 0
 	if (isnull(tamount))
 		tamount = src.get_amount()
@@ -295,13 +305,13 @@
 			continue
 		var/transfer = src.transfer_to(item)
 		if (transfer)
-			user << "<span class='notice'>You add a new [item.singular_name] to the stack. It now contains [item.amount] [item.singular_name]\s.</span>"
+			user << SPAN_NOTE("You add a new [item.singular_name] to the stack. It now contains [item.amount] [item.singular_name]\s.")
 		if(!amount)
 			break
 
 /obj/item/stack/attack_hand(mob/user as mob)
 	if (user.get_inactive_hand() == src)
-		var/N = input("How many stacks of [src] would you like to split off?", "Split stacks", 1) as num|null
+		var/N = round(input("How many stacks of [src] would you like to split off?", "Split stacks", 1) as num|null)
 		if(N>0)
 			var/obj/item/stack/F = src.split(N)
 			if (F)
@@ -345,7 +355,8 @@
 	var/on_floor = 0
 	var/use_material
 
-	New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = 0, on_floor = 0, supplied_material = null)
+	New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1,\
+			time = 0, one_per_turf = 0, on_floor = 0, supplied_material = null)
 		src.title = title
 		src.result_type = result_type
 		src.req_amount = req_amount

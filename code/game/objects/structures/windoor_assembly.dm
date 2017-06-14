@@ -79,7 +79,7 @@
 
 					if(do_after(user, 40, src))
 						if(!src || !WT.isOn()) return
-						user << "\blue You dissasembled the windoor assembly!"
+						user << SPAN_NOTE("You dissasembled the windoor assembly!")
 						new /obj/item/stack/material/glass/reinforced(get_turf(src), 5)
 						if(secure)
 							PoolOrNew(/obj/item/stack/rods, list(get_turf(src), 4))

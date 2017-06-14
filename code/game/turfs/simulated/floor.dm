@@ -41,7 +41,7 @@ var/list/wood_icons = list("wood","wood-broken")
 	var/lava = 0
 	var/broken = 0
 	var/burnt = 0
-	var/mineral = DEFAULT_WALL_MATERIAL
+	var/mineral = MATERIAL_STEEL
 	var/floor_type = /obj/item/stack/tile/steel
 	var/lightfloor_state // for light floors, this is the state of the tile. 0-7, 0x4 is on-bit - use the helper procs below
 
@@ -89,7 +89,8 @@ var/list/wood_icons = list("wood","wood-broken")
 				if(2)
 					src.ChangeTurf(/turf/space)
 				if(3)
-					if(prob(33)) new /obj/item/stack/material/steel(src)
+					if(prob(33))
+						new /obj/item/stack/material/steel(src)
 					if(prob(80))
 						src.break_tile_to_plating()
 					else
@@ -102,7 +103,7 @@ var/list/wood_icons = list("wood","wood-broken")
 	return
 
 /turf/simulated/floor/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	
+
 	var/temp_destroy = get_damage_temperature()
 	if(!burnt && prob(5))
 		burn_tile(exposed_temperature)
@@ -309,16 +310,16 @@ turf/simulated/floor/proc/update_icon()
 /turf/simulated/floor/proc/burn_tile(var/exposed_temperature)
 	if(istype(src,/turf/simulated/floor/engine)) return
 	if(istype(src,/turf/simulated/floor/plating/airless/asteroid)) return//Asteroid tiles don't burn
-	
+
 	var/damage_temp = get_damage_temperature()
-	
+
 	if(broken) return
 	if(burnt)
 		if(is_steel_floor() && exposed_temperature >= damage_temp) //allow upgrading from scorched tiles to damaged tiles
 			src.icon_state = "damaged[pick(1,2,3,4,5)]"
 			broken = 1
 		return
-	
+
 	if(is_steel_floor() && exposed_temperature >= T0C+300) //enough to char the floor, but not hot enough to actually burn holes in it
 		src.icon_state = "floorscorched[pick(1,2)]"
 		burnt = 1

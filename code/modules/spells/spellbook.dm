@@ -10,6 +10,7 @@
 	var/temp = null
 	var/max_uses = 5
 	var/op = 1
+	origin_tech = list(TECH_ARCANE = 5)
 
 /obj/item/weapon/spellbook/attack_self(mob/user = usr)
 	if(!user)
@@ -220,6 +221,10 @@
 		else
 			if(href_list["temp"])
 				temp = null
+		if(uses <= 0)
+			origin_tech[TECH_ARCANE] = 4
+		else
+			origin_tech[TECH_ARCANE] = 5
 		attack_self()
 
 	return
@@ -257,6 +262,7 @@
 		user <<"<span class='notice'>you rapidly read through the arcane book. Suddenly you realize you understand [spellname]!</span>"
 		user.attack_log += text("\[[time_stamp()]\] <font color='orange'>[user.real_name] ([user.ckey]) learned the spell [spellname] ([S]).</font>")
 		onlearned(user)
+		origin_tech[TECH_ARCANE]--
 
 /obj/item/weapon/spellbook/oneuse/proc/recoil(mob/user as mob)
 	user.visible_message("<span class='warning'>[src] glows in a black light!</span>")

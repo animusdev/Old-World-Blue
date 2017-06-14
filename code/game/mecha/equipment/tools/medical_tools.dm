@@ -32,41 +32,48 @@
 	action(var/mob/living/carbon/target)
 		if(!action_checks(target))
 			return
-		if(!istype(target))
-			return
-		if(target.buckled)
-			occupant_message("[target] will not fit into the sleeper because they are buckled to [target.buckled].")
-			return
-		if(occupant)
-			occupant_message("The sleeper is already occupied")
-			return
-		for(var/mob/living/carbon/slime/M in range(1,target))
-			if(M.Victim == target)
-				occupant_message("[target] will not fit into the sleeper because they have a slime latched onto their head.")
-				return
-		occupant_message("You start putting [target] into [src].")
-		chassis.visible_message("[chassis] starts putting [target] into the [src].")
-		var/C = chassis.loc
-		var/T = target.loc
-		if(do_after_cooldown(target))
-			if(chassis.loc!=C || target.loc!=T)
+		if(istype(target))
+			if(target.buckled)
+				occupant_message("[target] will not fit into the sleeper because they are buckled to [target.buckled].")
 				return
 			if(occupant)
-				occupant_message("<font color=\"red\"><B>The sleeper is already occupied!</B></font>")
+				occupant_message("The sleeper is already occupied")
 				return
-			target.forceMove(src)
-			occupant = target
-			target.reset_view(src)
-			/*
-			if(target.client)
-				target.client.perspective = EYE_PERSPECTIVE
-				target.client.eye = chassis
-			*/
-			set_ready_state(0)
-			pr_mech_sleeper.start()
-			occupant_message("<font color='blue'>[target] successfully loaded into [src]. Life support functions engaged.</font>")
-			chassis.visible_message("[chassis] loads [target] into [src].")
-			log_message("[target] loaded. Life support functions engaged.")
+			for(var/mob/living/carbon/slime/M in range(1,target))
+				if(M.Victim == target)
+					occupant_message("[target] will not fit into the sleeper because they have a slime latched onto their head.")
+					return
+			occupant_message("You start putting [target] into [src].")
+			chassis.visible_message("[chassis] starts putting [target] into the [src].")
+			var/C = chassis.loc
+			var/T = target.loc
+			if(do_after_cooldown(target))
+				if(chassis.loc!=C || target.loc!=T)
+					return
+				if(occupant)
+					occupant_message("<font color=\"red\"><B>The sleeper is already occupied!</B></font>")
+					return
+				target.forceMove(src)
+				occupant = target
+				target.reset_view(src)
+				/*
+				if(target.client)
+					target.client.perspective = EYE_PERSPECTIVE
+					target.client.eye = chassis
+				*/
+				set_ready_state(0)
+				pr_mech_sleeper.start()
+				occupant_message("<font color='blue'>[target] successfully loaded into [src]. Life support functions engaged.</font>")
+				chassis.visible_message("[chassis] loads [target] into [src].")
+				log_message("[target] loaded. Life support functions engaged.")
+		else
+			if(occupant && istype(target, /obj/machinery/atmospherics/unary/cryo_cell))
+				var/obj/machinery/atmospherics/unary/cryo_cell/CC = target
+				if(CC.occupant)
+					return
+				var/mob/living/carbon/H = occupant
+				go_out()
+				return CC.affect_grab(H, chassis.occupant)
 		return
 
 	proc/go_out()

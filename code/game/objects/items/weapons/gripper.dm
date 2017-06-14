@@ -146,9 +146,7 @@
 	desc = "A specialized loading device, designed to pick up and insert sheets of materials inside machines."
 	icon_state = "gripper-sheet"
 
-	can_hold = list(
-		/obj/item/stack/material
-		)
+	can_hold = list(/obj/item/stack/material)
 
 /obj/item/weapon/gripper/attack_self(mob/user as mob)
 	if(wrapped)

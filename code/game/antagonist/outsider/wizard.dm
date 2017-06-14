@@ -116,19 +116,32 @@ obj/item/clothing
 
 /*Checks if the wizard is wearing the proper attire.
 Made a proc so this is not repeated 14 (or more) times.*/
-/mob/proc/wearing_wiz_garb()
-	src << "Silly creature, you're not a human. Only humans can cast this spell."
+/mob/proc/is_like_wizard(flags)
+	src << SPAN_WARN("Silly creature, you're not a human. Only humans can cast this spell.")
 	return 0
 
 // Humans can wear clothes.
-/mob/living/carbon/human/wearing_wiz_garb()
-	if(!is_wiz_garb(src.wear_suit))
-		src << "<span class='warning'>I don't feel strong enough without my robe.</span>"
-		return 0
-	if(!is_wiz_garb(src.shoes))
-		src << "<span class='warning'>I don't feel strong enough without my sandals.</span>"
-		return 0
-	if(!is_wiz_garb(src.head))
-		src << "<span class='warning'>I don't feel strong enough without my hat.</span>"
-		return 0
-	return 1
+/mob/living/carbon/human/is_like_wizard(flags)
+	if(flags & WIZARD_CLOTHINGS)
+		if(!is_wiz_garb(src.wear_suit))
+			src << SPAN_WARN("I don't feel strong enough without my robe.")
+			return FALSE
+		if(!is_wiz_garb(src.shoes))
+			src << SPAN_WARN("I don't feel strong enough without my sandals.")
+			return FALSE
+		if(!is_wiz_garb(src.head))
+			src << SPAN_WARN("I don't feel strong enough without my hat.")
+			return FALSE
+	if(flags & WIZARD_KNOWLEDGE)
+		if(wizards && wizards.is_antagonist(mind))
+			return TRUE
+		else
+			for(var/obj/item/weapon/implant/wizard/I in src)
+				if(I.imp_in == src)
+					return TRUE
+			return FALSE
+	return TRUE
+
+/datum/antagonist/wizard/remove_antagonist(var/datum/mind/player, var/show_message, var/implanted)
+	player.current.spellremove()
+	..()

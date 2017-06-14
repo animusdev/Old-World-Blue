@@ -6,7 +6,7 @@
 	icon_state = "door_electronics"
 	w_class = ITEM_SIZE_TINY
 
-	matter = list(DEFAULT_WALL_MATERIAL = 50,"glass" = 50)
+	matter = list(MATERIAL_STEEL = 50,MATERIAL_GLASS = 50)
 
 	req_access = list(access_engine)
 

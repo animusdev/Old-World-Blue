@@ -1,11 +1,10 @@
-﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+﻿<!DOCTYPE HTML>
 <html>
 <head>
-  <title>BlueBay12</title>
+  <title>Old World Blue</title>
   <link rel="stylesheet" type="text/css" href="changelog.css">
   <base target="_blank" />
   <script type='text/javascript'>
-  
 	function changeText(tagID, newText, linkTagID){
 		var tag = document.getElementById(tagID);
 		tag.innerHTML = newText;
@@ -13,26 +12,155 @@
 		linkTag.removeAttribute("href");
 		linkTag.removeAttribute("onclick");
 	}
-	
+
   </script>  
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 
 <body>
-<table align='center' width='650'><tr><td>
-	<table align='center' >
-		<tr>
-			<td valign='top'>
-				<p><div align='center'><font size='3'><a href="http://forum.ss13.ru">Forum</a> | <a href="http://wiki.ss13.ru">Wiki</a> | <a href="https://github.com/animusdev/Old-World-Blue">Source</a></font></div></p>
-				</td>
-		</tr>
-	</table>
+<table align='center' width='650'>
+<tr><td align='center'>
+	<a href="http://forum.ss13.ru">Forum</a> | <a href="http://wiki.ss13.ru">Wiki</a> | <a href="https://github.com/animusdev/Old-World-Blue">Source</a>
 </td></tr>
 <tr><td>
 	<h2 class="date">16.05.2017</h2>
 	<h3 class="author">Lethal Ghost updated:</h3>
 	<ul class="changes bgimages16">
 		<li class="rscadd">Базовый код новой генетки.</li>
+	<h2 class="date">13.06.2017</h2>
+	<h3 class="author">Rodial updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Финально введена система рефлектов (отражений лучей) и рикошетов (пуль) от стен в зависимости от материала. Вероятность рикошета зависит от угла.</li>
+	</ul>
+	<h3 class="author">D00k_N00kem updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="maptweak">Карта диустина v6.</li>
+	</ul>
+	<h2 class="date">9.06.2017</h2>
+	<h3 class="author">D00k_N00kem updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="maptweak">Доработка основной карты стации.</li>
+	</ul>
+	<h3 class="author">Lethal Ghost updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Материалы переведены на новую основу.</li>
+		<li class="rscadd">Все создаваемое в протолате можно разобрать вернув 3/4 ресурсов.</li>
+		<li class="rscadd">Все создаваемое в принтере плат можно разобрать вернув 3/4 ресурсов.</li>
+		<li class="rscadd">Все создаваеммые из материалов предметы можно разобрать вернув материал.</li>
+		<li class="bugfix">Исправление конфлика материалов блокировавшего сборку мехов.</li>
+		<li class="rscadd">Создаваемые из материалов предметы (руками), наследуют уровни исследуемой в РнД.</li>
+		<li class="bugfix">Исправление рантайма возникающего при извлечение слишком большого числа ресурсов из фабрикатора.</li>
+		<li class="rscadd">Возможно разобрать всю создаваемую в фабрикаторе технику вернув 3/4 ресурсов.</li>
+		<li class="rscadd">Обновленный код соединения стаков предметов. Фикс соединения стаков проводов.</li>
+		<li class="rscadd">Добавлена индустриальная версия автолата.</li>
+		<li class="rscadd">Упрощенный код сборки мехов. Возможность использовать детали лучше требуемых, учет используемых деталей (только при сборке).</li>
+		<li class="maptweak">Индустриальный автолат в карго со старта.</li>
+	</ul>
+	<h2 class="date">6.06.2017</h2>
+	<h3 class="author">Lethal Ghost updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="experiment">Расширение взаимодействия магов с технологией. Персонажи больше не могут так просто использовать вещи мага.</li>
+	</ul>
+	<h3 class="author">D00k_N00kem updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="experiment">Изменения карты, бриг, немного инженерки, мелочи там и тут.</li>
+	</ul>
+	<h2 class="date">30.05.2017</h2>
+	<h3 class="author">Lethal Ghost updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="maptweak">Конвейеры на астероиде полностью питаются от внутренних зон.</li>
+		<li class="maptweak">Кнопки в кабинете РД больше не перекрывают друг друга.</li>
+		<li class="maptweak">Небольшая замена лута на дереликте, в тонелях станции.</li>
+	</ul>
+
+	<h2 class="date">28.05.2017</h2>
+	<h3 class="author">Lethal Ghost updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tweak">Переработка цен создания некоторых предметов в РнД. Плюс фиксы.</li>
+		<li class="tweak">Переработка донат панели. Просмотр доступен всем.</li>
+		<li class="bugfix">Исправление описания предметов за правым ухом персонажа.</li>
+	</ul>
+
+	<h2 class="date">27.05.2017</h2>
+	<h3 class="author">Lethal Ghost updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">Исправление телепортационного свитка мага.</li>
+	</ul>
+	<h3 class="author">Kinrany updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Обновленная работа дебаггера СЕ.</li>
+	</ul>
+
+	<h2 class="date">26.05.2017</h2>
+	<h3 class="author">Tertiumdatur updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="imageadd">Новые спрайты для ксенофлоры.</li>
+	</ul>
+
+	<h2 class="date">25.05.2017</h2>
+	<h3 class="author">Lethal Ghost updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="wip">Доработка маркеров карт. Вероятность попасть на Z уровень зависит от параметров карты, а не прописана строго.</li>
+		<li class="bugfix">Исправление описания модификации глаз в настройке персонажа.</li>
+		<li class="tweak">Обновленеи работы УИ паутины интриги.</li>
+	</ul>
+	<h3 class="author">Kinrany updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tweak">Исправление описания материалов при извлечении из автолата.</li>
+	</ul>
+
+	<h2 class="date">24.05.2017</h2>
+	<h3 class="author">Lethal Ghost updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Каменные полы/стены для новых карт.</li>
+		<li class="tweak">Чуть более удобное извлечение материалов из автолата.</li>
+		<li class="bugfix">Исправление непреднамереного снижения цен в автолатах.</li>
+	</ul>
+	<h3 class="author">KuzyXD updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Доработка снятия ролей с персонажей + фиксы.</li>
+	</ul>
+	<h3 class="author">Tertiumdatur updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="imageadd">Новые спрайты окружения для новых карт.</li>
+	</ul>
+
+
+	<h2 class="date">22.05.2017</h2>
+	<h3 class="author">Lethal Ghost updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Обновленный интерфейс фабрикатора мехов. Возможность извлечь кастомное число листов материалов, независимая прокрутка очереи и основного меню.</li>
+		<li class="bugfix">Исправление деления стаков на не целые части.</li>
+	</ul>
+
+	<h2 class="date">21.05.2017</h2>
+	<h3 class="author">KuzyXD updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">Исправление дюпа материалов с автолатом. Все созданное в автолате можно разобрать получим 3/4 вложенных ресурсов.</li>
+		<li class="bugfix">Исправление возможности получить материалы из голографических столов.</li>
+	</ul>
+
+	<h2 class="date">20.05.2017</h2>
+	<h3 class="author">Lethal Ghost updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">При пересадке головы переносится не только прическа, но и все цвета волос, борода.</li>
+		<li class="rscadd">Обновлена работа с материалами в автолате. Листы материалов больше не являются особыми рецептами.</li>
+	</ul>
+
+	<h2 class="date">19.05.2017</h2>
+	<h3 class="author">Lethal Ghost updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Теперь все аннонсменты логируются.</li>
+		<li class="imageadd">Новые виды диванов для новых карт. Пока без возможности сборки.</li>
+		<li class="wip">Доработка маркеров карт. Генерация астероида на основе данных карты, а не конфиге.</li>
+		<li class="bugfix">Исправлено зависание спрайта слиппера в закрытом положении.</li>
+		<li class="bugfix">Исправлена проходимость стационарного медицинского сканера.</li>
+	</ul>
+
+	<h2 class="date">18.05.2017</h2>
+	<h3 class="author">Lethal Ghost updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="bugfix">Исправление генерации спрайтов контейнеров.</li>
 	</ul>
 	<h2 class="date">14.05.2017</h2>
 	<h3 class="author">Lethal Ghost updated:</h3>

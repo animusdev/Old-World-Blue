@@ -105,21 +105,11 @@
 	message_admins("[usr] manually reloaded admins")
 	load_admins()
 
-/client/proc/reload_mentors()
-	set name = "Reload Mentors"
-	set category = "Debug"
-
-	if(!check_rights(R_SERVER)) return
-
-	message_admins("[usr] manually reloaded Mentors")
-	world.load_mods()
-
-
 //todo:
+/*
 /client/proc/jump_to_dead_group()
 	set name = "Jump to dead group"
 	set category = "Debug"
-		/*
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
@@ -134,7 +124,7 @@
 	var/datum/air_group/dest_group = pick(dead_groups)
 	usr.loc = pick(dest_group.members)
 	return
-	*/
+*/
 
 /client/proc/kill_airgroup()
 	set name = "Kill Local Airgroup"

@@ -17,14 +17,14 @@
 	var/time_coeff = 1.5 //can be upgraded with research
 	var/resource_coeff = 1.5 //can be upgraded with research
 	var/list/resources = list(
-		DEFAULT_WALL_MATERIAL=0,
-		"glass"=0,
-		"gold"=0,
-		"silver"=0,
-		"diamond"=0,
-		"phoron"=0,
-		"uranium"=0,
-		"plasteel"=0
+		MATERIAL_STEEL=0,
+		MATERIAL_GLASS=0,
+		MATERIAL_GOLD=0,
+		MATERIAL_SILVER=0,
+		MATERIAL_DIAMOND=0,
+		MATERIAL_PHORON=0,
+		MATERIAL_URANIUM=0,
+		MATERIAL_PLASTEEL=0
 	)
 
 	var/res_max_amount = 200000
@@ -117,34 +117,38 @@
 
 /obj/machinery/mecha_part_fabricator/proc/output_part_cost(var/datum/design/D)
 	var/list/output = list()
-	for(var/M in D.materials)
+	var/materials = get_resource_cost_w_coeff(D)
+	for(var/M in materials)
 		if(M in resources)
-			var/req_amount = get_resource_cost_w_coeff(D.materials[M])
+			var/req_amount = materials[M]
 			if(req_amount>resources[M])
 				output += "<span class='deficiency'>[req_amount] [M]</span>"
-			output = "[req_amount] [M]"
+			else
+				output += "[req_amount] [M]"
 	return jointext(output, "|")
 
 /obj/machinery/mecha_part_fabricator/proc/output_available_resources()
-	var/output
+	var/output = "<table><tr>"
+	var/i = 0
 	for(var/resource in resources)
 		var/amount = min(res_max_amount, resources[resource])
-		output += "<span class=\"res_name\">[resource]: </span>[amount] cm&sup3;"
-		if(amount>0)
-			output += "<span style='font-size:80%;'> - Remove \[<a href='?src=\ref[src];remove_mat=1;material=[resource]'>1</a>\] | \[<a href='?src=\ref[src];remove_mat=10;material=[resource]'>10</a>\] | \[<a href='?src=\ref[src];remove_mat=[res_max_amount];material=[resource]'>All</a>\]</span>"
-		output += "<br/>"
+		output += "<td><span class='res_name'><a href='?src=\ref[src];remove_material=[resource]'>[resource]</a></span>: "
+		output += "[amount] cm&sup3;</td>"
+		if(++i % 2 == 0)
+			output += "</tr><tr>"
+	output += "</td></table>"
 	return output
 
-/obj/machinery/mecha_part_fabricator/proc/remove_resources(var/datum/design/D)
-	for(var/M in D.materials)
+/obj/machinery/mecha_part_fabricator/proc/remove_resources(var/list/materials)
+	for(var/M in materials)
 		if(M in resources)
-			src.resources[M] -= get_resource_cost_w_coeff(D.materials[M])
+			src.resources[M] -= materials[M]
 
 /obj/machinery/mecha_part_fabricator/proc/check_resources(var/datum/design/D)
-	for(var/M in D.materials)
-		if(M in resources)
-			if(resources[M] < get_resource_cost_w_coeff(D.materials[M]))
-				return FALSE
+	var/list/materials = get_resource_cost_w_coeff(D)
+	for(var/M in materials)
+		if(!(M in resources) || resources[M] < materials[M])
+			return FALSE
 	return TRUE
 
 /obj/machinery/mecha_part_fabricator/proc/build(var/datum/design/D)
@@ -153,8 +157,9 @@
 
 	src.being_built = new D.build_path(src)
 
+	var/list/required = get_resource_cost_w_coeff(D)
 	src.desc = "It's building [src.being_built]."
-	src.remove_resources(D)
+	src.remove_resources(required)
 	src.overlays += "fab-active"
 	src.use_power = 2
 	src.updateUsrDialog()
@@ -163,6 +168,9 @@
 	src.overlays -= "fab-active"
 	src.desc = initial(src.desc)
 	if(being_built)
+		being_built.matter = list()
+		for(var/M in required)
+			being_built.matter[M] = round(required[M] * 0.75)
 		src.being_built.Move(get_step(src,output_dir))
 		src.visible_message("\icon[src] <b>[src]</b> beeps, \"The following has been completed: [src.being_built] is built\".")
 		src.being_built = null
@@ -306,8 +314,11 @@
 		src.visible_message("\icon[src] <b>[src]</b> beeps, \"Error! Couldn't connect to R&D server.\"")
 	return
 
-/obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(var/req_amount, var/roundto=1)
-	return round(req_amount*resource_coeff, roundto)
+/obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(var/datum/design/D)
+	var/list/materials = list()
+	for(var/M in D.materials)
+		materials[M] = D.materials[M] * resource_coeff
+	return materials
 
 
 /obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(var/datum/design/D, var/roundto=1)
@@ -338,7 +349,7 @@
 		left_part += "<a href='?src=\ref[src];sync=1'>Sync with R&D servers</a><hr>"
 		for(var/category in categories)
 			left_part += "<a href='?src=\ref[src];category=[category]'>[category]</a> - "
-			left_part += "\[<a href='?src=\ref[src];partset_to_queue=[category]'>Add all parts to queue\]<br>"
+			left_part += "\[<a href='?src=\ref[src];partset_to_queue=[category]'>Add all parts to queue</a>\]<br>"
 	dat = {"<html>
 		<head>
 			<title>[src.name]</title>
@@ -348,27 +359,26 @@
 				.red {color: #f00;}
 				.part {margin-bottom: 10px;}
 				.arrow {text-decoration: none; font-size: 10px;}
-				body, table {height: 100%;}
-				td {vertical-align: top; padding: 5px;}
-				html, body {padding: 0px; margin: 0px;}
+				.panel {height:100%; bottom:0px; float:left; overflow:auto;}
+				.right {width: 40%; background: #ccc;}
+				.left {width: 60%; padding-right: 10px;}
+				.content {height:98%;}
+				html, body {overflow:hidden;}
+				html {padding: 2px; margin: 0px;}
 				h1 {font-size: 18px; margin: 5px 0px;}
 				</style>
-			<script language='javascript' type='text/javascript'>
-				[js_byjax]
-			</script>
+			<script language='javascript' type='text/javascript'>[js_byjax]</script>
 		</head>
-		<body>
-			<table style='width: 100%;'>
+		<body><div class='content'>
+			<div class='panel left'>
 				<tr>
-				<td style='width: 70%; padding-right: 10px;'>
+				<td class='left'>
 				[left_part]
-				</td>
-				<td style='width: 30%; background: #ccc;' id='queue'>
+			</div>
+			<div class='panel right' id='queue'>
 				[list_queue()]
-				</td>
-				<tr>
-			</table>
-		</body>
+			</div>
+		</div></body>
 		</html>"}
 	user << browse(dat, "window=mecha_fabricator;size=1000x400")
 	onclose(user, "mecha_fabricator")
@@ -468,21 +478,24 @@
 				[D.desc]<br>
 				<a href='?src=\ref[src];clear_temp=1'>Return</a>
 			"}
-	if(href_list["remove_mat"] && href_list["material"])
-		temp = "Ejected [remove_material(href_list["material"],text2num(href_list["remove_mat"]))] of [href_list["material"]]<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
+	if(href_list["remove_material"])
+		var/material = href_list["remove_material"]
+		if(!material in resources)
+			return
+		var/amount = input(usr, "How many stacks you want eject?") as null|num
+		if(amount < 1 || !in_range(usr,src) || usr.stat || usr.restrained())
+			return
+		//convert list to units
+		amount *= SHEET_MATERIAL_AMOUNT
+		if(resources[material] < amount)
+			amount = round(resources[material], SHEET_MATERIAL_AMOUNT)
+			if(amount < SHEET_MATERIAL_AMOUNT)
+				return
+		resources[material] -= amount
+		create_material_stacks_from_unit(material, amount, src.loc)
+		temp = "Ejected [round(amount, SHEET_MATERIAL_AMOUNT)] of [material]<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
 	src.updateUsrDialog()
 	return
-
-
-/obj/machinery/mecha_part_fabricator/proc/remove_material(var/M, var/amount)
-	if(!M in resources || amount <= 0)
-		return
-	var/eject_amount = min(round(amount)*SHEET_MATERIAL_AMOUNT, resources[M])
-	if(eject_amount >= SHEET_MATERIAL_AMOUNT)
-		resources[M] = resources[M] - eject_amount
-		create_material_stack(M, eject_amount, src.loc)
-	return eject_amount
-
 
 /obj/machinery/mecha_part_fabricator/update_icon()
 	..()
@@ -493,7 +506,7 @@
 
 /obj/machinery/mecha_part_fabricator/dismantle()
 	for(var/material in resources)
-		create_material_stack(material, resources[material], src.loc)
+		create_material_stacks_from_unit(material, resources[material], src.loc)
 	return ..()
 
 
@@ -509,7 +522,7 @@
 	if(default_part_replacement(user, W))
 		return
 
-	if(istype(W, /obj/item/stack/material))
+	if(ismaterial(W))
 		var/material = W.get_material_name()
 		if(!material in resources)
 			return
@@ -519,7 +532,7 @@
 		if(src.resources[material] >= res_max_amount)
 			user << "The fabricator cannot hold more [sname]."
 			return
-		if(!stack || stack.amount <= 1)
+		if(!stack || stack.amount < 1)
 			user << "The fabricator can only accept full sheets of [sname]."
 			return
 		src.overlays += "fab-load-[material]"

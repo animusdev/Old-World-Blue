@@ -37,7 +37,6 @@ var/list/gamemode_cache = list()
 	var/vote_no_default = 0				// vote does not default to nochange/norestart (tbi)
 	var/vote_no_dead = 0				// dead people can't vote (tbi)
 	var/del_new_on_log = 1				// del's new players if they log before they spawn in
-	var/feature_object_spell_system = 0 //spawns a spellbook which gives object-type spells instead of verb-type spells for the wizard
 	var/traitor_scaling = 0 			//if amount of traitors scales based on amount of players
 	var/objectives_disabled = 0 			//if objectives are disabled or not
 	var/protect_roles_from_antagonist = 0// If security and such can be traitor/cult/other
@@ -62,7 +61,6 @@ var/list/gamemode_cache = list()
 	var/usewhitelist = 0
 	var/kick_inactive = 0				//force disconnect for inactive players after this many minutes, if non-0
 	var/show_mods = 0
-	var/show_mentors = 0
 	var/mods_can_tempban = 0
 	var/mods_can_job_tempban = 0
 	var/mod_tempban_max = 1440
@@ -423,9 +421,6 @@ var/list/gamemode_cache = list()
 				if ("usewhitelist")
 					config.usewhitelist = 1
 
-				if ("feature_object_spell_system")
-					config.feature_object_spell_system = 1
-
 				if ("traitor_scaling")
 					config.traitor_scaling = 1
 
@@ -464,9 +459,6 @@ var/list/gamemode_cache = list()
 
 				if("show_mods")
 					config.show_mods = 1
-
-				if("show_mentors")
-					config.show_mentors = 1
 
 				if("mods_can_tempban")
 					config.mods_can_tempban = 1

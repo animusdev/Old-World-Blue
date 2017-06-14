@@ -117,7 +117,7 @@
 			return
 
 //window placing begin //TODO CONVERT PROPERLY TO MATERIAL DATUM
-	else if(istype(W,/obj/item/stack/material))
+	else if(ismaterial(W))
 		var/obj/item/stack/material/ST = W
 		if(!ST.material.created_window)
 			return 0

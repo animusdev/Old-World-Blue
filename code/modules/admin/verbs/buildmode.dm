@@ -306,7 +306,8 @@
 					T.ChangeTurf(objholder)
 				else
 					var/obj/A = new objholder (get_turf(object))
-					A.set_dir(builddir.dir)
+					if(istype(A))
+						A.set_dir(builddir.dir)
 			else if(pa.Find("right"))
 				if(isobj(object))
 					qdel(object)

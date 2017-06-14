@@ -550,6 +550,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(src.msg =="" || src.msg=="\[REDACTED\]" || src.scanned_user == "Unknown" || src.channel_name == "" )
 				src.screen=6
 			else
+				log_game("[usr] use [src] for submit message: \"[msg]\"", src.loc, FALSE)
 				var/image = photo_data ? photo_data.photo : null
 				news_network.SubmitArticle(src.msg, src.scanned_user, src.channel_name, image, 0)
 				src.screen=4

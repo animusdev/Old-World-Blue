@@ -260,8 +260,7 @@ update_flag
 			return 0
 		if(WT.remove_fuel(5) && do_after(user, 30))
 			WT.remove_fuel(5)
-			var/obj/item/stack/material/G = new(loc, 5)
-			G.set_material(DEFAULT_WALL_MATERIAL)
+			create_material_stacks(MATERIAL_STEEL, 5, loc)
 			qdel(src)
 		return
 
