@@ -526,6 +526,15 @@ other types of metals and chemistry for reagents).
 			desc = initial(I.desc)
 		..()
 
+/datum/design/item/weapon/vortex_manipulator
+	id = "timelord_vortex"
+	name = "Vortex Manipulator"
+	desc = "Ancient reverse-engineered technology of some old species designed to travel through space and time. Time-shifting is DNA-locked, sadly."
+	req_tech = list(TECH_MATERIAL = 8, TECH_BLUESPACE = 9, TECH_MAGNET = 7, TECH_POWER = 7, TECH_DATA = 6)
+	materials = list(MATERIAL_STEEL = 10000, MATERIAL_GLASS = 5000, MATERIAL_SILVER = 1000, MATERIAL_GOLD = 1000, MATERIAL_DIAMOND = 2000)
+	build_path = /obj/item/weapon/vortex_manipulator
+
+
 /datum/design/item/weapon/nuclear_gun
 	id = "nuclear_gun"
 	req_tech = list(TECH_COMBAT = 3, TECH_MATERIAL = 5, TECH_POWER = 3)

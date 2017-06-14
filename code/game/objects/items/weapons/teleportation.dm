@@ -2,6 +2,7 @@
  * Contains:
  *		Locator
  *		Hand-tele
+ *		Vortex Manipulator
  */
 
 /*
@@ -174,3 +175,233 @@ Frequency:
 	P.creator = src
 	src.add_fingerprint(user)
 	return
+
+/*
+ * Vortex Manipulator (Hello Missy)
+ * TODO:
+ * - New Icon
+ * - Random Malfunctions
+ * - EMP interactions
+ */
+
+/obj/item/weapon/vortex_manipulator
+	name = "Vortex Manipulator"
+	desc = "Strange and complex reverse-engineered technology of some ancient race designed to travel through space and time. Unfortunately, time-shifting is DNA-locked."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "hand_tele"
+	item_state = "electronic"
+	var/chargecost_area = 10000
+	var/chargecost_beacon = 2000
+	var/chargecost_local = 1000
+	var/timelord_mode = 0
+	var/list/beacon_locations = list()
+	var/obj/item/weapon/cell/vcell
+	throwforce = 5
+	w_class = ITEM_SIZE_SMALL
+	throw_speed = 3
+	throw_range = 5
+	origin_tech = list(TECH_MATERIAL = 9, TECH_BLUESPACE = 10, TECH_MAGNET = 8, TECH_POWER = 8, TECH_ARCANE = 4, TECH_ILLEGAL = 5)
+	matter = list(MATERIAL_STEEL = 10000, MATERIAL_GLASS = 5000)
+	
+/obj/item/weapon/vortex_manipulator/attack_self(mob/user as mob)
+	user.set_machine(src)
+	var/dat = "<B>Vortex Manipulator Menu:</B><BR>"
+	dat += "Current charge: [src.vcell.charge] out of [src.vcell.maxcharge]<BR>"
+	if(timelord_mode)
+		dat += "SAY SOMETHING NICE<BR>"
+	dat += "<HR>"
+	dat += "<B>Unstable technology: Major Malfunction Possible!</B><BR>"
+	if(timelord_mode || vcell)
+		dat += "<A href='byond://?src=\ref[src];area_teleport=1'>Teleport to Area</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];beacon_teleport=1'>Teleport to Beacon</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];local_teleport=1'>Space-shift locally</A><BR>"
+	else
+		dat += "ALERT: THE DEVICE IS UNPOWERED"
+	dat += "Kind regards,<br>Dominus temporis. <br><br>P.S. Don't forget to ask someone to say something nice.<HR>"
+	user << browse(dat, "window=scroll")
+	onclose(user, "scroll")
+	return
+
+/obj/item/weapon/vortex_manipulator/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/cell))
+		if(!vcell)
+			user.drop_from_inventory(W, src)
+			vcell = W
+			user << "<span class='notice'>You install a cell in [src].</span>"
+			//update_icon()
+		else
+			user << "<span class='notice'>[src] already has a cell.</span>"
+
+	else if(istype(W, /obj/item/weapon/screwdriver))
+		if(vcell)
+			vcell.update_icon()
+			vcell.loc = get_turf(src.loc)
+			vcell = null
+			user << "<span class='notice'>You remove the cell from the [src].</span>"
+			//update_icon()
+			return
+		..()
+	return
+
+/obj/item/weapon/vortex_manipulator/Topic(href, href_list)
+	if(..())
+		return 1
+	if (usr.stat || usr.restrained() || src.loc != usr)
+		return
+	if (!ishuman(usr))
+		return 1
+	var/mob/living/carbon/human/H = usr
+	if ((H == src.loc || (in_range(src, H) && istype(src.loc, /turf))))
+		usr.set_machine(src)
+		if (href_list["area_teleport"])
+			if (timelord_mode || (src.vcell.charge >= src.chargecost_area))
+				areateleport(H)
+		else if (href_list["beacon_teleport"])
+			if (timelord_mode || (src.vcell.charge >= src.chargecost_beacon))
+				beaconteleport(H)
+		else if (href_list["local_teleport"])
+			if(timelord_mode || (src.vcell.charge >= src.chargecost_local * 7))
+				localteleport(H)
+	attack_self(H)
+	return
+
+/obj/item/weapon/vortex_manipulator/proc/malfunction()
+	visible_message(SPAN_NOTE("The Vortex Manipulator malfunctions!"))
+	if(prob(1))
+		visible_message(SPAN_DANG("The Vortex Manipulator explodes and disappears in Bluespace!"))
+		explosion(get_turf(src), 1, 2, 4, 5)
+		qdel(src)
+		return
+	else if(prob(5))
+		visible_message(SPAN_WARN("The Vortex Manipulator violently shakes and extracts Space Carps from local bluespace anomaly!"))
+		playsound(get_turf(src), 'sound/effects/phasein.ogg', 50, 1)
+		var/amount = rand(1,3)
+		for(var/i=0;i<amount;i++)
+			new /mob/living/simple_animal/hostile/carp(get_turf(src))
+		return
+	else if(prob(10))
+		visible_message(SPAN_WARN("The Vortex Manipulator violently shakes and releases some of its hidden energy!"))
+		explosion(get_turf(src), 0, 0, 3, 4)
+		return
+	playsound(get_turf(src), "sparks", 50, 1)
+	var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
+	sparks.set_up(3, 0, get_turf(src))
+	sparks.start()
+
+/obj/item/weapon/vortex_manipulator/proc/deductcharge(var/chrgdeductamt)
+	if(vcell)
+		if(vcell.checked_use(chrgdeductamt))
+			return 1
+		else
+			return 0
+	return null
+
+/obj/item/weapon/vortex_manipulator/proc/get_beacon_locations()
+	beacon_locations = list()
+	for(var/obj/item/device/radio/beacon/R in world)
+		var/area/AR = get_area(R)
+		//if(is_type_in_list(AR, list(/area/shuttle, /area/syndicate_station, /area/wizard_station))) continue
+		if(beacon_locations.Find(AR.name)) continue
+		var/turf/picked = pick(get_area_turfs(AR.type))
+		if(isStationLevel(picked.z))
+			beacon_locations += AR.name
+			beacon_locations[AR.name] = AR
+
+	beacon_locations = sortAssoc(beacon_locations)
+
+// phase_in & phase_out are from ninja's teleport.
+/obj/item/weapon/vortex_manipulator/proc/phase_in(var/mob/M,var/turf/T)
+	if(!M || !T)
+		return
+	playsound(T, 'sound/effects/phasein.ogg', 50, 1)
+	anim(T,M,'icons/mob/mob.dmi',,"phasein",,M.dir)
+	
+/obj/item/weapon/vortex_manipulator/proc/phase_out(var/mob/M,var/turf/T)
+	if(!M || !T)
+		return
+	playsound(T, 'sound/effects/phasein.ogg', 50, 1)
+	anim(T,M,'icons/mob/mob.dmi',,"phaseout",,M.dir)
+	
+/obj/item/weapon/vortex_manipulator/proc/localteleport(var/mob/user)
+	var/list/possible_x = list(-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5)
+	var/list/possible_y = list(-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5)
+	var/A = input(user, "X-coordinate shift", "JEEROOONIMOOO") in possible_x
+	var/B = input(user, "Y-coordinate shift", "JEEROOONIMOOO") in possible_y
+	var/turf/starting = get_turf(user)
+	var/new_x = starting.x + A
+	var/new_y = starting.y + B
+	var/turf/targetturf = locate(new_x, new_y, user.z)
+	phase_out(user,get_turf(user))
+	user.forceMove(targetturf)
+	phase_in(user,get_turf(user))
+	deductcharge(chargecost_local * round(sqrt(A * A + B * B)))
+	for(var/obj/item/weapon/grab/G in user.contents)
+		if(G.affecting)
+			phase_out(G.affecting,get_turf(G.affecting))
+			G.affecting.forceMove(get_turf(user))
+			phase_in(G.affecting,get_turf(G.affecting))
+	if(prob(25))
+		malfunction()
+	
+	
+/obj/item/weapon/vortex_manipulator/proc/beaconteleport(var/mob/user)
+	get_beacon_locations()
+	var/A = input(user, "Beacon to jump to", "JEEROOONIMOOO") in beacon_locations
+	var/area/thearea = beacon_locations[A]
+	if (user.stat || user.restrained())
+		return
+	if(!((user == loc || (in_range(src, user) && istype(src.loc, /turf)))))
+		return
+	if(user && user.buckled)
+		user.buckled.unbuckle_mob()
+	for(var/obj/item/device/radio/beacon/R in world)
+		if(get_area(R) == thearea)
+			var/turf/T = get_turf(R)
+			phase_out(user,get_turf(user))
+			user.forceMove(T)
+			phase_in(user,get_turf(user))
+			deductcharge(chargecost_beacon)
+			for(var/obj/item/weapon/grab/G in user.contents)
+				if(G.affecting)
+					phase_out(G.affecting,get_turf(G.affecting))
+					G.affecting.forceMove(locate(user.x+rand(-1,1),user.y+rand(-1,1),T.z))
+					phase_in(G.affecting,get_turf(G.affecting))
+			break
+	if(prob(5))
+		malfunction()
+	
+
+/obj/item/weapon/vortex_manipulator/proc/areateleport(var/mob/user)
+	var/A = input(user, "Area to jump to", "JEEROOONIMOOO") in teleportlocs
+	var/area/thearea = teleportlocs[A]
+	if (user.stat || user.restrained())
+		return
+	if(!((user == loc || (in_range(src, user) && istype(src.loc, /turf)))))
+		return
+	var/list/L = list()
+	for(var/turf/T in get_area_turfs(thearea.type))
+		if(!T.density)
+			var/clear = 1
+			for(var/obj/O in T)
+				if(O.density)
+					clear = 0
+					break
+			if(clear)
+				L+=T
+	if(!L.len)
+		user <<"The space-time travel matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry."
+		return
+	if(user && user.buckled)
+		user.buckled.unbuckle_mob()
+	var/turf/T = pick(L)
+	phase_out(user,get_turf(user))
+	user.forceMove(T)
+	phase_in(user,get_turf(user))
+	deductcharge(chargecost_area)
+	for(var/obj/item/weapon/grab/G in user.contents)
+		if(G.affecting)
+			phase_out(G.affecting,get_turf(G.affecting))
+			G.affecting.forceMove(locate(user.x+rand(-1,1),user.y+rand(-1,1),T.z))
+			phase_in(G.affecting,get_turf(G.affecting))
+	if(prob(50))
+		malfunction()
