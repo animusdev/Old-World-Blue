@@ -302,7 +302,7 @@ Frequency:
 	var/turf/starting = get_turf(user)
 	var/new_x = starting.x + A
 	var/new_y = starting.y + B
-	var/turf/targetturf = locate(A, B, user.z)
+	var/turf/targetturf = locate(new_x, new_y, user.z)
 	phase_out(user,get_turf(user))
 		user.forceMove(targetturf)
 		phase_in(user,get_turf(user))
