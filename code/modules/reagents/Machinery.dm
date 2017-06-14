@@ -646,14 +646,20 @@
 		src.updateUsrDialog()
 		return 0
 
-	if(!insert_material(O, user))
-		user << "\The [O] is not suitable for blending."
+	if(insert_material(O, user))
+		if(!user.unEquip(O, src))
+			return 0
+		holdingitems += O
 		return 1
+
+	if(O.reagents && O.reagents.total_volume)
+		return 1
+
+	user << SPAN_WARN("\The [O] is not suitable for blending.")
+	return 0
 
 
 /obj/machinery/reagentgrinder/proc/insert_material(var/obj/item/I, var/mob/living/user)
-	if(I.reagents && I.reagents.total_volume)
-		return 0
 	if(!ismaterial(I))
 		return 0
 	var/material/M = I.get_material()
@@ -724,11 +730,11 @@
 		return 1
 
 	switch(href_list["action"])
-		if ("grind")
+		if("grind")
 			grind()
 		if("eject")
 			eject()
-		if ("detach")
+		if("detach")
 			detach()
 	src.updateUsrDialog()
 	return 1
@@ -787,11 +793,12 @@
 			var/obj/item/stack/stack = O
 			var/amount_to_take = max(0,min(stack.amount,round(remaining_volume/REAGENTS_PER_SHEET)))
 			if(amount_to_take)
-				stack.use(amount_to_take)
-				if(deleted(stack))
-					holdingitems -= stack
 				var/material/M = O.get_material()
 				beaker.reagents.add_reagent(M.grind_to, (amount_to_take*REAGENTS_PER_SHEET))
+				if(amount_to_take >= stack.amount)
+					holdingitems -= stack
+					src.contents -= stack
+				stack.use(amount_to_take)
 				continue
 
 		else if(O.reagents)
