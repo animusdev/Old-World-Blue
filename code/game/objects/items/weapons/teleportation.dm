@@ -260,6 +260,29 @@ Frequency:
 	attack_self(H)
 	return
 
+/obj/item/weapon/vortex_manipulator/proc/malfunction()
+	visible_message("\red <B>\The Vortex Manipulator malfunctions!</B>")
+	if(prob(1))
+		visible_message("\red <B>\The Vortex Manipulator explodes and disappears in Bluespace!</B>")
+		explosion(get_turf(src), 1, 2, 4, 5)
+		qdel(src)
+		return
+	else if(prob(5))
+		visible_message("\red <B>\Space Carps fade from local bluespace anomaly!</B>")
+		playsound(get_turf(src), 'sound/effects/phasein.ogg', 50, 1)
+		var/amount = rand(1,3)
+		for(var/i=0;i<amount;i++)
+			new /mob/living/simple_animal/hostile/carp(get_turf(src))
+		return
+	else if(prob(10))
+		visible_message("\red <B>\The Vortex Manipulator violently shakes and releases some of its hidden energy!</B>")
+		explosion(get_turf(src), 0, 0, 3, 4)
+		return
+	playsound(get_turf(src), "sparks", 50, 1)
+	var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
+	sparks.set_up(3, 0, get_turf(src))
+	sparks.start()
+
 /obj/item/weapon/vortex_manipulator/proc/deductcharge(var/chrgdeductamt)
 	if(vcell)
 		if(vcell.checked_use(chrgdeductamt))
@@ -310,8 +333,10 @@ Frequency:
 	for(var/obj/item/weapon/grab/G in user.contents)
 		if(G.affecting)
 			phase_out(G.affecting,get_turf(G.affecting))
-			G.affecting.forceMove()
+			G.affecting.forceMove(get_turf(user))
 			phase_in(G.affecting,get_turf(G.affecting))
+	if(prob(25))
+		malfunction()
 	
 	
 /obj/item/weapon/vortex_manipulator/proc/beaconteleport(var/mob/user)
@@ -337,6 +362,8 @@ Frequency:
 					G.affecting.forceMove(locate(user.x+rand(-1,1),user.y+rand(-1,1),T.z))
 					phase_in(G.affecting,get_turf(G.affecting))
 			break
+	if(prob(5))
+		malfunction()
 	
 
 /obj/item/weapon/vortex_manipulator/proc/areateleport(var/mob/user)
@@ -371,3 +398,5 @@ Frequency:
 			phase_out(G.affecting,get_turf(G.affecting))
 			G.affecting.forceMove(locate(user.x+rand(-1,1),user.y+rand(-1,1),T.z))
 			phase_in(G.affecting,get_turf(G.affecting))
+	if(prob(50))
+		malfunction()
