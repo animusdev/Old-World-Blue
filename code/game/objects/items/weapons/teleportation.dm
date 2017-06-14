@@ -2,6 +2,7 @@
  * Contains:
  *		Locator
  *		Hand-tele
+ *		Vortex Manipulator
  */
 
 /*
