@@ -266,7 +266,7 @@ Frequency:
 	return
 
 /obj/item/weapon/vortex_manipulator/proc/emp_act(var/severity)
-	if(src.loc && istype(src.loc, /mob/living/carbon/human)
+	if(src.loc && istype(src.loc, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = src.loc
 	else if(src.loc.loc && istype(src.loc.loc, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = src.loc.loc
