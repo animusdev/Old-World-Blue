@@ -181,7 +181,7 @@ Frequency:
  * TODO:
  * - New Icon
  * - Random Malfunctions - maybe add more effects of spawning sth 'out of bluespace rift'
- * - EMP iteractions - more random effects
+ * - EMP interactions - more random effects
  */
 
 /obj/item/weapon/vortex_manipulator
