@@ -304,14 +304,14 @@ Frequency:
 	var/new_y = starting.y + B
 	var/turf/targetturf = locate(new_x, new_y, user.z)
 	phase_out(user,get_turf(user))
-		user.forceMove(targetturf)
-		phase_in(user,get_turf(user))
-		deductcharge(chargecost_local * round(sqrt(A * A + B * B)))
-		for(var/obj/item/weapon/grab/G in user.contents)
-			if(G.affecting)
-				phase_out(G.affecting,get_turf(G.affecting))
-				G.affecting.forceMove()
-				phase_in(G.affecting,get_turf(G.affecting))
+	user.forceMove(targetturf)
+	phase_in(user,get_turf(user))
+	deductcharge(chargecost_local * round(sqrt(A * A + B * B)))
+	for(var/obj/item/weapon/grab/G in user.contents)
+		if(G.affecting)
+			phase_out(G.affecting,get_turf(G.affecting))
+			G.affecting.forceMove()
+			phase_in(G.affecting,get_turf(G.affecting))
 	
 	
 /obj/item/weapon/vortex_manipulator/proc/beaconteleport(var/mob/user)
