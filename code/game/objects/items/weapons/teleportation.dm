@@ -273,7 +273,7 @@ Frequency:
 	for(var/obj/item/device/radio/beacon/R in world)
 		var/area/AR = get_area(R)
 		if(is_type_in_list(AR, list(/area/shuttle, /area/syndicate_station, /area/wizard_station))) continue
-		if(teleportlocs.Find(AR.name)) continue
+		if(beacon_locations.Find(AR.name)) continue
 		var/turf/picked = pick(get_area_turfs(AR.type))
 		if(isStationLevel(picked.z))
 			beacon_locations += AR.name
