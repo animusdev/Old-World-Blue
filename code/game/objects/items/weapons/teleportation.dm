@@ -308,7 +308,7 @@ Frequency:
 
 /obj/item/weapon/vortex_manipulator/proc/malfunction()
 	visible_message(SPAN_NOTE("The Vortex Manipulator malfunctions!"))
-	if(src.loc && istype(src.loc, /mob/living/carbon/human)
+	if(src.loc && istype(src.loc, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = src.loc
 	else if(src.loc.loc && istype(src.loc.loc, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = src.loc.loc
