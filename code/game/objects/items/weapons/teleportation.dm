@@ -194,6 +194,10 @@ Frequency:
 	var/chargecost_beacon = 2000
 	var/chargecost_local = 1000
 	var/timelord_mode = 0
+	var/unique_id = 0
+	// var/master_dna
+	var/active = 0
+	var/list/possible_ids = list(1, 2, 3)
 	var/list/beacon_locations = list()
 	var/obj/item/weapon/cell/vcell
 	throwforce = 5
@@ -206,17 +210,24 @@ Frequency:
 /obj/item/weapon/vortex_manipulator/attack_self(mob/user as mob)
 	user.set_machine(src)
 	var/dat = "<B>Vortex Manipulator Menu:</B><BR>"
-	dat += "Current charge: [src.vcell.charge] out of [src.vcell.maxcharge]<BR>"
+	if(vcell)
+		dat += "Current charge: [src.vcell.charge] out of [src.vcell.maxcharge]<BR>"
+	else
+		dat += "The device has no power source!<BR>"
 	if(timelord_mode)
 		dat += "SAY SOMETHING NICE<BR>"
 	dat += "<HR>"
 	dat += "<B>Unstable technology: Major Malfunction Possible!</B><BR>"
-	if(timelord_mode || vcell)
+	if(active && (timelord_mode || vcell))
 		dat += "<A href='byond://?src=\ref[src];area_teleport=1'>Teleport to Area</A><BR>"
 		dat += "<A href='byond://?src=\ref[src];beacon_teleport=1'>Teleport to Beacon</A><BR>"
 		dat += "<A href='byond://?src=\ref[src];local_teleport=1'>Space-shift locally</A><BR>"
 	else
-		dat += "ALERT: THE DEVICE IS UNPOWERED"
+		dat += "ALERT: THE DEVICE IS INACTIVE OR HAS NO SOURCE OF POWER"
+		if(vcell)
+			dat += "<A href='byond://?src=\ref[src];attempt_activate=1'>Activate the Vortex Manipulator</A><BR>"
+		else
+			dat += "<B>INSTALL POWER CELL! (vortex power cell recommended)</B><BR>"
 	dat += "Kind regards,<br>Dominus temporis. <br><br>P.S. Don't forget to ask someone to say something nice.<HR>"
 	user << browse(dat, "window=scroll")
 	onclose(user, "scroll")
@@ -253,54 +264,89 @@ Frequency:
 	var/mob/living/carbon/human/H = usr
 	if ((H == src.loc || (in_range(src, H) && istype(src.loc, /turf))))
 		usr.set_machine(src)
+		if(!vcell)
+			return
 		if (href_list["area_teleport"])
-			if (timelord_mode || (src.vcell.charge >= src.chargecost_area))
+			if (active && (timelord_mode || (src.vcell.charge >= src.chargecost_area)))
 				areateleport(H, 0)
 		else if (href_list["beacon_teleport"])
-			if (timelord_mode || (src.vcell.charge >= src.chargecost_beacon))
+			if (active && (timelord_mode || (src.vcell.charge >= src.chargecost_beacon)))
 				beaconteleport(H, 0)
 		else if (href_list["local_teleport"])
-			if(timelord_mode || (src.vcell.charge >= src.chargecost_local * 7))
+			if (active && (timelord_mode || (src.vcell.charge >= src.chargecost_local * 7)))
 				localteleport(H, 0)
+		else if (href_list["attempt_activate"])
+			self_activate(H)	
 	attack_self(H)
 	return
+
 /obj/item/weapon/vortex_manipulator/emp_act(var/severity)
 	var/vm_owner = get_owner()
 	if(!istype(vm_owner, /mob/living/carbon/human))
 		return
 	var/mob/living/carbon/human/H = vm_owner
 	if(severity == 2)
-		if(prob(5))
-			malfunction()
-			visible_message(SPAN_NOTE("The Vortex Manipulator automatically initiates emergency area teleportation procedure."))
-			areateleport(H, 1)
-			return
-		else if(prob(15))
-			malfunction()
-			visible_message(SPAN_NOTE("The Vortex Manipulator suddenly teleports user to specific beacon for its own reasons."))
-			beaconteleport(H, 1)
-			return
-		malfunction()
-		visible_message(SPAN_NOTE("The Vortex Manipulator is automatically trying to avoid local space-time anomaly."))
-		localteleport(H, 1)
+		if(prob(25))
+			if(prob(50))
+				H.visible_message(SPAN_NOTE("The Vortex Manipulator suddenly teleports user to specific beacon for its own reasons."))
+				beaconteleport(H, 1)
+			else
+				malfunction()
+		else 
+			if(prob(75))
+				H.visible_message(SPAN_NOTE("The Vortex Manipulator is automatically trying to avoid local space-time anomaly."))
+				localteleport(H, 1)
+			else
+				malfunction()	
 	else
 		if(prob(50))
-			malfunction()
 			if(prob(50))
-				visible_message(SPAN_WARN("The Vortex Manipulator violently shakes and extracts Space Carps from local bluespace anomaly!"))
+				H.visible_message(SPAN_WARN("The Vortex Manipulator violently shakes and extracts Space Carps from local bluespace anomaly!"))
 				playsound(get_turf(src), 'sound/effects/phasein.ogg', 50, 1)
 				new /mob/living/simple_animal/hostile/carp(get_turf(src))
-			visible_message(SPAN_NOTE("The Vortex Manipulator automatically initiates emergency area teleportation procedure."))
-			areateleport(H, 1)
+				H.visible_message(SPAN_NOTE("The Vortex Manipulator automatically initiates emergency area teleportation procedure."))
+				areateleport(H, 1)
+			else
+				malfunction()
 		else 
-			malfunction()
 			if(prob(50))
-				visible_message(SPAN_WARN("The Vortex Manipulator violently shakes and extracts Space Carps from local bluespace anomaly!"))
+				H.visible_message(SPAN_WARN("The Vortex Manipulator violently shakes and extracts Space Carps from local bluespace anomaly!"))
 				playsound(get_turf(src), 'sound/effects/phasein.ogg', 50, 1)
 				new /mob/living/simple_animal/hostile/carp(get_turf(src))
-			visible_message(SPAN_NOTE("The Vortex Manipulator suddenly teleports user to specific beacon for its own reasons."))
-			beaconteleport(H, 1)
-			
+				H.visible_message(SPAN_NOTE("The Vortex Manipulator suddenly teleports user to specific beacon for its own reasons."))
+				beaconteleport(H, 1)
+			else
+				malfunction()
+
+/obj/item/weapon/vortex_manipulator/proc/self_activate(var/mob/living/carbon/human/user)
+	if(!active)
+		user << SPAN_NOTE("You attempt to activate Vortex Manipulator")
+		if(timelord_mode)
+			unique_id = rand(1000, 9999)
+			active = 1
+			user << SPAN_NOTE("You successfully activate Vortex Manipulator. Its unique identifier is now: [unique_id]")
+			return
+		for(var/i in possible_ids)
+			var/check_id = 1
+			for(var/obj/item/weapon/vortex_manipulator/VM in world)
+				if (VM.unique_id == i)
+					// There can only be one.
+					check_id = 0
+					break
+			if(check_id)
+				unique_id = i
+				active = 1
+				user << SPAN_NOTE("You successfully activate Vortex Manipulator. Its unique identifier is now: [unique_id]")
+				return
+		SPAWN_WARN("You fail to activate your Vortex Manipulator - local space-time can't hold any more active VMs.")
+	else
+		//currently not used
+		user << SPAN_NOTE("You deactivate your Vortex Manipulator and clean all personal settings")
+		unique_id = 0
+		active = 0
+		timelord_mode = 0
+
+// Gets CURRENT HOLDER (or turf, if no mob is holding it) of VM, avoiding runtimes. Returns 0 just in case it's located in sth wrong.
 /obj/item/weapon/vortex_manipulator/proc/get_owner()
 	var/obj/item/temp_loc = src
 	while(!istype(temp_loc.loc, /mob/living/carbon/human) && !istype(temp_loc.loc, /turf))
@@ -309,42 +355,42 @@ Frequency:
 		temp_loc = temp_loc.loc
 	return temp_loc.loc
 
+// TODO: possible rework; different malfunctions in different situations (multipliers with default settings?)
 /obj/item/weapon/vortex_manipulator/proc/malfunction()
-	visible_message(SPAN_NOTE("The Vortex Manipulator malfunctions!"))
 	var/vm_owner = get_owner()
 	if(!istype(vm_owner, /mob/living/carbon/human))
 		return
 	var/mob/living/carbon/human/H = vm_owner
+	H.visible_message(SPAN_NOTE("The Vortex Manipulator malfunctions!"))
 	if(prob(1))
-		visible_message(SPAN_DANG("The Vortex Manipulator explodes and disappears in Bluespace!"))
+		H.visible_message(SPAN_DANG("The Vortex Manipulator releases its energy in a large explosion and teleports itself far away!"))
 		explosion(get_turf(src), 1, 2, 4, 5)
 		qdel(src)
 		return
 	else if(prob(10))
-		visible_message(SPAN_WARN("The Vortex Manipulator violently shakes and extracts Space Carps from local bluespace anomaly!"))
+		H.visible_message(SPAN_WARN("The Vortex Manipulator violently shakes and extracts Space Carps from local space-time anomaly!"))
 		playsound(get_turf(src), 'sound/effects/phasein.ogg', 50, 1)
 		var/amount = rand(1,3)
 		for(var/i=0;i<amount;i++)
 			new /mob/living/simple_animal/hostile/carp(get_turf(src))
-		return
 	else if(prob(15))
-		visible_message(SPAN_WARN("The Vortex Manipulator violently shakes and releases some of its hidden energy!"))
+		H.visible_message(SPAN_WARN("The Vortex Manipulator violently shakes and releases some of its hidden energy!"))
 		explosion(get_turf(src), 0, 0, 3, 4)
-		return
 	else if(prob(20))
-		visible_message(SPAN_NOTE("The Vortex Manipulator automatically initiates emergency area teleportation procedure."))
+		H.visible_message(SPAN_NOTE("The Vortex Manipulator automatically initiates emergency area teleportation procedure."))
 		areateleport(H, 1)
 	else if(prob(35))
-		visible_message(SPAN_NOTE("The Vortex Manipulator suddenly teleports user to specific beacon for its own reasons."))
+		H.visible_message(SPAN_NOTE("The Vortex Manipulator suddenly teleports user to specific beacon for its own reasons."))
 		beaconteleport(H, 1)
 	else if(prob(50))
-		visible_message(SPAN_NOTE("The Vortex Manipulator is automatically trying to avoid local space-time anomaly."))
+		H.visible_message(SPAN_NOTE("The Vortex Manipulator is automatically trying to avoid local space-time anomaly."))
 		localteleport(H, 1)
 	playsound(get_turf(src), "sparks", 50, 1)
 	var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
 	sparks.set_up(3, 0, get_turf(src))
 	sparks.start()
 
+// Lowers cellcharge according to power spent. Protected against negative charge values.
 /obj/item/weapon/vortex_manipulator/proc/deductcharge(var/chrgdeductamt)
 	if(vcell)
 		if(vcell.checked_use(chrgdeductamt))
@@ -353,20 +399,19 @@ Frequency:
 			return 0
 	return null
 
+// Looks for all beacons located on station levels (station + tcomms for now) and adds them to refreshed (emptied) list of areas to teleport to.
 /obj/item/weapon/vortex_manipulator/proc/get_beacon_locations()
 	beacon_locations = list()
 	for(var/obj/item/device/radio/beacon/R in world)
 		var/area/AR = get_area(R)
-		//if(is_type_in_list(AR, list(/area/shuttle, /area/syndicate_station, /area/wizard_station))) continue
 		if(beacon_locations.Find(AR.name)) continue
 		var/turf/picked = pick(get_area_turfs(AR.type))
 		if(isStationLevel(picked.z))
 			beacon_locations += AR.name
 			beacon_locations[AR.name] = AR
-
 	beacon_locations = sortAssoc(beacon_locations)
 
-// phase_in & phase_out are from ninja's teleport.
+// phase_in & phase_out are from ninja's teleport mostly.
 /obj/item/weapon/vortex_manipulator/proc/phase_in(var/mob/M,var/turf/T)
 	if(!M || !T)
 		return
@@ -378,8 +423,16 @@ Frequency:
 		return
 	playsound(T, 'sound/effects/phasein.ogg', 50, 1)
 	anim(T,M,'icons/mob/mob.dmi',,"phaseout",,M.dir)
-	
+
+/*
+ * Local teleport.
+ * Teleports user with coordinates (x, y) to coordinates (x+a, y+b), allowing him to choose 'a' and 'b' in range [-5, 5].
+ * When malfunctioning, picks random 'a' and 'b' values and has chance of next malfunction doubled.
+ * Also teleports everyone aggressively grabbed by user.
+ */
 /obj/item/weapon/vortex_manipulator/proc/localteleport(var/mob/user, var/malf_use)
+	if(!active)
+		malf_use = 1
 	var/list/possible_x = list(-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5)
 	var/list/possible_y = list(-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5)
 	var/A = pick(possible_x)
@@ -402,9 +455,17 @@ Frequency:
 			phase_in(G.affecting,get_turf(G.affecting))
 	if(prob(25 + (25 * malf_use)))
 		malfunction()
-	
-	
+
+/*
+ * Beacon teleport.
+ * Teleports user to every area with beacon in world on station levels (station + tcomms).
+ * If there are two or more beacons in area, target beacon is chosen almost randomly.
+ * When malfunctioning, picks random area from list of areas with beacons and has chance of next malfunction doubled.
+ * Also teleports everyone aggressively grabbed by user.
+ */
 /obj/item/weapon/vortex_manipulator/proc/beaconteleport(var/mob/user, var/malf_use)
+	if(!active)
+		malf_use = 1
 	get_beacon_locations()
 	var/A = pick(beacon_locations)
 	if(!malf_use)
@@ -431,9 +492,17 @@ Frequency:
 			break
 	if(prob(5 + (5 * malf_use)))
 		malfunction()
-	
 
+/*
+ * Area teleport.
+ * Teleports user to area selected from the same list of areas that wizard's teleportation scroll uses.
+ * When malfunctioning, picks random area from this list. Also has chance of next malfunction doubled.
+ * Which for now means definite malfunction after teleporation, so with the chance of 50% you will be teleported locally after that.
+ * Also teleports everyone aggressively grabbed by user.
+ */
 /obj/item/weapon/vortex_manipulator/proc/areateleport(var/mob/user, var/malf_use)
+	if(!active)
+		malf_use = 1
 	var/A = pick(teleportlocs)
 	if(!malf_use)
 		A = input(user, "Area to jump to", "JEEROOONIMOOO") in teleportlocs
