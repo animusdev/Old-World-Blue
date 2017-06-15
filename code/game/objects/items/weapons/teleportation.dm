@@ -370,9 +370,9 @@ Frequency:
 	var/turf/temp_turf = get_turf(H)
 	if(prob(1))
 		H.visible_message(SPAN_DANG("The Vortex Manipulator releases its energy in a large explosion!"))
-		explosion(get_turf(src), 0, 0, 3, 4)
+		explosion(temp_turf, 0, 0, 3, 4)
 		areateleport(H, 1)
-		explosion(get_turf(src), 1, 2, 4, 5)
+		explosion(temp_turf, 1, 2, 4, 5)
 		for(var/mob/M in range(rand(3, 7), temp_turf))
 			areateleport(M, 1)
 		return
@@ -447,6 +447,33 @@ Frequency:
 		return
 	playsound(T, 'sound/effects/phasein.ogg', 50, 1)
 	anim(T,M,'icons/mob/mob.dmi',,"phaseout",,M.dir)
+/*
+ * Special VM abilities:
+ * - Local massive random (COMBAT)
+ */
+
+/*
+ * Local massive random
+ * Special combat ability allowing VM to teleport all those surrounding its wearer randomly.
+ * User returns to his position after everyone's been teleported.
+ */
+/obj/item/weapon/vortex_manipulator/proc/localmassiverandom(var/mob/user)
+	user.visible_message(SPAN_WARN("The Vortex Manipulator announces: Battle function activated. Assembling local space-time anomaly."))
+	var/turf/temp_turf = get_turf(user)
+	for(var/mob/M in range(5, temp_turf))
+		localteleport(M, 1)
+	phase_out(user,get_turf(user))
+	user.forceMove(temp_turf)
+	phase_in(user,get_turf(user))
+
+
+
+/*
+ * VM basic teleporation types:
+ * - Local teleport
+ * - Beacon teleport
+ * - Area teleport
+ */
 
 /*
  * Local teleport.
