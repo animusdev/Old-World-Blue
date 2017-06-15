@@ -316,7 +316,7 @@ Frequency:
 				var/temp_turf = get_turf(H)
 				H.visible_message(SPAN_NOTE("The Vortex Manipulator suddenly teleports user to specific beacon for its own reasons."))
 				beaconteleport(H, 1)
-				for(var/mob/M in range(rand[2, 7], temp_turf))
+				for(var/mob/M in range(rand(2, 7), temp_turf))
 					localteleport(M, 1)
 			else
 				malfunction()
@@ -373,7 +373,7 @@ Frequency:
 		explosion(get_turf(src), 0, 0, 3, 4)
 		areateleport(H, 1)
 		explosion(get_turf(src), 1, 2, 4, 5)
-		for(var/mob/M in range(rand[3, 7], temp_turf))
+		for(var/mob/M in range(rand(3, 7), temp_turf))
 			areateleport(M, 1)
 		return
 	else if(prob(10))
@@ -382,7 +382,7 @@ Frequency:
 		var/amount = rand(1,3)
 		for(var/i=0;i<amount;i++)
 			new /mob/living/simple_animal/hostile/carp(get_turf(src))
-		for(var/mob/M in range(rand[3, 7], temp_turf))
+		for(var/mob/M in range(rand(3, 7), temp_turf))
 			localteleport(M, 1)
 		return
 	else if(prob(15))
@@ -392,20 +392,20 @@ Frequency:
 	else if(prob(20))
 		H.visible_message(SPAN_NOTE("The Vortex Manipulator automatically initiates emergency area teleportation procedure."))
 		areateleport(H, 1)
-		for(var/mob/M in range(rand[3, 7], temp_turf))
+		for(var/mob/M in range(rand(3, 7), temp_turf))
 			beaconteleport(M, 1)
 		return
 	else if(prob(35))
 		H.visible_message(SPAN_NOTE("The Vortex Manipulator suddenly teleports user to specific beacon for its own reasons."))
 		beaconteleport(H, 1)
-		for(var/mob/M in range(rand[3, 7], temp_turf))
+		for(var/mob/M in range(rand(3, 7), temp_turf))
 			localteleport(M, 1)
 		return
 	else if(prob(50))
 		H.visible_message(SPAN_NOTE("The Vortex Manipulator is automatically trying to avoid local space-time anomaly."))
 		if(prob(50))
 			H.visible_message(SPAN_WARN("The Vortex Manipulator fails to avoid local space-time anomaly!"))
-			for(var/mob/M in range(rand[3, 7], temp_turf))
+			for(var/mob/M in range(rand(3, 7), temp_turf))
 				localteleport(M, 1)
 			return
 		localteleport(H, 1)
