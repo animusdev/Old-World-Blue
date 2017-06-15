@@ -300,11 +300,13 @@ Frequency:
 				new /mob/living/simple_animal/hostile/carp(get_turf(src))
 			visible_message(SPAN_NOTE("The Vortex Manipulator suddenly teleports user to specific beacon for its own reasons."))
 			beaconteleport(H, 1)
+			
 /obj/item/weapon/vortex_manipulator/proc/get_owner()
-	var/temp_loc = src
+	var/obj/item/temp_loc = src
 	while(!istype(temp_loc.loc, /mob/living/carbon/human) && !istype(temp_loc.loc, /turf))
 		temp_loc = temp_loc.loc
 	return temp_loc.loc
+
 /obj/item/weapon/vortex_manipulator/proc/malfunction()
 	visible_message(SPAN_NOTE("The Vortex Manipulator malfunctions!"))
 	var/vm_owner = get_owner()
@@ -404,7 +406,7 @@ Frequency:
 	get_beacon_locations()
 	var/A = pick(beacon_locations)
 	if(!malf_use)
-		var/A = input(user, "Beacon to jump to", "JEEROOONIMOOO") in beacon_locations
+		A = input(user, "Beacon to jump to", "JEEROOONIMOOO") in beacon_locations
 	var/area/thearea = beacon_locations[A]
 	if (user.stat || user.restrained())
 		return
@@ -430,10 +432,9 @@ Frequency:
 	
 
 /obj/item/weapon/vortex_manipulator/proc/areateleport(var/mob/user, var/malf_use)
+	var/A = pick(teleportlocs)
 	if(!malf_use)
-		var/A = input(user, "Area to jump to", "JEEROOONIMOOO") in teleportlocs
-	else
-		var/A = pick(teleportlocs)
+		A = input(user, "Area to jump to", "JEEROOONIMOOO") in teleportlocs
 	var/area/thearea = teleportlocs[A]
 	if (user.stat || user.restrained())
 		return
