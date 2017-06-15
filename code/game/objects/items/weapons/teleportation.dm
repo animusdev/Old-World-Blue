@@ -266,10 +266,9 @@ Frequency:
 	return
 /obj/item/weapon/vortex_manipulator/emp_act(var/severity)
 	var/vm_owner = get_owner()
-	if(istype(vm_owner, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = vm_owner
-	else
+	if(!istype(vm_owner, /mob/living/carbon/human))
 		return
+	var/mob/living/carbon/human/H = vm_owner
 	if(severity == 2)
 		if(prob(5))
 			malfunction()
@@ -309,10 +308,9 @@ Frequency:
 /obj/item/weapon/vortex_manipulator/proc/malfunction()
 	visible_message(SPAN_NOTE("The Vortex Manipulator malfunctions!"))
 	var/vm_owner = get_owner()
-	if(istype(vm_owner, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = vm_owner
-	else
+	if(!istype(vm_owner, /mob/living/carbon/human))
 		return
+	var/mob/living/carbon/human/H = vm_owner
 	if(prob(1))
 		visible_message(SPAN_DANG("The Vortex Manipulator explodes and disappears in Bluespace!"))
 		explosion(get_turf(src), 1, 2, 4, 5)
@@ -380,12 +378,11 @@ Frequency:
 /obj/item/weapon/vortex_manipulator/proc/localteleport(var/mob/user, var/malf_use)
 	var/list/possible_x = list(-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5)
 	var/list/possible_y = list(-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5)
+	var/A = pick(possible_x)
+	var/B = pick(possible_y)
 	if(!malf_use)
-		var/A = input(user, "X-coordinate shift", "JEEROOONIMOOO") in possible_x
-		var/B = input(user, "Y-coordinate shift", "JEEROOONIMOOO") in possible_y
-	else 
-		var/A = pick(possible_x)
-		var/B = pick(possible_y)
+		A = input(user, "X-coordinate shift", "JEEROOONIMOOO") in possible_x
+		B = input(user, "Y-coordinate shift", "JEEROOONIMOOO") in possible_y
 	var/turf/starting = get_turf(user)
 	var/new_x = starting.x + A
 	var/new_y = starting.y + B
@@ -405,10 +402,9 @@ Frequency:
 	
 /obj/item/weapon/vortex_manipulator/proc/beaconteleport(var/mob/user, var/malf_use)
 	get_beacon_locations()
+	var/A = pick(beacon_locations)
 	if(!malf_use)
 		var/A = input(user, "Beacon to jump to", "JEEROOONIMOOO") in beacon_locations
-	else
-		var/A = pick(beacon_locations)
 	var/area/thearea = beacon_locations[A]
 	if (user.stat || user.restrained())
 		return
