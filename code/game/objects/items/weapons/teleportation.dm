@@ -304,6 +304,8 @@ Frequency:
 /obj/item/weapon/vortex_manipulator/proc/get_owner()
 	var/obj/item/temp_loc = src
 	while(!istype(temp_loc.loc, /mob/living/carbon/human) && !istype(temp_loc.loc, /turf))
+		if(!istype(temp_loc.loc, /mob) && !istype(temp_loc.loc, /obj))
+			return 0
 		temp_loc = temp_loc.loc
 	return temp_loc.loc
 
