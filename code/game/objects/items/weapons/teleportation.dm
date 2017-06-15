@@ -338,7 +338,7 @@ Frequency:
 				active = 1
 				user << SPAN_NOTE("You successfully activate Vortex Manipulator. Its unique identifier is now: [unique_id]")
 				return
-		SPAN_WARN("You fail to activate your Vortex Manipulator - local space-time can't hold any more active VMs.")
+		user << SPAN_WARN("You fail to activate your Vortex Manipulator - local space-time can't hold any more active VMs.")
 	else
 		//currently not used
 		user << SPAN_NOTE("You deactivate your Vortex Manipulator and clean all personal settings")
