@@ -84,6 +84,9 @@
 /proc/log_misc(text) //Replace with log_game ?
 	log_generic("MISC", text, null, 1, 0)
 
+/proc/log_DB(text)
+	log_generic("DATABASE", text, null, 1, 0)
+
 //pretty print a direction bitflag, can be useful for debugging.
 /proc/print_dir(var/dir)
 	var/list/comps = list()

@@ -63,27 +63,37 @@ DBConnection/proc/Connect(dbi_handler=src.dbi,user_handler=src.user,password_han
 	if(!cursor_handler) cursor_handler = Default_Cursor
 	return _dm_db_connect(_db_con,dbi_handler,user_handler,password_handler,cursor_handler,null)
 
-DBConnection/proc/Disconnect() return _dm_db_close(_db_con)
+DBConnection/proc/Disconnect()
+	return _dm_db_close(_db_con)
 
 DBConnection/proc/IsConnected()
-	if(!sqllogging) return 0
+	if(!sqllogging)
+		return 0
 	var/success = _dm_db_is_connected(_db_con)
 	return success
 
-DBConnection/proc/Quote(str) return _dm_db_quote(_db_con,str)
+DBConnection/proc/Quote(str)
+	return _dm_db_quote(_db_con,str)
 
-DBConnection/proc/ErrorMsg() return _dm_db_error_msg(_db_con)
+DBConnection/proc/ErrorMsg()
+	return _dm_db_error_msg(_db_con)
+
 DBConnection/proc/SelectDB(database_name,dbi)
-	if(IsConnected()) Disconnect()
+	if(IsConnected())
+		Disconnect()
 	//return Connect("[dbi?"[dbi]":"dbi:mysql:[database_name]:[DB_SERVER]:[DB_PORT]"]",user,password)
 	return Connect("[dbi?"[dbi]":"dbi:mysql:[database_name]:[sqladdress]:[sqlport]"]",user,password)
-DBConnection/proc/NewQuery(sql_query,cursor_handler=src.default_cursor) return new/DBQuery(sql_query,src,cursor_handler)
+
+DBConnection/proc/NewQuery(sql_query,cursor_handler=src.default_cursor)
+	return new/DBQuery(sql_query,src,cursor_handler)
 
 
 DBQuery/New(sql_query,DBConnection/connection_handler,cursor_handler)
 	if(sql_query) src.sql = sql_query
-	if(connection_handler) src.db_connection = connection_handler
-	if(cursor_handler) src.default_cursor = cursor_handler
+	if(connection_handler)
+		src.db_connection = connection_handler
+	if(cursor_handler)
+		src.default_cursor = cursor_handler
 	_db_query = _dm_db_new_query()
 	return ..()
 
@@ -98,19 +108,27 @@ DBQuery
 	var/DBConnection/db_connection
 	var/_db_query
 
-DBQuery/proc/Connect(DBConnection/connection_handler) src.db_connection = connection_handler
+DBQuery/proc/Connect(DBConnection/connection_handler)
+	src.db_connection = connection_handler
 
 DBQuery/proc/Execute(sql_query=src.sql,cursor_handler=default_cursor)
 	Close()
+	if(findtext(sql_query, "UPDATE") || findtext(sql_query, "DELETE") || findtext(sql_query, "INSERT"))
+		if(config.panic_DB_log || findtext(sql_query, "erro_admin") || findtext(sql_query, "erro_ban"))
+			log_DB(sql_query)
 	return _dm_db_execute(_db_query,sql_query,db_connection._db_con,cursor_handler,null)
 
-DBQuery/proc/NextRow() return _dm_db_next_row(_db_query,item,conversions)
+DBQuery/proc/NextRow()
+	return _dm_db_next_row(_db_query,item,conversions)
 
-DBQuery/proc/RowsAffected() return _dm_db_rows_affected(_db_query)
+DBQuery/proc/RowsAffected()
+	return _dm_db_rows_affected(_db_query)
 
-DBQuery/proc/RowCount() return _dm_db_row_count(_db_query)
+DBQuery/proc/RowCount()
+	return _dm_db_row_count(_db_query)
 
-DBQuery/proc/ErrorMsg() return _dm_db_error_msg(_db_query)
+DBQuery/proc/ErrorMsg()
+	return _dm_db_error_msg(_db_query)
 
 DBQuery/proc/Columns()
 	if(!columns)
@@ -138,9 +156,12 @@ DBQuery/proc/Quote(str)
 	return db_connection.Quote(str)
 
 DBQuery/proc/SetConversion(column,conversion)
-	if(istext(column)) column = columns.Find(column)
-	if(!conversions) conversions = new/list(column)
-	else if(conversions.len < column) conversions.len = column
+	if(istext(column))
+		column = columns.Find(column)
+	if(!conversions)
+		conversions = new/list(column)
+	else if(conversions.len < column)
+		conversions.len = column
 	conversions[column] = conversion
 
 
