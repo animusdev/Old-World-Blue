@@ -266,12 +266,12 @@ Frequency:
 	return
 /obj/item/weapon/vortex_manipulator/proc/get_owner()
 	var/temp_loc = src
-	while(!istype(temp_loc.loc, /mob/living/carbon/human) && !istype(temp_loc.loc, /turf)
+	while(!istype(temp_loc.loc, /mob/living/carbon/human) && !istype(temp_loc.loc, /turf))
 		temp_loc = temp_loc.loc
 	return temp_loc.loc
 /obj/item/weapon/vortex_manipulator/proc/emp_act(var/severity)
 	var/vm_owner = get_owner()
-	if(istype(vm_owner), /mob/living/carbon/human)
+	if(istype(vm_owner), /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = vm_owner
 	else
 		return
@@ -310,7 +310,7 @@ Frequency:
 /obj/item/weapon/vortex_manipulator/proc/malfunction()
 	visible_message(SPAN_NOTE("The Vortex Manipulator malfunctions!"))
 	var/vm_owner = get_owner()
-	if(istype(vm_owner), /mob/living/carbon/human)
+	if(istype(vm_owner), /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = vm_owner
 	else
 		return
