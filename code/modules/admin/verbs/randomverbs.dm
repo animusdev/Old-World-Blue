@@ -461,7 +461,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/cmd_admin_rejuvenate(mob/living/M as mob in mob_list)
 	set category = "Special Verbs"
 	set name = "Rejuvenate"
-	if(!holder)
+	if(!check_rights(R_REJUVINATE))
 		src << "Only administrators may use this command."
 		return
 	if(!mob)
