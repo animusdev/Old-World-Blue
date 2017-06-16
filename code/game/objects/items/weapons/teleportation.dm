@@ -519,7 +519,7 @@ Frequency:
  */
 
 /obj/item/weapon/vortex_manipulator/proc/vortexannounce(var/mob/user, var/nonactive_announce = 0)
-	var/input = sanitize(input(user, "Enter what you want to announce")
+	var/input = sanitize(input(user, "Enter what you want to announce"))
 	for(var/obj/item/weapon/vortex_manipulator/VM in world)
 		var/H = VM.get_user()
 		if (istype(H, /mob/living/carbon/human) && (VM.active || nonactive_announce))
