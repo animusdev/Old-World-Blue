@@ -193,6 +193,7 @@ Frequency:
 	var/chargecost_area = 10000
 	var/chargecost_beacon = 2000
 	var/chargecost_local = 1000
+	var/cover_open = 0
 	var/timelord_mode = 0
 	var/unique_id = 0
 	// var/master_dna
@@ -208,51 +209,75 @@ Frequency:
 	matter = list(MATERIAL_STEEL = 10000, MATERIAL_GLASS = 5000)
 	
 /obj/item/weapon/vortex_manipulator/attack_self(mob/user as mob)
-	user.set_machine(src)
-	var/dat = "<B>Vortex Manipulator Menu:</B><BR>"
-	if(vcell)
-		dat += "Current charge: [src.vcell.charge] out of [src.vcell.maxcharge]<BR>"
-	else
-		dat += "The device has no power source!<BR>"
-	if(timelord_mode)
-		dat += "SAY SOMETHING NICE<BR>"
-	dat += "<HR>"
-	dat += "<B>Unstable technology: Major Malfunction Possible!</B><BR>"
-	if(active && (timelord_mode || vcell))
-		dat += "<A href='byond://?src=\ref[src];area_teleport=1'>Teleport to Area</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];beacon_teleport=1'>Teleport to Beacon</A><BR>"
-		dat += "<A href='byond://?src=\ref[src];local_teleport=1'>Space-shift locally</A><BR>"
-	else
-		dat += "ALERT: THE DEVICE IS INACTIVE OR HAS NO SOURCE OF POWER"
+	if(cover_open)
+		user.set_machine(src)
+		var/dat = "<B>Vortex Manipulator Menu:</B><BR>"
 		if(vcell)
-			dat += "<A href='byond://?src=\ref[src];attempt_activate=1'>Activate the Vortex Manipulator</A><BR>"
+			dat += "Current charge: [src.vcell.charge] out of [src.vcell.maxcharge]<BR>"
 		else
-			dat += "<B>INSTALL POWER CELL! (vortex power cell recommended)</B><BR>"
-	dat += "Kind regards,<br>Dominus temporis. <br><br>P.S. Don't forget to ask someone to say something nice.<HR>"
-	user << browse(dat, "window=scroll")
-	onclose(user, "scroll")
-	return
+			dat += "The device has no power source!<BR>"
+		if(timelord_mode)
+			dat += "SAY SOMETHING NICE<BR>"
+		dat += "<HR>"
+		dat += "<B>Unstable technology: Major Malfunction Possible!</B><BR>"
+		if(active && (timelord_mode || vcell))
+			dat += "<A href='byond://?src=\ref[src];close_cover=1'>Flip device's protective cover</A><BR>"
+			dat += "<B>Teleportation abilities:</B><BR>"
+			dat += "<A href='byond://?src=\ref[src];area_teleport=1'>Teleport to Area</A><BR>"
+			dat += "<A href='byond://?src=\ref[src];beacon_teleport=1'>Teleport to Beacon</A><BR>"
+			dat += "<A href='byond://?src=\ref[src];local_teleport=1'>Space-shift locally</A><BR>"
+			dat += "<HR>"
+			dat += "<B>Special abilities:</B><BR>"
+			dat += "<A href='byond://?src=\ref[src];lmr_ability=1'>Create local space-time anomaly </A> <B>DANGER: COMBAT ABILITY</B><BR>"
+			dat += "<A href='byond://?src=\ref[src];ebt_ability=1'>Teleport to random beacon </A><B>WARNING: USE IN EMERGENCY ONLY</B><BR>"
+			dat += "<A href='byond://?src=\ref[src];vma_ability=1'>Announce something to all active VM users </A><B>WARNING: EXTREME POWER DRAIN</B><BR>"
+		else
+			dat += "ALERT: THE DEVICE IS INACTIVE OR HAS NO SOURCE OF POWER"
+			if(vcell)
+				dat += "<A href='byond://?src=\ref[src];attempt_activate=1'>Activate the Vortex Manipulator</A><BR>"
+			else
+				dat += "<B>INSTALL POWER CELL! (vortex power cell recommended)</B><BR>"
+		
+		dat += "Kind regards,<br>Dominus temporis. <br><br>P.S. Don't forget to ask someone to say something nice.<HR>"
+		user << browse(dat, "window=scroll")
+		onclose(user, "scroll")
+		return
+	else
+		user << SPAN_NOTE("You flip Vortex Manipulator's protective cover open")
+		cover_open = 1
+		/*
+		if(vcell)
+			item_state = "vm_open"
+		else
+			item_state = "vm_nocell"
+		*/
+		update_icon()
 
 /obj/item/weapon/vortex_manipulator/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/cell))
-		if(!vcell)
-			user.drop_from_inventory(W, src)
-			vcell = W
-			user << "<span class='notice'>You install a cell in [src].</span>"
-			//update_icon()
-		else
-			user << "<span class='notice'>[src] already has a cell.</span>"
+	if(cover_open)
+		if(istype(W, /obj/item/weapon/cell))
+			if(!vcell)
+				user.drop_from_inventory(W, src)
+				vcell = W
+				user << "<span class='notice'>You install a cell in [src].</span>"
+				//item_state = "vm_open"
+				//update_icon()
+			else
+				user << "<span class='notice'>[src] already has a cell.</span>"
 
-	else if(istype(W, /obj/item/weapon/screwdriver))
-		if(vcell)
-			vcell.update_icon()
-			vcell.loc = get_turf(src.loc)
-			vcell = null
-			user << "<span class='notice'>You remove the cell from the [src].</span>"
-			//update_icon()
-			return
-		..()
-	return
+		else if(istype(W, /obj/item/weapon/screwdriver))
+			if(vcell)
+				vcell.update_icon()
+				vcell.loc = get_turf(src.loc)
+				vcell = null
+				user << "<span class='notice'>You remove the cell from the [src].</span>"
+				//item_state = "vm_nocell"
+				//update_icon()
+				return
+			..()
+		return
+	else
+		user << SPAN_NOTE("Open cover first!")
 
 /obj/item/weapon/vortex_manipulator/Topic(href, href_list)
 	if(..())
@@ -275,8 +300,22 @@ Frequency:
 		else if (href_list["local_teleport"])
 			if (active && (timelord_mode || (src.vcell.charge >= src.chargecost_local * 7)))
 				localteleport(H, 0)
+		else if (href_list["lmr_ability"])
+			if (active && (timelord_mode || (src.vcell.charge >= src.chargecost_area)))
+				localmassiverandom(H)
+		else if (href_list["ebt_ability"])
+			if (active && (timelord_mode || (src.vcell.charge >= src.chargecost_area)))
+				beaconteleport(H, 1)
+		else if (href_list["vma_ability"])
+			if (active && (timelord_mode || (src.vcell.charge >= src.chargecost_area)))
+				vortexannounce(H, 1)
 		else if (href_list["attempt_activate"])
-			self_activate(H)	
+			self_activate(H)
+		else if (href_list["close_cover"])
+			cover_open = 0
+			//item_state = "vm_closed"
+			update_icon()
+				
 	attack_self(H)
 	return
 
@@ -285,6 +324,8 @@ Frequency:
 	if(!istype(vm_owner, /mob/living/carbon/human))
 		return
 	var/mob/living/carbon/human/H = vm_owner
+	if(!vcell || !cover_open)
+		return
 	if(timelord_mode || (severity == 2))
 		if(prob(25))
 			if(prob(50))
@@ -327,6 +368,7 @@ Frequency:
 		if(timelord_mode)
 			unique_id = rand(1000, 9999)
 			active = 1
+			log_game("[user] has activated Vortex Manipulator [unique_id]!")
 			user << SPAN_NOTE("You successfully activate Vortex Manipulator. Its unique identifier is now: [unique_id]")
 			return
 		for(var/i in possible_ids)
@@ -339,6 +381,7 @@ Frequency:
 			if(check_id)
 				unique_id = i
 				active = 1
+				log_game("[user] has activated Vortex Manipulator [unique_id]!")
 				user << SPAN_NOTE("You successfully activate Vortex Manipulator. Its unique identifier is now: [unique_id]")
 				return
 		user << SPAN_WARN("You fail to activate your Vortex Manipulator - local space-time can't hold any more active VMs.")
@@ -450,6 +493,7 @@ Frequency:
 /*
  * Special VM abilities:
  * - Local massive random (COMBAT)
+ * - Vortex Announce (COMMS)
  */
 
 /*
@@ -458,6 +502,7 @@ Frequency:
  * User returns to his position after everyone's been teleported.
  */
 /obj/item/weapon/vortex_manipulator/proc/localmassiverandom(var/mob/user)
+	log_game("[user] has used Vortex Manipulator's Local Massive Random ability.")
 	user.visible_message(SPAN_WARN("The Vortex Manipulator announces: Battle function activated. Assembling local space-time anomaly."))
 	var/turf/temp_turf = get_turf(user)
 	for(var/mob/M in range(5, temp_turf))
@@ -465,8 +510,22 @@ Frequency:
 	phase_out(user,get_turf(user))
 	user.forceMove(temp_turf)
 	phase_in(user,get_turf(user))
+	deductcharge(chargecost_area)
 
+/*
+ * Vortex Announce
+ * Allows you to say something nice to all active VM users in world
+ * TODO: add CD
+ */
 
+/obj/item/weapon/vortex_manipulator/proc/vortexannounce(var/mob/user, var/nonactive_announce = 0)
+	var/input = sanitize(input(user, "Enter what you want to announce")
+	for(var/obj/item/weapon/vortex_manipulator/VM in world)
+		var/H = VM.get_user()
+		if (istype(H, /mob/living/carbon/human) && (VM.active || nonactive_announce))
+			H << SPAN_DANG("Your Vortex Manipulator suddenly announces with voice of [user]: [input]")
+	deductcharge(chargecost_area)
+	
 
 /*
  * VM basic teleporation types:
