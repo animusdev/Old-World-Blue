@@ -189,7 +189,7 @@ Frequency:
 	desc = "Strange and complex reverse-engineered technology of some ancient race designed to travel through space and time. Unfortunately, time-shifting is DNA-locked."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hand_tele"
-	item_state = "electronic"
+	item_state = "vm_closed"
 	var/chargecost_area = 10000
 	var/chargecost_beacon = 2000
 	var/chargecost_local = 1000
@@ -245,12 +245,12 @@ Frequency:
 	else
 		user << SPAN_NOTE("You flip Vortex Manipulator's protective cover open")
 		cover_open = 1
-		/*
+		
 		if(vcell)
 			item_state = "vm_open"
 		else
 			item_state = "vm_nocell"
-		*/
+		
 		update_icon()
 
 /obj/item/weapon/vortex_manipulator/attackby(obj/item/weapon/W, mob/user)
@@ -260,8 +260,8 @@ Frequency:
 				user.drop_from_inventory(W, src)
 				vcell = W
 				user << "<span class='notice'>You install a cell in [src].</span>"
-				//item_state = "vm_open"
-				//update_icon()
+				item_state = "vm_open"
+				update_icon()
 			else
 				user << "<span class='notice'>[src] already has a cell.</span>"
 
@@ -271,8 +271,8 @@ Frequency:
 				vcell.loc = get_turf(src.loc)
 				vcell = null
 				user << "<span class='notice'>You remove the cell from the [src].</span>"
-				//item_state = "vm_nocell"
-				//update_icon()
+				item_state = "vm_nocell"
+				update_icon()
 				return
 			..()
 		return
