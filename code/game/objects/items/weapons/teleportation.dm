@@ -315,7 +315,7 @@ Frequency:
 			cover_open = 0
 			//item_state = "vm_closed"
 			update_icon()
-      return
+			return
 
 	attack_self(H)
 	return
