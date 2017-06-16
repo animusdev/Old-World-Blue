@@ -521,7 +521,7 @@ Frequency:
 /obj/item/weapon/vortex_manipulator/proc/vortexannounce(var/mob/user, var/nonactive_announce = 0)
 	var/input = sanitize(input(user, "Enter what you want to announce"))
 	for(var/obj/item/weapon/vortex_manipulator/VM in world)
-		var/H = VM.get_user()
+		var/H = VM.get_owner()
 		if (istype(H, /mob/living/carbon/human) && (VM.active || nonactive_announce))
 			H << SPAN_DANG("Your Vortex Manipulator suddenly announces with voice of [user]: [input]")
 	deductcharge(chargecost_area)
