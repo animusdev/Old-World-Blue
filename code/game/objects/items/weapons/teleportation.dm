@@ -188,8 +188,8 @@ Frequency:
 	name = "Vortex Manipulator"
 	desc = "Strange and complex reverse-engineered technology of some ancient race designed to travel through space and time. Unfortunately, time-shifting is DNA-locked."
 	icon = 'icons/obj/device.dmi'
-	icon_state = "hand_tele"
-	item_state = "vm_closed"
+	icon_state = "vm_closed"
+	item_state = "electronic"
 	var/chargecost_area = 10000
 	var/chargecost_beacon = 2000
 	var/chargecost_local = 1000
@@ -247,9 +247,9 @@ Frequency:
 		cover_open = 1
 		
 		if(vcell)
-			item_state = "vm_open"
+			icon_state = "vm_open"
 		else
-			item_state = "vm_nocell"
+			icon_state = "vm_nocell"
 		
 		update_icon()
 
@@ -260,7 +260,7 @@ Frequency:
 				user.drop_from_inventory(W, src)
 				vcell = W
 				user << "<span class='notice'>You install a cell in [src].</span>"
-				item_state = "vm_open"
+				icon_state = "vm_open"
 				update_icon()
 			else
 				user << "<span class='notice'>[src] already has a cell.</span>"
@@ -271,7 +271,7 @@ Frequency:
 				vcell.loc = get_turf(src.loc)
 				vcell = null
 				user << "<span class='notice'>You remove the cell from the [src].</span>"
-				item_state = "vm_nocell"
+				icon_state = "vm_nocell"
 				update_icon()
 				return
 			..()
