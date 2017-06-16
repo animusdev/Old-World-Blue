@@ -315,9 +315,54 @@ Frequency:
 			cover_open = 0
 			//item_state = "vm_closed"
 			update_icon()
-				
+      return
+
 	attack_self(H)
 	return
+/obj/item/weapon/vortex_manipulator/emp_act(var/severity)
+	var/vm_owner = get_owner()
+	if(!istype(vm_owner, /mob/living/carbon/human))
+		return
+	var/mob/living/carbon/human/H = vm_owner
+	if(severity == 2)
+		if(prob(5))
+			malfunction()
+			visible_message(SPAN_NOTE("The Vortex Manipulator automatically initiates emergency area teleportation procedure."))
+			areateleport(H, 1)
+			return
+		else if(prob(15))
+			malfunction()
+			visible_message(SPAN_NOTE("The Vortex Manipulator suddenly teleports user to specific beacon for its own reasons."))
+			beaconteleport(H, 1)
+			return
+		malfunction()
+		visible_message(SPAN_NOTE("The Vortex Manipulator is automatically trying to avoid local space-time anomaly."))
+		localteleport(H, 1)
+	else
+		if(prob(50))
+			malfunction()
+			if(prob(50))
+				visible_message(SPAN_WARN("The Vortex Manipulator violently shakes and extracts Space Carps from local bluespace anomaly!"))
+				playsound(get_turf(src), 'sound/effects/phasein.ogg', 50, 1)
+				new /mob/living/simple_animal/hostile/carp(get_turf(src))
+			visible_message(SPAN_NOTE("The Vortex Manipulator automatically initiates emergency area teleportation procedure."))
+			areateleport(H, 1)
+		else 
+			malfunction()
+			if(prob(50))
+				visible_message(SPAN_WARN("The Vortex Manipulator violently shakes and extracts Space Carps from local bluespace anomaly!"))
+				playsound(get_turf(src), 'sound/effects/phasein.ogg', 50, 1)
+				new /mob/living/simple_animal/hostile/carp(get_turf(src))
+			visible_message(SPAN_NOTE("The Vortex Manipulator suddenly teleports user to specific beacon for its own reasons."))
+			beaconteleport(H, 1)
+			
+/obj/item/weapon/vortex_manipulator/proc/get_owner()
+	var/obj/item/temp_loc = src
+	while(!istype(temp_loc.loc, /mob/living/carbon/human) && !istype(temp_loc.loc, /turf))
+		if(!istype(temp_loc.loc, /mob) && !istype(temp_loc.loc, /obj))
+			return 0
+		temp_loc = temp_loc.loc
+	return temp_loc.loc
 
 /obj/item/weapon/vortex_manipulator/emp_act(var/severity)
 	var/vm_owner = get_owner()
