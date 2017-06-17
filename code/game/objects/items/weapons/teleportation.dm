@@ -313,8 +313,8 @@ Frequency:
 			self_activate(H)
 		else if (href_list["close_cover"])
 			cover_open = 0
-			item_state = "vm_closed"
-			user << SPAN_NOTE("You flip Vortex Manipulator's protective cover closed")
+			icon_state = "vm_closed"
+			H << SPAN_NOTE("You flip Vortex Manipulator's protective cover closed")
 			update_icon()
 			return
 
