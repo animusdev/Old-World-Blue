@@ -190,9 +190,9 @@ Frequency:
 	icon = 'icons/obj/device.dmi'
 	icon_state = "vm_closed"
 	item_state = "electronic"
-	var/chargecost_area = 10000
-	var/chargecost_beacon = 2000
-	var/chargecost_local = 1000
+	var/chargecost_area = 5000
+	var/chargecost_beacon = 1000
+	var/chargecost_local = 500
 	var/cover_open = 0
 	var/timelord_mode = 0
 	var/unique_id = 0
@@ -421,7 +421,7 @@ Frequency:
 		for(var/mob/M in range(rand(3, 7), temp_turf))
 			areateleport(M, 1)
 		return
-	else if(prob(10))
+	else if(prob(5))
 		H.visible_message(SPAN_WARN("The Vortex Manipulator violently shakes and extracts Space Carps from local space-time anomaly!"))
 		playsound(get_turf(src), 'sound/effects/phasein.ogg', 50, 1)
 		var/amount = rand(1,3)
@@ -430,23 +430,23 @@ Frequency:
 		for(var/mob/M in range(rand(3, 7), temp_turf))
 			localteleport(M, 1)
 		return
-	else if(prob(15))
+	else if(prob(5))
 		H.visible_message(SPAN_WARN("The Vortex Manipulator violently shakes and releases some of its hidden energy!"))
 		explosion(get_turf(src), 0, 0, 3, 4)
 		return
-	else if(prob(20))
+	else if(prob(10))
 		H.visible_message(SPAN_NOTE("The Vortex Manipulator automatically initiates emergency area teleportation procedure."))
 		areateleport(H, 1)
 		for(var/mob/M in range(rand(3, 7), temp_turf))
 			beaconteleport(M, 1)
 		return
-	else if(prob(35))
+	else if(prob(25))
 		H.visible_message(SPAN_NOTE("The Vortex Manipulator suddenly teleports user to specific beacon for its own reasons."))
 		beaconteleport(H, 1)
 		for(var/mob/M in range(rand(3, 7), temp_turf))
 			localteleport(M, 1)
 		return
-	else if(prob(50))
+	else if(prob(35))
 		H.visible_message(SPAN_NOTE("The Vortex Manipulator is automatically trying to avoid local space-time anomaly."))
 		if(prob(50))
 			H.visible_message(SPAN_WARN("The Vortex Manipulator fails to avoid local space-time anomaly!"))
@@ -526,7 +526,7 @@ Frequency:
 		var/H = VM.get_owner()
 		if (istype(H, /mob/living/carbon/human) && (VM.active || nonactive_announce))
 			H << SPAN_DANG("Your Vortex Manipulator suddenly announces with voice of [user]: [input]")
-	deductcharge(chargecost_area)
+	deductcharge(chargecost_beacon)
 	
 
 /*
