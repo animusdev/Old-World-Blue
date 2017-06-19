@@ -120,7 +120,7 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 	for(var/datum/mind/M in player_list)
 		if(!istype(M.current,/mob/living))
 			continue
-		if(M.current.stat!=2)
+		if(M.current.stat!=DEAD)
 			M.current.Weaken(10)
 			flick("e_flash", M.current.flash)
 

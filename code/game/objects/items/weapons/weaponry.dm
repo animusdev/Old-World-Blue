@@ -54,7 +54,7 @@
 		return
 	*/
 
-	if (M.stat !=2)
+	if (M.stat !=DEAD)
 		if(cult && (M.mind in cult.current_antagonists) && prob(33))
 			M << "<span class='danger'>The power of [src] clears your mind of the cult's influence!</span>"
 			user << "<span class='danger'>You wave [src] over [M]'s head and see their eyes become clear, their mind returning to normal.</span>"

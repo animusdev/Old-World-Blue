@@ -487,7 +487,7 @@ datum
 				if(location in locate(/area/shuttle/escape/centcom))
 					for(var/mob/living/player in locate(/area/shuttle/escape/centcom))
 						if (player.mind && (player.mind != owner))
-							if (player.stat != 2) //they're not dead
+							if (player.stat != DEAD) //they're not dead
 								return 0
 					return 1
 
@@ -1068,7 +1068,7 @@ datum
 					if(steal_target)
 						for(var/obj/item/device/aicard/C in owner.current.get_contents())
 							for(var/mob/living/silicon/ai/M in C)
-								if(isAI(M) && M.stat != 2)
+								if(isAI(M) && M.stat != DEAD)
 									return 1
 						for(var/mob/living/silicon/ai/M in mob_list)
 							if(istype(M.loc, /turf))
@@ -1269,7 +1269,7 @@ datum
 
 			check_completion()
 				if(target && target.current)
-					if(!owner.current||owner.current.stat==2)//If you're otherwise dead.
+					if(!owner.current||owner.current.stat==DEAD)//If you're otherwise dead.
 						return 0
 					var/list/all_items = owner.current.get_contents()
 					for(var/obj/item/weapon/organ/head/mmi in all_items)
@@ -1373,7 +1373,7 @@ datum
 			check_completion()
 				if(!target)//If it's a free objective.
 					return 1
-				if(!owner.current||owner.current.stat==2)//If you're otherwise dead.
+				if(!owner.current||owner.current.stat==DEAD)//If you're otherwise dead.
 					return 0
 				var/list/all_items = owner.current.get_contents()
 				for(var/obj/item/device/mmi/mmi in all_items)
@@ -1425,25 +1425,25 @@ datum
 				var/captured_amount = 0
 				var/area/centcom/holding/A = locate()
 				for(var/mob/living/carbon/human/M in A)//Humans.
-					if(M.stat==2)//Dead folks are worth less.
+					if(M.stat==DEAD)//Dead folks are worth less.
 						captured_amount+=0.5
 						continue
 					captured_amount+=1
 				for(var/mob/living/carbon/monkey/M in A)//Monkeys are almost worthless, you failure.
 					captured_amount+=0.1
 				for(var/mob/living/carbon/alien/larva/M in A)//Larva are important for research.
-					if(M.stat==2)
+					if(M.stat==DEAD)
 						captured_amount+=0.5
 						continue
 					captured_amount+=1
 				for(var/mob/living/carbon/alien/humanoid/M in A)//Aliens are worth twice as much as humans.
 					if(istype(M, /mob/living/carbon/alien/humanoid/queen))//Queens are worth three times as much as humans.
-						if(M.stat==2)
+						if(M.stat==DEAD)
 							captured_amount+=1.5
 						else
 							captured_amount+=3
 						continue
-					if(M.stat==2)
+					if(M.stat==DEAD)
 						captured_amount+=1
 						continue
 					captured_amount+=2
@@ -1468,7 +1468,7 @@ datum/objective/silence
 			if (player == owner.current)
 				continue
 			if (player.mind)
-				if (player.stat != 2)
+				if (player.stat != DEAD)
 					if (get_turf(player) in shuttle)
 						return 0
 					if (get_turf(player) in pod1)

@@ -61,7 +61,7 @@
 			flush = 1
 			carded_ai.suiciding = 1
 			carded_ai << "Your core files are being wiped!"
-			while (carded_ai && carded_ai.stat != 2)
+			while (carded_ai && carded_ai.stat != DEAD)
 				carded_ai.adjustOxyLoss(2)
 				carded_ai.updatehealth()
 				sleep(10)

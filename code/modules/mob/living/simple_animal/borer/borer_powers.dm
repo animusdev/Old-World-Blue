@@ -136,7 +136,7 @@
 		src << "You are not inside a host body."
 		return
 
-	if(host.stat != 2)
+	if(host.stat != DEAD)
 		src << "Your host is still alive."
 		return
 
@@ -246,7 +246,7 @@
 
 	var/list/choices = list()
 	for(var/mob/living/carbon/C in view(3,src))
-		if(C.stat != 2)
+		if(C.stat != DEAD)
 			choices += C
 
 	if(world.time - used_dominate < 150)
@@ -342,7 +342,7 @@
 	set name = "Revive Host"
 	set desc = "Send a jolt of electricity through your host, reviving them."
 
-	if(stat != 2)
+	if(stat != DEAD)
 		usr << "Your host is already alive."
 		return
 

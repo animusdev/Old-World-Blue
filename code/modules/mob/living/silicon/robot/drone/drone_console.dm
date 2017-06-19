@@ -76,7 +76,7 @@
 
 		var/mob/living/silicon/robot/drone/D = locate(href_list["resync"])
 
-		if(D.stat != 2)
+		if(D.stat != DEAD)
 			usr << "<span class='danger'>You issue a law synchronization directive for the drone.</span>"
 			D.law_resync()
 
@@ -84,7 +84,7 @@
 
 		var/mob/living/silicon/robot/drone/D = locate(href_list["shutdown"])
 
-		if(D.stat != 2)
+		if(D.stat != DEAD)
 			usr << "<span class='danger'>You issue a kill command for the unfortunate drone.</span>"
 			log_game("[key_name(usr)] issued kill order for [key_name(src)] from control console.", src)
 			D.shut_down()

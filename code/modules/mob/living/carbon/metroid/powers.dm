@@ -36,7 +36,7 @@
 
 	regenerate_icons()
 
-	while(Victim && !invalidFeedTarget(M) && stat != 2)
+	while(Victim && !invalidFeedTarget(M) && stat != DEAD)
 		canmove = 0
 
 		if(Adjacent(M))

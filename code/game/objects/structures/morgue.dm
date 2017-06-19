@@ -342,7 +342,7 @@
 		locked = 1
 
 		for(var/mob/living/M in contents)
-			if (M.stat!=2)
+			if (M.stat!=DEAD)
 				if (!iscarbon(M))
 					M.emote("scream")
 				else

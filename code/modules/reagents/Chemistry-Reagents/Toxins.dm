@@ -104,7 +104,7 @@
 	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.stat != 1)
+		if(H.stat != UNCONSCIOUS)
 			if(H.losebreath >= 10)
 				H.losebreath = max(10, H.losebreath - 10)
 			H.adjustOxyLoss(2)
@@ -126,7 +126,7 @@
 	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.stat != 1)
+		if(H.stat != UNCONSCIOUS)
 			if(H.losebreath >= 10)
 				H.losebreath = max(10, M.losebreath-10)
 			H.adjustOxyLoss(2)
