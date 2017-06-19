@@ -428,7 +428,7 @@
 "il" = (/obj/machinery/light/small{tag = "icon-bulb1 (NORTH)"; icon_state = "bulb1"; dir = 1},/turf/simulated/floor/airless{tag = "icon-derelict15"; icon_state = "derelict15"},/area/derelict/hallway/primary)
 "im" = (/turf/simulated/floor/airless{tag = "icon-derelict16"; icon_state = "derelict16"},/area/derelict/hallway/primary)
 "in" = (/obj/item/ammo_casing/a50,/turf/simulated/floor/airless,/area/derelict/hallway/primary)
-"io" = (/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/machinery/power/apc/critical{dir = 1; name = "north bump"; pixel_x = 0; pixel_y = 24},/turf/simulated/floor/airless,/area/derelict/hallway/primary)
+"io" = (/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/machinery/power/apc/disalarmed{name = "North bump"; pixel_y = 24},/turf/simulated/floor/airless,/area/derelict/hallway/primary)
 "ip" = (/obj/structure/window/reinforced{tag = "icon-rwindow (EAST)"; icon_state = "rwindow"; dir = 4},/obj/structure/window/reinforced{tag = "icon-rwindow (WEST)"; icon_state = "rwindow"; dir = 8},/obj/structure/grille,/turf/simulated/floor/plating/airless,/area/derelict/hallway/primary)
 "iq" = (/turf/simulated/floor/airless{tag = "icon-derelict1"; icon_state = "derelict1"},/area/derelict/hallway/primary)
 "ir" = (/turf/simulated/floor/airless{tag = "icon-derelict2"; icon_state = "derelict2"},/area/derelict/hallway/primary)
@@ -470,7 +470,7 @@
 "jb" = (/obj/item/clothing/suit/space/syndicate,/turf/simulated/floor/airless,/area/derelict/bridge/ai_upload)
 "jc" = (/obj/effect/decal/remains/human,/turf/simulated/floor/airless,/area/derelict/bridge/ai_upload)
 "jd" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/wall/r_wall,/area/derelict/bridge/ai_upload)
-"je" = (/obj/structure/cable,/obj/machinery/power/apc/critical{name = "south bump"; pixel_y = -24},/turf/simulated/floor/airless,/area/derelict/bridge/ai_upload)
+"je" = (/obj/structure/cable,/obj/machinery/power/apc/disalarmed{name = "South bump"; pixel_y = -24},/turf/simulated/floor/airless,/area/derelict/bridge/ai_upload)
 "jf" = (/obj/structure/cable,/turf/simulated/floor/plating/airless,/area/space)
 "jg" = (/obj/structure/cable{icon_state = "0-2"; d2 = 2},/turf/simulated/floor/plating/airless,/area/space)
 "jh" = (/obj/machinery/power/solar,/turf/simulated/floor/airless{tag = "icon-solarpanel"; icon_state = "solarpanel"},/area/space)
@@ -739,3 +739,4 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 joaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
+
