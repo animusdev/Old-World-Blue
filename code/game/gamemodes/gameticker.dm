@@ -410,7 +410,7 @@ var/list/donator_icons
 	world << "<br>"
 
 	for (var/mob/living/silicon/ai/aiPlayer in mob_list)
-		if (aiPlayer.stat != 2)
+		if (aiPlayer.stat != DEAD)
 			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.key])'s laws at the end of the round were:</b>"
 		else
 			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.key])'s laws when it was deactivated were:</b>"
@@ -431,7 +431,7 @@ var/list/donator_icons
 			continue
 
 		if (!robo.connected_ai)
-			if (robo.stat != 2)
+			if (robo.stat != DEAD)
 				world << "<b>[robo.name] (Played by: [robo.key]) survived as an AI-less borg! Its laws were:</b>"
 			else
 				world << "<b>[robo.name] (Played by: [robo.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>"

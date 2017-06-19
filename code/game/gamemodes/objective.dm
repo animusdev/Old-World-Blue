@@ -593,13 +593,13 @@ datum/objective/capture
 
 		for(var/mob/living/carbon/human/M in A) // Humans (and subtypes).
 			var/worth = M.species.rarity_value
-			if(M.stat==2)//Dead folks are worth less.
+			if(M.stat==DEAD)//Dead folks are worth less.
 				worth*=0.5
 				continue
 			captured_amount += worth
 
 		for(var/mob/living/carbon/alien/larva/M in A)//Larva are important for research.
-			if(M.stat==2)
+			if(M.stat==DEAD)
 				captured_amount+=0.5
 				continue
 			captured_amount+=1
@@ -806,7 +806,7 @@ datum/objective/heist/salvage
 /datum/objective/borer_survive/check_completion()
 	if(owner)
 		var/mob/living/simple_animal/borer/B = owner
-		if(istype(B) && B.stat < 2 && B.host && B.host.stat < 2) return 1
+		if(istype(B) && B.stat < DEAD && B.host && B.host.stat < DEAD) return 1
 	return 0
 
 /datum/objective/borer_reproduce
@@ -825,7 +825,7 @@ datum/objective/heist/salvage
 	if(owner)
 		for(var/datum/mind/ninja in get_antags("ninja"))
 			if(ninja != owner)
-				if(ninja.current.stat < 2) return 0
+				if(ninja.current.stat < DEAD) return 0
 		return 1
 	return 0
 
@@ -842,7 +842,7 @@ datum/objective/heist/salvage
 	if(!cult)
 		return 0
 	for(var/datum/mind/cult_mind in cult.current_antagonists)
-		if (cult_mind.current && cult_mind.current.stat!=2)
+		if (cult_mind.current && cult_mind.current.stat!=DEAD)
 			var/area/A = get_area(cult_mind.current )
 			if ( is_type_in_list(A, centcom_areas))
 				acolytes_survived++

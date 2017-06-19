@@ -174,7 +174,7 @@ where x = a number, and _____ is something that may redefine a law, (Won't be ai
 
 	//AI laws
 	for(var/mob/living/silicon/ai/M in living_mob_list)
-		if(M.stat != 2 && M.see_in_dark != 0)
+		if(M.stat != DEAD && M.see_in_dark != 0)
 			var/who2 = pick(
 				"ALIENS", "BEARS", "CLOWNS", "XENOS", "PETES", "BOMBS", "FETISHES", "WIZARDS",\
 				"SYNDICATE AGENTS", "CENTCOM OFFICERS", "SPACE PIRATES", "TRAITORS", "MONKEYS",\

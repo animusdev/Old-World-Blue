@@ -34,7 +34,7 @@
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
 	if(.)
-		if(src.nutrition && src.stat != 2)
+		if(src.nutrition && src.stat != DEAD)
 			src.nutrition -= DEFAULT_HUNGER_FACTOR/10
 			if(src.m_intent == "run")
 				src.nutrition -= DEFAULT_HUNGER_FACTOR/10

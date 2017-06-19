@@ -91,7 +91,7 @@
 	return 0
 
 /mob/living/silicon/blob_act()
-	if (src.stat != 2)
+	if (src.stat != DEAD)
 		src.adjustBruteLoss(60)
 		src.updatehealth()
 		return 1
@@ -272,17 +272,17 @@
 
 	switch(severity)
 		if(1.0)
-			if (stat != 2)
+			if (stat != DEAD)
 				adjustBruteLoss(100)
 				adjustFireLoss(100)
 				if(!anchored)
 					gib()
 		if(2.0)
-			if (stat != 2)
+			if (stat != DEAD)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
 		if(3.0)
-			if (stat != 2)
+			if (stat != DEAD)
 				adjustBruteLoss(30)
 
 	updatehealth()

@@ -255,7 +255,7 @@ var/list/sacrificed = list()
 			for(var/obj/effect/rune/R in world)
 				if(R.word1==cultwords["travel"] && R.word2==cultwords["blood"] && R.word3==cultwords["self"])
 					for(var/mob/living/carbon/D in R.loc)
-						if(D.stat!=2)
+						if(D.stat!=DEAD)
 							admin_attack_log(usr, D, "Used a blood drain rune.", "Was victim of a blood drain rune.", "used a blood drain rune on")
 							var/bdrain = rand(1,25)
 							D << "<span class='warning'>You feel weakened.</span>"
@@ -594,7 +594,7 @@ var/list/sacrificed = list()
 			user.visible_message("<span class='danger'>\The [user] keels over dead, \his blood glowing blue as it escapes \his body and dissipates into thin air.</span>", \
 			"<span class='danger'>In the last moment of your humble life, you feel an immense pain as fabric of reality mends... with your blood.</span>", \
 			"<span class='warning'>You hear faint rustle.</span>")
-			for(,user.stat==2)
+			for(,user.stat==DEAD)
 				sleep(600)
 				if (!user)
 					return
@@ -675,7 +675,7 @@ var/list/sacrificed = list()
 							usr << "<span class='warning'>Your target's earthly bonds are too strong. You need more cultists to succeed in this ritual.</span>"
 					else
 						if(cultsinrange.len >= 3)
-							if(H.stat !=2)
+							if(H.stat !=DEAD)
 								if(prob(80) || worth)
 									usr << "<span class='cult'>The Geometer of Blood accepts this [worth ? "exotic " : ""]sacrifice.</span>"
 									cult.grant_runeword(usr)
@@ -698,7 +698,7 @@ var/list/sacrificed = list()
 								else
 									H.gib()
 						else
-							if(H.stat !=2)
+							if(H.stat !=DEAD)
 								usr << "<span class='warning'>The victim is still alive, you will need more cultists chanting for the sacrifice to succeed.</span>"
 							else
 								if(prob(40))
@@ -714,7 +714,7 @@ var/list/sacrificed = list()
 									H.gib()
 				else
 					if(cultsinrange.len >= 3)
-						if(H.stat !=2)
+						if(H.stat !=DEAD)
 							if(prob(80))
 								usr << "<span class='cult'>The Geometer of Blood accepts this sacrifice.</span>"
 								cult.grant_runeword(usr)
@@ -737,7 +737,7 @@ var/list/sacrificed = list()
 							else
 								H.gib()
 					else
-						if(H.stat !=2)
+						if(H.stat !=DEAD)
 							usr << "<span class='warning'>The victim is still alive, you will need more cultists chanting for the sacrifice to succeed.</span>"
 						else
 							if(prob(40))

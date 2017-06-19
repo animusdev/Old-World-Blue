@@ -199,7 +199,7 @@
 
 //CONSOLE PROCS
 /mob/living/silicon/robot/drone/proc/law_resync()
-	if(stat != 2)
+	if(stat != DEAD)
 		if(emagged)
 			src << "<span class='danger'>You feel something attempting to modify your programming, but your hacked subroutines are unaffected.</span>"
 		else
@@ -208,7 +208,7 @@
 			show_laws()
 
 /mob/living/silicon/robot/drone/proc/shut_down()
-	if(stat != 2)
+	if(stat != DEAD)
 		if(emagged)
 			src << "<span class='danger'>You feel a system kill order percolate through your tiny brain, but it doesn't seem like a good idea to you.</span>"
 		else

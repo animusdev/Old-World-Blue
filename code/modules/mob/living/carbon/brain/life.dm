@@ -47,7 +47,7 @@
 
 		handle_temperature_damage(HEAD, environment.temperature, environment_heat_capacity*transfer_coefficient)
 
-	if(stat==2)
+	if(stat==DEAD)
 		bodytemperature += 0.1*(environment.temperature - bodytemperature)*environment_heat_capacity/(environment_heat_capacity + 270000)
 
 	//Account for massive pressure differences
@@ -166,7 +166,7 @@
 		sight |= SEE_OBJS
 		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (stat != 2)
+	else if (stat != DEAD)
 		sight &= ~SEE_TURFS
 		sight &= ~SEE_MOBS
 		sight &= ~SEE_OBJS
@@ -174,7 +174,7 @@
 		see_invisible = SEE_INVISIBLE_LIVING
 
 	if (healths)
-		if (stat != 2)
+		if (stat != DEAD)
 			switch(health)
 				if(100 to INFINITY)
 					healths.icon_state = "health0"

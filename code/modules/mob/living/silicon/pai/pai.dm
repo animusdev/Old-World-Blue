@@ -129,7 +129,7 @@
 	return 0
 
 /mob/living/silicon/pai/blob_act()
-	if (src.stat != 2)
+	if (src.stat != DEAD)
 		src.adjustBruteLoss(60)
 		src.updatehealth()
 		return 1
@@ -375,7 +375,7 @@
 	else
 		visible_message("<span class='warning'>[user.name] bonks [src] harmlessly with [W].</span>")
 	spawn(1)
-		if(stat != 2) close_up()
+		if(stat != DEAD) close_up()
 	return
 
 /mob/living/silicon/pai/attack_hand(mob/user as mob)
