@@ -51,6 +51,12 @@
 /obj/machinery/autolathe/New()
 	..()
 	wires = new(src)
+	
+/obj/machinery/autolathe/Destroy()
+	if(wires)
+		qdel(wires)
+		wires = null
+	return ..()
 
 /obj/machinery/autolathe/proc/update_recipe_list()
 	if(!machine_recipes)

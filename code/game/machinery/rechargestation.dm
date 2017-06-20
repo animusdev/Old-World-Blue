@@ -73,7 +73,7 @@
 
 //Processes the occupant, drawing from the internal power cell if needed.
 /obj/machinery/recharge_station/proc/process_occupant()
-	if(istype(occupant, /mob/living/silicon/robot))
+	if(isrobot(occupant))
 		var/mob/living/silicon/robot/R = occupant
 
 		if(R.module)

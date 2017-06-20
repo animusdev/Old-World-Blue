@@ -74,7 +74,7 @@
 
 /obj/machinery/dna_scannernew/proc/eject_occupant()
 	src.go_out()
-	for(var/obj/O in (src.contents - src.component_parts))
+	for(var/obj/O in src)
 		O.loc = get_turf(src)//Ejects items that manage to get in there (exluding the components)
 	if(!occupant)
 		for(var/mob/M in src)//Failsafe so you can get mobs out
@@ -290,7 +290,7 @@
 	for(var/i=0;i<3;i++)
 		buffers[i+1]=new /datum/dna2/record
 	spawn(5)
-		for(dir in list(NORTH,EAST,SOUTH,WEST))
+		for(var/dir in list(NORTH,EAST,SOUTH,WEST))
 			connected = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
 			if(!isnull(connected))
 				break

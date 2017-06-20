@@ -141,7 +141,6 @@ Class Procs:
 /obj/machinery/process()//If you dont use process or power why are you here
 	if(!(use_power || idle_power_usage || active_power_usage))
 		return PROCESS_KILL
-	return
 
 /obj/machinery/emp_act(severity)
 	if(use_power && !stat)
@@ -239,7 +238,7 @@ Class Procs:
 			visible_message("<span class='warning'>[H] stares cluelessly at [src].</span>")
 			return 1
 		else if(prob(H.getBrainLoss()))
-			user << "<span class='warning'>You momentarily forget how to use [src].</span>"
+			user << "<span class='warning'>You momentarily forget how to use \the [src].</span>"
 			return 1
 
 	src.add_fingerprint(user)
@@ -253,6 +252,7 @@ Class Procs:
 	if(ispath(circuit))
 		circuit = PoolOrNew(circuit, null)
 
+	component_parts = list()
 	if(circuit)
 		component_parts += circuit
 
@@ -344,7 +344,7 @@ Class Procs:
 		return 0
 	playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 	panel_open = !panel_open
-	user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>"
+	user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of \the [src].</span>"
 	update_icon()
 	return 1
 

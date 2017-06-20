@@ -34,10 +34,9 @@ var/list/doppler_arrays = list()
 	if(distance > 100)		return
 	if(!(direct & dir))	return
 
-	var/message = "Explosive disturbance detected - Epicenter at: grid ([x0],[y0]). Epicenter radius: [devastation_range]. Outer radius: [heavy_impact_range]. Shockwave radius: [light_impact_range]. Temporal displacement of tachyons: [took]seconds."
+	var/message = "Explosive disturbance detected - Epicenter at: grid ([x0],[y0]). Epicenter radius: [devastation_range]. Outer radius: [heavy_impact_range]. Shockwave radius: [light_impact_range]. Temporal displacement of tachyons: [took] seconds."
 
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='game say'><span class='name'>[src]</span> states coldly, \"[message]\"",2)
+	hearable_message("<span class='game say'><span class='name'>[src]</span> states coldly, \"[message]\"</span>")
 
 
 /obj/machinery/doppler_array/power_change()

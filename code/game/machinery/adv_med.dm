@@ -37,12 +37,12 @@
 	set category = "Object"
 	set name = "Enter Body Scanner"
 
-	if (usr.stat)
+	if(usr.stat)
 		return
-	if (src.occupant)
+	if(src.occupant)
 		usr << "\blue <B>The scanner is already occupied!</B>"
 		return
-	if (usr.abiotic())
+	if(usr.abiotic())
 		usr << "\blue <B>Subject cannot have abiotic items on.</B>"
 		return
 	set_occupant(usr)
@@ -59,7 +59,6 @@
 	src.occupant = null
 	update_use_power(1)
 	src.icon_state = "body_scanner_0"
-	return
 
 /obj/machinery/bodyscanner/proc/set_occupant(var/mob/living/L)
 	L.forceMove(src)
@@ -111,17 +110,19 @@
 			for(var/atom/movable/A in src)
 				A.forceMove(loc)
 				A.ex_act(severity)
+			qdel(src)
 		if(2.0)
 			if (prob(50))
 				for(var/atom/movable/A in src)
 					A.forceMove(loc)
 					A.ex_act(severity)
+				qdel(src)
 		if(3.0)
 			if (prob(25))
 				for(var/atom/movable/A in src)
 					A.forceMove(loc)
 					A.ex_act(severity)
-	qdel(src)
+				qdel(src)
 
 /obj/machinery/bodyscanner/blob_act()
 	if(prob(50))
@@ -138,7 +139,6 @@
 			if (prob(50))
 				qdel(src)
 				return
-	return
 
 /obj/machinery/body_scanconsole/blob_act()
 	if(prob(50))
@@ -359,7 +359,8 @@
 				infected = "Acute Infection++:"
 			if (INFECTION_LEVEL_THREE to INFINITY)
 				infected = "Septic:"
-
+		if(e.rejecting)
+			infected += "(being rejected)"
 		if (e.implants.len)
 			var/unknown_body = 0
 			for(var/I in e.implants)
@@ -372,7 +373,7 @@
 
 		if(!AN && !open && !infected & !imp)
 			AN = "None:"
-		if(!(e.status & ORGAN_DESTROYED))
+		if(!e.is_stump())
 			dat += "<td>[e.name]</td><td>[e.burn_dam]</td><td>[e.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][internal_bleeding][lung_ruptured]</td>"
 		else
 			dat += "<td>[e.name]</td><td>-</td><td>-</td><td>Not Found</td>"
@@ -400,6 +401,8 @@
 				infection = "Acute Infection+:"
 			if (INFECTION_LEVEL_TWO + 300 to INFINITY)
 				infection = "Acute Infection++:"
+		if(i.rejecting)
+			infection += "(being rejected)"
 
 		dat += "<tr>"
 		dat += "<td>[i.name]</td><td>N/A</td><td>[i.damage]</td><td>[infection]:[mech]</td><td></td>"

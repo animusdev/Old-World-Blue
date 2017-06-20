@@ -180,7 +180,7 @@
 /obj/machinery/atmospherics/unary/cryo_cell/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if(istype(W, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
-			user << "\red A beaker is already loaded into the machine."
+			user << SPAN_WARN("A beaker is already loaded into the machine.")
 			return
 		if(user.unEquip(W, src))
 			beaker = W
@@ -322,7 +322,7 @@
 	if(usr == occupant)//If the user is inside the tube...
 		if(usr.stat == DEAD)//and he's not dead....
 			return
-		usr << "\blue Release sequence activated. This will take two minutes."
+		usr << SPAN_NOTE("Release sequence activated. This will take two minutes.")
 		sleep(1200)
 		if(!src || !usr || !occupant || (occupant != usr)) //Check if someone's released/replaced/bombed him already
 			return

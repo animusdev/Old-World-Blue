@@ -110,7 +110,7 @@
 
 		visible_message("<span class='notice'>The console beeps happily as it disgorges \the [I].</span>", 3)
 
-		I.loc = get_turf(src)
+		I.forceMove(get_turf(src))
 		frozen_items -= I
 
 	else if(href_list["allitems"])
@@ -123,7 +123,7 @@
 		visible_message("<span class='notice'>The console beeps happily as it disgorges the desired objects.</span>", 3)
 
 		for(var/obj/item/I in frozen_items)
-			I.loc = get_turf(src)
+			I.forceMove(get_turf(src))
 			frozen_items -= I
 
 	src.updateUsrDialog()
@@ -216,7 +216,7 @@
 
 /obj/machinery/cryopod/Destroy()
 	if(occupant)
-		occupant.loc = loc
+		occupant.forceMove(loc)
 		occupant.resting = 1
 	..()
 
@@ -226,7 +226,11 @@
 	find_control_computer()
 
 /obj/machinery/cryopod/proc/find_control_computer(urgent=0)
-	control_computer = locate(/obj/machinery/computer/cryopod) in src.loc.loc
+	// Workaround for http://www.byond.com/forum/?post=2007448
+	for(var/obj/machinery/computer/cryopod/C in src.loc.loc)
+		control_computer = C
+		break
+	// control_computer = locate(/obj/machinery/computer/cryopod) in src.loc.loc
 
 	// Don't send messages unless we *need* the computer, and less than five minutes have passed since last time we messaged
 	if(!control_computer && urgent && last_no_computer_message + 5*60*10 < world.time)
@@ -273,7 +277,7 @@
 	qdel(R.mmi)
 	for(var/obj/item/I in R.module) // the tools the borg has; metal, glass, guns etc
 		for(var/obj/item/O in I) // the things inside the tools, if anything; mainly for janiborg trash bags
-			O.loc = R
+			O.forceMove(R)
 		qdel(I)
 	qdel(R.module)
 
@@ -285,13 +289,13 @@
 	//Drop all items into the pod.
 	for(var/obj/item/W in occupant)
 		occupant.drop_from_inventory(W)
-		W.loc = src
+		W.forceMove(src)
 
 		if(W.contents.len) //Make sure we catch anything not handled by qdel() on the items.
 			for(var/obj/item/O in W.contents)
 				if(istype(O,/obj/item/storage/internal)) //Stop eating pockets, you fuck!
 					continue
-				O.loc = src
+				O.forceMove(src)
 
 	//Delete all items not on the preservation list.
 	var/list/items = src.contents.Copy()
@@ -312,7 +316,7 @@
 				control_computer.frozen_items += W
 				W.loc = null
 			else
-				W.loc = src.loc
+				W.forceMove(src.loc)
 
 	//Update any existing objectives involving this mob.
 	for(var/datum/objective/O in all_objectives)
@@ -440,7 +444,7 @@
 	if(announce) items -= announce
 
 	for(var/obj/item/W in items)
-		W.loc = get_turf(src)
+		W.forceMove(get_turf(src))
 
 	src.go_out()
 	add_fingerprint(usr)
@@ -467,7 +471,7 @@
 
 	visible_message("[usr] starts climbing into \the [src].", 3)
 
-	if(do_after(usr, 20))
+	if(do_after(usr, 20, src))
 
 		if(!usr || !usr.client)
 			return
@@ -501,7 +505,7 @@
 		occupant.client.eye = src.occupant.client.mob
 		occupant.client.perspective = MOB_PERSPECTIVE
 
-	occupant.loc = get_turf(src)
+	occupant.forceMove(get_turf(src))
 	set_occupant(null)
 
 	return

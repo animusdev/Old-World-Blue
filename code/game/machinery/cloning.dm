@@ -389,6 +389,7 @@
 	read_only = 1
 
 	New()
+		..()
 		initializeDisk()
 		buf.types=DNA2_BUF_UE|DNA2_BUF_UI
 		//data = "066000033000000000AF00330660FF4DB002690"

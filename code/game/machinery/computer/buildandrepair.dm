@@ -15,8 +15,8 @@
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				if(do_after(user, 20))
-					user << "\blue You wrench the frame into place."
+				if(do_after(user, 20, src))
+					user << SPAN_NOTE("You wrench the frame into place.")
 					src.anchored = 1
 					src.state = 1
 			if(istype(P, /obj/item/weapon/weldingtool))
@@ -25,36 +25,36 @@
 					user << "The welding tool must be on to complete this task."
 					return
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 20, src))
 					if(!src || !WT.isOn()) return
-					user << "\blue You deconstruct the frame."
+					user << SPAN_NOTE("You deconstruct the frame.")
 					new /obj/item/stack/material/steel( src.loc, 5 )
 					qdel(src)
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				if(do_after(user, 20))
-					user << "\blue You unfasten the frame."
+				if(do_after(user, 20, src))
+					user << SPAN_NOTE("You unfasten the frame.")
 					src.anchored = 0
 					src.state = 0
 			if(istype(P, /obj/item/weapon/circuitboard) && !circuit)
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "computer")
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					user << "\blue You place the circuit board inside the frame."
+					user << SPAN_NOTE("You place the circuit board inside the frame.")
 					src.icon_state = "1"
 					src.circuit = P
 					user.drop_from_inventory(P, src)
 				else
-					user << "\red This frame does not accept circuit boards of this type!"
+					user << SPAN_WARN("This frame does not accept circuit boards of this type!")
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				user << "\blue You screw the circuit board into place."
+				user << SPAN_NOTE("You screw the circuit board into place.")
 				src.state = 2
 				src.icon_state = "2"
 			if(istype(P, /obj/item/weapon/crowbar) && circuit)
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				user << "\blue You remove the circuit board."
+				user << SPAN_NOTE("You remove the circuit board.")
 				src.state = 1
 				src.icon_state = "0"
 				circuit.loc = src.loc
@@ -62,52 +62,52 @@
 		if(2)
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				user << "\blue You unfasten the circuit board."
+				user << SPAN_NOTE("You unfasten the circuit board.")
 				src.state = 1
 				src.icon_state = "1"
 			if(istype(P, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = P
 				if (C.get_amount() < 5)
-					user << "<span class='warning'>You need five coils of wire to add them to the frame.</span>"
+					user << SPAN_WARN("You need five coils of wire to add them to the frame.")
 					return
-				user << "<span class='notice'>You start to add cables to the frame.</span>"
+				user << SPAN_NOTE("You start to add cables to the frame.")
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				if(do_after(user, 20) && state == 2)
+				if(do_after(user, 20, src) && state == 2)
 					if (C.use(5))
-						user << "<span class='notice'>You add cables to the frame.</span>"
+						user << SPAN_NOTE("You add cables to the frame.")
 						state = 3
 						icon_state = "3"
 		if(3)
 			if(istype(P, /obj/item/weapon/wirecutters))
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-				user << "\blue You remove the cables."
+				user << SPAN_NOTE("You remove the cables.")
 				src.state = 2
 				src.icon_state = "2"
-				var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil( src.loc )
+				var/obj/item/stack/cable_coil/A = new /obj/item/stack/cable_coil(src.loc)
 				A.amount = 5
 
 			if(ismaterial(P) && P.get_material_name() == MATERIAL_GLASS)
 				var/obj/item/stack/G = P
 				if (G.get_amount() < 2)
-					user << "<span class='warning'>You need two sheets of glass to put in the glass panel.</span>"
+					user << SPAN_WARN("You need two sheets of glass to put in the glass panel.")
 					return
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				user << "<span class='notice'>You start to put in the glass panel.</span>"
-				if(do_after(user, 20) && state == 3)
+				user << SPAN_NOTE("You start to put in the glass panel.")
+				if(do_after(user, 20, src) && state == 3)
 					if (G.use(2))
-						user << "<span class='notice'>You put in the glass panel.</span>"
+						user << SPAN_NOTE("You put in the glass panel.")
 						src.state = 4
 						src.icon_state = "4"
 		if(4)
 			if(istype(P, /obj/item/weapon/crowbar))
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				user << "\blue You remove the glass panel."
+				user << SPAN_NOTE("You remove the glass panel.")
 				src.state = 3
 				src.icon_state = "3"
-				new /obj/item/stack/material/glass( src.loc, 2 )
+				new /obj/item/stack/material/glass(src.loc, 2)
 			if(istype(P, /obj/item/weapon/screwdriver))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				user << "\blue You connect the monitor."
-				var/B = new src.circuit.build_path ( src.loc )
+				user << SPAN_NOTE("You connect the monitor.")
+				var/B = new src.circuit.build_path(src.loc)
 				src.circuit.construct(B)
 				qdel(src)
