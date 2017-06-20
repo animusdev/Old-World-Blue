@@ -21,6 +21,7 @@ var/list/gamemode_cache = list()
 	var/log_pda = 0						// log pda messages
 	var/log_hrefs = 0					// logs all links clicked in-game. Could be used for debugging and tracking down exploits
 	var/log_runtime = 0					// logs world.log to a file
+	var/log_sql = 0						// logs sql queries
 	var/panic_DB_log = FALSE
 	var/sql_enabled = 1					// for sql switching
 	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
@@ -312,6 +313,9 @@ var/list/gamemode_cache = list()
 
 				if ("log_runtime")
 					config.log_runtime = 1
+
+				if ("log_sql")
+					config.log_sql = 1
 
 				if ("generate_asteroid")
 					config.generate_asteroid = 1
