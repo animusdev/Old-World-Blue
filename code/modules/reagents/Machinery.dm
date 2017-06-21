@@ -653,6 +653,10 @@
 		return 1
 
 	if(O.reagents && O.reagents.total_volume)
+		if(!user.unEquip(O, src))
+			return 0
+		holdingitems += O
+		src.updateUsrDialog()
 		return 1
 
 	user << SPAN_WARN("\The [O] is not suitable for blending.")
