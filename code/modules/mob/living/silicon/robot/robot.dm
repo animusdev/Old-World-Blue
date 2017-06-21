@@ -244,11 +244,18 @@
 /mob/living/silicon/robot/proc/pick_module()
 	if(module)
 		return
-	var/list/modules = robot_modules.Copy()
+	var/list/modules = new
+	for(var/M in robot_modules)
+		var/obj/item/weapon/robot_module/module = robot_modules[M]
+		if(!jobban_isbanned(src, initial(module.ban_type)))
+			modules[M] = robot_modules[M]
 	if((crisis && security_level == SEC_LEVEL_RED) || crisis_override) //Leaving this in until it's balanced appropriately.
-		src << "\red Crisis mode active. Combat module available."
-		for(var/name in redcode_robot_modules)
-			modules[name] = redcode_robot_modules[name]
+		src << SPAN_WARN("Crisis mode active. Combat module available.")
+		for(var/M in redcode_robot_modules)
+			var/obj/item/weapon/robot_module/module = redcode_robot_modules[M]
+			if(!jobban_isbanned(src, initial(module.ban_type)))
+				modules[M] = redcode_robot_modules[M]
+
 	modtype = input("Please, select a module!", "Robot", null, null) in modules
 
 	if(module)

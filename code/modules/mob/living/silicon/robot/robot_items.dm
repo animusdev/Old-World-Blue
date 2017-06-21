@@ -1,3 +1,13 @@
+/obj/item/weapon/door_pry_unit
+	name = "door openning unit"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "crowbar"
+	flags = CONDUCT
+	slot_flags = SLOT_BELT
+	force = 6
+	pry = 1
+	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
+
 //A portable analyzer, for research borgs.  This is better then giving them a gripper which can hold anything and letting them use the normal analyzer.
 /obj/item/weapon/portable_destructive_analyzer
 	name = "Portable Destructive Analyzer"

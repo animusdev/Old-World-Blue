@@ -37,6 +37,7 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	)
 	var/list/emotes = list()
 	var/module_type = "Standard"
+	var/ban_type = "Cyborg"
 	//var/sprites = list()
 	var/can_be_pushed = 1
 	var/no_slip = 0
@@ -184,13 +185,14 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	src.modules += new /obj/item/weapon/melee/baton/loaded(src)
 	src.modules += new /obj/item/weapon/extinguisher(src)
 	src.modules += new /obj/item/weapon/wrench(src)
-	src.modules += new /obj/item/weapon/crowbar(src)
+	src.modules += new /obj/item/weapon/door_pry_unit(src)
 	src.modules += new /obj/item/device/healthanalyzer(src)
 	src.emag = new /obj/item/weapon/melee/energy/sword(src)
 	..()
 
 /obj/item/weapon/robot_module/medical
 	name = "medical robot module"
+	ban_type = "Medical Doctor"
 	channels = list("Medical" = 1)
 	networks = list(NETWORK_MEDICAL)
 	subsystems = list(/mob/living/silicon/proc/subsystem_crew_monitor)
@@ -217,6 +219,7 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	src.modules += new /obj/item/weapon/surgicaldrill(src)
 	src.modules += new /obj/item/weapon/gripper/no_use/organ(src)
 	src.modules += new /obj/item/weapon/extinguisher/mini(src)
+	src.modules += new /obj/item/weapon/door_pry_unit(src)
 	src.emag = new /obj/item/weapon/reagent_containers/spray(src)
 	src.emag.reagents.add_reagent("pacid", 250)
 	src.emag.name = "Polyacid spray"
@@ -260,7 +263,7 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	src.modules += new /obj/item/weapon/reagent_containers/syringe(src)
 	src.modules += new /obj/item/weapon/gripper/no_use/organ(src)
 	src.modules += new /obj/item/weapon/extinguisher/mini(src)
-	src.modules += new /obj/item/weapon/crowbar(src)
+	src.modules += new /obj/item/weapon/door_pry_unit(src)
 	src.emag = new /obj/item/weapon/reagent_containers/spray(src)
 	src.emag.reagents.add_reagent("pacid", 250)
 	src.emag.name = "Polyacid spray"
@@ -307,6 +310,7 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	networks = list(NETWORK_ENGINEERING)
 	subsystems = list(/mob/living/silicon/proc/subsystem_power_monitor)
 	module_type = "Engineering"
+	ban_type = "Station Engineer"
 
 /obj/item/weapon/robot_module/engineering/general/New()
 	..()
@@ -382,6 +386,7 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	can_be_pushed = 0
 	supported_upgrades = list(/obj/item/borg/upgrade/tasercooler)
 	module_type = "Security"
+	ban_type = "Security Officer"
 
 /obj/item/weapon/robot_module/security/general/New()
 	src.modules += new /obj/item/device/flash(src)
@@ -391,7 +396,7 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	src.modules += new /obj/item/weapon/melee/baton/robot(src)
 	src.modules += new /obj/item/weapon/gun/energy/taser/mounted/cyborg(src)
 	src.modules += new /obj/item/taperoll(src)
-	src.modules += new /obj/item/weapon/crowbar(src)
+	src.modules += new /obj/item/weapon/door_pry_unit(src)
 	src.modules += new /obj/item/weapon/gun/energy/laser/mounted(src)
 	src.emag = new /obj/item/weapon/gun/energy/pulse_rifle/mounted(src)
 	..()
@@ -413,6 +418,7 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	name = "janitorial robot module"
 	channels = list("Service" = 1)
 	module_type = "Janitor"
+	ban_type = "Janitor"
 
 /obj/item/weapon/robot_module/janitor/New()
 	src.modules += new /obj/item/device/flash(src)
@@ -420,7 +426,7 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	src.modules += new /obj/item/storage/bag/trash(src)
 	src.modules += new /obj/item/weapon/mop(src)
 	src.modules += new /obj/item/device/lightreplacer(src)
-	src.modules += new /obj/item/weapon/crowbar(src)
+	src.modules += new /obj/item/weapon/door_pry_unit(src)
 	src.modules += new /obj/item/weapon/extinguisher/mini(src)
 	src.emag = new /obj/item/weapon/reagent_containers/spray(src)
 	src.emag.reagents.add_reagent("lube", 250)
@@ -452,6 +458,7 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 
 /obj/item/weapon/robot_module/clerical/butler
 	module_type = "Service"
+	ban_type = "Bartender"
 
 /obj/item/weapon/robot_module/clerical/butler/New()
 	src.modules += new /obj/item/device/flash(src)
@@ -477,7 +484,7 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 
 	src.modules += new /obj/item/weapon/tray/robotray(src)
 	src.modules += new /obj/item/weapon/reagent_containers/borghypo/service(src)
-	src.modules += new /obj/item/weapon/crowbar(src)
+	src.modules += new /obj/item/weapon/door_pry_unit(src)
 	src.modules += new /obj/item/weapon/extinguisher/mini(src)
 	src.emag = new /obj/item/weapon/reagent_containers/glass/drinks/bottle/small/beer(src)
 
@@ -491,6 +498,7 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 /obj/item/weapon/robot_module/clerical/general
 	name = "clerical robot module"
 	module_type = "Clerical"
+	ban_type = "Head of Personnel"
 
 /obj/item/weapon/robot_module/clerical/general/New()
 	src.modules += new /obj/item/device/flash(src)
@@ -498,7 +506,7 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	src.modules += new /obj/item/weapon/form_printer(src)
 	src.modules += new /obj/item/weapon/gripper/paperwork(src)
 	src.modules += new /obj/item/weapon/hand_labeler(src)
-	src.modules += new /obj/item/weapon/crowbar(src)
+	src.modules += new /obj/item/weapon/door_pry_unit(src)
 	src.modules += new /obj/item/weapon/extinguisher/mini(src)
 	src.modules += new /obj/item/weapon/stamp(src)
 	src.modules += new /obj/item/weapon/stamp/denied(src)
@@ -519,6 +527,7 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	channels = list("Supply" = 1)
 	networks = list(NETWORK_MINE)
 	module_type = "Miner"
+	ban_type = "Shaft Miner"
 	supported_upgrades = list(/obj/item/borg/upgrade/jetpack)
 
 /obj/item/weapon/robot_module/miner/New()
@@ -541,6 +550,7 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	name = "research module"
 	channels = list("Science" = 1)
 	module_type = "Research"
+	ban_type = "Scientist"
 
 /obj/item/weapon/robot_module/research/New()
 	src.modules += new /obj/item/device/flash(src)
@@ -593,7 +603,7 @@ var/mob/living/silicon/robot/global/list/redcode_robot_modules = list(
 	src.modules += new /obj/item/weapon/melee/energy/sword(src)
 	src.modules += new /obj/item/weapon/gun/energy/pulse_rifle/destroyer(src)
 	src.modules += new /obj/item/weapon/card/emag(src)
-	src.modules += new /obj/item/weapon/crowbar(src)
+	src.modules += new /obj/item/weapon/door_pry_unit(src)
 	var/jetpack = new /obj/item/weapon/tank/jetpack/carbondioxide(src)
 	src.modules += jetpack
 	R.internals = jetpack
