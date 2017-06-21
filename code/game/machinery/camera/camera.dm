@@ -52,7 +52,7 @@
 		ASSERT(src.network)
 		ASSERT(src.network.len > 0)
 
-	if(!c_tag || isturf(loc))
+	if(!c_tag && isturf(loc))
 		var/area/A = get_area(src)
 		c_tag = A.get_camera_tag(src)
 
