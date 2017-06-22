@@ -12,18 +12,16 @@
 	var/meat_type
 	var/victim_name = "corpse"
 
-/obj/structure/kitchenspike/attackby(obj/item/weapon/grab/G as obj, mob/user as mob)
-	if( !(istype(G) && G.affecting && get_dist(src,G.affecting)<2) )
-		return
+/obj/structure/kitchenspike/affect_grab(var/mob/user, var/mob/living/target, var/obj/item/weapon/grab/grab)
 	if(occupied)
-		user << "<span class = 'danger'>The spike already has something on it, finish collecting its meat first!</span>"
+		user << SPAN_DANG("The spike already has something on it, finish collecting its meat first!")
 	else
-		if(spike(G.affecting))
-			visible_message("<span class = 'danger'>[user] has forced [G.affecting] onto the spike, killing them instantly!</span>")
-			qdel(G.affecting)
-			qdel(G)
+		if(spike(target))
+			visible_message(SPAN_DANG("[user] has forced [target] onto the spike, killing them instantly!"))
+			qdel(target)
+			return TRUE
 		else
-			user << "<span class='danger'>They are too big for the spike, try something smaller!</span>"
+			user << SPAN_DANG("They are too big for the spike, try something smaller!")
 
 /obj/structure/kitchenspike/proc/spike(var/mob/living/victim)
 
