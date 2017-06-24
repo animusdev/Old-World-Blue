@@ -105,7 +105,7 @@
 				var/input = input(usr, "Please write a message to announce to the station crew.", "Priority Announcement")
 				if(!input || !(usr in view(1,src)))
 					return
-				log_game("[usr] use [src] for annonce \"[input]\"", src.loc, FALSE)
+				log_game("[key_name(usr)] use [src] for annonce \"[input]\"", src.loc, FALSE)
 				crew_announcement.Announce(input)
 				message_cooldown = 1
 				spawn(600)//One minute cooldown

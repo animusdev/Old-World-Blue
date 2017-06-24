@@ -261,7 +261,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 	if(href_list["sendAnnouncement"])
 		if(!announcementConsole)	return
-		log_game("[usr] use [src] for annonce \"[message]\"", src.loc, FALSE)
+		log_game("[key_name(usr)] use [src] for annonce \"[message]\"", src.loc, FALSE)
 		announcement.Announce(utf8_to_cp1251(message), msg_sanitized = 1)
 		reset_announce()
 		screen = 0
