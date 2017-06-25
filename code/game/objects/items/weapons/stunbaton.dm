@@ -25,13 +25,10 @@
 /obj/item/weapon/melee/baton/New()
 	..()
 	update_icon()
-	return
 
 /obj/item/weapon/melee/baton/loaded/New() //this one starts with a cell pre-installed.
-	..()
 	bcell = new/obj/item/weapon/cell/high(src)
-	update_icon()
-	return
+	..()
 
 /obj/item/weapon/melee/baton/proc/deductcharge(var/chrgdeductamt)
 	if(bcell)
@@ -53,23 +50,23 @@
 
 /obj/item/weapon/melee/baton/examine(mob/user, return_dist = 1)
 	.=..()
-	if(.>1)
+	if(.>3)
 		return
 
 	if(bcell)
-		user <<"<span class='notice'>The baton is [bcell.percent()]% charged.</span>"
+		user << SPAN_NOTE("The baton is [bcell.percent()]% charged.")
 	else
-		user <<"<span class='warning'>The baton does not have a power source installed.</span>"
+		user << SPAN_WARN("The baton does not have a power source installed.")
 
 /obj/item/weapon/melee/baton/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/cell))
 		if(!bcell)
 			user.drop_from_inventory(W, src)
 			bcell = W
-			user << "<span class='notice'>You install a cell in [src].</span>"
+			user << SPAN_NOTE("You install a cell in [src].")
 			update_icon()
 		else
-			user << "<span class='notice'>[src] already has a cell.</span>"
+			user << SPAN_NOTE("[src] already has a cell.")
 
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(bcell)
@@ -86,15 +83,15 @@
 /obj/item/weapon/melee/baton/attack_self(mob/user)
 	if(bcell && bcell.charge > hitcost)
 		status = !status
-		user << "<span class='notice'>[src] is now [status ? "on" : "off"].</span>"
+		user << SPAN_NOTE("[src] is now [status ? "on" : "off"].")
 		playsound(loc, "sparks", 75, 1, -1)
 		update_icon()
 	else
 		status = 0
 		if(!bcell)
-			user << "<span class='warning'>[src] does not have a power source!</span>"
+			user << SPAN_WARN("[src] does not have a power source!")
 		else
-			user << "<span class='warning'>[src] is out of charge.</span>"
+			user << SPAN_WARN("[src] is out of charge.")
 	add_fingerprint(user)
 
 
@@ -116,7 +113,7 @@
 	var/mob/living/L = M
 
 	var/target_zone = check_zone(user.zone_sel.selecting)
-	if(user.a_intent == I_HURT)
+	if(force && user.a_intent == I_HURT)
 		if (!..())	//item/attack() does it's own messaging and logs
 			return 0	// item/attack() will return 1 if they hit, 0 if they missed.
 		agony *= 0.5	//whacking someone causes a much poorer contact than prodding them.
@@ -139,16 +136,24 @@
 			var/obj/item/organ/external/affecting = H.get_organ(target_zone)
 			if (affecting)
 				if(!status)
-					L.visible_message("<span class='warning'>[L] has been prodded in the [affecting.name] with [src] by [user]. Luckily it was off.</span>")
+					L.visible_message(
+						SPAN_WARN("[L] has been prodded in the [affecting.name] with [src] by [user]. Luckily it was off.")
+					)
 					return 1
 				else
-					H.visible_message("<span class='danger'>[L] has been prodded in the [affecting.name] with [src] by [user]!</span>")
+					H.visible_message(
+						SPAN_DANG("[L] has been prodded in the [affecting.name] with [src] by [user]!")
+					)
 		else
 			if(!status)
-				L.visible_message("<span class='warning'>[L] has been prodded with [src] by [user]. Luckily it was off.</span>")
+				L.visible_message(
+					SPAN_WARN("[L] has been prodded with [src] by [user]. Luckily it was off.")
+				)
 				return 1
 			else
-				L.visible_message("<span class='danger'>[L] has been prodded with [src] by [user]!</span>")
+				L.visible_message(
+					SPAN_DANG("[L] has been prodded with [src] by [user]!")
+				)
 
 	//stun effects
 	L.stun_effect_act(stun, agony, target_zone, src)
@@ -210,15 +215,7 @@
 	hitcost = 1000
 	w_class = ITEM_SIZE_SMALL
 	attack_verb = list("shocked")
-	slot_flags = SLOT_BELT
-
-/obj/item/weapon/melee/baton/shocker/New()
-	..()
-	update_icon()
-	return
 
 /obj/item/weapon/melee/baton/shocker/loaded/New()
-	..()
 	bcell = new/obj/item/weapon/cell/high(src)
-	update_icon()
-	return
+	..()
