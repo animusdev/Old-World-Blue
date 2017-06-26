@@ -21,9 +21,8 @@
 	var/cooling = 0
 
 /obj/machinery/atmospherics/unary/freezer/New()
-	..()
 	initialize_directions = dir
-	RefreshParts()
+	..()
 
 /obj/machinery/atmospherics/unary/freezer/initialize()
 	if(node)

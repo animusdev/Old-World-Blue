@@ -22,9 +22,8 @@
 	var/heating = 0		//mainly for icon updates
 
 /obj/machinery/atmospherics/unary/heater/New()
-	..()
 	initialize_directions = dir
-	RefreshParts()
+	..()
 
 /obj/machinery/atmospherics/unary/heater/initialize()
 	if(node)
