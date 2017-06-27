@@ -37,7 +37,7 @@ var/datum/antagonist/wizard/wizards
 		if(31 to 60)
 			escape = 1
 			steal = 1
-		if(61 to 99)
+		if(61 to 89)
 			kill = 1
 			steal = 1
 		else
