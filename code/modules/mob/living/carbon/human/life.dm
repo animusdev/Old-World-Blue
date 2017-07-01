@@ -9,18 +9,18 @@
 // There are 50HP to get through, so (1/6)*last_tick_duration per second. Breaths however only happen every 4 ticks. last_tick_duration = ~2.0 on average
 #define HUMAN_CRIT_MAX_OXYLOSS ( 2.0 / 6)
 
-#define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
-#define HEAT_DAMAGE_LEVEL_2 4 //Amount of damage applied when your body temperature passes the 400K point
-#define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 1000K point
+#define HEAT_DAMAGE_LEVEL_1 3 //Amount of damage applied when your body temperature just passes the 360.15k safety point
+#define HEAT_DAMAGE_LEVEL_2 6 //Amount of damage applied when your body temperature passes the 400K point
+#define HEAT_DAMAGE_LEVEL_3 10 //Amount of damage applied when your body temperature passes the 1000K point
 
 #define COLD_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when your body temperature just passes the 260.15k safety point
 #define COLD_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when your body temperature passes the 200K point
 #define COLD_DAMAGE_LEVEL_3 3 //Amount of damage applied when your body temperature passes the 120K point
 
 //Note that gas heat damage is only applied once every FOUR ticks.
-#define HEAT_GAS_DAMAGE_LEVEL_1 2 //Amount of damage applied when the current breath's temperature just passes the 360.15k safety point
-#define HEAT_GAS_DAMAGE_LEVEL_2 4 //Amount of damage applied when the current breath's temperature passes the 400K point
-#define HEAT_GAS_DAMAGE_LEVEL_3 8 //Amount of damage applied when the current breath's temperature passes the 1000K point
+#define HEAT_GAS_DAMAGE_LEVEL_1 3 //Amount of damage applied when the current breath's temperature just passes the 360.15k safety point
+#define HEAT_GAS_DAMAGE_LEVEL_2 6 //Amount of damage applied when the current breath's temperature passes the 400K point
+#define HEAT_GAS_DAMAGE_LEVEL_3 10 //Amount of damage applied when the current breath's temperature passes the 1000K point
 
 #define COLD_GAS_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when the current breath's temperature just passes the 260.15k safety point
 #define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
