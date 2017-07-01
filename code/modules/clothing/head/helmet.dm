@@ -93,10 +93,17 @@
 			update_clothing_icon()	//so our mob-overlays update
 
 
+/obj/item/clothing/head/helmet/blackberetarmor
+	name = "officer beret"
+	flags_inv = HIDEEARS|HIDEEYES
+	desc = "A black beret with an officer's rank emblem."
+	icon_state = "beret_corporate_officer"
+
 /obj/item/clothing/head/helmet/dermal
 	name = "Dermal Armour Patch"
 	desc = "You're not quite sure how you manage to take it on and off, but it implants nicely in your head."
 	icon_state = "dermal"
+	flags_inv = HIDEEARS|HIDEEYES
 	item_state = "dermal"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
 	siemens_coefficient = 0.6
