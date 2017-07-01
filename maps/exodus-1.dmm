@@ -4579,7 +4579,7 @@
 "bKc" = (/obj/structure/flora/pottedplant{tag = "icon-plant-01"; icon_state = "plant-01"},/turf/simulated/floor{icon_state = "white"},/area/rnd/brainstorm)
 "bKd" = (/obj/structure/bookcase,/obj/item/weapon/book/manual/robotics_cyborgs{pixel_x = 4; pixel_y = 5},/obj/item/weapon/book/manual/excavation,/obj/item/weapon/book/manual/anomaly_spectroscopy,/obj/item/weapon/book/manual/anomaly_testing,/obj/item/weapon/book/manual/mass_spectrometry,/obj/item/weapon/book/manual/research_and_development,/turf/simulated/floor{icon_state = "white"},/area/rnd/brainstorm)
 "bKe" = (/obj/machinery/firealarm{dir = 8; pixel_x = -24},/turf/simulated/floor{dir = 8; icon_state = "whitepurplecorner"},/area/rnd/research)
-"bKf" = (/obj/structure/table/standard,/obj/item/weapon/crowbar/red{armor_penetration = 0; desc = "Used to remove headcrabs and pry open zombies."; force = 100},/obj/item/weapon/cell/super,/turf/simulated/floor{icon_state = "cafeteria"; dir = 5},/area/crew_quarters/heads/hor)
+"bKf" = (/obj/structure/table/standard,/obj/item/weapon/cell/super,/turf/simulated/floor{icon_state = "cafeteria"; dir = 5},/area/crew_quarters/heads/hor)
 "bKg" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor{icon_state = "cafeteria"; dir = 5},/area/crew_quarters/heads/hor)
 "bKh" = (/obj/machinery/computer/mecha,/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor{icon_state = "cafeteria"; dir = 5},/area/crew_quarters/heads/hor)
 "bKi" = (/obj/structure/table/rack,/obj/item/weapon/rig/hazmat/equipped,/turf/simulated/floor{icon_state = "cafeteria"; dir = 5},/area/crew_quarters/heads/hor)
