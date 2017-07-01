@@ -59,20 +59,12 @@
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
 	siemens_coefficient = 0.8
 
-/obj/item/clothing/head/HoS/solyarkin
-	name = "Internal security hat."
-	desc = "An old hat. A lot of time ago it was part of standard Internal Security gear, \
-			but now - its just memories "
-	icon_state = "secelitetop"
-	item_state = "secelitetop"
-
-
-
 
 /obj/item/clothing/head/helmet/warden
 	name = "warden's hat"
 	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
 	armor = list(melee = 60, bullet = 40, laser = 60, energy = 15, bomb = 25, bio = 0, rad = 0)
+	flags_inv = HIDEEARS|HIDEEYES
 	icon_state = "policehelm"
 
 /obj/item/clothing/head/helmet/warden/alt
