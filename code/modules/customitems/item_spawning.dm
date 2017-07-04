@@ -226,7 +226,6 @@
 
 	current_data = new()
 	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
-	current_data.character_name = "Rayner Rheinmetall"
 	current_data.item_path = /obj/item/clothing/head/helmet/blackberetarmor
 	L |= current_data
 
@@ -345,7 +344,6 @@
 	L = list()
 	current_data = new()
 	current_data.req_titles = list("Head of Security", "Security Officer", "Warden")
-	current_data.character_name = "Megan Abbott"
 	current_data.item_path = /obj/item/clothing/accessory/purple_heart/madman
 	L |= current_data
 
